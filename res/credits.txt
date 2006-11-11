@@ -1,0 +1,43 @@
+<font color='255,255,255' face='verdana' size='11' align='center'>
+<font size='32' style='b' color='51,51,153'>Calques 3D</font><br>
+<font color='51,51,153'>version 2.3.0</font><p><p>
+<font style='i' color='1,1,1' align='right' >Dedicated to Philippe BERNAT</font><p><p>
+  <font style='bu' align='left'>The authors:<br></font><vspace size='5'>
+  <font style='b' color='1,1,1' align='left'>Nicolas VAN LABEKE<br></font>
+    <font color='1,1,1' align='left'>The SCRE Centre<br></font>
+    <font color='1,1,1' align='left'>University of Glasgow<br></font>
+    <font color='1,1,1' align='left'>St Andrew's Building<br></font>
+    <font color='1,1,1' align='left'>11 Eldon Street<br></font>
+    <font color='1,1,1' align='left'>Glasgow G3 6NH<br></font>
+    <font color='1,1,1' align='left'>Scotland<p></font>
+  <font style='b' color='1,1,1' align='left'>Philippe BERNAT<br></font>
+  <font style='b' color='1,1,1' align='left'>Josette MORINET-LAMBERT<br></font>
+    <font color='1,1,1' align='left'>Equipe Informatique et Formation<br></font>
+    <font color='1,1,1' align='left'>LORIA/CNRS - Université Henri Poincaré<br></font>
+    <font color='1,1,1' align='left'>Bâtiment LORIA - BP 239<br></font>
+    <font color='1,1,1' align='left'>F-54506 Vandoeuvre les Nancy cedex<br></font>
+    <font color='1,1,1' align='left'>France<p><p></font>
+  <font style='bu' align='left'>Acknowledgements:<br></font><vspace size='5'>
+  <font color='1,1,1' align='left'>The authors would like to thank the teachers and <br>  didacticians who, as part of a research group, <br>  collaborated to the definition of the pedagogical <br>  objectives and content of <font style='b' color='51,51,153'>Calques 3D</font> :<p></font>
+<font color='1,1,1' align='left' style='b'>
+        - Jean-Claude DEMOLY<br>
+        - Christian GINET<br>
+        - Jean-Pierre GIORGI<br>
+        - Norbert GRESS<br>
+        - Françoise JEAN <br>
+        - Philippe LOMBARD<br>
+        - Christine MANCIAUX<br>
+        - Marie-Hélène MUNIER<br>
+        - Bernard PARZYSZ<br>
+        - Bernard PIERROT<br>
+        - Serge REMY<br>
+        - Michèle THIRY<br>
+        - Agnès VOLPI<p></font>
+  <font color='1,1,1' align='left'>Many thanks to :<p>
+        - <font style='b'>Nicolas Rosillo</font> for the Spanish version.<br>
+        - <font style='b'>Humberto Jose Bortolossi</font>, <br>
+          <font style='b'>Adelmo Ribeiro de Jesus</font> and <br>
+          <font style='b'>Alexandre Negreti</font> for the Brazilian version.<p><p></font>
+
+  <font color='1,1,1' align='left'>This project was initially supported by a grant from <br>  the <font style='b'>Conseil Régional de Lorraine</font>.<p><p></font>
+<vspace size='80'>

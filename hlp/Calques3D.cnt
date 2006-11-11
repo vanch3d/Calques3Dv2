@@ -1,0 +1,45 @@
+:Base Calques3D.hlp
+1 Calques 3D : Introduction=main_index
+1 Glossary=Glossary
+1 How to ...
+2 Visualise and manipulate a geometrical figure?=the_views
+2 Visualise and manipulate the geometrical objects?
+3 Categories of objects and designation=the_format1
+3 Appearance of geometrical objects=the_format2
+3 Visual indicators and feedback=the_format3
+2 Construct a geometrical figure?
+3 How to construct a geometrical figure?=the_constructions1
+3 What is a task?=the_constructions2
+3 How to select an object?=the_constructions3
+3 Is the new object completely defined?=the_constructions4
+2 Explore a geometrical figure?
+3 How to deform the figure and explore its various configurations?=the_exploration1
+3 How to observe parts of the figure?=the_exploration2
+3 How to retrieve analytical information of the figure?=the_exploration3
+3 How to verify some geometrical relations in a figure?=the_exploration4
+2 Create a macro-construction?
+3 What is a macro-construction?=the_macros1
+3 How to build a new macro-construction?=the_macros2
+3 How to graft a macro-construction in the current figure?=the_macros3
+2 Configure Calques 3D?
+3 The configuration panes=configure_c3d
+1 The views
+2 Universe=HIDR_VIEWUNIVERSE
+2 Tracing=HIDR_VIEWCALQUE
+2 History=HIDR_VIEWHISTORIQUE
+2 Dependence Graph=HIDR_VIEWGRAPH
+2 MathPad=HIDR_VIEWANALYTIC
+1 The menus
+2 File menu=menu_file
+2 Edit menu=menu_edit
+2 View menu=menu_view
+2 Tools menu=menu_tools
+2 Window menu=menu_window
+2 Help menu=menu_help
+2 Visualisation menu=menu_visualisation
+2 Object menu=menu_object
+2 Construction menu=menu_construction
+2 Exploration menu=menu_exploration
+2 History menu=menu_history
+2 Graph menu=menu_graph
+2 MathPad menu=menu_mathpad

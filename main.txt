@@ -1,0 +1,136 @@
+/*!
+\mainpage 
+
+\section About What is Calques 3D?
+
+In secondary level schools, spatial geometry teaching is an important goal in mathematics teaching, and a difficult one, mainly because students have intrinsic difficulties in visualising three-dimensional objects. Indeed, students are often unable to see and understand the display of a 3D figure on a 2D device, and then to proceed to form an abstraction of it. Moreover, though 'wire-frame' geometry does not introduce the same difficulties as solid geometry: it can cause other problems since the translucent aspect of objects makes it difficult to visualise their relative position. 
+
+Thus, the use of computers to display real-time and interactive images of 3D construction should be helpful for overcoming this problem. This observation led us to explore the field of Dynamic Geometry. In this context, Calques 3D could rely on similar software, both in plane geometry (e.g. Geometer's Sketchpad, Cabri-geometry  or Calques 2), and in spatial geometry (e.g. Geospace, Kappa  or Cabri 3D).
+
+Calques 3D is a microworld designed for constructing, observing and manipulating geometrical figures. It allows an intuitive and adaptable access to environment features. Intuitive because it is used by students who do not have preparation. Adaptable because it allows the teacher to decide, with respect to his own pedagogy, which primitives and operations will be made available to the student. The aims of Calques 3D are threefold: 
+
+-	Observation: allowing one to see and understand the third dimension by changing the spatial system of reference (axes, floor, etc.), choosing perspective ('cavalière', vanishing point, etc.), modifying the observer's point of view; displaying visual feedback on objects, etc. 
+
+-	Construction: allowing a dynamic construction of geometrical figures from elementary objects (points, lines, planes, etc.) and construction primitives (intersection, parallel, perpendicular, etc.).
+
+-	Exploration: allowing one to explore and discover geometrical properties of the figure (deforming it by directly dragging base-points, changing observer's point of view, etc.).  
+*/
+
+/**
+ \page BCGControlBar BCGControlBar Library Professional Edition (v. 7.31)
+BCGControlBar (Business Components Gallery Control Bar) Professional Edition is an MFC extension framework library 
+with which you can make your apps look like Office XP, Office 2000, Office 2003, Visual Studio, Visual Studio. NET 
+and Internet Explorer - complete with full toolbars, menu, and keyboard customization, docking control bars, menu bars, 
+and Office 2000/XP menus.
+
+BCGControlBar offers a set of C++ classes that extend standard MFC features like toolbars and docking windows, but it 
+doesn't replace MFC; it just makes it easier to write more powerful MFC apps.
+
+
+\section BCGControlBarList BCGControlBar Class List
+Here is a list of the BCGControlBar Library used in this project, with brief descriptions:
+<table border="0" cellspacing="3" cellpadding="3">
+  <tr><td class="indexkey">CBCGPButton</td><td class="indexvalue">The CBCGPButton  class provides the extended 
+		functionality of the standard Windows button controls. It includes the new look & feel styles, the various 
+		ways to align text, ability to combine an image and text, set cursor and tool tip.</td></tr>
+  <tr><td class="indexkey">CBCGPCaptionBar</td><td class="indexvalue">A CBCGPCaptionBar object is a control bar with 
+		a row of "elements": button, text label and image. It can contain only one element of each type in one time. 
+		Each element can be aligned to the left or right edges of the control or to the center. A caption bar has top 
+		and bottom borders with flat or 3D style.</td></tr>
+  <tr><td class="indexkey">CBCGPFrameWnd</td><td class="indexvalue">The CBCGPFrameWnd class provides the functionality 
+		of a Windows single document interface (SDI) overlapped or pop-up frame window, along with members for managing 
+		the window. </td></tr>
+  <tr><td class="indexkey">CBCGPPopupMenu</td><td class="indexvalue">The CBCGPPopupMenu class provides the 
+		functionality of Windows popup menus and extends it by supporting animations, tear-off, full customization, 
+		tool tips, rarely used commands, scrolling and loading/saving its state.</td></tr>
+  <tr><td class="indexkey">CBCGPPropertyPage</td><td class="indexvalue">The CBCGPPropertyPage class extends MFC's 
+		CPropertyPage class and enables correct processing of the library-supplied popup menus. Also, 
+		CBCGPropertyPage class should be used in conjunction with CBCGPropertySheet.</td></tr>
+  <tr><td class="indexkey">CBCGPPropertySheet</td><td class="indexvalue">The CBCGPPropertySheet class extends the 
+		functionality of MFC's CPropertySheet. It displays property pages in two different ways: as a regular property 
+		sheet (with tabs located on the top) or as outlook bar control where each outlook button corresponds to a 
+		property page.</td></tr>
+  <tr><td class="indexkey">CBCGPStatusBar</td><td class="indexvalue">The CBCGPStatusBar class implements the 
+		functionality of status bar and has almost the same interface as MFC CStatusBar. BCGControlBar Library has its 
+		own implementation in order to make status bar "skin"-enabled. </td></tr>
+  <tr><td class="indexkey">CBCGPTasksPane</td><td class="indexvalue">The CBCGPTaskPane class implements the 
+		functionality of a list of clickable items (tasks). The items can be arranged in groups and each group may 
+		have a caption. The groups can be collapsed and expanded one by one. With each item (task) may be associated 
+		a command ID and this command will be executed (WM_COMMAND message is sent to the owner of task pane control) 
+		when the user clicks the task. It's possible to assign an icon to each item (task). </td></tr>
+  <tr><td class="indexkey">CBCGPToolBar</td><td class="indexvalue">The CBCGPToolBar class extends the MFC toolbar 
+		control by providing support for a number of features such as full customization, drag and drop buttons 
+		between toolbars and menus, flat toolbars, toolbars with the "hot" images (Microsoft® Internet Explorer®-style), 
+		large icons support, "Pager" button (allows to see out of screen commands), etc.</td></tr>
+  <tr><td class="indexkey">CBCGPToolbarCustomize</td><td class="indexvalue">The CBCGPToolbarCustomize object represents 
+		a modeless tab dialog box (property sheet) that allows the user full customization of application toolbars, 
+		menus, keyboard, mouse, user-defined tools and provides some additional options for managing the application 
+		look and feel.</td></tr>
+  <tr><td class="indexkey">CBCGPToolBarImages</td><td class="indexvalue">The CBCGPToolBarImages class simplifies 
+		processing of toolbar images loaded from resource files or from disk files. The toolbar bitmap is a large 
+		bitmap containing a set of small images (toolbar images) of a fixed size. </td></tr>
+  <tr><td class="indexkey">CBCGPURLLinkButton</td><td class="indexvalue">The CBCGPURLLinkButton class extends the 
+		functionality of CBCGButton by providing support for URL links. It displays the URL link in the way it's 
+		defined by the GLOBAL_DATA::globalData global variable and invokes the shell (ShellExecute with the URL text 
+		as a parameter) when clicked.</td></tr>
+  <tr><td class="indexkey">CBCGPVisualManager</td><td class="indexvalue">The CBCGPVisualManager class provides the 
+		functionality, which allows you to control look and feel of an application. It centralizes the drawing code 
+		for the most important GUI elements, such as toolbars, buttons, grippers and menus.</td></tr>
+  <tr><td class="indexkey">CBCGPWorkspace</td><td class="indexvalue">The CBCGPWorkspace class provides the 
+		functionality of workspace manager. It handles the application/customization state, helps to save/load the 
+		state to/from the registry, contains initialization and access methods for the global managers such as 
+		CBCGMouseManager, CBCGContextMenuManager, CBCGKeyboardManager, CBCGUserToolsManager and CBCGTearOffManager.</td></tr>
+</table>
+**/
+
+/**
+\page MFCGridCtrl MFC Grid Control (v. 2.20)
+
+\author Chris Maunder - cmaunder@mail.com
+
+A fully featured MFC grid control for displaying tabular data. The grid is a custom control derived from CWnd 
+
+\section Preface Preface
+
+This grid is the work of thousands of hours of squinting at pixels, hunting memory leaks, adding new features, 
+fixing new bugs and beating the code by force of will into a form that is as feature rich and useable as something 
+of this form can be. Dozens of developers from all over the world have contributed fixes, improvements and suggestions 
+over the 4 years that the grid has been growing, and there is still no end in sight. Most of the fixes have been sent 
+in by readers so I'm trusting that they have done sufficient testing.
+
+Release 2.25 is a minor update of 2.24 for Visual C++ .NET 2003 / Whidbey. It includes a few bug fixes and behavioral 
+updates as well as some visual enhancements and speed improvements. 
+
+The control features:
+
+    - Cell selection using the mouse, with optional Control and Shift key combinations. Selection can be disabled.
+    - Row and Column resizing. Sizing can be disabled for row, columns or both.
+    - Auto row or column sizing when dividers are double-clicked.
+    - Any number of fixed rows and columns.
+    - Individual cells can have separate text and background colours.
+    - Individual cells can have separate fonts.
+    - Individual cells can be marked "Read-Only", or have their modification status set and checked.
+    - OLE Drag and drop.
+    - Ctrl-C, Ctrl-X and Ctrl-V perform clipboard copy, cut and paste, and Ctrl-A for "Select All"
+    - In place editing of cell contents. If a character key is pressed while a cell has focus, editing will start 
+	  on that cell, and the arrow keys will allow navigation to other keys. If the current focus cell is clicked on, 
+	  editing will start and the arrow keys will move the carat inside the edit control. Editing can be disabled.
+    - Support for Microsoft intellimouse.
+    - Optional grid lines.
+    - Images in any cell
+    - "Virtual" mode for large datasets
+    - Full printing support, for either a Doc/View environment (inc Print preview) or a standalone dialog based app 
+	  (no print preview).
+    - Optional "List mode", including full row selection, single row selection, and sort on column header click.
+    - Numerous virtual functions to allow this control to be extended very easily.
+    - Unicode support.
+    - WinCE support
+    - Titletips for cells that are too small to display their data.
+    - Hidden rows and columns
+    - Compiles under VC 4.2, 5.0, 6.0 and under the CE toolkit version 2.0 and 3.0 
+
+**/
+
+/**
+ \page MFC Microsoft Foundation Class Library 
+**/

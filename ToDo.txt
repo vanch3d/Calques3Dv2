@@ -1,0 +1,67 @@
+========================================================================
+       Calques3D : Todo list
+========================================================================
+
+26/07/01
+--------
+	* for every CObject3D, add
+		- SetParents(CObject3DSet* pSet)
+		- int SetDepth();
+
+	* update CRedefine3DTask
+		- 
+	* add a special treatment for modified objects in CCalques3DDoc
+		- updating the list of object
+		- undo
+
+	* continue the treatment of redefinition
+		- CRedefSet* GetRedefSet() in CPoint3D and children classes 
+
+
+#define HIDCANCEL                       0x80ac0002    // IDD_MACROINFO_DLG
+#define HIDHELP                         0x80ac0009    // IDD_MACROINFO_DLG
+#define HIDOK                           0x80ac0001    // IDD_MACROINFO_DLG
+
+#define HIDC_DELETELIST                 0x806b0412    // IDD_REDEFINE_DLG
+#define HIDC_SHOWLIST                   0x806b0411    // IDD_REDEFINE_DLG
+
+#define HIDC_MACRODEF                   0x80ac0465    // IDD_MACROINFO_DLG
+#define HIDC_MACROJHELP                 0x80ac0464    // IDD_MACROINFO_DLG
+#define HIDC_MACRONAME                  0x80ac0463    // IDD_MACROINFO_DLG
+#define HIDC_MACROPATH                  0x80ac0414    // IDD_MACROINFO_DLG
+#define HID_MACROSAVEAS                 0x80ac0466    // IDD_MACROINFO_DLG
+
+#define HIDC_DEPLIST                    0x80700418    // IDD_OBJECTCPT_PAGE
+
+#define HIDC_OBJCOLOR                   0x806c0415    // IDD_OBJECTPROP_PAGE
+#define HIDC_OBJHIDDEN                  0x806c0417    // IDD_OBJECTPROP_PAGE
+#define HIDC_OBJMARK                    0x806c0418    // IDD_OBJECTPROP_PAGE
+#define HIDC_OBJNAME                    0x80ac0413    // IDD_OBJECTPROP_PAGE
+#define HIDC_OBJSHAPE                   0x806c0416    // IDD_OBJECTPROP_PAGE
+
+#define HIDC_OBJDEF                     0x80ac0419    // IDD_OBJECTINFO_PAGE
+#define HIDC_OBJHELP                    0x80ac041a    // IDD_OBJECTINFO_PAGE
+
+#define HIDC_DEFCOLOR                   0x4142b    // IDD_PREF_SHAPE_PAGE
+#define HIDC_GRAY_HIDDEN                0x4143c    // IDD_PREF_SHAPE_PAGE
+#define HIDC_POINTSIZE                  0x41422    // IDD_PREF_SHAPE_PAGE
+#define HIDC_SHAPE_CALC                 0x41420    // IDD_PREF_SHAPE_PAGE
+#define HIDC_SHAPE_CSTR                 0x4141f    // IDD_PREF_SHAPE_PAGE
+#define HIDC_SHAPE_FREE                 0x4141e    // IDD_PREF_SHAPE_PAGE
+#define HIDC_SHAPE_VIS                  0x41421    // IDD_PREF_SHAPE_PAGE
+#define HIDC_SPINSIZE                   0x41424    // IDD_PREF_SHAPE_PAGE
+
+#define HIDC_LOADMACRO                  0x41458    // IDD_PREF_MACROS_PAGE
+#define HIDC_MACRO_DEF                  0x41457    // IDD_PREF_MACROS_PAGE
+#define HIDC_MACRO_NAME                 0x41456    // IDD_PREF_MACROS_PAGE
+#define HIDD_MACRO_BROWSE               0x4521b    // IDD_PREF_MACROS_PAGE
+#define HIDD_MACRO_LIST                 0x41001    // IDD_PREF_MACROS_PAGE
+#define HIDD_MACRO_PATH                 0x4521a    // IDD_PREF_MACROS_PAGE
+
+#define HIDC_MAGNET                     0x4144b    // IDD_PREF_UNIVERSE_PAGE
+#define HIDC_REFINIT                    0x4144a    // IDD_PREF_UNIVERSE_PAGE
+#define HIDC_SYNCHRO                    0x4144c    // IDD_PREF_UNIVERSE_PAGE
+
+#define HID_SAVEAS                      0x80ac0003    // IDD_PREF_SESSION_PAGE
+
+/////////////////////////////////////////////////////////////////////////////

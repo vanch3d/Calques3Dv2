@@ -1,0 +1,165 @@
+// Plan3D.h: interface for the CPlan3D class.
+//
+//////////////////////////////////////////////////////////////////////
+
+#if !defined(AFX_PLAN3D_H__F7E630B5_D1B9_11D4_A2FA_00D0B71C8709__INCLUDED_)
+#define AFX_PLAN3D_H__F7E630B5_D1B9_11D4_A2FA_00D0B71C8709__INCLUDED_
+
+#if _MSC_VER > 1000
+#pragma once
+#endif // _MSC_VER > 1000
+
+#include "Object3D.h"
+
+class CPoint3D;
+class CDroite3D;
+
+//////////////////////////////////////////////////////////////////////
+/// Construction/Destruction
+//////////////////////////////////////////////////////////////////////
+class CPlan3D : public CObject3D  
+{
+	BOOL		bUpdateMe;
+public:
+	DECLARE_SERIAL(CPlan3D);
+
+	CPoint3D 	*P1,*P2,*P3;
+	CVector4	VecNorm;
+	CVector4	p1,p2,p3,p4;
+	CPoint		tp1,tp2,tp3,tp4;
+
+	void		*VecList;			// Liste des successeurs
+	CLocalRep	plRep;
+	CLocalRep	ptonRep;
+
+	CPlan3D() : CObject3D(), bUpdateMe(1) {};
+	CPlan3D(CPoint3D *p1,CPoint3D *p2,CPoint3D *p3);
+	CPlan3D(CPoint3D *p1,CVector4 plNom);
+	CPlan3D(const CObject3D & );
+	virtual ~CPlan3D();
+
+	virtual CObject3D* CopyObject();
+	virtual CxObject3DSet* GetParents();
+	virtual void Serialize( CArchive& ar );
+	virtual BOOL ChangeParent(CObject3D *pOld,CObject3D *pNew,BOOL bUpGraph=FALSE);
+	virtual int SetDepth();
+	virtual void	GetRange(CVector4 &min,CVector4 &max);
+
+	virtual UINT GetNameID() const { return IDS_NAME_PLANE;};
+	virtual UINT GetHelpID() const { return IDS_HELP_PLANE;};
+	virtual UINT GetDefID() const { return IDS_DEF_PLAN;};
+	virtual CString GetObjectDef();
+
+	virtual unsigned long isA() const { return TPlan3DClass; }
+	virtual BOOL IsEqual(CObject3D &other);
+
+	virtual BOOL IsInActiveArea(CPoint);
+	virtual BOOL IsPointInside(CVector4& pt,BOOL bLim=TRUE) { return TRUE;};
+	virtual CRgn* InvalideRect();
+
+	void UpdateContour(bool upd=1) { bUpdateMe = upd;};
+	virtual int  CalculConceptuel();
+	virtual void CalculVisuel(CVisualParam *);
+	virtual void Draw(CDC*,CVisualParam *vp,BOOL bSm=FALSE);
+	virtual void DrawRetro(CDC*,CVisualParam *vp);
+
+	virtual CString DrawSymbolic(); 
+
+	virtual UINT IsParallelTo(CObject3D *pObj);
+	virtual UINT IsPerpendicularTo(CObject3D *pObj);
+
+
+	CVector4 GetNormalForm();
+	virtual void HandleObjectError(int,BOOL);
+
+
+	static FCoord GetDistancePt(CVector4 Nf, CVector4 pt);
+	static void GetProjectedMinMax(CObject3D* pObj,CVector4 P1,CVector4 I,CVector4 J,CVector4 K, CVector4& minmax);
+
+};
+
+//////////////////////////////////////////////////////////////////////
+/// Construction/Destruction
+//////////////////////////////////////////////////////////////////////
+class CPlanPerp3D : public CPlan3D
+{
+public:
+	DECLARE_SERIAL(CPlanPerp3D);
+	CDroite3D	*D;
+	CVector4	IntPt;
+
+	CPlanPerp3D() : CPlan3D() {};
+	CPlanPerp3D(CPoint3D *p1,CDroite3D *dr);
+	CPlanPerp3D(const CObject3D & );
+	virtual ~CPlanPerp3D();
+	virtual int SetDepth();
+
+	virtual void Serialize( CArchive& ar );
+
+	virtual CObject3D* CopyObject();
+	virtual CxObject3DSet* GetParents();
+	virtual int  CalculConceptuel();
+	virtual CString GetObjectDef();
+
+	virtual UINT GetDefID() const { return IDS_DEF_PLANPERP;};
+
+	virtual unsigned long isA() const { return TPlanPerp3DClass; }
+
+	virtual void Draw(CDC*,CVisualParam *vp,BOOL bSm=FALSE);
+	virtual CString DrawSymbolic(); 
+
+};
+
+//////////////////////////////////////////////////////////////////////
+/// Construction/Destruction
+//////////////////////////////////////////////////////////////////////
+class CPolygon3D : public CPlan3D
+{
+public:
+	enum { gNotConvex, gNotConvexDegenerate,
+	       gConvexDegenerate, gConvexCCW, gConvexCW };
+
+	DECLARE_SERIAL(CPolygon3D);
+	CxObject3DSet	m_pPointSet;
+	CVector4		m_vCentroid;
+	BOOL			m_bConvex;
+	FCoord			m_nArea;
+	FCoord			m_nZFact;
+
+	CPolygon3D();
+	CPolygon3D(CxObject3DSet *pSet);
+	CPolygon3D(const CObject3D & );
+	virtual ~CPolygon3D();
+	virtual int SetDepth();
+	virtual void	GetRange(CVector4 &min,CVector4 &max);
+
+	virtual void Serialize( CArchive& ar );
+
+	virtual CObject3D* CopyObject();
+	virtual CxObject3DSet* GetParents();
+	virtual int  CalculConceptuel();
+	virtual CString GetObjectDef();
+
+	virtual UINT GetHelpID() const { return IDS_HELP_POLYGON;};
+	virtual UINT GetDefID() const { return IDS_DEF_POLYGON;};
+
+	int		CalculCentroid();
+	int		CheckConvex();
+
+	int WhichSide(CVector4 p,CVector4 q,CVector4 r);
+	int Compare(CVector4 p,CVector4 q);
+
+	virtual void CalculVisuel(CVisualParam *);
+	virtual void Draw(CDC*,CVisualParam *vp,BOOL bSm=FALSE);
+	virtual void DrawRetro(CDC*,CVisualParam *vp);
+
+	virtual BOOL IsInActiveArea(CPoint);
+
+	virtual BOOL IsPointInside(CVector4& pt,BOOL bLim=TRUE);
+
+	virtual unsigned long isA() const { return TPolygon3DClass; }
+};
+
+
+
+#endif // !defined(AFX_PLAN3D_H__F7E630B5_D1B9_11D4_A2FA_00D0B71C8709__INCLUDED_)

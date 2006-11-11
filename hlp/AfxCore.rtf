@@ -1,0 +1,847 @@
+{\rtf1\ansi\ansicpg1252\uc1 \deff0\deflang1033\deflangfe1033{\fonttbl{\f0\froman\fcharset0\fprq2{\*\panose 02020603050405020304}Times New Roman;}{\f2\fmodern\fcharset0\fprq1{\*\panose 02070309020205020404}Courier New;}
+{\f3\froman\fcharset2\fprq2{\*\panose 05050102010706020507}Symbol;}{\f5\fswiss\fcharset0\fprq2{\*\panose 00000000000000000000}Helvetica{\*\falt Arial};}{\f8\froman\fcharset0\fprq2{\*\panose 00000000000000000000}Tms Rmn{\*\falt Times New Roman};}
+{\f11\fswiss\fcharset0\fprq2{\*\panose 00000000000000000000}MS Sans Serif;}{\f14\fnil\fcharset2\fprq2{\*\panose 05000000000000000000}Wingdings;}{\f27\fswiss\fcharset0\fprq2{\*\panose 020b0604030504040204}Tahoma;}
+{\f93\froman\fcharset238\fprq2 Times New Roman CE;}{\f94\froman\fcharset204\fprq2 Times New Roman Cyr;}{\f96\froman\fcharset161\fprq2 Times New Roman Greek;}{\f97\froman\fcharset162\fprq2 Times New Roman Tur;}
+{\f98\froman\fcharset177\fprq2 Times New Roman (Hebrew);}{\f99\froman\fcharset178\fprq2 Times New Roman (Arabic);}{\f100\froman\fcharset186\fprq2 Times New Roman Baltic;}{\f109\fmodern\fcharset238\fprq1 Courier New CE;}
+{\f110\fmodern\fcharset204\fprq1 Courier New Cyr;}{\f112\fmodern\fcharset161\fprq1 Courier New Greek;}{\f113\fmodern\fcharset162\fprq1 Courier New Tur;}{\f114\fmodern\fcharset177\fprq1 Courier New (Hebrew);}
+{\f115\fmodern\fcharset178\fprq1 Courier New (Arabic);}{\f116\fmodern\fcharset186\fprq1 Courier New Baltic;}{\f309\fswiss\fcharset238\fprq2 Tahoma CE;}{\f310\fswiss\fcharset204\fprq2 Tahoma Cyr;}{\f312\fswiss\fcharset161\fprq2 Tahoma Greek;}
+{\f313\fswiss\fcharset162\fprq2 Tahoma Tur;}{\f314\fswiss\fcharset177\fprq2 Tahoma (Hebrew);}{\f315\fswiss\fcharset178\fprq2 Tahoma (Arabic);}{\f316\fswiss\fcharset186\fprq2 Tahoma Baltic;}}{\colortbl;\red0\green0\blue0;\red0\green0\blue255;
+\red0\green255\blue255;\red0\green255\blue0;\red255\green0\blue255;\red255\green0\blue0;\red255\green255\blue0;\red255\green255\blue255;\red0\green0\blue128;\red0\green128\blue128;\red0\green128\blue0;\red128\green0\blue128;\red128\green0\blue0;
+\red128\green128\blue0;\red128\green128\blue128;\red192\green192\blue192;\red51\green51\blue153;}{\stylesheet{\ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 \snext0 Normal;}{
+\s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 \sbasedon0 \snext0 heading 1;}{
+\s2\ql \li0\ri0\sb120\sa60\nowidctlpar\faauto\outlinelevel1\rin0\lin0\itap0 \b\f5\fs16\lang2057\langfe1033\cgrid\langnp2057\langfenp1033 \sbasedon0 \snext0 heading 2;}{\s3\ql \li0\ri0\sb120\sa120\nowidctlpar\tx180\faauto\outlinelevel2\rin0\lin0\itap0 
+\b\f5\fs16\cf13\lang2057\langfe1033\cgrid\langnp2057\langfenp1033 \sbasedon0 \snext17 heading 3;}{\s4\ql \li0\ri0\nowidctlpar\faauto\outlinelevel3\rin0\lin0\itap0 \b\f5\fs18\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 \sbasedon0 \snext17 heading 4;}
+{\s5\ql \li720\ri0\nowidctlpar\faauto\outlinelevel4\rin0\lin720\itap0 \b\f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 \sbasedon0 \snext17 heading 5;}{\s6\ql \li720\ri0\nowidctlpar\faauto\outlinelevel5\rin0\lin720\itap0 
+\f5\fs16\ul\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 \sbasedon0 \snext17 heading 6;}{\s7\ql \li720\ri0\nowidctlpar\faauto\outlinelevel6\rin0\lin720\itap0 \i\f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 \sbasedon0 \snext17 heading 7;}
+{\s8\ql \li720\ri0\nowidctlpar\faauto\outlinelevel7\rin0\lin720\itap0 \i\f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 \sbasedon0 \snext17 heading 8;}{\s9\ql \li720\ri0\nowidctlpar\faauto\outlinelevel8\rin0\lin720\itap0 
+\i\f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 \sbasedon0 \snext17 heading 9;}{\*\cs10 \additive Default Paragraph Font;}{\*\cs15 \additive \f8\fs16\up6\lang1033\langfe0\langnp1033\langfenp0 \sbasedon10 footnote reference;}{
+\s16\ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 \sbasedon0 \snext16 footnote text;}{\s17\ql \li720\ri0\nowidctlpar\faauto\rin0\lin720\itap0 
+\f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 \sbasedon0 \snext17 Normal Indent;}{\s18\ql \fi-240\li480\ri0\sb80\nowidctlpar\tx480\faauto\rin0\lin480\itap0 \f5\fs24\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 \sbasedon0 \snext18 nscba;}
+{\s19\ql \fi-240\li240\ri0\sa20\nowidctlpar\faauto\rin0\lin240\itap0 \f5\fs24\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 \sbasedon0 \snext19 j;}{\s20\ql \li480\ri0\sa20\nowidctlpar\faauto\rin0\lin480\itap0 
+\f5\fs24\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 \sbasedon0 \snext20 ij;}{\s21\ql \li0\ri0\sb80\sa20\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs24\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 \sbasedon0 \snext21 btb;}{
+\s22\ql \fi-240\li2400\ri0\sb20\sa20\nowidctlpar\faauto\rin0\lin2400\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 \sbasedon0 \snext22 ctcb;}{\s23\ql \fi-240\li480\ri0\sa40\nowidctlpar\tx480\faauto\rin0\lin480\itap0 
+\f5\fs24\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 \sbasedon0 \snext23 ns;}{\s24\ql \li0\ri0\sa120\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs28\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 \sbasedon0 \snext24 TT;}{
+\s25\ql \fi-240\li2400\ri0\sa20\nowidctlpar\faauto\rin0\lin2400\itap0 \f5\fs24\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 \sbasedon0 \snext25 crtj;}{\s26\ql \fi-240\li480\ri0\nowidctlpar\tx480\faauto\rin0\lin480\itap0 
+\f5\fs24\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 \sbasedon0 \snext26 nsca;}{\s27\ql \li0\ri0\sa20\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs24\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 \sbasedon0 \snext27 bt;}{
+\s28\ql \li240\ri0\sb120\sa40\nowidctlpar\faauto\rin0\lin240\itap0 \f5\fs24\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 \sbasedon0 \snext28 Hf;}{\s29\ql \li240\ri0\sb120\sa40\nowidctlpar\faauto\rin0\lin240\itap0 
+\f5\fs24\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 \sbasedon0 \snext29 Hs;}{\s30\ql \li480\ri0\sb120\sa40\nowidctlpar\faauto\rin0\lin480\itap0 \f5\fs24\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 \sbasedon0 \snext30 RT;}{
+\s31\ql \fi-2160\li2160\ri0\sb240\sa80\nowidctlpar\tx2160\faauto\rin0\lin2160\itap0 \f5\fs24\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 \sbasedon0 \snext31 c;}{\s32\ql \li2160\ri0\sa20\nowidctlpar\faauto\rin0\lin2160\itap0 
+\f5\fs24\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 \sbasedon0 \snext32 ct;}{\s33\ql \li240\ri0\sa20\nowidctlpar\faauto\rin0\lin240\itap0 \f5\fs24\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 \sbasedon0 \snext33 it;}{
+\s34\ql \li480\ri0\nowidctlpar\faauto\rin0\lin480\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 \sbasedon0 \snext34 nsct;}{\s35\ql \fi-160\li400\ri0\sb80\sa40\nowidctlpar\faauto\rin0\lin400\itap0 
+\f5\fs24\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 \sbasedon0 \snext35 nscb;}{\s36\ql \fi-2640\li2880\ri0\sb120\sa40\nowidctlpar\brdrb\brdrs\brdrw15 \brdrbtw\brdrs\brdrw15 \tx2880\faauto\rin0\lin2880\itap0 
+\f5\fs24\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 \sbasedon0 \snext36 HC2;}{\s37\ql \fi-2640\li2880\ri0\sb120\sa20\nowidctlpar\tx2880\faauto\rin0\lin2880\itap0 \f5\fs24\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 \sbasedon0 \snext37 C2;}{
+\s38\ql \fi-240\li2400\ri0\sa20\nowidctlpar\faauto\rin0\lin2400\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 \sbasedon0 \snext38 ctc;}{\s39\ql \li2160\ri0\sb160\nowidctlpar\faauto\rin0\lin2160\itap0 
+\f5\fs24\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 \sbasedon0 \snext39 crt;}{\s40\ql \li480\ri0\sb20\sa40\nowidctlpar\faauto\rin0\lin480\itap0 \f5\fs24\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 \sbasedon0 \snext40 or;}{
+\s41\ql \fi-259\li360\ri0\sb40\sa40\nowidctlpar\tx360\faauto\rin0\lin360\itap0 \f11\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 \sbasedon0 \snext41 Ln1;}{\s42\ql \li115\ri0\sb80\sa80\nowidctlpar\faauto\rin0\lin115\itap0 
+\f11\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 \sbasedon0 \snext0 *Intro;}{\s43\ql \li115\ri0\sb80\sa80\keepn\nowidctlpar\tx180\faauto\rin0\lin115\itap0 \b\f11\fs16\cf13\lang2057\langfe1033\cgrid\langnp2057\langfenp1033 \sbasedon3 \snext42 
+*Title;}{\s44\ql \fi-245\li360\ri0\sb80\nowidctlpar\faauto\rin0\lin360\itap0 \f11\fs20\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 \snext44 *Jl;}{\s45\ql \li360\ri0\sb40\sa40\nowidctlpar\faauto\rin0\lin360\itap0 
+\f11\fs20\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 \snext0 Lp1;}{\s46\ql \fi-1800\li1915\ri0\sb60\sl-240\slmult1\nowidctlpar\tx1915\faauto\rin0\lin1915\itap0 \f11\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 \sbasedon0 \snext46 Tph;}{
+\s47\ql \li115\ri0\sb120\sa80\nowidctlpar\faauto\rin0\lin115\itap0 \b\f11\fs20\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 \snext41 Proch;}{\*\cs48 \additive \super \sbasedon10 endnote reference;}{\s49\ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 
+\cbpat9 \f27\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 \sbasedon0 \snext49 Document Map;}}{\*\listtable{\list\listtemplateid1481666016\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360
+\levelindent0{\leveltext\leveltemplateid-1743854520\'01\u-3913 ?;}{\levelnumbers;}\f3\chbrdr\brdrnone\brdrcf1 \chshdng0\chcfpat1\chcbpat1\fbias0 \fi-360\li360\jclisttab\tx360 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0
+\levelstartat1\levelspace360\levelindent0{\leveltext\leveltemplateid67698691\'01o;}{\levelnumbers;}\f2\chbrdr\brdrnone\brdrcf1 \chshdng0\chcfpat1\chcbpat1\fbias0 \fi-360\li1080\jclisttab\tx1080 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0
+\levelfollow0\levelstartat1\levelspace360\levelindent0{\leveltext\leveltemplateid67698693\'01\u-3929 ?;}{\levelnumbers;}\f14\chbrdr\brdrnone\brdrcf1 \chshdng0\chcfpat1\chcbpat1\fbias0 \fi-360\li1800\jclisttab\tx1800 }{\listlevel\levelnfc23\levelnfcn23
+\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\leveltext\leveltemplateid67698689\'01\u-3913 ?;}{\levelnumbers;}\f3\chbrdr\brdrnone\brdrcf1 \chshdng0\chcfpat1\chcbpat1\fbias0 \fi-360\li2520\jclisttab\tx2520 }{\listlevel
+\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\leveltext\leveltemplateid67698691\'01o;}{\levelnumbers;}\f2\chbrdr\brdrnone\brdrcf1 \chshdng0\chcfpat1\chcbpat1\fbias0 \fi-360\li3240\jclisttab\tx3240 }
+{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\leveltext\leveltemplateid67698693\'01\u-3929 ?;}{\levelnumbers;}\f14\chbrdr\brdrnone\brdrcf1 \chshdng0\chcfpat1\chcbpat1\fbias0 \fi-360\li3960
+\jclisttab\tx3960 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\leveltext\leveltemplateid67698689\'01\u-3913 ?;}{\levelnumbers;}\f3\chbrdr\brdrnone\brdrcf1 \chshdng0\chcfpat1\chcbpat1\fbias0 
+\fi-360\li4680\jclisttab\tx4680 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\leveltext\leveltemplateid67698691\'01o;}{\levelnumbers;}\f2\chbrdr\brdrnone\brdrcf1 
+\chshdng0\chcfpat1\chcbpat1\fbias0 \fi-360\li5400\jclisttab\tx5400 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\leveltext\leveltemplateid67698693\'01\u-3929 ?;}{\levelnumbers;}\f14\chbrdr
+\brdrnone\brdrcf1 \chshdng0\chcfpat1\chcbpat1\fbias0 \fi-360\li6120\jclisttab\tx6120 }{\listname ;}\listid469174419}{\list\listtemplateid-885325852\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360
+\levelindent0{\leveltext\leveltemplateid1415842466\'01\u-3913 ?;}{\levelnumbers;}\f3\chbrdr\brdrnone\brdrcf1 \chshdng0\chcfpat1\chcbpat1\fbias0 \fi-360\li547\jclisttab\tx547 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1
+\levelspace360\levelindent0{\leveltext\leveltemplateid67698691\'01o;}{\levelnumbers;}\f2\chbrdr\brdrnone\brdrcf1 \chshdng0\chcfpat1\chcbpat1\fbias0 \fi-360\li1267\jclisttab\tx1267 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0
+\levelstartat1\levelspace360\levelindent0{\leveltext\leveltemplateid67698693\'01\u-3929 ?;}{\levelnumbers;}\f14\chbrdr\brdrnone\brdrcf1 \chshdng0\chcfpat1\chcbpat1\fbias0 \fi-360\li1987\jclisttab\tx1987 }{\listlevel\levelnfc23\levelnfcn23\leveljc0
+\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\leveltext\leveltemplateid67698689\'01\u-3913 ?;}{\levelnumbers;}\f3\chbrdr\brdrnone\brdrcf1 \chshdng0\chcfpat1\chcbpat1\fbias0 \fi-360\li2707\jclisttab\tx2707 }{\listlevel\levelnfc23
+\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\leveltext\leveltemplateid67698691\'01o;}{\levelnumbers;}\f2\chbrdr\brdrnone\brdrcf1 \chshdng0\chcfpat1\chcbpat1\fbias0 \fi-360\li3427\jclisttab\tx3427 }{\listlevel
+\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\leveltext\leveltemplateid67698693\'01\u-3929 ?;}{\levelnumbers;}\f14\chbrdr\brdrnone\brdrcf1 \chshdng0\chcfpat1\chcbpat1\fbias0 \fi-360\li4147
+\jclisttab\tx4147 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\leveltext\leveltemplateid67698689\'01\u-3913 ?;}{\levelnumbers;}\f3\chbrdr\brdrnone\brdrcf1 \chshdng0\chcfpat1\chcbpat1\fbias0 
+\fi-360\li4867\jclisttab\tx4867 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\leveltext\leveltemplateid67698691\'01o;}{\levelnumbers;}\f2\chbrdr\brdrnone\brdrcf1 
+\chshdng0\chcfpat1\chcbpat1\fbias0 \fi-360\li5587\jclisttab\tx5587 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\leveltext\leveltemplateid67698693\'01\u-3929 ?;}{\levelnumbers;}\f14\chbrdr
+\brdrnone\brdrcf1 \chshdng0\chcfpat1\chcbpat1\fbias0 \fi-360\li6307\jclisttab\tx6307 }{\listname ;}\listid950212023}{\list\listtemplateid-1397486644\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360
+\levelindent0{\leveltext\leveltemplateid324424028\'01\u-3913 ?;}{\levelnumbers;}\f3\fs20\chbrdr\brdrnone\brdrcf1 \chshdng0\chcfpat1\chcbpat1\fbias0 \fi-360\li720\jclisttab\tx720 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0
+\levelstartat1\levelspace360\levelindent0{\leveltext\leveltemplateid67698691\'01o;}{\levelnumbers;}\f2\chbrdr\brdrnone\brdrcf1 \chshdng0\chcfpat1\chcbpat1\fbias0 \fi-360\li1440\jclisttab\tx1440 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0
+\levelfollow0\levelstartat1\levelspace360\levelindent0{\leveltext\leveltemplateid67698693\'01\u-3929 ?;}{\levelnumbers;}\f14\chbrdr\brdrnone\brdrcf1 \chshdng0\chcfpat1\chcbpat1\fbias0 \fi-360\li2160\jclisttab\tx2160 }{\listlevel\levelnfc23\levelnfcn23
+\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\leveltext\leveltemplateid67698689\'01\u-3913 ?;}{\levelnumbers;}\f3\chbrdr\brdrnone\brdrcf1 \chshdng0\chcfpat1\chcbpat1\fbias0 \fi-360\li2880\jclisttab\tx2880 }{\listlevel
+\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\leveltext\leveltemplateid67698691\'01o;}{\levelnumbers;}\f2\chbrdr\brdrnone\brdrcf1 \chshdng0\chcfpat1\chcbpat1\fbias0 \fi-360\li3600\jclisttab\tx3600 }
+{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\leveltext\leveltemplateid67698693\'01\u-3929 ?;}{\levelnumbers;}\f14\chbrdr\brdrnone\brdrcf1 \chshdng0\chcfpat1\chcbpat1\fbias0 \fi-360\li4320
+\jclisttab\tx4320 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\leveltext\leveltemplateid67698689\'01\u-3913 ?;}{\levelnumbers;}\f3\chbrdr\brdrnone\brdrcf1 \chshdng0\chcfpat1\chcbpat1\fbias0 
+\fi-360\li5040\jclisttab\tx5040 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\leveltext\leveltemplateid67698691\'01o;}{\levelnumbers;}\f2\chbrdr\brdrnone\brdrcf1 
+\chshdng0\chcfpat1\chcbpat1\fbias0 \fi-360\li5760\jclisttab\tx5760 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\leveltext\leveltemplateid67698693\'01\u-3929 ?;}{\levelnumbers;}\f14\chbrdr
+\brdrnone\brdrcf1 \chshdng0\chcfpat1\chcbpat1\fbias0 \fi-360\li6480\jclisttab\tx6480 }{\listname ;}\listid1538470445}{\list\listtemplateid1543113958\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360
+\levelindent0{\leveltext\leveltemplateid67698689\'01\u-3913 ?;}{\levelnumbers;}\f3\chbrdr\brdrnone\brdrcf1 \chshdng0\chcfpat1\chcbpat1\fbias0 \fi-360\li360\jclisttab\tx360 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1
+\levelspace360\levelindent0{\leveltext\leveltemplateid67698691\'01o;}{\levelnumbers;}\f2\chbrdr\brdrnone\brdrcf1 \chshdng0\chcfpat1\chcbpat1\fbias0 \fi-360\li1080\jclisttab\tx1080 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0
+\levelstartat1\levelspace360\levelindent0{\leveltext\leveltemplateid67698693\'01\u-3929 ?;}{\levelnumbers;}\f14\chbrdr\brdrnone\brdrcf1 \chshdng0\chcfpat1\chcbpat1\fbias0 \fi-360\li1800\jclisttab\tx1800 }{\listlevel\levelnfc23\levelnfcn23\leveljc0
+\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\leveltext\leveltemplateid67698689\'01\u-3913 ?;}{\levelnumbers;}\f3\chbrdr\brdrnone\brdrcf1 \chshdng0\chcfpat1\chcbpat1\fbias0 \fi-360\li2520\jclisttab\tx2520 }{\listlevel\levelnfc23
+\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\leveltext\leveltemplateid67698691\'01o;}{\levelnumbers;}\f2\chbrdr\brdrnone\brdrcf1 \chshdng0\chcfpat1\chcbpat1\fbias0 \fi-360\li3240\jclisttab\tx3240 }{\listlevel
+\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\leveltext\leveltemplateid67698693\'01\u-3929 ?;}{\levelnumbers;}\f14\chbrdr\brdrnone\brdrcf1 \chshdng0\chcfpat1\chcbpat1\fbias0 \fi-360\li3960
+\jclisttab\tx3960 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\leveltext\leveltemplateid67698689\'01\u-3913 ?;}{\levelnumbers;}\f3\chbrdr\brdrnone\brdrcf1 \chshdng0\chcfpat1\chcbpat1\fbias0 
+\fi-360\li4680\jclisttab\tx4680 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\leveltext\leveltemplateid67698691\'01o;}{\levelnumbers;}\f2\chbrdr\brdrnone\brdrcf1 
+\chshdng0\chcfpat1\chcbpat1\fbias0 \fi-360\li5400\jclisttab\tx5400 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\leveltext\leveltemplateid67698693\'01\u-3929 ?;}{\levelnumbers;}\f14\chbrdr
+\brdrnone\brdrcf1 \chshdng0\chcfpat1\chcbpat1\fbias0 \fi-360\li6120\jclisttab\tx6120 }{\listname ;}\listid1666325583}{\list\listtemplateid1787863070\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360
+\levelindent0{\leveltext\leveltemplateid67698693\'01\u-3929 ?;}{\levelnumbers;}\f14\chbrdr\brdrnone\brdrcf1 \chshdng0\chcfpat1\chcbpat1\fbias0 \fi-360\li360\jclisttab\tx360 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1
+\levelspace360\levelindent0{\leveltext\leveltemplateid67698691\'01o;}{\levelnumbers;}\f2\chbrdr\brdrnone\brdrcf1 \chshdng0\chcfpat1\chcbpat1\fbias0 \fi-360\li1080\jclisttab\tx1080 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0
+\levelstartat1\levelspace360\levelindent0{\leveltext\leveltemplateid67698693\'01\u-3929 ?;}{\levelnumbers;}\f14\chbrdr\brdrnone\brdrcf1 \chshdng0\chcfpat1\chcbpat1\fbias0 \fi-360\li1800\jclisttab\tx1800 }{\listlevel\levelnfc23\levelnfcn23\leveljc0
+\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\leveltext\leveltemplateid67698689\'01\u-3913 ?;}{\levelnumbers;}\f3\chbrdr\brdrnone\brdrcf1 \chshdng0\chcfpat1\chcbpat1\fbias0 \fi-360\li2520\jclisttab\tx2520 }{\listlevel\levelnfc23
+\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\leveltext\leveltemplateid67698691\'01o;}{\levelnumbers;}\f2\chbrdr\brdrnone\brdrcf1 \chshdng0\chcfpat1\chcbpat1\fbias0 \fi-360\li3240\jclisttab\tx3240 }{\listlevel
+\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\leveltext\leveltemplateid67698693\'01\u-3929 ?;}{\levelnumbers;}\f14\chbrdr\brdrnone\brdrcf1 \chshdng0\chcfpat1\chcbpat1\fbias0 \fi-360\li3960
+\jclisttab\tx3960 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\leveltext\leveltemplateid67698689\'01\u-3913 ?;}{\levelnumbers;}\f3\chbrdr\brdrnone\brdrcf1 \chshdng0\chcfpat1\chcbpat1\fbias0 
+\fi-360\li4680\jclisttab\tx4680 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\leveltext\leveltemplateid67698691\'01o;}{\levelnumbers;}\f2\chbrdr\brdrnone\brdrcf1 
+\chshdng0\chcfpat1\chcbpat1\fbias0 \fi-360\li5400\jclisttab\tx5400 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\leveltext\leveltemplateid67698693\'01\u-3929 ?;}{\levelnumbers;}\f14\chbrdr
+\brdrnone\brdrcf1 \chshdng0\chcfpat1\chcbpat1\fbias0 \fi-360\li6120\jclisttab\tx6120 }{\listname ;}\listid1889678807}}{\*\listoverridetable{\listoverride\listid1538470445\listoverridecount0\ls1}{\listoverride\listid1666325583\listoverridecount0\ls2}
+{\listoverride\listid1889678807\listoverridecount0\ls3}{\listoverride\listid469174419\listoverridecount0\ls4}{\listoverride\listid950212023\listoverridecount0\ls5}}{\info{\title AFXCORE}{\subject MFC Core RTF Help}{\author AFX}
+{\operator Nicolas VAN LABEKE}{\creatim\yr1992\mo10\dy7\hr11\min4}{\revtim\yr2002\mo8\dy27\hr22\min56}{\version93}{\edmins-32750}{\nofpages61}{\nofwords2941}{\nofchars16769}{\*\company CREDIT}{\nofcharsws0}{\vern8247}}
+\widowctrl\ftnbj\aenddoc\noxlattoyen\expshrtn\noultrlspc\dntblnsbdb\nospaceforul\linkstyles\hyphcaps0\horzdoc\dghspace120\dgvspace120\dghorigin1701\dgvorigin1984\dghshow0\dgvshow3\jcompress\viewkind1\viewscale100\nolnhtadjtbl \fet0{\*\template 
+C:\\Nicolas\\Dev\\Calques3D\\hlp\\Help (RTF).dot}\sectd \linex576\endnhere\sectdefaultcl {\*\pnseclvl1\pnucrm\pnstart1\pnindent720\pnhang{\pntxta .}}{\*\pnseclvl2\pnucltr\pnstart1\pnindent720\pnhang{\pntxta .}}{\*\pnseclvl3
+\pndec\pnstart1\pnindent720\pnhang{\pntxta .}}{\*\pnseclvl4\pnlcltr\pnstart1\pnindent720\pnhang{\pntxta )}}{\*\pnseclvl5\pndec\pnstart1\pnindent720\pnhang{\pntxtb (}{\pntxta )}}{\*\pnseclvl6\pnlcltr\pnstart1\pnindent720\pnhang{\pntxtb (}{\pntxta )}}
+{\*\pnseclvl7\pnlcrm\pnstart1\pnindent720\pnhang{\pntxtb (}{\pntxta )}}{\*\pnseclvl8\pnlcltr\pnstart1\pnindent720\pnhang{\pntxtb (}{\pntxta )}}{\*\pnseclvl9\pnlcrm\pnstart1\pnindent720\pnhang{\pntxtb (}{\pntxta )}}\pard\plain 
+\s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\fs16\up6\lang1036\langfe0\langnp1036\langfenp0 !{\footnote \pard\plain 
+\ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{\lang2057\langfe1033\langnp2057  CBB("btn_up","JI(\lquote main_index\rquote )");EB("btn_up")}
+} +{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6\lang1036\langfe0\langnp1036\langfenp0 +}{\lang1036\langfe1033\langnp1036  Menu:0000}}}{
+\cs15\fs16\up6\lang1036\langfe1033\langnp1036 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6\lang1036\langfe1033\langnp1036 #}{
+\lang1036\langfe1033\langnp1036  menu_file}}K{\footnote \pard\plain \s16\ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang1036\langfe1033\langnp1036 K}{
+\lang1036\langfe1033\langnp1036  Files: managing}}${\footnote \pard\plain \s16\ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6 $}{ File menu commands}}}{\lang1036\langfe1033\langnp1036 
+ File menu commands
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang1036\langfe1033\langnp1036 
+\par }{\lang2057\langfe1033\langnp2057 The File menu offers the following commands:
+\par 
+\par }\pard \ql \fi-1560\li1560\ri0\widctlpar\tx1560\faauto\rin0\lin1560\itap0 {\uldb\lang2057\langfe1033\langnp2057 New}{\v\lang2057\langfe1033\langnp2057 HID_FILE_NEW}{\lang2057\langfe1033\langnp2057 \tab Creates a new document.
+\par }{\uldb\lang2057\langfe1033\langnp2057 Open}{\v\lang2057\langfe1033\langnp2057 HID_FILE_OPEN}{\lang2057\langfe1033\langnp2057 \tab Opens an existing document.
+\par }{\uldb\lang2057\langfe1033\langnp2057 Close}{\v\lang2057\langfe1033\langnp2057 HID_FILE_CLOSE}{\lang2057\langfe1033\langnp2057 \tab Closes an opened document.
+\par }{\uldb\lang2057\langfe1033\langnp2057 Save}{\v\lang2057\langfe1033\langnp2057 HID_FILE_SAVE}{\lang2057\langfe1033\langnp2057 \tab Saves an opened document using the same file name.
+\par }{\uldb\lang2057\langfe1033\langnp2057 Save As}{\v\lang2057\langfe1033\langnp2057 HID_FILE_SAVE_AS}{\lang2057\langfe1033\langnp2057 \tab Saves an opened document to a specified file name.
+\par }{\uldb\lang1036\langfe1033\langnp1036 Print}{\v\lang1036\langfe1033\langnp1036 HID_FILE_PRINT}{\lang1036\langfe1033\langnp1036 \tab Prints a document.
+\par }{\uldb\lang2057\langfe1033\langnp2057 Print Preview}{\v\lang2057\langfe1033\langnp2057 HID_FILE_PRINT_PREVIEW}{\lang2057\langfe1033\langnp2057 \tab Displays the document on the screen, as it would appear printed.
+\par }{\uldb\lang2057\langfe1033\langnp2057 Print Setup}{\v\lang2057\langfe1033\langnp2057 HID_FILE_PRINT_SETUP}{\lang2057\langfe1033\langnp2057 \tab Selects a printer and printer connection.
+\par }{\uldb\lang2057\langfe1033\langnp2057 Configuration...}{\v\lang2057\langfe1033\langnp2057 HID_VIEW_CUSTOMIZE}{\lang2057\langfe1033\langnp2057 \tab Configures the tasks, menus and toolbars of }{\b\cf17\lang2057\langfe1033\langnp2057 Calques\~3D}{
+\lang2057\langfe1033\langnp2057 .
+\par }\pard \ql \fi-1560\li1560\ri0\nowidctlpar\tx1560\faauto\rin0\lin1560\itap0 {\uldb\lang1036\langfe1033\langnp1036 Exit}{\v\lang1036\langfe1033\langnp1036 HID_APP_EXIT}{\lang1036\langfe1033\langnp1036 \tab Exits }{\b\cf17\lang1036\langfe1033\langnp1036 
+Calques\~3D}{\lang1036\langfe1033\langnp1036 .
+\par }\pard \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 {\lang1036\langfe1033\langnp1036 
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  CBB("btn_up","JI(\lquote main_index\rquote )");EB("btn_up")}} +{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {
+\cs15\b\f8\up6\lang1036\langfe0\langnp1036\langfenp0 +}{\lang1036\langfe1033\langnp1036  Menu:0005}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 
+\f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6\lang1036\langfe1033\langnp1036 #}{\lang1036\langfe1033\langnp1036  menu_edit}}${\footnote \pard\plain \s16\ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 
+\f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang1036\langfe1033\langnp1036 $}{\lang1036\langfe1033\langnp1036  Edit menu commands}}}{\lang2057\langfe1033\langnp2057  Edit menu commands
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 
+\par The Edit menu offers the following commands:
+\par }\pard \ql \fi-720\li720\ri0\widctlpar\faauto\rin0\lin720\itap0 {\lang2057\langfe1033\langnp2057 
+\par }\pard \ql \fi-1560\li1560\ri0\widctlpar\tx1560\tx10320\faauto\rin0\lin1560\itap0 {\uldb\lang2057\langfe1033\langnp2057 Undo}{\v\lang2057\langfe1033\langnp2057 HID_EDIT_UNDO}{\lang2057\langfe1033\langnp2057 \tab Reverse previous editing operation.
+\par }{\uldb\lang2057\langfe1033\langnp2057 Redo}{\v\lang2057\langfe1033\langnp2057 HID_EDIT_REDO}{\lang2057\langfe1033\langnp2057 \tab Redo the previously undone action.
+\par }{\uldb\lang2057\langfe1033\langnp2057 Cut}{\v\lang2057\langfe1033\langnp2057 HID_EDIT_CUT}{\lang2057\langfe1033\langnp2057 \tab Deletes data from the document and moves it to the clipboard.
+\par }{\uldb\lang2057\langfe1033\langnp2057 Copy}{\v\lang2057\langfe1033\langnp2057 HID_EDIT_COPY}{\lang2057\langfe1033\langnp2057 \tab Copies data from the document to the clipboard.
+\par }{\uldb\lang2057\langfe1033\langnp2057 Paste}{\v\lang2057\langfe1033\langnp2057 HID_EDIT_PASTE}{\lang2057\langfe1033\langnp2057 \tab Pastes data from the clipboard into the document.
+\par }\pard \ql \fi-1418\li1418\ri0\widctlpar\tx1418\tx10320\faauto\rin0\lin1418\itap0 {\lang2057\langfe1033\langnp2057 
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  CBB("btn_up","JI(\lquote main_index\rquote )");EB("btn_up")}} +{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {
+\cs15\b\f8\up6\lang2057\langfe0\langnp2057\langfenp0 +}{\lang2057\langfe1033\langnp2057  Menu:0010}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 
+\f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6\lang2057\langfe1033\langnp2057 #}{\lang2057\langfe1033\langnp2057  menu_view}}${\footnote \pard\plain \s16\ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 
+\f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6 $}{ View menu commands}}}{\lang2057\langfe1033\langnp2057  View menu commands
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 
+\par The View menu offers the following commands:
+\par 
+\par }\pard \ql \fi-1560\li1560\ri0\widctlpar\tx1560\faauto\rin0\lin1560\itap0 {\uldb\lang2057\langfe1033\langnp2057 Toolbars}{\v\lang2057\langfe1033\langnp2057 HID_VIEW_TOOLBAR}{\lang2057\langfe1033\langnp2057 \tab Shows or hides the different toolbars.
+
+\par }{\uldb\lang2057\langfe1033\langnp2057 Status Bar}{\v\lang2057\langfe1033\langnp2057 HID_VIEW_STATUS_BAR}{\lang2057\langfe1033\langnp2057 \tab Shows or hides the status bar.
+\par }\pard \ql \fi-1418\li1418\ri0\widctlpar\tx1418\faauto\rin0\lin1418\itap0 {\lang2057\langfe1033\langnp2057 Placement\tab 
+\par }\pard \ql \fi-1276\li1560\ri0\nowidctlpar\tx1560\faauto\rin0\lin1560\itap0 {\uldb\lang2057\langfe1033\langnp2057 Save}{\v\lang2057\langfe1033\langnp2057 HID_VIEW_PLACEMENT_SAVE}{\lang2057\langfe1033\langnp2057 \tab 
+Save the positions of the current views.
+\par }{\uldb\lang2057\langfe1033\langnp2057 Restore}{\v\lang2057\langfe1033\langnp2057  HID_VIEW_PLACEMENT_RESTORE}{\lang2057\langfe1033\langnp2057 \tab Restore the saved position of the current views.
+\par }\pard \ql \fi-1560\li1560\ri0\nowidctlpar\tx1560\faauto\rin0\lin1560\itap0 {\uldb\lang2057\langfe1033\langnp2057 Universe}{\v\lang2057\langfe1033\langnp2057 HID_VIEW_UNIVERSE}{\lang2057\langfe1033\langnp2057 \tab Open the }{
+\b\lang2057\langfe1033\langnp2057 Universe}{\lang2057\langfe1033\langnp2057  View. 
+\par }{\uldb\lang2057\langfe1033\langnp2057 History}{\v\lang2057\langfe1033\langnp2057 HID_VIEW_HISTORIQUE}{\lang2057\langfe1033\langnp2057 \tab Open the }{\b\lang2057\langfe1033\langnp2057 History}{\lang2057\langfe1033\langnp2057  View. 
+\par }{\uldb\lang2057\langfe1033\langnp2057 Graph}{\v\lang2057\langfe1033\langnp2057 HID_VIEW_GRAPH}{\lang2057\langfe1033\langnp2057 \tab Open the }{\b\lang2057\langfe1033\langnp2057 Dependence Graph}{\lang2057\langfe1033\langnp2057  View. 
+\par }{\uldb\lang2057\langfe1033\langnp2057 MathPad}{\v\lang2057\langfe1033\langnp2057 HID_VIEW_ANALYTIC}{\lang2057\langfe1033\langnp2057 \tab Open the }{\b\lang2057\langfe1033\langnp2057 MathPad}{\lang2057\langfe1033\langnp2057  View. 
+\par }\pard \ql \fi-1560\li1560\ri0\widctlpar\tx1560\faauto\rin0\lin1560\itap0 {\uldb\lang2057\langfe1033\langnp2057 Tracing 1}{\v\lang2057\langfe1033\langnp2057 HID_VIEW_CALQUE}{\lang2057\langfe1033\langnp2057  \tab Open the first }{
+\b\lang2057\langfe1033\langnp2057 Tracing}{\lang2057\langfe1033\langnp2057  View.
+\par }{\uldb\lang2057\langfe1033\langnp2057 Tracing 2}{\v\lang2057\langfe1033\langnp2057 HID_VIEW_CALQUE2}{\lang2057\langfe1033\langnp2057  \tab Open the second }{\b\lang2057\langfe1033\langnp2057 Tracing}{\lang2057\langfe1033\langnp2057  View.
+\par }{\uldb\lang2057\langfe1033\langnp2057 Tracing 3}{\v\lang2057\langfe1033\langnp2057 HID_VIEW_CALQUE3}{\lang2057\langfe1033\langnp2057  \tab Open the third }{\b\lang2057\langfe1033\langnp2057 Tracing}{\lang2057\langfe1033\langnp2057  View.
+\par }{\uldb\lang2057\langfe1033\langnp2057 Tracing 4}{\v\lang2057\langfe1033\langnp2057 HID_VIEW_CALQUE4}{\lang2057\langfe1033\langnp2057  \tab Open the fourth }{\b\lang2057\langfe1033\langnp2057 Tracing}{\lang2057\langfe1033\langnp2057  View.
+\par }\pard \ql \fi-1418\li1418\ri0\widctlpar\tx1418\faauto\rin0\lin1418\itap0 {\lang2057\langfe1033\langnp2057 
+\par }\pard \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 {\lang2057\langfe1033\langnp2057 
+\par \tab <<add your application-specific "how to" topics here>>}{\ulw\lang2057\langfe1033\langnp2057 
+\par }\pard \ql \li0\ri0\widctlpar\tx1380\tx7560\faauto\rin0\lin0\itap0 {\lang2057\langfe1033\langnp2057 
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  CBB("btn_up","JI(\lquote main_index\rquote )");EB("btn_up")}} +{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {
+\cs15\b\f8\up6\lang2057\langfe0\langnp2057\langfenp0 +}{\lang2057\langfe1033\langnp2057  Menu:0015}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 
+\f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 #}{ menu_window}}${\footnote \pard\plain \s16\ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6 $}{
+ Window menu commands}}}{\lang2057\langfe1033\langnp2057  Window menu commands
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 
+\par The Window menu offers the following commands, which enable you to arrange multiple views of multiple documents in the application window:
+\par }\pard\plain \s16\ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 
+\par }\pard\plain \ql \fi-1560\li1560\ri0\widctlpar\tx1560\faauto\rin0\lin1560\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\uldb\lang2057\langfe1033\langnp2057 Cascade}{\v\lang2057\langfe1033\langnp2057 HID_WINDOW_CASCADE}{
+\lang2057\langfe1033\langnp2057 \tab Arranges windows in an overlapped fashion.
+\par }{\uldb\lang2057\langfe1033\langnp2057 Tile Horizontally}{\v\lang2057\langfe1033\langnp2057 HID_WINDOW_TILE}{\lang2057\langfe1033\langnp2057 \tab Arranges windows in non-overlapped tiles.
+\par }{\uldb\lang2057\langfe1033\langnp2057 Tile Vertically}{\v\lang2057\langfe1033\langnp2057 HID_WINDOW_TILE}{\lang2057\langfe1033\langnp2057 \tab Arranges windows in non-overlapped tiles.
+\par }{\uldb\lang2057\langfe1033\langnp2057 Arrange Icons}{\v\lang2057\langfe1033\langnp2057 HID_WINDOW_ARRANGE}{\lang2057\langfe1033\langnp2057 \tab Arranges icons of closed windows.
+\par }{\uldb\lang2057\langfe1033\langnp2057 Window 1, 2, ...}{\v\lang2057\langfe1033\langnp2057 HID_WINDOW_ALL}{\lang2057\langfe1033\langnp2057 \tab Goes to specified window.
+\par }\pard \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 {\lang2057\langfe1033\langnp2057 
+\par 
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  CBB("btn_up","JI(\lquote main_index\rquote )");EB("btn_up")}} +{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {
+\cs15\b\f8\up6\lang2057\langfe0\langnp2057\langfenp0 +}{\lang2057\langfe1033\langnp2057  Menu:0020}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 
+\f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 #}{ menu_help}}${\footnote \pard\plain \s16\ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6 $}{
+ Help menu commands}}}{\lang2057\langfe1033\langnp2057  Help menu commands
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 
+\par The Help menu offers the following commands, which provide you assistance with this application: 
+\par 
+\par }\pard \ql \fi-1560\li1560\ri0\widctlpar\tx1560\faauto\rin0\lin1560\itap0 {\uldb\lang2057\langfe1033\langnp2057 Help on Task}{\v\lang2057\langfe1033\langnp2057 HID_HELP_INDEX}{\lang2057\langfe1033\langnp2057 \tab Opens the help topic corre
+sponding to the current views.
+\par }{\uldb\lang2057\langfe1033\langnp2057 Help Index}{\v\lang2057\langfe1033\langnp2057 HID_HELP_INDEX}{\lang2057\langfe1033\langnp2057 \tab Opens an index to all the help topics of }{\b\cf17\lang2057\langfe1033\langnp2057 Calques\~3D}{
+\lang2057\langfe1033\langnp2057 .
+\par }{\uldb\lang2057\langfe1033\langnp2057 Help Topics}{\v\lang2057\langfe1033\langnp2057 HID_HELP_INDEX}{\lang2057\langfe1033\langnp2057 \tab Opens a list of common topics and tips about }{\b\cf17\lang2057\langfe1033\langnp2057 Calques\~3D}{
+\lang2057\langfe1033\langnp2057 .
+\par }{\uldb\lang2057\langfe1033\langnp2057 Keyboard Map\'85}{\v\lang2057\langfe1033\langnp2057 HID_HELP_INDEX}{\lang2057\langfe1033\langnp2057 \tab Displays a list of all the menu shortcuts defined in }{\b\cf17\lang2057\langfe1033\langnp2057 Calques\~3D}{
+\lang2057\langfe1033\langnp2057 .
+\par }{\uldb\lang2057\langfe1033\langnp2057 About}{\v\lang2057\langfe1033\langnp2057 HID_APP_ABOUT}{\lang2057\langfe1033\langnp2057 \tab Displays some information about }{\b\cf17\lang2057\langfe1033\langnp2057 Calques\~3D}{\lang2057\langfe1033\langnp2057 .
+
+\par }\pard \ql \fi-720\li720\ri0\widctlpar\faauto\rin0\lin720\itap0 {\lang2057\langfe1033\langnp2057 
+\par 
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  CBB("btn_up","JI(\lquote menu_file\rquote )");EB("btn_up")}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 
+\f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 #}{ HID_FILE_NEW}}K{\footnote \pard\plain \s16\ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6 K}{
+ Files: managing}}}{\lang2057\langfe1033\langnp2057  }{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 ${\footnote \pard\plain \s16\ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6 $}{
+ File New command}}}{\lang2057\langfe1033\langnp2057  New command (File menu)
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 
+\par Use this command to create a new document in }{\b\cf17\lang2057\langfe1033\langnp2057 Calques\~3D}{\lang2057\langfe1033\langnp2057 .  
+\par You can open an existing document with the }{\uldb\lang2057\langfe1033\langnp2057 Open command}{\v\lang2057\langfe1033\langnp2057 HID_FILE_OPEN}{\lang2057\langfe1033\langnp2057 .
+\par 
+\par }\pard\plain \s3\ql \li0\ri0\sb120\sa120\nowidctlpar\tx180\faauto\outlinelevel2\rin0\lin0\itap0 \b\f5\fs16\cf13\lang2057\langfe1033\cgrid\langnp2057\langfenp1033 {Shortcuts
+\par }\pard\plain \ql \fi-1080\li1440\ri0\widctlpar\tx1440\faauto\rin0\lin1440\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 Toolbar:\tab \{bmc filenew.bmp\}
+\par Keys:\tab CTRL+N
+\par }\pard \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 {\lang2057\langfe1033\langnp2057 
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  CBB("btn_up","JI(\lquote menu_file\rquote )");EB("btn_up")}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 
+\f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 #}{ HID_FILE_OPEN}}K{\footnote \pard\plain \s16\ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6 K}{ Files:
+ managing}}}{\lang2057\langfe1033\langnp2057  }{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 ${\footnote \pard\plain \s16\ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6 $}{
+ File Open command}}}{\lang2057\langfe1033\langnp2057  Open command (File menu)
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 
+\par Use this command to open an existing document in a new window.  You can open multiple documents at once.  Use the Window menu to switch among the multiple open documents.  See }{\uldb\lang2057\langfe1033\langnp2057 Window 1, 2, ... command}{
+\v\lang2057\langfe1033\langnp2057 HID_WINDOW_ALL}{\lang2057\langfe1033\langnp2057 .
+\par 
+\par You can create new documents with the }{\uldb\lang2057\langfe1033\langnp2057 New command}{\v\lang2057\langfe1033\langnp2057 HID_FILE_NEW}{\lang2057\langfe1033\langnp2057 .
+\par 
+\par }\pard\plain \s3\ql \li0\ri0\sb120\sa120\nowidctlpar\tx180\faauto\outlinelevel2\rin0\lin0\itap0 \b\f5\fs16\cf13\lang2057\langfe1033\cgrid\langnp2057\langfenp1033 {Shortcuts
+\par }\pard\plain \ql \fi-1080\li1440\ri0\widctlpar\tx1440\faauto\rin0\lin1440\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 Toolbar:\tab \{bmc fileopen.bmp\}
+\par Keys:\tab CTRL+O
+\par }\pard \ql \li360\ri0\widctlpar\faauto\rin0\lin360\itap0 {\lang2057\langfe1033\langnp2057 
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  DB("btn_up")}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 #}{
+ AFX_HIDD_FILEOPEN}}}{\lang2057\langfe1033\langnp2057 File Open dialog box
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 
+\par The following options allow you to specify which file to open:
+\par }\pard \ql \fi-1701\li1701\ri0\sb60\widctlpar\tx1701\faauto\rin0\lin1701\itap0 {\b\lang2057\langfe1033\langnp2057 File Name\tab }{\lang2057\langfe1033\langnp2057 
+Type or select the filename you want to open.  This box lists files with the extension you select in the List Files of Type box. 
+\par }{\b\lang2057\langfe1033\langnp2057 List Files of Type\tab }{\lang2057\langfe1033\langnp2057 Select the type of file you want to open:
+\par }\pard \ql \fi-1560\li3261\ri0\sb60\widctlpar\tx3261\faauto\rin0\lin3261\itap0 {\b\lang1036\langfe1033\langnp1036 Calques 3D Universe (*.c3d)}{\lang1036\langfe1033\langnp1036 
+\par }\pard \ql \li2127\ri0\widctlpar\faauto\rin0\lin2127\itap0 {\lang2057\langfe1033\langnp2057 The Universe is the main type of file of }{\b\cf17\lang2057\langfe1033\langnp2057 Calques\~3D}{\lang2057\langfe1033\langnp2057 
+. It contains a geometrical construction that you can construct step by step, using the various construction commands.
+\par }\pard \ql \fi-1559\li3260\ri0\widctlpar\tx3261\faauto\rin0\lin3260\itap0 {\b\lang2057\langfe1033\langnp2057 Macro-construction (*.m3d)}{\lang2057\langfe1033\langnp2057 
+\par }\pard \ql \li2127\ri0\widctlpar\faauto\rin0\lin2127\itap0 {\lang2057\langfe1033\langnp2057 The macro-construction 
+is a particular case of the Universe. It offers the same construction possibilities but the geometrical figure is aggregated as a composite object to be grafted in a construction as a single defined object. See the information about the }{
+\uldb\lang2057\langfe1033\langnp2057 macro-constructions}{\v\lang2057\langfe1033\langnp2057 the_composites}{\lang2057\langfe1033\langnp2057  and the }{\uldb\lang2057\langfe1033\langnp2057 graft operation}{\v\lang2057\langfe1033\langnp2057 the_macros}{
+\lang2057\langfe1033\langnp2057 .
+\par }\pard \ql \fi-1701\li1701\ri0\sb60\widctlpar\tx1701\faauto\rin0\lin1701\itap0 {\b\lang2057\langfe1033\langnp2057 Drives\tab }{\lang2057\langfe1033\langnp2057 Select the drive in which }{\b\cf17\lang2057\langfe1033\langnp2057 Calques\~3D}{
+\lang2057\langfe1033\langnp2057  stores the file that you want to open. 
+\par }{\b\lang2057\langfe1033\langnp2057 Directories\tab }{\lang2057\langfe1033\langnp2057 Select the directory in which }{\b\cf17\lang2057\langfe1033\langnp2057 Calques\~3D}{\lang2057\langfe1033\langnp2057  stores the file that you want to open.
+\par }{\b\lang2057\langfe1033\langnp2057 Network...\tab }{\lang2057\langfe1033\langnp2057 Choose this button to connect to a network location, assigning it a new drive letter. 
+\par 
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  CBB("btn_up","JI(\lquote menu_file\rquote )");EB("btn_up")}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 
+\f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 #}{ HID_FILE_CLOSE}}K{\footnote \pard\plain \s16\ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6 K}{
+ Files: managing}}}{\lang2057\langfe1033\langnp2057  }{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 ${\footnote \pard\plain \s16\ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6 $}{
+ File Close command}}}{\lang2057\langfe1033\langnp2057  Close command (File menu)
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 
+\par Use this command to close all windows containing the active document.  }{\b\cf17\lang2057\langfe1033\langnp2057 Calques\~3D}{\lang2057\langfe1033\langnp2057 
+ suggests that you save changes to your document before you close it.  If you close a document without saving, you lose all changes made since the last time you saved it.  Before closing an untitled document, }{\b\cf17\lang2057\langfe1033\langnp2057 
+Calques\~3D}{\lang2057\langfe1033\langnp2057  displays the }{\uldb\lang2057\langfe1033\langnp2057 Save As dialog box}{\v\lang2057\langfe1033\langnp2057 AFX_HIDD_FILESAVE}{\lang2057\langfe1033\langnp2057  and suggests that you name and save the document.
+
+\par 
+\par You can also close a document by using the Close icon on the document's window, as shown below:
+\par \{bml scmenu.bmp\}
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  CBB("btn_up","JI(\lquote menu_file\rquote )");EB("btn_up")}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 
+\f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 #}{ HID_FILE_SAVE}}K{\footnote \pard\plain \s16\ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6 K}{
+ Files: managing}}}{\lang2057\langfe1033\langnp2057  }{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 ${\footnote \pard\plain \s16\ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6 $}{
+ File Save command}}}{\lang2057\langfe1033\langnp2057  Save command (File menu)
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 
+\par Use this command to save the active document to its current name and directory.  When you save a document for the first time, }{\b\cf17\lang2057\langfe1033\langnp2057 Calques\~3D}{\lang2057\langfe1033\langnp2057  displays the }{
+\uldb\lang2057\langfe1033\langnp2057 Save As dialog box}{\v\lang2057\langfe1033\langnp2057 AFX_HIDD_FILESAVE}{\lang2057\langfe1033\langnp2057 
+ so you can name your document.  If you want to change the name and directory of an existing document before you save it, choose the }{\uldb\lang2057\langfe1033\langnp2057 Save As command}{\v\lang2057\langfe1033\langnp2057 HID_FILE_SAVE_AS}{
+\lang2057\langfe1033\langnp2057 .
+\par 
+\par }\pard\plain \s3\ql \li0\ri0\sb120\sa120\nowidctlpar\tx180\faauto\outlinelevel2\rin0\lin0\itap0 \b\f5\fs16\cf13\lang2057\langfe1033\cgrid\langnp2057\langfenp1033 {Shortcuts
+\par }\pard\plain \ql \fi-1080\li1440\ri0\widctlpar\tx1440\faauto\rin0\lin1440\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 Toolbar:\tab \{bmc filesave.bmp\}
+\par Keys:\tab CTRL+S
+\par }\pard \ql \li360\ri0\widctlpar\faauto\rin0\lin360\itap0 {\lang2057\langfe1033\langnp2057 
+\par }\pard \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 {\lang2057\langfe1033\langnp2057 
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  CBB("btn_up","JI(\lquote menu_file\rquote )");EB("btn_up")}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 
+\f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 #}{ HID_FILE_SAVE_AS}}K{\footnote \pard\plain \s16\ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6 K}{
+ Files: managing}}}{\lang2057\langfe1033\langnp2057  }{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 ${\footnote \pard\plain \s16\ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6 $}{
+ File Save As command}}}{\lang2057\langfe1033\langnp2057  Save As command (File menu)
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 
+\par Use this command to save and name the active document.  }{\b\cf17\lang2057\langfe1033\langnp2057 Calques\~3D}{\lang2057\langfe1033\langnp2057  displays the }{\uldb\lang2057\langfe1033\langnp2057 Save As dialog box}{\v\lang2057\langfe1033\langnp2057 
+AFX_HIDD_FILESAVE}{\lang2057\langfe1033\langnp2057  so you can name your document.  
+\par 
+\par To save a document with its existing name and directory, use the }{\uldb\lang2057\langfe1033\langnp2057 Save command}{\v\lang2057\langfe1033\langnp2057 HID_FILE_SAVE}{\lang2057\langfe1033\langnp2057 .
+\par 
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  DB("btn_up")}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 #}{
+ AFX_HIDD_FILESAVE}}}{\lang2057\langfe1033\langnp2057 File Save As dialog box
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 
+\par The following options allow you to specify the name and location of the file you're about to save:
+\par }\pard \ql \li0\ri0\sb60\widctlpar\faauto\rin0\lin0\itap0 {\b\lang2057\langfe1033\langnp2057 File Name
+\par }\pard \ql \li360\ri0\widctlpar\faauto\rin0\lin360\itap0 {\lang2057\langfe1033\langnp2057 Type a new filename to save a document with a different name.  }{\b\cf17\lang2057\langfe1033\langnp2057 Calques\~3D}{\lang2057\langfe1033\langnp2057 
+ adds the extension you specify in the Save File As Type box.
+\par }\pard \ql \li0\ri0\sb60\widctlpar\faauto\rin0\lin0\itap0 {\b\lang2057\langfe1033\langnp2057 Drives
+\par }\pard \ql \li360\ri0\widctlpar\faauto\rin0\lin360\itap0 {\lang2057\langfe1033\langnp2057 Select the drive in which you want to store the document.
+\par }\pard \ql \li0\ri0\sb60\widctlpar\faauto\rin0\lin0\itap0 {\b\lang2057\langfe1033\langnp2057 Directories
+\par }\pard \ql \li360\ri0\widctlpar\faauto\rin0\lin360\itap0 {\lang2057\langfe1033\langnp2057 Select the directory in which you want to store the document.
+\par }\pard \ql \li0\ri0\sb60\widctlpar\faauto\rin0\lin0\itap0 {\b\lang2057\langfe1033\langnp2057 Network...
+\par }\pard \ql \li360\ri0\widctlpar\faauto\rin0\lin360\itap0 {\lang2057\langfe1033\langnp2057 Choose this button to connect to a network location, assigning it a new drive letter. 
+\par 
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  CBB("btn_up","JI(\lquote menu_file\rquote )");EB("btn_up")}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \s16\ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 
+\f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6 #}{ HID_FILE_MRU_FILE1}}K{\footnote \pard\plain \s16\ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6 K}{
+ Files: managing}}${\footnote \pard\plain \s16\ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6 $}{ File 1, 2, 3, 4 command}}}{\lang2057\langfe1033\langnp2057 
+ 1, 2, 3, 4 command (File menu)
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 
+\par Use the numbers and filenames listed at the bottom of the File menu to open the last four documents you closed.  Choose the number that corresponds with the document you want to open.
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  CBB("btn_up","JI(\lquote menu_file\rquote )");EB("btn_up")}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 
+\f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 #}{ HID_APP_EXIT}}K{\footnote \pard\plain \s16\ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6 K}{ Exit}}$
+{\footnote \pard\plain \s16\ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6 $}{ File Exit command}}}{\lang2057\langfe1033\langnp2057  Exit command (File menu)
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 
+\par Use this command to end your }{\b\cf17\lang2057\langfe1033\langnp2057 Calques\~3D}{\lang2057\langfe1033\langnp2057  session.  You can also use the Close command on the application Control menu.  }{\b\cf17\lang2057\langfe1033\langnp2057 Calques\~3D}{
+\lang2057\langfe1033\langnp2057  prompts you to save documents with unsaved changes.
+\par 
+\par }\pard\plain \s3\ql \li0\ri0\sb120\sa120\nowidctlpar\tx180\faauto\outlinelevel2\rin0\lin0\itap0 \b\f5\fs16\cf13\lang2057\langfe1033\cgrid\langnp2057\langfenp1033 {Shortcuts
+\par }\pard\plain \ql \fi-1080\li1440\ri0\widctlpar\tx1440\faauto\rin0\lin1440\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 Mouse:\tab Double-click the application's Control menu button.
+\par \tab \{bmc appexit.bmp\}
+\par Keys:\tab ALT+F4
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  CBB("btn_up","JI(\lquote }{menu_edit}{\lang2057\langfe1033\langnp2057 \rquote )");EB("btn_up")}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 
+\f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 #}{ HID_EDIT_UNDO}}}{\lang2057\langfe1033\langnp2057 Undo/Can't Undo command (Edit menu)
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 
+\par Use this command to reverse the last editing action, if possible. The Undo command is active only if you can reverse your last action. 
+\par 
+\par The reversible actions and there effect are the following:
+\par 
+\par }\pard \ql \fi-1701\li1985\ri0\sb60\widctlpar\tx1985\faauto\rin0\lin1985\itap0 {\b\lang2057\langfe1033\langnp2057 Construction}{\lang2057\langfe1033\langnp2057 \tab Any construction task can be reversed, re
+sulting in the destruction of the newly created object.
+\par }{\b\lang2057\langfe1033\langnp2057 Destruction}{\lang2057\langfe1033\langnp2057 \tab The suppression of an object (and of all its dependents) by the command }{\uldb\lang2057\langfe1033\langnp2057 Suppress}{\v\lang2057\langfe1033\langnp2057 
+HID_OBJECT_DELETE}{\lang2057\langfe1033\langnp2057  can be reversed, resulting in the reapparition of the objects.
+\par }{\b\lang2057\langfe1033\langnp2057 Deformation\tab }{\lang2057\langfe1033\langnp2057 
+\par }{\b\lang2057\langfe1033\langnp2057 Modification\tab }{\lang2057\langfe1033\langnp2057 
+\par }\pard\plain \s16\ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 
+\par Only the last operation can be reversed. 
+\par }\pard \s16\ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 {\lang2057\langfe1033\langnp2057 
+\par }\pard\plain \s3\ql \li0\ri0\sb120\sa120\nowidctlpar\tx180\faauto\outlinelevel2\rin0\lin0\itap0 \b\f5\fs16\cf13\lang2057\langfe1033\cgrid\langnp2057\langfenp1033 {Shortcuts
+\par }\pard\plain \ql \fi-1080\li1440\ri0\widctlpar\tx1440\faauto\rin0\lin1440\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 Toolbar:\tab \{bmc editundo.bmp\}
+\par Keys:\tab CTRL+Z or ALT-BACKSPACE\tab 
+\par }\pard \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 {\lang2057\langfe1033\langnp2057 
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  CBB("btn_up","JI(\lquote }{menu_edit}{\lang2057\langfe1033\langnp2057 \rquote )");EB("btn_up")}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 
+\f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 #}{ HID_EDIT_REDO}}}{\lang2057\langfe1033\langnp2057 Redo command (Edit menu)
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 
+\par }\pard \qc \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 {\i\lang2057\langfe1033\langnp2057 This command is not yet implemented.
+\par }\pard \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 {\lang2057\langfe1033\langnp2057 
+\par Use this command to reverse the last undo action, if possible. 
+\par 
+\par }\pard\plain \s3\ql \li0\ri0\sb120\sa120\nowidctlpar\tx180\faauto\outlinelevel2\rin0\lin0\itap0 \b\f5\fs16\cf13\lang2057\langfe1033\cgrid\langnp2057\langfenp1033 {Shortcuts
+\par }\pard\plain \ql \fi-1080\li1440\ri0\widctlpar\tx1440\faauto\rin0\lin1440\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 Toolbar:\tab \{bmc editredo.bmp\}
+\par Keys:\tab CTRL+Y
+\par }\pard \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 {\lang2057\langfe1033\langnp2057 
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  CBB("btn_up","JI(\lquote }{menu_edit}{\lang2057\langfe1033\langnp2057 \rquote )");EB("btn_up")}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 
+\f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 #}{ HID_EDIT_CUT}}}{\lang2057\langfe1033\langnp2057 Cut command (Edit menu)
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 
+\par Use this command to remove the currently selected data from the document and put it on the clipboard.  This command is unavailable if there is no data currently selected.
+\par 
+\par Cutting data to the clipboard replaces the contents previously stored there.
+\par 
+\par }\pard\plain \s3\ql \li0\ri0\sb120\sa120\nowidctlpar\tx180\faauto\outlinelevel2\rin0\lin0\itap0 \b\f5\fs16\cf13\lang2057\langfe1033\cgrid\langnp2057\langfenp1033 {Shortcuts
+\par }\pard\plain \ql \fi-1080\li1440\ri0\widctlpar\tx1440\faauto\rin0\lin1440\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 Toolbar:\tab \{bmc editcut.bmp\}
+\par Keys:\tab CTRL+X
+\par }\pard \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 {\lang2057\langfe1033\langnp2057 
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  CBB("btn_up","JI(\lquote }{menu_edit}{\lang2057\langfe1033\langnp2057 \rquote )");EB("btn_up")}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 
+\f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 #}{ HID_EDIT_COPY}}}{\lang2057\langfe1033\langnp2057 Copy command (Edit menu)
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 
+\par Use this command to copy selected data onto the clipboard.  This command is unavailable if there is no data currently selected.
+\par 
+\par Copying data to the clipboard replaces the contents previously stored there.
+\par 
+\par }\pard\plain \s3\ql \li0\ri0\sb120\sa120\nowidctlpar\tx180\faauto\outlinelevel2\rin0\lin0\itap0 \b\f5\fs16\cf13\lang2057\langfe1033\cgrid\langnp2057\langfenp1033 {Shortcuts
+\par }\pard\plain \ql \fi-1080\li1440\ri0\widctlpar\tx1440\faauto\rin0\lin1440\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 Toolbar:\tab \{bmc editcopy.bmp\}
+\par Keys:\tab CTRL+C
+\par }\pard \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 {\lang2057\langfe1033\langnp2057 
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  CBB("btn_up","JI(\lquote }{menu_edit}{\lang2057\langfe1033\langnp2057 \rquote )");EB("btn_up")}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 
+\f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 #}{ HID_EDIT_PASTE}}}{\lang2057\langfe1033\langnp2057 Paste command (Edit menu)
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 
+\par Use this command to insert a copy of the clipboard contents at the insertion point.  This command is unavailable if the clipboard is empty.
+\par 
+\par }\pard\plain \s3\ql \li0\ri0\sb120\sa120\nowidctlpar\tx180\faauto\outlinelevel2\rin0\lin0\itap0 \b\f5\fs16\cf13\lang2057\langfe1033\cgrid\langnp2057\langfenp1033 {Shortcuts
+\par }\pard\plain \ql \fi-1080\li1440\ri0\widctlpar\tx1440\faauto\rin0\lin1440\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 Toolbar:\tab \{bmc editpast.bmp\}
+\par Keys:\tab CTRL+V
+\par }\pard \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 {\lang2057\langfe1033\langnp2057 
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  CBB("btn_up","JI(\lquote menu_view\rquote )");EB("btn_up")}}+{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {
+\cs15\f8\up6\lang1033\langfe0\langfenp0 +}{ View\~:0000}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 #}{
+ HID_VIEW_TOOLBAR}}K{\footnote \pard\plain \s16\ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6 K}{ Toolbar}}}{\lang2057\langfe1033\langnp2057  }{
+\cs15\fs16\up6\lang2057\langfe1033\langnp2057 ${\footnote \pard\plain \s16\ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6 $}{ View Toolbar command}}}{\lang2057\langfe1033\langnp2057 
+ Toolbar command (View menu)
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 
+\par Use this command to display and hide the Toolbar, which includes buttons for some of the most common commands in }{\b\cf17\lang2057\langfe1033\langnp2057 Calques\~3D}{\lang2057\langfe1033\langnp2057 
+, such as File Open.  A check mark appears next to the menu item when the Toolbar is displayed.
+\par 
+\par See }{\uldb\lang2057\langfe1033\langnp2057 Toolbar}{\v\lang2057\langfe1033\langnp2057 AFX_HIDW_TOOLBAR}{\lang2057\langfe1033\langnp2057  for help on using the toolbar.
+\par 
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  DB("btn_up")}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 #}{
+ AFX_HIDW_TOOLBAR}}K{\footnote \pard\plain \s16\ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6 K}{ Toolbar}}}{\lang2057\langfe1033\langnp2057  }{
+\cs15\fs16\up6\lang2057\langfe1033\langnp2057 ${\footnote \pard\plain \s16\ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6 $}{ Toolbar}}}{\lang2057\langfe1033\langnp2057  Toolbar
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \{bml hlptbar.bmp\}
+\par 
+\par The toolbar is displayed across the top of the application window, below the menu bar.  The toolbar provides quick mouse access to many tools used in }{\b\cf17\lang2057\langfe1033\langnp2057 Calques\~3D}{\lang2057\langfe1033\langnp2057 ,
+\par 
+\par To hide or display the Toolbar, choose Toolbar from the View menu (ALT, V, T).
+\par 
+\par << Add or remove toolbar buttons from the list below according to which ones your application offers. >>
+\par 
+\par }\pard \ql \li0\ri0\widctlpar\brdrb\brdrs\brdrw15\brsp20 \tx1080\faauto\rin0\lin0\itap0 {\b\lang2057\langfe1033\langnp2057 Click\tab To}{\lang2057\langfe1033\langnp2057 
+\par }\pard \ql \fi-1080\li1080\ri0\widctlpar\tx1080\faauto\rin0\lin1080\itap0 {\lang2057\langfe1033\langnp2057 \{bmc filenew.bmp\}\tab Open a new document.
+\par 
+\par \{bmc fileopen.bmp\}\tab Open an existing document.  }{\b\cf17\lang2057\langfe1033\langnp2057 Calques\~3D}{\lang2057\langfe1033\langnp2057  displays the Open dialog box, in which you can locate and open the desired file.
+\par 
+\par \{bmc filesave.bmp\}\tab Save the active document or template with its current name.  If you have not named the document, }{\b\cf17\lang2057\langfe1033\langnp2057 Calques\~3D}{\lang2057\langfe1033\langnp2057  displays the Save As dialog box.
+\par 
+\par \{bmc fileprnt.bmp\}\tab Print the active document.
+\par 
+\par \{bmc editcut.bmp\}\tab Remove selected data from the document and stores it on the clipboard.
+\par 
+\par \{bmc editcopy.bmp\}\tab Copy the selection to the clipboard.
+\par 
+\par \{bmc editpast.bmp\}\tab Insert the contents of the clipboard at the insertion point.
+\par 
+\par \{bmc editundo.bmp\}\tab Reverse the last editing.  Note:  You cannot undo some actions.
+\par 
+\par \{bmc recfirst.bmp\}\tab Go to the first record in the current selection.
+\par 
+\par \{bmc recprev.bmp\}\tab Go to the previous record in the current selection.
+\par 
+\par \{bmc recnext.bmp\}\tab Go to the next record in the current selection.
+\par 
+\par \{bmc reclast.bmp\}\tab Go to the last record in the current selection.
+\par 
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  CBB("btn_up","JI(\lquote menu_view\rquote )");EB("btn_up")}}+{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {
+\cs15\f8\up6\lang1033\langfe0\langfenp0 +}{ View\~:0000}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 #}{
+ HID_VIEW_STATUS_BAR}}K{\footnote \pard\plain \s16\ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6 K}{ Status bar}}}{\lang2057\langfe1033\langnp2057  }{
+\cs15\fs16\up6\lang2057\langfe1033\langnp2057 ${\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 $}{ View Status Bar Command}}}{\lang2057\langfe1033\langnp2057 
+Status Bar command (View menu)
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 
+\par Use this command to display and hide the Status Bar, which describes the action to be executed by the selected menu item or depressed toolbar button, and keyboard latch state. A check mark appears next to the menu item when the Status Bar is displayed.
+
+\par 
+\par See }{\uldb\lang2057\langfe1033\langnp2057 Status Bar}{\v\lang2057\langfe1033\langnp2057 AFX_HIDW_STATUS_BAR}{\lang2057\langfe1033\langnp2057  for help on using the status bar.
+\par 
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  DB("btn_up")}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 #}{
+ AFX_HIDW_STATUS_BAR}}K{\footnote \pard\plain \s16\ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6 K}{ Status bar}}}{\lang2057\langfe1033\langnp2057  }{
+\cs15\fs16\up6\lang2057\langfe1033\langnp2057 ${\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 $}{ Status bar}}}{\lang2057\langfe1033\langnp2057 Status Bar
+
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \{bml hlpsbar.bmp\}
+\par 
+\par The status bar is displayed at the bottom of the }{\b\cf17\lang2057\langfe1033\langnp2057 Calques\~3D}{\lang2057\langfe1033\langnp2057  window.  To display or hide the status bar, use the Status Bar command in the View menu.
+\par 
+\par The left area of the status bar describes actions of menu items as you use the arrow keys to navigate through menus.  This area similarly shows messages that describ
+e the actions of toolbar buttons as you depress them, before releasing them.  If after viewing the description of the toolbar button command you wish not to execute the command, then release the mouse button while the pointer is off the toolbar button.
+
+\par 
+\par The right areas of the status bar indicate which of the following keys are latched down:
+\par 
+\par }\pard \ql \li0\ri0\widctlpar\tx1440\faauto\rin0\lin0\itap0 {\b\lang2057\langfe1033\langnp2057 Indicator\tab Description}{\lang2057\langfe1033\langnp2057 
+\par }\pard \ql \fi-1440\li1440\ri0\sa120\widctlpar\tx1440\faauto\rin0\lin1440\itap0 {\lang2057\langfe1033\langnp2057 CAP\tab The Caps Lock key is latched down.
+\par NUM\tab The Num Lock key is latched down.
+\par SCRL\tab The Scroll Lock key is latched down.
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  CBB("btn_up","JI(\lquote }{menu_window}{\lang2057\langfe1033\langnp2057 \rquote )");EB("btn_up")}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 
+\f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 #}{ HID_WINDOW_NEW}}}{\lang2057\langfe1033\langnp2057 New command (Window menu)
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 
+\par Use this command to open a new window with the same contents as the active window.  You can open multiple document windows to display different parts or views of a document at the same ti
+me.  If you change the contents in one window, all other windows containing the same document reflect those changes.  When you open a new window, it becomes the active window and is displayed on top of all other open windows.
+\par 
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  CBB("btn_up","JI(\lquote }{menu_window}{\lang2057\langfe1033\langnp2057 \rquote )");EB("btn_up")}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 
+\f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 #}{ HID_WINDOW_CASCADE}}}{\lang2057\langfe1033\langnp2057 Cascade command (Window menu)
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 
+\par Use this command to arrange multiple opened windows in an overlapped fashion. 
+\par 
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  CBB("btn_up","JI(\lquote }{menu_window}{\lang2057\langfe1033\langnp2057 \rquote )");EB("btn_up")}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 
+\f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 #}{ HID_WINDOW_TILE}}}{\lang2057\langfe1033\langnp2057 Tile command (Window menu)
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 
+\par Use this command to arrange multiple opened windows in a non-overlapped fashion.
+\par 
+\par 
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  CBB("btn_up","JI(\lquote }{menu_window}{\lang2057\langfe1033\langnp2057 \rquote )");EB("btn_up")}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 
+\f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 #}{ HID_WINDOW_TILE_HORZ}}}{\lang2057\langfe1033\langnp2057 Tile Horizontal command (Window menu)
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 
+\par Use this command to vertically arrange multiple opened windows in a non-overlapped fashion.
+\par 
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  CBB("btn_up","JI(\lquote }{menu_window}{\lang2057\langfe1033\langnp2057 \rquote )");EB("btn_up")}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 
+\f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 #}{ HID_WINDOW_TILE_VERT}}}{\lang2057\langfe1033\langnp2057 Tile Vertical command (Window menu)
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 
+\par Use this command to arrange multiple opened windows side by side.
+\par 
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  CBB("btn_up","JI(\lquote }{menu_window}{\lang2057\langfe1033\langnp2057 \rquote )");EB("btn_up")}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 
+\f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 #}{ HID_WINDOW_ARRANGE}}}{\lang2057\langfe1033\langnp2057 Window Arrange Icons Command
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 
+\par }\pard \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 {\lang2057\langfe1033\langnp2057 
+Use this command to arrange the icons for minimized windows at the bottom of the main window.  If there is an open document window at the bottom of the main window, then some or all of th
+e icons may not be visible because they will be underneath this document window.
+\par 
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  CBB("btn_up","JI(\lquote }{menu_window}{\lang2057\langfe1033\langnp2057 \rquote )");EB("btn_up")}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 
+\f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 #}{ HID_WINDOW_SPLIT}}}{\lang2057\langfe1033\langnp2057 Split Command (Window menu)
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\b\lang2057\langfe1033\langnp2057 
+\par }\pard \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 {\lang2057\langfe1033\langnp2057 Use this command to split the active window into panes.  You may then use 
+the mouse or the keyboard arrows to move the splitter bars.  When you are finished, press the mouse button or enter to leave the splitter bars in their new location.  Pressing escape keeps the splitter bars in their original location.  << In a single docu
+ment interface application, this command will appear on the View menu. >>
+\par 
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  CBB("btn_up","JI(\lquote }{menu_window}{\lang2057\langfe1033\langnp2057 \rquote )");EB("btn_up")}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 
+\f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 #}{ HID_WINDOW_ALL}}}{\lang2057\langfe1033\langnp2057 1, 2, ... command (Window menu)
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 
+\par }{\b\cf17\lang2057\langfe1033\langnp2057 Calques\~3D}{\lang2057\langfe1033\langnp2057  displays a list of currently open document windo
+ws at the bottom of the Window menu.  A check mark appears in front of the document name of the active window.  Choose a document from this list to make its window active.  
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  CBB("btn_up","JI(\lquote }{menu_help}{\lang2057\langfe1033\langnp2057 \rquote )");EB("btn_up")}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 
+\f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 #}{ HID_HELP_INDEX}}}{\lang2057\langfe1033\langnp2057 Index command (Help menu)
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 
+\par Use this command to display the opening screen of Help.  From the opening screen, you can jump to step-by-step instructions for using }{\b\cf17\lang2057\langfe1033\langnp2057 Calques\~3D}{\lang2057\langfe1033\langnp2057 
+ and various types of reference information.  
+\par 
+\par Once you open Help, you can click the Contents button whenever you want to return to the opening screen.
+\par 
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  CBB("btn_up","JI(\lquote }{menu_help}{\lang2057\langfe1033\langnp2057 \rquote )");EB("btn_up")}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 
+\f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 #}{ HID_HELP_USING}}}{\lang2057\langfe1033\langnp2057 Using Help command (Help menu)
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 
+\par Use this command for instructions about using Help.
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  CBB("btn_up","JI(\lquote }{menu_window}{\lang2057\langfe1033\langnp2057 \rquote )");EB("btn_up")}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 
+\f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 #}{ HID_APP_ABOUT}}}{\lang2057\langfe1033\langnp2057 About command (Help menu)
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 
+\par Use this command to display the copyright notice and version number of your copy of }{\b\cf17\lang2057\langfe1033\langnp2057 Calques\~3D}{\lang2057\langfe1033\langnp2057 .
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  DB("btn_up")}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 #}{
+ HID_CONTEXT_HELP}}${\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 $}{ Help Using Help Command}}}{\lang2057\langfe1033\langnp2057 Context Help command 
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \{bml curhelp.bmp\}
+\par 
+\par Use the Context Help command to obtain help on some portion of }{\b\cf17\lang2057\langfe1033\langnp2057 Calques\~3D}{\lang2057\langfe1033\langnp2057 
+.  When you choose the Toolbar's Context Help button, the mouse pointer will change to an arrow and question mark.  Then click somewhere in the }{\b\cf17\lang2057\langfe1033\langnp2057 Calques\~3D}{\lang2057\langfe1033\langnp2057 
+ window, such as another Toolbar button.  The Help topic will be shown for the item you clicked.
+\par 
+\par }\pard\plain \s3\ql \li0\ri0\sb120\sa120\nowidctlpar\tx180\faauto\outlinelevel2\rin0\lin0\itap0 \b\f5\fs16\cf13\lang2057\langfe1033\cgrid\langnp2057\langfenp1033 {Shortcut
+\par }\pard\plain \ql \fi-1080\li1440\ri0\widctlpar\tx1440\faauto\rin0\lin1440\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 Keys:\tab SHIFT+F1
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  DB("btn_up")}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 #}{
+ HID_HT_CAPTION}}}{\lang2057\langfe1033\langnp2057 Title Bar
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 
+\par << Show your application's title bar here. >>
+\par 
+\par }\pard\plain \s42\ql \fi-360\li360\ri0\widctlpar\tx360\faauto\rin0\lin360\itap0 \f11\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\f5\lang2057\langfe1033\langnp2057 The title bar is located along the top of a window.  It contains the n
+ame of the application and document.
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 
+\par }\pard\plain \s42\ql \fi-360\li360\ri0\widctlpar\tx360\faauto\rin0\lin360\itap0 \f11\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\f5\lang2057\langfe1033\langnp2057 
+To move the window, drag the title bar.  Note: You can also move dialog boxes by dragging their title bars.
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 
+\par }\pard \ql \fi-360\li360\ri0\widctlpar\tx360\faauto\rin0\lin360\itap0 {\lang2057\langfe1033\langnp2057 A title bar may contain the following elements:
+\par }\pard\plain \s41\ql \fi-360\li360\ri0\sb40\sa40\widctlpar\tx360\faauto\rin0\lin360\itap0 \f11\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\f5\lang2057\langfe1033\langnp2057 \{bmc bullet.bmp\}\tab Application Control-menu button
+\par \{bmc bullet.bmp\}\tab Document Control-menu button
+\par \{bmc bullet.bmp\}\tab Maximize button
+\par \{bmc bullet.bmp\}\tab Minimize button
+\par \{bmc bullet.bmp\}\tab Name of the application
+\par \{bmc bullet.bmp\}\tab Name of the document
+\par \{bmc bullet.bmp\}\tab Restore button
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  CBB("btn_up","JI(\lquote menu_file\rquote )");EB("btn_up")}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \s16\ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 
+\f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6 #}{ Scrollbars}}}{\lang2057\langfe1033\langnp2057  Scroll bars
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 
+\par Displayed at the right and bottom edges of the document window.  The scroll boxes inside the scroll bars indicate your vertical and horizontal location in the document.  You can use the mouse to scroll to other parts of the document.
+\par 
+\par << Describe the actions of the various parts of the scrollbar, according to how they behave in your application. >>
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  DB("btn_up")}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 #}{ HID_SC_SIZE
+}}}{\lang2057\langfe1033\langnp2057 Size command (System menu)
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 
+\par Use this command to display a four-headed arrow so you can size the active window with the arrow keys.
+\par \{bml curarw4.bmp\}
+\par 
+\par After the pointer changes to the four-headed arrow:
+\par }\pard \ql \fi-360\li360\ri0\sb60\widctlpar\faauto\rin0\lin360\itap0 {\lang2057\langfe1033\langnp2057 1.\tab Press one of the DIRECTION keys (left, right, up, or down arrow key) to move the pointer to the border you want to move.  
+\par 2.\tab Press a DIRECTION key to move the border.
+\par 3.\tab Press ENTER when the window is the size you want.
+\par }\pard \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 {\lang2057\langfe1033\langnp2057 
+\par Note:  This command is unavailable if you maximize the window.
+\par 
+\par }\pard\plain \s3\ql \li0\ri0\sb120\sa120\nowidctlpar\tx180\faauto\outlinelevel2\rin0\lin0\itap0 \b\f5\fs16\cf13\lang2057\langfe1033\cgrid\langnp2057\langfenp1033 {Shortcut
+\par }\pard\plain \ql \fi-1080\li1440\ri0\widctlpar\tx1440\faauto\rin0\lin1440\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 Mouse:\tab Drag the size bars at the corners or edges of the window.
+\par }\pard \ql \li360\ri0\widctlpar\faauto\rin0\lin360\itap0 {\lang2057\langfe1033\langnp2057 
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  DB("btn_up")}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 #}{ HID_SC_MOVE
+}}}{\lang2057\langfe1033\langnp2057 Move command (Control menu)
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 
+\par Use this command to display a four-headed arrow so you can move the active window or dialog box with the arrow keys.
+\par \{bmc curarw4.bmp\}
+\par 
+\par Note:  This command is unavailable if you maximize the window.
+\par 
+\par }\pard\plain \s3\ql \li0\ri0\sb120\sa120\nowidctlpar\tx180\faauto\outlinelevel2\rin0\lin0\itap0 \b\f5\fs16\cf13\lang2057\langfe1033\cgrid\langnp2057\langfenp1033 {Shortcut
+\par }\pard\plain \ql \fi-1080\li1440\ri0\widctlpar\tx1440\faauto\rin0\lin1440\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 Keys:\tab CTRL+F7
+\par 
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  DB("btn_up")}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 #}{
+ HID_SC_MINIMIZE}}${\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 $}{ System Minimize Command}}}{\lang2057\langfe1033\langnp2057 
+Minimize command (application Control menu)
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 
+\par Use this command to reduce the }{\b\cf17\lang2057\langfe1033\langnp2057 Calques\~3D}{\lang2057\langfe1033\langnp2057  window to an icon.
+\par }\pard \ql \fi-360\li360\ri0\widctlpar\faauto\rin0\lin360\itap0 {\b\lang2057\langfe1033\langnp2057 
+\par }\pard\plain \s3\ql \li0\ri0\sb120\sa120\nowidctlpar\tx180\faauto\outlinelevel2\rin0\lin0\itap0 \b\f5\fs16\cf13\lang2057\langfe1033\cgrid\langnp2057\langfenp1033 {Shortcut
+\par }\pard\plain \ql \fi-1080\li1440\ri0\widctlpar\tx1440\faauto\rin0\lin1440\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 Mouse:\tab Click the minimize icon \{bmc scmin.bmp\} on the title bar.
+\par Keys:\tab ALT+F9
+\par }\pard \ql \fi-360\li1080\ri0\widctlpar\faauto\rin0\lin1080\itap0 {\lang2057\langfe1033\langnp2057 
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  DB("btn_up")}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 #}{
+ HID_SC_MAXIMIZE}}}{\lang2057\langfe1033\langnp2057 Maximize command (System menu)
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 
+\par Use this command to enlarge the active window to fill the available space.
+\par }\pard \ql \fi-360\li360\ri0\widctlpar\faauto\rin0\lin360\itap0 {\b\lang2057\langfe1033\langnp2057 
+\par }\pard\plain \s3\ql \li0\ri0\sb120\sa120\nowidctlpar\tx180\faauto\outlinelevel2\rin0\lin0\itap0 \b\f5\fs16\cf13\lang2057\langfe1033\cgrid\langnp2057\langfenp1033 {Shortcut
+\par }\pard\plain \ql \fi-1080\li1440\ri0\widctlpar\tx1440\faauto\rin0\lin1440\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 Mouse:\tab Click the maximize icon \{bmc scmax.bmp\}
+ on the title bar; or double-click the title bar.
+\par Keys:\tab CTRL+F10 enlarges a document window.
+\par }\pard \ql \fi-360\li1080\ri0\widctlpar\faauto\rin0\lin1080\itap0 {\lang2057\langfe1033\langnp2057 
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  DB("btn_up")}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 #}{
+ HID_SC_NEXTWINDOW}}}{\lang2057\langfe1033\langnp2057 Next Window command (document Control menu)
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 
+\par Use this command to switch to the next open document window.  }{\b\cf17\lang2057\langfe1033\langnp2057 Calques\~3D}{\lang2057\langfe1033\langnp2057  determines which window is next according to the order in which you opened the windows.
+\par 
+\par }\pard\plain \s3\ql \li0\ri0\sb120\sa120\nowidctlpar\tx180\faauto\outlinelevel2\rin0\lin0\itap0 \b\f5\fs16\cf13\lang2057\langfe1033\cgrid\langnp2057\langfenp1033 {Shortcut
+\par }\pard\plain \ql \fi-1080\li1440\ri0\widctlpar\tx1440\faauto\rin0\lin1440\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 Keys:\tab CTRL+F6
+\par }\pard \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 {\lang2057\langfe1033\langnp2057 
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  DB("btn_up")}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 #}{
+ HID_SC_PREVWINDOW}}}{\lang2057\langfe1033\langnp2057 Previous Window command (document Control menu)
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 
+\par Use this command to switch to the previous open document window.  }{\b\cf17\lang2057\langfe1033\langnp2057 Calques\~3D}{\lang2057\langfe1033\langnp2057  determines which window is previous according to the order in which you opened the windows.
+\par 
+\par }\pard\plain \s3\ql \li0\ri0\sb120\sa120\nowidctlpar\tx180\faauto\outlinelevel2\rin0\lin0\itap0 \b\f5\fs16\cf13\lang2057\langfe1033\cgrid\langnp2057\langfenp1033 {Shortcut
+\par }\pard\plain \ql \fi-1080\li1440\ri0\widctlpar\tx1440\faauto\rin0\lin1440\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 Keys:\tab SHIFT+CTRL+F6
+\par }\pard \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 {\lang2057\langfe1033\langnp2057 
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  DB("btn_up")}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 #}{
+ HID_SC_CLOSE}}}{\lang2057\langfe1033\langnp2057 Close command (Control menus)
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 
+\par Use this command to close the active window or dialog box.
+\par 
+\par Double-clicking a Control-menu box is the same as choosing the Close command.
+\par \{bml appexit.bmp\}
+\par 
+\par Note:  If you have multiple windows open for a single document, the Close command on the document Control menu closes only one window at a time.  You can close all windows at once with the Close command on the File menu.
+\par 
+\par }\pard\plain \s3\ql \li0\ri0\sb120\sa120\nowidctlpar\tx180\faauto\outlinelevel2\rin0\lin0\itap0 \b\f5\fs16\cf13\lang2057\langfe1033\cgrid\langnp2057\langfenp1033 {Shortcuts
+\par }\pard\plain \ql \fi-1080\li1440\ri0\widctlpar\tx1440\faauto\rin0\lin1440\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 Keys: \tab CTRL+F4 closes a document window
+\par \tab ALT+F4 closes the document window or dialog box
+\par }\pard \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 {\lang2057\langfe1033\langnp2057 
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  DB("btn_up")}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 #}{
+ HID_SC_RESTORE}}}{\lang2057\langfe1033\langnp2057 Restore command (Control menu)
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 
+\par Use this command to return the active window to its size and position before you chose the Maximize or Minimize command.
+\par 
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  DB("btn_up")}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 #}{
+ HID_SC_TASKLIST}}}{\lang2057\langfe1033\langnp2057 Switch to command (application Control menu)
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 
+\par Use this command to display a list of all open applications.  Use this "Task List" to switch to or close an application on the list.
+\par 
+\par }{\b\lang2057\langfe1033\langnp2057 Shortcut
+\par }\pard \ql \fi-1080\li1440\ri0\widctlpar\tx1440\faauto\rin0\lin1440\itap0 {\lang2057\langfe1033\langnp2057 Keys:\tab CTRL+ESC
+\par }\pard \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 {\lang2057\langfe1033\langnp2057 
+\par }{\b\lang2057\langfe1033\langnp2057 Dialog Box Options
+\par }{\lang2057\langfe1033\langnp2057 When you choose the Switch To command, you will be presented with a dialog box with the following options:
+\par }\pard \ql \li0\ri0\sb60\widctlpar\faauto\rin0\lin0\itap0 {\b\lang2057\langfe1033\langnp2057 Task List
+\par }\pard \ql \li360\ri0\widctlpar\faauto\rin0\lin360\itap0 {\lang2057\langfe1033\langnp2057 Select the application you want to switch to or close.
+\par }\pard \ql \li0\ri0\sb60\widctlpar\faauto\rin0\lin0\itap0 {\b\lang2057\langfe1033\langnp2057 Switch To
+\par }\pard \ql \li360\ri0\widctlpar\faauto\rin0\lin360\itap0 {\lang2057\langfe1033\langnp2057 Makes the selected application active.
+\par }\pard \ql \li0\ri0\sb60\widctlpar\faauto\rin0\lin0\itap0 {\b\lang2057\langfe1033\langnp2057 End Task
+\par }\pard \ql \li360\ri0\widctlpar\faauto\rin0\lin360\itap0 {\lang2057\langfe1033\langnp2057 Closes the selected application.
+\par }\pard \ql \li0\ri0\sb60\widctlpar\faauto\rin0\lin0\itap0 {\b\lang2057\langfe1033\langnp2057 Cancel
+\par }\pard \ql \li360\ri0\widctlpar\faauto\rin0\lin360\itap0 {\lang2057\langfe1033\langnp2057 Closes the Task List box.
+\par }\pard \ql \li0\ri0\sb60\widctlpar\faauto\rin0\lin0\itap0 {\b\lang2057\langfe1033\langnp2057 Cascade
+\par }\pard \ql \li360\ri0\widctlpar\faauto\rin0\lin360\itap0 {\lang2057\langfe1033\langnp2057 Arranges open applications so they overlap and you can see each title bar.  This option does not affect applications reduced to icons.
+\par }\pard \ql \li0\ri0\sb60\widctlpar\faauto\rin0\lin0\itap0 {\b\lang2057\langfe1033\langnp2057 Tile
+\par }\pard \ql \li360\ri0\widctlpar\faauto\rin0\lin360\itap0 {\lang2057\langfe1033\langnp2057 Arranges open applications into windows that do not overlap.  This option does not affect applications reduced to icons.
+\par }\pard \ql \li0\ri0\sb60\widctlpar\faauto\rin0\lin0\itap0 {\b\lang2057\langfe1033\langnp2057 Arrange Icons
+\par }\pard \ql \li360\ri0\widctlpar\faauto\rin0\lin360\itap0 {\lang2057\langfe1033\langnp2057 Arranges the icons of all minimized applications across the bottom of the screen.
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  CBB("btn_up","JI(\lquote }{menu_view}{\lang2057\langfe1033\langnp2057 \rquote )");EB("btn_up")}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 
+\f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 #}{ HID_VIEW_RULER}}${\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 $}{
+ View Ruler Command}}}{\lang2057\langfe1033\langnp2057 Ruler command (View menu)
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\b\lang2057\langfe1033\langnp2057 
+\par }{\lang2057\langfe1033\langnp2057 << Write application-specific help here. }{\lang1036\langfe1033\langnp1036 >>
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang1036\langfe1033\langnp1036 \page }{
+\cs15\f8\fs16\up6\lang1036\langfe0\langnp1036\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  DB("btn_up")}}}{\cs15\fs16\up6\lang1036\langfe1033\langnp1036 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {
+\cs15\b\f8\up6\lang1036\langfe1033\langnp1036 #}{\lang1036\langfe1033\langnp1036  AFX_HIDD_FONT}}${\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {
+\cs15\b\f8\up6\lang1036\langfe1033\langnp1036 $}{\lang1036\langfe1033\langnp1036  Choose Font Dialog}}}{\lang1036\langfe1033\langnp1036 Choose Font dialog box
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\b\lang1036\langfe1033\langnp1036 
+\par }{\lang2057\langfe1033\langnp2057 << Write application-specific help here. >>
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  DB("btn_up")}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 #}{
+ AFX_HIDD_COLOR}}${\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 $}{ Choose Color Dialog}}}{\lang2057\langfe1033\langnp2057 Choose Color dialog box
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\b\lang2057\langfe1033\langnp2057 
+\par }{\lang2057\langfe1033\langnp2057 << Write application-specific help here. >>
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  CBB("btn_up","JI(\lquote }{menu_edit}{\lang2057\langfe1033\langnp2057 \rquote )");EB("btn_up")}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 
+\f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 #}{ HID_EDIT_FIND}}${\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 $}{
+ Edit Find Command}}}{\lang2057\langfe1033\langnp2057 Find command (Edit menu)
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\b\lang2057\langfe1033\langnp2057 
+\par }{\lang2057\langfe1033\langnp2057 << Write application-specific help here. >>
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  DB("btn_up")}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 #}{
+ AFX_HIDD_FIND}}${\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 $}{ Find Dialog}}}{\lang2057\langfe1033\langnp2057 Find dialog box
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\b\lang2057\langfe1033\langnp2057 
+\par }{\lang2057\langfe1033\langnp2057 << Write application-specific help here. >>
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  CBB("btn_up","JI(\lquote }{menu_edit}{\lang2057\langfe1033\langnp2057 \rquote )");EB("btn_up")}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 
+\f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 #}{ HID_EDIT_REPLACE}}${\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 $}{
+ Edit Replace Command}}}{\lang2057\langfe1033\langnp2057 Replace command (Edit menu)
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\b\lang2057\langfe1033\langnp2057 
+\par }{\lang2057\langfe1033\langnp2057 << Write application-specific help here. >>
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  DB("btn_up")}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 #}{
+ AFX_HIDD_REPLACE}}${\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 $}{ Replace Dialog}}}{\lang2057\langfe1033\langnp2057 Replace dialog box
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\b\lang2057\langfe1033\langnp2057 
+\par }{\lang2057\langfe1033\langnp2057 << Write application-specific help here. >>
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  CBB("btn_up","JI(\lquote }{menu_edit}{\lang2057\langfe1033\langnp2057 \rquote )");EB("btn_up")}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 
+\f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 #}{ HID_EDIT_REPEAT}}${\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 $}{
+ Edit Repeat Command}}}{\lang2057\langfe1033\langnp2057 Repeat command (Edit menu)
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\b\lang2057\langfe1033\langnp2057 
+\par }{\lang2057\langfe1033\langnp2057 Use this command to repeat the last editing command carried out.  The Repeat menu item changes to Can't Repeat if you cannot repeat your last action.
+\par 
+\par }{\b\lang2057\langfe1033\langnp2057 Shortcut
+\par }\pard \ql \fi-1080\li1440\ri0\widctlpar\tx1440\faauto\rin0\lin1440\itap0 {\lang2057\langfe1033\langnp2057 Key:\tab F4
+\par }\pard \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 {\lang2057\langfe1033\langnp2057 
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  CBB("btn_up","JI(\lquote }{menu_edit}{\lang2057\langfe1033\langnp2057 \rquote )");EB("btn_up")}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 
+\f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 #}{ HID_EDIT_CLEAR}}${\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 $}{
+ Edit Clear Command}}}{\lang2057\langfe1033\langnp2057 Clear command (Edit menu)
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\b\lang2057\langfe1033\langnp2057 
+\par }{\lang2057\langfe1033\langnp2057 << Write application-specific help here. >>
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  CBB("btn_up","JI(\lquote }{menu_edit}{\lang2057\langfe1033\langnp2057 \rquote )");EB("btn_up")}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 
+\f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 #}{ HID_EDIT_CLEAR_ALL}}${\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 $}{
+ Edit Clear All}}}{\lang2057\langfe1033\langnp2057 Clear All command (Edit menu)
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\b\lang2057\langfe1033\langnp2057 
+\par }{\lang2057\langfe1033\langnp2057 << Write application-specific help here. >>
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  DB("btn_up")}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 #}{
+ HID_NEXT_PANE}}${\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 $}{ Next Pane Command}}}{\lang2057\langfe1033\langnp2057 Next Pane
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\b\lang2057\langfe1033\langnp2057 
+\par }{\lang2057\langfe1033\langnp2057 << Write application-specific help here. >>
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  DB("btn_up")}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 #}{
+ HID_PREV_PANE}}${\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 $}{ Prev Pane Command}}}{\lang2057\langfe1033\langnp2057 Prev Pane
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\b\lang2057\langfe1033\langnp2057 
+\par }{\lang2057\langfe1033\langnp2057 << Write application-specific help here. >>
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  DB("btn_up")}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 #}{
+ HIDR_DOC1TYPE}}}{\lang2057\langfe1033\langnp2057 Modifying the Document
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 
+\par << Write application-specific help here that provides an overview of how the user should modify a document using your application.>>
+\par 
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  DB("btn_up")}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\b\f8\up6 #}{
+ HID_HT_NOWHERE}}}{\lang2057\langfe1033\langnp2057 No Help Available
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 
+\par No help is available for this area of the window.
+\par }\pard\plain \s1\ql \li0\ri0\sb120\sa120\keepn\nowidctlpar\faauto\outlinelevel0\rin0\lin0\itap0 \b\f5\fs20\cf17\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 \page }{
+\cs15\f8\fs16\up6\lang2057\langfe0\langnp2057\langfenp0 !{\footnote \pard\plain \ql \li0\ri0\nowidctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6\lang2057\langfe0\langnp2057\langfenp0 !}{
+\lang2057\langfe1033\langnp2057  DB("btn_up")}}}{\cs15\fs16\up6\lang2057\langfe1033\langnp2057 #{\footnote \pard\plain \s16\ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\cs15\f8\up6 #}{
+ AFX_HIDP_default
+\par }}}{\lang2057\langfe1033\langnp2057  No Help Available
+\par }\pard\plain \ql \li0\ri0\widctlpar\faauto\rin0\lin0\itap0 \f5\fs16\lang1033\langfe1033\cgrid\langnp1033\langfenp1033 {\lang2057\langfe1033\langnp2057 
+\par No help is available for this message box.
+\par 
+\par << If you wish to author help specific to each message box prompt, then remove the AFX_HIDP_xxx values from the [ALIAS] section of your .HPJ file, and author a topic for each AFX_HIDP_xxx value.  For example, AFX_HIDP_INVALID_FILENAME is the help topic fo
+r the Invalid Filename message box. >>
+\par 
+\par }}
