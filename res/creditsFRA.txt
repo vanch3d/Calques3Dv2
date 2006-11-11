@@ -1,0 +1,45 @@
+<font color='255,255,255' face='verdana' size='11'>
+<font size='32' style='b' color='51,51,153' align='center'>Calques 3D</font><br>
+<font color='51,51,153'>Version 2.1.8</font><p><p>
+<font style='i' color='1,1,1' align='right' >Dédié à Philippe BERNAT</font><p><p>
+  <font style='bu' align='left'>Les auteurs :<br></font><vspace size='5'>
+  <font style='b' color='1,1,1' align='left'>Nicolas VAN LABEKE<br></font>
+    <font color='1,1,1' align='left'>ESRC CREDIT<br></font>
+    <font color='1,1,1' align='left'>School of Psychology<br></font>
+    <font color='1,1,1' align='left'>University Park<br></font>
+    <font color='1,1,1' align='left'>NOTTINGHAM NG7 2RD<br></font>
+    <font color='1,1,1' align='left'>UK<p></font>
+  <font style='b' color='1,1,1' align='left'>Philippe BERNAT<br></font>
+  <font style='b' color='1,1,1' align='left'>Josette MORINET-LAMBERT<br></font>
+    <font color='1,1,1' align='left'>Equipe Informatique et Formation<br></font>
+    <font color='1,1,1' align='left'>LORIA/CNRS - Université Henri Poincaré<br></font>
+    <font color='1,1,1' align='left'>Bâtiment LORIA - BP 239<br></font>
+    <font color='1,1,1' align='left'>F-54506 Vandoeuvre les Nancy cedex<br></font>
+    <font color='1,1,1' align='left'>France<p><p></font>
+  <font style='bu' align='left'>Remerciements :<br></font><vspace size='5'>
+<font color='1,1,1' align='left'>
+  Les auteurs voudraient remercier les enseignants et<br>
+  didacticiens qui, au sein d'un groupe de recherche,<br>
+  ont collaborés à la definition des objectifs pédago-<br>
+  giques et du contenu de <font style='b' color='51,51,153'>Calques 3D</font> :<p></font>
+<font color='1,1,1' align='left' style='b'>
+        - Jean-Claude DEMOLY<br>
+        - Christian GINET<br>
+        - Jean-Pierre GIORGI<br>
+        - Norbert GRESS<br>
+        - Françoise JEAN <br>
+        - Philippe LOMBARD<br>
+        - Christine MANCIAUX<br>
+        - Marie-Hélène MUNIER<br>
+        - Bernard PARZYSZ<br>
+        - Bernard PIERROT<br>
+        - Serge REMY<br>
+        - Michèle THIRY<br>
+        - Agnès VOLPI<p></font>
+<font color='1,1,1' align='left'>
+  Tous nos remerciements à <font style='b'>Nicolas ROSILLO</font> pour<br>
+  la traduction du logiciel en espagnol.<p><p>
+<font color='1,1,1' align='left'>
+  Ce projet a été initialement soutenu par une sub-<br>
+  vention du <font style='b'><a href='http://www.w3c.org' color='51,51,153' style='u'>Conseil Régional de Lorraine</a></font>.<p><p>
+  </font><vspace size='80'>

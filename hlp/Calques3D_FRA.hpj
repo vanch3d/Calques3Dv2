@@ -1,0 +1,97 @@
+; This file is maintained by HCW. Do not modify this file directly.
+
+; HIDD_ABOUTBOX = HID_APP_ABOUT
+
+[OPTIONS]
+COMPRESS=12 Hall Zeck
+ERRORLOG=Calques3D.LOG
+LCID=0x409 0x0 0x0 ; English (United States)
+REPORT=Yes
+CONTENTS=main_index
+TITLE=Aide de Calques 3D
+BMROOT=..
+BMROOT=.
+ROOT=..
+ROOT=.
+HLP=Calques3D_FRA.HLP
+
+[FILES]
+afxcore_fr.rtf
+afxprint_fr.rtf
+bcgcontrolbar.rtf
+Views.rtf
+dlg.rtf
+menu.rtf
+
+[ALIAS]
+AFX_HIDP_ASK_TO_SAVE              = AFX_HIDP_default
+AFX_HIDP_ASK_TO_UPDATE            = AFX_HIDP_default
+AFX_HIDP_BAD_VERB                 = AFX_HIDP_default
+AFX_HIDP_COMMAND_FAILURE          = AFX_HIDP_default
+AFX_HIDP_FAILED_ACCESS_READ       = AFX_HIDP_default
+AFX_HIDP_FAILED_ACCESS_WRITE      = AFX_HIDP_default
+AFX_HIDP_FAILED_DISK_FULL         = AFX_HIDP_default
+AFX_HIDP_FAILED_INVALID_FORMAT    = AFX_HIDP_default
+AFX_HIDP_FAILED_INVALID_PATH      = AFX_HIDP_default
+AFX_HIDP_FAILED_IO_ERROR_READ     = AFX_HIDP_default
+AFX_HIDP_FAILED_IO_ERROR_WRITE    = AFX_HIDP_default
+AFX_HIDP_FAILED_MEMORY_ALLOC      = AFX_HIDP_default
+AFX_HIDP_FAILED_TO_AUTO_REGISTER  = AFX_HIDP_default
+AFX_HIDP_FAILED_TO_CONNECT        = AFX_HIDP_default
+AFX_HIDP_FAILED_TO_CREATE_DOC     = AFX_HIDP_default
+AFX_HIDP_FAILED_TO_LAUNCH         = AFX_HIDP_default
+AFX_HIDP_FAILED_TO_LAUNCH_HELP    = AFX_HIDP_default
+AFX_HIDP_FAILED_TO_NOTIFY         = AFX_HIDP_default
+AFX_HIDP_FAILED_TO_OPEN_DOC       = AFX_HIDP_default
+AFX_HIDP_FAILED_TO_REGISTER       = AFX_HIDP_default
+AFX_HIDP_FAILED_TO_SAVE_DOC       = AFX_HIDP_default
+AFX_HIDP_FAILED_TO_START_PRINT    = AFX_HIDP_default
+AFX_HIDP_FAILED_TO_UPDATE         = AFX_HIDP_default
+AFX_HIDP_FILE_TOO_LARGE           = AFX_HIDP_default
+AFX_HIDP_INTERNAL_FAILURE         = AFX_HIDP_default
+AFX_HIDP_INVALID_FILENAME         = AFX_HIDP_default
+AFX_HIDP_PARSE_INT                = AFX_HIDP_default
+AFX_HIDP_PARSE_INT_RANGE          = AFX_HIDP_default
+AFX_HIDP_PARSE_REAL               = AFX_HIDP_default
+AFX_HIDP_PARSE_REAL_RANGE         = AFX_HIDP_default
+AFX_HIDP_PARSE_STRING_SIZE        = AFX_HIDP_default
+AFX_HIDP_SERVER_BUSY              = AFX_HIDP_default
+AFX_HIDP_STATIC_OBJECT            = AFX_HIDP_default
+HID_HT_HSCROLL = scrollbars
+HID_HT_MAXBUTTON = HID_SC_MAXIMIZE
+HID_HT_MINBUTTON = HID_SC_MINIMIZE
+HID_HT_SIZE = HID_SC_SIZE
+HID_HT_VSCROLL = scrollbars
+HID_MACROS_USER10=HID_MACROS_USER1        ; Redirect every user's macros on the same topic
+HID_MACROS_USER2=HID_MACROS_USER1         ; Redirect every user's macros on the same topic
+HID_MACROS_USER3=HID_MACROS_USER1         ; Redirect every user's macros on the same topic
+HID_MACROS_USER4=HID_MACROS_USER1         ; Redirect every user's macros on the same topic
+HID_MACROS_USER5=HID_MACROS_USER1         ; Redirect every user's macros on the same topic
+HID_MACROS_USER6=HID_MACROS_USER1         ; Redirect every user's macros on the same topic
+HID_MACROS_USER7=HID_MACROS_USER1         ; Redirect every user's macros on the same topic
+HID_MACROS_USER8=HID_MACROS_USER1         ; Redirect every user's macros on the same topic
+HID_MACROS_USER9=HID_MACROS_USER1         ; Redirect every user's macros on the same topic
+HIDD_ABOUTCALQUE=HIDD_ABOUTBOX              ; About Panes
+HIDD_ABOUTCREDIT=HIDD_ABOUTBOX              ; About Panes
+HIDD_ABOUTPROP=HIDD_ABOUTBOX            ; About Panes
+HID_VISUALISATION_POV_POV2= HID_VISUALISATION_POV_POV1              ; PoV
+HID_VISUALISATION_POV_POV3= HID_VISUALISATION_POV_POV1              ; PoV
+HID_VISUALISATION_POV_POV4= HID_VISUALISATION_POV_POV1              ; PoV
+HIDR_CALQUETYPE = HIDR_DOC1TYPE
+HIDR_MAINFRAME = main_index
+HIDC_SPINSIZE=HIDC_POINTSIZE
+
+[MAP]
+#include C:\Program Files\Microsoft Visual Studio\VC98\MFC\Include\AFXHELP.HM
+#include ..\resource.hm
+#include <BCGControlBar.hm>
+#include <Calques3D.hm>
+
+[WINDOWS]
+Main="",(595,101,416,656),60416,(r14876671),(r12632256),f3
+aux="Glossary",(470,292,318,527),4,(r14876671),(r12632256),1
+
+[CONFIG]
+CB("btn_gloss","&Glossary","JI(`>aux',`Glossary')")
+BrowseButtons()
+CB("btn_up","&Up","JI(`',`AproposdeCalques3D')"):DB("btn_up")
