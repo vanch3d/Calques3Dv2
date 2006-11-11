@@ -103,10 +103,10 @@ BOOL CCalques3DApp::InitInstance()
 	//------------------------------------------------------------
 	// Localization: comment/uncomment for the relevant version
 	//------------------------------------------------------------
-    //m_hinstBCGCBRes = LoadLibrary (_T("BCGCBProResESP.dll"));    // *** - Spanish
+    m_hinstBCGCBRes = LoadLibrary (_T("BCGCBProResESP.dll"));    // *** - Spanish
     //m_hinstBCGCBRes = LoadLibrary (_T("BCGCBProResFRA.dll"));    // *** - French
     //m_hinstBCGCBRes = LoadLibrary (_T("BCGCBProResPTG.dll"));    // *** - Portuguese
-	//BCGCBSetResourceHandle (m_hinstBCGCBRes);
+	::BCGCBProSetResourceHandle (m_hinstBCGCBRes);
 
 	//------------------------------------------------------------
 	// Standard initialization
@@ -289,7 +289,7 @@ int CCalques3DApp::ExitInstance()
 	//------------------------------------------------------------
 	// Localization: comment/uncomment for the relevant version
 	//------------------------------------------------------------
-	//FreeLibrary (m_hinstBCGCBRes);
+	FreeLibrary (m_hinstBCGCBRes);
 	return CWinApp::ExitInstance();
 }
 
