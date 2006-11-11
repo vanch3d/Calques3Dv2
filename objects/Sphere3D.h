@@ -27,7 +27,7 @@ private:
 	CVisualParam*	locVisParam;
 
 public:
-	CSphere3D() : CObject3D() {};
+	CSphere3D();
 	CSphere3D(CPoint3D *p1,CPoint3D *p2);
 	CSphere3D(const CObject3D & );
 	~CSphere3D();

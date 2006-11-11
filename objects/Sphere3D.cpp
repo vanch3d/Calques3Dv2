@@ -73,6 +73,11 @@ void CSphere3D::DrawUnit(CVector4& deb,CVector4& fin,CVector4& P1,
 //////////////////////////////////////////////////////////////////////
 IMPLEMENT_SERIAL(CSphere3D, CObject3D, VERSIONABLE_SCHEMA | 1)
 
+CSphere3D::CSphere3D() : CObject3D() 
+{
+	locVisParam = NULL;
+}
+
 CSphere3D::CSphere3D(CPoint3D *p1,CPoint3D *p2) : CObject3D()
 {
 	locVisParam = NULL;
