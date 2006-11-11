@@ -4,8 +4,6 @@
 #include "stdafx.h"
 #include "Calques3D.h"
 
-//#include "MVDocTemplate.hpp"
-
 #include "MainFrm.h"
 #include "ChildFrm.h"
 #include "Calques3DDoc.h"
@@ -103,10 +101,10 @@ BOOL CCalques3DApp::InitInstance()
 	//------------------------------------------------------------
 	// Localization: comment/uncomment for the relevant version
 	//------------------------------------------------------------
-    //m_hinstBCGCBRes = LoadLibrary (_T("BCGCBResESP.dll"));    // *** - Spanish
-    //m_hinstBCGCBRes = LoadLibrary (_T("BCGCBResFRA.dll"));    // *** - French
-    //m_hinstBCGCBRes = LoadLibrary (_T("BCGCBResPTG.dll"));    // *** - Portuguese
-	//BCGCBSetResourceHandle (m_hinstBCGCBRes);
+    //m_hinstBCGCBRes = LoadLibrary (_T("BCGCBProResESP.dll"));    // *** - Spanish
+    //m_hinstBCGCBRes = LoadLibrary (_T("BCGCBProResFRA.dll"));    // *** - French
+    //m_hinstBCGCBRes = LoadLibrary (_T("BCGCBProResPTG.dll"));    // *** - Portuguese
+	//::BCGCBProSetResourceHandle (m_hinstBCGCBRes);
 
 	//------------------------------------------------------------
 	// Standard initialization
@@ -286,6 +284,9 @@ BOOL CCalques3DApp::InitInstance()
 int CCalques3DApp::ExitInstance() 
 {
 	BCGCBProCleanUp();
+	//------------------------------------------------------------
+	// Localization: comment/uncomment for the relevant version
+	//------------------------------------------------------------
 	//FreeLibrary (m_hinstBCGCBRes);
 	return CWinApp::ExitInstance();
 }
