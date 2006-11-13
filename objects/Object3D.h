@@ -193,6 +193,12 @@ public:
 
 };
 
+//////////////////////////////////////////////////////////////////////
+/// Method =
+///
+/// \param %PARAMNAME% (%PARAMTYPE%)	todo
+/// \return inline void CObject3DAttr::operator
+//////////////////////////////////////////////////////////////////////
 inline void CObject3DAttr::operator =(const CObject3DAttr& other)
 {
 	m_bVisible = other.m_bVisible; 
@@ -358,6 +364,7 @@ public:
 	virtual void	ClearHistorique() { pHistItem = NULL;};
 	virtual CString	DrawSymbolic(); 
 	virtual void	DrawMathPad(CDC*) {};
+	virtual void	Draw3DRendering() {};
 
 	virtual void	DrawDepGraph(CDC* pDC,CImageList *pImgList=NULL,int nTrace=DIS_GRAPH_NONE,BOOL bDrawNode=TRUE,BOOL bDrawLink=TRUE);
 	virtual void	DrawDepGraphLink(CDC* pDC,CObject3D *pSrc=NULL,CObject3D *pDest=NULL,int nTrace=DIS_GRAPH_NONE);
