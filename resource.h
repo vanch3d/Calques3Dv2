@@ -31,7 +31,7 @@
 #define IDR_VIEWANALYTIC                145
 #define IDR_VIEWDEPEND                  146
 #define IDB_WORKSPACE                   147
-#define IDR_VIEWMACRO2                  151
+#define IDR_VIEWRENDERING               147
 #define IDD_SAVE_PROFILE_DLG            152
 #define IDC_POINT                       153
 #define IDC_POINTER_COPY                154
@@ -446,6 +446,7 @@
 #define ID_VIEW_CALQUE2                 30005
 #define ID_VIEW_CALQUE3                 30006
 #define ID_VIEW_CALQUE4                 30007
+#define ID_VIEW_RENDERING               30008
 #define ID_VIEW_PLACEMENT_SAVE          30010
 #define ID_VIEW_PLACEMENT_RESTORE       30011
 #define ID_VIEW_CUSTOMIZE               30012
