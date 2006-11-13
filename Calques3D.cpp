@@ -14,7 +14,7 @@
 #include "ViewGraph.h"
 #include "ViewAnalytic.h"
 #include "ViewDepend.h"
-#include "TestView.h"
+#include "View3DRender.h"
 
 #include "Splash.h"
 
@@ -246,6 +246,13 @@ BOOL CCalques3DApp::InitInstance()
 		RUNTIME_CLASS(CCalques3DDoc),
 		RUNTIME_CLASS(CChildFrame), // custom MDI child frame
 		RUNTIME_CLASS(CViewDepend));
+	AddDocTemplate(pDocTemplate);
+
+	pDocTemplate = new CCalques3DDocTemplate(
+		IDR_VIEWRENDERING,
+		RUNTIME_CLASS(CCalques3DDoc),
+		RUNTIME_CLASS(CChildFrame), // custom MDI child frame
+		RUNTIME_CLASS(CView3DRender));
 	AddDocTemplate(pDocTemplate);
 
 	// create main MDI Frame window
