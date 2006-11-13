@@ -14,6 +14,7 @@
 #include "ViewCalque.h"
 #include "ViewAnalytic.h"
 #include "ViewDepend.h"
+#include "View3DRender.h"
 
 #include "objects\Object3d.h"
 //#include "objects\ObjectPropPage.h"
@@ -58,6 +59,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CBCGPMDIFrameWnd)
 	ON_COMMAND(ID_VIEW_HISTORIQUE, OnViewHistorique)
 	ON_COMMAND(ID_VIEW_GRAPH, OnViewGraph)
 	ON_COMMAND(ID_VIEW_ANALYTIC, OnViewAnalytic)
+	ON_COMMAND(ID_VIEW_RENDERING, OnViewRendering)
 	ON_WM_CLOSE()
 	ON_COMMAND(ID_HELP_KEYBOARDMAP, OnHelpKeyboardmap)
 	//}}AFX_MSG_MAP
@@ -89,6 +91,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CBCGPMDIFrameWnd)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_UNIVERSE, OnUpdateViews)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_HISTORIQUE, OnUpdateViews)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_ANALYTIC, OnUpdateViews)
+	ON_UPDATE_COMMAND_UI(ID_VIEW_RENDERING, OnUpdateViews)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_GRAPH, OnUpdateViews)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_OBJECT, OnUpdateViewObject)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_CONSTRUCTION, OnUpdateViewConstruction)
@@ -1105,6 +1108,9 @@ void CMainFrame::OnUpdateViews(CCmdUI* pCmdUI)
 		case ID_VIEW_ANALYTIC:
 			bCheck = pView->IsKindOf(RUNTIME_CLASS(CViewAnalytic));
 			break;
+		case ID_VIEW_RENDERING:
+			bCheck = pView->IsKindOf(RUNTIME_CLASS(CView3DRender));
+			break;
 		case ID_VIEW_CALQUE:
 		case ID_VIEW_CALQUE2:
 		case ID_VIEW_CALQUE3:
@@ -1222,6 +1228,11 @@ void CMainFrame::OnViewGraph()
 void CMainFrame::OnViewHistorique() 
 {
 	LaunchViews(RUNTIME_CLASS(CViewHisto),IDR_VIEWHISTORIQUE);
+}
+
+void CMainFrame::OnViewRendering() 
+{
+	LaunchViews(RUNTIME_CLASS(CView3DRender),IDR_VIEWRENDERING);
 }
 
 void CMainFrame::OnDrawMenuLogo (CDC* pDC, CBCGPPopupMenu* pMenu, const CRect& rectLogo)

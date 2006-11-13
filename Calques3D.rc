@@ -41,6 +41,7 @@ IDR_VIEWGRAPH           ICON    DISCARDABLE     "res\\idr_graph.ico"
 IDR_VIEWANALYTIC        ICON    DISCARDABLE     "res\\idr_alge.ico"
 IDR_VIEWMACRO           ICON    DISCARDABLE     "res\\idr_macro.ico"
 IDR_VIEWDEPEND          ICON    DISCARDABLE     "res\\idr_dep.ico"
+IDR_VIEWRENDERING       ICON    DISCARDABLE     "res\\idr_render.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -298,7 +299,7 @@ IDD_OBJECTPROP_PAGE DIALOGEX 0, 0, 212, 73
 STYLE DS_MODALFRAME | DS_CONTEXTHELP | WS_POPUP | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_CONTEXTHELP
 CAPTION "Appearance"
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     GROUPBOX        "",IDC_STATIC,4,4,116,64,BS_FLAT
     LTEXT           "&Name :",IDC_STATIC,8,12,24,12,SS_CENTERIMAGE
@@ -514,7 +515,7 @@ END
 
 IDD_SPLASH DIALOGEX 0, 0, 204, 233
 STYLE DS_MODALFRAME | WS_POPUP
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     CONTROL         "",IDC_BIGICON,"Button",BS_OWNERDRAW | WS_DISABLED,4,4,
                     34,30
@@ -565,7 +566,7 @@ IDD_ZOOM_DLG DIALOGEX 0, 0, 192, 20
 STYLE DS_CONTEXTHELP | WS_POPUP | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_TOOLWINDOW | WS_EX_CONTEXTHELP
 CAPTION "Zoom"
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     CONTROL         "Slider1",IDC_ZOOM_SLIDER,"msctls_trackbar32",
                     TBS_AUTOTICKS | TBS_TOP | WS_TABSTOP,0,0,168,20,0,
@@ -657,7 +658,7 @@ END
 IDD_PREF_DISCOVERY_PAGE DIALOGEX 0, 0, 272, 146
 STYLE DS_CONTEXTHELP | WS_CHILD | WS_CAPTION
 CAPTION "Discovery (*)"
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     GROUPBOX        "Discovery System",IDC_STATIC,4,4,264,64,BS_FLAT
     RTEXT           "CAS Engine:",IDC_STATIC,16,16,48,12,SS_CENTERIMAGE
@@ -1058,6 +1059,7 @@ BEGIN
         MENUITEM "Tracing &3",                  ID_VIEW_CALQUE3
         MENUITEM "Tracing &4",                  ID_VIEW_CALQUE4
         MENUITEM "&MathPad",                    ID_VIEW_ANALYTIC
+        MENUITEM "3D &Renderer",                ID_VIEW_RENDERING
     END
     POPUP "Vi&sualisation"
     BEGIN
@@ -2166,6 +2168,84 @@ BEGIN
     END
 END
 
+IDR_VIEWRENDERING MENU PRELOAD DISCARDABLE 
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "&New\tCtrl+N",                ID_FILE_NEW
+        MENUITEM "&Open...\tCtrl+O",            ID_FILE_OPEN
+        MENUITEM "&Close",                      ID_FILE_CLOSE
+        MENUITEM "&Save\tCtrl+S",               ID_FILE_SAVE
+        MENUITEM "Save &As...",                 ID_FILE_SAVE_AS
+        MENUITEM SEPARATOR
+        MENUITEM "&Print...\tCtrl+P",           ID_FILE_PRINT
+        MENUITEM "Print Pre&view",              ID_FILE_PRINT_PREVIEW
+        MENUITEM "P&rint Setup...",             ID_FILE_PRINT_SETUP
+        MENUITEM SEPARATOR
+        MENUITEM "Pre&ferences",                ID_VIEW_CUSTOMIZE
+        MENUITEM SEPARATOR
+        MENUITEM "Recent File",                 ID_FILE_MRU_FILE1, GRAYED
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit",                       ID_APP_EXIT
+    END
+    POPUP "&Edit"
+    BEGIN
+        MENUITEM "&Undo\tCtrl+Z",               ID_EDIT_UNDO
+        MENUITEM "&Redo\tCtrl+Y",               ID_EDIT_REDO
+        MENUITEM SEPARATOR
+        MENUITEM "Cu&t\tCtrl+X",                ID_EDIT_CUT
+        MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
+        MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
+        MENUITEM SEPARATOR
+    END
+    POPUP "&View"
+    BEGIN
+        POPUP "&Toolbars"
+        BEGIN
+            MENUITEM "",                            ID_VIEW_TOOLBARS
+        END
+        MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
+        MENUITEM SEPARATOR
+        POPUP "&Placement"
+        BEGIN
+            MENUITEM "&Save",                       ID_VIEW_PLACEMENT_SAVE
+            MENUITEM "&Restore",                    ID_VIEW_PLACEMENT_RESTORE
+
+        END
+        MENUITEM SEPARATOR
+        MENUITEM "&Universe",                   ID_VIEW_UNIVERSE
+        MENUITEM "&History",                    ID_VIEW_HISTORIQUE
+        MENUITEM "&Graph",                      ID_VIEW_GRAPH
+        MENUITEM "Tracing &1",                  ID_VIEW_CALQUE
+        MENUITEM "Tracing &2",                  ID_VIEW_CALQUE2
+        MENUITEM "Tracing &3",                  ID_VIEW_CALQUE3
+        MENUITEM "Tracing &4",                  ID_VIEW_CALQUE4
+        MENUITEM "&MathPad",                    ID_VIEW_ANALYTIC
+    END
+    MENUITEM "3D &Rendering",               65535
+    POPUP "&Tools"
+    BEGIN
+        MENUITEM "< User-defined tools >",      ID_TOOLS_ENTRY, GRAYED
+    END
+    POPUP "&Window"
+    BEGIN
+        MENUITEM "&Cascade",                    ID_WINDOW_CASCADE
+        MENUITEM "Tile &Horizontally",          ID_WINDOW_TILE_HORZ
+        MENUITEM "Tile &Vertically",            ID_WINDOW_TILE_VERT
+        MENUITEM "&Arrange Icons",              ID_WINDOW_ARRANGE
+    END
+    POPUP "&Help", HELP
+    BEGIN
+        MENUITEM "&Help on Task",               ID_HELP
+        MENUITEM "Help &Index",                 ID_HELP_INDEX
+        MENUITEM "Help &Topics",                ID_HELP_FINDER
+        MENUITEM SEPARATOR
+        MENUITEM "&Keyboard Map...",            ID_HELP_KEYBOARDMAP
+        MENUITEM SEPARATOR
+        MENUITEM "&About Calques3D...",         ID_APP_ABOUT
+    END
+END
+
 
 #ifndef _MAC
 /////////////////////////////////////////////////////////////////////////////
@@ -2247,7 +2327,7 @@ BEGIN
     IDR_VIEWGRAPH           "Graph\n\nGraph\n\n\n\nGraph menu. Appears when a 'Graph' window is active."
     IDR_VIEWANALYTIC        "MathPad\n\nMathPad\n\n\n\nMathPad menu. Appears when a MathPad 'algrebraic' window is active."
     IDR_VIEWDEPEND          "Algrebra222\n\nAlgrebraic Notation\n\n\n\nAlgrebra menu. Appears when an 'Algrebraic notations' window is active."
-    IDR_VIEWMACRO2          "C3D\nC3D\nC3D\n*.p3d\n.p3d\nCalquesFFF3D.Document\nCalques 3D FFF Document"
+    IDR_VIEWRENDERING       "3D View\n\n3D Rendering\n\n\n\n3D View menu. Appears when an '3D View' window is active."
 END
 
 STRINGTABLE PRELOAD DISCARDABLE 
@@ -2418,6 +2498,7 @@ BEGIN
     ID_VIEW_CALQUE2         "Display a ""Tracing"" window\nShow Calque"
     ID_VIEW_CALQUE3         "Display a ""Tracing"" window\nShow Calque"
     ID_VIEW_CALQUE4         "Display a ""Tracing"" window\nShow Calque"
+    ID_VIEW_RENDERING       "Display the 3D rendering window\nShow 3D View"
     ID_VIEW_PLACEMENT_SAVE  "Save the placement of every views of this document\nSave Placement"
     ID_VIEW_PLACEMENT_RESTORE 
                             "Restore the placement of every views of this document\nRestore Placement"

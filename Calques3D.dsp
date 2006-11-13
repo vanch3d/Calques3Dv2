@@ -79,7 +79,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 version.lib /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept
+# ADD LINK32 version.lib /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept /libpath:"OGLTools/"
 
 !ENDIF 
 
@@ -476,6 +476,10 @@ SOURCE=.\Tasks\VerifyDlg.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\View3DRender.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\ViewAnalytic.cpp
 # End Source File
 # Begin Source File
@@ -831,6 +835,10 @@ SOURCE=.\Tasks\VerifyDlg.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\View3DRender.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\ViewAnalytic.h
 # End Source File
 # Begin Source File
@@ -956,6 +964,10 @@ SOURCE=.\res\idr_histo.ico
 # Begin Source File
 
 SOURCE=.\res\idr_macro.ico
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\idr_render.ico
 # End Source File
 # Begin Source File
 

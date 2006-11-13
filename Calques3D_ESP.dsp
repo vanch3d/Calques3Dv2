@@ -128,11 +128,11 @@ SOURCE=.\c3dLangES.rc
 # End Source File
 # Begin Source File
 
-SOURCE=.\Calques3D.h
+SOURCE=.\Calques3D_ESP.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Calques3D_ESP.cpp
+SOURCE=.\hlp\Calques3D_ESP.hpj
 # End Source File
 # Begin Source File
 
@@ -485,6 +485,10 @@ SOURCE=.\BCGPSliderButton.h
 # Begin Source File
 
 SOURCE=.\BCGXMLSettings.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\Calques3D.h
 # End Source File
 # Begin Source File
 

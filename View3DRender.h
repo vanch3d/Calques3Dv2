@@ -6,6 +6,7 @@
 #endif // _MSC_VER > 1000
 // View3DRender.h : header file
 //
+#include "OGLTools\OGLT.h"
 
 /////////////////////////////////////////////////////////////////////////////
 // CView3DRender view
@@ -18,13 +19,21 @@ protected:
 
 // Attributes
 public:
+	CWGL m_wgl;
+	float m_rtri;
+	float m_rquad;
+	bool m_bResizing;
 
 // Operations
 public:
+	CCalques3DDoc* GetDocument();
+	int DrawGLScene();
 
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CView3DRender)
+	public:
+	virtual void OnInitialUpdate();
 	protected:
 	virtual void OnDraw(CDC* pDC);      // overridden to draw this view
 	//}}AFX_VIRTUAL
@@ -40,10 +49,17 @@ protected:
 	// Generated message map functions
 protected:
 	//{{AFX_MSG(CView3DRender)
-		// NOTE - the ClassWizard will add and remove member functions here.
+	afx_msg void OnSize(UINT nType, int cx, int cy);
+	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
+
+
+#ifndef _DEBUG  // debug version in Calques3DView.cpp
+inline CCalques3DDoc* CView3DRender::GetDocument()
+   { return (CCalques3DDoc*)m_pDocument; }
+#endif
 
 /////////////////////////////////////////////////////////////////////////////
 

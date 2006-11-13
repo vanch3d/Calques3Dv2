@@ -75,6 +75,7 @@ protected:
 	afx_msg void OnViewHistorique();
 	afx_msg void OnViewGraph();
 	afx_msg void OnViewAnalytic();
+	afx_msg void OnViewRendering();
 	afx_msg void OnHelpKeyboardmap();
 	//}}AFX_MSG
 	afx_msg void OnViewDepend();
