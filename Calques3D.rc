@@ -48,28 +48,28 @@ IDR_VIEWRENDERING       ICON    DISCARDABLE     "res\\idr_render.ico"
 // Bitmap
 //
 
-IDR_MAINFRAME           BITMAP  MOVEABLE PURE   "res\\Toolbar.bmp"
+IDR_MAINFRAME           BITMAP  MOVEABLE PURE   "res\\tb_mainframe.bmp"
 IDB_WORKSPACE           BITMAP  DISCARDABLE     "res\\workspace.bmp"
-IDR_OBJECTS_TB          BITMAP  MOVEABLE PURE   "res\\objectTB.bmp"
-IDR_VISUALISATION_TB    BITMAP  MOVEABLE PURE   "res\\visualTB.bmp"
-IDR_COMMANDS_TB         BITMAP  MOVEABLE PURE   "res\\commandTB.bmp"
-IDR_CONSTRUCTION_TB     BITMAP  MOVEABLE PURE   "res\\constrTB.bmp"
+IDR_OBJECTS_TB          BITMAP  MOVEABLE PURE   "res\\tb_objects.bmp"
+IDR_VISUALISATION_TB    BITMAP  MOVEABLE PURE   "res\\tb_visual.bmp"
+IDR_COMMANDS_TB         BITMAP  MOVEABLE PURE   "res\\tb_command.bmp"
+IDR_CONSTRUCTION_TB     BITMAP  MOVEABLE PURE   "res\\tb_construction.bmp"
 IDB_VAR_ICONS           BITMAP  DISCARDABLE     "res\\smallcpn.bmp"
 IDB_OBJECTS_ICONS       BITMAP  DISCARDABLE     "res\\obj_icon.bmp"
 IDB_SPLASH              BITMAP  DISCARDABLE     "res\\Splsh16.bmp"
-IDR_UNIVERSEH_TB        BITMAP  MOVEABLE PURE   "res\\universe.bmp"
-IDR_UNIVERSEV_TB        BITMAP  MOVEABLE PURE   "res\\bmp00001.bmp"
-IDR_POINTON_TB          BITMAP  MOVEABLE PURE   "res\\pointon.bmp"
-IDR_INTERSECT_TB        BITMAP  MOVEABLE PURE   "res\\intersec.bmp"
-IDR_POINTDIV_TB         BITMAP  MOVEABLE PURE   "res\\pointdiv.bmp"
+IDR_UNIVERSEH_TB        BITMAP  MOVEABLE PURE   "res\\tb_univh.bmp"
+IDR_UNIVERSEV_TB        BITMAP  MOVEABLE PURE   "res\\tb_univv.bmp"
+IDR_POINTON_TB          BITMAP  MOVEABLE PURE   "res\\tb_pointon.bmp"
+IDR_INTERSECT_TB        BITMAP  MOVEABLE PURE   "res\\tb_intersec.bmp"
+IDR_POINTDIV_TB         BITMAP  MOVEABLE PURE   "res\\tb_pointdiv.bmp"
 IDB_MENU_LOGO           BITMAP  DISCARDABLE     "res\\menu_logo.bmp"
-IDR_GRAPH_TB            BITMAP  MOVEABLE PURE   "res\\graph.bmp"
+IDR_GRAPH_TB            BITMAP  MOVEABLE PURE   "res\\tb_graph.bmp"
 IDB_BITMAP48            BITMAP  DISCARDABLE     "res\\calque48.bmp"
 IDB_LOGO                BITMAP  DISCARDABLE     "res\\logo.bmp"
-IDR_VERIFY_TB           BITMAP  MOVEABLE PURE   "res\\verifyTB.bmp"
+IDR_VERIFY_TB           BITMAP  MOVEABLE PURE   "res\\tb_verify.bmp"
 IDB_BTNICON             BITMAP  DISCARDABLE     "res\\btnicon.bmp"
 IDB_PREFS_ICONS         BITMAP  DISCARDABLE     "res\\preficons.bmp"
-IDR_EXPLORATION_TB      BITMAP  DISCARDABLE     "res\\explorTB.bmp"
+IDR_EXPLORATION_TB      BITMAP  DISCARDABLE     "res\\tb_exploration.bmp"
 IDB_SLIDERS             BITMAP  DISCARDABLE     "res\\sliders.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
@@ -1044,6 +1044,7 @@ BEGIN
         END
         MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
         MENUITEM SEPARATOR
+        MENUITEM "&Full Screen",                ID_VIEW_FULLSCREEN
         POPUP "&Placement"
         BEGIN
             MENUITEM "&Save",                       ID_VIEW_PLACEMENT_SAVE
@@ -1054,11 +1055,15 @@ BEGIN
         MENUITEM "&Universe",                   ID_VIEW_UNIVERSE
         MENUITEM "&History",                    ID_VIEW_HISTORIQUE
         MENUITEM "&Graph",                      ID_VIEW_GRAPH
-        MENUITEM "Tracing &1",                  ID_VIEW_CALQUE
-        MENUITEM "Tracing &2",                  ID_VIEW_CALQUE2
-        MENUITEM "Tracing &3",                  ID_VIEW_CALQUE3
-        MENUITEM "Tracing &4",                  ID_VIEW_CALQUE4
         MENUITEM "&MathPad",                    ID_VIEW_ANALYTIC
+        POPUP "Tracings"
+        BEGIN
+            MENUITEM "Tracing &1",                  ID_VIEW_CALQUE
+            MENUITEM "Tracing &2",                  ID_VIEW_CALQUE2
+            MENUITEM "Tracing &3",                  ID_VIEW_CALQUE3
+            MENUITEM "Tracing &4",                  ID_VIEW_CALQUE4
+        END
+        MENUITEM SEPARATOR
         MENUITEM "3D &Renderer",                ID_VIEW_RENDERING
     END
     POPUP "Vi&sualisation"
