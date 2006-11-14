@@ -16,6 +16,8 @@
 #include "ViewDepend.h"
 #include "View3DRender.h"
 
+#include "BCGPSliderButton.h"
+
 #include "objects\Object3d.h"
 //#include "objects\ObjectPropPage.h"
 
@@ -60,8 +62,9 @@ BEGIN_MESSAGE_MAP(CMainFrame, CBCGPMDIFrameWnd)
 	ON_COMMAND(ID_VIEW_GRAPH, OnViewGraph)
 	ON_COMMAND(ID_VIEW_ANALYTIC, OnViewAnalytic)
 	ON_COMMAND(ID_VIEW_RENDERING, OnViewRendering)
-	ON_WM_CLOSE()
 	ON_COMMAND(ID_HELP_KEYBOARDMAP, OnHelpKeyboardmap)
+	ON_COMMAND(ID_VIEW_FULLSCREEN, OnViewFullScreen)
+	ON_WM_CLOSE()
 	//}}AFX_MSG_MAP
 	// Global help commands
 	//ON_COMMAND(ID_VIEW_DEPENDLSIT, OnViewDepend)
@@ -370,6 +373,8 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	InitUserToobars (NULL,uiFirstUserToolBarId,uiLastUserToolBarId);
 
 	EnableWindowsDialog (ID_WINDOW_MANAGER, IDS_WINDOW_MANAGER, TRUE);
+	EnableFullScreenMode (ID_VIEW_FULLSCREEN);
+	EnableFullScreenMainMenu(TRUE);
 
 	//-----------------------------------
 	// Create "File" menu logo resources:
@@ -967,14 +972,14 @@ afx_msg LRESULT CMainFrame::OnSetTaskMessageString(WPARAM wp, LPARAM lp)
 
 LRESULT CMainFrame::OnSetMessageString(WPARAM wParam, LPARAM lParam)
 {
-//	m_wndStatusBar.SetPaneIcon(0,(HICON)NULL);
+	m_wndStatusBar.SetPaneIcon(0,(HICON)NULL);
 	return CBCGPMDIFrameWnd::OnSetMessageString(wParam, lParam);
 }
 
 LRESULT CMainFrame::OnSetObjectSelectionString(WPARAM wParam, LPARAM lParam)
 {
 	CString strTaskHelp(*(CString*)wParam);
-//	m_wndStatusBar.SetPaneIcon(0,(HICON)NULL);
+	m_wndStatusBar.SetPaneIcon(0,(HICON)NULL);
 	m_wndStatusBar.SetPaneText(1,strTaskHelp);
 	return 0L;
 }
@@ -1207,6 +1212,48 @@ void CMainFrame::OnViewCalque(UINT id)
 
 		}
 		return;
+	}
+}
+
+void CMainFrame::OnViewFullScreen()
+{
+	CMDIChildWnd* pChild = MDIGetActive();
+
+	BOOL isFS = IsFullScreen();
+
+	if (!isFS) SetRedraw(FALSE);
+	if (pChild) pChild->ShowWindow(SW_MAXIMIZE);
+
+	
+	const CObList& gAllToolbars = CBCGPToolBar::GetAllToolbars ();
+	POSITION pos;
+	if (!isFS) for (pos = gAllToolbars.GetHeadPosition (); pos != NULL;)
+	{
+		CBCGPToolBar* pToolBar = (CBCGPToolBar*) gAllToolbars.GetNext (pos);
+		ASSERT (pToolBar != NULL);
+
+		if (CWnd::FromHandlePermanent (pToolBar->m_hWnd) != NULL)
+		{
+			ASSERT_VALID(pToolBar);
+			CBCGPMDIChildWnd *pWnd = DYNAMIC_DOWNCAST(CBCGPMDIChildWnd,pToolBar->GetParent());
+			if (pWnd)
+				pWnd->ShowControlBar (pToolBar, FALSE,FALSE, FALSE);
+		}
+	}
+	ShowFullScreen ();
+	if (!isFS) SetRedraw(TRUE);
+	if (!isFS) for (pos = gAllToolbars.GetHeadPosition (); pos != NULL;)
+	{
+		CBCGPToolBar* pToolBar = (CBCGPToolBar*) gAllToolbars.GetNext (pos);
+		ASSERT (pToolBar != NULL);
+
+		if (CWnd::FromHandlePermanent (pToolBar->m_hWnd) != NULL)
+		{
+			ASSERT_VALID(pToolBar);
+			CBCGPMDIChildWnd *pWnd = DYNAMIC_DOWNCAST(CBCGPMDIChildWnd,pToolBar->GetParent());
+			if (pWnd)
+				pWnd->ShowControlBar (pToolBar, TRUE,FALSE, FALSE);
+		}
 	}
 }
 

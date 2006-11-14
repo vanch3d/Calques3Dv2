@@ -77,6 +77,7 @@ protected:
 	afx_msg void OnViewAnalytic();
 	afx_msg void OnViewRendering();
 	afx_msg void OnHelpKeyboardmap();
+	afx_msg void OnViewFullScreen();
 	//}}AFX_MSG
 	afx_msg void OnViewDepend();
 	afx_msg void OnViewCustomize();

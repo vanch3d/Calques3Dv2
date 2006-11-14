@@ -487,9 +487,9 @@ void CCalques3DApp::LoadCustomState ()
 	//TPref::strProfileDesc = GetSectionString(REG_PROFILE,REG_PROFILEDES, TPref::strProfileDesc);
 
 	//SetRegistryBase (CCalques3DApp::g_strRegistryBase);
-	TPref::DefRep = GetSectionInt(_T("Universe"),_T("DefRep"), TPref::DefRep);
-	TPref::Magnet = GetSectionInt(_T("Universe"),_T("Magnet"), TPref::Magnet);
-	TPref::Synchron = GetSectionInt(_T("Universe"),_T("Synchron"), TPref::Synchron);
+	TPref::TUniv.nDefRep = GetSectionInt(_T("Universe"),_T("DefRep"), TPref::TUniv.nDefRep);
+	TPref::TUniv.bMagnet = GetSectionInt(_T("Universe"),_T("Magnet"), TPref::TUniv.bMagnet);
+	TPref::TUniv.bSynchron = GetSectionInt(_T("Universe"),_T("Synchron"), TPref::TUniv.bSynchron);
 	TPref::GrayedHidden = GetSectionInt(_T("Universe"),_T("GrayHidden"), TPref::GrayedHidden);
 	TPref::bMacroLoading = GetSectionInt(_T("Macro"),_T("UserLoading"), TPref::bMacroLoading);
 	BOOL brest = GetSectionObject(_T("Macro"),_T("UserMacros"),TPref::TMacroList);
@@ -511,9 +511,9 @@ void CCalques3DApp::SaveCustomState ()
 	//WriteSectionString(REG_PROFILE,REG_PROFILEDES, TPref::strProfileDesc);
 
 	SetRegistryBase (CCalques3DApp::g_strRegistryBase);
-	WriteSectionInt(_T("Universe"),_T("DefRep"), TPref::DefRep);
-	WriteSectionInt(_T("Universe"),_T("Magnet"), TPref::Magnet);
-	WriteSectionInt(_T("Universe"),_T("Synchron"), TPref::Synchron);
+	WriteSectionInt(_T("Universe"),_T("DefRep"), TPref::TUniv.nDefRep);
+	WriteSectionInt(_T("Universe"),_T("Magnet"), TPref::TUniv.bMagnet);
+	WriteSectionInt(_T("Universe"),_T("Synchron"), TPref::TUniv.bSynchron);
 	WriteSectionInt(_T("Universe"),_T("GrayHidden"), TPref::GrayedHidden);
 	//WriteInt (_T("GradientCaption"), CBCGSizingControlBar::IsCaptionGradient ());
 	//WriteInt (_T("TabFlatBorders"), m_bTabFlatBorders);
