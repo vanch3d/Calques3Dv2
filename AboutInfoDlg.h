@@ -12,30 +12,6 @@
 #include "IconCtrl.h"
 
 /////////////////////////////////////////////////////////////////////////////
-/// ProjectRCVersion: Reading the VERSIONINFO resource.
-///
-/////////////////////////////////////////////////////////////////////////////
-class ProjectRCVersion {
-public:
-	ProjectRCVersion ();
-	virtual ~ProjectRCVersion ();
-
-	BOOL GetProductName (LPSTR &prodName);
-	BOOL GetProductVersion (LPSTR &prodVersion);
-	BOOL GetCopyright (LPSTR &copyright);
-	BOOL GetDebug (LPSTR &debug);
-
-protected:
-    LPBYTE      TransBlock;
-    void FAR    *FVData;
-
-private:
-    // Don't allow this object to be copied.
-    ProjectRCVersion (const ProjectRCVersion &);
-    ProjectRCVersion & operator =(const ProjectRCVersion &);
-};
-
-/////////////////////////////////////////////////////////////////////////////
 /// CAboutCreditPage
 ///
 /////////////////////////////////////////////////////////////////////////////
