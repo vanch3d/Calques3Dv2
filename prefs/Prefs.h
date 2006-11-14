@@ -170,7 +170,17 @@ public :
 	/// ColourTableEntry
 	/////////////////////////////////////////////////////////////////////////////
 	struct CTUniverse {
-		COLORREF clrTrace;			///< Color used for drawing the traces of an object
+		COLORREF	clrTrace;		///< Color used for drawing the traces of an object
+		SProjection	sDefParam;		///< Parameters for the projection on the universe view
+		int			nMoveType; 		///< Axis of deformation (O horizontal, 1 left, 2 right)
+		int 		nDefRep; 		///< Type of SoR (0 none, 1 axes, 2 floor, 3 walls)
+		int 		nRepPas;		///< Number of units displayed in the SoR
+		int 		nUnitRep;		///< Size of each unit of the SoR (in pixel)
+		int			nDefPres;		///< Precision for designation area
+		float		fZoom;			///< Zoom factor for the universe. 
+		BOOL		bMagnet;		///< Magnetism of SoR activated
+		BOOL		bSynchron;		///< Synchronise updates between views
+		BOOL		bShowMarks;		///< Show the marks of objects
 	};
 
 
@@ -182,16 +192,16 @@ public :
 	static ColourTableEntry crColours[40];		///< List of predefined colors and (english) names 
 
 
-	static int			MoveType; 		///< Axis of deformation (O horizontal, 1 left, 2 right)
-	static BOOL			Magnet;			///< Magnetism of SoR activated
-	static int 			DefRep; 		///< Type of SoR (0 none, 1 axes, 2 floor, 3 walls)
-	static int 			NbRepPas;       ///< Number of units displayed in the SoR
-	static int 			UnitRep;		///< Size of each unit of the SoR (in pixel)
-	static int			DefPres;		///< Precision for designation area
-	static float		Zoom;			///< Zoom factor for the universe. 
-	static SProjection	DefParam;		///< Parameters for the projection on the universe view
-	static BOOL			ShowMarks;		///< Show the marks of objects
-	static BOOL			Synchron;		///< Synchronise updates between views
+	//static int			MoveType; 		///< Axis of deformation (O horizontal, 1 left, 2 right)
+	//static BOOL			Magnet;			///< Magnetism of SoR activated
+	//static int 			DefRep; 		///< Type of SoR (0 none, 1 axes, 2 floor, 3 walls)
+//	static int 			NbRepPas;       ///< Number of units displayed in the SoR
+//	static int 			UnitRep;		///< Size of each unit of the SoR (in pixel)
+//	static int			DefPres;		///< Precision for designation area
+//	static float		Zoom;			///< Zoom factor for the universe. 
+//	static SProjection	DefParam;		///< Parameters for the projection on the universe view
+//	static BOOL			ShowMarks;		///< Show the marks of objects
+//	static BOOL			Synchron;		///< Synchronise updates between views
 	static BOOL			GrayedHidden;	///< Hiden part of objects in gray
 
 
@@ -202,8 +212,8 @@ public :
 	static CTLocus3D	TLocus;			///< Default preferences for loci
 	static CTLine3D		TLine;			///< Default preferences for lines
 
-	static CTUniverse	Univ;			///< Default preferences for the universe view	
-	static CTMathPad	MathPad;		///< Default preferences for the mathpad view	
+	static CTUniverse	TUniv;			///< Default preferences for the universe view	
+	static CTMathPad	TMathPad;		///< Default preferences for the mathpad view	
 
 	static CObList		TMacroList;		///< List of user-defined macros available
 	static BOOL			bMacroLoading;	///< Allow user to load any macros
@@ -217,11 +227,12 @@ public :
 	static CObList		TPOVList;		///< List of user-defined PoV (NOT YET USED)
 
 	static CTVerif		Verif;
-	static CString		PrefDescr;		///< Description of the Profile \deprecated
+
+//	static CString		PrefDescr;		///< Description of the Profile \deprecated
 	static COLORREF		Color;			///< Default color for objects \deprecated
-	static BOOL			SignalCreation;	///< Indicate the creation of objects \deprecated
-	static int 			WndHeight,		///< Maximum size of screen \deprecated
-						WndWidth;		///< Maximum size of screen \deprecated
+//	static BOOL			SignalCreation;	///< Indicate the creation of objects \deprecated
+//	static int 			WndHeight,		///< Maximum size of screen \deprecated
+//						WndWidth;		///< Maximum size of screen \deprecated
 
 public :
 	static void DefaultInit();

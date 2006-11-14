@@ -22,14 +22,14 @@ CPrefMathPad::CPrefMathPad()
 	: CPropertyPage(CPrefMathPad::IDD)
 {
 	//{{AFX_DATA_INIT(CPrefMathPad)
-	m_bFraction = TPref::MathPad.ShowFraction;
+	m_bFraction = TPref::TMathPad.ShowFraction;
 	m_strScale = _T("");
-	m_nUnitAngle = TPref::MathPad.UnitAngular;
-	m_nUnitLinear = TPref::MathPad.UnitLinear;
-	m_nPrecFraction = TPref::MathPad.PrecFraction;
-	m_nPrecReal = TPref::MathPad.PrecReal;
+	m_nUnitAngle = TPref::TMathPad.UnitAngular;
+	m_nUnitLinear = TPref::TMathPad.UnitLinear;
+	m_nPrecFraction = TPref::TMathPad.PrecFraction;
+	m_nPrecReal = TPref::TMathPad.PrecReal;
 	//}}AFX_DATA_INIT
-	m_strScale.Format(_T("%.4g"),TPref::MathPad.UnitScale);
+	m_strScale.Format(_T("%.4g"),TPref::TMathPad.UnitScale);
 }
 
 void CPrefMathPad::DoDataExchange(CDataExchange* pDX)
@@ -49,12 +49,12 @@ void CPrefMathPad::DoDataExchange(CDataExchange* pDX)
 
 	if (pDX->m_bSaveAndValidate)
 	{
-		TPref::MathPad.ShowFraction = m_bFraction;
-		TPref::MathPad.UnitScale = atof(m_strScale);
-		TPref::MathPad.UnitAngular = m_nUnitAngle;
-		TPref::MathPad.UnitLinear = m_nUnitLinear;
-		TPref::MathPad.PrecFraction = m_nPrecFraction;
-		TPref::MathPad.PrecReal = m_nPrecReal;
+		TPref::TMathPad.ShowFraction = m_bFraction;
+		TPref::TMathPad.UnitScale = atof(m_strScale);
+		TPref::TMathPad.UnitAngular = m_nUnitAngle;
+		TPref::TMathPad.UnitLinear = m_nUnitLinear;
+		TPref::TMathPad.PrecFraction = m_nPrecFraction;
+		TPref::TMathPad.PrecReal = m_nPrecReal;
 	}
 }
 

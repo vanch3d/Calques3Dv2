@@ -316,7 +316,7 @@ void CViewUniv::OnInitialUpdate()
     wndToolTip.Create(this);
 
     pVisParam = new CVisuCloison();
-    SetVisualParam(TPref::DefRep);
+    SetVisualParam(TPref::TUniv.nDefRep);
     pCurrentTask = new CDefTask(this,ID_VISUALISATION_DEFAULTTASK);
     pSelectObj = NULL;
     if (GetVisualParam())
@@ -330,13 +330,13 @@ void CViewUniv::OnInitialUpdate()
         wndToolTip.SetDelayTime(TTDT_INITIAL,100);
         wndToolTip.SetDelayTime(TTDT_RESHOW,100);
 
-        int r = (int)(GetVisualParam()->ProjParam.phi - 180 -TPref::DefParam.phi);
+        int r = (int)(GetVisualParam()->ProjParam.phi - 180 -TPref::TUniv.sDefParam.phi);
         r = (r < 0) ? r + 360 : ((r > 360) ? r-360 : r);
         r /= 5;
 
         //**** wndVSliderBar.SetSliderPos(r);
 		SetSliderPosition(ID_VISUALISATION_POV_VSLIDER,r);
-        r = (int)(180 - GetVisualParam()->ProjParam.theta + TPref::DefParam.theta);
+        r = (int)(180 - GetVisualParam()->ProjParam.theta + TPref::TUniv.sDefParam.theta);
         r = (r < 0) ?  r+ 360 : ((r > 360) ? r-360 : r);
         r /= 5;
         //**** wndHSliderBar.SetSliderPos(r);
@@ -756,7 +756,7 @@ LRESULT CViewUniv::OnRotateHor(WPARAM,LPARAM)
 		int nScrollPos = pSlider->GetPos (ID_VISUALISATION_POV_HSLIDER);
 
 		nScrollPos *=5;
-		int r = (int)(180 - nScrollPos + TPref::DefParam.theta);
+		int r = (int)(180 - nScrollPos + TPref::TUniv.sDefParam.theta);
 		r = (r < 0) ?  r+ 360 : ((r > 360) ? r-360 : r);
 
 		SProjection MySProj = GetVisualParam()->GetProjParam();
@@ -778,12 +778,12 @@ void CViewUniv::OnChangePointsOfView()
     // TODO: Add your command handler code here
     GetVisualParam()->SetProjParam();
 
-    int r = (int)(GetVisualParam()->ProjParam.phi - 180 -TPref::DefParam.phi);
+    int r = (int)(GetVisualParam()->ProjParam.phi - 180 -TPref::TUniv.sDefParam.phi);
     r = (r < 0) ? r + 360 : ((r > 360) ? r-360 : r);
     r /= 5;
     //**** wndVSliderBar.SetSliderPos(r);
 	SetSliderPosition(ID_VISUALISATION_POV_VSLIDER,r);
-    r = (int)(180 - GetVisualParam()->ProjParam.theta + TPref::DefParam.theta);
+    r = (int)(180 - GetVisualParam()->ProjParam.theta + TPref::TUniv.sDefParam.theta);
     r = (r < 0) ?  r+ 360 : ((r > 360) ? r-360 : r);
     r /= 5;
     //**** wndHSliderBar.SetSliderPos(r);
@@ -800,7 +800,7 @@ LRESULT CViewUniv::OnRotateVer(WPARAM,LPARAM)
 	{
 		int nScrollPos = pSlider->GetPos (ID_VISUALISATION_POV_HSLIDER);
 		nScrollPos *=5;
-		int r = (int)(180 + nScrollPos + TPref::DefParam.phi);
+		int r = (int)(180 + nScrollPos + TPref::TUniv.sDefParam.phi);
 		r = (r < 0) ? r + 360 : ((r > 360) ? r-360 : r);
 		SProjection MySProj = GetVisualParam()->GetProjParam();
 		MySProj.phi = r;
@@ -863,14 +863,14 @@ void CViewUniv::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
     }
     if (bRedraw)
     {
-        int r = (int)(GetVisualParam()->ProjParam.phi - 180 -TPref::DefParam.phi);
+        int r = (int)(GetVisualParam()->ProjParam.phi - 180 -TPref::TUniv.sDefParam.phi);
         r = (r < 0) ? r + 360 : ((r > 360) ? r-360 : r);
         r /= 5;
 
         //**** wndVSliderBar.SetSliderPos(r);
 		SetSliderPosition(ID_VISUALISATION_POV_VSLIDER,r);
 
-        r = (int)(180 - GetVisualParam()->ProjParam.theta + TPref::DefParam.theta);
+        r = (int)(180 - GetVisualParam()->ProjParam.theta + TPref::TUniv.sDefParam.theta);
         r = (r < 0) ?  r+ 360 : ((r > 360) ? r-360 : r);
         r /= 5;
         //**** wndHSliderBar.SetSliderPos(r);
@@ -1695,13 +1695,13 @@ BOOL CViewUniv::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
         GetVisualParam()->AddProjParam(-15*nDelat,CVisualParam::ID_PHI);
     if (bRedraw)
     {
-        int r = (int)(GetVisualParam()->ProjParam.phi - 180 -TPref::DefParam.phi);
+        int r = (int)(GetVisualParam()->ProjParam.phi - 180 -TPref::TUniv.sDefParam.phi);
         r = (r < 0) ? r + 360 : ((r > 360) ? r-360 : r);
         r /= 5;
 
         //**** wndVSliderBar.SetSliderPos(r);
 		SetSliderPosition(ID_VISUALISATION_POV_VSLIDER,r);
-        r = (int)(180 - GetVisualParam()->ProjParam.theta + TPref::DefParam.theta);
+        r = (int)(180 - GetVisualParam()->ProjParam.theta + TPref::TUniv.sDefParam.theta);
         r = (r < 0) ?  r+ 360 : ((r > 360) ? r-360 : r);
         r /= 5;
         //**** wndHSliderBar.SetSliderPos(r);

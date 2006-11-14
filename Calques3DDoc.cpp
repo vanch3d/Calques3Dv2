@@ -1495,12 +1495,12 @@ void CCalques3DDoc::OnDiscovery()
 			strSymb += mstr + _T("\n");
 		}
 	}
-	mina.x = (mina.x/TPref::UnitRep)*TPref::MathPad.UnitScale;
-	mina.y = (mina.y/TPref::UnitRep)*TPref::MathPad.UnitScale;
-	mina.z = (mina.z/TPref::UnitRep)*TPref::MathPad.UnitScale;
-	maxa.x = (maxa.x/TPref::UnitRep)*TPref::MathPad.UnitScale;
-	maxa.y = (maxa.y/TPref::UnitRep)*TPref::MathPad.UnitScale;
-	maxa.z = (maxa.z/TPref::UnitRep)*TPref::MathPad.UnitScale;
+	mina.x = (mina.x/TPref::TUniv.nUnitRep)*TPref::TMathPad.UnitScale;
+	mina.y = (mina.y/TPref::TUniv.nUnitRep)*TPref::TMathPad.UnitScale;
+	mina.z = (mina.z/TPref::TUniv.nUnitRep)*TPref::TMathPad.UnitScale;
+	maxa.x = (maxa.x/TPref::TUniv.nUnitRep)*TPref::TMathPad.UnitScale;
+	maxa.y = (maxa.y/TPref::TUniv.nUnitRep)*TPref::TMathPad.UnitScale;
+	maxa.z = (maxa.z/TPref::TUniv.nUnitRep)*TPref::TMathPad.UnitScale;
 
 	CVector4 delta(0.5,0.5,0.5);
 

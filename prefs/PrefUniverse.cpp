@@ -75,9 +75,9 @@ CPrefUniverse::CPrefUniverse()
 		m_cPOVList(this)
 {	
 	//{{AFX_DATA_INIT(CPrefUniverse)
-	m_bMagnet = TPref::Magnet;
-	m_bSynchro = TPref::Synchron;
-	m_nRefInit = TPref::DefRep;
+	m_bMagnet = TPref::TUniv.bMagnet;
+	m_bSynchro = TPref::TUniv.bSynchron;
+	m_nRefInit = TPref::TUniv.nDefRep;
 	//}}AFX_DATA_INIT
 }
 
@@ -95,11 +95,11 @@ void CPrefUniverse::DoDataExchange(CDataExchange* pDX)
 
 	if (pDX->m_bSaveAndValidate)
 	{
-		TPref::Magnet = m_bMagnet;
-		TPref::Synchron = m_bSynchro;
-		TPref::DefRep = m_nRefInit;
+		TPref::TUniv.bMagnet = m_bMagnet;
+		TPref::TUniv.bSynchron = m_bSynchro;
+		TPref::TUniv.nDefRep = m_nRefInit;
 
-		TPref::Univ.clrTrace = m_wndTraceColor.GetColor();
+		TPref::TUniv.clrTrace = m_wndTraceColor.GetColor();
 
 	}
 }
@@ -162,7 +162,7 @@ BOOL CPrefUniverse::OnInitDialog()
 	//m_wndTraceColor.SetPalette(&m_palColorPicker);
 	//m_wndTraceColor.EnableAutomaticButton (strDef, m_clrDefObj);
 	m_wndTraceColor.EnableOtherButton (strOther);
-	m_wndTraceColor.SetColor (TPref::Univ.clrTrace);
+	m_wndTraceColor.SetColor (TPref::TUniv.clrTrace);
 	m_wndTraceColor.SetColumnsNumber (8);
 	m_wndTraceColor.m_bEnabledInCustomizeMode = TRUE;
 	//m_wndTraceColor.SetDocumentColors(strDoc,TPref::docColors);

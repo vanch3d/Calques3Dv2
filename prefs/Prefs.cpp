@@ -69,22 +69,22 @@ TPref::ColourTableEntry TPref::crColours[40] =
     { RGB(0xFF, 0xFF, 0xFF),    _T("White")             }
 };
 
-int 	TPref::MoveType=TPref::MV_HORIZ;
-CString	TPref::PrefDescr("<None>");			// description du fichier prefs
-BOOL    TPref::Magnet = FALSE;
-int 	TPref::DefPres = 5;
-int 	TPref::DefRep = 3;
-float 	TPref::Zoom = 1.; 			//facteur de zoom
-int 	TPref::NbRepPas = 6;
-int 	TPref::UnitRep = 50;
-int 	TPref::WndHeight=1000;
-int 	TPref::WndWidth = 1000;
-BOOL	TPref::SignalCreation = FALSE;		//signal de création
+//int 	TPref::MoveType=TPref::MV_HORIZ;
+//CString	TPref::PrefDescr("<None>");			// description du fichier prefs
+//BOOL    TPref::Magnet = FALSE;
+//int 	TPref::DefPres = 5;
+//int 	TPref::DefRep = 3;
+//float 	TPref::Zoom = 1.; 			//facteur de zoom
+//int 	TPref::NbRepPas = 6;
+//int 	TPref::UnitRep = 50;
+//int 	TPref::WndHeight=1000;
+//int 	TPref::WndWidth = 1000;
+//BOOL	TPref::SignalCreation = FALSE;		//signal de création
 BOOL	TPref::VerifyObject = 0;		//signal de création
-BOOL	TPref::ShowMarks=0;				// ffiche les marcques
-BOOL	TPref::Synchron=0;				// synchronisation de l'affichage
+//BOOL	TPref::ShowMarks=0;				// ffiche les marcques
+//BOOL	TPref::Synchron=0;				// synchronisation de l'affichage
 BOOL	TPref::GrayedHidden=0;
-SProjection	TPref::DefParam = {25.0,45.0,800.0,400.0};// Paramètres de projection
+//SProjection	TPref::DefParam = {25.0,45.0,800.0,400.0};// Paramètres de projection
 COLORREF	TPref::custColors[16] =
  {
 	RGB(255,0,0),RGB(0,255,0),RGB(0,0,255),
@@ -104,7 +104,7 @@ CString 	TPref::custColorsString[8] =
 	CString("Black"),CString("Grey")
 };
 
-COLORREF TPref::Color = 0x000000L;
+COLORREF TPref::Color = RGB(0,0,0);
 
 TPref::CTPoint3D	TPref::TPoint = {RGB(0,0,0),3,2,0,3};
 TPref::CTLine3D		TPref::TLine =	{RGB(0,0,255)};
@@ -113,11 +113,33 @@ TPref::CTCube3D		TPref::TCube =	{RGB(0,0,255),1};
 TPref::CTSphere3D	TPref::TSphere ={RGB(0,0,255),0,TRUE,TRUE};
 TPref::CTLocus3D	TPref::TLocus = {RGB(255,0,0),20};
 
-TPref::CTMathPad	TPref::MathPad = {1.0,0,0,0,100,4};
+TPref::CTMathPad	TPref::TMathPad = 
+		{
+			1.0,
+			0,
+			0,
+			0,
+			100,
+			4
+		};
+
+
+TPref::CTUniverse	TPref::TUniv = 
+		{
+			RGB(128,0,0),
+			{25.0,45.0,800.0,400.0},
+			TPref::MV_HORIZ,
+			3,
+			6,
+			50,
+			5,
+			1.0,
+			FALSE,
+			TRUE,
+			FALSE
+		};
 
 TPref::CTVerif      TPref::Verif;
-
-TPref::CTUniverse	TPref::Univ = {RGB(128,0,0)};
 
 
 BOOL TPref::bMacroLoading = TRUE;
@@ -131,7 +153,7 @@ CString	TPref::strProfileDesc = _T("");
 CStringArray TPref::strUnits;
 
 //////////////////////////////////////////////////////////////////////
-/// Default initialisation of tha parameters (if applicable)
+/// Default initialisation of the parameters (if applicable)
 //////////////////////////////////////////////////////////////////////
 void TPref::DefaultInit()
 {

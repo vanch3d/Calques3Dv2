@@ -254,23 +254,26 @@ BOOL CDroite3D::IsInLimit(FCoord x)
     return true;
 }
 
+const int WndHeight=1000;
+const int WndWidth=1000;
+
 BOOL CDroite3D::IsInActiveArea(CPoint thePt)
 {
     if (VP1.x == VP2.x)
     {
-        CRect theRect(VP1.x-TPref::DefPres,
+        CRect theRect(VP1.x-TPref::TUniv.nDefPres,
                 (!bIsSegment) ? -1 : min(VP1.y,VP2.y),
-                VP1.x+TPref::DefPres,
-                (!bIsSegment) ? TPref::WndHeight+1 : max(VP1.y,VP2.y));
+                VP1.x+TPref::TUniv.nDefPres,
+                (!bIsSegment) ? WndHeight+1 : max(VP1.y,VP2.y));
         return(theRect.PtInRect(thePt));
     }
 
     if (VP1.y == VP2.y)
     {
         CRect theRect((!bIsSegment) ? -1 : min(VP1.x,VP2.x),
-                VP1.y-TPref::DefPres,
-                (!bIsSegment) ? TPref::WndWidth+1 : max(VP1.x,VP2.x),
-                VP2.y+TPref::DefPres);
+                VP1.y-TPref::TUniv.nDefPres,
+                (!bIsSegment) ? WndWidth+1 : max(VP1.x,VP2.x),
+                VP2.y+TPref::TUniv.nDefPres);
         return(theRect.PtInRect(thePt));
     }
 
@@ -280,14 +283,14 @@ BOOL CDroite3D::IsInActiveArea(CPoint thePt)
     FCoord xpos = (FCoord)(VP1.x-VP2.x) / (FCoord)(VP1.y-VP2.y);
     xpos = xpos*(thePt.y-VP1.y) + VP1.x;
 
-    CRect theRect(  (int)(thePt.x-TPref::DefPres),
-                    (int)(ypos-TPref::DefPres),
-                    (int)(thePt.x+TPref::DefPres),
-                    (int)(ypos+TPref::DefPres));
-    CRect theRect2( (int)(xpos-TPref::DefPres),
-                    (int)(thePt.y-TPref::DefPres),
-                    (int)(xpos+TPref::DefPres),
-                    (int)(thePt.y+TPref::DefPres));
+    CRect theRect(  (int)(thePt.x-TPref::TUniv.nDefPres),
+                    (int)(ypos-TPref::TUniv.nDefPres),
+                    (int)(thePt.x+TPref::TUniv.nDefPres),
+                    (int)(ypos+TPref::TUniv.nDefPres));
+    CRect theRect2( (int)(xpos-TPref::TUniv.nDefPres),
+                    (int)(thePt.y-TPref::TUniv.nDefPres),
+                    (int)(xpos+TPref::TUniv.nDefPres),
+                    (int)(thePt.y+TPref::TUniv.nDefPres));
 
     BOOL test = theRect.PtInRect(thePt) || theRect2.PtInRect(thePt);
     if ((test) && (bIsSegment))
@@ -797,7 +800,7 @@ int CDroite3D::ClippingDroite()
     LP1=LP2=LP3=0;
     CLP1=CLP2=0;
 
-    int nb = TPref::NbRepPas*TPref::UnitRep;
+    int nb = TPref::TUniv.nRepPas*TPref::TUniv.nUnitRep;
     CVector4 t[7] = {
         CVector4(0,0,0),        // origin
         CVector4(0,nb,0),       // y

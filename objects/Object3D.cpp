@@ -1148,10 +1148,10 @@ BOOL CObject3D::GraftOn(CObject3D * pNew)
 CRgn* CObject3D::DoSegRgn(CPoint p1,CPoint p2)
 {
     CPoint pt[4] =
-            {   CPoint(p1.x-TPref::DefPres,p1.y-TPref::DefPres),
-                CPoint(p2.x-TPref::DefPres,p2.y-TPref::DefPres),
-                CPoint(p2.x+TPref::DefPres,p2.y+TPref::DefPres),
-                CPoint(p1.x+TPref::DefPres,p1.y+TPref::DefPres)
+            {   CPoint(p1.x-TPref::TUniv.nDefPres,p1.y-TPref::TUniv.nDefPres),
+                CPoint(p2.x-TPref::TUniv.nDefPres,p2.y-TPref::TUniv.nDefPres),
+                CPoint(p2.x+TPref::TUniv.nDefPres,p2.y+TPref::TUniv.nDefPres),
+                CPoint(p1.x+TPref::TUniv.nDefPres,p1.y+TPref::TUniv.nDefPres)
             };
 
     CRgn *myReg = new CRgn();

@@ -205,14 +205,14 @@ UINT CPoint3D::IsAlignedWith(CObject3D *pObj1,CObject3D *pObj2)
 
 BOOL CPoint3D::IsInActiveArea(CPoint thePt)
 {
-    int Dp = TPref::DefPres;
+    int Dp = TPref::TUniv.nDefPres;
     CRect temp( Visual_pt.x-Dp, Visual_pt.y-Dp, Visual_pt.x+Dp, Visual_pt.y+Dp);
     return temp.PtInRect(thePt);
 }
 
 CRgn* CPoint3D::InvalideRect()
 {
-    int Dp = TPref::DefPres;
+    int Dp = TPref::TUniv.nDefPres;
 
     //CRect temp( Visual_pt.x-Dp, Visual_pt.y-Dp, Visual_pt.x+Dp, Visual_pt.y+Dp);
     CRgn *mrgn = new CRgn();
@@ -278,8 +278,8 @@ void CPoint3D::Draw(CDC* pDC,CVisualParam *mV,BOOL bSm)
 
     if (bShowTrace)
     {
-        CPen trPen(PS_SOLID,1,TPref::Univ.clrTrace);
-        CBrush trBrush(TPref::Univ.clrTrace);
+        CPen trPen(PS_SOLID,1,TPref::TUniv.clrTrace);
+        CBrush trBrush(TPref::TUniv.clrTrace);
 
         oldP = pDC->SelectObject(&trPen);
         oldB = pDC->SelectObject(&trBrush);
@@ -398,13 +398,13 @@ CString CPoint3D::DrawSymbolic()
         __int64 y1,y2,y3;
         __int64 z1,z2,z3;
 
-        F1 = (Concept_pt.x/TPref::UnitRep)*TPref::MathPad.UnitScale;
+        F1 = (Concept_pt.x/TPref::TUniv.nUnitRep)*TPref::TMathPad.UnitScale;
         F1.Parts(x1,x2,x3,100);
         if (x3!=0) x1 = x1*x3 + x2;
-        F2 = (Concept_pt.y/TPref::UnitRep)*TPref::MathPad.UnitScale;
+        F2 = (Concept_pt.y/TPref::TUniv.nUnitRep)*TPref::TMathPad.UnitScale;
         F2.Parts(y1,y2,y3,100);
         if (y3!=0) y1 = y1*y3 + y2;
-        F3 = (Concept_pt.z/TPref::UnitRep)*TPref::MathPad.UnitScale;
+        F3 = (Concept_pt.z/TPref::TUniv.nUnitRep)*TPref::TMathPad.UnitScale;
         F3.Parts(z1,z2,z3,100);
         if (z3!=0) z1 = z1*z3 + z2;
 
@@ -441,7 +441,7 @@ BOOL CPoint3D::MoveObject(CVisualParam *myVisuParam,UINT modkey,CPoint MouseClic
     CPoint3D b(CVector4(TempCpt.x,TempCpt.y+100,TempCpt.z));
     CPoint3D c(CVector4(TempCpt.x,TempCpt.y,TempCpt.z+100));
     CPoint3D d(CVector4(TempCpt.x+100,TempCpt.y,TempCpt.z));
-    switch (TPref::MoveType)
+    switch (TPref::TUniv.nMoveType)
     {   case TPref::MV_HORIZ :
          {
 
@@ -495,7 +495,7 @@ BOOL CPoint3D::MoveObject(CVisualParam *myVisuParam,UINT modkey,CPoint MouseClic
         default:
             break;
         }
-    if (TPref::Magnet)
+    if (TPref::TUniv.bMagnet)
         myVisuParam->ApplyMagnet(TempCpt);
     return ret;
 /*  MouseClic.x-= myVisuParam->RepCoord.x;

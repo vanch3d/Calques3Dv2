@@ -444,7 +444,7 @@ FCoord CEquation3D::RoundNorm(FCoord nVal)
         return 0.00;
     else
         return (nVal/TPref::UnitRep)*TPref::MathPad.UnitScale;*/
-    return (FCZero(nVal)) ? 0.00 : (nVal/TPref::UnitRep)*TPref::MathPad.UnitScale;
+    return (FCZero(nVal)) ? 0.00 : (nVal/TPref::TUniv.nUnitRep)*TPref::TMathPad.UnitScale;
 }
 
 FCoord CEquation3D::Round(FCoord nVal)
@@ -500,15 +500,15 @@ CString CEquation3D::GetText()
 //////////////////////////////////////////////////////////////////////
 CString CEquation3D::FormatNumber(FCoord nValue, BOOL bValide,BOOL bSign)
 {
-    BOOL bShowFraction = TPref::MathPad.ShowFraction;
-    int  nPrecFraction = TPref::MathPad.PrecFraction;
+    BOOL bShowFraction = TPref::TMathPad.ShowFraction;
+    int  nPrecFraction = TPref::TMathPad.PrecFraction;
 
     CString strPrec,strObj;
     strObj = _T("####");
 
     if (!bValide) return strObj;
 
-    strPrec.Format(_T("%%.%df"),TPref::MathPad.PrecReal);
+    strPrec.Format(_T("%%.%df"),TPref::TMathPad.PrecReal);
 
     if (!bShowFraction)
     {
@@ -720,7 +720,7 @@ CString CEquation3D::GetSphereText(CObject3D *pObj)
 
     CVector4 ptSrc = ((CSphere3D*)pObj)->P1->Concept_pt;
     FCoord   nRay  = ((CSphere3D*)pObj)->Rayon;
-    nRay /= TPref::UnitRep;
+    nRay /= TPref::TUniv.nUnitRep;
 
     CString strMask = _T("(X %s) ² + (Y %s) ² + (Z %s) ² = (%s) ²");
 
@@ -1001,10 +1001,10 @@ CString CDistance3D::GetText()
 
     }
 
-    if (TPref::MathPad.UnitLinear)
+    if (TPref::TMathPad.UnitLinear)
     {
         CString mstr = mStrText;
-        mStrText.Format(_T("%s %s"),mstr,TPref::strUnits.GetAt(TPref::MathPad.UnitLinear));
+        mStrText.Format(_T("%s %s"),mstr,TPref::strUnits.GetAt(TPref::TMathPad.UnitLinear));
     }
 
     return mStrText;
@@ -1333,16 +1333,16 @@ CString CAngle3D::GetText()
     if (ac>=1.0) ac=1.0;
     if (ac<=-1.0) ac=-1.;
 
-    BOOL bApp = TPref::MathPad.ShowFraction;
-    int  nApp = TPref::MathPad.PrecFraction;
+    BOOL bApp = TPref::TMathPad.ShowFraction;
+    int  nApp = TPref::TMathPad.PrecFraction;
 
     m_fAngle = acos(ac);
     m_nValue = m_fAngle;
 
     CString strMask = _T("%s %s");
-    CString strUnit = (TPref::MathPad.UnitAngular) ? _T("rad") : _T("deg");
+    CString strUnit = (TPref::TMathPad.UnitAngular) ? _T("rad") : _T("deg");
     CString strN1 = FormatNumber(
-        (TPref::MathPad.UnitAngular) ? m_fAngle : m_fAngle*180/M_PI,
+        (TPref::TMathPad.UnitAngular) ? m_fAngle : m_fAngle*180/M_PI,
         bVal);
     mStrText.Format(strMask,strN1,strUnit);
 
@@ -1765,8 +1765,8 @@ CString CVolume3D::GetText()
     }
     else return mStrText;
 
-    BOOL bApp = TPref::MathPad.ShowFraction;
-    int  nApp = TPref::MathPad.PrecFraction;
+    BOOL bApp = TPref::TMathPad.ShowFraction;
+    int  nApp = TPref::TMathPad.PrecFraction;
 
     m_nValue = m_fAngle;
 

@@ -223,7 +223,8 @@ void CMoveObjectTask::OnMouseL(UINT, CPoint thePt)
 
 	m_nStep++;
 	GetContextualHelp();
-	//m_pParent->SendMessage(WM_SHOWOBJ_TOOLTIPS,(WPARAM)NULL,(LPARAM)FALSE);
+	m_pParent->SendMessage(WM_SHOWOBJ_TOOLTIPS,(WPARAM)NULL,(LPARAM)FALSE);
+	m_pParent->SetCapture();
 }
 
 void CMoveObjectTask::OnMouseLUp(UINT, CPoint)
@@ -241,6 +242,7 @@ void CMoveObjectTask::OnMouseLUp(UINT, CPoint)
 			//if (tmpcb)
 			 //tmpcb->cr->Visible = 0;
 		 }
+		ReleaseCapture();
 		GetDocument()->UpdateAllViews(m_pParent,WM_UPDATEOBJ_MOV,m_pSelObject);
 		m_pParent->Invalidate(0);
 		m_pParent->UpdateWindow();
@@ -315,7 +317,7 @@ void CMoveObjectTask::OnMouseMove(UINT modkey, CPoint thepos)
 			 }*/
 
 			m_ptOld = thepos;
-			if (TPref::Synchron)
+			if (TPref::TUniv.bSynchron)
 				GetDocument()->UpdateAllViews(m_pParent,WM_UPDATEOBJ_MOV,m_pSelObject);
 			InvalidateParent(TRUE);
 			//m_pParent->Invalidate();
@@ -383,13 +385,13 @@ BOOL CMoveObjectTask::OnUpdateTasksOption(CCmdUI* pCmdUI)
 	switch (pCmdUI->m_nID){
 	case ID_EXPLORATION_MOVE_MAGNETISM :
 		bEnab = TRUE;
-		bCheck = TPref::Magnet;
+		bCheck = TPref::TUniv.bMagnet;
 		break;
 	case ID_EXPLORATION_MOVE_HORIZONTAL  :
 	case ID_EXPLORATION_MOVE_LEFT :
 	case ID_EXPLORATION_MOVE_RIGTH:
 		bEnab = TRUE;
-		bCheck = (TPref::MoveType == (int)(pCmdUI->m_nID - ID_EXPLORATION_MOVE_HORIZONTAL));
+		bCheck = (TPref::TUniv.nMoveType == (int)(pCmdUI->m_nID - ID_EXPLORATION_MOVE_HORIZONTAL));
 		break;
 	case ID_EXPLORATION_MOVE_TRACE:
 		bEnab = TRUE;//!m_bTracePoint;
@@ -411,13 +413,13 @@ BOOL CMoveObjectTask::OnDoTasksOption(UINT nID)
 	BOOL bDone = TRUE;
 	switch (nID){
 	case ID_EXPLORATION_MOVE_MAGNETISM :
-		TPref::Magnet = !TPref::Magnet;
+		TPref::TUniv.bMagnet = !TPref::TUniv.bMagnet;
 		break;
 	case ID_EXPLORATION_MOVE_HORIZONTAL  :
 	case ID_EXPLORATION_MOVE_LEFT :
 	case ID_EXPLORATION_MOVE_RIGTH:
 		{
-			TPref::MoveType = (nID - ID_EXPLORATION_MOVE_HORIZONTAL);
+			TPref::TUniv.nMoveType = (nID - ID_EXPLORATION_MOVE_HORIZONTAL);
 			//m_pParent->Invalidate();
 			//m_pParent->UpdateWindow();
 		}

@@ -90,7 +90,7 @@ CArchive& operator>>(CArchive& ar, CVector4& pt)
 //////////////////////////////////////////////////////////////////////
 CVisualParam::CVisualParam()
 {
-	SProjection MySProj= TPref::DefParam;
+	SProjection MySProj= TPref::TUniv.sDefParam;
 
 	nVisuKind = VisuNone;	
 	ST = SP = CT = CP = 0.0;
@@ -159,7 +159,7 @@ CVisualParam::CVisualParam(SProjection proj)
 	nCalqueNum = 0;
 	bParProj = TRUE;
 	bDrawMark = FALSE;
-	nZoom = TPref::Zoom;
+	nZoom = TPref::TUniv.fZoom;
 	bFixed = FALSE;
 	bKeepProj = FALSE;
 	bFeedPlane = FALSE;
@@ -245,7 +245,7 @@ void CVisualParam::AddProjParam(FCoord NewVal,TVisuParam Id)
 void CVisualParam::SetProjParam()
 {
 	if (bFixed) return;
-	SProjection MySProj=TPref::DefParam;
+	SProjection MySProj=TPref::TUniv.sDefParam;
 
 	SetProjParam(MySProj);
 }
@@ -358,14 +358,14 @@ void CVisualParam::ApplyMagnet(CVector4& pt)
 {
 	FCoord a;
 
-	a = (pt.x / (FCoord) TPref::UnitRep) - (int)(pt.x / (FCoord) TPref::UnitRep);
-	pt.x= (int)((pt.x / (FCoord) TPref::UnitRep) + ((a < 0.5) ? 0 : 1) ) * TPref::UnitRep;
+	a = (pt.x / (FCoord) TPref::TUniv.nUnitRep) - (int)(pt.x / (FCoord) TPref::TUniv.nUnitRep);
+	pt.x= (int)((pt.x / (FCoord) TPref::TUniv.nUnitRep) + ((a < 0.5) ? 0 : 1) ) * TPref::TUniv.nUnitRep;
 
-	a = (pt.y / (FCoord) TPref::UnitRep) - (int)(pt.y / (FCoord) TPref::UnitRep);
-	pt.y= (int)((pt.y / (FCoord) TPref::UnitRep) + ((a < 0.5) ? 0 : 1) ) * TPref::UnitRep;
+	a = (pt.y / (FCoord) TPref::TUniv.nUnitRep) - (int)(pt.y / (FCoord) TPref::TUniv.nUnitRep);
+	pt.y= (int)((pt.y / (FCoord) TPref::TUniv.nUnitRep) + ((a < 0.5) ? 0 : 1) ) * TPref::TUniv.nUnitRep;
 
-	a = (pt.z / (FCoord) TPref::UnitRep) - (int)(pt.z / (FCoord) TPref::UnitRep);
-	pt.z= (int)((pt.z / (FCoord) TPref::UnitRep) + ((a < 0.5) ? 0 : 1) ) * TPref::UnitRep;
+	a = (pt.z / (FCoord) TPref::TUniv.nUnitRep) - (int)(pt.z / (FCoord) TPref::TUniv.nUnitRep);
+	pt.z= (int)((pt.z / (FCoord) TPref::TUniv.nUnitRep) + ((a < 0.5) ? 0 : 1) ) * TPref::TUniv.nUnitRep;
 }
 
 
@@ -409,7 +409,7 @@ CVisuRep::CVisuRep(const CVisualParam& param):
 
 void CVisuRep::Draw(CDC* pDC)
 {
-	int 	RepScale=TPref::UnitRep,
+	int 	RepScale=TPref::TUniv.nUnitRep,
 			RepPos=RepScale*10,
 			SclSz = 5;
 	CVector4 rep[7] = {
@@ -571,9 +571,9 @@ bool CVisuPlane::IsPointVisible(CVector4 pt)
 void CVisuPlane::DrawOnePLane(CDC* pDC,int min1,int max1,int min2,int max2,int co)
 {
 	int i,j,k;
-	FCoord xv = (co == 1) ? 0 : TPref::UnitRep;
-	FCoord yv = (co == 2) ? 0 : TPref::UnitRep;
-	FCoord zv = (co == 3) ? 0 : TPref::UnitRep;
+	FCoord xv = (co == 1) ? 0 : TPref::TUniv.nUnitRep;
+	FCoord yv = (co == 2) ? 0 : TPref::TUniv.nUnitRep;
+	FCoord zv = (co == 3) ? 0 : TPref::TUniv.nUnitRep;
 
 	CVector4 FaceNorm((co==1),(co==2),(co==3),1);
 	CVector4 DirPt= (bParProj)  ?	CVector4(0,0,0,1) : 
@@ -593,7 +593,7 @@ void CVisuPlane::DrawOnePLane(CDC* pDC,int min1,int max1,int min2,int max2,int c
 
 	if (condvisu)
 	{
-		if (co==(3-TPref::MoveType) && bFeedPlane)
+		if (co==(3-TPref::TUniv.nMoveType) && bFeedPlane)
 			oldB = pDC->SelectObject(&br3);
 		else
 			oldB = pDC->SelectObject(&br);
@@ -646,7 +646,7 @@ void CVisuPlane::DrawOnePLane(CDC* pDC,int min1,int max1,int min2,int max2,int c
 
 void CVisuPlane::Draw(CDC* pDC)
 {
-	int max = TPref::NbRepPas;
+	int max = TPref::TUniv.nRepPas;
 	DrawOnePLane(pDC,-max,max,-max,max,3);
 }
 
@@ -720,7 +720,7 @@ void CVisuCloison::DrawLineRep(CVector4 ptA[],CDC *pDC)
 			*oldP=NULL;
 	for (k=1;k<r;k++)
 	 {
-		if (k==(3-TPref::MoveType) && bFeedPlane)
+		if (k==(3-TPref::TUniv.nMoveType) && bFeedPlane)
 			oldP = pDC->SelectObject(&frontPen2);
 		else
 			oldP = pDC->SelectObject(&frontPen);
@@ -734,29 +734,29 @@ void CVisuCloison::DrawLineRep(CVector4 ptA[],CDC *pDC)
 void CVisuCloison::DrawScale(int order[],CDC *pDC)
 {
 	CVector4 ptA[4] = {
-			CVector4(0,0,0,1),	CVector4(TPref::UnitRep*(TPref::NbRepPas+2),0,0,1),
-			CVector4(0,TPref::UnitRep*(TPref::NbRepPas+2),0,1),
-			CVector4(0,0,TPref::UnitRep*(TPref::NbRepPas/2+2),1)};
+			CVector4(0,0,0,1),	CVector4(TPref::TUniv.nUnitRep*(TPref::TUniv.nRepPas+2),0,0,1),
+			CVector4(0,TPref::TUniv.nUnitRep*(TPref::TUniv.nRepPas+2),0,1),
+			CVector4(0,0,TPref::TUniv.nUnitRep*(TPref::TUniv.nRepPas/2+2),1)};
 
 
 			TPref::TMoveType gg = (TPref::TMoveType)2;
 	for (int i=0;i<6;i++)
 	 switch(order[i])
 	 {	case 1 :	//DrawFond(hdc);break;
-			DrawOnePLane(pDC,-1,TPref::NbRepPas,-1,TPref::NbRepPas,3);	
+			DrawOnePLane(pDC,-1,TPref::TUniv.nRepPas,-1,TPref::TUniv.nRepPas,3);	
 			break;
 		case 2 : //DrawGauche(hdc);break;
-			DrawOnePLane(pDC,0,TPref::NbRepPas,0,TPref::NbRepPas/2,2);
+			DrawOnePLane(pDC,0,TPref::TUniv.nRepPas,0,TPref::TUniv.nRepPas/2,2);
 			break;
 		case 3 : //DrawArriere(hdc);break;
-			DrawOnePLane(pDC,0,TPref::NbRepPas/2,0,TPref::NbRepPas,1);
+			DrawOnePLane(pDC,0,TPref::TUniv.nRepPas/2,0,TPref::TUniv.nRepPas,1);
 			break;
 		case 4 : // lines
 			DrawLineRep(ptA,pDC);	break;
 		case 5 : // Small Gauche
-			DrawOnePLane(pDC,-1,0,0,TPref::NbRepPas,1);	break;
+			DrawOnePLane(pDC,-1,0,0,TPref::TUniv.nRepPas,1);	break;
 		case 6 : // small Droit
-			DrawOnePLane(pDC,0,TPref::NbRepPas,-1,0,2);	break;
+			DrawOnePLane(pDC,0,TPref::TUniv.nRepPas,-1,0,2);	break;
 		default:	break;
 	 }
 }
