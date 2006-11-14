@@ -44,6 +44,7 @@ BOOL CIconCtrl::RegisterWindowClass()
         wndcls.hIcon            = NULL;
         wndcls.hCursor          = AfxGetApp()->LoadStandardCursor(IDC_ARROW);
         wndcls.hbrBackground    = (HBRUSH) (COLOR_3DFACE + 1);
+        //wndcls.hbrBackground    = (HBRUSH) (-1);
         wndcls.lpszMenuName     = NULL;
         wndcls.lpszClassName    = ICONCTRL_CLASSNAME;
 
@@ -81,7 +82,7 @@ BOOL CIconCtrl::OnEraseBkgnd(CDC* pDC)
 	// TODO: Add your message handler code here and/or call default
 	
 	//return CWnd::OnEraseBkgnd(pDC);
-	return FALSE;
+	return TRUE;
 }
 
 void CIconCtrl::OnDraw(CDC* pDC)
@@ -90,11 +91,11 @@ void CIconCtrl::OnDraw(CDC* pDC)
     if (pDC->GetClipBox(&clipRect) == ERROR)
         return;
 
-	CBrush mBR(RGB(0,0,0));
-
-	GetClientRect(clipRect);
-	pDC->FillRect(clipRect,&globalData.brBtnFace);
+	//CBrush mBR(RGB(0,0,0));
+	//GetClientRect(clipRect);
+	//pDC->FillRect(clipRect,&globalData.brBtnFace);
 	//pDC->DrawEdge(clipRect,EDGE_SUNKEN,BF_RECT);
+		globalData.DrawParentBackground (this, pDC);
 
 	CSize ms = m_cImage.GetImageSize();
 	CSize ms2 = clipRect.Size();

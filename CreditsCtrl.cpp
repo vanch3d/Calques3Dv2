@@ -112,8 +112,9 @@ void CCreditsCtrl::OnPaint()
 	memDC.SelectObject(&memBmp);
 
 	// draw backgorund
-	if(m_pBackgroundPaint!=NULL)
-		(*m_pBackgroundPaint)(&memDC,m_rcClient,m_bIsScrolling||bFirstDraw,m_dwBackgroundPaintLParam);
+//	if(m_pBackgroundPaint!=NULL)
+///		(*m_pBackgroundPaint)(&memDC,m_rcClient,m_bIsScrolling||bFirstDraw,m_dwBackgroundPaintLParam);
+	globalData.DrawParentBackground (this, &memDC, m_rcClient);
 
 	// calculate hot rectagle position and save background at that location
 	CDC hotBgDC;
