@@ -398,6 +398,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 			lf.lfHeight = -25;
 			lf.lfWeight = 700;
 			lf.lfItalic = TRUE;
+			lf.lfQuality=PROOF_QUALITY;
 			_tcscpy (lf.lfFaceName, _T("Arial"));
 
 			m_fontVertCaption.CreateFontIndirect (&lf);
