@@ -9,6 +9,7 @@ HID_VIEW_CALQUE                         0x17534
 HID_VIEW_CALQUE2                        0x17535
 HID_VIEW_CALQUE3                        0x17536
 HID_VIEW_CALQUE4                        0x17537
+HID_VIEW_RENDERING                      0x17538
 HID_VIEW_PLACEMENT_SAVE                 0x1753A
 HID_VIEW_PLACEMENT_RESTORE              0x1753B
 HID_VIEW_CUSTOMIZE                      0x1753C
@@ -215,7 +216,7 @@ HIDR_VIEWCALQUE                         0x2008F
 HIDR_VIEWGRAPH                          0x20090
 HIDR_VIEWANALYTIC                       0x20091
 HIDR_VIEWDEPEND                         0x20092
-HIDR_VIEWMACRO2                         0x20097
+HIDR_VIEWRENDERING                      0x20093
 HIDR_POPUP_EXTRACT                      0x200A4
 HIDR_OPEN                               0x200A6
 HIDR_POPUP_DEFAULT                      0x200A7
