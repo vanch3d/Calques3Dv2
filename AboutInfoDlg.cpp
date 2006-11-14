@@ -6,6 +6,7 @@
 
 #include "AboutInfoDlg.h"
 #include "ProjectRCVersion.h"
+#include "MemDC.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -112,6 +113,7 @@ void CAboutCalquePage::DoDataExchange(CDataExchange* pDX)
 	CPropertyPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CAboutCalquePage)
 	DDX_Control(pDX, IDC_ABOUTCALQUE, m_wndIcon);
+//	DDX_Control(pDX, IDC_BUTTON1, m_wndff);
 	//}}AFX_DATA_MAP
 }
 
@@ -128,12 +130,27 @@ END_MESSAGE_MAP()
 BOOL CAboutCalquePage::OnInitDialog() 
 {
 	CPropertyPage::OnInitDialog();
-	m_wndIcon.m_cImage.SetImageSize(CSize(297,298));
-	m_wndIcon.m_cImage.Load(IDB_SPLASH);
-	m_wndIcon.m_cImage.SetTransparentColor(RGB(192,192,192));
+	//m_wndff.m_nFlatStyle = CBCGPButton::BUTTONSTYLE_FLAT;
+	//	m_wndff.SetWindowText (_T(""));
+	//m_wndff.m_bTransparent = TRUE;
+	//m_wndff.m_bHighlightChecked=FALSE;
+//m_wndff.m_bGrayDisabled=FALSE;
+//m_wndff.m_bResponseOnButtonDown=FALSE;
+//m_wndff.m_bDrawFocus=FALSE;
+	//m_wndff.SizeToContent ();
+	//CBCGPButton::EnableWinXPTheme (FALSE);
+//	m_wndff.EnableWindow(FALSE);
+//	m_wndff.SetImage(IDB_SPLASH,0,IDB_SPLASH);
 
+	m_wndIcon.m_cImage.SetImageSize(CSize(297,298));
+	m_wndIcon.m_cImage.SetTransparentColor(RGB(255,0,0));
+	m_wndIcon.m_cImage.Load(IDB_SPLASH);
+//m_wndff.ShowWindow(FALSE);
 	m_wndIcon.SetImage(0);
 
+//	m_cImages.Load(IDB_SPLASH);
+//	m_cImages.SetTransparentColor(RGB(192,192,192));
+//	m_cImages.SetImageSize(CSize(297,298));
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
@@ -464,4 +481,3 @@ BOOL CAboutDlg::OnInitDialog()
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
-

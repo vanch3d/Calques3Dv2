@@ -100,9 +100,10 @@ public:
 // Dialog Data
 	//{{AFX_DATA(CAboutCalquePage)
 	CIconCtrl		m_wndIcon;
+//	CBCGPButton		m_wndff;
 	enum { IDD = IDD_ABOUTCALQUE };
 	//}}AFX_DATA
-
+//	CBCGPToolBarImages m_cImages;
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CAboutCalquePage)
