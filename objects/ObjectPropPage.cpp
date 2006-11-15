@@ -291,9 +291,6 @@ CObjectDepPage::CObjectDepPage()
 CObjectDepPage::CObjectDepPage(UINT nID)
 	: CPropertyPage(nID)
 {
-	//{{AFX_DATA_INIT(CObjectDepPage)
-		// NOTE: the ClassWizard will add member initialization here
-	//}}AFX_DATA_INIT
 	m_pList = NULL;
 }
 
@@ -514,10 +511,10 @@ CObjectCpntPage::CObjectCpntPage()
 	//}}AFX_DATA_INIT
 }
 
-/*BEGIN_MESSAGE_MAP(CObjectCpntPage, CObjectDepPage)
+BEGIN_MESSAGE_MAP(CObjectCpntPage, CObjectDepPage)
 	//{{AFX_MSG_MAP(CObjectCpntPage)
 	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()*/
+END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CObjectTextPage dialog

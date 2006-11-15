@@ -150,7 +150,7 @@ protected:
 
 
 //////////////////////////////////////////////////////////////////////
-// CObjectDepPage dialog
+/// CObjectDepPage dialog
 //////////////////////////////////////////////////////////////////////
 class CObjectDepPage : public CPropertyPage
 {
@@ -211,7 +211,7 @@ protected:
 	// Generated message map functions
 	//{{AFX_MSG(CObjectCpntPage)
 	//}}AFX_MSG
-	//DECLARE_MESSAGE_MAP()
+	DECLARE_MESSAGE_MAP()
 };
 
 //{{AFX_INSERT_LOCATION}}
