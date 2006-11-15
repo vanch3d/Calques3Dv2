@@ -1,19 +1,19 @@
 //////////////////////////////////////////////////////////////////////
-/// @file Fraction.h
-/// @brief Interface of the CFraction class - Code for handling fraction strings
-///
-/// \author Dean Wyant  dwyant@mindspring.com
-///
-/// This class is used like a double. Do anything you would do with a double,
-/// plus assign strings to it. When you need to get a string representation, use one of the 
-/// String calls. My favorite is ForceToStockString which returns a string for the closest
-/// valid stock transaction denominator up to MaxDen (default 256). This is great for 
-/// applications that need to show stock prices in fractions without resorting to a table
-/// lookup or showing unusual prices in decimal. 
-///
-/// C calls and plain calls for ASCIIZ support are provided
-///
-/// A description of the \ref Fraction is also given.
+// @file Fraction.h
+// @brief Interface of the CFraction class - Code for handling fraction strings
+//
+// \author Dean Wyant  dwyant@mindspring.com
+//
+// This class is used like a double. Do anything you would do with a double,
+// plus assign strings to it. When you need to get a string representation, use one of the 
+// String calls. My favorite is ForceToStockString which returns a string for the closest
+// valid stock transaction denominator up to MaxDen (default 256). This is great for 
+// applications that need to show stock prices in fractions without resorting to a table
+// lookup or showing unusual prices in decimal. 
+//
+// C calls and plain calls for ASCIIZ support are provided
+//
+// A description of the \ref Fraction is also given.
 //////////////////////////////////////////////////////////////////////
 #ifndef __FRACTION_H__
 #define __FRACTION_H__
@@ -21,15 +21,25 @@
 // If you are not using MFC or CString you can remark out this define
 #define FRAC_CSTRING
 
-#define FRACTION_MAX_PRECISION  10.0e-15  ///< Significant digits
+//////////////////////////////////////////////////////////////////////
+/// Significant digits
+/// \ingroup CFractionGroup
+//////////////////////////////////////////////////////////////////////
+#define FRACTION_MAX_PRECISION  10.0e-15
 
 double Abs(double f);  // Internal use to avoid <math.h>
 
+
+// define group
+/*!
+	\defgroup CFractionGroup CFraction Library : Code for handling fraction strings
+*/
 
 // C support
 
 //////////////////////////////////////////////////////////////////////
 /// Convert string that may include a fraction to floating point (double)
+/// \ingroup CFractionGroup
 ///
 /// \param pszNum	todo
 /// \return double
@@ -37,6 +47,7 @@ double Abs(double f);  // Internal use to avoid <math.h>
 double Fracatof(const char *pszNum);
 
 //////////////////////////////////////////////////////////////////////
+/// \ingroup CFractionGroup
 /// Convert double to a string that includes the whole part, space, and the fraction (numerator/denominator).
 /// If you want to get a Num and Den for a fractional part less than the default AllowedError,
 /// pass an allowed error less than the fractional part. Otherwise the default should be fine.
@@ -44,24 +55,28 @@ double Fracatof(const char *pszNum);
 char *Fracftoa(double f, char *pszBuffer, double AllowedError = FRACTION_MAX_PRECISION);
 
 //////////////////////////////////////////////////////////////////////
+/// \ingroup CFractionGroup
 /// Convert double to a string that includes the whole part, space, and the fraction (numerator/denominator). 
 /// Limits the denominator to MaxDen  
 //////////////////////////////////////////////////////////////////////
 char *Fracftoa(double f, char *pszBuffer, int MaxDen);
 
 //////////////////////////////////////////////////////////////////////
+/// \ingroup CFractionGroup
 /// Returns %6.4f unless denominator is less than or equal to MaxDen 
 /// and in 2,4,8,16,32,64,128,256
 //////////////////////////////////////////////////////////////////////
 char *DoubleToStockString(double f, char *pszBuffer, int MaxDen = 256);
 
 //////////////////////////////////////////////////////////////////////
+/// \ingroup CFractionGroup
 /// Returns closest fraction string with a denominator less than or equal to MaxDen 
 /// and in 2,4,8,16,32,64,128,256
 //////////////////////////////////////////////////////////////////////
 char *ForceDoubleToStockString(double f, char *pszBuffer, int MaxDen = 256);
 
 //////////////////////////////////////////////////////////////////////
+/// \ingroup CFractionGroup
 /// Convert a double to its fractional parts. Returns Error difference. 
 /// If you want to get a Num and Den for a fractional part less than the default AllowedError,
 /// pass an allowed error less than the fractional part. Otherwise the default should be fine.
@@ -69,12 +84,14 @@ char *ForceDoubleToStockString(double f, char *pszBuffer, int MaxDen = 256);
 double FracParts(double f, __int64 &Whole, __int64 &Num, __int64 &Den, double AllowedError = FRACTION_MAX_PRECISION);
 
 //////////////////////////////////////////////////////////////////////
+/// \ingroup CFractionGroup
 /// Convert a double to its fractional parts. Returns Error difference. 
 /// Limits the denominator to MaxDen  
 //////////////////////////////////////////////////////////////////////
 double FracParts(double f, __int64 &Whole, __int64 &Num, __int64 &Den, int MaxDen);
 
 //////////////////////////////////////////////////////////////////////
+/// \ingroup CFractionGroup
 /// Convert a double to its fractional parts. Returns Error difference. 
 /// Limits the denominator to MaxDen and always returns Den as 2,4,8,16,32,64,128,256 
 //////////////////////////////////////////////////////////////////////
@@ -87,6 +104,7 @@ double FracPartsStock(double f, __int64 &Whole, __int64 &Num, __int64 &Den, int 
 /// CFraction - Code for handling fraction strings
 ///
 /// \author Dean Wyant  dwyant@mindspring.com
+/// \ingroup CFractionGroup
 /////////////////////////////////////////////////////////////////////////////
 ///
 /// CFraction - This class is used like a double. Do anything you would do with a double,
@@ -160,6 +178,7 @@ private:
 
 /**
  \page Fraction Fraction Algorithm
+ \ingroup CFractionGroup
  The formula for converting a decimal fraction to a string fraction is based on 
  reciprocals. Any fractional part can be represented as 1/(I1 + 1/(I2 + 1/(I3 + 1/In...
  where I1 is the integer part of the reciprocal of the fraction and I2 is the 
