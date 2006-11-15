@@ -39,6 +39,7 @@ protected:
 	CBCGPDropDownToolBar	m_wndDivPointBar;	///< Control for the "Various Point" dropdown menu
 
 	CPropertyBar			m_wndPropertyBar;	///< Control for the modeless object properties dialog
+	CDependentBar			m_wndDependentBar;	///< Control for the modeless object properties dialog
 
 	CBCGPToolBarImages		m_UserImages;		///< List of user-defined images (for configuring the interface)
 
@@ -50,6 +51,7 @@ protected:
 // Operations
 public:
 	CPropertyBar*		GetPropertyBar() { return  &m_wndPropertyBar;};
+	CPropertyBar*		GetDependentBar() { return  &m_wndDependentBar;};
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CMainFrame)
@@ -102,6 +104,8 @@ protected:
 	afx_msg void OnUpdateViewExploration(CCmdUI* pCmdUI);
 	afx_msg void OnViewPropertyBar();
 	afx_msg void OnUpdateViewPropertyBar(CCmdUI* pCmdUI);
+	afx_msg void OnViewDependentBar();
+	afx_msg void OnUpdateViewDependentBar(CCmdUI* pCmdUI);
 	afx_msg void OnWindowManager();
 	afx_msg void OnAppLook(UINT id);
 	afx_msg void OnUpdateAppLook(CCmdUI* pCmdUI);
