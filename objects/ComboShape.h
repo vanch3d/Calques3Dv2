@@ -1,11 +1,15 @@
+//////////////////////////////////////////////////////////////////////
+/// @file ComboShape.h
+/// @brief interface of various CProp widgets used in Calques 3D
+///
+///
+//////////////////////////////////////////////////////////////////////
 #if !defined(AFX_COMBOSHAPE_H__57010BB1_245D_430F_B746_9708A6E73E25__INCLUDED_)
 #define AFX_COMBOSHAPE_H__57010BB1_245D_430F_B746_9708A6E73E25__INCLUDED_
 
 #if _MSC_VER > 1000
-#pragma once
-#endif // _MSC_VER > 1000
-// ComboShape.h : header file
-//
+	#pragma once
+#endif
 
 #include "Shape.h"
 
@@ -18,15 +22,21 @@ class CComboShape : public CComboBox
 // Construction
 public:
 	CComboShape();
-	CComboShape(CShape::TShapeType type);
+	CComboShape(int type);
 
 // Attributes
 private:
-	CShape::TShapeType	m_type;		///< Type of the shape widget
+	int	m_type;		///< Type of the shape widget
 
 // Operations
 public:
-	void SetType(CShape::TShapeType type) {m_type = type;};
+	
+	//////////////////////////////////////////////////////////////////////
+	/// Set the type of shapes associated with the combobox.
+	/// \param type	The type of the shape (see CShape::TShapeType)
+	//////////////////////////////////////////////////////////////////////
+	void SetType(int type) {m_type = type;};
+
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CComboShape)
@@ -37,7 +47,6 @@ public:
 
 // Implementation
 public:
-	virtual ~CComboShape();
 
 	// Generated message map functions
 protected:
@@ -49,19 +58,19 @@ protected:
 };
 
 /////////////////////////////////////////////////////////////////////////////
-/// CBCGShapeProp
+/// CBCGPShapeProp
 ///
 /////////////////////////////////////////////////////////////////////////////
-class CBCGShapeProp : public CBCGPProp
+class CBCGPShapeProp : public CBCGPProp
 {
 public:
-	CBCGShapeProp(	const CString& strName, int index = 0, int size = 0,
-					CShape::TShapeType type=CShape::PointShape,
+	CBCGPShapeProp(	const CString& strName, int index = 0, int size = 0,
+					int type=CShape::PointShape,
 					LPCTSTR lpszDescr = NULL);
 
 // Attributes
 private:
-	CShape::TShapeType	m_type;		///< Type of the shape widget
+	int	m_type;		///< Type of the shape widget
 
 // Overrides
 public:
@@ -74,59 +83,24 @@ protected:
 };
 
 /////////////////////////////////////////////////////////////////////////////
-/// CBCGPointProp
+/// CBCGPObjectProp
 ///
 /////////////////////////////////////////////////////////////////////////////
-class CBCGPointProp : public CBCGShapeProp
-{
-public:
-	CBCGPointProp(const CString& strName, int index = 0, LPCTSTR lpszDescr = NULL):
-		CBCGShapeProp (strName, index, 6, CShape::PointShape,lpszDescr) 
-		{};
-};
-
-/////////////////////////////////////////////////////////////////////////////
-/// CBCGLineProp
-///
-/////////////////////////////////////////////////////////////////////////////
-class CBCGLineProp : public CBCGShapeProp
-{
-public:
-	CBCGLineProp(const CString& strName, int index = 0, LPCTSTR lpszDescr = NULL):
-		CBCGShapeProp (strName, index, 8, CShape::LineShape,lpszDescr) 
-		{		
-		};
-};
-
-/////////////////////////////////////////////////////////////////////////////
-/// CBCGVolumeProp
-///
-/////////////////////////////////////////////////////////////////////////////
-class CBCGVolumeProp : public CBCGShapeProp
-{
-public:
-	CBCGVolumeProp(const CString& strName, int index = 0, LPCTSTR lpszDescr = NULL):
-	  CBCGShapeProp (strName, index, 3, CShape::VolShape,lpszDescr) 
-		{		
-		};
-};
-
-/////////////////////////////////////////////////////////////////////////////
-/// CBCGObjectProp
-///
-/////////////////////////////////////////////////////////////////////////////
-class CBCGObjectProp : public CBCGPProp
+class CBCGPObjectProp : public CBCGPProp
 {
 protected:
 	CImageList*		m_pImgList;	///< A pointer to the image list containing the object icons
 	int				m_nIcon;	///< Index of the icon to draw
 
 public:
-	CBCGObjectProp(const CString& strName, const CString& strHelp,int ndx,DWORD dwData = 0);
-	CBCGObjectProp();
+	CBCGPObjectProp(const CString& strName, const CString& strHelp,int ndx,BOOL bHasList,DWORD dwData = 0);
+	//CBCGObjectProp();
 
-
-	virtual void OnDrawExpandBox (CDC* pDC, CRect rectExpand);
+	virtual BOOL HasValueField () const
+	{
+		return FALSE;
+	}
+//	virtual void OnDrawExpandBox (CDC* pDC, CRect rectExpand);
 	virtual void OnDrawName (CDC* pDC, CRect rect);
 	virtual BOOL OnEdit (LPPOINT lptClick) { return FALSE;};
 	virtual BOOL OnSetCursor () const { return FALSE;};
@@ -136,10 +110,14 @@ public:
 };
 
 
-class CBCGSliderProp : public CBCGPProp
+/////////////////////////////////////////////////////////////////////////////
+/// CBCGPSliderProp
+///
+/////////////////////////////////////////////////////////////////////////////
+class CBCGPSliderProp : public CBCGPProp
 {
 public:
-	CBCGSliderProp(
+	CBCGPSliderProp(
 		const CString& strName,
 		long nValue,
 		LPCTSTR lpszDescr = NULL,
@@ -153,19 +131,53 @@ protected:
 };
 
 /////////////////////////////////////////////////////////////////////////////
-// CPropSliderCtrl window
+/// CBCGPCheckBoxProp
+///
+/////////////////////////////////////////////////////////////////////////////
+class CBCGPCheckBoxProp : public CBCGPProp
+{
+public:
+	CBCGPCheckBoxProp(
+		const CString& strName,
+		BOOL bCheck,
+		LPCTSTR lpszDescr = NULL,
+		DWORD dwData = 0
+	);
 
+protected:
+	virtual CWnd* CreateInPlaceEdit (CRect rectEdit, BOOL& bDefaultFormat);
+	virtual BOOL OnEdit(LPPOINT lptClick)				{	return FALSE;	}
+	virtual void OnDrawButton (CDC* pDC, CRect rectButton)	{}
+	virtual void OnDrawValue(CDC* pDC, CRect rect);
+	virtual BOOL HasButton () const						{	return FALSE;	}
+
+	virtual BOOL PushChar (UINT nChar);
+	virtual void OnDrawCheckBox (CDC * pDC, CRect rectCheck, BOOL bChecked);
+	virtual void OnDrawName (CDC* pDC, CRect rect);
+	virtual void OnClickName (CPoint point);
+	virtual BOOL OnClickValue (UINT uiMsg, CPoint point);
+	virtual BOOL OnDblClick (CPoint point);
+
+protected:
+	CRect	m_rectCheck;	///< The bounding rect of the checkbox
+};
+
+
+/////////////////////////////////////////////////////////////////////////////
+/// CPropSliderCtrl
+///
+/////////////////////////////////////////////////////////////////////////////
 class CPropSliderCtrl : public CSliderCtrl
 {
 // Construction
 public:
-	CPropSliderCtrl(CBCGSliderProp* pProp, COLORREF clrBack);
+	CPropSliderCtrl(CBCGPSliderProp* pProp, COLORREF clrBack);
 
 // Attributes
 protected:
-	CBrush			m_brBackground;
-	COLORREF		m_clrBack;
-	CBCGSliderProp*	m_pProp;
+	CBrush				m_brBackground;		///< The background brush used for the slider
+	COLORREF			m_clrBack;			///< The background color used for the slider
+	CBCGPSliderProp*	m_pProp;			///< The property widget associated with this control
 
 // Operations
 public:
@@ -176,14 +188,13 @@ public:
 
 // Implementation
 public:
-	virtual ~CPropSliderCtrl();
 
 	// Generated message map functions
 protected:
 	//{{AFX_MSG(CPropSliderCtrl)
 	afx_msg HBRUSH CtlColor(CDC* pDC, UINT nCtlColor);
-	//}}AFX_MSG
 	afx_msg void HScroll (UINT nSBCode, UINT nPos);
+	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()
 };

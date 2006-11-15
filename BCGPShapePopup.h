@@ -1,21 +1,17 @@
+//////////////////////////////////////////////////////////////////////
+/// @file BCGPShapePopup.h
+/// @brief interface for the CBCGPShapePopup class
+///
+///
+//////////////////////////////////////////////////////////////////////
 #if !defined(AFX_BCGCPSHAPEPOPUP_H__6ABB7DC6_CCA2_4B65_9269_3F41D3F21D3D__INCLUDED_)
 #define AFX_BCGCPSHAPEPOPUP_H__6ABB7DC6_CCA2_4B65_9269_3F41D3F21D3D__INCLUDED_
-
-// This is a part of the BCGControlBar Library
-// Copyright (C) 1998-2000 BCGSoft Ltd.
-// All rights reserved.
-//
-// This source code can be used, distributed or modified
-// only under terms and conditions 
-// of the accompanying license agreement.
 
 #if _MSC_VER > 1000
 #pragma once
 #endif // _MSC_VER > 1000
-// ColorPopup.h : header file
-//
 
-#include "BCGPPopupMenu.h"
+//#include "BCGPPopupMenu.h"
 #include "BCGPShapeBar.h"
 
 class CBCGPControlBar;
@@ -26,43 +22,16 @@ class CBCGPPropList;
 
 class CBCGPShapePopup : public CBCGPPopupMenu
 {
-	//friend class CBCGPColorMenuButton;
 	friend class CBCGPShapeButton;
 	//friend class CBCGPColorProp;
+	//friend class CBCGPColorMenuButton;
 
 	DECLARE_DYNAMIC(CBCGPShapePopup)
 
 // Construction
 public:
-    /*CBCGPShapePopup (	const CArray<COLORREF, COLORREF>& colors,
-					COLORREF color, 
-					LPCTSTR lpszAutoColor,
-					LPCTSTR lpszOtherColor,
-					LPCTSTR lpszDocColors,
-					CList<COLORREF,COLORREF>& lstDocColors,
-					int nColumns,
-					int nHorzDockRows,
-					int nVertDockColumns,
-					COLORREF colorAutomatic,
-					UINT uiCommandID,
-					BOOL bStdColorDlg = FALSE)
-		: m_wndColorBar (colors, color, lpszAutoColor, lpszOtherColor,
-						lpszDocColors, lstDocColors, nColumns, 
-						nHorzDockRows, nVertDockColumns, colorAutomatic,
-						uiCommandID, NULL)
-	{
-		m_bEnabledInCustomizeMode = FALSE;
-		m_wndColorBar.m_bStdColorDlg = bStdColorDlg;
-	}*/
-
-    CBCGPShapePopup (CBCGPShapeButton* pParentBtn,
-					 int type,
-					 int nShape,
-					 int nColumns)
-		: m_wndColorBar (type, nShape, nColumns, 
-						-1, -1,
-						(UINT)-1,
-						pParentBtn)
+    CBCGPShapePopup (CBCGPShapeButton* pParentBtn,int type,int nShape,int nColumns)
+		: m_wndColorBar (type, nShape, nColumns,-1, -1,(UINT)-1,pParentBtn)
 	{
 		m_bEnabledInCustomizeMode = FALSE;
 	}
@@ -75,10 +44,6 @@ protected:
 	BOOL			m_bEnabledInCustomizeMode;
 
 protected:
-	/*void SetPropList (CBCGPPropList* pWndList)
-	{
-		m_wndColorBar.SetPropList (pWndList);
-	}*/
 
 // Operations
 public:

@@ -1,23 +1,21 @@
+//////////////////////////////////////////////////////////////////////
+/// @file BCGPShapeButton.h
+/// @brief interface for the CBCGPShapeButton class
+///
+///
+//////////////////////////////////////////////////////////////////////
 #if !defined(AFX_BCGPSHAPEBUTTON_H__FEA34C6D_5D34_461C_9403_95C23C0B6F4A__INCLUDED_)
 #define AFX_BCGPSHAPEBUTTON_H__FEA34C6D_5D34_461C_9403_95C23C0B6F4A__INCLUDED_
 
 #if _MSC_VER > 1000
-#pragma once
-#endif // _MSC_VER > 1000
-// BCGPShapeButton.h.h : header file
-//
-
-#ifndef BCG_NO_COLOR
-
-//#include "BCGCBPro.h"
-//#include "BCGPButton.h"
-#include "BCGPShapeBar.h"
+	#pragma once
+#endif
 
 class CBCGPShapePopup;
 
 /////////////////////////////////////////////////////////////////////////////
-// CBCGPShapeButton window
-
+/// CBCGPShapeButton window
+/////////////////////////////////////////////////////////////////////////////
 class CBCGPShapeButton : public CBCGPButton
 {
 	friend class CBCGPShapeBar;
@@ -30,62 +28,25 @@ public:
 
 // Attributes
 public:
-	/*COLORREF GetColor () const
-	{
-	*/
+	BOOL	m_bEnabledInCustomizeMode;	///< 
+	BOOL	m_bAutoSetFocus;			///<
 
+protected:
+	int		m_nShapeType;				///<
+	int		m_nShape;					///<
+	int		m_nColumns;					///<
+
+	CBCGPShapePopup*	m_pPopup;		///<
+
+// Operations
+public:
 	int GetShape() const;
 	void SetShape(int type, int index =-1/* automatic*/);
-
-	//void SetColor (COLORREF color /* -1 - automatic*/);
 
 	void SetColumnsNumber (int nColumns)
 	{
 		m_nColumns = nColumns;
 	}
-
-	//void EnableAutomaticButton (LPCTSTR lpszLabel, COLORREF colorAutomatic, BOOL bEnable = TRUE);
-	//void EnableOtherButton (LPCTSTR lpszLabel, BOOL bAltColorDlg = TRUE, BOOL bEnable = TRUE);
-	
-	//void SetDocumentColors (LPCTSTR lpszLabel, CList<COLORREF,COLORREF>& lstColors);
-
-	/*static void SetColorName (COLORREF color, const CString& strName)	{
-		CBCGPColorBar::SetColorName (color, strName);
-	}*/
-
-	/*COLORREF GetAutomaticColor () const
-	{
-		return m_ColorAutomatic;
-	}*/
-
-	BOOL						m_bEnabledInCustomizeMode;
-	BOOL						m_bAutoSetFocus;
-
-protected:
-	virtual void UpdateShape (int color);
-	///void RebuildPalette (CPalette* pPal);
-
-protected:
-	int			m_nShapeType;
-	int					m_nShape;
-	//COLORREF					m_Color;
-	//COLORREF					m_ColorAutomatic;
-	//CArray<COLORREF, COLORREF>	m_Colors;
-	//CList<COLORREF,COLORREF>	m_lstDocColors;
-	int							m_nColumns;
-	CBCGPShapePopup*			m_pPopup;
-
-	//CString						m_strOtherText;
-	//CString						m_strDocColorsText;
-	//CString						m_strAutoColorText;
-
-	//BOOL						m_bAltColorDlg;
-
-	//CPalette*					m_pPalette;
-
-// Operations
-public:
-	//void SetPalette (CPalette* pPalette);
 
 // Overrides
 	// ClassWizard generated virtual function overrides
@@ -98,6 +59,7 @@ public:
 	virtual CSize SizeToContent (BOOL bCalcOnly = FALSE);
 
 protected:
+	virtual void UpdateShape (int color);
 	virtual void OnFillBackground (CDC* pDC, const CRect& rectClient);
 	virtual void OnDraw (CDC* pDC, const CRect& rect, UINT uiState);
 	virtual void OnDrawBorder (CDC* pDC, CRect& rectClient, UINT uiState);
@@ -119,8 +81,6 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 };
-
-#endif // BCG_NO_COLOR
 
 /////////////////////////////////////////////////////////////////////////////
 

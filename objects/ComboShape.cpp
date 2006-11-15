@@ -13,9 +13,20 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 
+//***************************************************************************
+// CBCGPShapeProp
+//***************************************************************************
 
 
-CBCGShapeProp::CBCGShapeProp(const CString& strName, int index,int size,CShape::TShapeType type,LPCTSTR lpszDescr):
+/////////////////////////////////////////////////////////////////////////////
+/// Constructor for the shape property widget
+///	@param strName		The name of the property
+///	@param index		The zero-based index of the selected shape
+///	@param size			The number of shapes available
+///	@param type			The type of the shape
+///	@param lpszDescr	The description associated with the property widget
+/////////////////////////////////////////////////////////////////////////////
+CBCGPShapeProp::CBCGPShapeProp(const CString& strName, int index,int size,int type,LPCTSTR lpszDescr):
 	CBCGPProp (strName, _variant_t((long)index), lpszDescr) 
 {		
 	m_type = type;
@@ -28,7 +39,13 @@ CBCGShapeProp::CBCGShapeProp(const CString& strName, int index,int size,CShape::
 	AllowEdit(FALSE);
 };
 
-CComboBox* CBCGShapeProp::CreateCombo (CWnd* pWndParent, CRect rect)
+/////////////////////////////////////////////////////////////////////////////
+/// Called by the framework when it needs to create a combo box inside the property. 
+///	@param pWndParent	The parent for the combo box 
+///	@param rect			The bounding rectangle of the combo box
+///	@return				A pointer to the newly created CComboBox object.
+/////////////////////////////////////////////////////////////////////////////
+CComboBox* CBCGPShapeProp::CreateCombo (CWnd* pWndParent, CRect rect)
 {
 	ASSERT_VALID (this);
 
@@ -46,12 +63,25 @@ CComboBox* CBCGShapeProp::CreateCombo (CWnd* pWndParent, CRect rect)
 }
 
 
-void CBCGShapeProp::OnDrawValue (CDC* pDC, CRect rect)
+/////////////////////////////////////////////////////////////////////////////
+/// Called by the framework to display the property value. 
+///	@param pDC		A pointer to a device context.  
+///	@param rect		The bounding rectangle of the property value.
+/////////////////////////////////////////////////////////////////////////////
+void CBCGPShapeProp::OnDrawValue (CDC* pDC, CRect rect)
 {
 	CShape::DrawShapes(m_type,pDC,rect,(long)GetValue());
 }
 
-CWnd* CBCGShapeProp::CreateInPlaceEdit (CRect rectEdit, BOOL& bDefaultFormat)
+/////////////////////////////////////////////////////////////////////////////
+/// The function is called by the framework to create an in-place edit control for a property
+///	@param rectEdit			The bounding rectangle of the edit control.  
+///	@param bDefaultFormat	Specifies whether to use the default property format (TRUE) when 
+///							setting the text to edit control, or not (FALSE).
+///	@return					A valid pointer to edit control if success, or NULL if the property doesn't 
+///							support in-place editing.
+/////////////////////////////////////////////////////////////////////////////
+CWnd* CBCGPShapeProp::CreateInPlaceEdit (CRect rectEdit, BOOL& bDefaultFormat)
 {
 	CEdit* pWndEdit = new CEdit;
 	DWORD dwStyle = WS_VISIBLE | WS_CHILD | ES_AUTOHSCROLL | ES_READONLY;
@@ -61,33 +91,36 @@ CWnd* CBCGShapeProp::CreateInPlaceEdit (CRect rectEdit, BOOL& bDefaultFormat)
 }
 
 
-/////////////////////////////////////////////////////////////////////////////
+//***************************************************************************
 // CComboShape
+//***************************************************************************
 
+BEGIN_MESSAGE_MAP(CComboShape, CComboBox)
+	//{{AFX_MSG_MAP(CComboShape)
+	//}}AFX_MSG_MAP
+END_MESSAGE_MAP()
+
+/////////////////////////////////////////////////////////////////////////////
+/// Default constructor
+/////////////////////////////////////////////////////////////////////////////
 CComboShape::CComboShape()
 {
 	m_type = CShape::PointShape;
 }
 
-CComboShape::CComboShape(CShape::TShapeType type)
+/////////////////////////////////////////////////////////////////////////////
+/// Constructor
+/////////////////////////////////////////////////////////////////////////////
+CComboShape::CComboShape(int type)
 {
 	m_type = type;
 }
 
-CComboShape::~CComboShape()
-{
-}
-
-
-BEGIN_MESSAGE_MAP(CComboShape, CComboBox)
-	//{{AFX_MSG_MAP(CComboShape)
-		// NOTE - the ClassWizard will add and remove mapping macros here.
-	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
-
 /////////////////////////////////////////////////////////////////////////////
-// CComboShape message handlers
-
+/// Called by the framework when a visual aspect of an owner-draw combo box changes.
+///	@param lpDrawItemStruct		A  pointer to a DRAWITEMSTRUCT structure that contains information 
+///								about the type of drawing required.  
+/////////////////////////////////////////////////////////////////////////////
 void CComboShape::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct) 
 {
 	ASSERT(lpDrawItemStruct);
@@ -104,161 +137,60 @@ void CComboShape::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	CShape::DrawShapes(m_type,pDC,rect,lpDrawItemStruct->itemID);
 }
 
-/////////////////////////////////////////////////////////////////////////////
-// CBCGObjectProp
+//***************************************************************************
+// CBCGPObjectProp
+//***************************************************************************
 
-CBCGObjectProp::CBCGObjectProp(const CString& strName, const CString& strHelp,int ndx,DWORD dwData):
+/////////////////////////////////////////////////////////////////////////////
+/// Constructor for the CObject3D property widget
+///	@param strName		The name of the geometrical object
+///	@param strHelp		The description of the geometrical object
+///	@param ndx			The zero-based index of the object's icon
+///	@param bHasList		TRUE if the object has parents, FALSE otherwise
+///	@param dwData		The user defined data to be associated with the property. 
+/////////////////////////////////////////////////////////////////////////////
+CBCGPObjectProp::CBCGPObjectProp(const CString& strName, const CString& strHelp,
+								 int ndx,BOOL bHasList,DWORD dwData):
 	CBCGPProp(strName, _T(""),(LPCTSTR)strHelp,dwData)
 {
 	m_pImgList = NULL;
-	m_bGroup = TRUE;
+	m_bGroup = bHasList;
 	m_nIcon = ndx;
+	m_bIsValueList = bHasList;
 }
 
-void CBCGObjectProp::OnDrawExpandBox (CDC* pDC, CRect rectExpand)
+/////////////////////////////////////////////////////////////////////////////
+/// Called by the framework to display the property name.
+///	@param pDC		A pointer to a device context.  
+///	@param rect		The bounding rectangle of the property value.
+/////////////////////////////////////////////////////////////////////////////
+void CBCGPObjectProp::OnDrawName (CDC* pDC, CRect rect)
 {
-	CRect rect = rectExpand;
-
-	rect.DeflateRect(0,1,0,0);
-
-	CWnd* pWndParent = m_pWndList->GetParent ();
-	BOOL m_bbControlBarColors = (pWndParent == NULL ||
-								!pWndParent->IsKindOf (RUNTIME_CLASS (CDialog)));
-
-	{
-		CRect rectFill = rect;
-
-		CWnd* pWnd = m_pWndList->GetFocus();
-
-		if (!IsSelected ())
-		{
-			pDC->FillRect (rectFill, &globalData.brWindow);
-		}
-		else
-		{
-			if (pWnd!=m_pWndList)
-			{
-				pDC->FillRect (rectFill, 
-					m_bbControlBarColors ? &globalData.brBarFace : &globalData.brBtnFace);
-			}
-			else
-			{
-				pDC->FillRect (rectFill, &globalData.brHilite);
-			}
-		}
-	}
-
+	IMAGEINFO pInfo;
 	if (m_pImgList)
-		m_pImgList->Draw(pDC,m_nIcon,CPoint(rectExpand.TopLeft())+CSize(1,1),ILD_TRANSPARENT);
-
+	{
+		m_pImgList->GetImageInfo(m_nIcon,&pInfo);
+		m_pImgList->Draw(pDC,m_nIcon,CPoint(rect.TopLeft())+CSize(1,1),ILD_TRANSPARENT);
+		rect.left = rect.left + pInfo.rcImage.right-pInfo.rcImage.left+3;
+	}
+	CBCGPProp::OnDrawName (pDC, rect);
 }
 
-void CBCGObjectProp::OnDrawName (CDC* pDC, CRect rect)
-{
-	COLORREF clrTextOld = (COLORREF)-1;
 
-	CWnd* pWndParent = m_pWndList->GetParent ();
-	BOOL m_bbControlBarColors = pWndParent == NULL ||
-		!pWndParent->IsKindOf (RUNTIME_CLASS (CDialog));
-
-/*	CWnd* pWnd = m_pWndList->GetFocus();
-		CRect rectFill = rect;
-		rectFill.top++;
-
-		if (pWnd!=m_pWndList)
-		{
-			clrTextOld = pDC->SetTextColor (globalData.clrBtnText);
-			pDC->FillRect (rectFill, 
-				m_bbControlBarColors ? &globalData.brBarFace : &globalData.brBtnFace);
-		}
-		else
-		{
-			clrTextOld = pDC->SetTextColor (globalData.clrTextHilite);
-			pDC->FillRect (rectFill, &globalData.brHilite);
-		}*/
-
-//	if (IsSelected () && (!m_pWndList->IsVSDotNetLook()))
-	{
-		CRect rectFill = rect;
-		rectFill.top++;
-
-		CWnd* pWnd = m_pWndList->GetFocus();
-
-		if (!IsSelected ())
-		{
-			//clrTextOld = pDC->SetTextColor (globalData.clrBtnText);
-			pDC->FillRect (rectFill, 
-				m_bbControlBarColors ? &globalData.brWindow : &globalData.brWindow);
-				//m_bbControlBarColors ? &globalData.brBarFace : &globalData.brBtnFace);
-		}
-		else
-		{
-			if (pWnd!=m_pWndList)
-			{
-				clrTextOld = pDC->SetTextColor (globalData.clrBtnText);
-				pDC->FillRect (rectFill, 
-					m_bbControlBarColors ? &globalData.brBarFace : &globalData.brBtnFace);
-			}
-			else
-			{
-				clrTextOld = pDC->SetTextColor (globalData.clrTextHilite);
-				pDC->FillRect (rectFill, &globalData.brHilite);
-			}
-		}
-	}
-
-	CFont* pFont = CFont::FromHandle ((HFONT) ::GetStockObject (DEFAULT_GUI_FONT));
-	CFont* hOldFont = pDC->SelectObject(pFont);
-
-		rect.DeflateRect (TEXT_MARGIN, 0);
-	int nTextHeight = pDC->DrawText (m_strName, rect, 
-		DT_LEFT | DT_SINGLELINE | DT_VCENTER | DT_NOPREFIX | DT_END_ELLIPSIS);
-
-	pDC->SelectObject(hOldFont);
-
-	m_bNameIsTrancated = pDC->GetTextExtent (m_strName).cx > rect.Width ();
-
-/*	if (IsSelected () && m_pWndList->IsVSDotNetLook() )
-	{
-		CRect rectFocus = rect;
-		rectFocus.top = rectFocus.CenterPoint ().y - nTextHeight / 2;
-		rectFocus.bottom = rectFocus.top + nTextHeight;
-		rectFocus.right = 
-			min (rect.right, rectFocus.left + pDC->GetTextExtent (m_strName).cx);
-		rectFocus.InflateRect (2, 0);
-
-		COLORREF clrShadow = m_bbControlBarColors ?
-			globalData.clrBarShadow : globalData.clrBtnShadow;
-
-		pDC->Draw3dRect (rectFocus, clrShadow, clrShadow);
-	}*/
-
-	if (clrTextOld != (COLORREF)-1)
-	{
-		pDC->SetTextColor (clrTextOld);
-	}
-}
-
-BOOL CBCGObjectProp::OnDblClick (CPoint point)
+/////////////////////////////////////////////////////////////////////////////
+/// Called by the framework when the user double clicks the property.
+///	@param point	Specifies the point in the property list control client coordinates.  
+///	@return			TRUE if the notification is processed by the property.
+/////////////////////////////////////////////////////////////////////////////
+BOOL CBCGPObjectProp::OnDblClick (CPoint point)
 {
 	AfxMessageBox("fdfdfddf dd f");
 	return TRUE;
 }
 
-/////////////////////////////////////////////////////////////////////////////
+//***************************************************************************
 // CPropSliderCtrl
-
-CPropSliderCtrl::CPropSliderCtrl(CBCGSliderProp* pProp, COLORREF clrBack)
-{
-	m_clrBack = clrBack;
-	m_brBackground.CreateSolidBrush (m_clrBack);
-	m_pProp = pProp;
-}
-
-CPropSliderCtrl::~CPropSliderCtrl()
-{
-}
-
+//***************************************************************************
 
 BEGIN_MESSAGE_MAP(CPropSliderCtrl, CSliderCtrl)
 	//{{AFX_MSG_MAP(CPropSliderCtrl)
@@ -268,14 +200,23 @@ BEGIN_MESSAGE_MAP(CPropSliderCtrl, CSliderCtrl)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
-// CPropSliderCtrl message handlers
+/// Constructor for the CObject3D property widget
+///	@param pProp		A pointer to the parent property
+///	@param clrBack		The background colour
+/////////////////////////////////////////////////////////////////////////////
+CPropSliderCtrl::CPropSliderCtrl(CBCGPSliderProp* pProp, COLORREF clrBack)
+{
+	m_clrBack = clrBack;
+	m_brBackground.CreateSolidBrush (m_clrBack);
+	m_pProp = pProp;
+}
 
 HBRUSH CPropSliderCtrl::CtlColor(CDC* pDC, UINT nCtlColor) 
 {
 	pDC->SetBkColor (m_clrBack);
 	return m_brBackground;
 }
-//************************************************************************************
+
 void CPropSliderCtrl::HScroll (UINT nSBCode, UINT nPos)
 {
 	ASSERT_VALID (m_pProp);
@@ -284,16 +225,25 @@ void CPropSliderCtrl::HScroll (UINT nSBCode, UINT nPos)
 	m_pProp->Redraw ();
 }
 
-////////////////////////////////////////////////////////////////////////////////
-// CSliderProp class
+//***************************************************************************
+// CBCGPSliderProp
+//***************************************************************************
 
-CBCGSliderProp::CBCGSliderProp(const CString& strName, long nValue, 
+/////////////////////////////////////////////////////////////////////////////
+/// Constructor for the slider property widget
+///	@param strName		The name of the geometrical object
+///	@param strHelp		The description of the geometrical object
+///	@param ndx			The zero-based index of the object's icon
+///	@param bHasList		TRUE if the object has parents, FALSE otherwise
+///	@param dwData		The user defined data to be associated with the property. 
+/////////////////////////////////////////////////////////////////////////////
+CBCGPSliderProp::CBCGPSliderProp(const CString& strName, long nValue, 
 							 LPCTSTR lpszDescr, DWORD dwData)
 	:	CBCGPProp (strName, nValue, lpszDescr, dwData)
 {
 }
-//************************************************************************************
-CWnd* CBCGSliderProp::CreateInPlaceEdit (CRect rectEdit, BOOL& bDefaultFormat)
+
+CWnd* CBCGPSliderProp::CreateInPlaceEdit (CRect rectEdit, BOOL& bDefaultFormat)
 {
 	CPropSliderCtrl* pWndSlider = new CPropSliderCtrl (this, globalData.clrWindow);
 
@@ -305,8 +255,8 @@ CWnd* CBCGSliderProp::CreateInPlaceEdit (CRect rectEdit, BOOL& bDefaultFormat)
 	bDefaultFormat = TRUE;
 	return pWndSlider;
 }
-//******************************************************************************************
-BOOL CBCGSliderProp::OnUpdateValue ()
+
+BOOL CBCGPSliderProp::OnUpdateValue ()
 {
 	ASSERT_VALID (this);
 	ASSERT_VALID (m_pWndInPlace);
@@ -322,6 +272,104 @@ BOOL CBCGSliderProp::OnUpdateValue ()
 	if (lCurrValue != (long) m_varValue)
 	{
 		m_pWndList->OnPropertyChanged (this);
+	}
+
+	return TRUE;
+}
+
+
+//***************************************************************************
+// CBCGPCheckBoxProp
+//***************************************************************************
+
+CBCGPCheckBoxProp::CBCGPCheckBoxProp(const CString& strName, BOOL bCheck, LPCTSTR lpszDescr, DWORD dwData)
+	:	CBCGPProp (strName, _variant_t (bool (bCheck != 0)), lpszDescr, dwData)
+{
+	m_rectCheck.SetRectEmpty ();
+}
+
+void CBCGPCheckBoxProp::OnDrawName(CDC* pDC, CRect rect)
+{
+	CBCGPProp::OnDrawName (pDC, rect);
+}
+
+void CBCGPCheckBoxProp::OnDrawValue(CDC* pDC, CRect rect)
+{
+	m_rectCheck = rect;
+
+	m_rectCheck.DeflateRect (1, 1);
+
+	m_rectCheck.right = m_rectCheck.left + m_rectCheck.Height();
+
+	rect.left = m_rectCheck.right + 1;
+
+	CBCGPProp::OnDrawValue (pDC, rect);
+
+	OnDrawCheckBox (pDC, m_rectCheck, bool (m_varValue));
+}
+
+CWnd* CBCGPCheckBoxProp::CreateInPlaceEdit (CRect rectEdit, BOOL& bDefaultFormat)
+{
+	CBCGPButton * pWndCheckBox = new CBCGPButton ();
+
+	rectEdit.left = rectEdit.right ;
+
+	pWndCheckBox->Create ("",WS_CHILD|BS_CHECKBOX, rectEdit, m_pWndList, BCGPROPLIST_ID_INPLACE);
+		pWndCheckBox->m_nFlatStyle = CBCGPButton::BUTTONSTYLE_FLAT;
+		pWndCheckBox->m_nAlignStyle = CBCGPButton::ALIGN_LEFT;
+		pWndCheckBox->m_bDrawFocus = FALSE;
+		pWndCheckBox->m_bResponseOnButtonDown = TRUE;
+		pWndCheckBox->m_bTransparent = TRUE;
+		pWndCheckBox->m_bDontUseWinXPTheme = TRUE;
+			pWndCheckBox->SetCheck ((bool)m_varValue);
+
+	bDefaultFormat = TRUE;
+	return pWndCheckBox;
+}
+
+void CBCGPCheckBoxProp::OnClickName(CPoint point)
+{
+	CBCGPProp::OnClickName (point);
+	if (m_bEnabled && m_rectCheck.PtInRect (point)) 
+	{
+		m_varValue = !bool(m_varValue);
+		m_pWndList->InvalidateRect (GetRect());
+	}
+}
+
+BOOL CBCGPCheckBoxProp::OnClickValue (UINT uiMsg, CPoint point)
+{
+	return CBCGPProp::OnClickValue (uiMsg, point);
+}
+
+BOOL CBCGPCheckBoxProp::OnDblClick (CPoint point)
+{
+	if (m_bEnabled && m_rectCheck.PtInRect (point)) 
+	{
+		//return TRUE;
+	}
+
+	m_varValue = !bool(m_varValue);
+	m_pWndList->InvalidateRect (GetRect()	);
+		m_pWndList->OnPropertyChanged (this);
+	return TRUE;
+}
+
+void CBCGPCheckBoxProp::OnDrawCheckBox (CDC * pDC, CRect rect, BOOL bChecked)
+{
+	COLORREF clrTextOld = pDC->GetTextColor ();
+
+	CBCGPVisualManager::GetInstance ()->OnDrawCheckBox (pDC, rect,
+										 FALSE, bChecked, m_bEnabled);
+
+	pDC->SetTextColor (clrTextOld);
+}
+
+BOOL CBCGPCheckBoxProp::PushChar (UINT nChar)
+{
+	if (nChar == VK_SPACE)
+	{
+		OnDblClick (CPoint (-1, -1));
 	}
 
 	return TRUE;

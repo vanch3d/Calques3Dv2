@@ -1,36 +1,30 @@
-// This is a part of the BCGControlBar Library
-// Copyright (C) 1998-2000 BCGSoft Ltd.
-// All rights reserved.
-//
-// This source code can be used, distributed or modified
-// only under terms and conditions 
-// of the accompanying license agreement.
-
+//////////////////////////////////////////////////////////////////////
+/// @file BCGPShapeBar.h
+/// @brief interface for the CBCGPShapeBar class
+///
+///
+//////////////////////////////////////////////////////////////////////
 #if !defined(AFX_BCGPSHAPEBAR_H__9B759C19_6B1C_48C4_A884_C0DEDD60DD77__INCLUDED_)
 #define AFX_BCGPSHAPEBAR_H__9B759C19_6B1C_48C4_A884_C0DEDD60DD77__INCLUDED_
 
 #if _MSC_VER > 1000
-#pragma once
-#endif // _MSC_VER > 1000
-// BCGPColorBar.h : header file
-//
-
-//#include "BCGCBPro.h"
-//#include "BCGPPopupMenuBar.h"
+	#pragma once
+#endif 
 
 class CBCGPShapeButton;
 class CBCGPPropList;
 
 /////////////////////////////////////////////////////////////////////////////
-// CBCGPShapeBar window
-
+/// Provides the functionality of the regular docking control bar specially designed  
+/// to handle various shape selection issues in the document/application. 
+/////////////////////////////////////////////////////////////////////////////
 class CBCGPShapeBar : public CBCGPPopupMenuBar
 {
 	friend class CShapePopup;
-	//friend class CBCGPColorMenuButton;
 	friend class CBCGPShapeButton;
-	friend class CShapeToolbarPopup;
+	friend class CBCGPCShapeToolbarButton;
 	friend class CBCGPShapePopup;
+	//friend class CBCGPColorMenuButton;
 	//friend class CBCGPImageEditDlg;
 	//friend class CBCGPColorProp;
 
@@ -54,17 +48,17 @@ public:
 			const CRect&	rect,
 			UINT			nID,
 			int				nColumns = -1,
-			CPalette*		pPalette = NULL
-		);
+			CPalette*		pPalette = NULL);
 
 protected:
-	CBCGPShapeBar(int type,
-					 int nShape,
-					 int nColumns,
-					int	nRowsDockHorz,
-					int	nColDockVert,
-					UINT nCommandID,
-					CBCGPShapeButton* pParentBtn);
+	CBCGPShapeBar(
+			int	type,
+			int nShape,
+			int nColumns,
+			int	nRowsDockHorz,
+			int	nColDockVert,
+			UINT nCommandID,
+			CBCGPShapeButton* pParentBtn);
 
 	CBCGPShapeBar (CBCGPShapeBar& src, UINT uiCommandID);
 
@@ -110,24 +104,25 @@ public:
 	}
 
 protected:
-	int			m_Type;
-    int							m_nNumColumns;
-    int							m_nNumRowsHorz;
-    int							m_nNumColumnsVert;
-	int							m_nShape;
-	CSize						m_BoxSize;
-	int							m_nRowHeight;
-	int							m_nShapeSelected;	// (-1) - auto
-	UINT						m_nCommandID;
-	BOOL						m_bIsEnabled;
-	BOOL						m_bIsTearOff;
-	CBCGPShapeButton*			m_pParentBtn;
-	//CBCGPPropList*				m_pWndPropList;
-	int							m_nHorzOffset;
-	int							m_nVertOffset;
-	BOOL						m_bInternal;	// Used in customization
-	int							m_nVertMargin;
-	int							m_nHorzMargin;
+	int		m_Type;
+    int		m_nNumColumns;
+    int		m_nNumRowsHorz;
+    int		m_nNumColumnsVert;
+	int		m_nShape;
+	CSize	m_BoxSize;
+	int		m_nRowHeight;
+	int		m_nShapeSelected;	// (-1) - auto
+	UINT	m_nCommandID;
+	BOOL	m_bIsEnabled;
+	BOOL	m_bIsTearOff;
+	int		m_nHorzOffset;
+	int		m_nVertOffset;
+	BOOL	m_bInternal;	// Used in customization
+	int		m_nVertMargin;
+	int		m_nHorzMargin;
+
+	CBCGPShapeButton*	m_pParentBtn;
+	//CBCGPPropList*		m_pWndPropList;
 
 // Overrides
 	virtual BOOL OnSendCommand (const CBCGPToolbarButton* pButton);

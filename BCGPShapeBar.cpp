@@ -31,17 +31,17 @@ static char THIS_FILE[] = __FILE__;
 static const int SEPARATOR_SIZE = 2;
 
 /////////////////////////////////////////////////////////////////////////////
-// CShapeToolbarPopup
-
-class CShapeToolbarPopup : public CBCGPToolbarButton  
+/// CBCGPCShapeToolbarButton 
+/////////////////////////////////////////////////////////////////////////////
+class CBCGPCShapeToolbarButton : public CBCGPToolbarButton  
 {
 	friend class CBCGPShapeBar;
 	//friend class CBCGPColorMenuButton;
 
-	DECLARE_SERIAL(CShapeToolbarPopup)
+	DECLARE_SERIAL(CBCGPCShapeToolbarButton)
 
 protected:
-	CShapeToolbarPopup(int type=0,int index=0, 
+	CBCGPCShapeToolbarButton(int type=0,int index=0, 
 				BOOL bIsAutomatic = FALSE, 
 				LPCTSTR lpszColorName = NULL, BOOL bHighlight = FALSE)
 	{
@@ -97,9 +97,9 @@ protected:
 	CBCGPShapeBar*	m_pParentBar;
 };
 
-IMPLEMENT_SERIAL(CShapeToolbarPopup, CBCGPToolbarButton, 1)
+IMPLEMENT_SERIAL(CBCGPCShapeToolbarButton, CBCGPToolbarButton, 1)
 
-void CShapeToolbarPopup::OnDraw (CDC* pDC, const CRect& rect, CBCGPToolBarImages* /*pImages*/,
+void CBCGPCShapeToolbarButton::OnDraw (CDC* pDC, const CRect& rect, CBCGPToolBarImages* /*pImages*/,
 								BOOL bHorz, BOOL bCustomizeMode, BOOL bHighlight,
 								BOOL bDrawBorder, BOOL /*bGrayDisabledButtons*/)
 {
@@ -368,7 +368,7 @@ void CBCGPShapeBar::AdjustLocations ()
 		}
 		else
 		{
-			CShapeToolbarPopup* pColorButton = DYNAMIC_DOWNCAST (CShapeToolbarPopup, pButton);
+			CBCGPCShapeToolbarButton* pColorButton = DYNAMIC_DOWNCAST (CBCGPCShapeToolbarButton, pButton);
 			if (pColorButton == NULL)
 			{
 				continue;
@@ -655,7 +655,7 @@ void CBCGPShapeBar::Rebuild ()
 	int nColors = temp.GetShapeSize();
 	for (int i = 0; i <nColors; i ++)
 	{
-		InsertButton (new CShapeToolbarPopup (m_Type,i, FALSE, NULL, m_nShapeSelected == i));
+		InsertButton (new CBCGPCShapeToolbarButton (m_Type,i, FALSE, NULL, m_nShapeSelected == i));
 
 		if (!bAlreadySelected)
 		{
@@ -664,6 +664,10 @@ void CBCGPShapeBar::Rebuild ()
 	}
 }
 
+/////////////////////////////////////////////////////////////////////////////
+/// CBCGPColorCCmdUI
+///
+/////////////////////////////////////////////////////////////////////////////
 class CBCGPColorCCmdUI : public CCmdUI
 {
 public:
@@ -719,7 +723,7 @@ void CBCGPShapeBar::OnUpdateCmdUI(CFrameWnd* pTarget, BOOL bDisableIfNoHndler)
 
 		for (POSITION pos = m_Buttons.GetHeadPosition (); pos != NULL;)
 		{
-			CShapeToolbarPopup* pColorButton = DYNAMIC_DOWNCAST (CShapeToolbarPopup, m_Buttons.GetNext (pos));
+			CBCGPCShapeToolbarButton* pColorButton = DYNAMIC_DOWNCAST (CBCGPCShapeToolbarButton, m_Buttons.GetNext (pos));
 			if (pColorButton != NULL)
 			{
 				pColorButton->m_nStyle &= ~TBBS_DISABLED;
@@ -753,7 +757,7 @@ BOOL CBCGPShapeBar::OnSendCommand (const CBCGPToolbarButton* pButton)
  int shape = (COLORREF) -1;
 
 	CBCGPPopupMenu* pParentMenu = DYNAMIC_DOWNCAST (CBCGPPopupMenu, GetParent ());
-	CShapeToolbarPopup* pColorButton = DYNAMIC_DOWNCAST (CShapeToolbarPopup, pButton);
+	CBCGPCShapeToolbarButton* pColorButton = DYNAMIC_DOWNCAST (CBCGPCShapeToolbarButton, pButton);
 	if (pColorButton == NULL)
 	{
 		ASSERT (FALSE);
@@ -959,7 +963,7 @@ void CBCGPShapeBar::SetShape (int color)
 			continue;
 		}
 
-		CShapeToolbarPopup* pColorButton = DYNAMIC_DOWNCAST (CShapeToolbarPopup, pButton);
+		CBCGPCShapeToolbarButton* pColorButton = DYNAMIC_DOWNCAST (CBCGPCShapeToolbarButton, pButton);
 		if (pColorButton == NULL)
 		{
 			continue;
