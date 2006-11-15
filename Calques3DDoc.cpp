@@ -1321,10 +1321,12 @@ void CCalques3DDoc::UpdateAllViews(CView* pSender, LPARAM lHint, CObject* pHint)
 			if (pObj && pWnd) 
 			{
 		        pWnd->GetPropertyBar()->AddProperties(pObj);
+		        pWnd->GetDependentBar()->AddProperties(pObj);
 			}
 			else if (pWnd)
 			{
 		        pWnd->GetPropertyBar()->AddProperties(NULL);
+		        pWnd->GetDependentBar()->AddProperties(NULL);
 			}
 		}
 		break;
