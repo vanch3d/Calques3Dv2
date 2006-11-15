@@ -1,4 +1,4 @@
-// MainFrm.cpp : implementation of the CMainFrame class
+74// MainFrm.cpp : implementation of the CMainFrame class
 //
 
 #include "stdafx.h"
@@ -88,6 +88,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CBCGPMDIFrameWnd)
 	ON_COMMAND(ID_VIEW_VISUALISATION, OnViewVisualisation)
 	ON_COMMAND(ID_VIEW_EXPLORATION, OnViewExploration)
 	ON_COMMAND(ID_VIEW_PROPERTYBAR, OnViewPropertyBar)
+	ON_COMMAND(ID_VIEW_DEPENDENTBAR, OnViewDependentBar)
 	ON_COMMAND_RANGE(ID_VIEW_CALQUE,ID_VIEW_CALQUE4, OnViewCalque)
 	ON_UPDATE_COMMAND_UI_RANGE(ID_VIEW_CALQUE,ID_VIEW_CALQUE4, OnUpdateViews)
 	ON_UPDATE_COMMAND_UI(ID_INDICATOR_MODE, OnUpdateMode)
@@ -101,6 +102,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CBCGPMDIFrameWnd)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_VISUALISATION, OnUpdateViewVisualisation)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_EXPLORATION, OnUpdateViewExploration)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_PROPERTYBAR, OnUpdateViewPropertyBar)
+	ON_UPDATE_COMMAND_UI(ID_VIEW_DEPENDENTBAR, OnUpdateViewDependentBar)
 //	ON_COMMAND(ID_VIEW_PLACEMENT_RESTORE, OnPlacementRestore)
 //	ON_COMMAND(ID_VIEW_PLACEMENT_SAVE, OnPlacementSave)
 //	ON_UPDATE_COMMAND_UI(ID_VIEW_PLACEMENT_SAVE, OnUpdatePlacement)
@@ -329,11 +331,29 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	strPropertyTitle.LoadString (IDR_PROPERTY_TB);
 	if (!m_wndPropertyBar.Create (strPropertyTitle, this, CSize (200, 200),
 		TRUE /* Has gripper */, ID_VIEW_PROPERTYBAR,
-		WS_CHILD | WS_VISIBLE | CBRS_RIGHT))
+		WS_CHILD | WS_VISIBLE | CBRS_RIGHT|CBRS_FLOAT_MULTI))
 	{
 		TRACE0("Failed to create workspace bar\n");
 		return -1;      // fail to create
 	}
+	strPropertyTitle.LoadString (IDR_DEPENDENT_TB);
+	if (!m_wndDependentBar.Create (strPropertyTitle, this, CSize (200, 200),
+		TRUE /* Has gripper */, ID_VIEW_DEPENDENTBAR,
+		WS_CHILD | WS_VISIBLE | CBRS_RIGHT|CBRS_FLOAT_MULTI))
+	{
+		TRACE0("Failed to create workspace bar\n");
+		return -1;      // fail to create
+	}
+
+	HICON hPropertyIcon = (HICON) ::LoadImage (::AfxGetResourceHandle (), 
+		MAKEINTRESOURCE (IDR_PROPERTY_TB),
+				IMAGE_ICON, ::GetSystemMetrics (SM_CXSMICON), ::GetSystemMetrics (SM_CYSMICON), 0);
+	m_wndPropertyBar.SetIcon (hPropertyIcon, FALSE);
+	hPropertyIcon = (HICON) ::LoadImage (::AfxGetResourceHandle (), 
+		MAKEINTRESOURCE (IDR_DEPENDENT_TB),
+				IMAGE_ICON, ::GetSystemMetrics (SM_CXSMICON), ::GetSystemMetrics (SM_CYSMICON), 0);
+	m_wndDependentBar.SetIcon (hPropertyIcon, FALSE);
+
 
 	EnableDocking(CBRS_ALIGN_ANY);
 	//EnableAutoHideBars(CBRS_ALIGN_ANY);
@@ -345,7 +365,8 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndConstrBar.EnableDocking(CBRS_ALIGN_ANY);
 	m_wndExplorBar.EnableDocking(CBRS_ALIGN_ANY);
 	m_wndVisuBar.EnableDocking(CBRS_ALIGN_ANY); 
-	m_wndPropertyBar.EnableDocking(CBRS_ALIGN_RIGHT);
+	m_wndPropertyBar.EnableDocking(CBRS_ALIGN_ANY);
+	m_wndDependentBar.EnableDocking(CBRS_ALIGN_ANY);
 
 	DockControlBar(&m_wndMenuBar);
 	DockControlBar(&m_wndToolBar);
@@ -359,6 +380,8 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	//DockControlBarLeftOf(&m_wndExplorBar,&m_wndToolBar);			///// NVL
 	//DockControlBarLeftOf(&m_wndVisuBar,&m_wndToolBar);			///// NVL
 	DockControlBar(&m_wndPropertyBar);
+	//DockControlBar(&m_wndDependentBar);
+	m_wndDependentBar.DockToWindow (&m_wndPropertyBar, CBRS_ALIGN_BOTTOM);
 
 
 	BOOL bRet = CBCGPToolBar::AddToolBarForImageCollection(IDR_COMMANDS_TB);
@@ -935,6 +958,19 @@ void CMainFrame::OnViewPropertyBar()
 void CMainFrame::OnUpdateViewPropertyBar(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck (m_wndPropertyBar.IsVisible());
+}
+
+void CMainFrame::OnViewDependentBar()
+{
+	ShowControlBar (&m_wndDependentBar,
+					!(m_wndDependentBar.IsVisible()),
+					FALSE,TRUE);
+	RecalcLayout ();
+}
+
+void CMainFrame::OnUpdateViewDependentBar(CCmdUI* pCmdUI)
+{
+	pCmdUI->SetCheck (m_wndDependentBar.IsVisible());
 }
 
 
