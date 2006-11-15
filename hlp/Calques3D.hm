@@ -178,6 +178,8 @@ HID_VIEW_FULLSCREEN                     0x18047
 HID_VISUALISATION_HORSLIDER             0x18049
 HID_VISUALISATION_VERSLIDER             0x1804A
 HID_HELP_KEYBOARDMAP                    0x1804D
+HID_PROPERTY_EXPAND                     0x1806E
+HID_PROPERTY_SORTING                    0x1806F
 HID_EDIT_UNDO_DELETE                    0x1808B
 HID_EDIT_UNDO_APPEND                    0x1808C
 HID_EDIT_UNDO_MODIFY                    0x1808D
@@ -186,6 +188,7 @@ HID_VIEW_CONSTRUCTION                   0x180A2
 HID_VIEW_VISUALISATION                  0x180A3
 HID_VIEW_EXPLORATION                    0x180A4
 HID_VIEW_PROPERTYBAR                    0x180A5
+HID_VIEW_DEPENDENTBAR                   0x180A6
 HID_DUMMY_POINTON                       0x180C0
 HID_DUMMY_INTERS                        0x180C1
 HID_DUMMY_POINTDIV                      0x180C2
@@ -242,6 +245,7 @@ HIDR_POINTDIV_TB                        0x211D0
 HIDR_GRAPH_TB                           0x211D1
 HIDR_VERIFY_TB                          0x211D2
 HIDR_PROPERTY_TB                        0x211D6
+HIDR_DEPENDENT_TB                       0x211D7
  
 // Dialogs (IDD_*) 
 HIDD_ABOUTBOX                           0x20064

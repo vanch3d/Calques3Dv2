@@ -256,6 +256,7 @@
 #define IDB_BTNICON                     4564
 #define IDB_PREFS_ICONS                 4565
 #define IDR_PROPERTY_TB                 4566
+#define IDR_DEPENDENT_TB                4567
 #define IDS_NAME_OBJECT                 5000
 #define IDS_NAME_POINT                  5001
 #define IDS_NAME_LINE                   5002
@@ -615,6 +616,8 @@
 #define ID_VISUALISATION_HORSLIDER      32841
 #define ID_VISUALISATION_VERSLIDER      32842
 #define ID_HELP_KEYBOARDMAP             32845
+#define ID_PROPERTY_EXPAND              32878
+#define ID_PROPERTY_SORTING             32879
 #define ID_EDIT_UNDO_DELETE             32907
 #define ID_EDIT_UNDO_APPEND             32908
 #define ID_EDIT_UNDO_MODIFY             32909
@@ -623,6 +626,7 @@
 #define ID_VIEW_VISUALISATION           32931
 #define ID_VIEW_EXPLORATION             32932
 #define ID_VIEW_PROPERTYBAR             32933
+#define ID_VIEW_DEPENDENTBAR            32934
 #define ID_DUMMY_POINTON                32960
 #define ID_DUMMY_INTERS                 32961
 #define ID_DUMMY_POINTDIV               32962
