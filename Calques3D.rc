@@ -42,6 +42,8 @@ IDR_VIEWANALYTIC        ICON    DISCARDABLE     "res\\idr_alge.ico"
 IDR_VIEWMACRO           ICON    DISCARDABLE     "res\\idr_macro.ico"
 IDR_VIEWDEPEND          ICON    DISCARDABLE     "res\\idr_dep.ico"
 IDR_VIEWRENDERING       ICON    DISCARDABLE     "res\\idr_render.ico"
+IDR_PROPERTY_TB         ICON    DISCARDABLE     "res\\prop_bar.ico"
+IDR_DEPENDENT_TB        ICON    DISCARDABLE     "res\\dep_bar.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -71,6 +73,7 @@ IDB_BTNICON             BITMAP  DISCARDABLE     "res\\btnicon.bmp"
 IDB_PREFS_ICONS         BITMAP  DISCARDABLE     "res\\preficons.bmp"
 IDR_EXPLORATION_TB      BITMAP  DISCARDABLE     "res\\tb_exploration.bmp"
 IDB_SLIDERS             BITMAP  DISCARDABLE     "res\\sliders.bmp"
+IDR_PROPERTY_TB         BITMAP  DISCARDABLE     "res\\tb_property.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -249,6 +252,12 @@ BEGIN
     BUTTON      ID_EXPLORATION_EXTRACTION
     BUTTON      ID_EXPLORATION_LOCUS
     BUTTON      ID_EXPLORATION_ANIMATION
+END
+
+IDR_PROPERTY_TB TOOLBAR DISCARDABLE  16, 16
+BEGIN
+    BUTTON      ID_PROPERTY_EXPAND
+    BUTTON      ID_PROPERTY_SORTING
 END
 
 
@@ -1906,12 +1915,14 @@ IDR_POPUP_TOOLBAR MENU DISCARDABLE
 BEGIN
     POPUP "< TOOLBAR >"
     BEGIN
+        MENUITEM "&Property",                   ID_VIEW_PROPERTYBAR
+        MENUITEM "&Dependents",                 ID_VIEW_DEPENDENTBAR
+        MENUITEM SEPARATOR
         MENUITEM "&Standard Toolbar",           ID_VIEW_TOOLBAR
         MENUITEM "&Objects",                    ID_VIEW_OBJECT
         MENUITEM "&Construction",               ID_VIEW_CONSTRUCTION
         MENUITEM "&Visualisation",              ID_VIEW_VISUALISATION
         MENUITEM "&Exploration",                ID_VIEW_EXPLORATION
-        MENUITEM "&Property",                   ID_VIEW_PROPERTYBAR
         MENUITEM SEPARATOR
         MENUITEM "<User Toolbar>",              ID_VIEW_USER_TOOLBAR1
         MENUITEM "<User Toolbar>",              ID_VIEW_USER_TOOLBAR2
@@ -3047,6 +3058,7 @@ END
 STRINGTABLE DISCARDABLE 
 BEGIN
     IDR_PROPERTY_TB         "Property"
+    IDR_DEPENDENT_TB        "Dependent"
 END
 
 STRINGTABLE DISCARDABLE 
@@ -3060,6 +3072,7 @@ BEGIN
     ID_VIEW_VISUALISATION   "Show or hide the visualisation bar\nToggle Visualisation"
     ID_VIEW_EXPLORATION     "Show or hide the exploration bar\nToggle Exploration"
     ID_VIEW_PROPERTYBAR     "Show or hide the property bar\nToggle Property"
+    ID_VIEW_DEPENDENTBAR    "Show or hide the dependent bar\nToggle Dependent"
 END
 
 STRINGTABLE DISCARDABLE 
@@ -3214,6 +3227,12 @@ BEGIN
     CTX_MACRO_UNLOAD        "click anywhere to load the macro-construction."
     CTX_MACRO_POINT         "select a point to graft this base-point on or double-click to end up the graft."
     CTX_MOVE_TRACE          "select a point to trace"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_PROPERTY_EXPAND      "AAAAAAA"
+    ID_PROPERTY_SORTING     "BBBBBBBBBBBBB"
 END
 
 #endif    // English (U.K.) resources
