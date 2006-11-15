@@ -36,7 +36,7 @@ public:
     BOOL            m_bIsRepereFixed;   ///< TRUE if the referential cannot be rotated, FALSE otherwise
 protected:
     CxObject3DSet    m_cObjectFound;     ///< List of geometrical objects found at the last mouse-click
-    CStringArray    m_cStrObjFound;     ///< List of descriptions for objects in the selection list. \deprecated Not in use anymore.
+//    CStringArray    m_cStrObjFound;     ///< List of descriptions for objects in the selection list. \deprecated Not in use anymore.
     CObject3D*      m_pObject;          ///< Last selected object from the list
     CPoint          m_ptOld;            ///<
     BOOL            m_bPersistent;      ///< TRUE if the task is persistent, FALSE otherwise

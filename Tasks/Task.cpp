@@ -49,7 +49,7 @@ CTask::~CTask()
     m_nStep = 0;
     m_pObject = NULL;
     m_cObjectFound.RemoveAll();
-    m_cStrObjFound.RemoveAll();
+//    m_cStrObjFound.RemoveAll();
     if (m_pParent->GetSelectedObject())
     {
         m_pParent->GetSelectedObject()->SetSelected(FALSE);
@@ -202,7 +202,7 @@ int  CTask::FindObject(CPoint theLoc,unsigned long mask,BOOL bShowLabel,BOOL bSu
     CString strObj(_T(""));
 
     m_cObjectFound.RemoveAll();
-    m_cStrObjFound.RemoveAll();
+//    m_cStrObjFound.RemoveAll();
 
 //  CViewUniv *pUniv = DYNAMIC_DOWNCAST(CViewUniv,m_pParent);
 
@@ -242,7 +242,7 @@ int  CTask::FindObject(CPoint theLoc,unsigned long mask,BOOL bShowLabel,BOOL bSu
             CObject3D *obj = m_cObjectFound.GetAt(i);
             if (!obj) continue;
             CString mstr = obj->GetObjectHelp();
-            m_cStrObjFound.Add(mstr);
+//            m_cStrObjFound.Add(mstr);
             mObjFound.Add(obj);
         }
         //m_pParent->SendMessage(WM_SHOWOBJ_TOOLTIPS,(WPARAM)(&m_cStrObjFound),(LPARAM)trouve);
@@ -285,7 +285,7 @@ CObject3D* CTask::GetObject()
                 break;
             }
             CString mstr = obj->GetObjectHelp();
-            m_cStrObjFound.Add(mstr);
+//            m_cStrObjFound.Add(mstr);
             int nbO = pPickUp.AddString(mstr);
             pPickUp.AddHelper(nbO,obj->GetObjectDef());
         }
