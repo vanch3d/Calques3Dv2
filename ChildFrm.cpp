@@ -158,16 +158,19 @@ void CChildFrame::OnMDIActivate(BOOL bActivate, CWnd* pActivateWnd, CWnd* pDeact
     if (!pActivateWnd)
     {
         pWnd->GetPropertyBar()->EnableBar(FALSE);
+        pWnd->GetDependentBar()->EnableBar(FALSE);
         //pWnd->m_wndWorkSpace.UpdateDocument();
     }
     else if (bActivate)// && pMDoc)
     {
         pWnd->GetPropertyBar()->EnableBar(TRUE);
+        pWnd->GetDependentBar()->EnableBar(TRUE);
         //pWnd->m_wndWorkSpace.UpdateFromDoc(pMDoc);
     }
 	else
     {
         pWnd->GetPropertyBar()->EnableBar(FALSE);
+        pWnd->GetDependentBar()->EnableBar(FALSE);
         //pWnd->m_wndWorkSpace.UpdateDocument();
     }	
 }
