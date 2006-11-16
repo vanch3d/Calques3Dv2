@@ -424,6 +424,26 @@
 #define PREF_DEF_SPHGCR                 7111
 #define PREF_DEF_LOCUS                  7112
 #define PREF_DEF_LOCSIZE                7113
+#define PROP_DEFINITION                 8000
+#define PROP_APPEARANCE                 8001
+#define PROP_OBJNAME                    8002
+#define PROP_OBJCOLOR                   8003
+#define PROP_OBJSHAPE                   8004
+#define PROP_OBJVISIBLE                 8005
+#define PROP_OBJMARKED                  8006
+#define PROP_DEPENDENT                  8007
+#define PROP_COMPOSITE                  8008
+#define PROP_PARENTS                    8009
+#define PROP_DEFINITION_DESC            8100
+#define PROP_APPEARANCE_DESC            8101
+#define PROP_OBJNAME_DESC               8102
+#define PROP_OBJCOLOR_DESC              8103
+#define PROP_OBJSHAPE_DESC              8104
+#define PROP_OBJVISIBLE_DESC            8105
+#define PROP_OBJMARKED_DESC             8106
+#define PROP_DEPENDENT_DESC             8107
+#define PROP_COMPOSITE_DESC             8108
+#define PROP_PARENTS_DESC               8109
 #define IDC_PSESS_SAVEAS                18920
 #define IDC_PMAC_LIST                   18921
 #define IDC_PMAC_PATH                   18922
@@ -438,7 +458,6 @@
 #define IDD_OBJECTTEXT_PAGE             18936
 #define IDD_PREF_DISCOVERY_PAGE         18937
 #define IDD_UNDO_DLG                    18938
-#define IDD_PREF_TEST_PAGE              18939
 #define ID_VIEW_UNIVERSE                30000
 #define ID_VIEW_HISTORIQUE              30001
 #define ID_VIEW_GRAPH                   30002
@@ -605,6 +624,7 @@
 #define ID_GRAPH_SHOWBASEPT             30703
 #define ID_MATHPAD_ADDCOMMENT           30800
 #define ID_MATHPAD_ADDEQUATION          30801
+#define ID_RENDERER_PROPERTY            30900
 #define ID_VIEW_TOOLBARS                32771
 #define ID_TOOLS_ENTRY                  32805
 #define ID_VIEW_APPLOOK_2000            32833
@@ -645,9 +665,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        187
-#define _APS_NEXT_COMMAND_VALUE         32989
+#define _APS_NEXT_RESOURCE_VALUE        188
+#define _APS_NEXT_COMMAND_VALUE         32990
 #define _APS_NEXT_CONTROL_VALUE         1178
-#define _APS_NEXT_SYMED_VALUE           123
+#define _APS_NEXT_SYMED_VALUE           124
 #endif
 #endif

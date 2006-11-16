@@ -167,6 +167,7 @@ HID_GRAPH_SHOWDEPENDENTS                0x177EE
 HID_GRAPH_SHOWBASEPT                    0x177EF
 HID_MATHPAD_ADDCOMMENT                  0x17850
 HID_MATHPAD_ADDEQUATION                 0x17851
+HID_RENDERER_PROPERTY                   0x178B4
 HID_VIEW_TOOLBARS                       0x18003
 HID_TOOLS_ENTRY                         0x18025
 HID_VIEW_APPLOOK_2000                   0x18041
@@ -270,6 +271,5 @@ HIDD_PREF_MATHPAD_PAGE                  0x249F7
 HIDD_OBJECTTEXT_PAGE                    0x249F8
 HIDD_PREF_DISCOVERY_PAGE                0x249F9
 HIDD_UNDO_DLG                           0x249FA
-HIDD_PREF_TEST_PAGE                     0x249FB
  
 // Frame Controls (IDW_*) 
