@@ -7,6 +7,7 @@
 #include "MainFrm.h"
 #include "ChildFrm.h"
 #include "Calques3DDoc.h"
+#include "ProjectRCVersion.h"
 
 #include "ViewHisto.h"
 #include "ViewUniv.h"
@@ -39,6 +40,9 @@ static char THIS_FILE[] = __FILE__;
 #define REG_BUILD		_T("BuildDate")
 #define REG_PROFILE		_T("Profile")
 #define REG_PROFILEDES	_T("Description")
+#define REG_VERMAJOR	_T("VersionMajor")
+#define REG_VERMINOR	_T("VersionMinor")
+#define REG_VERREVIS	_T("VersionRevision")
 
 // Specify the base item for the registry
 CString CCalques3DApp::g_strRegistryBase = REG_SETTINGS;
@@ -141,7 +145,29 @@ BOOL CCalques3DApp::InitInstance()
 	SetRegistryBase();
 	//CString mstr1 = GetRegSectionPath();
 
-	// For compatibility reasons, check the build date from the registry
+	CProjectRCVersion applVersion;
+	int major=-1,minor=-1,revision=-1;
+	applVersion.GetProductVersion(major,minor,revision);
+
+	int vmajor = GetSectionInt(REG_SETTINGS,REG_VERMAJOR,-1);
+	int vminor = GetSectionInt(REG_SETTINGS,REG_VERMINOR,-1);
+	int vrev = GetSectionInt(REG_SETTINGS,REG_VERREVIS,-1);
+
+	if (vmajor==-1 || (vmajor!=major || vminor!=minor))
+	{
+		MessageBox(NULL,
+				_T("Due to major modifications in Calques 3D, the configuration saved\n"
+				   "during the last session cannot be retrieved by this new version.\n"
+				   "Calques 3D will be initialised with its default configuration.\n"
+				   "This problem will not occur anymore after this launch."),
+				_T("Warning !"),MB_ICONWARNING|MB_OK);
+		CleanState(CCalques3DApp::g_strRegistryBase);
+		WriteInt(REG_VERMAJOR,major);
+		WriteInt(REG_VERMINOR,minor);
+		WriteInt(REG_VERREVIS,revision);
+	}
+
+/*	// For compatibility reasons, check the build date from the registry
 	CString strRegDate = GetString(REG_BUILD, _T(""));
 	CString strBuildDate = __DATE__;
 	if (!strRegDate.IsEmpty() && strRegDate != strBuildDate)
@@ -154,7 +180,7 @@ BOOL CCalques3DApp::InitInstance()
 				_T("Warning !"),MB_ICONWARNING|MB_OK);
 		WriteString(REG_BUILD,strBuildDate);
 		CleanState(CCalques3DApp::g_strRegistryBase);
-	}
+	}*/
 
 	// If appropriate, load the information form the specify user profile
 	SetRegistryBase (REG_SESSION);
