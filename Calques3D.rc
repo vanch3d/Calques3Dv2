@@ -542,7 +542,7 @@ END
 IDD_ABOUTCALQUE DIALOGEX 0, 0, 202, 191
 STYLE WS_CHILD | WS_VISIBLE | WS_CAPTION
 CAPTION "Calques 3D"
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     CONTROL         "Custom",IDC_ABOUTCALQUE,"MFCIconCtrl",0x0,7,7,188,177,0,
                     HIDC_ABOUTCALQUE
@@ -703,15 +703,6 @@ BEGIN
     PUSHBUTTON      "",IDC_UNDO_REDO,120,4,20,12
     CTEXT           "Text",IDC_UNDO_TXT,24,4,96,12,SS_CENTERIMAGE,
                     WS_EX_STATICEDGE
-END
-
-IDD_PREF_TEST_PAGE DIALOGEX 0, 0, 272, 146
-STYLE DS_CONTEXTHELP | WS_CHILD | WS_CAPTION
-CAPTION "Appearance (*)"
-FONT 8, "MS Sans Serif", 0, 0, 0x1
-BEGIN
-    GROUPBOX        "Initial appearance of points",IDC_SHAPE_APP,4,4,264,136,
-                    BS_FLAT,0,0xc9fb0486
 END
 
 
@@ -904,14 +895,6 @@ BEGIN
         RIGHTMARGIN, 137
         TOPMARGIN, 7
         BOTTOMMARGIN, 13
-    END
-
-    IDD_PREF_TEST_PAGE, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 265
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 139
     END
 END
 #endif    // APSTUDIO_INVOKED
@@ -1299,6 +1282,7 @@ BEGIN
         END
         MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
         MENUITEM SEPARATOR
+        MENUITEM "&Full Screen",                ID_VIEW_FULLSCREEN
         POPUP "&Placement"
         BEGIN
             MENUITEM "&Save",                       ID_VIEW_PLACEMENT_SAVE
@@ -1309,11 +1293,16 @@ BEGIN
         MENUITEM "&Universe",                   ID_VIEW_UNIVERSE
         MENUITEM "&History",                    ID_VIEW_HISTORIQUE
         MENUITEM "&Graph",                      ID_VIEW_GRAPH
-        MENUITEM "Tracing &1",                  ID_VIEW_CALQUE
-        MENUITEM "Tracing &2",                  ID_VIEW_CALQUE2
-        MENUITEM "Tracing &3",                  ID_VIEW_CALQUE3
-        MENUITEM "Tracing &4",                  ID_VIEW_CALQUE4
         MENUITEM "&MathPad",                    ID_VIEW_ANALYTIC
+        POPUP "Tracings"
+        BEGIN
+            MENUITEM "Tracing &1",                  ID_VIEW_CALQUE
+            MENUITEM "Tracing &2",                  ID_VIEW_CALQUE2
+            MENUITEM "Tracing &3",                  ID_VIEW_CALQUE3
+            MENUITEM "Tracing &4",                  ID_VIEW_CALQUE4
+        END
+        MENUITEM SEPARATOR
+        MENUITEM "3D &Renderer",                ID_VIEW_RENDERING
     END
     POPUP "Vi&sualisation"
     BEGIN
@@ -1536,6 +1525,7 @@ BEGIN
         END
         MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
         MENUITEM SEPARATOR
+        MENUITEM "&Full Screen",                ID_VIEW_FULLSCREEN
         POPUP "&Placement"
         BEGIN
             MENUITEM "&Save",                       ID_VIEW_PLACEMENT_SAVE
@@ -1546,11 +1536,16 @@ BEGIN
         MENUITEM "&Universe",                   ID_VIEW_UNIVERSE
         MENUITEM "&History",                    ID_VIEW_HISTORIQUE
         MENUITEM "&Graph",                      ID_VIEW_GRAPH
-        MENUITEM "Tracing &1",                  ID_VIEW_CALQUE
-        MENUITEM "Tracing &2",                  ID_VIEW_CALQUE2
-        MENUITEM "Tracing &3",                  ID_VIEW_CALQUE3
-        MENUITEM "Tracing &4",                  ID_VIEW_CALQUE4
         MENUITEM "&MathPad",                    ID_VIEW_ANALYTIC
+        POPUP "Tracings"
+        BEGIN
+            MENUITEM "Tracing &1",                  ID_VIEW_CALQUE
+            MENUITEM "Tracing &2",                  ID_VIEW_CALQUE2
+            MENUITEM "Tracing &3",                  ID_VIEW_CALQUE3
+            MENUITEM "Tracing &4",                  ID_VIEW_CALQUE4
+        END
+        MENUITEM SEPARATOR
+        MENUITEM "3D &Renderer",                ID_VIEW_RENDERING
     END
     POPUP "Hist&ory"
     BEGIN
@@ -1620,6 +1615,7 @@ BEGIN
         END
         MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
         MENUITEM SEPARATOR
+        MENUITEM "&Full Screen",                ID_VIEW_FULLSCREEN
         POPUP "&Placement"
         BEGIN
             MENUITEM "&Save",                       ID_VIEW_PLACEMENT_SAVE
@@ -1630,11 +1626,16 @@ BEGIN
         MENUITEM "&Universe",                   ID_VIEW_UNIVERSE
         MENUITEM "&History",                    ID_VIEW_HISTORIQUE
         MENUITEM "&Graph",                      ID_VIEW_GRAPH
-        MENUITEM "Tracing &1",                  ID_VIEW_CALQUE
-        MENUITEM "Tracing &2",                  ID_VIEW_CALQUE2
-        MENUITEM "Tracing &3",                  ID_VIEW_CALQUE3
-        MENUITEM "Tracing &4",                  ID_VIEW_CALQUE4
         MENUITEM "&MathPad",                    ID_VIEW_ANALYTIC
+        POPUP "Tracings"
+        BEGIN
+            MENUITEM "Tracing &1",                  ID_VIEW_CALQUE
+            MENUITEM "Tracing &2",                  ID_VIEW_CALQUE2
+            MENUITEM "Tracing &3",                  ID_VIEW_CALQUE3
+            MENUITEM "Tracing &4",                  ID_VIEW_CALQUE4
+        END
+        MENUITEM SEPARATOR
+        MENUITEM "3D &Renderer",                ID_VIEW_RENDERING
     END
     POPUP "&Graph"
     BEGIN
@@ -1705,6 +1706,7 @@ BEGIN
         END
         MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
         MENUITEM SEPARATOR
+        MENUITEM "&Full Screen",                ID_VIEW_FULLSCREEN
         POPUP "&Placement"
         BEGIN
             MENUITEM "&Save",                       ID_VIEW_PLACEMENT_SAVE
@@ -1715,11 +1717,16 @@ BEGIN
         MENUITEM "&Universe",                   ID_VIEW_UNIVERSE
         MENUITEM "&History",                    ID_VIEW_HISTORIQUE
         MENUITEM "&Graph",                      ID_VIEW_GRAPH
-        MENUITEM "Tracing &1",                  ID_VIEW_CALQUE
-        MENUITEM "Tracing &2",                  ID_VIEW_CALQUE2
-        MENUITEM "Tracing &3",                  ID_VIEW_CALQUE3
-        MENUITEM "Tracing &4",                  ID_VIEW_CALQUE4
         MENUITEM "&MathPad",                    ID_VIEW_ANALYTIC
+        POPUP "Tracings"
+        BEGIN
+            MENUITEM "Tracing &1",                  ID_VIEW_CALQUE
+            MENUITEM "Tracing &2",                  ID_VIEW_CALQUE2
+            MENUITEM "Tracing &3",                  ID_VIEW_CALQUE3
+            MENUITEM "Tracing &4",                  ID_VIEW_CALQUE4
+        END
+        MENUITEM SEPARATOR
+        MENUITEM "3D &Renderer",                ID_VIEW_RENDERING
     END
     POPUP "Vi&sualisation"
     BEGIN
@@ -1857,6 +1864,7 @@ BEGIN
         END
         MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
         MENUITEM SEPARATOR
+        MENUITEM "&Full Screen",                ID_VIEW_FULLSCREEN
         POPUP "&Placement"
         BEGIN
             MENUITEM "&Save",                       ID_VIEW_PLACEMENT_SAVE
@@ -1867,11 +1875,16 @@ BEGIN
         MENUITEM "&Universe",                   ID_VIEW_UNIVERSE
         MENUITEM "&History",                    ID_VIEW_HISTORIQUE
         MENUITEM "&Graph",                      ID_VIEW_GRAPH
-        MENUITEM "Tracing &1",                  ID_VIEW_CALQUE
-        MENUITEM "Tracing &2",                  ID_VIEW_CALQUE2
-        MENUITEM "Tracing &3",                  ID_VIEW_CALQUE3
-        MENUITEM "Tracing &4",                  ID_VIEW_CALQUE4
         MENUITEM "&MathPad",                    ID_VIEW_ANALYTIC
+        POPUP "Tracings"
+        BEGIN
+            MENUITEM "Tracing &1",                  ID_VIEW_CALQUE
+            MENUITEM "Tracing &2",                  ID_VIEW_CALQUE2
+            MENUITEM "Tracing &3",                  ID_VIEW_CALQUE3
+            MENUITEM "Tracing &4",                  ID_VIEW_CALQUE4
+        END
+        MENUITEM SEPARATOR
+        MENUITEM "3D &Renderer",                ID_VIEW_RENDERING
     END
     POPUP "&MathPad"
     BEGIN
@@ -2224,6 +2237,7 @@ BEGIN
         END
         MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
         MENUITEM SEPARATOR
+        MENUITEM "&Full Screen",                ID_VIEW_FULLSCREEN
         POPUP "&Placement"
         BEGIN
             MENUITEM "&Save",                       ID_VIEW_PLACEMENT_SAVE
@@ -2234,13 +2248,21 @@ BEGIN
         MENUITEM "&Universe",                   ID_VIEW_UNIVERSE
         MENUITEM "&History",                    ID_VIEW_HISTORIQUE
         MENUITEM "&Graph",                      ID_VIEW_GRAPH
-        MENUITEM "Tracing &1",                  ID_VIEW_CALQUE
-        MENUITEM "Tracing &2",                  ID_VIEW_CALQUE2
-        MENUITEM "Tracing &3",                  ID_VIEW_CALQUE3
-        MENUITEM "Tracing &4",                  ID_VIEW_CALQUE4
         MENUITEM "&MathPad",                    ID_VIEW_ANALYTIC
+        POPUP "Tracings"
+        BEGIN
+            MENUITEM "Tracing &1",                  ID_VIEW_CALQUE
+            MENUITEM "Tracing &2",                  ID_VIEW_CALQUE2
+            MENUITEM "Tracing &3",                  ID_VIEW_CALQUE3
+            MENUITEM "Tracing &4",                  ID_VIEW_CALQUE4
+        END
+        MENUITEM SEPARATOR
+        MENUITEM "3D &Renderer",                ID_VIEW_RENDERING
     END
-    MENUITEM "3D &Rendering",               65535
+    POPUP "3D &Rendering"
+    BEGIN
+        MENUITEM "&Property...",                ID_RENDERER_PROPERTY
+    END
     POPUP "&Tools"
     BEGIN
         MENUITEM "< User-defined tools >",      ID_TOOLS_ENTRY, GRAYED
@@ -2985,8 +3007,8 @@ END
 STRINGTABLE DISCARDABLE 
 BEGIN
     ID_EDIT_UNDO_DELETE     "Undo"
-    ID_EDIT_UNDO_APPEND     "cxzcvxczvxzcvzx"
-    ID_EDIT_UNDO_MODIFY     "dffgdfg fdcvzvzx vzx"
+    ID_EDIT_UNDO_APPEND     "Undo"
+    ID_EDIT_UNDO_MODIFY     "Undo"
 END
 
 STRINGTABLE DISCARDABLE 
@@ -3231,8 +3253,41 @@ END
 
 STRINGTABLE DISCARDABLE 
 BEGIN
-    ID_PROPERTY_EXPAND      "AAAAAAA"
-    ID_PROPERTY_SORTING     "BBBBBBBBBBBBB"
+    ID_PROPERTY_EXPAND      "Expand the property list\nExpand"
+    ID_PROPERTY_SORTING     "Sort the property list alphabetically\nSort"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_RENDERER_PROPERTY    "Change the rendering properties of the view\nChange Property"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    PROP_DEFINITION         "Definition"
+    PROP_APPEARANCE         "Appearance"
+    PROP_OBJNAME            "Name"
+    PROP_OBJCOLOR           "Colour"
+    PROP_OBJSHAPE           "Shape"
+    PROP_OBJVISIBLE         "Visible"
+    PROP_OBJMARKED          "Marked"
+    PROP_DEPENDENT          "Dependents"
+    PROP_COMPOSITE          "Composite"
+    PROP_PARENTS            "Parents"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    PROP_DEFINITION_DESC    "The nature and name of the object"
+    PROP_APPEARANCE_DESC    "The graphical properties of the object"
+    PROP_OBJNAME_DESC       "The name of the object"
+    PROP_OBJCOLOR_DESC      "The colour of the object"
+    PROP_OBJSHAPE_DESC      "The shape of the object"
+    PROP_OBJVISIBLE_DESC    "Specify if the object is visible or not"
+    PROP_OBJMARKED_DESC     "Specify if the visual marks of the object are visible or not"
+    PROP_DEPENDENT_DESC     "The list of all objects built from this one"
+    PROP_COMPOSITE_DESC     "The list of all internal constituents of this object"
+    PROP_PARENTS_DESC       "The objects from which this one is built"
 END
 
 #endif    // English (U.K.) resources
