@@ -102,13 +102,6 @@ const unsigned long TVectorProd3DClass		= 	MAKELONG(4096,8);	// NOT YET USED
 const unsigned long TUnivers3DClass			=	MAKELONG(800,2);	// NOT USED
 
 
-#define DIS_GRAPH_NONE		0x0000		///<
-#define DIS_GRAPH_PARENT	0x0001		///<
-#define DIS_GRAPH_CHILDREN	0x0002		///<
-#define DIS_GRAPH_FULL		0x0003		///<
-#define DIS_GRAPH_BASE		0x0004		///<
-
-
 class CObject3D;
 class CRedefineScheme;
 class CVisualParam;
@@ -162,7 +155,7 @@ public:
 
 
 /////////////////////////////////////////////////////////////////////////////
-/// Extract all the attributes of a geometrical object into a single class.
+/// Extract all the visual attributes of a geometrical object into a single class.
 /// 
 /// This class is used for transfering, copying or exchanging more easily attributes (ie shape,
 /// color, markers, etc.) between objects.
@@ -174,14 +167,22 @@ public:
 class CObject3DAttr: public CObject 
 {
 public:
-	BOOL		m_bVisible;
-	BOOL		m_bMarked;
-	CString		m_strObjectName;
-	int			m_nCalque;
-	CShape		m_pObjectShape;
+	BOOL		m_bVisible;			///< TRUE if the object is visible, FALSE otherwise
+	BOOL		m_bMarked;			///< TRUE if the visual marks of the object are visibles, FALSE otherwise
+	CString		m_strObjectName;	///< The name of the object
+	int			m_nCalque;			///< The object is extracted in tracing X (bit X)
+	CShape		m_pObjectShape;		///< The shape of the object
 
 public:
+	/////////////////////////////////////////////////////////////////////////////
+	/// Default constructor
+	/////////////////////////////////////////////////////////////////////////////
 	CObject3DAttr() {};
+
+	/////////////////////////////////////////////////////////////////////////////
+	/// Copy constructor
+	/// @param pObj	A reference to the object's attribute to be duplicated
+	/////////////////////////////////////////////////////////////////////////////
 	CObject3DAttr(const CObject3DAttr& pObj)
 		{	m_bVisible = pObj.m_bVisible; 
 			m_bMarked = pObj.m_bMarked;
@@ -189,15 +190,15 @@ public:
 			m_nCalque = pObj.m_nCalque;
 			m_pObjectShape = pObj.m_pObjectShape;
 		};
+
 	void operator =(const CObject3DAttr& other);
 
 };
 
 //////////////////////////////////////////////////////////////////////
-/// Method =
+/// Assignment operator
 ///
-/// \param %PARAMNAME% (%PARAMTYPE%)	todo
-/// \return inline void CObject3DAttr::operator
+/// @param pObj	A reference to the object's attribute to be duplicated
 //////////////////////////////////////////////////////////////////////
 inline void CObject3DAttr::operator =(const CObject3DAttr& other)
 {
@@ -226,8 +227,20 @@ inline void CObject3DAttr::operator =(const CObject3DAttr& other)
 /////////////////////////////////////////////////////////////////////////////
 class CObject3D : public CObject  
 {
-public:
 	DECLARE_SERIAL(CObject3D);
+
+public:
+	//////////////////////////////////////////////////////////////////////
+	/// Used to identify the type of shape of a given object
+	//////////////////////////////////////////////////////////////////////
+	enum TGraphType 
+	{ 
+		GRAPH_NONE = 0,	///< No particular highlighting
+		GRAPH_PARENT,	///< Highlight the parents of the object
+		GRAPH_CHILDREN,	///< Highlight the (direct) children of the object
+		GRAPH_FULL,		///< Highlight all the dependents of the object
+		GRAPH_BASE		///< Highlight the base points connected to the object
+	};
 
 	BOOL		bValidate;				///< TRUE if the object is analytically valide, FALSE otherwise
 	BOOL		bVisible;				///< TRUE if the object is visible, FALSE if it is hidden
@@ -252,7 +265,6 @@ public:
 	CRect		rGraphRect;				///< Location of the object in the Graph Window
 
 	CxObject3DSet	cDependList;		///< List of dependents
-
 	CxVector4Set	cTracePosition;		///< List of the object's coordinates, used for the trace.
 
 protected:
@@ -298,7 +310,7 @@ public:
 	virtual BOOL	AddObjToDependList(CxObject3DSet* pList);
 	virtual void	SetInGraph(BOOL bAdd=TRUE);
 	virtual BOOL	ChangeParent(CObject3D *pOld,CObject3D *pNew,BOOL bUpGraph=FALSE);
-	virtual BOOL	SetParents(CxObject3DSet* pSet) { return FALSE;};
+	virtual BOOL	SetParents(CxObject3DSet* pSet);
 	virtual BOOL	GraftOn(CObject3D *pNew);
    //@}
 
@@ -336,18 +348,18 @@ public:
 	//@{
 	virtual BOOL	IsVisible() {return bVisible;};
 	virtual BOOL	IsSelected() { return bIsSelected;};
+	virtual BOOL	IsInCalque(int CalcNum);
+	virtual void	SetVisible(BOOL bVis) { bVisible = bVis;};
 	virtual void	SetSelected(BOOL bSel=TRUE) {bIsSelected = bSel; };
+	virtual BOOL	AddInCalque(int CalcNum,BOOL add=1);
 	virtual int		SetProperties(CxObject3DSet *pSet=NULL);
 	virtual void	SetName(CString mstr);
 	virtual int		SetObjectID(int nID);
 	virtual void	SetColor(COLORREF rColor);
 	virtual COLORREF	GetDefaultColor();
 	virtual void	SetStyle(int nStyle);
-	virtual void	SetVisible(BOOL bVis) { bVisible = bVis;};
 	virtual void	SetAvailHisto();
 	virtual void	GetRange(CVector4 &min,CVector4 &max);
-	virtual BOOL	IsInCalque(int CalcNum);
-	virtual BOOL	AddInCalque(int CalcNum,BOOL add=1);
  	virtual CObject3DAttr	GetAttributes();
 	virtual	void	SetAttributes(CObject3DAttr pAttr);
   	virtual CxSchemeSet* GetRedefineSchemes(CxSchemeSet* pSet) { return pSet;};
@@ -366,9 +378,9 @@ public:
 	virtual void	DrawMathPad(CDC*) {};
 	virtual void	Draw3DRendering() {};
 
-	virtual void	DrawDepGraph(CDC* pDC,CImageList *pImgList=NULL,int nTrace=DIS_GRAPH_NONE,BOOL bDrawNode=TRUE,BOOL bDrawLink=TRUE);
-	virtual void	DrawDepGraphLink(CDC* pDC,CObject3D *pSrc=NULL,CObject3D *pDest=NULL,int nTrace=DIS_GRAPH_NONE);
-	virtual void	DrawDepGraphNode(CDC* pDC,CImageList *pImgList=NULL,CObject3D *pSrc=NULL,int nTrace=DIS_GRAPH_NONE);
+	virtual void	DrawDepGraph(CDC* pDC,CImageList *pImgList=NULL,int nTrace=GRAPH_NONE,BOOL bDrawNode=TRUE,BOOL bDrawLink=TRUE);
+	virtual void	DrawDepGraphLink(CDC* pDC,CObject3D *pSrc=NULL,CObject3D *pDest=NULL,int nTrace=GRAPH_NONE);
+	virtual void	DrawDepGraphNode(CDC* pDC,CImageList *pImgList=NULL,CObject3D *pSrc=NULL,int nTrace=GRAPH_NONE);
 	void			DrawGraphArrow(CDC *pDC,CPoint ptStart, CPoint ptEnd, int nArrowSize ,int nArrowlength,CBrush* pbrush);
     //@}
 
