@@ -26,7 +26,7 @@ IMPLEMENT_DYNCREATE(CViewGraph, CScrollView)
 
 CViewGraph::CViewGraph()
 {
-	m_nShowCmd = DIS_GRAPH_FULL;
+	m_nShowCmd = CObject3D::GRAPH_FULL;
 }
 
 CViewGraph::~CViewGraph()
@@ -63,10 +63,10 @@ void CViewGraph::OnInitialUpdate()
 {
 	CScrollView::OnInitialUpdate();
 
-	myToolTip.Create(this);
-	myToolTip.AddTool(this);
-	myToolTip.SetDelayTime(TTDT_INITIAL,500);
-	myToolTip.SetDelayTime(TTDT_RESHOW,100);
+	m_wndToolTip.Create(this);
+	m_wndToolTip.AddTool(this);
+	m_wndToolTip.SetDelayTime(TTDT_INITIAL,500);
+	m_wndToolTip.SetDelayTime(TTDT_RESHOW,100);
 
 
 	m_Obj = NULL;
@@ -136,7 +136,7 @@ void CViewGraph::OnDrawGraph(CDC* pDC)
 		{
 			CObject3D *pTObj = m_ObjList.GetAt(i);
 			if (!pTObj) continue;
-			if (m_nShowCmd==DIS_GRAPH_BASE)
+			if (m_nShowCmd==CObject3D::GRAPH_BASE)
 			{
 				BOOL bDraw = pTObj->MaskObject(TPoint3DClass|TPointSurD3DClass|
 						 TPointSurC3DClass|TPointSurP3DClass|
@@ -158,13 +158,13 @@ void CViewGraph::OnDrawGraph(CDC* pDC)
 			else if (!pTObj->bDrawInGraph) 
 				continue;
 
-			else if (m_nShowCmd==DIS_GRAPH_PARENT||m_nShowCmd==DIS_GRAPH_CHILDREN)
+			else if (m_nShowCmd==CObject3D::GRAPH_PARENT||m_nShowCmd==CObject3D::GRAPH_CHILDREN)
 			{
 				if (!pFirst) pFirst = pTObj;
 				pTObj->DrawDepGraph(pDC,&m_ImageList,m_nShowCmd,TRUE,FALSE);
 				if (pFirst != pTObj)
 				{
-					if (m_nShowCmd==DIS_GRAPH_PARENT)
+					if (m_nShowCmd==CObject3D::GRAPH_PARENT)
 						pTObj->DrawDepGraphLink(pDC,pTObj,pFirst,m_nShowCmd);
 					else
 						pTObj->DrawDepGraphLink(pDC,pFirst,pTObj,m_nShowCmd);
@@ -604,9 +604,9 @@ BOOL CViewGraph::OnSelectObject(CObject3D *pObj)
 {
 	m_ObjList.RemoveAll();
 	switch (m_nShowCmd){
-	case DIS_GRAPH_NONE:
+	case CObject3D::GRAPH_NONE:
 		break;
-	case DIS_GRAPH_BASE:
+	case CObject3D::GRAPH_BASE:
 		if (pObj)
 		{
 			GetFreePoint(pObj,m_ObjList);
@@ -617,7 +617,7 @@ BOOL CViewGraph::OnSelectObject(CObject3D *pObj)
 			}
 		}
 		break;
-	case DIS_GRAPH_PARENT:
+	case CObject3D::GRAPH_PARENT:
 		if (pObj)
 		{
 			m_ObjList.Add(pObj);
@@ -639,14 +639,14 @@ BOOL CViewGraph::OnSelectObject(CObject3D *pObj)
 			}
 		}
 		break;
-	case DIS_GRAPH_CHILDREN:
+	case CObject3D::GRAPH_CHILDREN:
 		if (pObj)
 		{
 			pObj->GetDependList(&m_ObjList,2);
 			//m_ObjList.Add(pObj);
 		}
 		break;
-	case DIS_GRAPH_FULL:
+	case CObject3D::GRAPH_FULL:
 		if (pObj)
 		{
 			pObj->GetDependList(&m_ObjList);
@@ -756,16 +756,16 @@ void CViewGraph::OnGraphShowCmd(UINT nCmd)
 //		m_nShowCmd = DIS_GRAPH_NONE;
 //		break;
 	case ID_GRAPH_SHOWPARENTS:
-		m_nShowCmd = DIS_GRAPH_PARENT;
+		m_nShowCmd = CObject3D::GRAPH_PARENT;
 		break;
 	case ID_GRAPH_SHOWBASEPT:
-		m_nShowCmd = DIS_GRAPH_BASE;
+		m_nShowCmd = CObject3D::GRAPH_BASE;
 		break;
 	case ID_GRAPH_SHOWCHILDREN:
-		m_nShowCmd = DIS_GRAPH_CHILDREN;
+		m_nShowCmd = CObject3D::GRAPH_CHILDREN;
 		break;
 	case ID_GRAPH_SHOWDEPENDENTS:
-		m_nShowCmd = DIS_GRAPH_FULL;
+		m_nShowCmd = CObject3D::GRAPH_FULL;
 		break;
 	default:
 		bRedraw = FALSE;
@@ -823,7 +823,7 @@ LRESULT CViewGraph::OnUpdateObjTooltip(WPARAM wp, LPARAM lp)
 {
 	if (!lp || !wp)
 	{
-		myToolTip.Activate(FALSE);
+		m_wndToolTip.Activate(FALSE);
 		return 0L;
 	}
 
@@ -831,13 +831,13 @@ LRESULT CViewGraph::OnUpdateObjTooltip(WPARAM wp, LPARAM lp)
 
 	CString mstr = mSet->GetObjectHelp();
 
-	myToolTip.UpdateTipText(mstr,this);
-	if (!myToolTip.IsWindowVisible())
+	m_wndToolTip.UpdateTipText(mstr,this);
+	if (!m_wndToolTip.IsWindowVisible())
 	{
-		CRect mmmm;
-		mmmm.SetRectEmpty();
-		myToolTip.GetMargin(mmmm);
-		myToolTip.Activate(TRUE);
+		//CRect mmmm;
+		//mmmm.SetRectEmpty();
+		//m_wndToolTip.GetMargin(mmmm);
+		m_wndToolTip.Activate(TRUE);
 	}
 	return 0L;
 }
@@ -848,7 +848,7 @@ BOOL CViewGraph::PreTranslateMessage(MSG* pMsg)
 	if(pMsg->message== WM_LBUTTONDOWN ||
         pMsg->message== WM_LBUTTONUP ||
         pMsg->message== WM_MOUSEMOVE)
-		myToolTip.RelayEvent(pMsg);
+		m_wndToolTip.RelayEvent(pMsg);
 	
 	return CScrollView::PreTranslateMessage(pMsg);
 }

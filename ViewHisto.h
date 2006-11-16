@@ -1,3 +1,9 @@
+//////////////////////////////////////////////////////////////////////
+/// @file ViewHisto.h
+/// @brief interface of the CViewHisto class.
+///
+/// 
+//////////////////////////////////////////////////////////////////////
 #if !defined(AFX_VIEWHISTO_H__1B2AE4DB_D0DE_11D4_A2FA_00D0B71C8709__INCLUDED_)
 #define AFX_VIEWHISTO_H__1B2AE4DB_D0DE_11D4_A2FA_00D0B71C8709__INCLUDED_
 
@@ -19,11 +25,11 @@ protected:
 
 // Attributes
 public:
-	CImageList		m_ImageList;
-	BOOL			m_bRefit;
 
 protected:
-	CImageList m_treeicon;
+	CImageList		m_ImageList;	///< List of icons for drawing the objects
+	CImageList		m_treeicon;		///< List of icons for the status indicators
+	BOOL			m_bRefit;		///< TRUE for updating the tree control, FALSE for blocking it
 
 private:
 	CRect rcBounds;

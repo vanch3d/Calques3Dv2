@@ -1,11 +1,16 @@
+//////////////////////////////////////////////////////////////////////
+/// @file ViewGraph.h
+/// @brief interface of the CViewGraph class.
+///
+/// 
+//////////////////////////////////////////////////////////////////////
 #if !defined(AFX_VIEWGRAPH_H__38064EB4_D667_11D4_A2FA_00D0B71C8709__INCLUDED_)
 #define AFX_VIEWGRAPH_H__38064EB4_D667_11D4_A2FA_00D0B71C8709__INCLUDED_
 
 #if _MSC_VER > 1000
 #pragma once
 #endif // _MSC_VER > 1000
-// ViewGraph.h : header file
-//
+
 
 /////////////////////////////////////////////////////////////////////////////
 /// Display the dependency graph of the construction.
@@ -26,7 +31,9 @@ public:
 	CImageList	 m_ImageList;
 	CxObject3DSet	m_ObjList;
 	int				m_nShowCmd;
-	CToolTipCtrl	myToolTip;
+
+private:
+	CToolTipCtrl	m_wndToolTip;			///< Reimplementation of the tooltip
 
 // Operations
 public:

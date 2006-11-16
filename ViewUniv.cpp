@@ -125,16 +125,16 @@ END_MESSAGE_MAP()
 
 CViewUniv::CViewUniv()
 {
-    pVisParam = NULL;
-    pCurrentTask = NULL;
+    m_pVisParam = NULL;
+    m_pCurrentTask = NULL;
 }
 
 CViewUniv::~CViewUniv()
 {
-    if (pCurrentTask) delete pCurrentTask;
-    if (pVisParam) delete pVisParam;
-    pVisParam = NULL;
-    pCurrentTask = NULL;
+    if (m_pCurrentTask) delete m_pCurrentTask;
+    if (m_pVisParam) delete m_pVisParam;
+    m_pVisParam = NULL;
+    m_pCurrentTask = NULL;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -174,7 +174,7 @@ void CViewUniv::OnDraw(CDC* rDC)
     if (GetVisualParam())
     {
         // Draw System of Reference
-        GetVisualParam()->Draw(pDC);
+        //GetVisualParam()->Draw(pDC);
 
         // Calculate Visual Representation of objects
         int nb = GetDocument()->m_cObjectSet.GetSize();
@@ -217,6 +217,8 @@ void CViewUniv::OnDraw(CDC* rDC)
             if (!pObj) continue;
             pObj->Draw(pDC,GetVisualParam());
         }
+        // Draw System of Reference
+        GetVisualParam()->Draw(pDC);
 
         // Draw the Objects
         for (i=0;i<nb;i++)
@@ -232,9 +234,9 @@ void CViewUniv::OnDraw(CDC* rDC)
     }
 
     // Draw the task feedback
-    if (IsWindowActivated() && pCurrentTask)
+    if (IsWindowActivated() && m_pCurrentTask)
     {
-        pCurrentTask->DrawFeedBack(pDC);
+        m_pCurrentTask->DrawFeedBack(pDC);
     }
     pDC->SetBkMode(oldM);
 }
@@ -273,7 +275,7 @@ CObject3D* CViewUniv::GetSelectedObject()
 
 CVisualParam* CViewUniv::GetVisualParam()
 {
-    return pVisParam;
+    return m_pVisParam;
 }
 
 void CViewUniv::SetVisualParam(int VP)
@@ -297,8 +299,8 @@ void CViewUniv::SetVisualParam(int VP)
     }
     if (pNewParam)
     {
-        delete pVisParam;
-        pVisParam = pNewParam;
+        delete m_pVisParam;
+        m_pVisParam = pNewParam;
         if (GetSafeHwnd())
         {
             Invalidate();
@@ -313,11 +315,11 @@ void CViewUniv::SetVisualParam(int VP)
 void CViewUniv::OnInitialUpdate()
 {
     CView::OnInitialUpdate();
-    wndToolTip.Create(this);
+    m_wndToolTip.Create(this);
 
-    pVisParam = new CVisuCloison();
+    m_pVisParam = new CVisuCloison();
     SetVisualParam(TPref::TUniv.nDefRep);
-    pCurrentTask = new CDefTask(this,ID_VISUALISATION_DEFAULTTASK);
+    m_pCurrentTask = new CDefTask(this,ID_VISUALISATION_DEFAULTTASK);
     pSelectObj = NULL;
     if (GetVisualParam())
     {
@@ -326,9 +328,9 @@ void CViewUniv::OnInitialUpdate()
         GetClientRect(&mrect);
         GetVisualParam()->ptRepCoord = mrect.CenterPoint();
         //GetVisualParam()->ptRepCoord = CPoint(150,150);
-        wndToolTip.AddTool(this);
-        wndToolTip.SetDelayTime(TTDT_INITIAL,100);
-        wndToolTip.SetDelayTime(TTDT_RESHOW,100);
+        m_wndToolTip.AddTool(this);
+        m_wndToolTip.SetDelayTime(TTDT_INITIAL,100);
+        m_wndToolTip.SetDelayTime(TTDT_RESHOW,100);
 
         int r = (int)(GetVisualParam()->ProjParam.phi - 180 -TPref::TUniv.sDefParam.phi);
         r = (r < 0) ? r + 360 : ((r > 360) ? r-360 : r);
@@ -386,7 +388,7 @@ BOOL CViewUniv::PreTranslateMessage(MSG* pMsg)
     if(pMsg->message== WM_LBUTTONDOWN ||
         pMsg->message== WM_LBUTTONUP ||
         pMsg->message== WM_MOUSEMOVE)
-        wndToolTip.RelayEvent(pMsg);
+        m_wndToolTip.RelayEvent(pMsg);
 
 
     return CView::PreTranslateMessage(pMsg);
@@ -417,7 +419,7 @@ void CViewUniv::OnChangeReferential(UINT nID)
 {
     // TODO: Add your command handler code here
     //SProjection myProj = GetVisualParam()->GetProjParam();
-    BOOL    bFix =  (pCurrentTask && pCurrentTask->m_bIsRepereFixed);
+    BOOL    bFix =  (m_pCurrentTask && m_pCurrentTask->m_bIsRepereFixed);
     if (bFix) return;
 
     switch (nID){
@@ -445,7 +447,7 @@ void CViewUniv::OnUpdateReferential(CCmdUI* pCmdUI)
     // TODO: Add your command update UI handler code here
     BOOL bCheck = FALSE;
     BOOL bFix =     (GetVisualParam() && (GetVisualParam()->bFixed || GetVisualParam()->bKeepProj));
-    BOOL bFix2 = (pCurrentTask && pCurrentTask->m_bIsRepereFixed);
+    BOOL bFix2 = (m_pCurrentTask && m_pCurrentTask->m_bIsRepereFixed);
     int nRep = pCmdUI->m_nID -ID_VISUALISATION_REFERENTIAL_NONE;
     switch (pCmdUI->m_nID){
     case ID_VISUALISATION_REFERENTIAL_AXES:
@@ -590,9 +592,9 @@ void CViewUniv::OnUpdatePerspective(CCmdUI* pCmdUI)
 void CViewUniv::OnStartTask(UINT nID)
 {
     // TODO: Add your command handler code here
-    if (pCurrentTask->OnDoTasksOption(nID))
+    if (m_pCurrentTask->OnDoTasksOption(nID))
         return;
-    if (pCurrentTask->m_nTaskID == nID)
+    if (m_pCurrentTask->m_nTaskID == nID)
     {
         //MessageBox("dfdfsfdsfdsa");
         return;
@@ -728,17 +730,17 @@ void CViewUniv::OnStartTask(UINT nID)
     }
     if (pNewTask)
     {
-        delete pCurrentTask;
-        pCurrentTask = pNewTask;
+        delete m_pCurrentTask;
+        m_pCurrentTask = pNewTask;
     }
 }
 
 
 void CViewUniv::OnUpdateTasks(CCmdUI* pCmdUI)
 {
-    if (pCurrentTask->OnUpdateTasksOption(pCmdUI)) return;
+    if (m_pCurrentTask->OnUpdateTasksOption(pCmdUI)) return;
 
-    BOOL bCheck = ((pCurrentTask) && (pCurrentTask->m_nTaskID == pCmdUI->m_nID));
+    BOOL bCheck = ((m_pCurrentTask) && (m_pCurrentTask->m_nTaskID == pCmdUI->m_nID));
     BOOL bEnab = GetDocument()->IsTaskAvailable(pCmdUI->m_nID);
 
     pCmdUI->Enable(bEnab);
@@ -884,9 +886,9 @@ void CViewUniv::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 void CViewUniv::OnLButtonDown(UINT nFlags, CPoint point)
 {
     // TODO: Add your message handler code here and/or call default
-    if (pCurrentTask)
+    if (m_pCurrentTask)
     {
-        pCurrentTask->OnMouseL(nFlags,point);
+        m_pCurrentTask->OnMouseL(nFlags,point);
     }
     CView::OnLButtonDown(nFlags, point);
 }
@@ -894,9 +896,9 @@ void CViewUniv::OnLButtonDown(UINT nFlags, CPoint point)
 void CViewUniv::OnLButtonUp(UINT nFlags, CPoint point)
 {
     // TODO: Add your message handler code here and/or call default
-    if (pCurrentTask)
+    if (m_pCurrentTask)
     {
-        pCurrentTask->OnMouseLUp(nFlags,point);
+        m_pCurrentTask->OnMouseLUp(nFlags,point);
     }
     CView::OnLButtonUp(nFlags, point);
 }
@@ -904,9 +906,9 @@ void CViewUniv::OnLButtonUp(UINT nFlags, CPoint point)
 void CViewUniv::OnLButtonDblClk(UINT nFlags, CPoint point)
 {
     // TODO: Add your message handler code here and/or call default
-    if (pCurrentTask)
+    if (m_pCurrentTask)
     {
-        pCurrentTask->OnMouseLDC(nFlags,point);
+        m_pCurrentTask->OnMouseLDC(nFlags,point);
     }
     GetDocument()->SaveWindowPos();
     CView::OnLButtonDblClk(nFlags, point);
@@ -921,9 +923,9 @@ void CViewUniv::OnRButtonDown(UINT nFlags, CPoint point)
 void CViewUniv::OnContextMenu(CWnd* pWnd, CPoint point)
 {
     // TODO: Add your message handler code here
-    if (pCurrentTask)
+    if (m_pCurrentTask)
     {
-        pCurrentTask->OnMouseR(0,point);
+        m_pCurrentTask->OnMouseR(0,point);
     }
 }
 
@@ -943,9 +945,9 @@ BOOL CViewUniv::IsWindowActivated()
 
 void CViewUniv::OnMouseMove(UINT nFlags, CPoint point)
 {
-    if (IsWindowActivated() && pCurrentTask)
+    if (IsWindowActivated() && m_pCurrentTask)
     {
-        pCurrentTask->OnMouseMove(nFlags,point);
+        m_pCurrentTask->OnMouseMove(nFlags,point);
 //      pCurrentTask->GetContextualHelp();
 
 
@@ -998,8 +1000,8 @@ LRESULT CViewUniv::OnUpdateObjTooltip(WPARAM pObjSet, LPARAM bShowToolTip)
 
     if (!bShowToolTip|| pObjSet==NULL)
     {
-        wndToolTip.Activate(FALSE);
-        if (pCurrentTask) pCurrentTask->GetContextualHelp();
+        m_wndToolTip.Activate(FALSE);
+        if (m_pCurrentTask) m_pCurrentTask->GetContextualHelp();
         return 0L;
     }
 
@@ -1009,8 +1011,8 @@ LRESULT CViewUniv::OnUpdateObjTooltip(WPARAM pObjSet, LPARAM bShowToolTip)
 
     if (!nb)
     {
-        wndToolTip.Activate(FALSE);
-        if (pCurrentTask) pCurrentTask->GetContextualHelp();
+        m_wndToolTip.Activate(FALSE);
+        if (m_pCurrentTask) m_pCurrentTask->GetContextualHelp();
         return 0L;
     }
 
@@ -1036,13 +1038,13 @@ LRESULT CViewUniv::OnUpdateObjTooltip(WPARAM pObjSet, LPARAM bShowToolTip)
 		pMainFrame->SendMessage(WM_SHOWOBJ_DESCRIPTION,(WPARAM)&strTaskTip,(LPARAM)FALSE);
 
     }
-    wndToolTip.UpdateTipText(strToolTip,this);
-    if (!wndToolTip.IsWindowVisible())
+    m_wndToolTip.UpdateTipText(strToolTip,this);
+    if (!m_wndToolTip.IsWindowVisible())
     {
-        CRect mmmm;
-        mmmm.SetRectEmpty();
-        wndToolTip.GetMargin(mmmm);
-        wndToolTip.Activate(TRUE);
+        //CRect mmmm;
+        //mmmm.SetRectEmpty();
+        //m_wndToolTip.GetMargin(mmmm);
+        m_wndToolTip.Activate(TRUE);
     }
     return 0L;
 }
@@ -1079,10 +1081,10 @@ void CViewUniv::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
     case WM_UPDATEOBJ_EXT:  // Object extracted
         break;
     case WM_UPDATEOBJ_MOV:  // Object Moved
-        if (pCurrentTask && pCurrentTask->GetTaskResID()==CTX_PROJECTION &&
+        if (m_pCurrentTask && m_pCurrentTask->GetTaskResID()==CTX_PROJECTION &&
             GetVisualParam() && GetVisualParam()->bKeepProj)
         {
-            pCurrentTask->CreateObject3D();
+            m_pCurrentTask->CreateObject3D();
         }
         break;
     default:
@@ -1102,9 +1104,9 @@ BOOL CViewUniv::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message)
     // TODO: Add your message handler code here and/or call default
     BOOL bRet = FALSE;
     HCURSOR hCur;
-    if (pCurrentTask)
+    if (m_pCurrentTask)
     {
-        UINT curID = pCurrentTask->GetTaskCursor();
+        UINT curID = m_pCurrentTask->GetTaskCursor();
         if (curID != -1)
             hCur = AfxGetApp()->LoadCursor(curID);
         else
@@ -1716,9 +1718,9 @@ BOOL CViewUniv::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 void CViewUniv::OnTimer(UINT nIDEvent)
 {
     // TODO: Add your message handler code here and/or call default
-    if (IsWindowActivated() && pCurrentTask)
+    if (IsWindowActivated() && m_pCurrentTask)
     {
-        pCurrentTask->OnTimer(nIDEvent);
+        m_pCurrentTask->OnTimer(nIDEvent);
     }
     CView::OnTimer(nIDEvent);
 }

@@ -463,7 +463,7 @@ BOOL CObject3D::AddObjToDependList(CxObject3DSet* pList)
 /// in a construction. This method checks for the parents (if any) of this object and
 /// add it in their dependents list (or remove it from).
 ///
-/// \param bAdd     TRUE for adding the object, FALSE for removing it.
+/// @param bAdd     TRUE for adding the object, FALSE for removing it.
 //////////////////////////////////////////////////////////////////////
 void CObject3D::SetInGraph(BOOL bAdd)
 {
@@ -495,10 +495,37 @@ void CObject3D::SetInGraph(BOOL bAdd)
     delete pList;
 }
 
+//////////////////////////////////////////////////////////////////////
+/// Change one of the parents of the object
+/// @param pOld		A pointer to the oarent object to change.
+/// @param pNew		A pointer to the object to replace the current parent with.
+/// @param bUpGraph	TRUE if the dependence graph needs to be updated, FALSE otherwise
+/// @return TRUE is the parent has been properly changed, FALSE otherwise
+//////////////////////////////////////////////////////////////////////
 BOOL CObject3D::ChangeParent(CObject3D *pOld,CObject3D *pNew,BOOL bUpGraph)
 {
     return FALSE;
 }
+
+//////////////////////////////////////////////////////////////////////
+/// Set the parents of the object
+//////////////////////////////////////////////////////////////////////
+BOOL CObject3D::SetParents(CxObject3DSet* pSet) 
+{ 
+	return FALSE;
+}
+
+//////////////////////////////////////////////////////////////////////
+/// Graft this object to the designated target
+//////////////////////////////////////////////////////////////////////
+BOOL CObject3D::GraftOn(CObject3D * pNew)
+{
+    return FALSE;
+}
+
+//----------------------------------------------------------------------
+// Attribute/Information Functions
+//----------------------------------------------------------------------
 
 
 CObject3DAttr CObject3D::GetAttributes()
@@ -924,11 +951,11 @@ void CObject3D::DrawDepGraphLink(CDC* pDC,CObject3D *pSrc/*=NULL*/,CObject3D *pD
     CPoint parPt(rParRect.CenterPoint().x,rParRect.top);
 
     COLORREF mclr = RGB(128,128,128);
-    if (nTrace==DIS_GRAPH_PARENT || nTrace==DIS_GRAPH_BASE)
+    if (nTrace==GRAPH_PARENT || nTrace==GRAPH_BASE)
         mclr = RGB(0,128,0);
-    else if (nTrace==DIS_GRAPH_CHILDREN)
+    else if (nTrace==GRAPH_CHILDREN)
         mclr = RGB(128,0,0);
-    else if (nTrace==DIS_GRAPH_FULL)
+    else if (nTrace==GRAPH_FULL)
         mclr = RGB(0,0,255);
 
     CPen mTracePenV(PS_DOT,1,RGB(128,128,128));
@@ -1031,9 +1058,9 @@ void CObject3D::DrawDepGraph(CDC* pDC,CImageList *pImgList,int nTrace,BOOL bDraw
         else
         {
             COLORREF mclr = RGB(0,0,255);
-            if (nTrace==DIS_GRAPH_PARENT || nTrace==DIS_GRAPH_BASE)
+            if (nTrace==GRAPH_PARENT || nTrace==GRAPH_BASE)
                 mclr = RGB(0,128,0);
-            else if (nTrace==DIS_GRAPH_CHILDREN)
+            else if (nTrace==GRAPH_CHILDREN)
                 mclr = RGB(128,0,0);
             CPen mTracePenV(PS_SOLID,1,mclr /*RGB(128,128,128)*/);
             CPen mTracePenI(PS_SOLID,1,RGB(255,0,0));
@@ -1128,11 +1155,6 @@ void CObject3D::CalculVisuel(CVisualParam *mV)
 {
 }
 
-
-BOOL CObject3D::GraftOn(CObject3D * pNew)
-{
-    return FALSE;
-}
 
 
 //////////////////////////////////////////////////////////////////////

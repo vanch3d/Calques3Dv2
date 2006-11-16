@@ -95,7 +95,6 @@ private:
 	HINSTANCE		m_hinstBCGCBRes;	///< Handle for BCGContrlBar resources (for i18n purpose)
 
 public:
-	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	CCalques3DApp();
 
 	// Override from CBCGWorkspace
@@ -110,6 +109,7 @@ public:
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CCalques3DApp)
 	public:
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	virtual BOOL InitInstance();
 	virtual int ExitInstance();
 	//}}AFX_VIRTUAL

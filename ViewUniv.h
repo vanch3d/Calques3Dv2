@@ -1,11 +1,16 @@
+//////////////////////////////////////////////////////////////////////
+/// @file ViewUniv.h
+/// @brief interface of the CViewUniv class.
+///
+/// 
+//////////////////////////////////////////////////////////////////////
 #if !defined(AFX_VIEWUNIV_H__1B2AE4DA_D0DE_11D4_A2FA_00D0B71C8709__INCLUDED_)
 #define AFX_VIEWUNIV_H__1B2AE4DA_D0DE_11D4_A2FA_00D0B71C8709__INCLUDED_
 
 #if _MSC_VER > 1000
 #pragma once
 #endif // _MSC_VER > 1000
-// ViewUniv.h : header file
-//
+
 #include "BCGPSliderButton.h"
 
 class CVisualParam;
@@ -15,7 +20,7 @@ class CTask;
 /// Display the complete construction in a 2½D environment.
 ///
 /// This is the main interface for creating, visualising and manipulation geometrical constructions
-/// in Clauqes 3D.
+/// in Calques 3D.
 /////////////////////////////////////////////////////////////////////////////
 class CViewUniv : public CView
 {
@@ -25,14 +30,14 @@ protected:
 
 // Attributes
 private:
-	CVisualParam*	pVisParam;		///< Pointer to the local visualisation parameters
-	CTask*			pCurrentTask;	///< Pointer to the current activated task
-	CToolTipCtrl	wndToolTip;		///< Reimplementation of the tooltip
+	CVisualParam*	m_pVisParam;		///< Pointer to the local visualisation parameters
+	CTask*			m_pCurrentTask;		///< Pointer to the current activated task
+	CToolTipCtrl	m_wndToolTip;			///< Reimplementation of the tooltip
 
 	CBCGPSliderToolbar	m_wndHorizBar;	///< Control for the horizontal slider
 	CBCGPSliderToolbar	m_wndVertBar;	///< Control for the vertical slider
 
-	CObject3D*		pSelectObj;		///< Pointer to the object currently selected
+	CObject3D*		pSelectObj;			///< Pointer to the object currently selected
 
 // Operations
 public:
