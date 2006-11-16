@@ -390,11 +390,13 @@ void CBCGPSliderCtrl::OnPaint()
 	BOOL enable = IsWindowEnabled();
 	BOOL hilite = (GetFocus()== this);
 	int index = (GetStyle( )& TBS_VERT)?2:3;
-	if (hilite) index-=2;
+	if (!enable) index+=2;
+	else if (hilite) index-=2;
+
 	if (GetStyle( )& TBS_VERT)
-		m_Images.Draw (memDC, thumbRect.left, thumbRect.top-5, index,FALSE,!enable);
+		m_Images.Draw (memDC, thumbRect.left, thumbRect.top-5, index);
 	else
-		m_Images.Draw (memDC, thumbRect.left-5, thumbRect.top, index,FALSE,!enable);
+		m_Images.Draw (memDC, thumbRect.left-5, thumbRect.top, index);
 	m_Images.EndDrawImage (ds);
 
 }
