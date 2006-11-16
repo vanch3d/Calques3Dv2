@@ -239,9 +239,9 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		TRACE0("Failed to create status bar\n");
 		return -1;      // fail to create
 	}
-	m_wndStatusBar.SetPaneStyle (0, SBPS_NORMAL); // icon
-	m_wndStatusBar.SetPaneStyle (1, SBPS_STRETCH | SBPS_NORMAL); // status line
-	m_wndStatusBar.SetPaneStyle (2, SBPS_NORMAL);	// progress
+	m_wndStatusBar.SetPaneStyle (0, SBPS_NOBORDERS);				// icon pane
+	m_wndStatusBar.SetPaneStyle (1, SBPS_STRETCH | SBPS_NOBORDERS); // status line
+	m_wndStatusBar.SetPaneStyle (2, SBPS_NOBORDERS);				// progress pane
 	m_wndStatusBar.SetPaneWidth (2, 80);
 	m_wndStatusBar.EnablePaneDoubleClick ();
 
@@ -1130,6 +1130,11 @@ void CMainFrame::OnUpdateViews(CCmdUI* pCmdUI)
 	CDocument* pDoc = pChild->GetActiveDocument();
     if (!pDoc) return; // only for views with document
 
+	if (pCmdUI->m_nID==ID_VIEW_RENDERING)
+		pCmdUI->Enable(FALSE);
+
+
+
 	CView* pView=NULL;
 	POSITION pos = pDoc->GetFirstViewPosition();
 	while (pos != NULL)
@@ -1397,10 +1402,10 @@ void CMainFrame::OnHelpKeyboardmap()
 
 void CMainFrame::OnWindowManager() 
 {
-	//ShowWindowsDialog ();
-	CPreferenceDialog propSheet(this);
+	ShowWindowsDialog ();
+	//CPreferenceDialog propSheet(this);
 	//propSheet.SetData(&m_xScores);
-	propSheet.DoModal();
+	//propSheet.DoModal();
 
 }
 
