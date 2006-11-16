@@ -16,7 +16,7 @@
 #include "ViewDepend.h"
 #include "View3DRender.h"
 
-#include "Splash.h"
+#include "SplashScreen.h"
 
 #include "AboutInfoDlg.h"
 
@@ -88,7 +88,7 @@ BOOL CCalques3DApp::InitInstance()
 	//------------------------------------------------------------
 	//Launch the splash window
 	//------------------------------------------------------------
-	CSplashWnd splash;
+	CSplashScreen splash;
 	BOOL bSplash = cmdInfo.m_bShowSplash;
 	if (bSplash)
 	{
