@@ -1,3 +1,9 @@
+//////////////////////////////////////////////////////////////////////
+/// @file ViewAnalytic.h
+/// @brief interface of the CViewAnalytic class.
+///
+/// 
+//////////////////////////////////////////////////////////////////////
 #if !defined(AFX_VIEWANALYTIC_H__9DBCACD6_F378_11D4_A2FA_00D0B71C8709__INCLUDED_)
 #define AFX_VIEWANALYTIC_H__9DBCACD6_F378_11D4_A2FA_00D0B71C8709__INCLUDED_
 

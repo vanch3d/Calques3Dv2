@@ -1,11 +1,15 @@
+//////////////////////////////////////////////////////////////////////
+/// @file ViewCalque.h
+/// @brief interface of the CViewCalque class.
+///
+/// 
+//////////////////////////////////////////////////////////////////////
 #if !defined(AFX_VIEWCALQUE_H__ACACFDF0_D297_11D4_A2FA_00D0B71C8709__INCLUDED_)
 #define AFX_VIEWCALQUE_H__ACACFDF0_D297_11D4_A2FA_00D0B71C8709__INCLUDED_
 
 #if _MSC_VER > 1000
 #pragma once
-#endif // _MSC_VER > 1000
-// ViewCalque.h : header file
-//
+#endif 
 
 /////////////////////////////////////////////////////////////////////////////
 /// Display a subset of the construction in a view similar to the universe.

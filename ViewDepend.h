@@ -7,11 +7,11 @@
 // ViewDepend.h : header file
 //
 
-/////////////////////////////////////////////////////////////////////////////
-/// Display the dependency list of the selected object.
-///
-/// \deprecated This view was originally used for debugging purpose and is not part of the
-/// standard Calques 3D release.
+////////////////////////////////////////////////////////////////////////////
+// Display the dependency list of the selected object.
+//
+// \deprecated This view was originally used for debugging purpose and is not part of the
+// standard Calques 3D release.
 /////////////////////////////////////////////////////////////////////////////
 class CViewDepend : public CListView
 {

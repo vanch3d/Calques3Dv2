@@ -1,14 +1,19 @@
-// Shape.h: interface for the CShape2 class.
-//
 //////////////////////////////////////////////////////////////////////
-
+/// @file Shape.h
+/// @brief interface of the CShape class.
+///
+///
+//////////////////////////////////////////////////////////////////////
 #if !defined(AFX_SHAPE_H__4315D5D6_71DA_4852_AE32_7A1F1725A20D__INCLUDED_)
 #define AFX_SHAPE_H__4315D5D6_71DA_4852_AE32_7A1F1725A20D__INCLUDED_
 
 #if _MSC_VER > 1000
-#pragma once
-#endif // _MSC_VER > 1000
+	#pragma once
+#endif
 
+//////////////////////////////////////////////////////////////////////
+/// Build and draw the various shapes of geometrical objects
+//////////////////////////////////////////////////////////////////////
 class CShape : public CObject  
 {
 public:
@@ -18,17 +23,17 @@ public:
 	/// Used to identify the type of shape of a given object
 	//////////////////////////////////////////////////////////////////////
 	enum TShapeType { 
-				LineShape,		///<
-				PointShape,		///<
-				VolShape,		///<
-				PolShape		///<
+				LineShape,		///< Shapes for lines and planes
+				PointShape,		///< Shapes for points
+				VolShape,		///< Shapes for volumes
+				PolShape		///< Shapes for polygons
 			};
 
 	//////////////////////////////////////////////////////////////////////
 	/// Used to identify the shape of a line
 	//////////////////////////////////////////////////////////////////////
 	enum TShapeLine { 
-			LineDot,		///<
+			LineDot,		///< 
 			LineDash,		///<
 			LineDashDot,	///<
 			LineDashDotDot,	///<
@@ -59,6 +64,9 @@ public:
 			VolComposite	///<
 		};
 
+	//////////////////////////////////////////////////////////////////////
+	/// Used to identify the shape of a polygon
+	//////////////////////////////////////////////////////////////////////
 	enum TShapePolygon{ 
 			PolTransparent,	///<
 			PolOpaque,		///<
@@ -72,18 +80,23 @@ public:
 			PolLine4		///<
 		};
 
-	COLORREF	clrObject;		///<
-	int 		nShapeId;		///<
-	int 		nShapeNb;		///<
+	COLORREF	clrObject;		///< The color of the geometrical object
+	int 		nShapeId;		///< Zero-based index of the shape of the geometrical object
+	int 		nShapeNb;		///< Number of possibles shapes for this object
 protected:
-	int			nShapeType;		///<
-	int			nShapeDef;		///<
+	int			nShapeType;		///< The type of shape associated with the object
+	int			nShapeDef;		///< Zero-based index of the default shape for the object
 public:
 	CShape(int nType = LineShape,int id=4);
 	CShape(CShape& src);
 	virtual void Serialize( CArchive& ar );
 
 	void SetShapeType(int nType=LineShape);
+
+	//////////////////////////////////////////////////////////////////////
+	/// Get the type of shape associated with the object
+	/// @return The zero-based identifier of the shape (TShapeType)
+	//////////////////////////////////////////////////////////////////////
 	int GetShapeType() { return nShapeType;};
 
 	virtual void		Draw(CDC*,CRect);
