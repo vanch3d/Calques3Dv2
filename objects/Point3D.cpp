@@ -14,6 +14,7 @@
 #include "Sphere3D.h"
 
 #include "..\fraction.h"
+#include "..\OGLTools\OGLT.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -430,6 +431,18 @@ CString CPoint3D::DrawSymbolic()
         mstr.Format(_T("FreePointD[%s,%s];"),strName,strCoord);
     }
     return mstr;
+}
+
+
+void CPoint3D::Draw3DRendering()
+{
+	GLfloat x = (Concept_pt.x/TPref::TUniv.nUnitRep)*TPref::TMathPad.UnitScale;
+	GLfloat y = (Concept_pt.y/TPref::TUniv.nUnitRep)*TPref::TMathPad.UnitScale;
+	GLfloat z = (Concept_pt.z/TPref::TUniv.nUnitRep)*TPref::TMathPad.UnitScale;
+	glBegin (GL_POINTS);
+	glColor3f(1.0f,0.0f,0.0f);			// Red
+	glVertex3f (x,y,z);
+	glEnd ();
 }
 
 
