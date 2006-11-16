@@ -381,7 +381,9 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	//DockControlBarLeftOf(&m_wndVisuBar,&m_wndToolBar);			///// NVL
 	DockControlBar(&m_wndPropertyBar);
 	//DockControlBar(&m_wndDependentBar);
-	m_wndDependentBar.DockToWindow (&m_wndPropertyBar, CBRS_ALIGN_BOTTOM);
+	//m_wndDependentBar.DockToWindow (&m_wndPropertyBar, CBRS_ALIGN_BOTTOM);
+	CBCGPDockingControlBar* pTabbedBar = NULL; 
+	m_wndDependentBar.AttachToTabWnd (&m_wndPropertyBar, DM_SHOW, FALSE, &pTabbedBar);
 
 
 	BOOL bRet = CBCGPToolBar::AddToolBarForImageCollection(IDR_COMMANDS_TB);
