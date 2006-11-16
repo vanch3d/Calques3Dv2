@@ -68,7 +68,7 @@ public:
 	virtual void DrawSelected(CDC* pDC,CVisualParam *vp);
 	virtual void HandleObjectError(int,BOOL bShow=FALSE);
 
-	virtual void DrawDepGraph(CDC* pDC,CImageList *pImgList=NULL,int nTrace=DIS_GRAPH_NONE,BOOL bDrawNode=TRUE,BOOL bDrawLink=TRUE);
+	virtual void DrawDepGraph(CDC* pDC,CImageList *pImgList=NULL,int nTrace=GRAPH_NONE,BOOL bDrawNode=TRUE,BOOL bDrawLink=TRUE);
 	virtual HTREEITEM DrawHistorique(CTreeCtrl& mListCtrl,HTREEITEM pParent=TVI_ROOT);
 	virtual void ClearHistorique();
 

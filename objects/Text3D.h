@@ -48,7 +48,7 @@ public:
     virtual void CalculVisuel(CVisualParam *);
     virtual void Draw(CDC*,CVisualParam *vp,BOOL bSm=FALSE);
     virtual HTREEITEM DrawHistorique(CTreeCtrl& mListCtrl,HTREEITEM pParent=TVI_ROOT);
-    virtual void DrawDepGraph(CDC* pDC,CImageList *pImgList=NULL,int nTrace=DIS_GRAPH_NONE,BOOL bDrawNode=TRUE,BOOL bDrawLink=TRUE);
+    virtual void DrawDepGraph(CDC* pDC,CImageList *pImgList=NULL,int nTrace=GRAPH_NONE,BOOL bDrawNode=TRUE,BOOL bDrawLink=TRUE);
 };
 
 //////////////////////////////////////////////////////////////////////
