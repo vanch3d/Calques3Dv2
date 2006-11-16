@@ -21,6 +21,7 @@ public:
 
 	BOOL GetProductName (LPSTR &prodName);
 	BOOL GetProductVersion (LPSTR &prodVersion);
+	BOOL GetProductVersion (int &major,int& minor,int& revision);
 	BOOL GetCopyright (LPSTR &copyright);
 	BOOL GetDebug (LPSTR &debug);
 

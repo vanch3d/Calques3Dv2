@@ -69,6 +69,23 @@ BOOL CProjectRCVersion::GetProductVersion (LPSTR &prodVersion)
     return FVData ? ::VerQueryValue(FVData, subBlockName, (void FAR* FAR*)&prodVersion, &vSize) : false;
 }
 
+BOOL CProjectRCVersion::GetProductVersion (int &major,int& minor,int& revision)
+{
+	LPSTR prodVersion = 0;
+	BOOL ret = GetProductVersion (prodVersion);
+	if (ret)
+	{
+		CString str(prodVersion);
+
+		int rr = sscanf(str,"%d.%d.%d",&major,&minor,&revision);
+		if (rr==0||rr==EOF)
+			rr = sscanf(str,"%d,%d,%d",&major,&minor,&revision);
+		return (rr!=0&&rr!=EOF);
+	}
+	return ret;
+}
+
+
 
 BOOL CProjectRCVersion::GetCopyright (LPSTR &copyright)
 {
