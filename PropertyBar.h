@@ -82,7 +82,7 @@ protected:
 	afx_msg void OnSorting();
 	afx_msg void OnUpdateSorting(CCmdUI* pCmdUI);
 	afx_msg void OnSetFocus(CWnd* pOldWnd);
-	LRESULT OnPropertyChanged (WPARAM wParam,LPARAM lParam);
+	afx_msg LRESULT OnPropertyChanged (WPARAM wParam,LPARAM lParam);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
@@ -95,12 +95,24 @@ protected:
 class CDependentBar : public CPropertyBar
 {
 public:
+	CDependentBar();
 	virtual void AddProperties(CObject3D* pObj);
+
+// Overrides
+	// ClassWizard generated virtual function overrides
+	//{{AFX_VIRTUAL(CDependentBar)
+	//}}AFX_VIRTUAL
+
+// Implementation
+public:
+	virtual ~CDependentBar();
 
 protected:
 	//{{AFX_MSG(CDependentBar)
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	afx_msg void OnUpdateExpand(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateSorting(CCmdUI* pCmdUI);
 	//}}AFX_MSG
-
+	DECLARE_MESSAGE_MAP()
 };
 #endif // !defined(AFX_PROPERTYBAR_H__1AADA4F6_2728_4C39_B844_3B0AD1B1B9D7__INCLUDED_)
