@@ -88,9 +88,16 @@ void CPropertyBar::EnableBar(BOOL bOpen/*=TRUE*/)
 
 CBCGPProp* CPropertyBar::AddAppearance(CObject3D* pObj)
 {
-	CBCGPProp* pGroup = new CBCGPProp ("Appearance");
+	CString strRes,strDefRes;
 
-	CBCGPProp* pProp = new CBCGPProp ("Name", (LPCTSTR) pObj->GetObjectName(),_T(""));
+	strRes.LoadString(PROP_APPEARANCE);
+	strDefRes.LoadString(PROP_APPEARANCE_DESC);
+	CBCGPProp* pGroup = new CBCGPProp (strRes);
+	pGroup->SetDescription(strDefRes);
+
+	strRes.LoadString(PROP_OBJNAME);
+	strDefRes.LoadString(PROP_OBJNAME_DESC);
+	CBCGPProp* pProp = new CBCGPProp (strRes, (LPCTSTR) pObj->GetObjectName(),strDefRes);
 	pGroup->AddSubItem (pProp);
 	pProp->SetData((DWORD)&pObj->strObjectName);
 
@@ -118,9 +125,11 @@ CBCGPProp* CPropertyBar::AddAppearance(CObject3D* pObj)
 		m_palColorPicker.CreatePalette (pLogPalette);
 	}
 
-	CBCGPColorProp* pColorProp = new CBCGPColorProp ("Colour", 
+	strRes.LoadString(PROP_OBJCOLOR);
+	strDefRes.LoadString(PROP_OBJCOLOR_DESC);
+	CBCGPColorProp* pColorProp = new CBCGPColorProp (strRes, 
 						pObj->pObjectShape.GetObjectColor(), &m_palColorPicker, 
-						_T(""));
+						strDefRes);
 	pColorProp->AllowEdit(FALSE);
 	pColorProp->SetData((DWORD)&pObj->pObjectShape.clrObject);
 
@@ -132,19 +141,25 @@ CBCGPProp* CPropertyBar::AddAppearance(CObject3D* pObj)
 
 	pGroup->AddSubItem (pColorProp);
 
+	strRes.LoadString(PROP_OBJSHAPE);
+	strDefRes.LoadString(PROP_OBJSHAPE_DESC);
 	int index = pObj->pObjectShape.nShapeId;
-	pProp = new CBCGPShapeProp ("Shape", index, 
+	pProp = new CBCGPShapeProp (strRes, index, 
 					pObj->pObjectShape.GetShapeSize(), 
 					pObj->pObjectShape.GetShapeType(),
-					_T(""));
+					strDefRes);
 	pProp->SetData((DWORD)&pObj->pObjectShape.nShapeId);
 	pGroup->AddSubItem (pProp);
 
-	pProp = new CBCGPCheckBoxProp ("Visible", pObj->bVisible,_T(""));
+	strRes.LoadString(PROP_OBJVISIBLE);
+	strDefRes.LoadString(PROP_OBJVISIBLE_DESC);
+	pProp = new CBCGPCheckBoxProp (strRes, pObj->bVisible,strDefRes);
 	pProp->SetData((DWORD)&pObj->bVisible);
 	pGroup->AddSubItem (pProp);
 
-	pProp = new CBCGPCheckBoxProp ("Marked", pObj->bMarked,_T(""));
+	strRes.LoadString(PROP_OBJMARKED);
+	strDefRes.LoadString(PROP_OBJMARKED_DESC);
+	pProp = new CBCGPCheckBoxProp (strRes, pObj->bMarked,strDefRes);
 	pProp->SetData((DWORD)&pObj->bMarked);
 	pGroup->AddSubItem (pProp);
 
@@ -164,40 +179,41 @@ void CPropertyBar::AddProperties(CObject3D* pObj)
 		return;
 	}
 
+	CString strRes,strDesRes;
+
 	CBCGPProp* pTopItem = NULL;
-	// Set the definition group
+	strRes.LoadString(PROP_DEFINITION);
+	strDesRes.LoadString(PROP_DEFINITION_DESC);
+	CBCGPProp* pGroup0 = new CBCGPProp (strRes);
+	pGroup0->SetDescription(strDesRes);
+
+	CString str = pObj->GetObjectDef();
+	CBCGPObjectProp* pProp = new CBCGPObjectProp(
+									pObj->GetObjectHelp(),
+									pObj->GetObjectDef(),
+									pObj->GetNameID() - IDS_NAME_OBJECT,
+									FALSE);
+	pProp->SetImageList(&m_pImgList);
+	pGroup0->AddSubItem (pProp);
+	pTopItem = pProp;
+
+
+	/*CxObject3DSet* pParent = pObj->GetParents();
+	if (pParent) for (int j=0;j<pParent->GetSize();j++)
 	{
-		CBCGPProp* pGroup0 = new CBCGPProp ("Definition");
-	
-		CString str = pObj->GetObjectDef();
-		CBCGPObjectProp* pProp = new CBCGPObjectProp(
-										pObj->GetObjectHelp(),
-										pObj->GetObjectDef(),
-										pObj->GetNameID() - IDS_NAME_OBJECT,
-										TRUE);
-		pTopItem = pProp;
-		//pProp->Enable(FALSE);
-		pProp->SetImageList(&m_pImgList);
-		pGroup0->AddSubItem (pProp);
+		CObject3D *pPar = pParent->GetAt(j);
+		if (!pPar) continue;
+		CBCGPObjectProp* pProp2 = new CBCGPObjectProp(
+									pPar->GetObjectHelp(),
+									pPar->GetObjectDef(),
+									pPar->GetNameID() - IDS_NAME_OBJECT,
+									FALSE);
+		pProp2->SetImageList(&m_pImgList);
+		pProp->AddSubItem (pProp2);
 
-
-		CxObject3DSet* pParent = pObj->GetParents();
-		if (pParent) for (int j=0;j<pParent->GetSize();j++)
-		{
-			CObject3D *pPar = pParent->GetAt(j);
-			if (!pPar) continue;
-			CBCGPObjectProp* pProp2 = new CBCGPObjectProp(
-										pPar->GetObjectHelp(),
-										pPar->GetObjectDef(),
-										pPar->GetNameID() - IDS_NAME_OBJECT,
-										FALSE);
-			pProp2->SetImageList(&m_pImgList);
-			pProp->AddSubItem (pProp2);
-
-		}
-		delete pParent;
-		m_wndProp.AddProperty (pGroup0);
 	}
+	delete pParent;*/
+	m_wndProp.AddProperty (pGroup0);
 
 	// Set the appearance group
 	m_wndProp.AddProperty (AddAppearance(pObj));
@@ -343,6 +359,25 @@ void CPropertyBar::OnChangeVisualStyle ()
 //		IDB_PROP24 : IDR_PROPERTIES, 0, 0, TRUE /* Locked */);
 }
 
+
+
+
+BEGIN_MESSAGE_MAP(CDependentBar, CPropertyBar)
+	//{{AFX_MSG_MAP(CDependentBar)
+	ON_WM_CREATE()
+	ON_UPDATE_COMMAND_UI(ID_PROPERTY_SORTING, OnUpdateSorting)
+	ON_UPDATE_COMMAND_UI(ID_PROPERTY_EXPAND, OnUpdateExpand)
+	//}}AFX_MSG_MAP
+END_MESSAGE_MAP()
+
+CDependentBar::CDependentBar() : CPropertyBar()
+{
+}
+
+CDependentBar::~CDependentBar()
+{
+}
+
 int CDependentBar::OnCreate(LPCREATESTRUCT lpCreateStruct) 
 {
 	if (CBCGPDockingControlBar::OnCreate(lpCreateStruct) == -1)
@@ -356,6 +391,7 @@ int CDependentBar::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndProp.EnableHeaderCtrl(FALSE);
 	m_wndProp.SetVSDotNetLook(TRUE);
 	m_wndProp.SetGroupNameFullWidth (TRUE);
+	m_wndProp.SetAlphabeticMode(FALSE);
 
 	// Initialize color names:
 	int m_nNumColours2 = sizeof (TPref::crColours)/sizeof(TPref::ColourTableEntry);
@@ -365,7 +401,7 @@ int CDependentBar::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	}
 
 	m_wndToolBar.Create (this, dwDefaultToolbarStyle, IDR_DEPENDENT_TB);
-	m_wndToolBar.LoadToolBar (IDR_DEPENDENT_TB, 0, 0, TRUE /* Is locked */);
+	m_wndToolBar.LoadToolBar (IDR_PROPERTY_TB, 0, 0, TRUE /* Is locked */);
 	OnChangeVisualStyle ();
 	m_wndToolBar.SetBarStyle(m_wndToolBar.GetBarStyle() |
 		CBRS_TOOLTIPS | CBRS_FLYBY);
@@ -400,6 +436,35 @@ void CDependentBar::AddProperties(CObject3D* pObj)
 	CBCGPProp* pTopItem = NULL;
 	// Set the definition group
 
+	CString strRes,strDefRes;
+
+	// Set Parents
+	{
+		CxObject3DSet* pParent = pObj->GetParents();
+		if (pParent) 
+		{
+			strRes.LoadString(PROP_PARENTS);
+			strDefRes.LoadString(PROP_PARENTS_DESC);
+			CBCGPProp* pGroup3 = new CBCGPProp (strRes);
+			pGroup3->SetDescription(strDefRes);
+			for (int j=0;j<pParent->GetSize();j++)
+			{
+				CObject3D *pPar = pParent->GetAt(j);
+				if (!pPar) continue;
+				CBCGPObjectProp* pProp2 = new CBCGPObjectProp(
+											pPar->GetObjectHelp(),
+											pPar->GetObjectDef(),
+											pPar->GetNameID() - IDS_NAME_OBJECT,
+											FALSE);
+				pProp2->SetImageList(&m_pImgList);
+				pGroup3->AddSubItem (pProp2);
+				if (!pTopItem) pTopItem = pProp2;
+
+			}
+			delete pParent;
+			m_wndProp.AddProperty (pGroup3);
+		}
+	}
 	// Set Dependents
 	{
 		CxObject3DSet pList;
@@ -407,7 +472,10 @@ void CDependentBar::AddProperties(CObject3D* pObj)
 		int nsize = pList.GetSize();
 		if (nsize > 1)
 		{
-			CBCGPProp* pGroup3 = new CBCGPProp ("Dependents");
+			strRes.LoadString(PROP_DEPENDENT);
+			strDefRes.LoadString(PROP_DEPENDENT_DESC);
+			CBCGPProp* pGroup3 = new CBCGPProp (strRes);
+			pGroup3->SetDescription(strDefRes);
 			for (int i=0;i<nsize;i++)
 			{
 				CObject3D* pDep = (CObject3D*)pList.GetAt(i);
@@ -450,3 +518,16 @@ void CDependentBar::AddProperties(CObject3D* pObj)
 	}*/
 	if (pTopItem) m_wndProp.SetCurSel(pTopItem);
 }
+
+void CDependentBar::OnUpdateSorting(CCmdUI* pCmdUI) 
+{
+	pCmdUI->SetCheck (m_wndProp.IsAlphabeticMode ());
+	pCmdUI->Enable(FALSE);
+}
+
+void CDependentBar::OnUpdateExpand(CCmdUI* pCmdUI) 
+{
+	pCmdUI->SetCheck (!m_wndProp.IsAlphabeticMode ());
+	pCmdUI->Enable(FALSE);
+}
+
