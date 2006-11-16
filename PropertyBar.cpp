@@ -438,6 +438,24 @@ void CDependentBar::AddProperties(CObject3D* pObj)
 
 	CString strRes,strDefRes;
 
+	{
+			strRes.LoadString(PROP_DEFINITION);
+		strDefRes.LoadString(PROP_DEFINITION_DESC);
+		CBCGPProp* pGroup0 = new CBCGPProp (strRes);
+		pGroup0->SetDescription(strDefRes);
+
+		CString str = pObj->GetObjectDef();
+		CBCGPObjectProp* pProp = new CBCGPObjectProp(
+										pObj->GetObjectHelp(),
+										pObj->GetObjectDef(),
+										pObj->GetNameID() - IDS_NAME_OBJECT,
+										FALSE);
+		pProp->SetImageList(&m_pImgList);
+		pGroup0->AddSubItem (pProp);
+		m_wndProp.AddProperty (pGroup0);
+		if (!pTopItem) pTopItem = pProp;
+
+	}
 	// Set Parents
 	{
 		CxObject3DSet* pParent = pObj->GetParents();
