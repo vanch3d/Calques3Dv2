@@ -16,13 +16,13 @@
 /// \todo The popup menu is in fact generic. It may be a good idea to merge it with the 
 /// list of selected objects and get rid of the item-by-item construction of the menu items.
 /////////////////////////////////////////////////////////////////////////////
-class CAmbiguityList : public CWnd
+class CAmbiguityList : public CBCGPToolBar
 {
 // Construction
 public:
-	CAmbiguityList();
 	CAmbiguityList(const char far* title, CWnd* parent);
 	CAmbiguityList(UINT sid, CWnd* parent);
+	virtual ~CAmbiguityList();
 
 // Attributes
 private:
@@ -36,26 +36,30 @@ private:
 public:
 	int AddString(CString str,BOOL dis = FALSE,BOOL checked = FALSE);
 	int AddString(UINT sid=0,BOOL dis = FALSE,BOOL checked = FALSE);
-	//int AddString(CBitmap& bmp,BOOL dis = FALSE,BOOL checked = FALSE);
-	//int AddString(HMENU hpopup,CString str,BOOL dis = FALSE,BOOL checked = FALSE);
-	int Execute();   // returns pick index (1 based), 0 if cancelled
+	int Execute();
 	void AddHelper(int n,CString mstr);
 
-// Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CAmbiguityList)
-	protected:
-	virtual BOOL OnCommand(WPARAM wParam, LPARAM lParam);
-	//}}AFX_VIRTUAL
+	/////////////////////////////////////////////////////////////////////////////
+	/// Override for special enabling/disabling of user-interface items associated with the toolbar
+	/// @param bDisableIfNoHndler	Specifies whether the user-interface item should be disabled 
+	///								if there is no handler defined in message map 
+	/////////////////////////////////////////////////////////////////////////////
+	virtual void OnUpdateCmdUI(CFrameWnd* /*pTarget*/, BOOL bDisableIfNoHndler)	
+	{		
+		CBCGPToolBar::OnUpdateCmdUI ((CFrameWnd*) GetOwner (), bDisableIfNoHndler);
+	}
 
-// Implementation
-public:
-	virtual ~CAmbiguityList();
+	/////////////////////////////////////////////////////////////////////////////
+	/// Called by the framework to receive permission from a CBCGPBaseToolBar-derived object 
+	/// to display (or not) the object in the list box on the toolbar customization page.   
+	/////////////////////////////////////////////////////////////////////////////
+	virtual BOOL AllowShowOnList () const		{	return FALSE;	}
 
 	// Generated message map functions
 protected:
 	//{{AFX_MSG(CAmbiguityList)
 	afx_msg void OnMenuSelect(UINT nItemID, UINT nFlags, HMENU hSysMenu);
+	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
