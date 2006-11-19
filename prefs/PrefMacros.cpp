@@ -18,10 +18,27 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 
-// "BCGToolsPage.cpp"
 /////////////////////////////////////////////////////////////////////////////
-// CPrefMacros dialog
-BOOL CMacroList::OnBeforeRemoveItem (int iItem)
+// CBCGPMacroList 
+
+/////////////////////////////////////////////////////////////////////////////
+/// Default constructor
+/////////////////////////////////////////////////////////////////////////////
+CBCGPMacroList::CBCGPMacroList(CPrefMacros* pParent) : CBCGPEditListBox()
+{
+	m_pParent = pParent;
+	m_bBrowse = FALSE;
+}
+ 
+/////////////////////////////////////////////////////////////////////////////
+/// Used by the framework to receive notifications that a list box item is about to be 
+/// removed from the list box. 
+/// Remove the corresponding user macro from the list and from the interface.
+///
+/// @param iItem	The zero-based index of the item to remove
+/// @return			TRUE is the item can be removed, FALSE otherwise
+/////////////////////////////////////////////////////////////////////////////
+BOOL CBCGPMacroList::OnBeforeRemoveItem (int iItem)
 {
 	CMacroUserTool* pTool = (CMacroUserTool*) GetItemData (iItem);
 	ASSERT_VALID (pTool);
@@ -40,45 +57,86 @@ BOOL CMacroList::OnBeforeRemoveItem (int iItem)
        }
    }
 	//g_pUserToolsManager->RemoveTool (pTool);
-	m_pParent->m_pSelTool = NULL;
 	return TRUE;
 }
-//***************************************************************************
-void CMacroList::OnAfterAddItem (int iItem)
-{
-	CMacroUserTool* pTool = new CMacroUserTool();
-	//pTool->m_strLabel = GetItemText (iItem);
-	TPref::TMacroList.AddTail(pTool);
-	SetItemData (iItem, (DWORD) pTool);
 
-	OnSelectionChanged ();
-}
-//***************************************************************************
-void CMacroList::OnAfterRenameItem (int iItem)
+/////////////////////////////////////////////////////////////////////////////
+/// Called by the framework when the the label of an item has been edited.
+/// Fix to prevent automatic updating of the item when the browse dialog box is opened.
+/////////////////////////////////////////////////////////////////////////////
+void CBCGPMacroList::OnEndEditLabel (LPCTSTR lpszLabel)
 {
-	CMacroUserTool* pTool = (CMacroUserTool*) GetItemData (iItem);
-	ASSERT_VALID (pTool);
+	if (m_bBrowse) return;
+	CBCGPEditListBase::OnEndEditLabel (lpszLabel);
+}
 
-	//pTool->m_strLabel = GetItemText (iItem);
-}
-//***************************************************************************
-void CMacroList::OnAfterMoveItemUp (int iItem)
+/////////////////////////////////////////////////////////////////////////////
+/// Called by the framework when the user click on the browse button associated with a macro item.
+/////////////////////////////////////////////////////////////////////////////
+void CBCGPMacroList::OnBrowse ()
 {
-	CMacroUserTool* pTool = (CMacroUserTool*) GetItemData (iItem);
-	ASSERT_VALID (pTool);
+	int iSelItem = GetSelItem ();
 
-//	g_pUserToolsManager->MoveToolUp (pTool);
+	static char BASED_CODE szFilter[] = "Macro-construction (*.m3d)||";
+	m_bBrowse=TRUE;
+	
+	CFileDialog mdlg(TRUE,"*.m3d","*.m3d",
+			OFN_ENABLESIZING|OFN_FILEMUSTEXIST|OFN_PATHMUSTEXIST|OFN_HIDEREADONLY,
+			szFilter,
+			this);
+	//SetItemText(iSelItem,"< browse >");
+
+	if (mdlg.DoModal () == IDOK)
+	{
+		CCalques3DMacroDoc mdoc;
+		mdoc.OnOpenDocument(mdlg.GetPathName ());
+
+		CString strMacroPath = mdlg.GetPathName ();
+		CString strMacroName = mdoc.strObjectName;
+		CString strMacroDef = mdoc.strObjectDef;
+
+		CMacroUserTool* pTool = new CMacroUserTool();
+		pTool->m_strDef = strMacroDef;
+		pTool->m_strFile = strMacroPath;
+		pTool->m_strLabel = strMacroName;
+		TPref::TMacroList.AddTail(pTool);
+		SetItemData (iSelItem, (DWORD) pTool);
+		SetItemText(iSelItem,strMacroName);
+		OnSelectionChanged ();
+		m_bNewItem = false;
+		m_bBrowse=FALSE;
+	}
+	else
+	{	
+		m_bBrowse=FALSE;
+		OnEndEditLabel ("");
+	}
 }
-//***************************************************************************
-void CMacroList::OnAfterMoveItemDown (int iItem)
+
+/*void CBCGPMacroList::OnClickButton (int iButton)
 {
-	CMacroUserTool* pTool = (CMacroUserTool*) GetItemData (iItem);
-	ASSERT_VALID (pTool);
-//
-//	g_pUserToolsManager->MoveToolDown (pTool);
-}
-//**************************************************************************
-void CMacroList::OnSelectionChanged ()
+	int iSelItem = GetSelItem ();
+	UINT uiBtnID = GetButtonID (iButton);
+
+	if (uiBtnID==BGCEDITLISTBOX_BTN_FOLDER_ID)
+	{
+	}
+	else
+	{
+		UINT temp = m_uiStandardBtns;
+		m_uiStandardBtns = 1;
+		CBCGPEditListBase::OnClickButton (iButton);
+		m_uiStandardBtns = temp;
+	}
+
+}*/
+
+/////////////////////////////////////////////////////////////////////////////
+/// Called by the framework when selection in the list control has changed. 
+/// The interface in the Preference dialog is updated to reflect the information 
+/// associated with the selected macro (ie name, file, description).
+/////////////////////////////////////////////////////////////////////////////
+void CBCGPMacroList::OnSelectionChanged ()
 {
 	int iSelItem = GetSelItem ();
 	CMacroUserTool* pSelTool = (iSelItem < 0) ? 
@@ -99,35 +157,28 @@ void CMacroList::OnSelectionChanged ()
 		m_pParent->m_strMacroDef = pSelTool->m_strDef;
 	}
 
-	//ASSERT_VALID (m_pParent->m_pParentSheet);
-	//m_pParent->m_pParentSheet->OnBeforeChangeTool (m_pParent->m_pSelTool);
-
-	m_pParent->m_pSelTool = pSelTool;
 	m_pParent->UpdateData (FALSE);
-
 	m_pParent->EnableControls ();
-
-//	m_pParent->m_pParentSheet->OnAfterChangeTool (m_pParent->m_pSelTool);*/
-}
-
-void CMacroList::CreateNewItem ()
-{
-	int iLastItem = AddItem (_T("new macro"));
-	ASSERT (iLastItem >= 0);
-
-	m_bNewItem = TRUE;
-	EditItem (iLastItem);
 }
 
 
 /////////////////////////////////////////////////////////////////////////////
 // CPrefMacros dialog
+
 IMPLEMENT_DYNCREATE(CPrefMacros, CBCGPPropertyPage)
 
+BEGIN_MESSAGE_MAP(CPrefMacros, CBCGPPropertyPage)
+	//{{AFX_MSG_MAP(CPrefMacros)
+	ON_WM_DESTROY()
+	//}}AFX_MSG_MAP
+END_MESSAGE_MAP()
 
-CPrefMacros::CPrefMacros()
-	:	CBCGPPropertyPage(CPrefMacros::IDD),
-		m_cMacroList (this)
+/////////////////////////////////////////////////////////////////////////////
+/// Default constructor
+/////////////////////////////////////////////////////////////////////////////
+CPrefMacros::CPrefMacros():	
+		CBCGPPropertyPage(CPrefMacros::IDD),
+		m_wndMacroListBox (this)
 {
 	//{{AFX_DATA_INIT(CPrefMacros)
 	m_strMacroPath = _T("");
@@ -135,11 +186,12 @@ CPrefMacros::CPrefMacros()
 	m_strMacroName = _T("");
 	m_bFreeLoad = TPref::bMacroLoading;
 	//}}AFX_DATA_INIT
-
-	m_pSelTool = NULL;
 }
 
 
+/////////////////////////////////////////////////////////////////////////////
+/// Called by the framework to exchange and validate dialog data.
+/////////////////////////////////////////////////////////////////////////////
 void CPrefMacros::DoDataExchange(CDataExchange* pDX)
 {
 	CBCGPPropertyPage::DoDataExchange(pDX);
@@ -147,8 +199,7 @@ void CPrefMacros::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_PMAC_DEF, m_cDef);
 	DDX_Control(pDX, IDC_PMAC_NAME, m_cName);
 	DDX_Control(pDX, IDC_PMAC_PATH, m_cPath);
-	DDX_Control(pDX, IDC_PMAC_BROWSE, m_cBrowse);
-	DDX_Control(pDX, IDC_PMAC_LIST, m_cMacroList);
+	DDX_Control(pDX, IDC_PMAC_LIST, m_wndMacroListBox);
 	DDX_Text(pDX, IDC_PMAC_PATH, m_strMacroPath);
 	DDX_Text(pDX, IDC_PMAC_DEF, m_strMacroDef);
 	DDX_Text(pDX, IDC_PMAC_NAME, m_strMacroName);
@@ -162,24 +213,23 @@ void CPrefMacros::DoDataExchange(CDataExchange* pDX)
 }
 
 
-BEGIN_MESSAGE_MAP(CPrefMacros, CBCGPPropertyPage)
-	//{{AFX_MSG_MAP(CPrefMacros)
-	ON_BN_CLICKED(IDC_PMAC_BROWSE, OnMacroBrowse)
-	ON_WM_DESTROY()
-	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
-
 /////////////////////////////////////////////////////////////////////////////
-// CPrefMacros message handlers
-
+/// Initialise the content of the dialog box. 
+/////////////////////////////////////////////////////////////////////////////
 BOOL CPrefMacros::OnInitDialog() 
 {
 	CBCGPPropertyPage::OnInitDialog();
+	//CBCGPButton::EnableWinXPTheme ();
 	
 	//-------------
 	// Add buttons:
 	//-------------
-	m_cMacroList.SetStandardButtons (BGCEDITLISTBOX_BTN_NEW | BGCEDITLISTBOX_BTN_DELETE);
+	//m_wndMacroListBox.AddButton(IDB_LIST_ADDITEM,"Add",0,0,BGCEDITLISTBOX_BTN_NEW_ID);
+	//m_wndMacroListBox.AddButton(IDB_LIST_DELITEM,"Remove",0,0,BGCEDITLISTBOX_BTN_DELETE_ID);
+	//m_wndMacroListBox.AddButton(IDB_LIST_BROWSE,"Browse",0,0,BGCEDITLISTBOX_BTN_FOLDER_ID);
+	m_wndMacroListBox.SetStandardButtons (BGCEDITLISTBOX_BTN_NEW | BGCEDITLISTBOX_BTN_DELETE);
+	m_wndMacroListBox.EnableBrowseButton ();
+	m_wndMacroListBox.SetGrayDisabledButtons();
 
 	//------------
 	// Fill tools:
@@ -188,112 +238,43 @@ BOOL CPrefMacros::OnInitDialog()
 	{
 		CMacroUserTool* pTool = (CMacroUserTool*)TPref::TMacroList.GetNext( pos );
 		if (pTool)
-			m_cMacroList.AddItem (pTool->m_strLabel, (DWORD) pTool);
+			m_wndMacroListBox.AddItem (pTool->m_strLabel, (DWORD) pTool);
 	}
 
-	EnableControls ();	// By Andreas Roth
+	EnableControls ();
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
+/////////////////////////////////////////////////////////////////////////////
+/// Enable/disable the edit controls, depending in the selection of an item in the
+/// user macro list box.
+/////////////////////////////////////////////////////////////////////////////
 void CPrefMacros::EnableControls ()
 {
-	BOOL bEnableItemProps = (m_cMacroList.GetSelItem () >= 0);
+	BOOL bEnableItemProps = (m_wndMacroListBox.GetSelItem () >= 0);
 
 	m_cPath.EnableWindow (bEnableItemProps);
 	m_cName.EnableWindow (bEnableItemProps);
 	m_cDef.EnableWindow (bEnableItemProps);
-	m_cBrowse.EnableWindow (bEnableItemProps);
 }
 
-void CPrefMacros::OnUpdateTool() 
-{
-	UpdateData ();
-
-	int iSelItem = m_cMacroList.GetSelItem ();
-	CMacroUserTool* pSelTool = (iSelItem >= 0) ?
-		(CMacroUserTool*) m_cMacroList.GetItemData (iSelItem) : NULL;
-
-	if (pSelTool == NULL)
-	{
-		m_strMacroPath.Empty ();
-		m_strMacroName.Empty ();
-		m_strMacroDef.Empty ();
-
-		UpdateData (FALSE);
-	}
-	else
-	{
-		ASSERT_VALID (pSelTool);
-
-		pSelTool->m_strFile = m_strMacroPath;
-		pSelTool->m_strLabel = m_strMacroName;
-		pSelTool->m_strDef = m_strMacroDef;
-	}
-
-	EnableControls ();	// By Andreas Roth
-}
-
-
-void CPrefMacros::OnMacroBrowse() 
-{
-	// TODO: Add your control notification handler code here
-	static char BASED_CODE szFilter[] = "Macro-construction (*.m3d)||";
-
-	//CFileDialog dlg (TRUE, g_pUserToolsManager->GetDefExt (), NULL, 0,
-	//	g_pUserToolsManager->GetFilter (), this);
-	
-	CFileDialog mdlg(TRUE,"*.m3d","*.m3d",
-			OFN_ENABLESIZING|OFN_FILEMUSTEXIST|OFN_PATHMUSTEXIST|OFN_HIDEREADONLY,
-			szFilter,
-			this);
-
-	if (mdlg.DoModal () == IDOK)
-	{
-		CCalques3DMacroDoc mdoc;
-		mdoc.OnOpenDocument(mdlg.GetPathName ());
-
-		m_strMacroPath = mdlg.GetPathName ();
-		m_strMacroName = mdoc.strObjectName;
-		m_strMacroDef = mdoc.strObjectDef;
-		UpdateData (FALSE);
-		OnUpdateTool();
-	}
-}
-
-CMacroUserTool* CPrefMacros::CreateNewTool ()
-{
-	//ASSERT_VALID (m_pParentSheet);
-
-	const int nMaxTools = 10;//g_pUserToolsManager->GetMaxTools ();
-
-	if (TPref::TMacroList.GetCount () == nMaxTools)
-	{
-		//CBCGLocalResource locaRes;
-		
-		//CString strError;
-		//strError.Format (IDS_BCGBARRES_TOO_MANY_TOOLS_FMT, nMaxTools);
-		//MessageBox (strError);
-		return NULL;
-	}
-
-	//CBCGUserTool* pTool = g_pUserToolsManager->CreateNewTool ();
-	//ASSERT_VALID (pTool);
-	CMacroUserTool* pTool = new CMacroUserTool();
-
-	return pTool;
-}
-
+/////////////////////////////////////////////////////////////////////////////
+/// Called when the user clicks the OK button. Update the data before closing.
+/////////////////////////////////////////////////////////////////////////////
 void CPrefMacros::OnOK() 
 {
 	// TODO: Add your specialized code here and/or call the base class
-	OnUpdateTool();
+	UpdateData ();
 	CBCGPPropertyPage::OnOK();
 }
 
+/////////////////////////////////////////////////////////////////////////////
+/// Called when the dialog box is being destroyed. Update the data before closing.
+/////////////////////////////////////////////////////////////////////////////
 void CPrefMacros::OnDestroy() 
 {
-	OnUpdateTool();
+	UpdateData ();
 	CBCGPPropertyPage::OnDestroy();
 }

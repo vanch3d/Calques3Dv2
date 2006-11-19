@@ -1,40 +1,40 @@
+//////////////////////////////////////////////////////////////////////
+/// @file PrefMacros.h
+/// @brief interface of the CPrefMacros class.
+///
+///
+//////////////////////////////////////////////////////////////////////
 #if !defined(AFX_PREFMACROS_H__6E53D06A_064E_11D5_A2FA_00D0B71C8709__INCLUDED_)
 #define AFX_PREFMACROS_H__6E53D06A_064E_11D5_A2FA_00D0B71C8709__INCLUDED_
 
 #if _MSC_VER > 1000
 #pragma once
-#endif // _MSC_VER > 1000
-// PrefMacros.h : header file
-//
+#endif 
 
-/////////////////////////////////////////////////////////////////////////////
-// CPrefMacros dialog
+#define BGCEDITLISTBOX_BTN_FOLDER_ID		(UINT)(-15)
+
 class CPrefMacros;
+class CMacroUserTool;
 
 /////////////////////////////////////////////////////////////////////////////
-/// CMacroList
+/// Override of the CBCGPEditListBox in order to deal with user macro items.
 ///
 /////////////////////////////////////////////////////////////////////////////
-class CMacroList : public CBCGPEditListBox
+class CBCGPMacroList : public CBCGPEditListBox
 {
 public:
-	CPrefMacros* m_pParent;
+	CPrefMacros* m_pParent;			///< A Pointer to the parent dialog box.
+	BOOL m_bBrowse;					///< TRUE if the browse dialog is launched, FALSE otherwise
 
-	CMacroList(CPrefMacros* pParent) : m_pParent (pParent) {}
+	CBCGPMacroList(CPrefMacros* pParent);
 		
-	virtual void OnSelectionChanged ();
+	//virtual void OnClickButton (int iButton);
 	virtual BOOL OnBeforeRemoveItem (int iItem);
-	virtual void OnAfterAddItem (int iItem);
-	virtual void OnAfterRenameItem (int iItem);
-	virtual void OnAfterMoveItemUp (int iItem);
-	virtual void OnAfterMoveItemDown (int iItem);
-
-
-protected:
-	virtual void CreateNewItem ();
+	virtual void OnEndEditLabel (LPCTSTR lpszLabel);
+	virtual void OnSelectionChanged ();
+	virtual void OnBrowse ();
 };
 
-class CMacroUserTool;
 
 /////////////////////////////////////////////////////////////////////////////
 /// CPrefMacros
@@ -50,18 +50,15 @@ public:
 // Dialog Data
 	//{{AFX_DATA(CPrefMacros)
 	enum { IDD = IDD_PREF_MACROS_PAGE };
+	CBCGPMacroList		m_wndMacroListBox;		///< The control for the macro item list
 	CEdit	m_cDef;
 	CEdit	m_cName;
 	CEdit	m_cPath;
-	CButton	m_cBrowse;
-	CMacroList		m_cMacroList;
 	CString	m_strMacroPath;
 	CString	m_strMacroDef;
 	CString	m_strMacroName;
 	BOOL	m_bFreeLoad;
 	//}}AFX_DATA
-
-	CMacroUserTool*		m_pSelTool;
 
 // Overrides
 	// ClassWizard generated virtual function overrides
@@ -74,16 +71,12 @@ public:
 
 // Implementation
 public:
-	CMacroUserTool* CreateNewTool ();
 	void EnableControls ();
 
 protected:
-	void OnUpdateTool();
-
 	// Generated message map functions
 	//{{AFX_MSG(CPrefMacros)
 	virtual BOOL OnInitDialog();
-	afx_msg void OnMacroBrowse();
 	afx_msg void OnDestroy();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
