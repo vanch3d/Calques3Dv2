@@ -62,6 +62,9 @@
 #define IDR_POPUP_VERIFY                175
 #define IDR_POPUP_MEASURE               176
 #define IDD_MACROINFO_DLG               177
+#define IDB_LIST_ADDITEM                188
+#define IDB_LIST_BROWSE                 189
+#define IDB_LIST_DELITEM                190
 #define IDC_PLACEHOLDER                 250
 #define IDC_MAIL                        1000
 #define IDC_URL                         1001
@@ -447,7 +450,6 @@
 #define IDC_PSESS_SAVEAS                18920
 #define IDC_PMAC_LIST                   18921
 #define IDC_PMAC_PATH                   18922
-#define IDC_PMAC_BROWSE                 18923
 #define IDD_PREF_MACROS_PAGE            18928
 #define IDD_PREF_SESSION_PAGE           18929
 #define IDD_ABOUTCREDIT                 18930
@@ -665,7 +667,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        188
+#define _APS_NEXT_RESOURCE_VALUE        191
 #define _APS_NEXT_COMMAND_VALUE         32990
 #define _APS_NEXT_CONTROL_VALUE         1178
 #define _APS_NEXT_SYMED_VALUE           124

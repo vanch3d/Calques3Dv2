@@ -30,12 +30,11 @@
 #define HIDC_OBJ_MARK                   0x806c0418    // IDD_OBJECTPROP_PAGE
 #define HIDC_OBJ_NAME                   0x806c0413    // IDD_OBJECTPROP_PAGE
 #define HIDC_OBJ_SHAPE                  0x806c0416    // IDD_OBJECTPROP_PAGE
-#define HIDC_PMAC_BROWSE                0x459eb    // IDD_PREF_MACROS_PAGE
-#define HIDC_PMAC_DEF                   0x41457    // IDD_PREF_MACROS_PAGE
+#define HIDC_PMAC_DEF                   0xc9f00457    // IDD_PREF_MACROS_PAGE
 #define HIDC_PMAC_LIST                  0xc9f049e9    // IDD_PREF_MACROS_PAGE
-#define HIDC_PMAC_LOADMACRO             0x41458    // IDD_PREF_MACROS_PAGE
-#define HIDC_PMAC_NAME                  0x41456    // IDD_PREF_MACROS_PAGE
-#define HIDC_PMAC_PATH                  0x459ea    // IDD_PREF_MACROS_PAGE
+#define HIDC_PMAC_LOADMACRO             0xc9f00458    // IDD_PREF_MACROS_PAGE
+#define HIDC_PMAC_NAME                  0xc9f00456    // IDD_PREF_MACROS_PAGE
+#define HIDC_PMAC_PATH                  0xc9f049ea    // IDD_PREF_MACROS_PAGE
 #define HIDC_PROFILE_LIST               0x80980411    // IDD_SAVE_PROFILE_DLG
 #define HIDC_PROFILE_NAME               0x80980414    // IDD_SAVE_PROFILE_DLG
 #define HIDC_PSESS_DESCR                0x41467    // IDD_PREF_SESSION_PAGE
