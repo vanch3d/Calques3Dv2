@@ -154,7 +154,8 @@ CString CUndoObject::GetUndoText()
 /////////////////////////////////////////////////////////////////////////////
 // CCalques3DDoc
 
-IMPLEMENT_DYNCREATE(CCalques3DDoc, CDocument)
+//IMPLEMENT_DYNCREATE(CCalques3DDoc, CDocument)
+IMPLEMENT_SERIAL(CCalques3DDoc, CDocument, VERSIONABLE_SCHEMA | 1)
 
 BEGIN_MESSAGE_MAP(CCalques3DDoc, CDocument)
 	//{{AFX_MSG_MAP(CCalques3DDoc)
@@ -274,6 +275,7 @@ void CCalques3DDoc::Serialize(CArchive& ar)
 	}
 	else
 	{
+		UINT schema = ar.GetObjectSchema();
 		// TODO: add loading code here
 		CxObject3DSet	pObjectSet;
 		CxObject3DSet	pGlobalObjectSet;
@@ -288,7 +290,17 @@ void CCalques3DDoc::Serialize(CArchive& ar)
 		}
 		CCalques3DDoc::GLOBALObjectSet = NULL;
 	}
-	//m_cWinPos.Serialize(ar);
+/*	try
+	{	
+		m_cWinPos.Serialize(ar);
+	}
+	catch (CException* pEx)
+	{
+		pEx->Delete ();
+		m_strPathName.Empty();      // no path name yet
+		SetModifiedFlag(TRUE);     // make clean
+	}*/
+	
 }
 
 /////////////////////////////////////////////////////////////////////////////
