@@ -41,35 +41,43 @@ IDR_VIEWGRAPH           ICON       DISCARDABLE        "res\\idr_graph.ico"
 IDR_VIEWANALYTIC        ICON       DISCARDABLE        "res\\idr_alge.ico"
 IDR_VIEWMACRO           ICON       DISCARDABLE        "res\\idr_macro.ico"
 IDR_VIEWDEPEND          ICON       DISCARDABLE        "res\\idr_dep.ico"
+IDR_VIEWRENDERING       ICON       DISCARDABLE        "res\\idr_render.ico"
+IDR_PROPERTY_TB         ICON       DISCARDABLE        "res\\prop_bar.ico"
+IDR_DEPENDENT_TB        ICON       DISCARDABLE        "res\\dep_bar.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // Bitmap
 //
 
-IDR_MAINFRAME           BITMAP     MOVEABLE PURE      "res\\Toolbar.bmp"
+IDR_MAINFRAME           BITMAP     MOVEABLE PURE      "res\\tb_mainframe.bmp"
 IDB_WORKSPACE           BITMAP     DISCARDABLE        "res\\workspace.bmp"
-IDR_OBJECTS_TB          BITMAP     MOVEABLE PURE      "res\\objectTB.bmp"
-IDR_VISUALISATION_TB    BITMAP     MOVEABLE PURE      "res\\visualTB.bmp"
-IDR_COMMANDS_TB         BITMAP     MOVEABLE PURE      "res\\commandTB.bmp"
-IDR_CONSTRUCTION_TB     BITMAP     MOVEABLE PURE      "res\\constrTB.bmp"
+IDR_OBJECTS_TB          BITMAP     MOVEABLE PURE      "res\\tb_objects.bmp"
+IDR_VISUALISATION_TB    BITMAP     MOVEABLE PURE      "res\\tb_visual.bmp"
+IDR_COMMANDS_TB         BITMAP     MOVEABLE PURE      "res\\tb_command.bmp"
+IDR_CONSTRUCTION_TB     BITMAP     MOVEABLE PURE      "res\\tb_construction.bmp"
 IDB_VAR_ICONS           BITMAP     DISCARDABLE        "res\\smallcpn.bmp"
 IDB_OBJECTS_ICONS       BITMAP     DISCARDABLE        "res\\obj_icon.bmp"
 IDB_SPLASH              BITMAP     DISCARDABLE        "res\\Splsh16.bmp"
-IDR_UNIVERSEH_TB        BITMAP     MOVEABLE PURE      "res\\universe.bmp"
-IDR_UNIVERSEV_TB        BITMAP     MOVEABLE PURE      "res\\bmp00001.bmp"
-IDR_POINTON_TB          BITMAP     MOVEABLE PURE      "res\\pointon.bmp"
-IDR_INTERSECT_TB        BITMAP     MOVEABLE PURE      "res\\intersec.bmp"
-IDR_POINTDIV_TB         BITMAP     MOVEABLE PURE      "res\\pointdiv.bmp"
+IDR_UNIVERSEH_TB        BITMAP     MOVEABLE PURE      "res\\tb_univh.bmp"
+IDR_UNIVERSEV_TB        BITMAP     MOVEABLE PURE      "res\\tb_univv.bmp"
+IDR_POINTON_TB          BITMAP     MOVEABLE PURE      "res\\tb_pointon.bmp"
+IDR_INTERSECT_TB        BITMAP     MOVEABLE PURE      "res\\tb_intersec.bmp"
+IDR_POINTDIV_TB         BITMAP     MOVEABLE PURE      "res\\tb_pointdiv.bmp"
 IDB_MENU_LOGO           BITMAP     DISCARDABLE        "res\\menu_logo.bmp"
-IDR_GRAPH_TB            BITMAP     MOVEABLE PURE      "res\\graph.bmp"
+IDR_GRAPH_TB            BITMAP     MOVEABLE PURE      "res\\tb_graph.bmp"
 IDB_BITMAP48            BITMAP     DISCARDABLE        "res\\calque48.bmp"
 IDB_LOGO                BITMAP     DISCARDABLE        "res\\logo.bmp"
-IDR_VERIFY_TB           BITMAP     MOVEABLE PURE      "res\\verifyTB.bmp"
+IDR_VERIFY_TB           BITMAP     MOVEABLE PURE      "res\\tb_verify.bmp"
 IDB_BTNICON             BITMAP     DISCARDABLE        "res\\btnicon.bmp"
 IDB_PREFS_ICONS         BITMAP     DISCARDABLE        "res\\preficons.bmp"
-IDR_EXPLORATION_TB      BITMAP     DISCARDABLE        "res\\explorTB.bmp"
+IDR_EXPLORATION_TB      BITMAP     DISCARDABLE        "res\\tb_exploration.bmp"
 IDB_SLIDERS             BITMAP     DISCARDABLE        "res\\sliders.bmp"
+IDR_PROPERTY_TB         BITMAP     DISCARDABLE        "res\\tb_property.bmp"
+IDB_LIST_ADDITEM        BITMAP     DISCARDABLE        "res\\list_add.bmp"
+IDB_LIST_BROWSE         BITMAP     DISCARDABLE        "res\\list_browse.bmp"
+IDB_LIST_DELITEM        BITMAP     DISCARDABLE        "res\\list_delete.bmp"
+IDB_PROJECTION          BITMAP     DISCARDABLE        "res\\project.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -250,6 +258,12 @@ BEGIN
     BUTTON      ID_EXPLORATION_ANIMATION
 END
 
+IDR_PROPERTY_TB TOOLBAR DISCARDABLE  16, 16
+BEGIN
+    BUTTON      ID_PROPERTY_EXPAND
+    BUTTON      ID_PROPERTY_SORTING
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -298,10 +312,10 @@ IDD_OBJECTPROP_PAGE DIALOGEX 0, 0, 212, 73
 STYLE DS_MODALFRAME | DS_CONTEXTHELP | WS_POPUP | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_CONTEXTHELP
 CAPTION "Aspecto"
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     GROUPBOX        "",IDC_STATIC,4,4,116,64,BS_FLAT
-    LTEXT           "&Nombre :",IDC_STATIC,8,14,31,8,SS_CENTERIMAGE
+    LTEXT           "&Nombre:",IDC_STATIC,8,14,31,8,SS_CENTERIMAGE
     EDITTEXT        IDC_OBJ_NAME,39,12,73,12,ES_AUTOHSCROLL,0,HIDC_OBJ_NAME
     LTEXT           "&Color :",IDC_STATIC,14,29,22,11,SS_CENTERIMAGE
     PUSHBUTTON      "Color",IDC_OBJ_COLOR,38,28,74,12,0,0,HIDC_OBJ_COLOR
@@ -376,7 +390,7 @@ END
 IDD_PREF_UNIVERSE_PAGE DIALOGEX 0, 0, 272, 146
 STYLE DS_CONTEXTHELP | WS_CHILD | WS_CAPTION
 CAPTION "Universo (*)"
-FONT 8, "MS Sans Serif", 0, 0, 0x1
+FONT 8, "MS Sans Serif"
 BEGIN
     GROUPBOX        "Sistema de referencia",IDC_STATIC,4,4,140,48,BS_FLAT
     LTEXT           "&Referencial inicial : ",IDC_STATIC,10,16,39,16,
@@ -392,9 +406,34 @@ BEGIN
                     BS_FLAT
     LTEXT           "",IDC_PUNIV_POVLIST,156,16,108,60,WS_TABSTOP,0,
                     HIDC_PUNIV_POVLIST
-    PUSHBUTTON      "Shape",IDC_PUNIV_TRACE,48,68,84,12,0,0,HIDC_PUNIV_TRACE
+    PUSHBUTTON      "Forma",IDC_PUNIV_TRACE,48,68,84,12,0,0,HIDC_PUNIV_TRACE
     GROUPBOX        "Trace",IDC_STATIC,4,56,140,32,BS_FLAT
-    LTEXT           "Colour:",IDC_STATIC,16,68,32,12,SS_CENTERIMAGE
+    LTEXT           "Color:",IDC_STATIC,16,68,32,12,SS_CENTERIMAGE
+    CONTROL         191,IDC_STATIC,"Static",SS_BITMAP,152,84,60,52
+    EDITTEXT        IDC_EDIT1,228,84,36,12,ES_CENTER | ES_AUTOHSCROLL | 
+                    ES_NUMBER
+    CONTROL         "Spin1",IDC_SPIN1,"msctls_updown32",UDS_SETBUDDYINT | 
+                    UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,252,84,11,
+                    12
+    EDITTEXT        IDC_EDIT2,228,97,36,12,ES_CENTER | ES_AUTOHSCROLL | 
+                    ES_NUMBER
+    CONTROL         "Spin1",IDC_SPIN2,"msctls_updown32",UDS_SETBUDDYINT | 
+                    UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,252,97,11,
+                    12
+    EDITTEXT        IDC_EDIT3,228,112,36,12,ES_CENTER | ES_AUTOHSCROLL | 
+                    ES_NUMBER
+    CONTROL         "Spin1",IDC_SPIN3,"msctls_updown32",UDS_SETBUDDYINT | 
+                    UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,252,112,
+                    11,12
+    EDITTEXT        IDC_EDIT4,228,124,36,12,ES_CENTER | ES_AUTOHSCROLL | 
+                    ES_NUMBER
+    CONTROL         "Spin1",IDC_SPIN4,"msctls_updown32",UDS_SETBUDDYINT | 
+                    UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,252,124,
+                    11,12
+    CTEXT           "&r=",IDC_STATIC,216,84,12,12,SS_CENTERIMAGE
+    CTEXT           "&t=",IDC_STATIC,216,96,12,12,SS_CENTERIMAGE
+    CTEXT           "&d=",IDC_STATIC,216,112,12,12,SS_CENTERIMAGE
+    CTEXT           "&n=",IDC_STATIC,216,124,12,12,SS_CENTERIMAGE
 END
 
 IDD_ABOUTPROP DIALOG DISCARDABLE  0, 0, 214, 190
@@ -402,16 +441,16 @@ STYLE WS_CHILD | WS_VISIBLE | WS_CAPTION
 CAPTION "Información"
 FONT 8, "MS Sans Serif"
 BEGIN
-    ICON            IDR_MAINFRAME,IDC_STATIC,12,12,21,20
+    ICON            IDR_MAINFRAME,IDC_STATIC,12,12,20,20
     LTEXT           "Calques3D",IDC_STATIC,50,12,40,8,SS_NOPREFIX | 
                     SS_CENTERIMAGE
-    RTEXT           "Versión",IDC_VERSION,138,12,64,8,SS_CENTERIMAGE
+    LTEXT           "Versión",IDC_VERSION,92,12,64,8,SS_CENTERIMAGE
     LTEXT           "Versión",IDC_DEBUG,50,24,152,8,SS_CENTERIMAGE
     CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME,7,44,200,95
     LTEXT           "Copyright",IDC_COPYRIGHT,12,50,190,12,SS_CENTERIMAGE
-    LTEXT           "Información",IDC_INFO,12,68,190,67
+    LTEXT           "",IDC_INFO,12,68,190,67
     CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME,7,141,200,42
-    LTEXT           "Auteur : ",IDC_STATIC,12,146,38,12,SS_CENTERIMAGE
+    LTEXT           "Author : ",IDC_STATIC,12,146,38,12,SS_CENTERIMAGE
     CONTROL         "Nicolas VAN LABEKE",IDC_MAIL,"Button",BS_OWNERDRAW | 
                     BS_LEFT | WS_TABSTOP,50,146,152,12
     LTEXT           "URL : ",IDC_STATIC,12,166,38,12,SS_CENTERIMAGE
@@ -427,13 +466,13 @@ FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     LTEXT           "Introduzca la siguiente información para la macro en uso",
                     IDC_STATIC,4,4,200,12,SS_CENTERIMAGE
-    LTEXT           "&Nombre :",IDC_STATIC,17,20,30,12,SS_CENTERIMAGE
+    LTEXT           "&Nombre:",IDC_STATIC,17,20,30,12,SS_CENTERIMAGE
     EDITTEXT        IDC_DMACRO_NAME,50,20,158,12,ES_MULTILINE,0,
                     HIDC_DMACRO_NAME
-    LTEXT           "&Designación :",IDC_STATIC,4,36,43,12,SS_CENTERIMAGE
+    LTEXT           "D&esignación :",IDC_STATIC,4,36,43,12,SS_CENTERIMAGE
     EDITTEXT        IDC_DMACRO_HELP,49,36,159,12,ES_MULTILINE,0,
                     HIDC_DMACRO_HELP
-    LTEXT           "D&efinición :",IDC_STATIC,10,52,37,12,SS_CENTERIMAGE
+    LTEXT           "&Definición:",IDC_STATIC,10,52,37,12,SS_CENTERIMAGE
     EDITTEXT        IDC_DMACRO_DEF,49,52,159,36,ES_MULTILINE,0,
                     HIDC_DMACRO_DEF
     LTEXT           "&Icono :",IDC_STATIC,4,92,25,12,SS_CENTERIMAGE
@@ -457,15 +496,14 @@ BEGIN
                     8,4,172,10,0,HIDC_PMAC_LOADMACRO
     LTEXT           "&Contenido del menu Macros",IDC_PMAC_LIST,8,20,256,56,
                     WS_TABSTOP,0,HIDC_PMAC_LIST
-    LTEXT           "Macros &File : ",IDC_STATIC,8,84,43,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_PMAC_PATH,52,84,200,12,ES_AUTOHSCROLL,0,
-                    HIDC_PMAC_PATH
-    PUSHBUTTON      "&...",IDC_PMAC_BROWSE,252,84,13,12,0,0,HIDC_PMAC_BROWSE
-    LTEXT           "&Name :",IDC_STATIC,24,100,24,10,SS_CENTERIMAGE
-    EDITTEXT        IDC_PMAC_NAME,52,100,200,12,ES_MULTILINE | ES_READONLY,0,
+    LTEXT           "&Archivo:",IDC_STATIC,20,84,31,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_PMAC_PATH,52,84,212,12,ES_AUTOHSCROLL | ES_READONLY,
+                    0,HIDC_PMAC_PATH
+    LTEXT           "&Nombre:",IDC_STATIC,20,100,28,10,SS_CENTERIMAGE
+    EDITTEXT        IDC_PMAC_NAME,52,100,212,12,ES_MULTILINE | ES_READONLY,0,
                     HIDC_PMAC_NAME
-    LTEXT           "&Def. :",IDC_STATIC,28,116,20,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_PMAC_DEF,52,116,200,24,ES_MULTILINE | ES_READONLY,0,
+    LTEXT           "&Definición:",IDC_STATIC,13,116,35,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_PMAC_DEF,52,116,212,24,ES_MULTILINE | ES_READONLY,0,
                     HIDC_PMAC_DEF
 END
 
@@ -514,7 +552,7 @@ END
 
 IDD_SPLASH DIALOGEX 0, 0, 204, 233
 STYLE DS_MODALFRAME | WS_POPUP
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     CONTROL         "",IDC_BIGICON,"Button",BS_OWNERDRAW | WS_DISABLED,4,4,
                     34,30
@@ -534,8 +572,10 @@ STYLE WS_CHILD | WS_VISIBLE | WS_CAPTION
 CAPTION "Calques 3D"
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    CONTROL         "Custom",IDC_ABOUTCALQUE,"MFCIconCtrl",WS_TABSTOP,7,7,
-                    188,177,0,HIDC_ABOUTCALQUE
+    CONTROL         "Custom",IDC_ABOUTCALQUE,"MFCIconCtrl",0x0,7,7,188,177,0,
+                    HIDC_ABOUTCALQUE
+    PUSHBUTTON      "",IDC_STATIC,4,4,8,8,NOT WS_VISIBLE | WS_DISABLED | NOT 
+                    WS_TABSTOP
 END
 
 IDD_SUPPRESS_DLG DIALOGEX 0, 0, 316, 97
@@ -565,7 +605,7 @@ IDD_ZOOM_DLG DIALOGEX 0, 0, 192, 20
 STYLE DS_CONTEXTHELP | WS_POPUP | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_TOOLWINDOW | WS_EX_CONTEXTHELP
 CAPTION "Zoom"
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     CONTROL         "Slider1",IDC_ZOOM_SLIDER,"msctls_trackbar32",
                     TBS_AUTOTICKS | TBS_TOP | WS_TABSTOP,0,0,168,20,0,
@@ -577,17 +617,17 @@ END
 IDD_VERIFY_DLG DIALOGEX 0, 0, 200, 82
 STYLE DS_CONTEXTHELP | WS_POPUP | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_TOOLWINDOW | WS_EX_CONTEXTHELP
-CAPTION "Verify..."
+CAPTION "Comprobar..."
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     ICON            "",IDC_VERIFY_PROP_ICON,8,9,21,20,0,0,
                     HIDC_VERIFY_PROP_ICON
-    CONTROL         "The composite cb#233",IDC_VERIFY_PROP,"Static",
+    CONTROL         "El componente cb#233",IDC_VERIFY_PROP,"Static",
                     SS_LEFTNOWORDWRAP | SS_CENTERIMAGE | WS_GROUP,31,8,160,12,
                     WS_EX_TRANSPARENT,HIDC_VERIFY_PROP
-    GROUPBOX        "Targets",IDC_STATIC,68,36,104,20,BS_RIGHT | BS_FLAT | 
+    GROUPBOX        "Destinos",IDC_STATIC,68,36,104,20,BS_RIGHT | BS_FLAT | 
                     NOT WS_VISIBLE | WS_DISABLED
-    GROUPBOX        "Property",IDC_STATIC,4,0,192,24,BS_CENTER | BS_FLAT
+    GROUPBOX        "Relación",IDC_STATIC,4,0,192,24,BS_CENTER | BS_FLAT
     EDITTEXT        IDC_VERIFY_RESULT,8,32,184,24,ES_MULTILINE | ES_READONLY | 
                     NOT WS_BORDER,0,HIDC_VERIFY_RESULT
     PUSHBUTTON      "&Show counter-example",IDC_VERIFY_COUNTER,92,60,100,16,
@@ -603,7 +643,7 @@ STYLE DS_CONTEXTHELP | WS_CHILD | WS_CAPTION
 CAPTION "MathPad (*)"
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    GROUPBOX        "Display",IDC_STATIC,8,4,160,40,BS_FLAT
+    GROUPBOX        "Presentación",IDC_STATIC,8,4,160,40,BS_FLAT
     CONTROL         "&Real value",IDC_MATHPAD_REAL,"Button",
                     BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP,16,16,52,12,0,
                     HIDC_MATHPAD_REAL
@@ -638,26 +678,26 @@ EXSTYLE WS_EX_CONTEXTHELP
 CAPTION "Text"
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    LTEXT           "&Definition:",IDC_STATIC,4,24,52,8
+    LTEXT           "&Definición:",IDC_STATIC,4,24,52,8
     EDITTEXT        IDC_TXT_EQUATION,4,36,204,12,ES_AUTOHSCROLL,0,
                     HIDC_TXT_EQUATION
     LTEXT           "&Variable:",IDC_STATIC,4,8,32,12,SS_CENTERIMAGE
     EDITTEXT        IDC_TXT_VARNAME,36,8,64,12,ES_AUTOHSCROLL,0,
                     HIDC_TXT_VARNAME
-    PUSHBUTTON      "&Font ...",IDC_TXT_FONT,152,4,48,16,WS_DISABLED,0,
+    PUSHBUTTON      "&Fuente:",IDC_TXT_FONT,152,4,48,16,WS_DISABLED,0,
                     HIDC_TXT_FONT
-    PUSHBUTTON      "&Insert Variables",IDC_TXT_VAR,28,52,76,16,0,0,
+    PUSHBUTTON      "&Insertar variables",IDC_TXT_VAR,28,52,76,16,0,0,
                     HIDC_TXT_VAR
     EDITTEXT        IDC_TXT_EDIT,4,36,204,32,ES_MULTILINE | ES_AUTOVSCROLL | 
                     NOT WS_VISIBLE | WS_VSCROLL,0,HIDC_TXT_EDIT
-    CONTROL         "&Marked",IDC_OBJ_MARK,"Button",BS_AUTOCHECKBOX | 
+    CONTROL         "&Marcado",IDC_OBJ_MARK,"Button",BS_AUTOCHECKBOX | 
                     WS_TABSTOP,152,24,40,10,0,HIDC_OBJ_MARK
 END
 
 IDD_PREF_DISCOVERY_PAGE DIALOGEX 0, 0, 272, 146
 STYLE DS_CONTEXTHELP | WS_CHILD | WS_CAPTION
 CAPTION "Discovery (*)"
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     GROUPBOX        "Discovery System",IDC_STATIC,4,4,264,64,BS_FLAT
     RTEXT           "CAS Engine:",IDC_STATIC,16,16,48,12,SS_CENTERIMAGE
@@ -691,15 +731,6 @@ BEGIN
     PUSHBUTTON      "",IDC_UNDO_REDO,120,4,20,12
     CTEXT           "Text",IDC_UNDO_TXT,24,4,96,12,SS_CENTERIMAGE,
                     WS_EX_STATICEDGE
-END
-
-IDD_PREF_TEST_PAGE DIALOGEX 0, 0, 272, 146
-STYLE DS_CONTEXTHELP | WS_CHILD | WS_CAPTION
-CAPTION "Appearance (*)"
-FONT 8, "MS Sans Serif", 0, 0, 0x1
-BEGIN
-    GROUPBOX        "Initial appearance of points",IDC_SHAPE_APP,4,4,264,136,
-                    BS_FLAT,0,0xc9fb0486
 END
 
 
@@ -893,14 +924,6 @@ BEGIN
         TOPMARGIN, 7
         BOTTOMMARGIN, 13
     END
-
-    IDD_PREF_TEST_PAGE, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 265
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 139
-    END
 END
 #endif    // APSTUDIO_INVOKED
 
@@ -950,24 +973,24 @@ END
 
 IDD_PREF_UNIVERSE_PAGE DLGINIT
 BEGIN
-    IDC_PUNIV_REFINIT, 0x403, 5, 0
-0x6f4e, 0x656e, "\000"
+    IDC_PUNIV_REFINIT, 0x403, 8, 0
+0x694e, 0x676e, 0x6e75, 0x006f, 
 
     IDC_PUNIV_REFINIT, 0x403, 5, 0
-0x7841, 0x7365, "\000"
+0x6a45, 0x7365, "\000"
 
     IDC_PUNIV_REFINIT, 0x403, 6, 0
-0x6c46, 0x6f6f, 0x0072, 
+0x7553, 0x6c65, 0x006f, 
 
-    IDC_PUNIV_REFINIT, 0x403, 6, 0
-0x6157, 0x6c6c, 0x0073, 
+    IDC_PUNIV_REFINIT, 0x403, 8, 0
+0x6150, 0x6572, 0x6564, 0x0073, 
 0
 END
 
 IDD_PREF_MATHPAD_PAGE DLGINIT
 BEGIN
-    IDC_MATHPAD_ANGLE, 0x403, 8, 0
-0x6544, 0x7267, 0x6565, 0x0073, 
+    IDC_MATHPAD_ANGLE, 0x403, 7, 0
+0x7247, 0x6461, 0x736f, "\000"
 
     IDC_MATHPAD_ANGLE, 0x403, 8, 0
 0x6152, 0x6964, 0x6e61, 0x0073, 
@@ -1051,7 +1074,8 @@ BEGIN
         END
         MENUITEM "Barra de &estado",                 ID_VIEW_STATUS_BAR
         MENUITEM SEPARATOR
-        POPUP "&Posición"
+        MENUITEM "&Pantalla completa",                ID_VIEW_FULLSCREEN
+        POPUP "Posi&ción"
         BEGIN
             MENUITEM "&Guardar",                       ID_VIEW_PLACEMENT_SAVE
             MENUITEM "&Restaurar",                    ID_VIEW_PLACEMENT_RESTORE
@@ -1061,11 +1085,16 @@ BEGIN
         MENUITEM "&Universo",                   ID_VIEW_UNIVERSE
         MENUITEM "&Histórico",                    ID_VIEW_HISTORIQUE
         MENUITEM "&Diagrama de arbol",                      ID_VIEW_GRAPH
-        MENUITEM "Calco &1",                  ID_VIEW_CALQUE
-        MENUITEM "Calco &2",                  ID_VIEW_CALQUE2
-        MENUITEM "Calco &3",                  ID_VIEW_CALQUE3
-        MENUITEM "Calco &4",                  ID_VIEW_CALQUE4
         MENUITEM "&MathPad",                    ID_VIEW_ANALYTIC
+        POPUP "Calcos"
+        BEGIN
+            MENUITEM "Calco &1",                  ID_VIEW_CALQUE
+            MENUITEM "Calco &2",                  ID_VIEW_CALQUE2
+            MENUITEM "Calco &3",                  ID_VIEW_CALQUE3
+            MENUITEM "Calco &4",                  ID_VIEW_CALQUE4
+        END
+        MENUITEM SEPARATOR
+        MENUITEM "3D &Renderer",                ID_VIEW_RENDERING
     END
     POPUP "Visuali&zación"
     BEGIN
@@ -1097,7 +1126,7 @@ BEGIN
             MENUITEM "&50%",                        ID_VISUALISATION_ZOOM_50
             MENUITEM "&25%",                        ID_VISUALISATION_ZOOM_25
             MENUITEM SEPARATOR
-            MENUITEM "&Ajuster...",                  ID_VISUALISATION_ZOOM_ADJUST
+            MENUITEM "&Ajustar ...",                  ID_VISUALISATION_ZOOM_ADJUST
 
         END
         MENUITEM SEPARATOR
@@ -1118,7 +1147,7 @@ BEGIN
 
         END
         MENUITEM "&Proyección ...",             ID_VISUALISATION_PROJECTION
-        MENUITEM "Center on ...",               ID_VISUALISATION_CENTERON
+        MENUITEM "Centrar en ...",               ID_VISUALISATION_CENTERON
         MENUITEM SEPARATOR
         MENUITEM "&Cambiar estilos",              ID_VISUALISATION_APPLYSTYLE
         MENUITEM SEPARATOR
@@ -1136,7 +1165,7 @@ BEGIN
         MENUITEM "&Arco de circunferencia",              ID_OBJECT_ARCCIRCLE
         MENUITEM SEPARATOR
         MENUITEM "Pla&no",                      ID_OBJECT_PLANE
-        MENUITEM "P&olygon",                    ID_OBJECT_POLYGON
+        MENUITEM "P&olígono",                    ID_OBJECT_POLYGON
         MENUITEM SEPARATOR
         POPUP "&Volúmenes"
         BEGIN
@@ -1175,7 +1204,7 @@ BEGIN
             MENUITEM "Pl&ano-plano",                ID_CONSTRUCTION_INTERSECTION_PLANEPLANE
 
             MENUITEM SEPARATOR
-            MENUITEM "Sphere-Sphere",               ID_CONSTRUCTION_INTERSECTION_SPHERESPHERE
+            MENUITEM "Esfera-esfera",               ID_CONSTRUCTION_INTERSECTION_SPHERESPHERE
 
             MENUITEM "Plano-&Cilindro",              ID_CONSTRUCTION_INTERSECTION_PLANECYLINDER
 
@@ -1214,13 +1243,13 @@ BEGIN
         , GRAYED
         MENUITEM "&Discovery...",               ID_EXPLORATION_DISCOVERY
         MENUITEM SEPARATOR
-        MENUITEM "A&nimation",                  ID_EXPLORATION_ANIMATION
+        MENUITEM "A&nimación",                  ID_EXPLORATION_ANIMATION
         MENUITEM "&Información...",            ID_EXPLORATION_INFORMATION
     END
     POPUP "&Macros"
     BEGIN
         MENUITEM "&Guardar como macro",          ID_MACROS_SAVE
-        MENUITEM "&Description ...",            ID_MACROS_INFO
+        MENUITEM "&Descripción ...",            ID_MACROS_INFO
         MENUITEM SEPARATOR
         MENUITEM "&Cargar...",                   ID_MACROS_LOAD
         POPUP "Macros del usuario"
@@ -1289,7 +1318,8 @@ BEGIN
         END
         MENUITEM "Barra de &estado",                 ID_VIEW_STATUS_BAR
         MENUITEM SEPARATOR
-        POPUP "&Posición"
+        MENUITEM "&Pantalla completa",                ID_VIEW_FULLSCREEN
+        POPUP "Posi&ción"
         BEGIN
             MENUITEM "&Guardar",                       ID_VIEW_PLACEMENT_SAVE
             MENUITEM "&Restaurar",                    ID_VIEW_PLACEMENT_RESTORE
@@ -1299,11 +1329,16 @@ BEGIN
         MENUITEM "&Universo",                   ID_VIEW_UNIVERSE
         MENUITEM "&Histórico",                    ID_VIEW_HISTORIQUE
         MENUITEM "&Diagrama de arbol",                      ID_VIEW_GRAPH
-        MENUITEM "Calco &1",                  ID_VIEW_CALQUE
-        MENUITEM "Calco &2",                  ID_VIEW_CALQUE2
-        MENUITEM "Calco &3",                  ID_VIEW_CALQUE3
-        MENUITEM "Calco &4",                  ID_VIEW_CALQUE4
         MENUITEM "&MathPad",                    ID_VIEW_ANALYTIC
+        POPUP "Calcos"
+        BEGIN
+            MENUITEM "Calco &1",                  ID_VIEW_CALQUE
+            MENUITEM "Calco &2",                  ID_VIEW_CALQUE2
+            MENUITEM "Calco &3",                  ID_VIEW_CALQUE3
+            MENUITEM "Calco &4",                  ID_VIEW_CALQUE4
+        END
+        MENUITEM SEPARATOR
+        MENUITEM "3D &Renderer",                ID_VIEW_RENDERING
     END
     POPUP "Visuali&zación"
     BEGIN
@@ -1335,7 +1370,7 @@ BEGIN
             MENUITEM "&50%",                        ID_VISUALISATION_ZOOM_50
             MENUITEM "&25%",                        ID_VISUALISATION_ZOOM_25
             MENUITEM SEPARATOR
-            MENUITEM "&Adjust...",                  ID_VISUALISATION_ZOOM_ADJUST
+            MENUITEM "&Ajustar ...",                  ID_VISUALISATION_ZOOM_ADJUST
 
         END
         MENUITEM SEPARATOR
@@ -1356,7 +1391,7 @@ BEGIN
 
         END
         MENUITEM "&Proyección ...",             ID_VISUALISATION_PROJECTION
-        MENUITEM "Center on ...",               ID_VISUALISATION_CENTERON
+        MENUITEM "Centrar en ...",               ID_VISUALISATION_CENTERON
         MENUITEM SEPARATOR
         MENUITEM "&Cambiar estilos",              ID_VISUALISATION_APPLYSTYLE
         MENUITEM SEPARATOR
@@ -1374,7 +1409,7 @@ BEGIN
         MENUITEM "&Arco de circunferencia",              ID_OBJECT_ARCCIRCLE
         MENUITEM SEPARATOR
         MENUITEM "Pla&no",                      ID_OBJECT_PLANE
-        MENUITEM "P&olygon",                    ID_OBJECT_POLYGON
+        MENUITEM "P&olígono",                    ID_OBJECT_POLYGON
         MENUITEM SEPARATOR
         POPUP "&Volúmenes"
         BEGIN
@@ -1413,7 +1448,7 @@ BEGIN
             MENUITEM "Pl&ano-plano",                ID_CONSTRUCTION_INTERSECTION_PLANEPLANE
 
             MENUITEM SEPARATOR
-            MENUITEM "Sphere-Sphere",               ID_CONSTRUCTION_INTERSECTION_SPHERESPHERE
+            MENUITEM "Esfera-esfera",               ID_CONSTRUCTION_INTERSECTION_SPHERESPHERE
 
             MENUITEM "Plano-&Cilindro",              ID_CONSTRUCTION_INTERSECTION_PLANECYLINDER
 
@@ -1452,7 +1487,7 @@ BEGIN
         , GRAYED
         MENUITEM "&Discovery...",               ID_EXPLORATION_DISCOVERY
         MENUITEM SEPARATOR
-        MENUITEM "A&nimation",                  ID_EXPLORATION_ANIMATION
+        MENUITEM "A&nimación",                  ID_EXPLORATION_ANIMATION
         MENUITEM "&Información...",            ID_EXPLORATION_INFORMATION
     END
     POPUP "&Macros"
@@ -1526,7 +1561,8 @@ BEGIN
         END
         MENUITEM "Barra de &estado",                 ID_VIEW_STATUS_BAR
         MENUITEM SEPARATOR
-        POPUP "&Posición"
+        MENUITEM "&Pantalla completa",                ID_VIEW_FULLSCREEN
+        POPUP "Posi&ción"
         BEGIN
             MENUITEM "&Guardar",                       ID_VIEW_PLACEMENT_SAVE
             MENUITEM "&Restaurar",                    ID_VIEW_PLACEMENT_RESTORE
@@ -1536,11 +1572,16 @@ BEGIN
         MENUITEM "&Universo",                   ID_VIEW_UNIVERSE
         MENUITEM "&Histórico",                    ID_VIEW_HISTORIQUE
         MENUITEM "&Diagrama de arbol",                      ID_VIEW_GRAPH
-        MENUITEM "Calco &1",                  ID_VIEW_CALQUE
-        MENUITEM "Calco &2",                  ID_VIEW_CALQUE2
-        MENUITEM "Calco &3",                  ID_VIEW_CALQUE3
-        MENUITEM "Calco &4",                  ID_VIEW_CALQUE4
         MENUITEM "&MathPad",                    ID_VIEW_ANALYTIC
+        POPUP "Calcos"
+        BEGIN
+            MENUITEM "Calco &1",                  ID_VIEW_CALQUE
+            MENUITEM "Calco &2",                  ID_VIEW_CALQUE2
+            MENUITEM "Calco &3",                  ID_VIEW_CALQUE3
+            MENUITEM "Calco &4",                  ID_VIEW_CALQUE4
+        END
+        MENUITEM SEPARATOR
+        MENUITEM "3D &Renderer",                ID_VIEW_RENDERING
     END
     POPUP "&Histórico"
     BEGIN
@@ -1610,7 +1651,8 @@ BEGIN
         END
         MENUITEM "Barra de &estado",                 ID_VIEW_STATUS_BAR
         MENUITEM SEPARATOR
-        POPUP "&Posición"
+        MENUITEM "&Pantalla completa",                ID_VIEW_FULLSCREEN
+        POPUP "Posi&ción"
         BEGIN
             MENUITEM "&Guardar",                       ID_VIEW_PLACEMENT_SAVE
             MENUITEM "&Restaurar",                    ID_VIEW_PLACEMENT_RESTORE
@@ -1620,17 +1662,22 @@ BEGIN
         MENUITEM "&Universo",                   ID_VIEW_UNIVERSE
         MENUITEM "&Histórico",                    ID_VIEW_HISTORIQUE
         MENUITEM "&Diagrama de arbol",                      ID_VIEW_GRAPH
-        MENUITEM "Calco &1",                  ID_VIEW_CALQUE
-        MENUITEM "Calco &2",                  ID_VIEW_CALQUE2
-        MENUITEM "Calco &3",                  ID_VIEW_CALQUE3
-        MENUITEM "Calco &4",                  ID_VIEW_CALQUE4
         MENUITEM "&MathPad",                    ID_VIEW_ANALYTIC
+        POPUP "Calcos"
+        BEGIN
+            MENUITEM "Calco &1",                  ID_VIEW_CALQUE
+            MENUITEM "Calco &2",                  ID_VIEW_CALQUE2
+            MENUITEM "Calco &3",                  ID_VIEW_CALQUE3
+            MENUITEM "Calco &4",                  ID_VIEW_CALQUE4
+        END
+        MENUITEM SEPARATOR
+        MENUITEM "3D &Renderer",                ID_VIEW_RENDERING
     END
     POPUP "&Diagrama de arbol"
     BEGIN
         MENUITEM "&Propiedades ...",               ID_HISTORY_PROPERTY
         MENUITEM SEPARATOR
-        MENUITEM "Show &Base-points",           ID_GRAPH_SHOWBASEPT
+        MENUITEM "Mostrar puntos &base",           ID_GRAPH_SHOWBASEPT
         MENUITEM "Mostrar p&adres",               ID_GRAPH_SHOWPARENTS
         MENUITEM "Mostrar &hijos",              ID_GRAPH_SHOWCHILDREN
         MENUITEM "Mostrar &dependientes",            ID_GRAPH_SHOWDEPENDENTS
@@ -1689,13 +1736,14 @@ BEGIN
     END
     POPUP "&Ver"
     BEGIN
-        POPUP "Barras de he&rramientas"
+        POPUP "&Barras de herramientas"
         BEGIN
             MENUITEM "",                            ID_VIEW_TOOLBARS
         END
         MENUITEM "Barra de &estado",                 ID_VIEW_STATUS_BAR
         MENUITEM SEPARATOR
-        POPUP "&Placement"
+        MENUITEM "&Pantalla completa",                ID_VIEW_FULLSCREEN
+        POPUP "Posi&ción"
         BEGIN
             MENUITEM "&Guardar",                       ID_VIEW_PLACEMENT_SAVE
             MENUITEM "&Restaurar",                    ID_VIEW_PLACEMENT_RESTORE
@@ -1705,11 +1753,16 @@ BEGIN
         MENUITEM "&Universo",                   ID_VIEW_UNIVERSE
         MENUITEM "&Histórico",                    ID_VIEW_HISTORIQUE
         MENUITEM "&Diagrama de arbol",                      ID_VIEW_GRAPH
-        MENUITEM "Calco &1",                  ID_VIEW_CALQUE
-        MENUITEM "Calco &2",                  ID_VIEW_CALQUE2
-        MENUITEM "Calco &3",                  ID_VIEW_CALQUE3
-        MENUITEM "Calco &4",                  ID_VIEW_CALQUE4
         MENUITEM "&MathPad",                    ID_VIEW_ANALYTIC
+        POPUP "Calcos"
+        BEGIN
+            MENUITEM "Calco &1",                  ID_VIEW_CALQUE
+            MENUITEM "Calco &2",                  ID_VIEW_CALQUE2
+            MENUITEM "Calco &3",                  ID_VIEW_CALQUE3
+            MENUITEM "Calco &4",                  ID_VIEW_CALQUE4
+        END
+        MENUITEM SEPARATOR
+        MENUITEM "3D &Renderer",                ID_VIEW_RENDERING
     END
     POPUP "Visuali&zación"
     BEGIN
@@ -1741,7 +1794,7 @@ BEGIN
             MENUITEM "&50%",                        ID_VISUALISATION_ZOOM_50
             MENUITEM "&25%",                        ID_VISUALISATION_ZOOM_25
             MENUITEM SEPARATOR
-            MENUITEM "&Adjust...",                  ID_VISUALISATION_ZOOM_ADJUST
+            MENUITEM "&Ajustar ...",                  ID_VISUALISATION_ZOOM_ADJUST
 
         END
         MENUITEM SEPARATOR
@@ -1762,7 +1815,7 @@ BEGIN
 
         END
         MENUITEM "&Proyección ...",             ID_VISUALISATION_PROJECTION
-        MENUITEM "Center on ...",               ID_VISUALISATION_CENTERON
+        MENUITEM "Centrar en ...",               ID_VISUALISATION_CENTERON
         MENUITEM SEPARATOR
         MENUITEM "&Cambiar estilos",              ID_VISUALISATION_APPLYSTYLE
         MENUITEM SEPARATOR
@@ -1784,7 +1837,7 @@ BEGIN
         , GRAYED
         MENUITEM "&Discovery...",               ID_EXPLORATION_DISCOVERY
         MENUITEM SEPARATOR
-        MENUITEM "A&nimation",                  ID_EXPLORATION_ANIMATION
+        MENUITEM "A&nimación",                  ID_EXPLORATION_ANIMATION
         MENUITEM "&Información...",            ID_EXPLORATION_INFORMATION
     END
     POPUP "He&rramientas"
@@ -1847,7 +1900,8 @@ BEGIN
         END
         MENUITEM "Barra de &estado",                 ID_VIEW_STATUS_BAR
         MENUITEM SEPARATOR
-        POPUP "&Posición"
+        MENUITEM "&Pantalla completa",                ID_VIEW_FULLSCREEN
+        POPUP "Posi&ción"
         BEGIN
             MENUITEM "&Guardar",                       ID_VIEW_PLACEMENT_SAVE
             MENUITEM "&Restaurar",                    ID_VIEW_PLACEMENT_RESTORE
@@ -1857,18 +1911,23 @@ BEGIN
         MENUITEM "&Universo",                   ID_VIEW_UNIVERSE
         MENUITEM "&Histórico",                    ID_VIEW_HISTORIQUE
         MENUITEM "&Diagrama de arbol",                      ID_VIEW_GRAPH
-        MENUITEM "Calco &1",                  ID_VIEW_CALQUE
-        MENUITEM "Calco &2",                  ID_VIEW_CALQUE2
-        MENUITEM "Calco &3",                  ID_VIEW_CALQUE3
-        MENUITEM "Calco &4",                  ID_VIEW_CALQUE4
         MENUITEM "&MathPad",                    ID_VIEW_ANALYTIC
+        POPUP "Calcos"
+        BEGIN
+            MENUITEM "Calco &1",                  ID_VIEW_CALQUE
+            MENUITEM "Calco &2",                  ID_VIEW_CALQUE2
+            MENUITEM "Calco &3",                  ID_VIEW_CALQUE3
+            MENUITEM "Calco &4",                  ID_VIEW_CALQUE4
+        END
+        MENUITEM SEPARATOR
+        MENUITEM "3D &Renderer",                ID_VIEW_RENDERING
     END
     POPUP "&MathPad"
     BEGIN
         MENUITEM "&Propiedades ...",               ID_HISTORY_PROPERTY
         MENUITEM SEPARATOR
-        MENUITEM "Add &Comment",                ID_MATHPAD_ADDCOMMENT
-        MENUITEM "Add &Expression",             ID_MATHPAD_ADDEQUATION
+        MENUITEM "Agregar &Comentario",                ID_MATHPAD_ADDCOMMENT
+        MENUITEM "Agregar &Expresión",             ID_MATHPAD_ADDEQUATION
     END
     POPUP "He&rramientas"
     BEGIN
@@ -1905,12 +1964,14 @@ IDR_POPUP_TOOLBAR MENU DISCARDABLE
 BEGIN
     POPUP "< TOOLBAR >"
     BEGIN
+        MENUITEM "&Propiedades",                   ID_VIEW_PROPERTYBAR
+        MENUITEM "&Dependientes",                 ID_VIEW_DEPENDENTBAR
+        MENUITEM SEPARATOR
         MENUITEM "&Standard",           ID_VIEW_TOOLBAR
         MENUITEM "&Objetos",                    ID_VIEW_OBJECT
         MENUITEM "&Construcción",               ID_VIEW_CONSTRUCTION
         MENUITEM "&Visualización",              ID_VIEW_VISUALISATION
         MENUITEM "&Exploration",                ID_VIEW_EXPLORATION
-        MENUITEM "&Property",                   ID_VIEW_PROPERTYBAR
         MENUITEM SEPARATOR
         MENUITEM "< Barras de herramientas del usuario >",              ID_VIEW_USER_TOOLBAR1
         MENUITEM "< Barras de herramientas del usuario >",              ID_VIEW_USER_TOOLBAR2
@@ -1927,7 +1988,7 @@ END
 
 IDR_POPUP_SHAPE MENU DISCARDABLE 
 BEGIN
-    POPUP "< Cambiar estilos >"
+    POPUP "Cambiar estilos"
     BEGIN
         MENUITEM "&Duplicar estilos",                  ID_VISUALISATION_STYLE_COPY
         MENUITEM SEPARATOR
@@ -1938,7 +1999,7 @@ END
 
 IDR_POPUP_PROJECTION MENU DISCARDABLE 
 BEGIN
-    POPUP "< Proyección >"
+    POPUP "Proyección"
     BEGIN
         MENUITEM "&Frontal",                    ID_VISUALISATION_PROJECTION_FRONT
 
@@ -1968,7 +2029,7 @@ END
 
 IDR_POPUP_MOVE MENU DISCARDABLE 
 BEGIN
-    POPUP "< Mover >"
+    POPUP "Mover"
     BEGIN
         MENUITEM "&Magnetismo",                   ID_EXPLORATION_MOVE_MAGNETISM
 
@@ -2001,7 +2062,7 @@ END
 
 IDR_POPUP_EXTRACT MENU DISCARDABLE 
 BEGIN
-    POPUP "< Extracción >"
+    POPUP "Extracción"
     BEGIN
         MENUITEM "&Extraer a...",             ID_EXPLORATION_EXTRACTION_ADDIN
         , GRAYED
@@ -2093,7 +2154,7 @@ BEGIN
     END
     POPUP "He&rramientas"
     BEGIN
-        MENUITEM "< Herramientas del usuario >",      ID_TOOLS_ENTRY, GRAYED
+        MENUITEM "< User-defined tools >",      ID_TOOLS_ENTRY, GRAYED
     END
     POPUP "Ay&uda", HELP
     BEGIN
@@ -2126,13 +2187,13 @@ BEGIN
         MENUITEM "&50%",                        ID_VISUALISATION_ZOOM_50
         MENUITEM "&25%",                        ID_VISUALISATION_ZOOM_25
         MENUITEM SEPARATOR
-        MENUITEM "&Adjust...",                  ID_VISUALISATION_ZOOM_ADJUST
+        MENUITEM "&Ajustar ...",                  ID_VISUALISATION_ZOOM_ADJUST
     END
 END
 
 IDR_REFERENTIEL MENU DISCARDABLE 
 BEGIN
-    POPUP "< Referencial >"
+    POPUP "< REFERENTIEL >"
     BEGIN
         MENUITEM "&Ninguno",                       ID_VISUALISATION_REFERENTIAL_NONE
 
@@ -2147,12 +2208,12 @@ END
 
 IDR_POPUP_VERIFY MENU DISCARDABLE 
 BEGIN
-    POPUP "< Verificar >"
+    POPUP "Verificar"
     BEGIN
-        MENUITEM "&Parallel",                   ID_EXPLORATION_VERIFY_PAR
-        MENUITEM "P&erpendicular",              ID_EXPLORATION_VERIFY_PERP
+        MENUITEM "&Paralelismo",                   ID_EXPLORATION_VERIFY_PAR
+        MENUITEM "P&erpendicularidad",              ID_EXPLORATION_VERIFY_PERP
         MENUITEM SEPARATOR
-        MENUITEM "Point &on ...",               ID_EXPLORATION_VERIFY_PTON
+        MENUITEM "Punto &sobre",               ID_EXPLORATION_VERIFY_PTON
         MENUITEM "&Alignment",                  ID_EXPLORATION_VERIFY_PTALIGN
 
     END
@@ -2160,17 +2221,104 @@ END
 
 IDR_POPUP_MEASURE MENU DISCARDABLE 
 BEGIN
-    POPUP "< Medir >"
+    POPUP "Medir"
     BEGIN
         MENUITEM "án&gulo",                      ID_EXPLORATION_MEASURE_ANGLE
-        MENUITEM "&distance",                   ID_EXPLORATION_MEASURE_DISTANCE
+        MENUITEM "&Distance",                   ID_EXPLORATION_MEASURE_DISTANCE
 
         MENUITEM SEPARATOR
         MENUITEM "&longitud",                     ID_EXPLORATION_MEASURE_LENGTH
 
         MENUITEM "á&rea",                       ID_EXPLORATION_MEASURE_AREA
-        MENUITEM "&volume",                     ID_EXPLORATION_MEASURE_VOLUME
+        MENUITEM "&volumen",                     ID_EXPLORATION_MEASURE_VOLUME
 
+    END
+END
+
+IDR_VIEWRENDERING MENU PRELOAD DISCARDABLE 
+BEGIN
+    POPUP "&Archivo"
+    BEGIN
+        MENUITEM "&Nuevo\tCtrl+N",                ID_FILE_NEW
+        MENUITEM "&Abrir...\tCtrl+O",            ID_FILE_OPEN
+        MENUITEM "&Cerrar",                      ID_FILE_CLOSE
+        MENUITEM "&Guardar\tCtrl+S",               ID_FILE_SAVE
+        MENUITEM "Guardar c&omo...",                 ID_FILE_SAVE_AS
+        MENUITEM SEPARATOR
+        MENUITEM "&Imprimir...\tCtrl+P",           ID_FILE_PRINT
+        MENUITEM "&Presentación preliminar",              ID_FILE_PRINT_PREVIEW
+        MENUITEM "Con&figurar impresora...",             ID_FILE_PRINT_SETUP
+        MENUITEM SEPARATOR
+        MENUITEM "Config&uración",                ID_VIEW_CUSTOMIZE
+        MENUITEM SEPARATOR
+        MENUITEM "Archivo reciente",                 ID_FILE_MRU_FILE1, GRAYED
+        MENUITEM SEPARATOR
+        MENUITEM "&Salir",                       ID_APP_EXIT
+    END
+    POPUP "&Editar"
+    BEGIN
+        MENUITEM "&Deshacer\tCtrl+Z",               ID_EDIT_UNDO
+        MENUITEM "&Rehacer\tCtrl+Y",               ID_EDIT_REDO
+        MENUITEM SEPARATOR
+        MENUITEM "Cor&tar\tCtrl+X",                ID_EDIT_CUT
+        MENUITEM "&Copiar\tCtrl+C",               ID_EDIT_COPY
+        MENUITEM "&Pegar\tCtrl+V",              ID_EDIT_PASTE
+        MENUITEM SEPARATOR
+    END
+    POPUP "&Ver"
+    BEGIN
+        POPUP "&Barras de herramientas"
+        BEGIN
+            MENUITEM "",                            ID_VIEW_TOOLBARS
+        END
+        MENUITEM "Barra de &estado",                 ID_VIEW_STATUS_BAR
+        MENUITEM SEPARATOR
+        MENUITEM "&Pantalla completa",                ID_VIEW_FULLSCREEN
+        POPUP "Posi&ción"
+        BEGIN
+            MENUITEM "&Guardar",                       ID_VIEW_PLACEMENT_SAVE
+            MENUITEM "&Restaurar",                    ID_VIEW_PLACEMENT_RESTORE
+
+        END
+        MENUITEM SEPARATOR
+        MENUITEM "&Universo",                   ID_VIEW_UNIVERSE
+        MENUITEM "&Histórico",                    ID_VIEW_HISTORIQUE
+        MENUITEM "&Diagrama de arbol",                      ID_VIEW_GRAPH
+        MENUITEM "&MathPad",                    ID_VIEW_ANALYTIC
+        POPUP "Calcos"
+        BEGIN
+            MENUITEM "Calco &1",                  ID_VIEW_CALQUE
+            MENUITEM "Calco &2",                  ID_VIEW_CALQUE2
+            MENUITEM "Calco &3",                  ID_VIEW_CALQUE3
+            MENUITEM "Calco &4",                  ID_VIEW_CALQUE4
+        END
+        MENUITEM SEPARATOR
+        MENUITEM "3D &Renderer",                ID_VIEW_RENDERING
+    END
+    POPUP "3D &Rendering"
+    BEGIN
+        MENUITEM "&Property...",                ID_RENDERER_PROPERTY
+    END
+    POPUP "He&rramientas"
+    BEGIN
+        MENUITEM "< User-defined tools >",      ID_TOOLS_ENTRY, GRAYED
+    END
+    POPUP "Ven&tana"
+    BEGIN
+        MENUITEM "&Cascada",                    ID_WINDOW_CASCADE
+        MENUITEM "Mosaico &horizontal",          ID_WINDOW_TILE_HORZ
+        MENUITEM "Mosaico &vertical",            ID_WINDOW_TILE_VERT
+        MENUITEM "&Organizar iconos",              ID_WINDOW_ARRANGE
+    END
+    POPUP "Ay&uda", HELP
+    BEGIN
+        MENUITEM "&Ayuda sobre la tarea",               ID_HELP
+        MENUITEM "&Indice de ayuda",                 ID_HELP_INDEX
+        MENUITEM "&Temas de ayuda",                ID_HELP_FINDER
+        MENUITEM SEPARATOR
+        MENUITEM "&Mapa del teclado",            ID_HELP_KEYBOARDMAP
+        MENUITEM SEPARATOR
+        MENUITEM "Acerca de &Calques 3D...",         ID_APP_ABOUT
     END
 END
 
@@ -2255,7 +2403,7 @@ BEGIN
     IDR_VIEWGRAPH           "Diagrama de arbol\n\nDiagrama de arbol\n\n\n\nAparece cuando una ventana ""Diagrama de arbol"" está activa."
     IDR_VIEWANALYTIC        "MathPad\n\nMathPad\n\n\n\nAparece cuando una ventana ""MathPad"" está activa."
     IDR_VIEWDEPEND          "Algrebra222\n\nAlgrebraic Notation\n\n\n\n Algrebra menu. Appears when an 'Algrebraic notations' window is active."
-    IDR_VIEWMACRO2          "C3D\nC3D\nC3D\n*.p3d\n.p3d\nCalquesFFF3D.Document\nCalques 3D FFF Document"
+    IDR_VIEWRENDERING       "3D View\n\n3D Rendering\n\n\n\n3D View menu. Appears when an '3D View' window is active."
 END
 
 STRINGTABLE PRELOAD DISCARDABLE 
@@ -2426,6 +2574,7 @@ BEGIN
     ID_VIEW_CALQUE2         "Muestra una ventana Calco\nMuestra Calco 2"
     ID_VIEW_CALQUE3         "Muestra una ventana Calco\nMuestra Calco 3"
     ID_VIEW_CALQUE4         "Muestra una ventana Calco\nMuestra Calco 4"
+    ID_VIEW_RENDERING       "Display the 3D rendering window\nShow 3D View"
     ID_VIEW_PLACEMENT_SAVE  "Guardar la localización de cada vista de este documento \nGuardar localización"
     ID_VIEW_PLACEMENT_RESTORE 
                             "Restaurar la localización de cada vista de este documento \nGuardar localización"
@@ -2712,7 +2861,21 @@ END
 
 STRINGTABLE DISCARDABLE 
 BEGIN
-    ERR_AMBIGUITY           "Ambigüedad..."
+    IDS_POLSHAPE1           "Opaco"
+    IDS_POLSHAPE2           "Punto"
+    IDS_POLSHAPE3           "Raya"
+    IDS_POLSHAPE4           "Raya-Punto"
+    IDS_POLSHAPE5           "Raya-Punto-Punto"
+    IDS_POLSHAPE6           "Línea 1"
+    IDS_POLSHAPE7           "Línea 2"
+    IDS_POLSHAPE8           "Línea 3"
+    IDS_POLSHAPE9           "Línea 4"
+    IDS_AMBIGUITY           "Ambigüedad..."
+    IDS_REDEFINE            "Redefine as ..."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
     ERR_2SAMEPTS            "Este punto ya ha sido seleccionado\nPor favor, seleccione otro"
     ERR_2SAMEDRS            "Esta recta ya ha sido seleccionada\nPor favor, seleccione otra"
     ERR_2SAMEPLS            "Este plano ya ha sido seleccionado\nPor favor, seleccione otro"
@@ -2726,7 +2889,6 @@ BEGIN
     ERR_LOCUS_NOPTSUR       "El punto principal no es un punto de un objeto \nEl lugar geométrico no puede ser definido"
     ERR_NOLOCUS             "Algunas propiedades provocan especificaciones erróneas de uno de los puntos \nPor eso, el lugar geométrico no puede ser definido"
     ERR_LOCUS_INTERNAL      "Algunas propiedades no se verifican en las relaciones entre el punto prinicpal y los puntos del lugar geométrico \nPor eso, el lugar geométrico no puede ser definido"
-    ERR_REDEFINE            "Redefine as ..."
     ERR_REDEFINE_INGRAPH    "The object already depends of the target object.\n Its redefinition cannot be proceeded."
 END
 
@@ -2766,7 +2928,7 @@ BEGIN
     IDS_DEF_PLAN            "%s es el plano que contiene a %s, %s y %s"
     IDS_DEF_PLANPERP        "%s es el plano que contiene a %s perpendicular a %s"
     IDS_DEF_CIRCLE          "%s es la circunferencia que contiene a %s, %s y %s"
-    IDS_DEF_ARCCIRCLE       "%s es el arco de cirfunferencia con inicio en %s, fin en %s y que contiene por %s"
+    IDS_DEF_ARCCIRCLE       "%s es el arco de circunferencia con inicio en %s, fin en %s y que contiene por %s"
     IDS_DEF_POINTMID2       "%s es el punto medio de %s y %s"
     IDS_DEF_CPTOBJECT       "%s es un objeto componente"
     IDS_DEF_CUBE            "%s el cubo definido por %s y %s"
@@ -2967,6 +3129,7 @@ END
 STRINGTABLE DISCARDABLE 
 BEGIN
     IDR_PROPERTY_TB         "Property"
+    IDR_DEPENDENT_TB        "Dependent"
 END
 
 STRINGTABLE DISCARDABLE 
@@ -2980,6 +3143,7 @@ BEGIN
     ID_VIEW_VISUALISATION   "Mostrar u ocultar la barra de visualización\nBarra visualización"
     ID_VIEW_EXPLORATION     "Show or hide the exploration bar\nToggle Exploration"
     ID_VIEW_PROPERTYBAR     "Show or hide the property bar\nToggle Property"
+    ID_VIEW_DEPENDENTBAR    "Show or hide the dependent bar\nToggle Dependent"
 END
 
 STRINGTABLE DISCARDABLE 
@@ -3029,20 +3193,7 @@ BEGIN
     ERR_POLYGON_3POINT      "This polygon is defined by less than 3 points.\nThus, the polygon cannot be defined."
     ERR_NOPOLYGON           "Some properties result in mis-specification of one of the objects.\nThus, the polygon cannot be defined."
     ERR_POLYGON_NOCONVEX    "This polygon is not convex.\nThus, it cannot be defined."
-    ERR_AMBIGUITY2          "More than one object are detected. Clear the ambiguity by using the contextual menu."
-END
-
-STRINGTABLE DISCARDABLE 
-BEGIN
-    IDS_POLSHAPE1           "Opaco"
-    IDS_POLSHAPE2           "Punto"
-    IDS_POLSHAPE3           "Raya"
-    IDS_POLSHAPE4           "Raya-Punto"
-    IDS_POLSHAPE5           "Raya-Punto-Punto"
-    IDS_POLSHAPE6           "Línea 1"
-    IDS_POLSHAPE7           "Línea 2"
-    IDS_POLSHAPE8           "Línea 3"
-    IDS_POLSHAPE9           "Línea 4"
+    ERR_AMBIGUITY           "More than one object are detected. Clear the ambiguity by using the contextual menu."
 END
 
 STRINGTABLE DISCARDABLE 
@@ -3060,18 +3211,19 @@ END
 STRINGTABLE DISCARDABLE 
 BEGIN
     VER_ERROR               "The property cannot be verified on these objects."
-    VER_PAR_NO              "%s and %s are not %s in this configuration."
-    VER_PAR_ANALYTIC        "%s and %s are %s in this configuration. But there is another configuration where it is not true."
-    VER_PAR_CONSTRUCTION    "%s and %s seem to be %s in every configuration."
-    VER_PERP                "perpendicular"
+    VER_PAR_NO              "%s and %s are not parallel in this configuration."
+    VER_PAR_ANALYTIC        "%s and %s are parallel in this configuration. But there is another configuration where it is not true."
+    VER_PAR_CONSTRUCTION    "%s and %s seem to be parallel in every configuration."
+    VER_PERP_NO             "%s and %s are not perpendicular in this configuration."
+    VER_PERP_ANALYTIC       "%s and %s are perpendicular in this configuration. But there is another configuration where it is not true."
+    VER_PERP_CONSTRUCTION   "%s and %s seem to be perpendicular in every configuration."
 END
 
 STRINGTABLE DISCARDABLE 
 BEGIN
-    VER_PAR                 "parallel"
-    VER_ON_NO               "%s is not on %s in this configuration."
-    VER_ON_ANALYTIC         "%s is on %s in this configuration. But there is another configuration where it is not true."
-    VER_ON_CONSTRUCTION     "%s seems to be on %s in every configuration."
+    VER_BELONG_NO           "%s is not on %s in this configuration."
+    VER_BELONG_ANALYTIC     "%s is on %s in this configuration. But there is another configuration where it is not true."
+    VER_BELONG_CONSTRUCTION "%s seems to be on %s in every configuration."
     VER_ALIGN_NO            "%s, %s and %s are not aligned in this configuration."
     VER_ALIGN_ANALYTIC      "%s, %s and %s are aligned in this configuration. But there is another configuration where it is not true."
     VER_ALIGN_CONSTRUCTION  "%s, %s and %s seem to be aligned in every configuration."
@@ -3115,7 +3267,7 @@ STRINGTABLE DISCARDABLE
 BEGIN
     PREF_NAME_CLROTHER      "Other colours..."
     PREF_NAME_CLRAUTO       "Default"
-    PREF_NAME_SPHEQ         "Equator"
+    PREF_NAME_SPHEQ         "Ecuador"
     PREF_NAME_SPHGCR        "Great Circles"
     PREF_NAME_LOCUS         "Lugar geométrico"
     PREF_NAME_LOCSIZE       "Tamaño"
@@ -3134,6 +3286,45 @@ BEGIN
     CTX_MACRO_UNLOAD        "click anywhere to load the macro-construction."
     CTX_MACRO_POINT         "select a point to graft this base-point on or double-click to end up the graft."
     CTX_MOVE_TRACE          "select a point to trace"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_PROPERTY_EXPAND      "Expand the property list\nExpand"
+    ID_PROPERTY_SORTING     "Sort the property list alphabetically\nSort"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_RENDERER_PROPERTY    "Change the rendering properties of the view\nChange Property"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    PROP_DEFINITION         "Definición"
+    PROP_APPEARANCE         "Aspecto"
+    PROP_OBJNAME            "Nombre"
+    PROP_OBJCOLOR           "Color"
+    PROP_OBJSHAPE           "Forma"
+    PROP_OBJVISIBLE         "Visible"
+    PROP_OBJMARKED          "Marcado"
+    PROP_DEPENDENT          "Dependientes "
+    PROP_COMPOSITE          "Constituyentes"
+    PROP_PARENTS            "Padres"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    PROP_DEFINITION_DESC    "The nature and name of the object"
+    PROP_APPEARANCE_DESC    "The graphical properties of the object"
+    PROP_OBJNAME_DESC       "The name of the object"
+    PROP_OBJCOLOR_DESC      "The colour of the object"
+    PROP_OBJSHAPE_DESC      "The shape of the object"
+    PROP_OBJVISIBLE_DESC    "Specify if the object is visible or not"
+    PROP_OBJMARKED_DESC     "Specify if the visual marks of the object are visible or not"
+    PROP_DEPENDENT_DESC     "The list of all objects built from this one"
+    PROP_COMPOSITE_DESC     "The list of all internal constituents of this object"
+    PROP_PARENTS_DESC       "The objects from which this one is built"
 END
 
 #endif    // English (U.K.) resources
