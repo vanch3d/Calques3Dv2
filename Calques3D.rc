@@ -77,6 +77,7 @@ IDR_PROPERTY_TB         BITMAP  DISCARDABLE     "res\\tb_property.bmp"
 IDB_LIST_ADDITEM        BITMAP  DISCARDABLE     "res\\list_add.bmp"
 IDB_LIST_BROWSE         BITMAP  DISCARDABLE     "res\\list_browse.bmp"
 IDB_LIST_DELITEM        BITMAP  DISCARDABLE     "res\\list_delete.bmp"
+IDB_PROJECTION          BITMAP  DISCARDABLE     "res\\project.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -389,7 +390,7 @@ END
 IDD_PREF_UNIVERSE_PAGE DIALOGEX 0, 0, 272, 146
 STYLE DS_CONTEXTHELP | WS_CHILD | WS_CAPTION
 CAPTION "Universe (*)"
-FONT 8, "MS Sans Serif", 0, 0, 0x1
+FONT 8, "MS Sans Serif"
 BEGIN
     GROUPBOX        "System of reference",IDC_STATIC,4,4,140,48,BS_FLAT
     LTEXT           "&Initial system : ",IDC_STATIC,8,16,46,12,
@@ -408,6 +409,31 @@ BEGIN
     PUSHBUTTON      "Shape",IDC_PUNIV_TRACE,48,68,84,12,0,0,HIDC_PUNIV_TRACE
     GROUPBOX        "Trace",IDC_STATIC,4,56,140,32,BS_FLAT
     LTEXT           "Colour:",IDC_STATIC,16,68,32,12,SS_CENTERIMAGE
+    CONTROL         191,IDC_STATIC,"Static",SS_BITMAP,152,84,60,52
+    EDITTEXT        IDC_EDIT1,228,84,36,12,ES_CENTER | ES_AUTOHSCROLL | 
+                    ES_NUMBER
+    CONTROL         "Spin1",IDC_SPIN1,"msctls_updown32",UDS_SETBUDDYINT | 
+                    UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,252,84,11,
+                    12
+    EDITTEXT        IDC_EDIT2,228,97,36,12,ES_CENTER | ES_AUTOHSCROLL | 
+                    ES_NUMBER
+    CONTROL         "Spin1",IDC_SPIN2,"msctls_updown32",UDS_SETBUDDYINT | 
+                    UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,252,97,11,
+                    12
+    EDITTEXT        IDC_EDIT3,228,112,36,12,ES_CENTER | ES_AUTOHSCROLL | 
+                    ES_NUMBER
+    CONTROL         "Spin1",IDC_SPIN3,"msctls_updown32",UDS_SETBUDDYINT | 
+                    UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,252,112,
+                    11,12
+    EDITTEXT        IDC_EDIT4,228,124,36,12,ES_CENTER | ES_AUTOHSCROLL | 
+                    ES_NUMBER
+    CONTROL         "Spin1",IDC_SPIN4,"msctls_updown32",UDS_SETBUDDYINT | 
+                    UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,252,124,
+                    11,12
+    CTEXT           "&r=",IDC_STATIC,216,84,12,12,SS_CENTERIMAGE
+    CTEXT           "&t=",IDC_STATIC,216,96,12,12,SS_CENTERIMAGE
+    CTEXT           "&d=",IDC_STATIC,216,112,12,12,SS_CENTERIMAGE
+    CTEXT           "&n=",IDC_STATIC,216,124,12,12,SS_CENTERIMAGE
 END
 
 IDD_ABOUTPROP DIALOG DISCARDABLE  0, 0, 214, 190
@@ -463,7 +489,7 @@ END
 IDD_PREF_MACROS_PAGE DIALOGEX 0, 0, 272, 146
 STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Macros (*)"
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     CONTROL         "&Other macro-constructions can be loaded by user",
                     IDC_PMAC_LOADMACRO,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
@@ -2827,7 +2853,21 @@ END
 
 STRINGTABLE DISCARDABLE 
 BEGIN
-    ERR_AMBIGUITY           "Ambiguity ..."
+    IDS_POLSHAPE1           "Opaque"
+    IDS_POLSHAPE2           "Dot"
+    IDS_POLSHAPE3           "Dash"
+    IDS_POLSHAPE4           "Dash-Dot"
+    IDS_POLSHAPE5           "Dash-Dot-Dot"
+    IDS_POLSHAPE6           "Line 1"
+    IDS_POLSHAPE7           "Line 2"
+    IDS_POLSHAPE8           "Line 3"
+    IDS_POLSHAPE9           "Line 4"
+    IDS_AMBIGUITY           "Ambiguity ..."
+    IDS_REDEFINE            "Redefine as ..."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
     ERR_2SAMEPTS            "You already selected this point. \nPlease select another one."
     ERR_2SAMEDRS            "You already selected this line. \nPlease select another one."
     ERR_2SAMEPLS            "You already selected this plane. \nPlease select another one."
@@ -2841,7 +2881,6 @@ BEGIN
     ERR_LOCUS_NOPTSUR       "The command point is not a point on an object. \n The locus cannot be defined."
     ERR_NOLOCUS             "Some properties result in mis-specification of one of the points..\nThus, the locus cannot be defined."
     ERR_LOCUS_INTERNAL      "Some properties are not verified in the relations between the command point and the locus point.. \n The locus cannot be defined."
-    ERR_REDEFINE            "Redefine as ..."
     ERR_REDEFINE_INGRAPH    "The object already depends of the target object.\n Its redefinition cannot be proceeded."
 END
 
@@ -3146,20 +3185,7 @@ BEGIN
     ERR_POLYGON_3POINT      "This polygon is defined by less than 3 points.\nThus, the polygon cannot be defined."
     ERR_NOPOLYGON           "Some properties result in mis-specification of one of the objects.\nThus, the polygon cannot be defined."
     ERR_POLYGON_NOCONVEX    "This polygon is not convex.\nThus, it cannot be defined."
-    ERR_AMBIGUITY2          "More than one object are detected. Clear the ambiguity by using the contextual menu."
-END
-
-STRINGTABLE DISCARDABLE 
-BEGIN
-    IDS_POLSHAPE1           "Opaque"
-    IDS_POLSHAPE2           "Dot"
-    IDS_POLSHAPE3           "Dash"
-    IDS_POLSHAPE4           "Dash-Dot"
-    IDS_POLSHAPE5           "Dash-Dot-Dot"
-    IDS_POLSHAPE6           "Line 1"
-    IDS_POLSHAPE7           "Line 2"
-    IDS_POLSHAPE8           "Line 3"
-    IDS_POLSHAPE9           "Line 4"
+    ERR_AMBIGUITY           "More than one object are detected. Clear the ambiguity by using the contextual menu."
 END
 
 STRINGTABLE DISCARDABLE 
@@ -3177,18 +3203,19 @@ END
 STRINGTABLE DISCARDABLE 
 BEGIN
     VER_ERROR               "The property cannot be verified on these objects."
-    VER_PAR_NO              "%s and %s are not %s in this configuration."
-    VER_PAR_ANALYTIC        "%s and %s are %s in this configuration. But there is another configuration where it is not true."
-    VER_PAR_CONSTRUCTION    "%s and %s seem to be %s in every configuration."
-    VER_PERP                "perpendicular"
+    VER_PAR_NO              "%s and %s are not parallel in this configuration."
+    VER_PAR_ANALYTIC        "%s and %s are parallel in this configuration. But there is another configuration where it is not true."
+    VER_PAR_CONSTRUCTION    "%s and %s seem to be parallel in every configuration."
+    VER_PERP_NO             "%s and %s are not perpendicular in this configuration."
+    VER_PERP_ANALYTIC       "%s and %s are perpendicular in this configuration. But there is another configuration where it is not true."
+    VER_PERP_CONSTRUCTION   "%s and %s seem to be perpendicular in every configuration."
 END
 
 STRINGTABLE DISCARDABLE 
 BEGIN
-    VER_PAR                 "parallel"
-    VER_ON_NO               "%s is not on %s in this configuration."
-    VER_ON_ANALYTIC         "%s is on %s in this configuration. But there is another configuration where it is not true."
-    VER_ON_CONSTRUCTION     "%s seems to be on %s in every configuration."
+    VER_BELONG_NO           "%s is not on %s in this configuration."
+    VER_BELONG_ANALYTIC     "%s is on %s in this configuration. But there is another configuration where it is not true."
+    VER_BELONG_CONSTRUCTION "%s seems to be on %s in every configuration."
     VER_ALIGN_NO            "%s, %s and %s are not aligned in this configuration."
     VER_ALIGN_ANALYTIC      "%s, %s and %s are aligned in this configuration. But there is another configuration where it is not true."
     VER_ALIGN_CONSTRUCTION  "%s, %s and %s seem to be aligned in every configuration."
