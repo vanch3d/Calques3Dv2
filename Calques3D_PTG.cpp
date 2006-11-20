@@ -7,6 +7,7 @@
 #include "MainFrm.h"
 #include "ChildFrm.h"
 #include "Calques3DDoc.h"
+#include "ProjectRCVersion.h"
 
 #include "ViewHisto.h"
 #include "ViewUniv.h"
@@ -14,9 +15,9 @@
 #include "ViewGraph.h"
 #include "ViewAnalytic.h"
 #include "ViewDepend.h"
-#include "TestView.h"
+#include "View3DRender.h"
 
-#include "Splash.h"
+#include "SplashScreen.h"
 
 #include "AboutInfoDlg.h"
 
@@ -39,6 +40,9 @@ static char THIS_FILE[] = __FILE__;
 #define REG_BUILD		_T("BuildDate")
 #define REG_PROFILE		_T("Profile")
 #define REG_PROFILEDES	_T("Description")
+#define REG_VERMAJOR	_T("VersionMajor")
+#define REG_VERMINOR	_T("VersionMinor")
+#define REG_VERREVIS	_T("VersionRevision")
 
 // Specify the base item for the registry
 CString CCalques3DApp::g_strRegistryBase = REG_SETTINGS;
@@ -88,7 +92,7 @@ BOOL CCalques3DApp::InitInstance()
 	//------------------------------------------------------------
 	//Launch the splash window
 	//------------------------------------------------------------
-	CSplashWnd splash;
+	CSplashScreen splash;
 	BOOL bSplash = cmdInfo.m_bShowSplash;
 	if (bSplash)
 	{
@@ -141,7 +145,29 @@ BOOL CCalques3DApp::InitInstance()
 	SetRegistryBase();
 	//CString mstr1 = GetRegSectionPath();
 
-	// For compatibility reasons, check the build date from the registry
+	CProjectRCVersion applVersion;
+	int major=-1,minor=-1,revision=-1;
+	applVersion.GetProductVersion(major,minor,revision);
+
+	int vmajor = GetSectionInt(REG_SETTINGS,REG_VERMAJOR,-1);
+	int vminor = GetSectionInt(REG_SETTINGS,REG_VERMINOR,-1);
+	int vrev = GetSectionInt(REG_SETTINGS,REG_VERREVIS,-1);
+
+	if (vmajor==-1 || (vmajor!=major || vminor!=minor))
+	{
+		MessageBox(NULL,
+				_T("Due to major modifications in Calques 3D, the configuration saved\n"
+				   "during the last session cannot be retrieved by this new version.\n"
+				   "Calques 3D will be initialised with its default configuration.\n"
+				   "This problem will not occur anymore after this launch."),
+				_T("Warning !"),MB_ICONWARNING|MB_OK);
+		CleanState(CCalques3DApp::g_strRegistryBase);
+		WriteInt(REG_VERMAJOR,major);
+		WriteInt(REG_VERMINOR,minor);
+		WriteInt(REG_VERREVIS,revision);
+	}
+
+/*	// For compatibility reasons, check the build date from the registry
 	CString strRegDate = GetString(REG_BUILD, _T(""));
 	CString strBuildDate = __DATE__;
 	if (!strRegDate.IsEmpty() && strRegDate != strBuildDate)
@@ -154,7 +180,7 @@ BOOL CCalques3DApp::InitInstance()
 				_T("Warning !"),MB_ICONWARNING|MB_OK);
 		WriteString(REG_BUILD,strBuildDate);
 		CleanState(CCalques3DApp::g_strRegistryBase);
-	}
+	}*/
 
 	// If appropriate, load the information form the specify user profile
 	SetRegistryBase (REG_SESSION);
@@ -246,6 +272,13 @@ BOOL CCalques3DApp::InitInstance()
 		RUNTIME_CLASS(CCalques3DDoc),
 		RUNTIME_CLASS(CChildFrame), // custom MDI child frame
 		RUNTIME_CLASS(CViewDepend));
+	AddDocTemplate(pDocTemplate);
+
+	pDocTemplate = new CCalques3DDocTemplate(
+		IDR_VIEWRENDERING,
+		RUNTIME_CLASS(CCalques3DDoc),
+		RUNTIME_CLASS(CChildFrame), // custom MDI child frame
+		RUNTIME_CLASS(CView3DRender));
 	AddDocTemplate(pDocTemplate);
 
 	// create main MDI Frame window
@@ -480,9 +513,9 @@ void CCalques3DApp::LoadCustomState ()
 	//TPref::strProfileDesc = GetSectionString(REG_PROFILE,REG_PROFILEDES, TPref::strProfileDesc);
 
 	//SetRegistryBase (CCalques3DApp::g_strRegistryBase);
-	TPref::DefRep = GetSectionInt(_T("Universe"),_T("DefRep"), TPref::DefRep);
-	TPref::Magnet = GetSectionInt(_T("Universe"),_T("Magnet"), TPref::Magnet);
-	TPref::Synchron = GetSectionInt(_T("Universe"),_T("Synchron"), TPref::Synchron);
+	TPref::TUniv.nDefRep = GetSectionInt(_T("Universe"),_T("DefRep"), TPref::TUniv.nDefRep);
+	TPref::TUniv.bMagnet = GetSectionInt(_T("Universe"),_T("Magnet"), TPref::TUniv.bMagnet);
+	TPref::TUniv.bSynchron = GetSectionInt(_T("Universe"),_T("Synchron"), TPref::TUniv.bSynchron);
 	TPref::GrayedHidden = GetSectionInt(_T("Universe"),_T("GrayHidden"), TPref::GrayedHidden);
 	TPref::bMacroLoading = GetSectionInt(_T("Macro"),_T("UserLoading"), TPref::bMacroLoading);
 	BOOL brest = GetSectionObject(_T("Macro"),_T("UserMacros"),TPref::TMacroList);
@@ -504,9 +537,9 @@ void CCalques3DApp::SaveCustomState ()
 	//WriteSectionString(REG_PROFILE,REG_PROFILEDES, TPref::strProfileDesc);
 
 	SetRegistryBase (CCalques3DApp::g_strRegistryBase);
-	WriteSectionInt(_T("Universe"),_T("DefRep"), TPref::DefRep);
-	WriteSectionInt(_T("Universe"),_T("Magnet"), TPref::Magnet);
-	WriteSectionInt(_T("Universe"),_T("Synchron"), TPref::Synchron);
+	WriteSectionInt(_T("Universe"),_T("DefRep"), TPref::TUniv.nDefRep);
+	WriteSectionInt(_T("Universe"),_T("Magnet"), TPref::TUniv.bMagnet);
+	WriteSectionInt(_T("Universe"),_T("Synchron"), TPref::TUniv.bSynchron);
 	WriteSectionInt(_T("Universe"),_T("GrayHidden"), TPref::GrayedHidden);
 	//WriteInt (_T("GradientCaption"), CBCGSizingControlBar::IsCaptionGradient ());
 	//WriteInt (_T("TabFlatBorders"), m_bTabFlatBorders);
