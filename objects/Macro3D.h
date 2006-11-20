@@ -25,7 +25,7 @@ public:
 	CMacro3D();
 	virtual ~CMacro3D();
 
-	virtual unsigned long isA() const { return TMacro3DClass; }
+	virtual DWORD isA() const { return TMacro3DClass; }
 
 	virtual void Serialize( CArchive& ar );
 	int SetProperties(CxObject3DSet *pSet=NULL);

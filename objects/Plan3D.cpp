@@ -242,7 +242,7 @@ UINT CPlan3D::IsPerpendicularTo(CObject3D *pObj)
         CVector4 pV2 = pPl->VecNorm;
 
         FCoord pVC = pV1 * pV2;
-        return (FCZero(pVC)) ? VER_PAR_ANALYTIC : VER_PAR_NO ;
+        return (FCZero(pVC)) ? VER_PERP_ANALYTIC : VER_PERP_NO ;
     }
     if (pDr) return pDr->IsPerpendicularTo(this);
 
@@ -277,7 +277,7 @@ CRgn* CPlan3D::InvalideRect()
 #define MRG_ZERO 1.0e-8
 
 
-int  CPlan3D::CalculConceptuel()
+UINT  CPlan3D::CalculConceptuel()
 {
     if (P2 && P3)
         bValidate = ((P1->bValidate) && (P2->bValidate) && (P3->bValidate));
@@ -743,7 +743,7 @@ void CPlan3D::Draw(CDC* pDC,CVisualParam *mV,BOOL bSm)
     CVector4    VisuNorm= vispt.Concept_pt - origin;
     CPlan3D vispl(&vispt,VisuNorm);
 
-    int hh = vispl.CalculConceptuel();
+    UINT hh = vispl.CalculConceptuel();
     int theside=-1,howmuch=-4;
     FCoord base;
     if (!hh)
@@ -791,7 +791,7 @@ void CPlan3D::Draw(CDC* pDC,CVisualParam *mV,BOOL bSm)
         CSegment3D p2p3(&Ap2,&Ap3);
 
         CPointInterDP3D Hp2p3(&p2p3,mV->H);
-        int r = Hp2p3.CalculConceptuel();
+        UINT r = Hp2p3.CalculConceptuel();
         if (!r)
          {
             CVector4 A(Hp2p3.Concept_pt);
@@ -819,9 +819,9 @@ void CPlan3D::Draw(CDC* pDC,CVisualParam *mV,BOOL bSm)
         CDroiteInterPP3D d2(this,mV->G);
         CDroiteInterPP3D d3(this,mV->H);
 
-        int r1 = d1.CalculConceptuel();
-        int r2 = d2.CalculConceptuel();
-        int r3 = d3.CalculConceptuel();
+        UINT r1 = d1.CalculConceptuel();
+        UINT r2 = d2.CalculConceptuel();
+        UINT r3 = d3.CalculConceptuel();
 
         CPoint3D Ap1(p1);
         CPoint3D Ap2(p2);
@@ -1190,14 +1190,14 @@ CxObject3DSet* CPlanPerp3D::GetParents()
     return list;
 }
 
-int  CPlanPerp3D::CalculConceptuel()
+UINT  CPlanPerp3D::CalculConceptuel()
 {
     if (P1 && D)
         bValidate = ((P1->bValidate) && (D->bValidate));
     if (!bValidate)
         return ERR_NOPLAN;
     VecNorm = D->CDirVector;
-    int ret = CPlan3D::CalculConceptuel();
+    UINT ret = CPlan3D::CalculConceptuel();
 
     if (bValidate)
      {
@@ -1404,7 +1404,7 @@ BOOL CPolygon3D::IsPointInside(CVector4& pt,BOOL bLim/*=TRUE*/)
         pSeg.CalculConceptuel();
         pDem.CalculConceptuel();
         CPointInterDD3D pPt(&pSeg,&pDem);
-        int h = pPt.CalculConceptuel();
+        UINT h = pPt.CalculConceptuel();
         if (!h)
             pt = pPt.Concept_pt;
     }
@@ -1554,7 +1554,7 @@ int CPolygon3D::CalculCentroid()
     return 0;
 }
 
-int  CPolygon3D::CalculConceptuel()
+UINT  CPolygon3D::CalculConceptuel()
 {
     int nb = m_pPointSet.GetSize();
     if (nb <3)

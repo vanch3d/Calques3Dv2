@@ -310,7 +310,7 @@ FCoord CCylinder3D::DistPtToLine(CVector4 pt,CVector4 src,CVector4 dir)
     return dis;
 }
 
-int  CCylinder3D::CalculConceptuel()
+UINT  CCylinder3D::CalculConceptuel()
 {
     bValidate = ((P1->bValidate) && (P2->bValidate) && (Rad->bValidate));
     if (!bValidate)
@@ -501,7 +501,7 @@ void CCylinder3D::Draw(CDC* pDC,CVisualParam *mV,BOOL bSm)
     CVector4 origin(0,0,0,1);
     CVector4 VisuNorm= vispt.Concept_pt - origin;
     CPlan3D vispl(&vispt,VisuNorm);
-    int hh = vispl.CalculConceptuel();
+    UINT hh = vispl.CalculConceptuel();
 
     if (C1)
     {
@@ -614,7 +614,7 @@ void CCylinder3D::DrawRetro(CDC*,CVisualParam *vp)
     pl.CalculConceptuel();
 /* NVL
     CEllipse3D ell(0,this,&pl);
-    int ret = ell.CalculConceptuel();
+    UINT ret = ell.CalculConceptuel();
     if (!ret)
      {
         ell.ObjectShape->AShape = 0;
@@ -789,7 +789,7 @@ CObject3D* CCone3D::CopyObject()
     return NULL;
 }
 
-int  CCone3D::CalculConceptuel()
+UINT  CCone3D::CalculConceptuel()
 {
     return 0;
 }

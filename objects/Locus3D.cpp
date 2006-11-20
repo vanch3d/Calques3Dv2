@@ -229,7 +229,7 @@ CRgn* CLocus3D::InvalideRect()
     return NULL;
 }
 
-int  CLocus3D::CalculConceptuel()
+UINT  CLocus3D::CalculConceptuel()
 {
     bValidate = (m_pSource->bValidate && m_pLocus->bValidate);
     if (!bValidate)
@@ -359,7 +359,7 @@ int  CLocus3D::CalculConceptuel()
                     CObject3D *pObj = pDirectList.GetAt(k);
                     if (!pObj) continue;
                     if (DYNAMIC_DOWNCAST(CLocus3D,pObj)) continue;
-                    int res = pObj->CalculConceptuel();
+                    UINT res = pObj->CalculConceptuel();
                     if (res)
                     {
                         //bValidate = FALSE;
@@ -405,7 +405,7 @@ int  CLocus3D::CalculConceptuel()
                 CObject3D *pObj = pDirectList.GetAt(j);
                 if (!pObj) continue;
                 if (DYNAMIC_DOWNCAST(CLocus3D,pObj)) continue;
-                int res = pObj->CalculConceptuel();
+                UINT res = pObj->CalculConceptuel();
                 if (res)
                 {
                     //bValidate = FALSE;

@@ -80,9 +80,9 @@ void CVector3D::CalculVisuel(CVisualParam *vp)
 	CSegment3D::CalculVisuel(vp);
 }
 
-int  CVector3D::CalculConceptuel()
+UINT  CVector3D::CalculConceptuel()
 {
-	int res = CSegment3D::CalculConceptuel();
+	UINT res = CSegment3D::CalculConceptuel();
 	return 0;
 }
 

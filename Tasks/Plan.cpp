@@ -57,7 +57,7 @@ unsigned CPlan3DTask::GetHelpResID()
 }
 
 
-unsigned long CPlan3DTask::GetMask()
+DWORD CPlan3DTask::GetMask()
 {
 	return TAllPointClass;
 }
@@ -133,7 +133,7 @@ void CPlan3DTask::OnMouseMove(UINT, CPoint thepoint)
 void CPlan3DTask::CreateObject3D()
 {
 	CPlan3D* temp = new CPlan3D(ptA,ptB,ptC);
-	int a = temp->CalculConceptuel();
+	UINT a = temp->CalculConceptuel();
 	if (a)
 	{
 		temp->HandleObjectError(a,TRUE);
@@ -173,7 +173,7 @@ void CCercle3DTask::CreateObject3D()
 	else
 		temp = new CCercle3D(ptA,ptB,ptC);
 	if (!temp) return;
-	int a = temp->CalculConceptuel();
+	UINT a = temp->CalculConceptuel();
 	if (a)
 	{
 		temp->HandleObjectError(a,TRUE);
@@ -205,7 +205,7 @@ void CCylindreTask::CreateObject3D()
 {
 	CCylinder3D* temp= new CCylinder3D(ptA,ptB,ptC);
 	if (!temp) return;
-	int a = temp->CalculConceptuel();
+	UINT a = temp->CalculConceptuel();
 	if (a)
 	{
 		temp->HandleObjectError(a,TRUE);
@@ -243,7 +243,7 @@ void CTranslatTask::CreateObject3D()
 {
 	CPointTranslat3D* temp= new CPointTranslat3D(ptA,ptB,ptC);
 	if (!temp) return;
-	int a = temp->CalculConceptuel();
+	UINT a = temp->CalculConceptuel();
 	if (a)
 	{
 		temp->HandleObjectError(a,TRUE);

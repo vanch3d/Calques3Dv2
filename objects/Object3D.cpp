@@ -184,6 +184,8 @@ void CObject3D::Serialize( CArchive& ar )
     }
     else
     {
+		UINT schema = ar.GetObjectSchema();
+
         ar >> bValidate;
         ar >> bVisible;
         ar >> bMarked;
@@ -316,7 +318,7 @@ CString CObject3D::GetObjectName()
 /// Get the identifier representing the type of the object.
 /// See TObject3DClass and others identifiers
 //////////////////////////////////////////////////////////////////////
-unsigned long CObject3D::isA() const
+DWORD CObject3D::isA() const
 {
     return TObject3DClass;
 }
@@ -342,9 +344,9 @@ unsigned long CObject3D::isA() const
 /// \param mask A bitwise combination of object identifiers
 /// \return     TRUE if this object fits the mask, FALSE otherwise.
 //////////////////////////////////////////////////////////////////////
-BOOL CObject3D::MaskObject(unsigned long mask)
+BOOL CObject3D::MaskObject(DWORD mask)
 {
-    unsigned long objID = isA();
+    DWORD objID = isA();
     unsigned int hiMask = HIWORD(mask);
     unsigned int loMask = LOWORD(mask);
     unsigned int hiID = HIWORD(objID);
@@ -577,22 +579,46 @@ BOOL CObject3D::operator < ( const CObject3D &other ) const
     return TRUE;
 }
 
+//////////////////////////////////////////////////////////////////////
+/// Verify if this object is analytically identical to another one.
+/// @param other	A reference to the object to compare with this one.
+/// @return			TRUE if both object are analytically the same, FALSE otherwise
+//////////////////////////////////////////////////////////////////////
 BOOL CObject3D::IsEqual(CObject3D &other)
 {
     return FALSE;
 }
 
+//////////////////////////////////////////////////////////////////////
+/// Verify if this object is analytically parallel to another one.
+/// @param pObj		A pointer to the object to compare with this one.
+/// @return			The code for the property verification
+/// @see \ref C3DCodes_Verif
+//////////////////////////////////////////////////////////////////////
 UINT CObject3D::IsParallelTo(CObject3D *pObj)
 {
     return VER_ERROR;
 }
 
+//////////////////////////////////////////////////////////////////////
+/// Verify if this object is analytically align with two other ones.
+/// @param pObj1	A pointer to the first object to compare with this one.
+/// @param pObj2	A pointer to the second object to compare with this one.
+/// @return			The code for the property verification
+/// @see \ref C3DCodes_Verif
+//////////////////////////////////////////////////////////////////////
 UINT CObject3D::IsAlignedWith(CObject3D *pObj1,CObject3D *pObj2)
 {
     return VER_ERROR;
 }
 
 
+//////////////////////////////////////////////////////////////////////
+/// Verify if this object is analytically perpendicular to another one.
+/// @param pObj		A pointer to the object to compare with this one.
+/// @return			The code for the property verification
+/// @see \ref C3DCodes_Verif
+//////////////////////////////////////////////////////////////////////
 UINT CObject3D::IsPerpendicularTo(CObject3D *pObj)
 {
     return VER_ERROR;
@@ -774,14 +800,6 @@ void CObject3D::HandleObjectError(int errNo,BOOL bShow)
     //Geom3DApp->ShowErrorMsg(errNo);
 }
 
-CString CObject3D::DrawSymbolic()
-{
-    CString mstr;
-    //mstr.Format(_T("****"));
-    mstr.Empty();
-    return mstr;
-}
-
 void CObject3D::GetRange(CVector4 &min,CVector4 &max)
 {
     CVector4 pt(0,0,0,0);
@@ -791,11 +809,85 @@ void CObject3D::GetRange(CVector4 &min,CVector4 &max)
 
 
 
+
+
+
+
+UINT CObject3D::CalculConceptuel()
+{
+    return 0;
+}
+
+void CObject3D::CalculVisuel(CVisualParam *mV)
+{
+}
+
+
+
+//////////////////////////////////////////////////////////////////////
+// Static Functions
+//////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////
+/// Method CObject3D::DoSegRgn
+///
+/// @param p1	The location of the first end of the segment
+/// @param p2	The location of the second end of the segment
+/// @return A pointer to the region defined by the two points
+//////////////////////////////////////////////////////////////////////
+CRgn* CObject3D::DoSegRgn(CPoint p1,CPoint p2)
+{
+    CPoint pt[4] =
+            {   CPoint(p1.x-TPref::TUniv.nDefPres,p1.y-TPref::TUniv.nDefPres),
+                CPoint(p2.x-TPref::TUniv.nDefPres,p2.y-TPref::TUniv.nDefPres),
+                CPoint(p2.x+TPref::TUniv.nDefPres,p2.y+TPref::TUniv.nDefPres),
+                CPoint(p1.x+TPref::TUniv.nDefPres,p1.y+TPref::TUniv.nDefPres)
+            };
+
+    CRgn *myReg = new CRgn();
+    BOOL ret = myReg->CreatePolygonRgn(pt,4,ALTERNATE);
+
+    //return myReg;
+    DWORD dd = GetLastError();
+    return myReg;
+}
+
+
+//----------------------------------------------------------------------
+// Display Functions
+//----------------------------------------------------------------------
+
+//////////////////////////////////////////////////////////////////////
+/// Method CObject3D::Draw
+///
+/// @param pDC	A pointer to the device-context associated with the drawing view
+/// @param vp	A pointer to the visual parameters of the view
+/// @param bSm	TRUE if the object is displayed in a reduced form, FALSE otherwise
+//////////////////////////////////////////////////////////////////////
+void CObject3D::Draw(CDC* pDC,CVisualParam *vp,BOOL bSm) {}
+
+//////////////////////////////////////////////////////////////////////
+/// Method CObject3D::DrawRetro
+///
+/// @param pDC	A pointer to the device-context associated with the drawing view
+/// @param vp	A pointer to the visual parameters of the view
+//////////////////////////////////////////////////////////////////////
+void CObject3D::DrawRetro(CDC *pDC,CVisualParam *vp) {}
+
+//////////////////////////////////////////////////////////////////////
+/// Method CObject3D::DrawSelected
+///
+/// @param pDC	A pointer to the device-context associated with the drawing view
+/// @param vp	A pointer to the visual parameters of the view
+//////////////////////////////////////////////////////////////////////
+void CObject3D::DrawSelected(CDC* pDC,CVisualParam *vp) {}
+
 //////////////////////////////////////////////////////////////////////
 /// Method CObject3D::DrawHistorique
 ///
-/// \param %PARAMNAME% (%PARAMTYPE%)    todo
-/// \return HTREEITEM
+/// \param mListCtrl	A reference to the Tree List Control
+/// \param pParent		A handler to the parent tree item for this object
+/// \return A handler to the tree item associated with this object.
 //////////////////////////////////////////////////////////////////////
 HTREEITEM CObject3D::DrawHistorique(CTreeCtrl& mListCtrl,HTREEITEM pParent)
 {
@@ -846,161 +938,42 @@ HTREEITEM CObject3D::DrawHistorique(CTreeCtrl& mListCtrl,HTREEITEM pParent)
 }
 
 //////////////////////////////////////////////////////////////////////
-/// Method CObject3D::DrawDepGraphNode
+/// Method CObject3D::DrawSymbolic
 ///
-/// \param %PARAMNAME% (%PARAMTYPE%)    todo
-/// \return void
+/// @return A String containing the symbolic representation of the object
+/// @todo	Add a parameter for identifying the export format (currently only COCOA) and implements
+///			the other formats (eg DOT) locally with each object.
 //////////////////////////////////////////////////////////////////////
-void CObject3D::DrawDepGraphNode(CDC* pDC,CImageList *pImgList/*=NULL*/,
-                                 CObject3D *pSrc/*=NULL*/,int nTrace/*=DIS_GRAPH_NONE*/)
+CString CObject3D::DrawSymbolic()
 {
+    CString mstr;
+    //mstr.Format(_T("****"));
+    mstr.Empty();
+    return mstr;
 }
 
 //////////////////////////////////////////////////////////////////////
-/// Method CObject3D::DrawGraphArrow
+/// Method CObject3D::DrawMathPad
 ///
-/// \param %PARAMNAME% (%PARAMTYPE%)    todo
-/// \return void
+/// @param pDC	A pointer to the device-context associated with the drawing view
 //////////////////////////////////////////////////////////////////////
-void CObject3D::DrawGraphArrow(CDC *pDC,CPoint ptStart, CPoint ptEnd, int nArrowSize ,int nArrowlength,CBrush* pbrush)
-{
-    CPoint points[4];
-    //CRgn rgn;
-
-    int dx=0,dy=0,dx1,dy1;
-    CRect rect(ptStart,ptEnd);
-        //rect.NormalizeRect();
-    CRect saverect=rect;
-    long r2=(rect.top-rect.bottom)*(rect.top-rect.bottom)+(rect.left-rect.right)*(rect.left-rect.right);
-    int l=(int)sqrt((double)r2);
-    if (l)
-    {
-        dy=(nArrowlength*(rect.top-rect.bottom))/l;
-        dx=(nArrowlength*(rect.left-rect.right))/l;
-        dy1=(nArrowlength*(rect.top-rect.bottom))/l;
-        dx1=(nArrowlength*(rect.left-rect.right))/l;
-    }
-    if (rect.top > rect.bottom)
-    {
-        //rect.top -= m_logpen.lopnWidth.y / 2;
-        rect.top -= abs(dy1);
-        //rect.bottom += (m_logpen.lopnWidth.y + 1) / 2;
-        rect.bottom += abs(dy);
-    }
-    else
-    {
-        //rect.top += (m_logpen.lopnWidth.y + 1) / 2;
-        rect.top += abs(dy1);
-        //rect.bottom -= m_logpen.lopnWidth.y / 2;
-        rect.bottom -=abs(dy);
-    }
-    if (rect.left > rect.right)
-    {
-        //rect.left -= m_logpen.lopnWidth.x / 2;
-        rect.left -=abs(dx1);
-        //rect.right += (m_logpen.lopnWidth.x + 1) / 2;
-        rect.right +=abs(dx);
-    }
-    else
-    {
-        //rect.left += (m_logpen.lopnWidth.x + 1) / 2;
-        rect.left +=abs(dx1);
-        //rect.right -= m_logpen.lopnWidth.x / 2;
-        rect.right -=abs(dx);
-    }
-
-    //actually a triagle
-    points[0]=saverect.BottomRight();
-    points[1]=points[2]=rect.BottomRight();
-    points[1].x+=nArrowSize*dy/nArrowlength;
-    points[1].y-=nArrowSize*dx/nArrowlength;
-    points[2].x-=nArrowSize*dy/nArrowlength;
-    points[2].y+=nArrowSize*dx/nArrowlength;
-    pDC->Polygon(points,3);
-
-/*  if (sae)
-    {
-        points[0]=saverect.TopLeft();
-        points[1]=points[2]=rect.TopLeft();
-        points[1].x+=arrowSize*dy1/arrowlength;
-        points[1].y-=arrowSize*dx1/arrowlength;
-        points[2].x-=arrowSize*dy1/arrowlength;
-        points[2].y+=arrowSize*dx1/arrowlength;
-        pDC->Polygon(points,3);
-    }*/
-
-    //rgn.CreatePolygonRgn(points, 3, ALTERNATE);
-    //pDC->FillRgn(&rgn,pbrush);
-}
-
+void CObject3D::DrawMathPad(CDC*) {}
 
 //////////////////////////////////////////////////////////////////////
-/// Method CObject3D::DrawDepGraphLink
+/// Method CObject3D::Draw3DRendering
 ///
-/// \param %PARAMNAME% (%PARAMTYPE%)    todo
-/// \return void
+/// @todo	Add the OpenGL representastion for all objects
 //////////////////////////////////////////////////////////////////////
-void CObject3D::DrawDepGraphLink(CDC* pDC,CObject3D *pSrc/*=NULL*/,CObject3D *pDest/*=NULL*/,
-                                 int nTrace/*=DIS_GRAPH_NONE*/)
-{
-    if (!pSrc || !pDest) return;
-    if (!pDest->bDrawInGraph) return;
-
-    CRect rParRect = pDest->rGraphRect;
-    CPoint locPt(pSrc->rGraphRect.CenterPoint().x,pSrc->rGraphRect.bottom);
-    CPoint parPt(rParRect.CenterPoint().x,rParRect.top);
-
-    COLORREF mclr = RGB(128,128,128);
-    if (nTrace==GRAPH_PARENT || nTrace==GRAPH_BASE)
-        mclr = RGB(0,128,0);
-    else if (nTrace==GRAPH_CHILDREN)
-        mclr = RGB(128,0,0);
-    else if (nTrace==GRAPH_FULL)
-        mclr = RGB(0,0,255);
-
-    CPen mTracePenV(PS_DOT,1,RGB(128,128,128));
-    CPen mTracePenVT(PS_SOLID,1,mclr /*RGB(128,128,128)*/);
-    CPen mTracePenI(PS_DOT,1,RGB(255,0,0));
-    CPen mTracePenIT(PS_SOLID,1,RGB(255,0,0));
-    CPen *oldP = NULL;
-
-    if (nTrace)
-    {
-        if (pSrc->bValidate)
-            oldP = pDC->SelectObject(&mTracePenVT);
-        else
-            oldP = pDC->SelectObject(&mTracePenIT);
-    }
-    else
-    {
-        if (pSrc->bValidate)
-            oldP = pDC->SelectObject(&mTracePenV);
-        else
-            oldP = pDC->SelectObject(&mTracePenI);
-    }
-    CPoint locSt = locPt;
-    locPt+=CSize(0,8);
-    pDC->MoveTo(locPt);
-    pDC->LineTo(parPt);
-
-    if (oldP) pDC->SelectObject(oldP );
-    if (pSrc->bValidate)
-        oldP = pDC->SelectObject(&mTracePenVT);
-    else
-        oldP = pDC->SelectObject(&mTracePenIT);
-
-    CBrush mbrush(mclr);//::GetSysColor(COLOR_3DLIGHT));
-    CBrush *oldb= pDC->SelectObject(&mbrush);
-    DrawGraphArrow(pDC,locPt,locSt,4,8,NULL);
-    pDC->SelectObject(oldb);
-    if (oldP) pDC->SelectObject(oldP );
-}
+void CObject3D::Draw3DRendering() {}
 
 //////////////////////////////////////////////////////////////////////
 /// Method CObject3D::DrawDepGraph
 ///
-/// \param %PARAMNAME% (%PARAMTYPE%)    todo
-/// \return void
+/// @param pDC			A pointer to the device-context associated with the drawing view
+/// @param pImgList		A pointer to the list of image containing the object's icons
+/// @param nTrace		The nature of the dependence graph to highlight (see TGraphType)
+/// @param bDrawNode	TRUE if this node is to be drawn, FALSE otherwise
+/// @param bDrawLink	TRUE if the link(s) associated with this node are drawn, FALSE otherwise
 //////////////////////////////////////////////////////////////////////
 void CObject3D::DrawDepGraph(CDC* pDC,CImageList *pImgList,int nTrace,BOOL bDrawNode,BOOL bDrawLink)
 {
@@ -1009,20 +982,21 @@ void CObject3D::DrawDepGraph(CDC* pDC,CImageList *pImgList,int nTrace,BOOL bDraw
     {
         if (!nTrace)
         {
-                if (IsSelected())
-    {
-        CRect focRect = rGraphRect;
-        if (focRect != CRect(-1,-1,-1,-1))
-        {
-            focRect.InflateRect(-1,-1);
-            CBrush mbr(RGB(192,192,192));
-            CBrush *oldB = pDC->SelectObject(&mbr);
-            pDC->Rectangle(focRect);
-            pDC->SelectObject(oldB );
-            //pDC->DrawFocusRect(focRect);
-        }
-    }
-    CString mstr = GetObjectName();
+			if (IsSelected())
+			{
+				CRect focRect = rGraphRect;
+				if (focRect != CRect(-1,-1,-1,-1))
+				{
+					focRect.InflateRect(-1,-1);
+					CBrush mbr(RGB(192,192,192));
+					CBrush *oldB = pDC->SelectObject(&mbr);
+					pDC->Rectangle(focRect);
+					pDC->SelectObject(oldB );
+					//pDC->DrawFocusRect(focRect);
+				}
+			 }
+		
+			CString mstr = GetObjectName();
 
             //CString strDepth;
             //strDepth.Format(_T("%d  "),nDepth);
@@ -1049,13 +1023,13 @@ void CObject3D::DrawDepGraph(CDC* pDC,CImageList *pImgList,int nTrace,BOOL bDraw
                     oldC = pDC->SetTextColor(RGB(128,128,128));
             }
             else
-                    oldC = pDC->SetTextColor(RGB(255,0,0));
+				oldC = pDC->SetTextColor(RGB(255,0,0));
             int oldM = pDC->SetBkMode(TRANSPARENT);
             pDC->DrawText(mstr,rText,DT_END_ELLIPSIS|DT_CENTER|DT_WORDBREAK|DT_SINGLELINE );
             pDC->SetBkMode(oldM);
             pDC->SetTextColor(oldC);
         }
-        else
+        else //nTrace==0
         {
             COLORREF mclr = RGB(0,0,255);
             if (nTrace==GRAPH_PARENT || nTrace==GRAPH_BASE)
@@ -1137,49 +1111,238 @@ void CObject3D::DrawDepGraph(CDC* pDC,CImageList *pImgList,int nTrace,BOOL bDraw
 }
 
 //////////////////////////////////////////////////////////////////////
-/// Method CObject3D::Draw
+/// Method CObject3D::DrawDepGraphLink
 ///
-/// \param %PARAMNAME% (%PARAMTYPE%)    todo
-/// \return void
+/// @param pDC		A pointer to the device-context associated with the drawing view
+/// @param pSrc		A pointer to the initial object in the link
+/// @param pDest	A pointer to the destination object in the link
+/// @param nTrace	The nature of the dependence graph to highlight (see TGraphType)
 //////////////////////////////////////////////////////////////////////
-void CObject3D::Draw(CDC* pDC,CVisualParam *vp,BOOL bSm)
+void CObject3D::DrawDepGraphLink(CDC* pDC,CObject3D *pSrc/*=NULL*/,CObject3D *pDest/*=NULL*/,
+                                 int nTrace/*=DIS_GRAPH_NONE*/)
 {
+    if (!pSrc || !pDest) return;
+    if (!pDest->bDrawInGraph) return;
+
+    CRect rParRect = pDest->rGraphRect;
+    CPoint locPt(pSrc->rGraphRect.CenterPoint().x,pSrc->rGraphRect.bottom);
+    CPoint parPt(rParRect.CenterPoint().x,rParRect.top);
+
+    COLORREF mclr = RGB(128,128,128);
+    if (nTrace==GRAPH_PARENT || nTrace==GRAPH_BASE)
+        mclr = RGB(0,128,0);
+    else if (nTrace==GRAPH_CHILDREN)
+        mclr = RGB(128,0,0);
+    else if (nTrace==GRAPH_FULL)
+        mclr = RGB(0,0,255);
+
+    CPen mTracePenV(PS_DOT,1,RGB(128,128,128));
+    CPen mTracePenVT(PS_SOLID,1,mclr /*RGB(128,128,128)*/);
+    CPen mTracePenI(PS_DOT,1,RGB(255,0,0));
+    CPen mTracePenIT(PS_SOLID,1,RGB(255,0,0));
+    CPen *oldP = NULL;
+
+    if (nTrace)
+    {
+        if (pSrc->bValidate)
+            oldP = pDC->SelectObject(&mTracePenVT);
+        else
+            oldP = pDC->SelectObject(&mTracePenIT);
+    }
+    else
+    {
+        if (pSrc->bValidate)
+            oldP = pDC->SelectObject(&mTracePenV);
+        else
+            oldP = pDC->SelectObject(&mTracePenI);
+    }
+    CPoint locSt = locPt;
+    locPt+=CSize(0,8);
+    pDC->MoveTo(locPt);
+    pDC->LineTo(parPt);
+
+    if (oldP) pDC->SelectObject(oldP );
+    if (pSrc->bValidate)
+        oldP = pDC->SelectObject(&mTracePenVT);
+    else
+        oldP = pDC->SelectObject(&mTracePenIT);
+
+    CBrush mbrush(mclr);//::GetSysColor(COLOR_3DLIGHT));
+    CBrush *oldb= pDC->SelectObject(&mbrush);
+    DrawGraphArrow(pDC,locPt,locSt,4,8,NULL);
+    pDC->SelectObject(oldb);
+    if (oldP) pDC->SelectObject(oldP );
 }
 
-int CObject3D::CalculConceptuel()
-{
-    return 0;
-}
-
-void CObject3D::CalculVisuel(CVisualParam *mV)
-{
-}
-
-
 
 //////////////////////////////////////////////////////////////////////
-// Static Functions
-//////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////
-/// Method CObject3D::DoSegRgn
+/// Method CObject3D::DrawDepGraphNode
 ///
-/// \param %PARAMNAME% (%PARAMTYPE%)    todo
-/// \return CRgn*
+/// @param pDC		A pointer to the device-context associated with the drawing view
+/// @param pImgList	A pointer to the list of image containing the object's icons
+/// @param pSrc		A pointer to the source object
+/// @param nTrace	The nature of the dependence graph to highlight (see TGraphType)
+/// @deprecated Not in use anymore, see ::DrawDepGraph).
 //////////////////////////////////////////////////////////////////////
-CRgn* CObject3D::DoSegRgn(CPoint p1,CPoint p2)
+void CObject3D::DrawDepGraphNode(CDC* pDC,CImageList *pImgList/*=NULL*/,
+								 CObject3D *pSrc/*=NULL*/,int nTrace/*=DIS_GRAPH_NONE*/) {}
+
+//////////////////////////////////////////////////////////////////////
+/// Method CObject3D::DrawGraphArrow
+///
+/// @param pDC			A pointer to the device-context associated with the drawing view
+/// @param ptStart		The starting point for the arrow
+/// @param ptEnd		The end point for the arrow
+/// @param nArrowSize	The size of the arrow
+/// @param nArrowlength	The length of the arrow
+/// @param pbrush		A pointer to the burhs to use of drawing the arrow
+//////////////////////////////////////////////////////////////////////
+void CObject3D::DrawGraphArrow(CDC *pDC,CPoint ptStart, CPoint ptEnd, int nArrowSize ,int nArrowlength,CBrush* pbrush)
 {
-    CPoint pt[4] =
-            {   CPoint(p1.x-TPref::TUniv.nDefPres,p1.y-TPref::TUniv.nDefPres),
-                CPoint(p2.x-TPref::TUniv.nDefPres,p2.y-TPref::TUniv.nDefPres),
-                CPoint(p2.x+TPref::TUniv.nDefPres,p2.y+TPref::TUniv.nDefPres),
-                CPoint(p1.x+TPref::TUniv.nDefPres,p1.y+TPref::TUniv.nDefPres)
-            };
+    CPoint points[4];
+    //CRgn rgn;
 
-    CRgn *myReg = new CRgn();
-    BOOL ret = myReg->CreatePolygonRgn(pt,4,ALTERNATE);
+    int dx=0,dy=0,dx1,dy1;
+    CRect rect(ptStart,ptEnd);
+        //rect.NormalizeRect();
+    CRect saverect=rect;
+    long r2=(rect.top-rect.bottom)*(rect.top-rect.bottom)+(rect.left-rect.right)*(rect.left-rect.right);
+    int l=(int)sqrt((double)r2);
+    if (l)
+    {
+        dy=(nArrowlength*(rect.top-rect.bottom))/l;
+        dx=(nArrowlength*(rect.left-rect.right))/l;
+        dy1=(nArrowlength*(rect.top-rect.bottom))/l;
+        dx1=(nArrowlength*(rect.left-rect.right))/l;
+    }
+    if (rect.top > rect.bottom)
+    {
+        //rect.top -= m_logpen.lopnWidth.y / 2;
+        rect.top -= abs(dy1);
+        //rect.bottom += (m_logpen.lopnWidth.y + 1) / 2;
+        rect.bottom += abs(dy);
+    }
+    else
+    {
+        //rect.top += (m_logpen.lopnWidth.y + 1) / 2;
+        rect.top += abs(dy1);
+        //rect.bottom -= m_logpen.lopnWidth.y / 2;
+        rect.bottom -=abs(dy);
+    }
+    if (rect.left > rect.right)
+    {
+        //rect.left -= m_logpen.lopnWidth.x / 2;
+        rect.left -=abs(dx1);
+        //rect.right += (m_logpen.lopnWidth.x + 1) / 2;
+        rect.right +=abs(dx);
+    }
+    else
+    {
+        //rect.left += (m_logpen.lopnWidth.x + 1) / 2;
+        rect.left +=abs(dx1);
+        //rect.right -= m_logpen.lopnWidth.x / 2;
+        rect.right -=abs(dx);
+    }
 
-    //return myReg;
-    DWORD dd = GetLastError();
-    return myReg;
+    //actually a triagle
+    points[0]=saverect.BottomRight();
+    points[1]=points[2]=rect.BottomRight();
+    points[1].x+=nArrowSize*dy/nArrowlength;
+    points[1].y-=nArrowSize*dx/nArrowlength;
+    points[2].x-=nArrowSize*dy/nArrowlength;
+    points[2].y+=nArrowSize*dx/nArrowlength;
+    pDC->Polygon(points,3);
+
+/*  if (sae)
+    {
+        points[0]=saverect.TopLeft();
+        points[1]=points[2]=rect.TopLeft();
+        points[1].x+=arrowSize*dy1/arrowlength;
+        points[1].y-=arrowSize*dx1/arrowlength;
+        points[2].x-=arrowSize*dy1/arrowlength;
+        points[2].y+=arrowSize*dx1/arrowlength;
+        pDC->Polygon(points,3);
+    }*/
+
+    //rgn.CreatePolygonRgn(points, 3, ALTERNATE);
+    //pDC->FillRgn(&rgn,pbrush);
 }
+
+
+/**
+\page CObject3DCodes CObject3D Internal Identifiers
+
+\section C3DCodes_Errors Error Codes
+<table border="0" cellspacing="3" cellpadding="3">
+  <tr><td class="indexkey">Code</td><td class="indexvalue">Description</td></tr>
+  <tr><td class="indexkey"> ERR_SUPPORTOBJECT</td><td class="indexvalue">Some properties result in mis-specification of the support object. Thus, a point on this object cannot be defined.</td></tr>
+  <tr><td class="indexkey"> ERR_NOMIDDLE1</td><td class="indexvalue">Some properties result in segment's mis-specification. Thus, its midpoint cannot be defined.</td></tr>
+  <tr><td class="indexkey"> ERR_NOMIDDLE2</td><td class="indexvalue">Some properties result in mis-specification of one of the points. Thus, their midpoint cannot be defined.</td></tr>
+  <tr><td class="indexkey"> ERR_NOINTER</td><td class="indexvalue">Some properties result in mis-specification of one of the objects. Thus, their intersection cannot be defined.</td></tr>
+  <tr><td class="indexkey"> ERR_DROITEPAR</td><td class="indexvalue">The lines are parallel.</td></tr>
+  <tr><td class="indexkey"> ERR_DROITNOCOPLAN</td><td class="indexvalue">The lines are not in the same plane.</td></tr>
+  <tr><td class="indexkey"> ERR_INTERINSEG</td><td class="indexvalue">The intersection point does not belong to the segment line(s).</td></tr>
+  <tr><td class="indexkey"> ERR_DRPLANPAR</td><td class="indexvalue">The line and the plan are parallel.</td></tr>
+  <tr><td class="indexkey"> ERR_NOSPHERE</td><td class="indexvalue">Some properties result in mis-specification of one of the objects. Thus, the sphere cannot be defined.</td></tr>
+  <tr><td class="indexkey"> ERR_SPHPTSID</td><td class="indexvalue">Both points are identical. Thus, the sphere cannot be defined.</td></tr>
+  <tr><td class="indexkey"> ERR_PTSALIGN</td><td class="indexvalue">The points are aligned.  The object cannot be defined.</td></tr>
+  <tr><td class="indexkey"> ERR_NOPLAN</td><td class="indexvalue">Some properties result in mis-specification of one of the objects. Thus, the plane cannot be defined.</td></tr>
+  <tr><td class="indexkey"> ERR_NODROITE</td><td class="indexvalue">Some properties result in mis-specification of one of the objects. Thus, the line cannot be defined.</td></tr>
+  <tr><td class="indexkey"> ERR_DRPTSID</td><td class="indexvalue">Both points are identical. Thus, the line cannot be defined.</td></tr>
+  <tr><td class="indexkey"> ERR_PLANEPAR</td><td class="indexvalue">Both planes are parallel.</td></tr>
+  <tr><td class="indexkey"> ERR_PTONLINE</td><td class="indexvalue">The point belongs to the line.  Thus, the perpendicular line cannot be defined.</td></tr>
+  <tr><td class="indexkey"> ERR_2SAMEPTS</td><td class="indexvalue">You already selected this point. Please select another one.</td></tr>
+  <tr><td class="indexkey"> ERR_2SAMEDRS</td><td class="indexvalue">You already selected this line. Please select another one.</td></tr>
+  <tr><td class="indexkey"> ERR_2SAMEPLS</td><td class="indexvalue">You already selected this plane. Please select another one.</td></tr>
+  <tr><td class="indexkey"> ERR_NOCERCLE</td><td class="indexvalue">Some properties result in mis-specification of one of the points. Thus, the circle cannot be defined.</td></tr>
+  <tr><td class="indexkey"> ERR_INDEPEND</td><td class="indexvalue">Some parent objects are not defined. Thus, this object cannot be defined.</td></tr>
+  <tr><td class="indexkey"> ERR_CBPTSID</td><td class="indexvalue">Both points of the initial edge are identical. The cube cannot be defined.</td></tr>
+  <tr><td class="indexkey"> ERR_NOCYLIND</td><td class="indexvalue">Some properties result in mis-specification of one of the points. Thus, the .cylinder cannot be defined.</td></tr>
+  <tr><td class="indexkey"> ERR_INTCALC</td><td class="indexvalue">The internal calculus of the point is not determined by external conditions. The point is not defined.</td></tr>
+  <tr><td class="indexkey"> ERR_INTERSPHDR</td><td class="indexvalue">The line and the sphere do not intersect. Their intersection is not defined.</td></tr>
+  <tr><td class="indexkey"> ERR_LOCUS_NOREL</td><td class="indexvalue">There is no relation between the two points. The locus cannot be defined.</td></tr>
+  <tr><td class="indexkey"> ERR_LOCUS_NOPTSUR</td><td class="indexvalue">The command point is not a point on an object. The locus cannot be defined.</td></tr>
+  <tr><td class="indexkey"> ERR_NOLOCUS</td><td class="indexvalue">Some properties result in mis-specification of one of the points..Thus, the locus cannot be defined.</td></tr>
+  <tr><td class="indexkey"> ERR_LOCUS_INTERNAL</td><td class="indexvalue">Some properties are not verified in the relations between the command point and the locus point.. The locus cannot be defined.</td></tr>
+  <tr><td class="indexkey"> ERR_REDEFINE_INGRAPH</td><td class="indexvalue">The object already depends of the target object. Its redefinition cannot be proceeded.</td></tr>
+  <tr><td class="indexkey"> ERR_REDEFINE_PARENTS</td><td class="indexvalue">The selected object is already one of the parent of the target object. Select another one.</td></tr>
+  <tr><td class="indexkey"> ERR_REDEFINE_NOPARENTS</td><td class="indexvalue">The selected object is not one of the parent of the target object. Select another one.</td></tr>
+  <tr><td class="indexkey"> ERR_POLYGON_NOPLANE</td><td class="indexvalue">This point is not in the plane defined by the previous ones. Select another one.</td></tr>
+  <tr><td class="indexkey"> ERR_POLYGON_NOPLANE2</td><td class="indexvalue">One or many of the points are not in the same plane. Thus, the polygon cannot be defined.</td></tr>
+  <tr><td class="indexkey"> ERR_POLYGON_3POINT</td><td class="indexvalue">This polygon is defined by less than 3 points. Thus, the polygon cannot be defined.</td></tr>
+  <tr><td class="indexkey"> ERR_NOPOLYGON</td><td class="indexvalue">Some properties result in mis-specification of one of the objects. Thus, the polygon cannot be defined.</td></tr>
+  <tr><td class="indexkey"> ERR_POLYGON_NOCONVEX</td><td class="indexvalue">This polygon is not convex. Thus, it cannot be defined.</td></tr>
+  <tr><td class="indexkey"> ERR_AMBIGUITY</td><td class="indexvalue">More than one object are detected. Clear the ambiguity by using the contextual menu.</td></tr>
+  </table>
+
+\section C3DCodes_Verif Relation Verification Codes
+<table border="0" cellspacing="3" cellpadding="3">
+  <tr><td class="indexkey">Code</td><td class="indexvalue">Description</td></tr>
+  <tr><td class="indexkey"> VER_ERROR</td>
+		<td class="indexvalue"></td></tr>
+  <tr><td class="indexkey"> VER_PAR_NO</td>
+		<td class="indexvalue"></td></tr>
+  <tr><td class="indexkey"> VER_PAR_ANALYTIC</td>
+		<td class="indexvalue"></td></tr>
+  <tr><td class="indexkey"> VER_PAR_CONSTRUCTION</td>
+		<td class="indexvalue"></td></tr>
+  <tr><td class="indexkey"> VER_PERP_NO</td>
+		<td class="indexvalue"></td></tr>
+  <tr><td class="indexkey"> VER_PERP_ANALYTIC</td>
+		<td class="indexvalue"></td></tr>
+  <tr><td class="indexkey"> VER_PERP_CONSTRUCTION</td>
+		<td class="indexvalue"></td></tr>
+  <tr><td class="indexkey"> VER_BELONG_NO</td>
+		<td class="indexvalue"></td></tr>
+  <tr><td class="indexkey"> VER_BELONG_ANALYTIC</td>
+		<td class="indexvalue"></td></tr>
+  <tr><td class="indexkey"> VER_BELONG_CONSTRUCTION</td>
+		<td class="indexvalue"></td></tr>
+  <tr><td class="indexkey"> VER_ALIGN_NO</td>
+		<td class="indexvalue"></td></tr>
+  <tr><td class="indexkey"> VER_ALIGN_ANALYTIC</td>
+		<td class="indexvalue"></td></tr>
+  <tr><td class="indexkey"> VER_ALIGN_CONSTRUCTION</td>
+		<td class="indexvalue"></td></tr>
+
+**/

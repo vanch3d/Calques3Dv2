@@ -30,7 +30,7 @@ CDeleteObjectTask::CDeleteObjectTask(CView *AParent,UINT taskID):
 {
 }
 
-unsigned long CDeleteObjectTask::GetMask()
+DWORD CDeleteObjectTask::GetMask()
 {
     return CTask::GetMask();
 }
@@ -112,9 +112,9 @@ CCopyShapeTask::~CCopyShapeTask()
 }
 
 
-unsigned long CCopyShapeTask::GetMask()
+DWORD CCopyShapeTask::GetMask()
 {
-    unsigned long nMask = TObject3DClass;
+	DWORD nMask = TObject3DClass;
     //if (nMaskTarget)
 //      nMask = nMaskTarget;
     return nMask;
@@ -179,8 +179,8 @@ void CCopyShapeTask::OnMouseL(UINT modkey, CPoint pt)
     {
         nMaskTarget = MAKELONG(LOWORD(pObj->isA()),1);
 
-        unsigned long  ppp = pObj->isA();
-        unsigned long  ttt= TAllPointClass;
+        DWORD ppp = pObj->isA();
+        DWORD ttt= TAllPointClass;
         WORD rrr = LOWORD(ppp);
         DWORD sss= MAKELONG(rrr,1);
         pShape  = &(pObj->pObjectShape);

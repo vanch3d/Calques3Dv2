@@ -69,7 +69,7 @@ unsigned CLabelTask::GetHelpResID()
     return CTX_SELECT_OBJECT;
 }
 
-unsigned long CLabelTask::GetMask()
+DWORD CLabelTask::GetMask()
 {
     return (TAllPointClass | TAllDroiteClass | TAllPlanClass | TSphere3DClass);
 }
@@ -207,9 +207,9 @@ unsigned CMeasureTask::GetHelpResID()
     return CTX_SELECT_OBJECT;
 }
 
-unsigned long CMeasureTask::GetMask()
+DWORD CMeasureTask::GetMask()
 {
-    unsigned long mask = 0;
+    DWORD mask = 0;
     switch (m_nOptionID){
     case ID_EXPLORATION_MEASURE_DISTANCE :
         //if (pSource)

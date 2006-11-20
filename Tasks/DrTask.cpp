@@ -105,7 +105,7 @@ void CDroite3DTask::OnMouseMove(UINT, CPoint thepoint)
 		m_pParent->Invalidate(FALSE);
 }
 
-unsigned long CDroite3DTask::GetMask()
+DWORD CDroite3DTask::GetMask()
 {
 	return TAllPointClass;
 }
@@ -231,7 +231,7 @@ CLocus3DTask::CLocus3DTask(CView *AParent,UINT nID) : CDroite3DTask(AParent,nID)
 {
 }
 
-unsigned long CLocus3DTask::GetMask()
+DWORD CLocus3DTask::GetMask()
 {
 	if (!ptA) 
 		return TPointSurD3DClass | TPointSurC3DClass | TPointSurP3DClass | 
@@ -269,7 +269,7 @@ void CLocus3DTask::CreateObject3D()
 {
 	CLocus3D* temp = new CLocus3D(ptA,ptB);
 
-	int res = temp->CalculConceptuel();
+	UINT res = temp->CalculConceptuel();
 	if (res)
 	{
 		temp->HandleObjectError(res,TRUE);

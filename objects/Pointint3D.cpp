@@ -157,7 +157,7 @@ CString CPointInterDD3D::GetObjectDef()
 
 
 
-int  CPointInterDD3D::CalculConceptuel()
+UINT  CPointInterDD3D::CalculConceptuel()
 {
 	bValidate = ((D1->bValidate) && (D2->bValidate));
 	if (!bValidate) return ERR_NOINTER;
@@ -423,7 +423,7 @@ CObject3D* CPointInterDP3D::CopyObject()
 	return temp;
 }
 
-int  CPointInterDP3D::CalculConceptuel()
+UINT  CPointInterDP3D::CalculConceptuel()
 {
 	if (P)
 		bValidate = ((D1->bValidate) && (P->bValidate));

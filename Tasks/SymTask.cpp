@@ -53,9 +53,9 @@ unsigned CSymetricTask::GetHelpResID()
     return ((m_nStep) ? CTX_SELECT_SYM : CTX_SELECT_POINT1);
 }
 
-unsigned long CSymetricTask::GetMask()
+DWORD CSymetricTask::GetMask()
 {
-    unsigned long mask;
+    DWORD mask;
 //  mask = TAllPointClass;
 
     if (!pSrc)
@@ -197,7 +197,7 @@ void CVerify3DTask::CancelTache()
 
 unsigned CVerify3DTask::GetHelpResID()
 {
-    unsigned long mask;
+    DWORD mask;
 
     int nb = m_cObjectTarget.GetSize();
 
@@ -236,9 +236,9 @@ unsigned CVerify3DTask::GetHelpResID()
     return mask;
 }
 
-unsigned long CVerify3DTask::GetMask()
+DWORD CVerify3DTask::GetMask()
 {
-    unsigned long mask;
+    DWORD mask;
 
     int nb = m_cObjectTarget.GetSize();
 
@@ -388,7 +388,7 @@ BOOL CVerify3DTask::OnVerifyParallel(CObject3D *pObj1,CObject3D *pObj2)
         res = pObj1->IsPerpendicularTo(pObj2);
     //***********
 
-    if (res==VER_PAR_ANALYTIC)
+    if (res==VER_PAR_ANALYTIC || res==VER_PERP_ANALYTIC)
     {
         CxObject3DSet mSet;
         GetFreePoint(pObj1,mSet);
@@ -399,11 +399,11 @@ BOOL CVerify3DTask::OnVerifyParallel(CObject3D *pObj1,CObject3D *pObj2)
                                 CVector4(0,0,POSVER),
                                 CVector4(POSVER,POSVER,POSVER)};
 
-        res=VER_PAR_CONSTRUCTION;
+        res=(m_nCurrTask==ID_EXPLORATION_VERIFY_PAR)?VER_PAR_CONSTRUCTION:VER_PERP_CONSTRUCTION;
 
         for (int i=0;i<mSet.GetSize();i++)
         {
-            if (res != VER_PAR_CONSTRUCTION) break;
+            if (res != VER_PAR_CONSTRUCTION && res != VER_PERP_CONSTRUCTION) break;
             CPoint3D *pFree = DYNAMIC_DOWNCAST(CPoint3D,mSet.GetAt(i));
             if (!pFree) continue;
 
@@ -433,9 +433,10 @@ BOOL CVerify3DTask::OnVerifyParallel(CObject3D *pObj1,CObject3D *pObj2)
                     res2 = pObj1->IsPerpendicularTo(pObj2);
                 //***********
 
-                if (res2==VER_PAR_NO)
+                if (res2==VER_PAR_NO || res2==VER_PERP_NO)
                 {
                     res=VER_PAR_ANALYTIC;
+			        res=(m_nCurrTask==ID_EXPLORATION_VERIFY_PAR)?VER_PAR_ANALYTIC:VER_PERP_ANALYTIC;
 
                     m_pVerifyDlg->m_pObjFree = pFree;
                     m_pVerifyDlg->m_vNewPt = ptt;
@@ -458,18 +459,18 @@ BOOL CVerify3DTask::OnVerifyParallel(CObject3D *pObj1,CObject3D *pObj2)
     CString strMsg2,strMsg,strProp,strTarget,strTarget2;
     strMsg.LoadString(res);
 
-    if (m_nCurrTask==ID_EXPLORATION_VERIFY_PAR)
-        strProp.LoadString(VER_PAR);
-    else if (m_nCurrTask==ID_EXPLORATION_VERIFY_PERP)
-        strProp.LoadString(VER_PERP);
+    //if (m_nCurrTask==ID_EXPLORATION_VERIFY_PAR)
+    //    strProp.LoadString(VER_PAR);
+    //else if (m_nCurrTask==ID_EXPLORATION_VERIFY_PERP)
+    //    strProp.LoadString(VER_PERP);
 
     strTarget = pObj1->GetObjectHelp();
     strTarget2 = pObj2->GetObjectHelp();
 
-    strMsg2.Format(strMsg,strTarget,strTarget2,strProp);
+    strMsg2.Format(strMsg,strTarget,strTarget2);
 
     m_pVerifyDlg->m_strResult = strMsg2;
-    m_pVerifyDlg->m_bShowCE = (res==VER_PAR_ANALYTIC);
+    m_pVerifyDlg->m_bShowCE = (res==VER_PAR_ANALYTIC||res==VER_PERP_ANALYTIC);
     m_pVerifyDlg->UpdateData(FALSE);
     m_pVerifyDlg->ShowWindow(SW_SHOW);
 
@@ -494,9 +495,9 @@ BOOL CVerify3DTask::OnVerifyPointOn(CObject3D *pOPt,CObject3D *pObj)
 
     if (!bRet) return FALSE;
 
-    res = (FCZero(dis)) ? VER_ON_ANALYTIC : VER_ON_NO;
+    res = (FCZero(dis)) ? VER_BELONG_ANALYTIC : VER_BELONG_NO;
 
-    if (res == VER_ON_ANALYTIC)
+    if (res == VER_BELONG_ANALYTIC)
     {
         CxObject3DSet mSet;
         GetFreePoint(pPt,mSet);
@@ -507,11 +508,11 @@ BOOL CVerify3DTask::OnVerifyPointOn(CObject3D *pOPt,CObject3D *pObj)
                                 CVector4(0,0,POSVER),
                                 CVector4(POSVER,POSVER,POSVER)};
 
-        res=VER_ON_CONSTRUCTION;
+        res=VER_BELONG_CONSTRUCTION;
 
         for (int i=0;i<mSet.GetSize();i++)
         {
-            if (res != VER_ON_CONSTRUCTION) break;
+            if (res != VER_BELONG_CONSTRUCTION) break;
             CPoint3D *pFree = DYNAMIC_DOWNCAST(CPoint3D,mSet.GetAt(i));
             if (!pFree) continue;
 
@@ -536,14 +537,14 @@ BOOL CVerify3DTask::OnVerifyPointOn(CObject3D *pOPt,CObject3D *pObj)
 
                 //***********
                 bRet = pPt->GetDistanceFrom(pObj,dis);
-                if (!bRet) res2 = VER_ON_ANALYTIC;
+                if (!bRet) res2 = VER_BELONG_ANALYTIC;
                 else
-                    res2 = (!FCZero(dis)) ? VER_ON_NO : VER_ON_ANALYTIC;
+                    res2 = (!FCZero(dis)) ? VER_BELONG_NO : VER_BELONG_ANALYTIC;
                 //***********
 
-                if (res2==VER_ON_NO)
+                if (res2==VER_BELONG_NO)
                 {
-                    res=VER_ON_ANALYTIC;
+                    res=VER_BELONG_ANALYTIC;
 
                     m_pVerifyDlg->m_pObjFree = pFree;
                     m_pVerifyDlg->m_vNewPt = ptt;
@@ -569,7 +570,7 @@ BOOL CVerify3DTask::OnVerifyPointOn(CObject3D *pOPt,CObject3D *pObj)
     strMsg2.Format(strMsg,strTarget,strProp);
 
     m_pVerifyDlg->m_strResult = strMsg2;
-    m_pVerifyDlg->m_bShowCE = (res==VER_ON_ANALYTIC);
+    m_pVerifyDlg->m_bShowCE = (res==VER_BELONG_ANALYTIC);
     m_pVerifyDlg->UpdateData(FALSE);
     m_pVerifyDlg->ShowWindow(SW_SHOW);
 
@@ -1048,9 +1049,9 @@ void CAnimation3DTask::CancelTache()
     m_nTimer=0;
 }
 
-unsigned long CAnimation3DTask::GetMask()
+DWORD CAnimation3DTask::GetMask()
 {
-    unsigned long mask = TPointSurD3DClass | TPointSurC3DClass;
+    DWORD mask = TPointSurD3DClass | TPointSurC3DClass;
         //  | TPoint3DClass |
         //  TPointSurP3DClass | TPointSurS3DClass
         //      );
@@ -1294,7 +1295,7 @@ void CAnimation3DTask::OnTimer(UINT nIDEvent)
         ///CObject3D *pObj = pList.GetAt(j);
         CObject3D *pObj = m_pList.GetAt(j);
         if (!pObj) continue;
-        int res = pObj->CalculConceptuel();
+        UINT res = pObj->CalculConceptuel();
         //pObj->CalculVisuel();
     }
     GetDocument()->UpdateAllViews(m_pParent,WM_UPDATEOBJ_MOV,m_pObjAnimated);
@@ -1342,7 +1343,7 @@ unsigned CPolygonTask::GetHelpResID()
     return CTX_SELECT_POINT1;
 }
 
-unsigned long CPolygonTask::GetMask()
+DWORD CPolygonTask::GetMask()
 {
     return TAllPointClass;
 }
@@ -1443,7 +1444,7 @@ void CPolygonTask::CreateObject3D()
 
     CPolygon3D* temp = new CPolygon3D(&m_cObjectsTarget);
 
-    int res = temp->CalculConceptuel();
+    UINT res = temp->CalculConceptuel();
     if (res)
     {
         temp->HandleObjectError(res,TRUE);
@@ -1510,9 +1511,9 @@ unsigned CCenterOn3DTask::GetHelpResID()
     return CTX_SELECT_POINT1;
 }
 
-unsigned long CCenterOn3DTask::GetMask()
+DWORD CCenterOn3DTask::GetMask()
 {
-    unsigned long mask = TAllPointClass;
+    DWORD mask = TAllPointClass;
     return mask;
 }
 

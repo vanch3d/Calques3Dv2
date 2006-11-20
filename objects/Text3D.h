@@ -31,7 +31,7 @@ public:
     virtual CObject3D* CopyObject();
     virtual void Serialize( CArchive& ar );
 
-    virtual unsigned long isA() const { return TLabel3DClass; }
+    virtual DWORD isA() const { return TLabel3DClass; }
 
     virtual UINT GetNameID() const { return IDS_NAME_TEXT;};
     virtual UINT GetHelpID() const { return IDS_HELP_TEXT;};
@@ -44,7 +44,7 @@ public:
 
     virtual void SetFont(LOGFONT *pLogFont);
 
-    virtual int  CalculConceptuel();
+    virtual UINT  CalculConceptuel();
     virtual void CalculVisuel(CVisualParam *);
     virtual void Draw(CDC*,CVisualParam *vp,BOOL bSm=FALSE);
     virtual HTREEITEM DrawHistorique(CTreeCtrl& mListCtrl,HTREEITEM pParent=TVI_ROOT);
@@ -66,7 +66,7 @@ public:
     CLabel3D(const CObject3D & );
     virtual ~CLabel3D();
 
-    virtual unsigned long isA() const { return TLabel3DClass; }
+    virtual DWORD isA() const { return TLabel3DClass; }
 
     virtual CObject3D* CopyObject();
     virtual CxObject3DSet* GetParents();
@@ -75,7 +75,7 @@ public:
 
     virtual CString GetText();
 
-    virtual int  CalculConceptuel();
+    virtual UINT  CalculConceptuel();
     virtual void CalculVisuel(CVisualParam *);
     virtual void Draw(CDC*,CVisualParam *vp,BOOL bSm=FALSE);
 };
@@ -97,7 +97,7 @@ public:
     CEquation3D(const CObject3D & );
     virtual ~CEquation3D();
 
-    virtual unsigned long isA() const { return TEquation3DClass; }
+    virtual DWORD isA() const { return TEquation3DClass; }
     virtual CString GetText();
 
     virtual BOOL ChangeParent(CObject3D *pOld,CObject3D *pNew,BOOL bUpGraph=FALSE);
@@ -115,7 +115,7 @@ public:
     virtual int SetProperties(CxObject3DSet *pSet=NULL);
 
     virtual void CalculVisuel(CVisualParam *);
-    virtual int  CalculConceptuel();
+    virtual UINT  CalculConceptuel();
     virtual void Draw(CDC*,CVisualParam *vp,BOOL bSm=FALSE);
     virtual void DrawMathPad(CDC* pDC);
     virtual HTREEITEM DrawHistorique(CTreeCtrl& mListCtrl,HTREEITEM pParent=TVI_ROOT);
@@ -141,7 +141,7 @@ public:
     virtual UINT GetHelpID() const { return IDS_HELP_VALUE;};
     virtual UINT GetDefID() const { return IDS_DEF_VALUE;};
 
-    virtual unsigned long isA() const { return TValue3DClass; }
+    virtual DWORD isA() const { return TValue3DClass; }
     virtual void Serialize( CArchive& ar );
 };
 
@@ -161,7 +161,7 @@ public:
     virtual ~CDistance3D();
 
     virtual UINT GetDefID() const { return IDS_DEF_DISTANCE;};
-    virtual unsigned long isA() const { return TDistance3DClass; }
+    virtual DWORD isA() const { return TDistance3DClass; }
     virtual CString GetText();
 
     virtual BOOL ChangeParent(CObject3D *pOld,CObject3D *pNew,BOOL bUpGraph=FALSE);
@@ -171,7 +171,7 @@ public:
     virtual void Serialize( CArchive& ar );
 
     virtual void CalculVisuel(CVisualParam *);
-    virtual int  CalculConceptuel();
+    virtual UINT  CalculConceptuel();
     virtual void Draw(CDC*,CVisualParam *vp,BOOL bSm=FALSE);
     virtual void DrawMathPad(CDC* pDC);
 };
@@ -199,7 +199,7 @@ public:
     virtual ~CAngle3D();
 
     virtual UINT GetDefID() const { return IDS_DEF_ANGLE;};
-    virtual unsigned long isA() const { return TAngle3DClass; }
+    virtual DWORD isA() const { return TAngle3DClass; }
     virtual CString GetText();
 
     virtual BOOL ChangeParent(CObject3D *pOld,CObject3D *pNew,BOOL bUpGraph=FALSE);
@@ -209,7 +209,7 @@ public:
     virtual void Serialize( CArchive& ar );
 
     virtual void CalculVisuel(CVisualParam *);
-    virtual int  CalculConceptuel();
+    virtual UINT  CalculConceptuel();
     virtual void Draw(CDC*,CVisualParam *vp,BOOL bSm=FALSE);
     virtual void DrawMathPad(CDC* pDC);
 };
@@ -227,7 +227,7 @@ public:
     CVolume3D(const CObject3D & );
 
     virtual UINT GetDefID() const { return IDS_DEF_VOLUME;};
-    virtual unsigned long isA() const { return TVolume3DClass; }
+    virtual DWORD isA() const { return TVolume3DClass; }
     virtual CString GetText();
     virtual void Draw(CDC*,CVisualParam *vp,BOOL bSm=FALSE);
     virtual void DrawMathPad(CDC* pDC);
@@ -246,7 +246,7 @@ public:
     CArea3D(const CObject3D & );
 
     virtual UINT GetDefID() const { return IDS_DEF_AREA;};
-    virtual unsigned long isA() const { return TArea3DClass; }
+    virtual DWORD isA() const { return TArea3DClass; }
     virtual CString GetText();
     virtual void Draw(CDC*,CVisualParam *vp,BOOL bSm=FALSE);
     virtual void DrawMathPad(CDC* pDC);
@@ -266,14 +266,14 @@ public:
     CComment3D(const CObject3D & );
     virtual ~CComment3D();
 
-    virtual unsigned long isA() const { return TCComment3DClass; }
+    virtual DWORD isA() const { return TCComment3DClass; }
     virtual CString GetText();
 
     virtual void Serialize( CArchive& ar );
     virtual int SetProperties(CxObject3DSet *pSet=NULL);
 
     virtual void CalculVisuel(CVisualParam *);
-    virtual int  CalculConceptuel();
+    virtual UINT  CalculConceptuel();
     virtual void Draw(CDC*,CVisualParam *vp,BOOL bSm=FALSE);
     virtual void DrawMathPad(CDC* pDC);
 };
@@ -309,7 +309,7 @@ public:
     void    OnUpdateVariables(CxObject3DSet *pSet=NULL);
 
 
-    virtual unsigned long isA() const { return TMathOp3DClass; }
+    virtual DWORD isA() const { return TMathOp3DClass; }
     virtual CString GetText();
     virtual void Draw(CDC*,CVisualParam *vp,BOOL bSm=FALSE);
     virtual void DrawMathPad(CDC* pDC);

@@ -447,7 +447,7 @@ void CViewGraph::OnLButtonDblClk(UINT nFlags, CPoint point)
 			GetDocument()->ModifyPropObject(m_Obj);
 		else
 		{
-			int rr = m_Obj->CalculConceptuel();
+			UINT rr = m_Obj->CalculConceptuel();
 			m_Obj->HandleObjectError(rr,TRUE);
 		}
 	}*/
@@ -807,7 +807,7 @@ void CViewGraph::OnObjectProperty()
 		GetDocument()->ModifyPropObject(m_Obj);
 	else
 	{
-		int rr = m_Obj->CalculConceptuel();
+		UINT rr = m_Obj->CalculConceptuel();
 		m_Obj->HandleObjectError(rr,TRUE);
 	}
 	

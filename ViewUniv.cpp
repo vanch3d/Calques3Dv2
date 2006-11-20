@@ -1020,8 +1020,8 @@ LRESULT CViewUniv::OnUpdateObjTooltip(WPARAM pObjSet, LPARAM bShowToolTip)
     CString strTaskTip(_T(""));
     if (nb != 1)
     {
-        strToolTip.LoadString(ERR_AMBIGUITY);
-        strTaskTip.LoadString(ERR_AMBIGUITY2);
+        strToolTip.LoadString(IDS_AMBIGUITY);
+        strTaskTip.LoadString(ERR_AMBIGUITY);
     }
     else
     {

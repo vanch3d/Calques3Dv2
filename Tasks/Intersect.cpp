@@ -97,9 +97,9 @@ unsigned CInter3DTask::GetHelpResID()
 }
 
 
-unsigned long CInter3DTask::GetMask()
+DWORD CInter3DTask::GetMask()
 {
-  unsigned long mask;
+  DWORD mask;
   switch (m_nTaskID)
 	{	case ID_CONSTRUCTION_INTERSECTION_LINELINE:
   		case ID_CONSTRUCTION_CROSSPRODUCT:

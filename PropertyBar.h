@@ -1,5 +1,5 @@
 //////////////////////////////////////////////////////////////////////
-/// @file ComboShape.h
+/// @file PropertyBar.h
 /// @brief interface for the CPropertyBar and CDependentBar classes
 ///
 ///

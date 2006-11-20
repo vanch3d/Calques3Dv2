@@ -24,82 +24,82 @@
 /// See CObject3D::MaskObject for information about how the bitwise combination of identifiers is
 /// used.
 //@{
-const unsigned long TObject3DClass			=	MAKELONG(1,1);		///< ALL geometrical objects
+const DWORD TObject3DClass			=	MAKELONG(1,1);		///< ALL geometrical objects
 
-	const unsigned long TAllPointClass		= 	MAKELONG(2,1);		///< ALL points
-	const unsigned long TAllBasePointClass	= 	MAKELONG(2,8674);	///< ALL base-points (ie with at leat of degree of freedom)
+	const DWORD TAllPointClass		= 	MAKELONG(2,1);		///< ALL points
+	const DWORD TAllBasePointClass	= 	MAKELONG(2,8674);	///< ALL base-points (ie with at leat of degree of freedom)
 
-const unsigned long TPoint3DClass			= 	MAKELONG(2,2);		///< Free point
-const unsigned long TPointMilieu3DClass		=	MAKELONG(2,4);		///< Point middle of a bipoint or a segment
-const unsigned long TPointInterDD3DClass	=	MAKELONG(2,8);		///< Point intersection of 2 lines
-const unsigned long TPointInterDP3DClass	=	MAKELONG(2,16);		///< Point intersection of a line and a plane
-const unsigned long TPointSurD3DClass 		=	MAKELONG(2,32);		///< Point on a line
-const unsigned long TPointSurC3DClass 		=	MAKELONG(2,64);		///< Point on a circle
-const unsigned long TPointSurP3DClass 		=	MAKELONG(2,128);	///< Point on a plane
-const unsigned long TPointSurS3DClass 		=	MAKELONG(2,256);	///< Point on a sphere
-const unsigned long TPointCalc3DClass 		=	MAKELONG(2,512);	///< Point internally calculated
-const unsigned long TPointCenter3DClass		=	MAKELONG(2,1024);	///< Point center of a circle
-const unsigned long TPointSymetric3DClass	=	MAKELONG(2,2048);	///< Point symetrical of a point/line/plane
-const unsigned long TPointTranslat3DClass	=	MAKELONG(2,4096);	///< Point translated according to a vector
-const unsigned long TPointSurCyl3DClass 	=	MAKELONG(2,8192);	///< Point on a cylinder
-
-
-	const unsigned long TAllDroiteClass		= 	MAKELONG(12,1);		///< ALL lines (includes segments)
-
-const unsigned long TDroite3DClass			= 	MAKELONG(4,2);		///< Line defined by 2 points
-const unsigned long TDroitePar3DClass		=	MAKELONG(4,8);		///< Line parallel to another line
-const unsigned long TDroiteInterPP3DClass	=	MAKELONG(4,16);		///< Line intersection of 2 planes
-const unsigned long TDroitePerp3DClass		=	MAKELONG(4,32);		///< Line perpendicular to a line or a plane
-const unsigned long TDemiDroite3DClass		=	MAKELONG(4,64);		///< Half-line defined by 2 points
-const unsigned long TDroitePerpDD3DClass	=	MAKELONG(4,128);	///< Lines perpendicular to 2 lines
-
-	const unsigned long TAllSegmentClass	= 	MAKELONG(8,1);		///< ALL segments
-	const unsigned long TSegment3DClass		=	MAKELONG(8,2);		///< Segment defined by 2 points
-
-	const unsigned long TAllPlanClass		= 	MAKELONG(16,1);		///< ALL planes
-const unsigned long TPlan3DClass			=	MAKELONG(16,2);		///< Plane defined by 3 points
-const unsigned long TPlanPerp3DClass		=	MAKELONG(16,4);		///< Plane perpendicular to a line
-const unsigned long TPolygon3DClass			=	MAKELONG(16,8);		///< Polygon defined by at least 3 points 
-
-	const unsigned long TAllCercleClass		=	MAKELONG(32,1);		///< ALL circles
-const unsigned long TCercle3DClass			=	MAKELONG(32,2);		///< Circle defined by 3 points
-const unsigned long TArcCercle3DClass		=	MAKELONG(32,4);		///< Arc of circle defined by 3 points
-const unsigned long TEllipse3DClass			=	MAKELONG(32,8);		///< Ellipse defined by the intersection of a plane and a cylinder
-const unsigned long TCercleInterSS3D		=	MAKELONG(32,16);	///< Circle defined by the intersection of 2 spheres
+const DWORD TPoint3DClass			= 	MAKELONG(2,2);		///< Free point
+const DWORD TPointMilieu3DClass		=	MAKELONG(2,4);		///< Point middle of a bipoint or a segment
+const DWORD TPointInterDD3DClass	=	MAKELONG(2,8);		///< Point intersection of 2 lines
+const DWORD TPointInterDP3DClass	=	MAKELONG(2,16);		///< Point intersection of a line and a plane
+const DWORD TPointSurD3DClass 		=	MAKELONG(2,32);		///< Point on a line
+const DWORD TPointSurC3DClass 		=	MAKELONG(2,64);		///< Point on a circle
+const DWORD TPointSurP3DClass 		=	MAKELONG(2,128);	///< Point on a plane
+const DWORD TPointSurS3DClass 		=	MAKELONG(2,256);	///< Point on a sphere
+const DWORD TPointCalc3DClass 		=	MAKELONG(2,512);	///< Point internally calculated
+const DWORD TPointCenter3DClass		=	MAKELONG(2,1024);	///< Point center of a circle
+const DWORD TPointSymetric3DClass	=	MAKELONG(2,2048);	///< Point symetrical of a point/line/plane
+const DWORD TPointTranslat3DClass	=	MAKELONG(2,4096);	///< Point translated according to a vector
+const DWORD TPointSurCyl3DClass 	=	MAKELONG(2,8192);	///< Point on a cylinder
 
 
-const unsigned long TCompositeObject3DClass	=	MAKELONG(64,1);		///< ALL composites objects
-const unsigned long TCube3DClass			=	MAKELONG(64,4);		///< Cube defined by 3 points
-const unsigned long TInterSphDr3DClass		=	MAKELONG(64,8);		///< Bipoint defined by intersection of a sphere and a line
-const unsigned long TMacro3DClass			=	MAKELONG(64,16);	///< Macro-construction
-const unsigned long TDivSegment3DClass		=	MAKELONG(64,32);	///< Points equally spread on a segment
+	const DWORD TAllDroiteClass		= 	MAKELONG(12,1);		///< ALL lines (includes segments)
 
-const unsigned long TSphere3DClass			=	MAKELONG(128,1);	///< ALL spheres
+const DWORD TDroite3DClass			= 	MAKELONG(4,2);		///< Line defined by 2 points
+const DWORD TDroitePar3DClass		=	MAKELONG(4,8);		///< Line parallel to another line
+const DWORD TDroiteInterPP3DClass	=	MAKELONG(4,16);		///< Line intersection of 2 planes
+const DWORD TDroitePerp3DClass		=	MAKELONG(4,32);		///< Line perpendicular to a line or a plane
+const DWORD TDemiDroite3DClass		=	MAKELONG(4,64);		///< Half-line defined by 2 points
+const DWORD TDroitePerpDD3DClass	=	MAKELONG(4,128);	///< Lines perpendicular to 2 lines
 
-const unsigned long TCylindre3DClass		= 	MAKELONG(256,1);	///< ALL cylinder
-const unsigned long TCone3DClass			= 	MAKELONG(256,1);	///< ALL cones
+	const DWORD TAllSegmentClass	= 	MAKELONG(8,1);		///< ALL segments
+	const DWORD TSegment3DClass		=	MAKELONG(8,2);		///< Segment defined by 2 points
 
-const unsigned long TValue3DClass			=   MAKELONG(1024,120);	///< ALL values (used in the MathPad)
+	const DWORD TAllPlanClass		= 	MAKELONG(16,1);		///< ALL planes
+const DWORD TPlan3DClass			=	MAKELONG(16,2);		///< Plane defined by 3 points
+const DWORD TPlanPerp3DClass		=	MAKELONG(16,4);		///< Plane perpendicular to a line
+const DWORD TPolygon3DClass			=	MAKELONG(16,8);		///< Polygon defined by at least 3 points 
 
-const unsigned long TText3DClass			= 	MAKELONG(1024,1);	///< ALL text items
-const unsigned long TLabel3DClass			= 	MAKELONG(1024,2);	///< Label
-const unsigned long TEquation3DClass		= 	MAKELONG(1024,4);	///< Equation
-const unsigned long TDistance3DClass		= 	MAKELONG(1024,8);	///< Distance
-const unsigned long TAngle3DClass			= 	MAKELONG(1024,16);	///< Angle
-const unsigned long TVolume3DClass			= 	MAKELONG(1024,32);	///< Volume
-const unsigned long TArea3DClass			= 	MAKELONG(1024,64);	///< Area
-const unsigned long TCComment3DClass		= 	MAKELONG(1024,128);	///< Comment
-const unsigned long TMathOp3DClass			= 	MAKELONG(1024,256);	///< Mathematical expression
+	const DWORD TAllCercleClass		=	MAKELONG(32,1);		///< ALL circles
+const DWORD TCercle3DClass			=	MAKELONG(32,2);		///< Circle defined by 3 points
+const DWORD TArcCercle3DClass		=	MAKELONG(32,4);		///< Arc of circle defined by 3 points
+const DWORD TEllipse3DClass			=	MAKELONG(32,8);		///< Ellipse defined by the intersection of a plane and a cylinder
+const DWORD TCercleInterSS3D		=	MAKELONG(32,16);	///< Circle defined by the intersection of 2 spheres
 
-const unsigned long TLocus3DClass			= 	MAKELONG(2048,1);	///< ALL locus
+
+const DWORD TCompositeObject3DClass	=	MAKELONG(64,1);		///< ALL composites objects
+const DWORD TCube3DClass			=	MAKELONG(64,4);		///< Cube defined by 3 points
+const DWORD TInterSphDr3DClass		=	MAKELONG(64,8);		///< Bipoint defined by intersection of a sphere and a line
+const DWORD TMacro3DClass			=	MAKELONG(64,16);	///< Macro-construction
+const DWORD TDivSegment3DClass		=	MAKELONG(64,32);	///< Points equally spread on a segment
+
+const DWORD TSphere3DClass			=	MAKELONG(128,1);	///< ALL spheres
+
+const DWORD TCylindre3DClass		= 	MAKELONG(256,1);	///< ALL cylinder
+const DWORD TCone3DClass			= 	MAKELONG(256,1);	///< ALL cones
+
+const DWORD TValue3DClass			=   MAKELONG(1024,120);	///< ALL values (used in the MathPad)
+
+const DWORD TText3DClass			= 	MAKELONG(1024,1);	///< ALL text items
+const DWORD TLabel3DClass			= 	MAKELONG(1024,2);	///< Label
+const DWORD TEquation3DClass		= 	MAKELONG(1024,4);	///< Equation
+const DWORD TDistance3DClass		= 	MAKELONG(1024,8);	///< Distance
+const DWORD TAngle3DClass			= 	MAKELONG(1024,16);	///< Angle
+const DWORD TVolume3DClass			= 	MAKELONG(1024,32);	///< Volume
+const DWORD TArea3DClass			= 	MAKELONG(1024,64);	///< Area
+const DWORD TCComment3DClass		= 	MAKELONG(1024,128);	///< Comment
+const DWORD TMathOp3DClass			= 	MAKELONG(1024,256);	///< Mathematical expression
+
+const DWORD TLocus3DClass			= 	MAKELONG(2048,1);	///< ALL locus
 //@}
 
-	const unsigned long TAllVectorClass		=	MAKELONG(4096,1);	// NOT YET USED
-const unsigned long TVector3DClass			= 	MAKELONG(4096,2);	// NOT YET USED 
-const unsigned long TVectorAdd3DClass		= 	MAKELONG(4096,4);	// NOT YET USED 
-const unsigned long TVectorProd3DClass		= 	MAKELONG(4096,8);	// NOT YET USED
+	const DWORD TAllVectorClass		=	MAKELONG(4096,1);	// NOT YET USED
+const DWORD TVector3DClass			= 	MAKELONG(4096,2);	// NOT YET USED 
+const DWORD TVectorAdd3DClass		= 	MAKELONG(4096,4);	// NOT YET USED 
+const DWORD TVectorProd3DClass		= 	MAKELONG(4096,8);	// NOT YET USED
 
-const unsigned long TUnivers3DClass			=	MAKELONG(800,2);	// NOT USED
+const DWORD TUnivers3DClass			=	MAKELONG(800,2);	// NOT USED
 
 
 class CObject3D;
@@ -242,33 +242,33 @@ public:
 		GRAPH_BASE		///< Highlight the base points connected to the object
 	};
 
-	BOOL		bValidate;				///< TRUE if the object is analytically valide, FALSE otherwise
-	BOOL		bVisible;				///< TRUE if the object is visible, FALSE if it is hidden
-	BOOL		bMarked;				///< TRUE if the object has its visual marks activated, FALSE otherwise 
-	BOOL		bDrawInGraph;			///< TRUE if the object can be displayed in the Graph, FALSE otherwise
-	BOOL		bNotInHisto;			///< TRUE if the object cannot be displayed in the History, FALSE otherwise
-	BOOL		bShowTrace;
+	BOOL		bValidate;			///< TRUE if the object is analytically valide, FALSE otherwise
+	BOOL		bVisible;			///< TRUE if the object is visible, FALSE if it is hidden
+	BOOL		bMarked;			///< TRUE if the object has its visual marks activated, FALSE otherwise 
+	BOOL		bDrawInGraph;		///< TRUE if the object can be displayed in the Graph, FALSE otherwise
+	BOOL		bNotInHisto;		///< TRUE if the object cannot be displayed in the History, FALSE otherwise
+	BOOL		bShowTrace;			///< TRUE if the visual marks of the object are displayed, FALSE otherwise
 
-	unsigned	nObjectId;				///< Unique ID of the object (usually index in the document list)
+	unsigned	nObjectId;			///< Unique ID of the object (usually index in the document list)
 
-	CString		strObjectName;			///< Name of the object
-	CString		strObjectHelp;			///< Designation
-	CString		strObjectDef;			///< Definition
-	CShape		pObjectShape;			///< Shape and color of the object
-	int			nSortKind;				///< Sort order for object (0 Zorder, 1 depth) \deprecated Not used anymore
-	int			nDepth;					///< Depth of the object in the dependency graph
-	int			nCalque;				///< The object is extracted in Tracing X (bit X)
+	CString		strObjectName;		///< Name of the object
+	CString		strObjectHelp;		///< Designation
+	CString		strObjectDef;		///< Definition
+	CShape		pObjectShape;		///< Shape and color of the object
+	int			nSortKind;			///< Sort order for object (0 Zorder, 1 depth) \deprecated Not used anymore
+	int			nDepth;				///< Depth of the object in the dependency graph
+	int			nCalque;			///< The object is extracted in Tracing X (bit X)
 
-	CObject3D*	pComposite;				///< Pointeur to the composite this object belongs to, NULL if not
+	CObject3D*	pComposite;			///< Pointeur to the composite this object belongs to, NULL if not
 
-	HTREEITEM	pHistItem;				///< Item in the History View
-	CRect		rGraphRect;				///< Location of the object in the Graph Window
+	HTREEITEM	pHistItem;			///< Item in the History View
+	CRect		rGraphRect;			///< Location of the object in the Graph Window
 
-	CxObject3DSet	cDependList;		///< List of dependents
-	CxVector4Set	cTracePosition;		///< List of the object's coordinates, used for the trace.
+	CxObject3DSet	cDependList;	///< List of dependents
+	CxVector4Set	cTracePosition;	///< List of the object's coordinates, used for the trace.
 
 protected:
-	BOOL 		bIsSelected;			///< TRUE if the object is selected, FALSE otherwise
+	BOOL 		bIsSelected;		///< TRUE if the object is selected, FALSE otherwise
 
 public:
 	CObject3D();				
@@ -293,11 +293,11 @@ public:
 	virtual UINT	GetNameID() const;
 	virtual UINT	GetHelpID() const;
 	virtual UINT	GetDefID() const;
-	virtual CString GetObjectDef();
-	virtual CString GetObjectHelp();
-	virtual CString GetObjectName();
-	virtual BOOL	MaskObject(unsigned long mask);
-	virtual unsigned long isA() const;
+	virtual CString	GetObjectDef();
+	virtual CString	GetObjectHelp();
+	virtual CString	GetObjectName();
+	virtual BOOL	MaskObject(DWORD mask);
+	virtual DWORD	isA() const;
     //@}
 
 	/// @name Dependence Graph Functions
@@ -318,7 +318,7 @@ public:
 	/// These functions are used to access or modify the analytical definition of the geometrical
 	/// object: coordinates of the points, equations of the lines, etc.
 	//@{
-	virtual int		CalculConceptuel();
+	virtual UINT		CalculConceptuel();
 	virtual void	CalculVisuel(CVisualParam *);
 	virtual void	PrepareMoveObject(BOOL bMove = TRUE) {};
 	virtual BOOL	MoveObject(CVisualParam *,UINT,CPoint ,CVector4&) { return FALSE;};
@@ -337,51 +337,51 @@ public:
 	/// by mouse-clicks.
 	//@{
 	virtual CObject3D*	HitTest(CPoint pt,UINT mask=0,int nCalcNum = 0,BOOL bSub = TRUE,CxObject3DSet* pSet = NULL);
-	virtual BOOL	IsInActiveArea(CPoint pt) {return FALSE;}
-	virtual CRgn*	InvalideRect();
-	virtual	CRgn*	DoSegRgn(CPoint p1,CPoint p2);
+	virtual BOOL		IsInActiveArea(CPoint pt) {return FALSE;}
+	virtual CRgn*		InvalideRect();
+	virtual	CRgn*		DoSegRgn(CPoint p1,CPoint p2);
     //@}
 
 	/// @name Attribute/Information Functions
 	/// These functions are used to access or to modify the attributes of the geometrical object: 
 	/// name, colour, shape, tracing, etc.
 	//@{
-	virtual BOOL	IsVisible() {return bVisible;};
-	virtual BOOL	IsSelected() { return bIsSelected;};
-	virtual BOOL	IsInCalque(int CalcNum);
-	virtual void	SetVisible(BOOL bVis) { bVisible = bVis;};
-	virtual void	SetSelected(BOOL bSel=TRUE) {bIsSelected = bSel; };
-	virtual BOOL	AddInCalque(int CalcNum,BOOL add=1);
-	virtual int		SetProperties(CxObject3DSet *pSet=NULL);
-	virtual void	SetName(CString mstr);
-	virtual int		SetObjectID(int nID);
-	virtual void	SetColor(COLORREF rColor);
+	virtual BOOL		IsVisible() {return bVisible;};
+	virtual void		SetVisible(BOOL bVis) { bVisible = bVis;};
+	virtual BOOL		IsSelected() { return bIsSelected;};
+	virtual void		SetSelected(BOOL bSel=TRUE) {bIsSelected = bSel; };
+	virtual BOOL		IsInCalque(int CalcNum);
+	virtual BOOL		AddInCalque(int CalcNum,BOOL add=1);
+	virtual void		SetName(CString mstr);
+	virtual int			SetObjectID(int nID);
+	virtual void		SetColor(COLORREF rColor);
 	virtual COLORREF	GetDefaultColor();
-	virtual void	SetStyle(int nStyle);
-	virtual void	SetAvailHisto();
-	virtual void	GetRange(CVector4 &min,CVector4 &max);
+	virtual void		SetStyle(int nStyle);
+	virtual void		SetAvailHisto();
+	virtual void		GetRange(CVector4 &min,CVector4 &max);
+	virtual int			SetProperties(CxObject3DSet *pSet=NULL);
+	virtual	void		SetAttributes(CObject3DAttr pAttr);
  	virtual CObject3DAttr	GetAttributes();
-	virtual	void	SetAttributes(CObject3DAttr pAttr);
-  	virtual CxSchemeSet* GetRedefineSchemes(CxSchemeSet* pSet) { return pSet;};
+  	virtual CxSchemeSet*	GetRedefineSchemes(CxSchemeSet* pSet) { return pSet;};
   //@}
 
 	/// @name Display Functions
 	/// These functions are used to display the geometrical object according to
 	/// the format of the various views: Universe, Tracing, History, etc.
 	//@{
-	virtual void	Draw(CDC* pDC,CVisualParam *vp,BOOL bSm=0);
-	virtual void	DrawRetro(CDC *pDC,CVisualParam *vp){};
-	virtual void	DrawSelected(CDC* pDC,CVisualParam *vp) {};
+	virtual void		Draw(CDC* pDC,CVisualParam *vp,BOOL bSm=0);
+	virtual void		DrawRetro(CDC *pDC,CVisualParam *vp);
+	virtual void		DrawSelected(CDC* pDC,CVisualParam *vp);
 	virtual HTREEITEM	DrawHistorique(CTreeCtrl& mListCtrl,HTREEITEM pParent=TVI_ROOT);
-	virtual void	ClearHistorique() { pHistItem = NULL;};
-	virtual CString	DrawSymbolic(); 
-	virtual void	DrawMathPad(CDC*) {};
-	virtual void	Draw3DRendering() {};
+	virtual void		ClearHistorique() { pHistItem = NULL;};
+	virtual CString		DrawSymbolic(); 
+	virtual void		DrawMathPad(CDC*);
+	virtual void		Draw3DRendering();
 
-	virtual void	DrawDepGraph(CDC* pDC,CImageList *pImgList=NULL,int nTrace=GRAPH_NONE,BOOL bDrawNode=TRUE,BOOL bDrawLink=TRUE);
-	virtual void	DrawDepGraphLink(CDC* pDC,CObject3D *pSrc=NULL,CObject3D *pDest=NULL,int nTrace=GRAPH_NONE);
-	virtual void	DrawDepGraphNode(CDC* pDC,CImageList *pImgList=NULL,CObject3D *pSrc=NULL,int nTrace=GRAPH_NONE);
-	void			DrawGraphArrow(CDC *pDC,CPoint ptStart, CPoint ptEnd, int nArrowSize ,int nArrowlength,CBrush* pbrush);
+	virtual void		DrawDepGraph(CDC* pDC,CImageList *pImgList=NULL,int nTrace=GRAPH_NONE,BOOL bDrawNode=TRUE,BOOL bDrawLink=TRUE);
+	virtual void		DrawDepGraphLink(CDC* pDC,CObject3D *pSrc=NULL,CObject3D *pDest=NULL,int nTrace=GRAPH_NONE);
+	virtual void		DrawDepGraphNode(CDC* pDC,CImageList *pImgList=NULL,CObject3D *pSrc=NULL,int nTrace=GRAPH_NONE);
+	void				DrawGraphArrow(CDC *pDC,CPoint ptStart, CPoint ptEnd, int nArrowSize ,int nArrowlength,CBrush* pbrush);
     //@}
 
 	/// @name Error Functions

@@ -93,7 +93,7 @@ void CRedefine3DTask::OnMouseL(UINT, CPoint thepos)
 //      {
             int nb = m_pOptionSet->GetSize();
 
-            CAmbiguityList pPickUp(ERR_REDEFINE,m_pParent);
+            CAmbiguityList pPickUp(IDS_REDEFINE,m_pParent);
             for (int i=0;i<nb;i++)
             {
                 CRedefineScheme *pRedef = m_pOptionSet->GetAt(i);
@@ -203,9 +203,9 @@ void CRedefine3DTask::OnMouseMove(UINT, CPoint thepoint)
     FindObject(thepoint,GetMask(),TRUE,FALSE);
 }
 
-unsigned long CRedefine3DTask::GetMask()
+DWORD CRedefine3DTask::GetMask()
 {
-    unsigned long mask;
+    DWORD mask;
 
     if (m_pOption)
         mask = m_pOption->nStepID[m_nStep-1];
@@ -219,7 +219,7 @@ unsigned long CRedefine3DTask::GetMask()
 
 unsigned CRedefine3DTask::GetHelpResID()
 {
-    unsigned long mask;
+	DWORD mask;
 
     if (m_pOption)
         mask = m_pOption->nTaskResID[m_nStep-1];

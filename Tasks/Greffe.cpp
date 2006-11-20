@@ -168,7 +168,7 @@ void CGreffe3DTask::OnLoadMacro(UINT nID)
 	m_nStep = 0;
 }
 
-unsigned long CGreffe3DTask::GetMask()
+DWORD CGreffe3DTask::GetMask()
 {
 	return TAllPointClass;
 }

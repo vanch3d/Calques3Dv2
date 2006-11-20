@@ -117,7 +117,7 @@ unsigned CTask::GetTaskResID() const
 /// The filter is a bitwise combination of objects identifiers (see #TObject3DClass and others).
 /// See CObject3D#MaskObject and CObject3D#isA for description of the filter mechanism.
 //////////////////////////////////////////////////////////////////////
-unsigned long CTask::GetMask()
+DWORD CTask::GetMask()
 {
     return TObject3DClass;
 }
@@ -196,7 +196,7 @@ UINT CTask::GetTaskCursor()
 }
 
 
-int  CTask::FindObject(CPoint theLoc,unsigned long mask,BOOL bShowLabel,BOOL bSub)
+int  CTask::FindObject(CPoint theLoc,DWORD mask,BOOL bShowLabel,BOOL bSub)
 {
     int trouve=0;
     CString strObj(_T(""));
@@ -273,7 +273,7 @@ CObject3D* CTask::GetObject()
     {
         //CBCGPopupMenu *pMen=NULL;
         BOOL bFound= FALSE;
-        CAmbiguityList pPickUp(ERR_AMBIGUITY,m_pParent);
+        CAmbiguityList pPickUp(IDS_AMBIGUITY,m_pParent);
         for (int i=0;i<nb;i++)
         {
             CObject3D *obj = m_cObjectFound.GetAt(i);

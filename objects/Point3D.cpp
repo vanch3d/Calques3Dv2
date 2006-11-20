@@ -222,7 +222,7 @@ CRgn* CPoint3D::InvalideRect()
 }
 
 
-int CPoint3D::CalculConceptuel()
+UINT CPoint3D::CalculConceptuel()
 {
     bValidate = TRUE;
     return 0;
@@ -790,7 +790,7 @@ CxObject3DSet* CPointMilieu3D::GetParents()
     return list;
 }
 
-int  CPointMilieu3D::CalculConceptuel()
+UINT  CPointMilieu3D::CalculConceptuel()
 {
     CVector4 V1,V2;
     if (P1 == NULL)
@@ -928,7 +928,7 @@ BOOL CPointCenter3D::SetParents(CxObject3DSet* pSet)
 
 
 
-int  CPointCenter3D::CalculConceptuel()
+UINT  CPointCenter3D::CalculConceptuel()
 {
     bValidate = (C->bValidate);
     if (!bValidate)
@@ -1133,7 +1133,7 @@ BOOL CPointSymetric3D::SetParents(CxObject3DSet* pSet)
 
 
 
-int CPointSymetric3D::CalculConceptuel()
+UINT CPointSymetric3D::CalculConceptuel()
 {
     bValidate = Src->bValidate;
 
@@ -1342,7 +1342,7 @@ CString CPointTranslat3D::GetObjectDef()
     return mstr;
 }
 
-int  CPointTranslat3D::CalculConceptuel()
+UINT  CPointTranslat3D::CalculConceptuel()
 {
     bValidate = Src->bValidate && Org->bValidate && Dir->bValidate;
 

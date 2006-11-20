@@ -315,14 +315,14 @@ CObject3D* CCompositeObj3D::HitTest(CPoint pt,UINT mask,int nCalcNum,BOOL bSub,C
     return pObj;
 }
 
-int  CCompositeObj3D::CalculConceptuel()
+UINT  CCompositeObj3D::CalculConceptuel()
 {
     int ret=0;
     int nb = m_cSubObjects.GetSize();
     for (int i=0;i<nb;i++)
      {
         CObject3D * obj = m_cSubObjects.GetAt(i);
-        int temp = obj->CalculConceptuel();
+        UINT temp = obj->CalculConceptuel();
         obj->pComposite = this;
         if (temp)
         {
@@ -814,7 +814,7 @@ CString CCube3D::GetObjectDef()
     return mstr;
 }
 
-int  CCube3D::CalculConceptuel()
+UINT  CCube3D::CalculConceptuel()
 {
     bValidate = ((ptA->bValidate) && (ptB->bValidate));
     if (!bValidate)
@@ -1162,7 +1162,7 @@ void CInterSphDr3D::InitInterSphDr()
 }
 
 
-int  CInterSphDr3D::CalculConceptuel()
+UINT  CInterSphDr3D::CalculConceptuel()
 {
     bValidate = ((Sph->bValidate) && (Dr->bValidate));
     if (!bValidate)
@@ -1431,7 +1431,7 @@ CString CDivSegment3D::GetObjectDef()
     return mstr;
 }
 
-int  CDivSegment3D::CalculConceptuel()
+UINT  CDivSegment3D::CalculConceptuel()
 {
     bValidate = (Seg->bValidate);
     if (!bValidate)

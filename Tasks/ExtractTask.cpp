@@ -54,7 +54,7 @@ CExtractCalcTask::~CExtractCalcTask()
 	m_cObjExtracted.RemoveAll();
 }
 
-unsigned long CExtractCalcTask::GetMask()
+DWORD CExtractCalcTask::GetMask()
 {
 	return CTask::GetMask();
 }

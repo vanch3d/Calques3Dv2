@@ -26,7 +26,7 @@ public:
 	virtual UINT GetHelpID() const { return IDS_HELP_VECTOR;};
 	virtual UINT GetDefID() const { return IDS_DEF_VECTOR;};
 
-	virtual unsigned long isA() const { return TVector3DClass; }
+	virtual DWORD isA() const { return TVector3DClass; }
 
 	virtual BOOL IsEqual(CObject3D &other);
 
@@ -39,7 +39,7 @@ public:
 	virtual CString GetObjectDef();
 
 	virtual void CalculVisuel(CVisualParam *);
-	virtual int  CalculConceptuel();
+	virtual UINT  CalculConceptuel();
 	virtual void Draw(CDC*,CVisualParam *vp,BOOL bSm=0);
 
 };

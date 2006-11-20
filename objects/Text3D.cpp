@@ -109,7 +109,7 @@ void CText3D::SetFont(LOGFONT *pLogFont)
     mTextFont.CreateFontIndirect(pLogFont);
 }
 
-int  CText3D::CalculConceptuel()
+UINT  CText3D::CalculConceptuel()
 {
     bValidate = TRUE;
     return 0;
@@ -271,7 +271,7 @@ void CLabel3D::Serialize( CArchive& ar )
     }
 }
 
-int  CLabel3D::CalculConceptuel()
+UINT  CLabel3D::CalculConceptuel()
 {
     bValidate = (pSource && pSource->bValidate);
     return 0;
@@ -431,9 +431,9 @@ void CEquation3D::SetSelected(BOOL bSel /*=TRUE*/)
         pSource->SetSelected(bSel);
 }
 
-int  CEquation3D::CalculConceptuel()
+UINT  CEquation3D::CalculConceptuel()
 {
-    int res = CText3D::CalculConceptuel();
+    UINT res = CText3D::CalculConceptuel();
     bValidate = (pSource && pSource->bValidate);
     return res;
 }
@@ -1066,9 +1066,9 @@ void CDistance3D::CalculVisuel(CVisualParam *vp)
     //CValue3D::CalculVisuel(vp);
 }
 
-int  CDistance3D::CalculConceptuel()
+UINT  CDistance3D::CalculConceptuel()
 {
-    int res = CText3D::CalculConceptuel();
+    UINT res = CText3D::CalculConceptuel();
     if (pSource2 && pSource)
         bValidate = (pSource2->bValidate && pSource->bValidate);
     else if (pSource)
@@ -1445,9 +1445,9 @@ void CAngle3D::CalculVisuel(CVisualParam *vp)
     //bValidate = TRUE;
 }
 
-int  CAngle3D::CalculConceptuel()
+UINT  CAngle3D::CalculConceptuel()
 {
-    int res = CText3D::CalculConceptuel();
+    UINT res = CText3D::CalculConceptuel();
 
     BOOL bVal = TRUE;
     for (int i=0;i<m_pSource.GetSize();i++)
@@ -2112,7 +2112,7 @@ void CComment3D::CalculVisuel(CVisualParam *)
     bValidate = TRUE;
 }
 
-int  CComment3D::CalculConceptuel()
+UINT  CComment3D::CalculConceptuel()
 {
     return CEquation3D::CalculConceptuel();
 }

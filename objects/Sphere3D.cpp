@@ -214,7 +214,7 @@ CRgn* CSphere3D::InvalideRect()
 }
 
 
-int  CSphere3D::CalculConceptuel()
+UINT  CSphere3D::CalculConceptuel()
 {
 	bValidate = ((P1->bValidate) && (P2->bValidate));
 	if (!bValidate)

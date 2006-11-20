@@ -61,13 +61,13 @@ public:
 	virtual CString GetObjectDef();
 	virtual int SetDepth();
 	
-	virtual unsigned long isA() const { return TCercle3DClass; }
+	virtual DWORD isA() const { return TCercle3DClass; }
 	virtual BOOL IsEqual(CObject3D &other);
 
 	virtual BOOL IsInActiveArea(CPoint);
 	virtual CRgn* InvalideRect();
 
-	virtual int  CalculConceptuel();
+	virtual UINT  CalculConceptuel();
 	virtual void CalculVisuel(CVisualParam *);
 	virtual void Draw(CDC*,CVisualParam *,BOOL bSM=FALSE);
 
@@ -89,11 +89,11 @@ public:
 	virtual CObject3D* CopyObject();
 
 	virtual UINT GetDefID() const { return IDS_DEF_ARCCIRCLE;};
-	virtual unsigned long isA() const { return TArcCercle3DClass; }
+	virtual DWORD isA() const { return TArcCercle3DClass; }
 	virtual CString GetObjectDef();
 
 	virtual BOOL IsEqual(CObject3D &other);
-	virtual int  CalculConceptuel();
+	virtual UINT  CalculConceptuel();
 
 	virtual CString DrawSymbolic(); 
 
@@ -120,13 +120,13 @@ public:
 	virtual CxObject3DSet* GetParents();
 	virtual CString GetObjectDef();
 
-	virtual unsigned long isA() const { return TEllipse3DClass; }
+	virtual DWORD isA() const { return TEllipse3DClass; }
 	virtual UINT GetDefID() const { return IDS_DEF_ELLIPSE;};
 
 	virtual BOOL IsEqual(CObject3D &other);
 	virtual void Serialize( CArchive& ar );
 
-	virtual int  CalculConceptuel();
+	virtual UINT  CalculConceptuel();
 };
 
 
@@ -150,11 +150,11 @@ public:
 	virtual CObject3D* CopyObject();
 
 	virtual UINT GetDefID() const { return IDS_DEF_CIRCLEISS;};
-	virtual unsigned long isA() const { return TCercleInterSS3D; }
+	virtual DWORD isA() const { return TCercleInterSS3D; }
 	virtual CString GetObjectDef();
 
 	virtual BOOL IsEqual(CObject3D &other);
-	virtual int  CalculConceptuel();
+	virtual UINT  CalculConceptuel();
 
 	virtual CString DrawSymbolic(); 
 	virtual void Serialize( CArchive& ar );

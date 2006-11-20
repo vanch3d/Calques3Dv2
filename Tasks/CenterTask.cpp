@@ -50,7 +50,7 @@ unsigned CCenterTask::GetHelpResID()
 
 
 
-unsigned long CCenterTask::GetMask()
+DWORD CCenterTask::GetMask()
 {
 	return TAllCercleClass;
 }

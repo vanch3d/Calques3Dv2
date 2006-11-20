@@ -67,7 +67,7 @@ public:
 	virtual UINT GetHelpID() const { return IDS_HELP_LINE;};
 	virtual UINT GetDefID() const { return IDS_DEF_LINE;};
 
-	virtual unsigned long isA() const { return TDroite3DClass; }
+	virtual DWORD isA() const { return TDroite3DClass; }
 
 	virtual BOOL IsEqual(CObject3D &other);
 	virtual BOOL IsInLimit(FCoord x);
@@ -86,7 +86,7 @@ public:
 	void AddVisualPt(CDVector4);
 
 	virtual void CalculVisuel(CVisualParam *);
-	virtual int  CalculConceptuel();
+	virtual UINT  CalculConceptuel();
 	virtual void Draw(CDC*,CVisualParam *vp,BOOL bSm=0);
 
 	virtual CString DrawSymbolic(); 
@@ -117,7 +117,7 @@ public:
 	virtual UINT GetHelpID() const { return IDS_HELP_SEG;};
 	virtual UINT GetDefID() const { return IDS_DEF_SEG;};
 
-	virtual unsigned long isA() const { return TSegment3DClass; }
+	virtual DWORD isA() const { return TSegment3DClass; }
 
 	virtual CString DrawSymbolic(); 
 
@@ -143,7 +143,7 @@ public:
 
 	virtual CString DrawSymbolic(); 
 
-	virtual unsigned long isA() const { return TDemiDroite3DClass; }
+	virtual DWORD isA() const { return TDemiDroite3DClass; }
 };
 
 
@@ -163,7 +163,7 @@ public:
 
 	virtual CString DrawSymbolic(); 
 
-	virtual unsigned long isA() const { return TDroitePar3DClass; }
+	virtual DWORD isA() const { return TDroitePar3DClass; }
 } ;
 
 //////////////////////////////////////////////////////////////////////
@@ -192,11 +192,11 @@ public:
 	virtual CxObject3DSet* GetParents();
 	virtual CString GetObjectDef();
 
-	virtual unsigned long isA() const { return TDroiteInterPP3DClass; }
+	virtual DWORD isA() const { return TDroiteInterPP3DClass; }
 
 	virtual CVector4  GetDirVector();
 	virtual CVector4  GetBasePoint();
-	virtual int  CalculConceptuel();
+	virtual UINT  CalculConceptuel();
 
 	virtual CString DrawSymbolic(); 
 
@@ -227,11 +227,11 @@ public:
 	virtual CxObject3DSet* GetParents();
 	virtual CString GetObjectDef();
 
-	virtual unsigned long isA() const { return TDroitePerpDD3DClass; }
+	virtual DWORD isA() const { return TDroitePerpDD3DClass; }
 
 	virtual CVector4  GetDirVector();
 	virtual CVector4  GetBasePoint();
-	virtual int  CalculConceptuel();
+	virtual UINT  CalculConceptuel();
 
 	virtual CString DrawSymbolic(); 
 
@@ -261,7 +261,7 @@ public:
 	virtual CObject3D* CopyObject();
 	virtual void Serialize( CArchive& ar );
 
-	virtual unsigned long isA() const { return TDroitePerp3DClass; }
+	virtual DWORD isA() const { return TDroitePerp3DClass; }
 
 	virtual CString GetObjectDef();
 
@@ -269,7 +269,7 @@ public:
 
 	virtual CVector4  GetDirVector();
 	virtual CVector4  GetBasePoint();
-	virtual int  CalculConceptuel();
+	virtual UINT  CalculConceptuel();
 
 	virtual void Draw(CDC*,CVisualParam *vp,BOOL bSm=FALSE);
 

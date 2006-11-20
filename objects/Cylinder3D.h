@@ -54,7 +54,7 @@ public:
 	virtual UINT GetHelpID() const { return IDS_HELP_CYLIN;};
 	virtual UINT GetDefID() const { return IDS_DEF_CYLIN;};
 
-	virtual unsigned long isA() const { return TCylindre3DClass; }
+	virtual DWORD isA() const { return TCylindre3DClass; }
 
 	virtual CString GetObjectDef();
 	virtual int SetProperties(CxObject3DSet *pSet=NULL);
@@ -62,7 +62,7 @@ public:
 	CVector4	 calculGeneratrice(FCoord th,CVector4 C,FCoord R,CVector4 I,CVector4 J,CVector4 K);
 	FCoord		 DistPtToLine(CVector4 pt,CVector4 src,CVector4 dir);
 
-	virtual int  CalculConceptuel();
+	virtual UINT  CalculConceptuel();
 	virtual void CalculVisuel(CVisualParam *);
 	virtual void Draw(CDC* pDC,CVisualParam *vp,BOOL bSm=0);
 	virtual void DrawRetro(CDC*,CVisualParam *vp);
@@ -83,9 +83,9 @@ public:
 	virtual ~CCone3D();
 
 	virtual CObject3D* CopyObject();
-	virtual unsigned long isA() const { return TCone3DClass; }
+	virtual DWORD isA() const { return TCone3DClass; }
 
-	virtual int  CalculConceptuel();
+	virtual UINT  CalculConceptuel();
 	virtual void CalculVisuel(CVisualParam *);
 
 	virtual void Draw(CDC* pDC,CVisualParam *vp,BOOL bSm=0);

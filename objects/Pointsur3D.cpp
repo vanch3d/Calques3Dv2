@@ -198,7 +198,7 @@ void CPointSurD3D::CopyPointPosition(CObject3D* src)
 {
 	CPointSur3D::CopyPointPosition(src);
 	if (!src) return;
-	unsigned long ff = src->isA();
+	DWORD ff = src->isA();
 	if (ff == TPointSurD3DClass)
 	{
 		//Concept_pt =  ((CPointSurD3D*)src)->Concept_pt;
@@ -269,7 +269,7 @@ CString CPointSurD3D::GetObjectDef()
 }
 
 
-int  CPointSurD3D::CalculConceptuel()
+UINT  CPointSurD3D::CalculConceptuel()
 {
 	bValidate = (S->bValidate);
 	if (!bValidate)
@@ -453,9 +453,9 @@ BOOL CPointSurD3D::MoveObject(CVisualParam *myVisuParam,UINT,CPoint MouseClic,CV
 /*	TPoint3D pt(0,ecran);
 	Vector4 plNorm(S->GetDirVector());
 	TPlan3D pl(0,&pt,plNorm);
-	int res1 = pl.CalculConceptuel();
+	UINT res1 = pl.CalculConceptuel();
 	TPointInterDP3D dp(0,S,&pl);
-	int res2 = dp.CalculConceptuel();
+	UINT res2 = dp.CalculConceptuel();
 	if (res2) return 0;
 	TempCpt = dp.Concept_pt;
 */
@@ -607,7 +607,7 @@ CString CPointSurC3D::GetObjectDef()
 }
 
 
-int  CPointSurC3D::CalculConceptuel()
+UINT  CPointSurC3D::CalculConceptuel()
 {
 	bValidate = (S->bValidate);
 	if (!bValidate)
@@ -1036,7 +1036,7 @@ CString CPointSurP3D::GetObjectDef()
 }*/
 
 
-int  CPointSurP3D::CalculConceptuel()
+UINT  CPointSurP3D::CalculConceptuel()
 {
 	bValidate = (P->bValidate);
 	if (!bValidate)
@@ -1198,7 +1198,7 @@ BOOL CPointSurP3D::MoveObject(CVisualParam *myVisuParam,UINT,CPoint MouseClic,CV
 	CDroite3D dxy(&x,&y);
 	dxy.CalculConceptuel();
 	CPointInterDP3D dp(&dxy,(CPlan3D*)P);
-	int r = dp.CalculConceptuel();
+	UINT r = dp.CalculConceptuel();
 	if (r)	return 0;
 
 	CVector4 ppt = dp.Concept_pt;
@@ -1414,7 +1414,7 @@ CString CPointSurS3D::GetObjectDef()
 	return mstr;
 }
 
-int  CPointSurS3D::CalculConceptuel()
+UINT  CPointSurS3D::CalculConceptuel()
 {
 	bValidate = (S->bValidate);
 	if (!bValidate)
@@ -1736,7 +1736,7 @@ CString CPointSurCyl3D::GetObjectDef()
 }
 
 
-int  CPointSurCyl3D::CalculConceptuel()
+UINT  CPointSurCyl3D::CalculConceptuel()
 {
 	bValidate = (Cyl->bValidate);
 	if (!bValidate)

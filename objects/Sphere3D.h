@@ -43,7 +43,7 @@ public:
 	virtual int SetDepth();
 	virtual void	GetRange(CVector4 &min,CVector4 &max);
 
-	virtual unsigned long isA() const { return TSphere3DClass; }
+	virtual DWORD isA() const { return TSphere3DClass; }
 	virtual BOOL IsEqual(CObject3D &other);
 
 	virtual BOOL IsInActiveArea(CPoint pt);
@@ -51,7 +51,7 @@ public:
 
 	virtual void Serialize( CArchive& ar );
 
-	virtual int  CalculConceptuel();
+	virtual UINT  CalculConceptuel();
 	virtual void CalculVisuel(CVisualParam *);
 	virtual void Draw(CDC* pDC,CVisualParam *vp,BOOL bSm=0);
 	virtual void DrawRetro(CDC*,CVisualParam *vp);

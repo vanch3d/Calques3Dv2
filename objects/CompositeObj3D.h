@@ -36,7 +36,7 @@ public:
 
 	virtual CObject3D* CopyObject();
 
-	virtual unsigned long isA() const { return TCompositeObject3DClass; }
+	virtual DWORD isA() const { return TCompositeObject3DClass; }
 	virtual int UpdateID(int nIdx);
 
 	virtual void Serialize( CArchive& ar );
@@ -62,7 +62,7 @@ public:
 
 	virtual CObject3D* HitTest(CPoint pt,UINT mask=0,int nCalcNum = 0,BOOL bSub = TRUE,CxObject3DSet* pSet = NULL);
 
-	virtual int  CalculConceptuel();
+	virtual UINT  CalculConceptuel();
 	virtual void CalculVisuel(CVisualParam *);
 	virtual void Draw(CDC*,CVisualParam *vp,BOOL bSM=FALSE);
 	virtual void DrawSelected(CDC* pDC,CVisualParam *vp);
@@ -127,7 +127,7 @@ public:
 	virtual UINT GetHelpID() const { return IDS_HELP_CUBE;};
 	virtual UINT GetDefID() const { return IDS_DEF_CUBE;};
 
-	virtual unsigned long isA() const { return TCube3DClass; }
+	virtual DWORD isA() const { return TCube3DClass; }
 
 	virtual void Draw(CDC*,CVisualParam *vp,BOOL bSM=FALSE);
 	virtual void PrepareMoveObject(BOOL bMove = TRUE);
@@ -135,7 +135,7 @@ public:
 	void InitCube(BOOL bLoad = FALSE);
 	void InitFace(int facNum,int som,int s1,int s2,int s3,int s4);
 	virtual CString GetObjectDef();
-	virtual int  CalculConceptuel();
+	virtual UINT  CalculConceptuel();
 	virtual void CalculVisuel(CVisualParam *);
 
 	virtual void	GetRange(CVector4 &min,CVector4 &max);
@@ -164,7 +164,7 @@ public:
 	virtual CxObject3DSet* GetParents();
 	virtual BOOL IsEqual(CObject3D &other);
 
-	virtual unsigned long isA() const { return TInterSphDr3DClass; }
+	virtual DWORD isA() const { return TInterSphDr3DClass; }
 
 	virtual UINT GetDefID() const { return IDS_DEF_INTSPDR;};
 
@@ -173,7 +173,7 @@ public:
 	virtual void SetStyle(int nStyle);
 
 	virtual CString GetObjectDef();
-	virtual int  CalculConceptuel();
+	virtual UINT  CalculConceptuel();
 	virtual void CalculVisuel(CVisualParam *);
 	virtual void Draw(CDC*,CVisualParam *vp,BOOL bSM=FALSE);
 
@@ -201,7 +201,7 @@ public:
 	virtual CxObject3DSet* GetParents();
 	virtual BOOL IsEqual(CObject3D &other);
 
-	virtual unsigned long isA() const { return TDivSegment3DClass; }
+	virtual DWORD isA() const { return TDivSegment3DClass; }
 
 	virtual UINT GetDefID() const { return IDS_DEF_SECTIONSEG;};
 
@@ -210,7 +210,7 @@ public:
 	virtual void SetStyle(int nStyle);
 
 	virtual CString GetObjectDef();
-	virtual int  CalculConceptuel();
+	virtual UINT  CalculConceptuel();
 	virtual void CalculVisuel(CVisualParam *);
 	virtual void Draw(CDC*,CVisualParam *vp,BOOL bSM=FALSE);
 

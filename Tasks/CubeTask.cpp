@@ -48,7 +48,7 @@ CCube3DTask::~CCube3DTask()
 
 }
 
-unsigned long CCube3DTask::GetMask()
+DWORD CCube3DTask::GetMask()
 {
 	return TAllPointClass;
 }
@@ -222,7 +222,7 @@ void CCube3DTask::CreateObject3D()
 				((CPointSurP3D *)ptS)->alpha,
 				((CPointSurP3D *)ptS)->beta);*/
 
-	int a = temp->CalculConceptuel();
+	UINT a = temp->CalculConceptuel();
 	if (a)
 	 {	
 		temp->HandleObjectError(a,TRUE);

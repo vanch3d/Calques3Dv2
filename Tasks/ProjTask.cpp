@@ -43,7 +43,7 @@ CProjectionTask::~CProjectionTask()
 	m_pParent->GetVisualParam()->bFixed = FALSE;
 }
 
-unsigned long CProjectionTask::GetMask()
+DWORD CProjectionTask::GetMask()
 {
 	if (!pl && !pt1)
 		return TAllPointClass | TAllPlanClass;

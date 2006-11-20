@@ -62,13 +62,13 @@ public:
 
 	virtual BOOL ChangeParent(CObject3D *pOld,CObject3D *pNew,BOOL bUpGraph=FALSE);
 
-	virtual unsigned long isA() const { return TLocus3DClass; }
+	virtual DWORD isA() const { return TLocus3DClass; }
 	virtual BOOL IsEqual(CObject3D &other);
 
 	virtual BOOL IsInActiveArea(CPoint);
 	virtual CRgn* InvalideRect();
 
-	virtual int  CalculConceptuel();
+	virtual UINT  CalculConceptuel();
 	virtual void CalculVisuel(CVisualParam *);
 	virtual void Draw(CDC*,CVisualParam *,BOOL bSM=FALSE);
 

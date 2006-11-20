@@ -195,8 +195,8 @@ BOOL CDroite3D::IsEqual(CObject3D &o)
 {
     if (!o.MaskObject(TAllDroiteClass)) return false;
 
-    unsigned long ThisIsSeg = (isA() == TAllSegmentClass);
-    unsigned long OtherIsSeg = (o.isA() == TAllSegmentClass);
+    DWORD ThisIsSeg = (isA() == TAllSegmentClass);
+    DWORD OtherIsSeg = (o.isA() == TAllSegmentClass);
 
     if (OtherIsSeg && ThisIsSeg)
      {
@@ -223,7 +223,7 @@ BOOL CDroite3D::IsEqual(CObject3D &o)
             pl.CalculConceptuel();
 
             CPointInterDP3D a1(this,&pl);
-            int res = a1.CalculConceptuel();
+            UINT res = a1.CalculConceptuel();
             if (res)
              {
                 //TPlan3D pl2(0,&p1,&p2,&p4);
@@ -233,7 +233,7 @@ BOOL CDroite3D::IsEqual(CObject3D &o)
                 CPointInterDP3D a1b(this,&pl2);
                 res = a1b.CalculConceptuel();
                 CPointInterDP3D a2((CDroite3D *)&o,&pl2);
-                int res2 = a2.CalculConceptuel();
+                UINT res2 = a2.CalculConceptuel();
                 return a1b.IsEqual(a2);
              }
             else
@@ -344,7 +344,7 @@ UINT CDroite3D::IsPerpendicularTo(CObject3D *pObj)
         CVector4 pV2 = pDr->GetDirVector();
 
         FCoord pVC = pV1 * pV2;
-        return (FCZero(pVC)) ? VER_PAR_ANALYTIC : VER_PAR_NO ;
+        return (FCZero(pVC)) ? VER_PERP_ANALYTIC : VER_PERP_NO ;
     }
     if (pPl)
     {
@@ -353,10 +353,10 @@ UINT CDroite3D::IsPerpendicularTo(CObject3D *pObj)
 
         CVector4 pProd = pV1 % pV2;
 
-        return (pProd.NullVector()) ? VER_PAR_ANALYTIC : VER_PAR_NO;
+        return (pProd.NullVector()) ? VER_PERP_ANALYTIC : VER_PERP_NO;
 
         FCoord pVC = pV1 * pV2;
-        return (FCZero(pVC)) ? VER_PAR_ANALYTIC : VER_PAR_NO ;
+        return (FCZero(pVC)) ? VER_PERP_ANALYTIC : VER_PERP_NO ;
     }
     return VER_ERROR;
 }
@@ -500,7 +500,7 @@ void CDroite3D::CalculVisuel(CVisualParam *myVisuParam)
      }
 }
 
-int  CDroite3D::CalculConceptuel()
+UINT  CDroite3D::CalculConceptuel()
 {
     if (P2)
         bValidate = ((P2->bValidate) && (P1->bValidate));
@@ -1162,7 +1162,7 @@ CVector4  CDroiteInterPP3D::GetBasePoint()
 #define MRG_ZERO 1.0e-8
 //#define CALCUL_INTER_2
 
-int  CDroiteInterPP3D::CalculConceptuel()
+UINT  CDroiteInterPP3D::CalculConceptuel()
 {
     bValidate = ((Pl1->bValidate) && (Pl2->bValidate));
     if (!bValidate)
@@ -1267,11 +1267,11 @@ int  CDroiteInterPP3D::CalculConceptuel()
         CVector4 MYPPT(0,0,0);
         BOOL bTest=FALSE;
 
-        int r= s1.CalculConceptuel();
+        UINT r= s1.CalculConceptuel();
         if (!r)
         {
             CPointInterDD3D ps1(this,&s1);
-            int d= ps1.CalculConceptuel();
+            UINT d= ps1.CalculConceptuel();
             if (!d)
             {   //ps1.lambda;
                 if (ps1.mu <= 1.0001 && ps1.mu >= -1E-12)
@@ -1290,7 +1290,7 @@ int  CDroiteInterPP3D::CalculConceptuel()
         if (!r)
         {
             CPointInterDD3D ps1(this,&s2);
-            int d= ps1.CalculConceptuel();
+            UINT d= ps1.CalculConceptuel();
             if (!d)
             {   //ps1.lambda;
                 if (ps1.mu <= 1.0001 && ps1.mu >= -1E-12)
@@ -1309,7 +1309,7 @@ int  CDroiteInterPP3D::CalculConceptuel()
         if (!r)
         {
             CPointInterDD3D ps1(this,&s3);
-            int d= ps1.CalculConceptuel();
+            UINT d= ps1.CalculConceptuel();
             if (!d)
             {   //ps1.lambda;
                 if (ps1.mu <= 1.0001 && ps1.mu >= -1E-12)
@@ -1328,7 +1328,7 @@ int  CDroiteInterPP3D::CalculConceptuel()
         if (!r)
         {
             CPointInterDD3D ps1(this,&s4);
-            int d= ps1.CalculConceptuel();
+            UINT d= ps1.CalculConceptuel();
             if (!d)
             {   //ps1.lambda;
                 if (ps1.mu <= 1.0001 && ps1.mu >= -1E-12)
@@ -1364,11 +1364,11 @@ int  CDroiteInterPP3D::CalculConceptuel()
         CVector4 MYPPT(0,0,0);
         BOOL bTest=FALSE;
 
-        int r= s1.CalculConceptuel();
+        UINT r= s1.CalculConceptuel();
         if (!r)
         {
             CPointInterDD3D ps1(this,&s1);
-            int d= ps1.CalculConceptuel();
+            UINT d= ps1.CalculConceptuel();
             if (!d)
             {   //ps1.lambda;
                 if (ps1.mu <= 1.0001 && ps1.mu >= -1E-12)
@@ -1387,7 +1387,7 @@ int  CDroiteInterPP3D::CalculConceptuel()
         if (!r)
         {
             CPointInterDD3D ps1(this,&s2);
-            int d= ps1.CalculConceptuel();
+            UINT d= ps1.CalculConceptuel();
             if (!d)
             {   //ps1.lambda;
                 if (ps1.mu <= 1.0001 && ps1.mu >= -1E-12)
@@ -1406,7 +1406,7 @@ int  CDroiteInterPP3D::CalculConceptuel()
         if (!r)
         {
             CPointInterDD3D ps1(this,&s3);
-            int d= ps1.CalculConceptuel();
+            UINT d= ps1.CalculConceptuel();
             if (!d)
             {   //ps1.lambda;
                 if (ps1.mu <= 1.0001 && ps1.mu >= -1E-12)
@@ -1425,7 +1425,7 @@ int  CDroiteInterPP3D::CalculConceptuel()
         if (!r)
         {
             CPointInterDD3D ps1(this,&s4);
-            int d= ps1.CalculConceptuel();
+            UINT d= ps1.CalculConceptuel();
             if (!d)
             {   //ps1.lambda;
                 if (ps1.mu <= 1.0001 && ps1.mu >= -1E-12)
@@ -1606,7 +1606,7 @@ CVector4  CDroitePerp3D::GetBasePoint()
     return CDroite3D::GetBasePoint();
 }
 
-int  CDroitePerp3D::CalculConceptuel()
+UINT  CDroitePerp3D::CalculConceptuel()
 {
     if (D2)
         bValidate = ((P1->bValidate) && (D2->bValidate));
@@ -1629,7 +1629,7 @@ int  CDroitePerp3D::CalculConceptuel()
         CPoint3D b(p2);
         CPoint3D c(p3);
         CPlan3D plan(&a,&b,&c);
-        int h = plan.CalculConceptuel();
+        UINT h = plan.CalculConceptuel();
         if (h)
          {
             bValidate = 0;
@@ -1667,7 +1667,7 @@ int  CDroitePerp3D::CalculConceptuel()
          }
         CDirVector = Norm;
         if (mypt)
-         {  int h = mypt->CalculConceptuel();
+         {  UINT h = mypt->CalculConceptuel();
             IntPt = mypt->Concept_pt;
             delete mypt;
          }
@@ -1815,7 +1815,7 @@ CVector4  CDroitePerpDD3D::GetBasePoint()
     return DrPt;
 }
 
-int  CDroitePerpDD3D::CalculConceptuel()
+UINT  CDroitePerpDD3D::CalculConceptuel()
 {
     bValidate = ((D2->bValidate) && (D3->bValidate));
     if (!bValidate)

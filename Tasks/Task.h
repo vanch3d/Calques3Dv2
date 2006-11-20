@@ -52,7 +52,7 @@ public:
     //@{
     virtual unsigned GetTaskResID() const;
     virtual unsigned GetHelpResID();
-    virtual unsigned long GetMask();
+    virtual DWORD GetMask();
     virtual UINT GetTaskCursor();
     virtual CString GetContextualHelp();
     //@}
@@ -92,7 +92,7 @@ public:
     /// @name Target Selection Functions
     /// These functions are used by the task to retrieve and select its target objects
     //@{
-    virtual int  FindObject(CPoint theLoc,unsigned long mask,BOOL bShowLabel=TRUE,BOOL bSub=TRUE);
+    virtual int  FindObject(CPoint theLoc,DWORD mask,BOOL bShowLabel=TRUE,BOOL bSub=TRUE);
     virtual CObject3D* GetObject();
     //@}
 
@@ -162,7 +162,7 @@ public :
     virtual unsigned GetTaskResID() const { return CTX_DROITE; }
     virtual unsigned GetHelpResID();
 
-    virtual unsigned long GetMask();
+    virtual DWORD GetMask();
     virtual void OnMouseL(UINT, CPoint);
     virtual void OnMouseR(UINT, CPoint);
     virtual void OnMouseMove(UINT, CPoint);
@@ -215,7 +215,7 @@ public :
     virtual BOOL OnUpdateTasksOption(CCmdUI* pCmdUI);
     virtual BOOL OnDoTasksOption(UINT nID);
 
-    virtual unsigned long GetMask();
+    virtual DWORD GetMask();
     virtual void OnMouseL(UINT, CPoint);
     virtual void OnMouseR(UINT, CPoint);
     virtual void OnMouseMove(UINT, CPoint);
@@ -224,7 +224,7 @@ public :
     virtual void CancelTache() {};
     virtual UINT GetTaskCursor();
 
-    virtual int  FindObject(CPoint theLoc,unsigned long mask,BOOL bShowLabel=TRUE,BOOL bSub=TRUE);
+    virtual int  FindObject(CPoint theLoc,DWORD mask,BOOL bShowLabel=TRUE,BOOL bSub=TRUE);
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -239,7 +239,7 @@ public :
     virtual unsigned GetTaskResID() const { return CTX_DELETE_OBJECT; }
     virtual unsigned GetHelpResID();
 
-    virtual unsigned long GetMask();
+    virtual DWORD GetMask();
     virtual void OnMouseL(UINT, CPoint);
     virtual void OnMouseR(UINT, CPoint);
     virtual void OnMouseMove(UINT, CPoint);
@@ -259,7 +259,7 @@ public :
     virtual unsigned GetTaskResID() const { return CTX_PLAN; }
     virtual unsigned GetHelpResID();
 
-    virtual unsigned long GetMask();
+    virtual DWORD GetMask();
     virtual void OnMouseL(UINT, CPoint);
     virtual void OnMouseR(UINT, CPoint);
     virtual void OnMouseMove(UINT, CPoint);
@@ -301,7 +301,7 @@ public :
     virtual unsigned GetTaskResID() const;
     virtual unsigned GetHelpResID();
 
-    virtual unsigned long GetMask();
+    virtual DWORD GetMask();
     virtual void OnMouseL(UINT, CPoint);
     virtual void OnMouseR(UINT, CPoint);
     virtual void OnMouseMove(UINT, CPoint);
@@ -329,7 +329,7 @@ public :
     virtual unsigned GetHelpResID();
 
     virtual void CreateObject3D();
-    virtual unsigned long GetMask();
+    virtual DWORD GetMask();
 
     virtual void OnMouseL(UINT, CPoint);
     virtual void OnMouseR(UINT, CPoint);
@@ -351,7 +351,7 @@ public :
 
     virtual unsigned GetTaskResID() const { return CTX_MILIEU; }
     virtual unsigned GetHelpResID();
-    virtual unsigned long GetMask();
+    virtual DWORD GetMask();
 
     virtual void OnMouseL(UINT, CPoint);
     virtual void OnMouseMove(UINT, CPoint);
@@ -375,7 +375,7 @@ public :
     virtual unsigned GetTaskResID() const { return CTX_CENTER_CIRCLE; }
     virtual unsigned GetHelpResID();
 
-    virtual unsigned long GetMask();
+    virtual DWORD GetMask();
     virtual void OnMouseL(UINT, CPoint);
     virtual void OnMouseMove(UINT, CPoint);
     virtual void CreateObject3D();
@@ -397,7 +397,7 @@ public :
     virtual unsigned GetTaskResID() const { return CTX_DROITE_PAR; }
     virtual unsigned GetHelpResID();
 
-    virtual unsigned long GetMask();
+    virtual DWORD GetMask();
     virtual void OnMouseL(UINT, CPoint);
     virtual void OnMouseMove(UINT, CPoint);
     virtual void CreateObject3D();
@@ -417,7 +417,7 @@ public :
     virtual unsigned GetTaskResID() const;
     virtual unsigned GetHelpResID();
 
-    virtual unsigned long GetMask();
+    virtual DWORD GetMask();
     virtual void CreateObject3D();
     virtual void DrawFeedBack(CDC *);
 };
@@ -438,7 +438,7 @@ public :
     virtual unsigned GetTaskResID() const { return CTX_CUBE; }
     virtual unsigned GetHelpResID();
 
-    virtual unsigned long GetMask();
+    virtual DWORD GetMask();
     virtual void OnMouseL(UINT, CPoint);
     virtual void OnMouseMove(UINT, CPoint);
     virtual void OnMouseLUp(UINT, CPoint);
@@ -504,7 +504,7 @@ public :
     virtual BOOL OnUpdateTasksOption(CCmdUI* pCmdUI);
     virtual BOOL OnDoTasksOption(UINT nID);
 
-    virtual unsigned long GetMask();
+    virtual DWORD GetMask();
     virtual void OnMouseL(UINT, CPoint);
     virtual void OnMouseR(UINT, CPoint);
     virtual void OnMouseMove(UINT, CPoint);
@@ -528,7 +528,7 @@ public :
     virtual unsigned GetTaskResID() const { return CTX_SYMMETRIC; }
     virtual unsigned GetHelpResID();
 
-    virtual unsigned long GetMask();
+    virtual DWORD GetMask();
     virtual void OnMouseL(UINT, CPoint);
     virtual void OnMouseMove(UINT, CPoint);
     virtual void CreateObject3D();
@@ -572,7 +572,7 @@ public :
     virtual BOOL OnUpdateTasksOption(CCmdUI* pCmdUI);
     virtual BOOL OnDoTasksOption(UINT nID);
 
-    virtual unsigned long GetMask();
+    virtual DWORD GetMask();
     virtual void OnMouseL(UINT, CPoint);
     virtual void OnMouseR(UINT, CPoint);
     virtual void OnMouseMove(UINT, CPoint);
@@ -603,7 +603,7 @@ public :
     virtual unsigned GetTaskResID() const;
     virtual unsigned GetHelpResID();
 
-    virtual unsigned long GetMask();
+    virtual DWORD GetMask();
     virtual void CreateObject3D();
     virtual void OnMouseL(UINT, CPoint);
     virtual void OnMouseMove(UINT, CPoint);
@@ -635,7 +635,7 @@ public :
     virtual BOOL OnUpdateTasksOption(CCmdUI* pCmdUI);
     virtual BOOL OnDoTasksOption(UINT nID);
 
-    virtual unsigned long GetMask();
+    virtual DWORD GetMask();
     virtual void CreateObject3D();
 };
 
@@ -652,7 +652,7 @@ public :
 
     CShape          *pShape;
     //COLORREF      *color;
-    unsigned long   nMaskTarget;
+    DWORD nMaskTarget;
     int             nSubTaskID; // 0 Duplicate 1 hide 2 Mark
 
     CCopyShapeTask(CView *AParent,UINT taskID);
@@ -660,7 +660,7 @@ public :
     virtual unsigned GetTaskResID() const { return CTX_COPYSHAPE; }
     virtual unsigned GetHelpResID();
 
-    virtual unsigned long GetMask();
+    virtual DWORD GetMask();
     virtual void OnMouseL(UINT, CPoint);
     virtual void OnMouseR(UINT, CPoint);
     virtual void OnMouseMove(UINT, CPoint);
@@ -682,7 +682,7 @@ public :
     virtual unsigned GetTaskResID() const { return CTX_LOCUS; }
     virtual unsigned GetHelpResID();
     virtual void DrawFeedBack(CDC *);
-    virtual unsigned long GetMask();
+    virtual DWORD GetMask();
 
     virtual void CreateObject3D();
 };
@@ -706,7 +706,7 @@ public :
     virtual unsigned GetHelpResID();
 
     void ShiftTo(CPoint pt);
-    virtual unsigned long GetMask();
+    virtual DWORD GetMask();
     virtual void OnMouseL(UINT, CPoint);
     virtual void OnMouseR(UINT, CPoint);
     virtual void OnMouseLDC(UINT, CPoint);
@@ -736,7 +736,7 @@ public :
     virtual unsigned GetTaskResID() const { return CTX_REDEFINE; }
     virtual unsigned GetHelpResID();
 
-    virtual unsigned long GetMask();
+    virtual DWORD GetMask();
     virtual void OnMouseL(UINT, CPoint);
     virtual void OnMouseR(UINT, CPoint);
     virtual void OnMouseMove(UINT, CPoint);
@@ -770,7 +770,7 @@ public :
     virtual unsigned GetTaskResID() const { return CTX_VERIFY; }
     virtual unsigned GetHelpResID();
 
-    virtual unsigned long GetMask();
+    virtual DWORD GetMask();
     virtual void OnMouseL(UINT, CPoint);
     virtual void OnMouseMove(UINT, CPoint);
     virtual void OnMouseR(UINT, CPoint);
@@ -805,7 +805,7 @@ public :
 
     virtual void CancelTache();
 
-    virtual unsigned long GetMask();
+    virtual DWORD GetMask();
     virtual void OnMouseL(UINT, CPoint);
     virtual void OnMouseMove(UINT, CPoint);
     virtual void CreateObject3D();
@@ -835,7 +835,7 @@ public :
     virtual ~CAnimation3DTask();
     virtual void CancelTache();
 
-    virtual unsigned long GetMask();
+    virtual DWORD GetMask();
     virtual void OnMouseL(UINT, CPoint);
     virtual void OnMouseMove(UINT, CPoint);
     virtual void OnMouseLUp(UINT, CPoint);
@@ -862,7 +862,7 @@ public :
     virtual unsigned GetTaskResID() const { return CTX_CENTERON; }
     virtual unsigned GetHelpResID();
 
-    virtual unsigned long GetMask();
+    virtual DWORD GetMask();
     virtual void OnMouseL(UINT, CPoint);
     virtual void OnMouseMove(UINT, CPoint);
     virtual void CreateObject3D();

@@ -382,7 +382,7 @@ void CViewHisto::OnDblclk(NMHDR* pNMHDR, LRESULT* pResult)
 		GetDocument()->ModifyPropObject(pObj);
 	else
 	{
-		int rr = pObj->CalculConceptuel();
+		UINT rr = pObj->CalculConceptuel();
 		pObj->HandleObjectError(rr,TRUE);
 	}
 	//pObj->SetProperties();

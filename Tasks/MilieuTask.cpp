@@ -50,7 +50,7 @@ void CMilieu3DTask::OnMouseL(UINT, CPoint thepos)
 {
 	CObject3D *temp;
 
-//	unsigned long mask;
+//	DWORD mask;
 	int index=0;
 	index = FindObject(thepos,GetMask(),FALSE);
 //	if (!ptA && !index) //mask = TAllPointClass;
@@ -113,7 +113,7 @@ unsigned CMilieu3DTask::GetHelpResID()
 		return ((m_nStep) ? CTX_SELECT_POINT2 : CTX_SELECT_POINTSEG);
 }
 
-unsigned long CMilieu3DTask::GetMask()
+DWORD CMilieu3DTask::GetMask()
 {
 	if (m_nTaskID==ID_CONSTRUCTION_DIVSEGMENT)
 		return TAllSegmentClass;

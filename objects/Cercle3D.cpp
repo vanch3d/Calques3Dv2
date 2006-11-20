@@ -246,7 +246,7 @@ CRgn* CCercle3D::InvalideRect()
     return NULL;
 }
 
-int  CCercle3D::CalculConceptuel()
+UINT  CCercle3D::CalculConceptuel()
 {
     if (!P2 && !P3)
     {
@@ -507,7 +507,7 @@ BOOL CArcCercle3D::IsEqual(CObject3D &other)
     return CCercle3D::IsEqual(other);
 }
 
-int  CArcCercle3D::CalculConceptuel()
+UINT  CArcCercle3D::CalculConceptuel()
 {
     bValidate = ((P1->bValidate) && (P2->bValidate) && (P3->bValidate));
     if (!bValidate)
@@ -665,7 +665,7 @@ BOOL CEllipse3D::IsEqual(CObject3D &other)
     return FALSE;
 }
 
-int  CEllipse3D::CalculConceptuel()
+UINT  CEllipse3D::CalculConceptuel()
 {
     bValidate = ((Pl->bValidate) && (Cy->bValidate));
     if (!bValidate)
@@ -674,7 +674,7 @@ int  CEllipse3D::CalculConceptuel()
     CSegment3D seg(Cy->P1,Cy->P2);
     seg.CalculConceptuel();
     CPointInterDP3D ptint(&seg,Pl);
-    int ret = ptint.CalculConceptuel();
+    UINT ret = ptint.CalculConceptuel();
     if (ret)
      {
         bValidate = 0;
@@ -823,7 +823,7 @@ BOOL CCercleInterSS3D::IsEqual(CObject3D &other)
     return CCercle3D::IsEqual(other);
 }
 
-int  CCercleInterSS3D::CalculConceptuel()
+UINT  CCercleInterSS3D::CalculConceptuel()
 {
     bValidate = ((SP1->bValidate) && (SP1->bValidate));
     if (!bValidate)

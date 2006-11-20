@@ -50,7 +50,7 @@ public:
 	virtual UINT GetDefID() const { return IDS_DEF_PLAN;};
 	virtual CString GetObjectDef();
 
-	virtual unsigned long isA() const { return TPlan3DClass; }
+	virtual DWORD isA() const { return TPlan3DClass; }
 	virtual BOOL IsEqual(CObject3D &other);
 
 	virtual BOOL IsInActiveArea(CPoint);
@@ -58,7 +58,7 @@ public:
 	virtual CRgn* InvalideRect();
 
 	void UpdateContour(bool upd=1) { bUpdateMe = upd;};
-	virtual int  CalculConceptuel();
+	virtual UINT  CalculConceptuel();
 	virtual void CalculVisuel(CVisualParam *);
 	virtual void Draw(CDC*,CVisualParam *vp,BOOL bSm=FALSE);
 	virtual void DrawRetro(CDC*,CVisualParam *vp);
@@ -98,12 +98,12 @@ public:
 
 	virtual CObject3D* CopyObject();
 	virtual CxObject3DSet* GetParents();
-	virtual int  CalculConceptuel();
+	virtual UINT  CalculConceptuel();
 	virtual CString GetObjectDef();
 
 	virtual UINT GetDefID() const { return IDS_DEF_PLANPERP;};
 
-	virtual unsigned long isA() const { return TPlanPerp3DClass; }
+	virtual DWORD isA() const { return TPlanPerp3DClass; }
 
 	virtual void Draw(CDC*,CVisualParam *vp,BOOL bSm=FALSE);
 	virtual CString DrawSymbolic(); 
@@ -137,7 +137,7 @@ public:
 
 	virtual CObject3D* CopyObject();
 	virtual CxObject3DSet* GetParents();
-	virtual int  CalculConceptuel();
+	virtual UINT  CalculConceptuel();
 	virtual CString GetObjectDef();
 
 	virtual UINT GetHelpID() const { return IDS_HELP_POLYGON;};
@@ -157,7 +157,7 @@ public:
 
 	virtual BOOL IsPointInside(CVector4& pt,BOOL bLim=TRUE);
 
-	virtual unsigned long isA() const { return TPolygon3DClass; }
+	virtual DWORD isA() const { return TPolygon3DClass; }
 };
 
 
