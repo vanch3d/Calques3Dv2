@@ -53,7 +53,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /machine:I386
-# ADD LINK32 version.lib /nologo /subsystem:windows /machine:I386
+# ADD LINK32 version.lib /nologo /subsystem:windows /machine:I386 /libpath:"OGLTools/"
 
 !ELSEIF  "$(CFG)" == "Calques3D - Win32 Debug"
 
@@ -391,6 +391,10 @@ SOURCE=.\prefs\PrefUniverse.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ProjectRCVersion.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Tasks\ProjTask.cpp
 # End Source File
 # Begin Source File
@@ -415,7 +419,7 @@ SOURCE=.\objects\Sphere3D.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Splash.cpp
+SOURCE=.\SplashScreen.cpp
 # End Source File
 # Begin Source File
 
@@ -441,10 +445,6 @@ SOURCE=.\Tasks\SymTask.cpp
 # Begin Source File
 
 SOURCE=.\Tasks\Task.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\TestView.cpp
 # End Source File
 # Begin Source File
 
@@ -708,6 +708,10 @@ SOURCE=.\prefs\PrefUniverse.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\ProjectRCVersion.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\PropertyBar.h
 # End Source File
 # Begin Source File
@@ -783,7 +787,7 @@ SOURCE=.\objects\Sphere3D.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Splash.h
+SOURCE=.\SplashScreen.h
 # End Source File
 # Begin Source File
 
@@ -804,10 +808,6 @@ SOURCE=.\MathParser\SymTable.h
 # Begin Source File
 
 SOURCE=.\Tasks\Task.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\TestView.h
 # End Source File
 # Begin Source File
 
@@ -875,14 +875,6 @@ SOURCE=.\res\arrowcop.cur
 # End Source File
 # Begin Source File
 
-SOURCE=.\res\bitmap1.bmp
-# End Source File
-# Begin Source File
-
-SOURCE=.\res\bmp00001.bmp
-# End Source File
-# Begin Source File
-
 SOURCE=.\res\btnicon.bmp
 # End Source File
 # Begin Source File
@@ -899,15 +891,7 @@ SOURCE=.\res\Calques3D.rc2
 # End Source File
 # Begin Source File
 
-SOURCE=.\res\Calques3DDoc.ico
-# End Source File
-# Begin Source File
-
-SOURCE=.\res\commandTB.bmp
-# End Source File
-# Begin Source File
-
-SOURCE=.\res\constrTB.bmp
+SOURCE=.\res\dep_bar.ico
 # End Source File
 # Begin Source File
 
@@ -928,18 +912,6 @@ SOURCE=.\res\drop_mar.cur
 # Begin Source File
 
 SOURCE=.\res\drop_sel.cur
-# End Source File
-# Begin Source File
-
-SOURCE=.\res\explorTB.bmp
-# End Source File
-# Begin Source File
-
-SOURCE=.\res\graph.bmp
-# End Source File
-# Begin Source File
-
-SOURCE=.\res\icon1.ico
 # End Source File
 # Begin Source File
 
@@ -975,7 +947,15 @@ SOURCE=.\res\idr_univ.ico
 # End Source File
 # Begin Source File
 
-SOURCE=.\res\intersec.bmp
+SOURCE=.\res\list_add.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\list_browse.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\list_delete.bmp
 # End Source File
 # Begin Source File
 
@@ -1003,23 +983,19 @@ SOURCE=.\res\obj_icon.bmp
 # End Source File
 # Begin Source File
 
-SOURCE=.\res\objectTB.bmp
-# End Source File
-# Begin Source File
-
 SOURCE=.\res\Point.cur
 # End Source File
 # Begin Source File
 
-SOURCE=.\res\pointdiv.bmp
-# End Source File
-# Begin Source File
-
-SOURCE=.\res\pointon.bmp
-# End Source File
-# Begin Source File
-
 SOURCE=.\res\preficons.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\project.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\prop_bar.ico
 # End Source File
 # Begin Source File
 
@@ -1035,23 +1011,59 @@ SOURCE=.\res\Splsh16.bmp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Splsh16.bmp
+SOURCE=.\res\tb_command.bmp
 # End Source File
 # Begin Source File
 
-SOURCE=.\res\Toolbar.bmp
+SOURCE=.\res\tb_construction.bmp
 # End Source File
 # Begin Source File
 
-SOURCE=.\res\toolbar1.bmp
+SOURCE=.\res\tb_exploration.bmp
 # End Source File
 # Begin Source File
 
-SOURCE=.\res\tree_ctrl.bmp
+SOURCE=.\res\tb_graph.bmp
 # End Source File
 # Begin Source File
 
-SOURCE=.\res\universe.bmp
+SOURCE=.\res\tb_intersec.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\tb_mainframe.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\tb_objects.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\tb_pointdiv.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\tb_pointon.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\tb_property.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\tb_univh.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\tb_univv.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\tb_verify.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\tb_visual.bmp
 # End Source File
 # Begin Source File
 
@@ -1059,14 +1071,6 @@ SOURCE=.\UserImages.bmp
 # PROP Exclude_From_Scan -1
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
-# End Source File
-# Begin Source File
-
-SOURCE=.\res\verifyTB.bmp
-# End Source File
-# Begin Source File
-
-SOURCE=.\res\visualtb.bmp
 # End Source File
 # Begin Source File
 

@@ -53,7 +53,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo /o"Release_PTG/Calques3D.bsc"
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /machine:I386
-# ADD LINK32 version.lib /nologo /subsystem:windows /machine:I386 /out:"Release_PTG/Calques3D.exe"
+# ADD LINK32 version.lib /nologo /subsystem:windows /machine:I386 /out:"Release_PTG/Calques3D.exe" /libpath:"OGLTools/"
 
 !ELSEIF  "$(CFG)" == "Calques3D_PTG - Win32 Debug"
 
@@ -79,7 +79,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo /o"Debug_PTG/Calques3D.bsc"
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 version.lib /nologo /subsystem:windows /debug /machine:I386 /out:"Debug_PTG/Calques3D.exe" /pdbtype:sept
+# ADD LINK32 version.lib /nologo /subsystem:windows /debug /machine:I386 /out:"Debug_PTG/Calques3D.exe" /pdbtype:sept /libpath:"OGLTools/"
 
 !ENDIF 
 
@@ -389,6 +389,10 @@ SOURCE=.\prefs\PrefUniverse.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ProjectRCVersion.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Tasks\ProjTask.cpp
 # End Source File
 # Begin Source File
@@ -413,7 +417,7 @@ SOURCE=.\objects\Sphere3D.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Splash.cpp
+SOURCE=.\SplashScreen.cpp
 # End Source File
 # Begin Source File
 
@@ -463,6 +467,10 @@ SOURCE=.\objects\Vector4.cpp
 # Begin Source File
 
 SOURCE=.\Tasks\VerifyDlg.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\View3DRender.cpp
 # End Source File
 # Begin Source File
 
@@ -725,7 +733,7 @@ SOURCE=.\objects\Sphere3D.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Splash.h
+SOURCE=.\SplashScreen.h
 # End Source File
 # Begin Source File
 
@@ -793,14 +801,6 @@ SOURCE=.\res\arrowcop.cur
 # End Source File
 # Begin Source File
 
-SOURCE=.\res\bitmap1.bmp
-# End Source File
-# Begin Source File
-
-SOURCE=.\res\bmp00001.bmp
-# End Source File
-# Begin Source File
-
 SOURCE=.\res\btnicon.bmp
 # End Source File
 # Begin Source File
@@ -817,11 +817,7 @@ SOURCE=.\res\Calques3D.rc2
 # End Source File
 # Begin Source File
 
-SOURCE=.\res\Calques3DDoc.ico
-# End Source File
-# Begin Source File
-
-SOURCE=.\res\constrTB.bmp
+SOURCE=.\res\dep_bar.ico
 # End Source File
 # Begin Source File
 
@@ -842,18 +838,6 @@ SOURCE=.\res\drop_mar.cur
 # Begin Source File
 
 SOURCE=.\res\drop_sel.cur
-# End Source File
-# Begin Source File
-
-SOURCE=.\res\explorTB.bmp
-# End Source File
-# Begin Source File
-
-SOURCE=.\res\graph.bmp
-# End Source File
-# Begin Source File
-
-SOURCE=.\res\icon1.ico
 # End Source File
 # Begin Source File
 
@@ -881,11 +865,11 @@ SOURCE=.\res\idr_macro.ico
 # End Source File
 # Begin Source File
 
-SOURCE=.\res\idr_univ.ico
+SOURCE=.\res\idr_render.ico
 # End Source File
 # Begin Source File
 
-SOURCE=.\res\intersec.bmp
+SOURCE=.\res\idr_univ.ico
 # End Source File
 # Begin Source File
 
@@ -913,19 +897,11 @@ SOURCE=.\res\obj_icon.bmp
 # End Source File
 # Begin Source File
 
-SOURCE=.\res\objectTB.bmp
-# End Source File
-# Begin Source File
-
 SOURCE=.\res\Point.cur
 # End Source File
 # Begin Source File
 
-SOURCE=.\res\pointdiv.bmp
-# End Source File
-# Begin Source File
-
-SOURCE=.\res\pointon.bmp
+SOURCE=.\res\prop_bar.ico
 # End Source File
 # Begin Source File
 
@@ -933,34 +909,10 @@ SOURCE=.\res\smallcpn.bmp
 # End Source File
 # Begin Source File
 
-SOURCE=.\res\Toolbar.bmp
-# End Source File
-# Begin Source File
-
-SOURCE=.\res\toolbar1.bmp
-# End Source File
-# Begin Source File
-
-SOURCE=.\res\tree_ctrl.bmp
-# End Source File
-# Begin Source File
-
-SOURCE=.\res\universe.bmp
-# End Source File
-# Begin Source File
-
 SOURCE=.\UserImages.bmp
 # PROP Exclude_From_Scan -1
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
-# End Source File
-# Begin Source File
-
-SOURCE=.\res\verifyTB.bmp
-# End Source File
-# Begin Source File
-
-SOURCE=.\res\visualtb.bmp
 # End Source File
 # Begin Source File
 

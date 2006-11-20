@@ -53,7 +53,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo /o"Release_ESP/Calques3D.bsc"
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /machine:I386
-# ADD LINK32 version.lib /nologo /subsystem:windows /machine:I386 /out:"Release_ESP/Calques3D.exe"
+# ADD LINK32 version.lib /nologo /subsystem:windows /machine:I386 /out:"Release_ESP/Calques3D.exe" /libpath:"OGLTools/"
 
 !ELSEIF  "$(CFG)" == "Calques3D_ESP - Win32 Debug"
 
@@ -79,7 +79,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo /o"Debug_ESP/Calques3D.bsc"
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 version.lib /nologo /subsystem:windows /debug /machine:I386 /out:"Debug_ESP/Calques3D.exe" /pdbtype:sept
+# ADD LINK32 version.lib /nologo /subsystem:windows /debug /machine:I386 /out:"Debug_ESP/Calques3D.exe" /pdbtype:sept /libpath:"OGLTools/"
 
 !ENDIF 
 
@@ -340,6 +340,10 @@ SOURCE=.\prefs\prefuniverse.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\ProjectRCVersion.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Tasks\ProjTask.cpp
 # End Source File
 # Begin Source File
@@ -364,11 +368,12 @@ SOURCE=.\objects\Sphere3D.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Splash.cpp
+SOURCE=.\SplashScreen.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\StdAfx.cpp
+# ADD CPP /Yc"stdafx.h"
 # End Source File
 # Begin Source File
 
@@ -389,10 +394,6 @@ SOURCE=.\Tasks\SymTask.cpp
 # Begin Source File
 
 SOURCE=.\Tasks\Task.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\TestView.cpp
 # End Source File
 # Begin Source File
 
@@ -421,6 +422,10 @@ SOURCE=.\objects\Vector4.cpp
 # Begin Source File
 
 SOURCE=.\Tasks\verifydlg.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\View3DRender.cpp
 # End Source File
 # Begin Source File
 
@@ -664,10 +669,6 @@ SOURCE=.\objects\Sphere3D.h
 # End Source File
 # Begin Source File
 
-SOURCE=.\Splash.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\StdAfx.h
 # End Source File
 # Begin Source File
@@ -685,10 +686,6 @@ SOURCE=.\MathParser\SymTable.h
 # Begin Source File
 
 SOURCE=.\Tasks\Task.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\TestView.h
 # End Source File
 # Begin Source File
 
@@ -756,6 +753,10 @@ SOURCE=.\res\Calques3D.ico
 # End Source File
 # Begin Source File
 
+SOURCE=.\res\dep_bar.ico
+# End Source File
+# Begin Source File
+
 SOURCE=.\res\drag.cur
 # End Source File
 # Begin Source File
@@ -800,6 +801,10 @@ SOURCE=.\res\idr_macro.ico
 # End Source File
 # Begin Source File
 
+SOURCE=.\res\idr_render.ico
+# End Source File
+# Begin Source File
+
 SOURCE=.\res\idr_univ.ico
 # End Source File
 # Begin Source File
@@ -817,6 +822,10 @@ SOURCE=.\res\Movever.cur
 # Begin Source File
 
 SOURCE=.\res\Point.cur
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\prop_bar.ico
 # End Source File
 # End Group
 # Begin Group "Help Files"
