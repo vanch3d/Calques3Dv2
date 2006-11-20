@@ -47,12 +47,13 @@ void CView3DRender::OnDraw(CDC* pDC)
 {
 	CDocument* pDoc = GetDocument();
 	m_wgl.Begin(pDC);
-		if (m_bResizing)
+/*		if (m_bResizing)
 		{
 			CRect rect;
 			GetClientRect(&rect);
 
 			glViewport(0,0, rect.Width(), rect.Height());
+			gluOrtho2D (-10.0, 10.0, -10.0, 10.0);
 			glMatrixMode(GL_PROJECTION);
 			glLoadIdentity();
 			gluPerspective(35,rect.Width()/(double)rect.Height(),1,100);
@@ -64,8 +65,10 @@ void CView3DRender::OnDraw(CDC* pDC)
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	gluPerspective(35,0.5,1,1000);
-	glMatrixMode(GL_MODELVIEW);
-		DrawGLScene();
+	glMatrixMode(GL_MODELVIEW);*/
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glLoadIdentity();
+	DrawGLScene();
 		
 	m_wgl.End();
 }
@@ -97,90 +100,23 @@ CCalques3DDoc* CView3DRender::GetDocument() // non-debug version is inline
 
 int CView3DRender::DrawGLScene()
 {
-	glLoadIdentity();						// Reset The View
-	glTranslatef(-1.5f,0.0f,-6.0);			// Move Left And Into The Screen
-
-	glRotatef(m_rtri,0.0f,1.0f,0.0f);		// Rotate The Pyramid On It's Y Axis
-
-	glBegin(GL_TRIANGLES);					// Start Drawing The Pyramid
-
-		glColor3f(1.0f,0.0f,0.0f);			// Red
-		glVertex3f( 0.0f, 1.0f, 0.0f);			// Top Of Triangle (Front)
-		glColor3f(0.0f,1.0f,0.0f);			// Green
-		glVertex3f(-1.0f,-1.0f, 1.0f);			// Left Of Triangle (Front)
-		glColor3f(0.0f,0.0f,1.0f);			// Blue
-		glVertex3f( 1.0f,-1.0f, 1.0f);			// Right Of Triangle (Front)
-
-
-		glColor3f(1.0f,0.0f,0.0f);			// Red
-		glVertex3f( 0.0f, 1.0f, 0.0f);			// Top Of Triangle (Right)
-		glColor3f(0.0f,0.0f,1.0f);			// Blue
-		glVertex3f( 1.0f,-1.0f, 1.0f);			// Left Of Triangle (Right)
-		glColor3f(0.0f,1.0f,0.0f);			// Green
-		glVertex3f( 1.0f,-1.0f, -1.0f);			// Right Of Triangle (Right)
-
-
-		glColor3f(1.0f,0.0f,0.0f);			// Red
-		glVertex3f( 0.0f, 1.0f, 0.0f);			// Top Of Triangle (Back)
-		glColor3f(0.0f,1.0f,0.0f);			// Green
-		glVertex3f( 1.0f,-1.0f, -1.0f);			// Left Of Triangle (Back)
-		glColor3f(0.0f,0.0f,1.0f);			// Blue
-		glVertex3f(-1.0f,-1.0f, -1.0f);			// Right Of Triangle (Back)
-
-		glColor3f(1.0f,0.0f,0.0f);			// Red
-		glVertex3f( 0.0f, 1.0f, 0.0f);			// Top Of Triangle (Left)
-		glColor3f(0.0f,0.0f,1.0f);			// Blue
-		glVertex3f(-1.0f,-1.0f,-1.0f);			// Left Of Triangle (Left)
-		glColor3f(0.0f,1.0f,0.0f);			// Green
-		glVertex3f(-1.0f,-1.0f, 1.0f);			// Right Of Triangle (Left)
-	glEnd();						// Done Drawing The Pyramid
+	int nb = GetDocument()->m_cObjectSet.GetSize();
+    for (int i=0;i<nb;i++)
+    {
+        CObject3D* pObj = GetDocument()->m_cObjectSet.GetAt(i);
+        if (!pObj) continue;
+	glLoadIdentity();
+//glTranslatef(-01.5f,0.0f,-6.0);			// Move Left And Into The Screen
+		pObj->Draw3DRendering();
+	}
 
 	glLoadIdentity();
-	glTranslatef(1.5f,0.0f,-7.0f);				// Move Right And Into The Screen
-	glRotatef(m_rquad,1.0f,1.0f,1.0f);			// Rotate The Cube On X, Y & Z
-
-	glBegin(GL_QUADS);					// Start Drawing The Cube
-
-		glColor3f(0.0f,1.0f,0.0f);			// Set The Color To Green
-		glVertex3f( 1.0f, 1.0f,-1.0f);			// Top Right Of The Quad (Top)
-		glVertex3f(-1.0f, 1.0f,-1.0f);			// Top Left Of The Quad (Top)
-		glVertex3f(-1.0f, 1.0f, 1.0f);			// Bottom Left Of The Quad (Top)
-		glVertex3f( 1.0f, 1.0f, 1.0f);			// Bottom Right Of The Quad (Top)
-
-		glColor3f(1.0f,0.5f,0.0f);			// Set The Color To Orange
-		glVertex3f( 1.0f,-1.0f, 1.0f);			// Top Right Of The Quad (Bottom)
-		glVertex3f(-1.0f,-1.0f, 1.0f);			// Top Left Of The Quad (Bottom)
-		glVertex3f(-1.0f,-1.0f,-1.0f);			// Bottom Left Of The Quad (Bottom)
-		glVertex3f( 1.0f,-1.0f,-1.0f);			// Bottom Right Of The Quad (Bottom)
-
-		glColor3f(1.0f,0.0f,0.0f);			// Set The Color To Red
-		glVertex3f( 1.0f, 1.0f, 1.0f);			// Top Right Of The Quad (Front)
-		glVertex3f(-1.0f, 1.0f, 1.0f);			// Top Left Of The Quad (Front)
-		glVertex3f(-1.0f,-1.0f, 1.0f);			// Bottom Left Of The Quad (Front)
-		glVertex3f( 1.0f,-1.0f, 1.0f);			// Bottom Right Of The Quad (Front)
-
-		glColor3f(1.0f,1.0f,0.0f);			// Set The Color To Yellow
-		glVertex3f( 1.0f,-1.0f,-1.0f);			// Bottom Left Of The Quad (Back)
-		glVertex3f(-1.0f,-1.0f,-1.0f);			// Bottom Right Of The Quad (Back)
-		glVertex3f(-1.0f, 1.0f,-1.0f);			// Top Right Of The Quad (Back)
-		glVertex3f( 1.0f, 1.0f,-1.0f);			// Top Left Of The Quad (Back)
-
-		glColor3f(0.0f,0.0f,1.0f);			// Set The Color To Blue
-		glVertex3f(-1.0f, 1.0f, 1.0f);			// Top Right Of The Quad (Left)
-		glVertex3f(-1.0f, 1.0f,-1.0f);			// Top Left Of The Quad (Left)
-		glVertex3f(-1.0f,-1.0f,-1.0f);			// Bottom Left Of The Quad (Left)
-		glVertex3f(-1.0f,-1.0f, 1.0f);			// Bottom Right Of The Quad (Left)
-
-   
-		glColor3f(1.0f,0.0f,1.0f);			// Set The Color To Violet
-		glVertex3f( 1.0f, 1.0f,-1.0f);			// Top Right Of The Quad (Right)
-		glVertex3f( 1.0f, 1.0f, 1.0f);			// Top Left Of The Quad (Right)
-		glVertex3f( 1.0f,-1.0f, 1.0f);			// Bottom Left Of The Quad (Right)
-		glVertex3f( 1.0f,-1.0f,-1.0f);			// Bottom Right Of The Quad (Right)
-	glEnd();						// Done Drawing The Quad
-
-	m_rtri+=0.5f;						// Increase The Rotation Variable For The Triangle 
-	m_rquad-=0.4f;						// Decrease The Rotation Variable For The Quad 
+//glTranslatef(-01.5f,0.0f,-6.0);			// Move Left And Into The Screen
+/*	glBegin(GL_TRIANGLES); // Drawing Using Triangles
+glVertex3f( 0.0f, 1.0f, 0.0f); // Top
+glVertex3f(-1.0f,-1.0f, 0.0f); // Bottom Left
+glVertex3f( 1.0f,-1.0f, 0.0f); // Bottom Right
+glEnd(); // Finished Drawing The Triangle*/
 	return TRUE;						// Keep Going
 }
 
@@ -207,7 +143,19 @@ void CView3DRender::OnSize(UINT nType, int cx, int cy)
 {
 	CView::OnSize(nType, cx, cy);
 	
+	if (cy==0) cy =1;
 	// TODO: Add your message handler code here
-		m_bResizing = true;
+	CClientDC dc(this);
 
+	m_wgl.Begin(&dc);
+	glViewport(0,0, cx, cy);
+	glMatrixMode(GL_PROJECTION); // Select The Projection Matrix
+	glLoadIdentity(); // Reset The Projection Matrix
+	gluPerspective(45.0f,(GLfloat)cx/(GLfloat)cy,0.1f,100.0f);
+	gluLookAt(1,1,1,
+			  1,0,0,
+			  10,1,8);
+	glMatrixMode(GL_MODELVIEW); // Select The Modelview Matrix
+	glLoadIdentity(); // Reset The Modelview Matrix
+	m_wgl.End();
 }
