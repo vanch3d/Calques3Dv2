@@ -65,6 +65,7 @@
 #define IDB_LIST_ADDITEM                188
 #define IDB_LIST_BROWSE                 189
 #define IDB_LIST_DELITEM                190
+#define IDB_PROJECTION                  191
 #define IDC_PLACEHOLDER                 250
 #define IDC_MAIL                        1000
 #define IDC_URL                         1001
@@ -153,6 +154,14 @@
 #define IDC_UNDO_REDO                   1170
 #define IDC_UNDO_TXT                    1171
 #define IDC_PUNIV_TRACE                 1172
+#define IDC_EDIT1                       1178
+#define IDC_SPIN1                       1179
+#define IDC_EDIT2                       1180
+#define IDC_SPIN2                       1183
+#define IDC_EDIT3                       1184
+#define IDC_SPIN3                       1185
+#define IDC_EDIT4                       1186
+#define IDC_SPIN4                       1187
 #define IDC_ABOUTCALQUE                 1201
 #define IDS_LINESHAPE                   3000
 #define IDS_LINESHAPE1                  3001
@@ -181,6 +190,8 @@
 #define IDS_POLSHAPE7                   3030
 #define IDS_POLSHAPE8                   3031
 #define IDS_POLSHAPE9                   3032
+#define IDS_AMBIGUITY                   3033
+#define IDS_REDEFINE                    3034
 #define ERR_SUPPORTOBJECT               4000
 #define ERR_NOMIDDLE1                   4001
 #define ERR_NOMIDDLE2                   4002
@@ -197,7 +208,6 @@
 #define ERR_DRPTSID                     4013
 #define ERR_PLANEPAR                    4014
 #define ERR_PTONLINE                    4015
-#define ERR_AMBIGUITY                   4016
 #define ERR_2SAMEPTS                    4017
 #define ERR_2SAMEDRS                    4018
 #define ERR_2SAMEPLS                    4019
@@ -211,7 +221,6 @@
 #define ERR_LOCUS_NOPTSUR               4027
 #define ERR_NOLOCUS                     4028
 #define ERR_LOCUS_INTERNAL              4029
-#define ERR_REDEFINE                    4030
 #define ERR_REDEFINE_INGRAPH            4031
 #define ERR_REDEFINE_PARENTS            4032
 #define ERR_REDEFINE_NOPARENTS          4033
@@ -220,7 +229,7 @@
 #define ERR_POLYGON_3POINT              4036
 #define ERR_NOPOLYGON                   4037
 #define ERR_POLYGON_NOCONVEX            4038
-#define ERR_AMBIGUITY2                  4039
+#define ERR_AMBIGUITY                   4039
 #define IDS_UNDO_NONE                   4100
 #define IDS_UNDO_DELETE                 4101
 #define IDS_UNDO_APPEND                 4102
@@ -232,14 +241,12 @@
 #define VER_PAR_NO                      4201
 #define VER_PAR_ANALYTIC                4202
 #define VER_PAR_CONSTRUCTION            4203
-#define VER_PAR_LL                      4204
-#define VER_PAR_LP                      4205
-#define VER_PAR_PP                      4206
-#define VER_PERP                        4207
-#define VER_PAR                         4208
-#define VER_ON_NO                       4209
-#define VER_ON_ANALYTIC                 4210
-#define VER_ON_CONSTRUCTION             4211
+#define VER_PERP_NO                     4204
+#define VER_PERP_ANALYTIC               4205
+#define VER_PERP_CONSTRUCTION           4206
+#define VER_BELONG_NO                   4209
+#define VER_BELONG_ANALYTIC             4210
+#define VER_BELONG_CONSTRUCTION         4211
 #define VER_ALIGN_NO                    4212
 #define VER_ALIGN_ANALYTIC              4213
 #define VER_ALIGN_CONSTRUCTION          4214
@@ -667,9 +674,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        191
+#define _APS_NEXT_RESOURCE_VALUE        192
 #define _APS_NEXT_COMMAND_VALUE         32990
-#define _APS_NEXT_CONTROL_VALUE         1178
+#define _APS_NEXT_CONTROL_VALUE         1180
 #define _APS_NEXT_SYMED_VALUE           124
 #endif
 #endif
