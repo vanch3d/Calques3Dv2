@@ -185,38 +185,44 @@ void CViewUniv::OnDraw(CDC* rDC)
             pObj->CalculVisuel(GetVisualParam());
         }
 
-        // Calculate Position of the Polygons
-        int nbPol = GetDocument()->m_cPolygonSet.GetSize();
-        CxObject3DSet mset;
-        for (i=0;i<nbPol;i++)
-        {
-            CObject3D* pObj = GetDocument()->m_cPolygonSet.GetAt(i);
-            if (!pObj) continue;
-            CPolygon3D *pPol = DYNAMIC_DOWNCAST(CPolygon3D,pObj);
-            if (!pPol) continue;
+		// Treats polygons only if adequate referential 
+		int nRep = GetVisualParam()->nVisuKind;
+		if (nRep==CVisualParam::VisuNone || nRep==CVisualParam::VisuRep)
+		{
+			// Calculate Position of the Polygons
+			int nbPol = GetDocument()->m_cPolygonSet.GetSize();
+			CxObject3DSet mset;
+			for (i=0;i<nbPol;i++)
+			{
+				CObject3D* pObj = GetDocument()->m_cPolygonSet.GetAt(i);
+				if (!pObj) continue;
+				CPolygon3D *pPol = DYNAMIC_DOWNCAST(CPolygon3D,pObj);
+				if (!pPol) continue;
 
-            BOOL bFound=FALSE;
-            for (int k=0;k<mset.GetSize();k++)
-            {
-                CObject3D* pObj2 = mset.GetAt(k);
-                CPolygon3D *pPol2 = DYNAMIC_DOWNCAST(CPolygon3D,pObj2);
-                if (pPol->m_nZFact < pPol2->m_nZFact)
-                {
+				BOOL bFound=FALSE;
+				for (int k=0;k<mset.GetSize();k++)
+				{
+					CObject3D* pObj2 = mset.GetAt(k);
+					CPolygon3D *pPol2 = DYNAMIC_DOWNCAST(CPolygon3D,pObj2);
+					if (pPol->m_nZFact < pPol2->m_nZFact)
+					{
 
-                    mset.InsertAt(k,pObj);
-                    bFound=TRUE;
-                    break;
-                }
-            }
-            if (!bFound) mset.Add(pObj);
-        }
-        // Draw the Polygons
-        for (i=0;i<mset.GetSize();i++)
-        {
-            CObject3D* pObj = mset.GetAt(i);
-            if (!pObj) continue;
-            pObj->Draw(pDC,GetVisualParam());
-        }
+						mset.InsertAt(k,pObj);
+						bFound=TRUE;
+						break;
+					}
+				}
+				if (!bFound) mset.Add(pObj);
+			}
+			// Draw the Polygons
+			for (i=0;i<mset.GetSize();i++)
+			{
+				CObject3D* pObj = mset.GetAt(i);
+				if (!pObj) continue;
+				pObj->Draw(pDC,GetVisualParam());
+			}
+		}
+
         // Draw System of Reference
         GetVisualParam()->Draw(pDC);
 
