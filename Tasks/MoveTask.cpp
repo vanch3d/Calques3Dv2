@@ -224,7 +224,7 @@ void CMoveObjectTask::OnMouseL(UINT, CPoint thePt)
 	m_nStep++;
 	GetContextualHelp();
 	m_pParent->SendMessage(WM_SHOWOBJ_TOOLTIPS,(WPARAM)NULL,(LPARAM)FALSE);
-	m_pParent->SetCapture();
+	//m_pParent->SetCapture();
 }
 
 void CMoveObjectTask::OnMouseLUp(UINT, CPoint)
@@ -242,7 +242,7 @@ void CMoveObjectTask::OnMouseLUp(UINT, CPoint)
 			//if (tmpcb)
 			 //tmpcb->cr->Visible = 0;
 		 }
-		ReleaseCapture();
+		//ReleaseCapture();
 		GetDocument()->UpdateAllViews(m_pParent,WM_UPDATEOBJ_MOV,m_pSelObject);
 		m_pParent->Invalidate(0);
 		m_pParent->UpdateWindow();
