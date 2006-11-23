@@ -15,11 +15,11 @@ static char THIS_FILE[] = __FILE__;
 
 /////////////////////////////////////////////////////////////////////////////
 // CPrefMathPad dialog
-IMPLEMENT_DYNCREATE(CPrefMathPad, CPropertyPage)
+IMPLEMENT_DYNCREATE(CPrefMathPad, CBCGPPropertyPage)
 
 
 CPrefMathPad::CPrefMathPad()
-	: CPropertyPage(CPrefMathPad::IDD)
+	: CBCGPPropertyPage(CPrefMathPad::IDD)
 {
 	//{{AFX_DATA_INIT(CPrefMathPad)
 	m_bFraction = TPref::TMathPad.ShowFraction;
@@ -34,7 +34,7 @@ CPrefMathPad::CPrefMathPad()
 
 void CPrefMathPad::DoDataExchange(CDataExchange* pDX)
 {
-	CPropertyPage::DoDataExchange(pDX);
+	CBCGPPropertyPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CPrefMathPad)
 	DDX_Control(pDX, IDC_MATHPAD_DIST, m_cUnitLinear);
 	DDX_Radio(pDX, IDC_MATHPAD_REAL, m_bFraction);
@@ -59,7 +59,7 @@ void CPrefMathPad::DoDataExchange(CDataExchange* pDX)
 }
 
 
-BEGIN_MESSAGE_MAP(CPrefMathPad, CPropertyPage)
+BEGIN_MESSAGE_MAP(CPrefMathPad, CBCGPPropertyPage)
 	//{{AFX_MSG_MAP(CPrefMathPad)
 	ON_WM_DESTROY()
 	ON_BN_CLICKED(IDC_MATHPAD_REAL, OnMathpadReal)
@@ -75,7 +75,7 @@ END_MESSAGE_MAP()
 void CPrefMathPad::OnDestroy() 
 {
 	UpdateData();
-	CPropertyPage::OnDestroy();
+	CBCGPPropertyPage::OnDestroy();
 	
 	// TODO: Add your message handler code here
 	
@@ -83,7 +83,7 @@ void CPrefMathPad::OnDestroy()
 
 BOOL CPrefMathPad::OnInitDialog() 
 {
-	CPropertyPage::OnInitDialog();
+	CBCGPPropertyPage::OnInitDialog();
 	
 	// TODO: Add extra initialization here
 	int nb = 	TPref::strUnits.GetSize();
@@ -128,7 +128,7 @@ void CPrefMathPad::OnMathpadFraction()
 void CPrefMathPad::OnChangeMathpadPrv() 
 {
 	// TODO: If this is a RICHEDIT control, the control will not
-	// send this notification unless you override the CPropertyPage::OnInitDialog()
+	// send this notification unless you override the CBCGPPropertyPage::OnInitDialog()
 	// function and call CRichEditCtrl().SetEventMask()
 	// with the ENM_CHANGE flag ORed into the mask.
 	
@@ -139,7 +139,7 @@ void CPrefMathPad::OnChangeMathpadPrv()
 void CPrefMathPad::OnChangeMathpadPfr() 
 {
 	// TODO: If this is a RICHEDIT control, the control will not
-	// send this notification unless you override the CPropertyPage::OnInitDialog()
+	// send this notification unless you override the CBCGPPropertyPage::OnInitDialog()
 	// function and call CRichEditCtrl().SetEventMask()
 	// with the ENM_CHANGE flag ORed into the mask.
 	

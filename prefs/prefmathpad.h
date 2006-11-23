@@ -14,7 +14,7 @@
 /// CPrefMathPad
 ///
 /////////////////////////////////////////////////////////////////////////////
-class CPrefMathPad : public CPropertyPage
+class CPrefMathPad : public CBCGPPropertyPage
 {
 // Construction
 public:
