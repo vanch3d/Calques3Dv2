@@ -1,4 +1,4 @@
-74// MainFrm.cpp : implementation of the CMainFrame class
+// MainFrm.cpp : implementation of the CMainFrame class
 //
 
 #include "stdafx.h"
@@ -78,6 +78,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CBCGPMDIFrameWnd)
 	ON_MESSAGE(WM_SETMESSAGESTRING, OnSetMessageString)
 	ON_COMMAND(ID_WINDOW_MANAGER, OnWindowManager)
 	ON_COMMAND(ID_VIEW_CUSTOMIZE, OnViewCustomize)
+	ON_COMMAND(ID_VIEW_OPTIONS, OnViewOptions)
 	ON_REGISTERED_MESSAGE(BCGM_RESETTOOLBAR, OnToolbarReset)
 	ON_REGISTERED_MESSAGE(BCGM_TOOLBARMENU, OnToolbarContextMenu)
 	ON_COMMAND_EX_RANGE(ID_VIEW_USER_TOOLBAR1, ID_VIEW_USER_TOOLBAR10, OnToolsViewUserToolbar)
@@ -422,7 +423,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 			
 			lf.lfHeight = -25;
 			lf.lfWeight = 700;
-			lf.lfItalic = TRUE;
+			lf.lfItalic = FALSE;
 			lf.lfQuality=PROOF_QUALITY;
 			_tcscpy (lf.lfFaceName, _T("Arial"));
 
@@ -475,6 +476,12 @@ void CMainFrame::Dump(CDumpContext& dc) const
 /////////////////////////////////////////////////////////////////////////////
 // CMainFrame message handlers
 
+
+void CMainFrame::OnViewOptions()
+{
+	CPreferenceDialog propSheet(this);
+	propSheet.DoModal();
+}
 
 void CMainFrame::OnViewCustomize()
 {
@@ -1405,10 +1412,6 @@ void CMainFrame::OnHelpKeyboardmap()
 void CMainFrame::OnWindowManager() 
 {
 	ShowWindowsDialog ();
-	//CPreferenceDialog propSheet(this);
-	//propSheet.SetData(&m_xScores);
-	//propSheet.DoModal();
-
 }
 
 void CMainFrame::OnUpdateAppLook(CCmdUI* pCmdUI)

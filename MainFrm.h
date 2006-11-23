@@ -90,6 +90,7 @@ protected:
 	//}}AFX_MSG
 	afx_msg void OnViewDepend();
 	afx_msg void OnViewCustomize();
+	afx_msg void OnViewOptions();
 	afx_msg LRESULT OnToolbarReset(WPARAM,LPARAM);
 	void OnToolsViewUserToolbar (UINT id);
 	void OnUpdateToolsViewUserToolbar (CCmdUI* pCmdUI);
