@@ -9,8 +9,10 @@
 
 #include "PrefSession.h"
 #include "PrefObjShape.h"
+#include "PrefObjColor.h"
 #include "PrefMacros.h"
 #include "PrefUniverse.h"
+#include "PrefMathPad.h"
 
 /////////////////////////////////////////////////////////////////////////////
 // CPreferenceDialog
@@ -25,10 +27,12 @@ public:
 
 // Attributes
 public:
-	CPrefSession		m_wndPage1;		///< Reference to the Land page of the dialog
-	CPrefUniverse	m_wndPage2;		///< Reference to the Income page of the dialog
-	CPrefObjShape		m_wndPage3;		///< Reference to the Troops page of the dialog
-	CPrefMacros	m_wndPage4;		///< Reference to the Territory page of the dialog
+	CPrefSession	m_wndSession;		///< Control for the Session page
+	CPrefUniverse	m_wndUniverse;		///< Control for the Universe page
+	CPrefObjShape	m_wndShape;			///< Control for the Object Appearance page
+	CPrefObjColor	m_wndColours;		///< Control for the Object Appearance page
+	CPrefMathPad	m_wndMathPad;		///< Control for the MathPad page
+	CPrefMacros		m_wndMacros;		///< Control for the Macros page
 
 // Operations
 public:
@@ -36,6 +40,8 @@ public:
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CPreferenceDialog)
+	public:
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
 	//}}AFX_VIRTUAL
 
 // Implementation
@@ -48,6 +54,8 @@ protected:
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
 	afx_msg LRESULT OnToolbarContextMenu(WPARAM,LPARAM);
 	virtual BOOL OnInitDialog();
+	afx_msg void OnSize(UINT nType, int cx, int cy);
+	afx_msg BOOL OnHelpInfo(HELPINFO* pHelpInfo);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
