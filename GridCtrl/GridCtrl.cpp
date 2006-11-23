@@ -648,9 +648,14 @@ void CGridCtrl::EraseBkgnd(CDC* pDC)
 
     // Draw bottom of window below grid
     if (VisRect.bottom < ClipRect.bottom && ClipRect.left < VisRect.right) 
-        pDC->FillRect(CRect(ClipRect.left, VisRect.bottom,
-                      VisRect.right, ClipRect.bottom),
-                      &Back);
+	{
+       // pDC->FillRect(CRect(ClipRect.left, VisRect.bottom,
+         //             VisRect.right, ClipRect.bottom),
+           //           &Back);
+		globalData.DrawParentBackground (this,pDC, CRect(ClipRect.left, VisRect.bottom,
+                      VisRect.right, ClipRect.bottom));
+
+	}
 }
 
 void CGridCtrl::OnSize(UINT nType, int cx, int cy)
