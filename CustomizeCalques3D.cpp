@@ -34,7 +34,7 @@ CCustomizeCalques3D::CCustomizeCalques3D(CFrameWnd* pWndParentFrame,
 						BOOL bAutoSetFromMenus,
 						UINT uiFlags,
 						CustomPageList* plistCustomPages):
-	CBCGPToolbarCustomize(pWndParentFrame,bAutoSetFromMenus,uiFlags,plistCustomPages)
+	CBCGPToolbarCustomize(pWndParentFrame,bAutoSetFromMenus,uiFlags,NULL)
 {
 	CImageList pImageList;
 	pImageList.Create(IDB_PREFS_ICONS,16,0,RGB (255, 0, 255));
