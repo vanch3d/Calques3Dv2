@@ -307,6 +307,7 @@ public:
 	virtual int		SetDepth();
 	virtual CxObject3DSet* GetParents();
 	virtual void	GetDependList(CxObject3DSet*,BOOL bAll=TRUE);
+	virtual void	GetPolygons(CxObject3DSet*);
 	virtual BOOL	AddObjToDependList(CxObject3DSet* pList);
 	virtual void	SetInGraph(BOOL bAdd=TRUE);
 	virtual BOOL	ChangeParent(CObject3D *pOld,CObject3D *pNew,BOOL bUpGraph=FALSE);

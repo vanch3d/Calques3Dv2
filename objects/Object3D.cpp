@@ -397,7 +397,7 @@ CxObject3DSet* CObject3D::GetParents()
 void CObject3D::GetDependList(CxObject3DSet* pList,BOOL bAll)
 {
     if (!pList) return;
-    TRACE("CObject3D::GetDependList : %s\n",GetObjectDef());
+    //TRACE("CObject3D::GetDependList : %s\n",GetObjectDef());
 
     BOOL bAdded = AddObjToDependList(pList);
     if (!bAdded) return;
@@ -408,12 +408,21 @@ void CObject3D::GetDependList(CxObject3DSet* pList,BOOL bAll)
         CObject3D *pObj = cDependList.GetAt(i);
         if (!pObj) continue;
         //if (pObj->pComposite) continue;
-        TRACE("\t\tcDependList : %s\n",pObj->GetObjectDef());
+        //TRACE("\t\tcDependList : %s\n",pObj->GetObjectDef());
         if (!bAll || bAll==2)
             pObj->AddObjToDependList(pList);
         else
             pObj->GetDependList(pList);
     }
+}
+
+//////////////////////////////////////////////////////////////////////
+/// Get the polygons defined in the object.
+/// This virtual method is for ensuring the detection of polygons embedded in composite object.
+/// \param pList    A pointer to the object list to fill in.
+//////////////////////////////////////////////////////////////////////
+void CObject3D::GetPolygons(CxObject3DSet* pList)
+{
 }
 
 //////////////////////////////////////////////////////////////////////
