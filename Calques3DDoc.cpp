@@ -436,9 +436,9 @@ BOOL CCalques3DDoc::AddObject(CObject3D* pObj,BOOL bUndo)
 	m_cObjectSet.Add(pObj);
 	RenumberObjects();
 
-	if (DYNAMIC_DOWNCAST(CPolygon3D,pObj))
-		m_cPolygonSet.Add(pObj);
-
+	//if (DYNAMIC_DOWNCAST(CPolygon3D,pObj))
+	//	m_cPolygonSet.Add(pObj);
+	pObj->GetPolygons(&m_cPolygonSet);
 
 	pObj->SetInGraph();
 
@@ -513,7 +513,24 @@ BOOL CCalques3DDoc::RemoveObject(CObject3D* pObj,BOOL bUndo)
 		pMyObj->SetInGraph(FALSE);
 		RenumberObjects();
 
-		if (DYNAMIC_DOWNCAST(CPolygon3D,pMyObj))
+
+		CxObject3DSet polylist;
+		pMyObj->GetPolygons(&polylist);
+		for (int z=0;z<polylist.GetSize();z++)
+		{
+			CObject3D* ppoly = polylist.GetAt(z);
+			if (!ppoly) continue;
+			for (int j=0;j<m_cPolygonSet.GetSize();j++)
+			{
+				CObject3D* pO2 = m_cPolygonSet.GetAt(j);
+				if (pO2==ppoly)
+				{
+					m_cPolygonSet.RemoveAt(j);
+					break;
+				}
+			}
+		}
+		/*if (DYNAMIC_DOWNCAST(CPolygon3D,pMyObj))
 		{
 			for (int j=0;j<m_cPolygonSet.GetSize();j++)
 			{
@@ -524,7 +541,7 @@ BOOL CCalques3DDoc::RemoveObject(CObject3D* pObj,BOOL bUndo)
 					break;
 				}
 			}
-		}
+		}*/
 
 		UpdateAllViews(NULL,WM_UPDATEOBJ_DEL,pMyObj);
 	}
@@ -688,8 +705,10 @@ BOOL CCalques3DDoc::OnDoRedo(CView *pView)
 				pObj->SetInGraph();
 				OnCountObjects(pObj,TRUE);
 
-				if (DYNAMIC_DOWNCAST(CPolygon3D,pObj))
-					m_cPolygonSet.Add(pObj);
+				//if (DYNAMIC_DOWNCAST(CPolygon3D,pObj))
+				//	m_cPolygonSet.Add(pObj);
+				pObj->GetPolygons(&m_cPolygonSet);
+
 
 				UpdateAllViews(pView,WM_UPDATEOBJ_ADD,pObj);
 				if (pView)
@@ -832,7 +851,23 @@ BOOL CCalques3DDoc::OnDoRedo(CView *pView)
 				pMyObj->SetInGraph(FALSE);
 				RenumberObjects();
 
-				if (DYNAMIC_DOWNCAST(CPolygon3D,pObj))
+				CxObject3DSet polylist;
+				pObj->GetPolygons(&polylist);
+				for (int z=0;z<polylist.GetSize();z++)
+				{
+					CObject3D* ppoly = polylist.GetAt(z);
+					if (!ppoly) continue;
+					for (int j=0;j<m_cPolygonSet.GetSize();j++)
+					{
+						CObject3D* pO2 = m_cPolygonSet.GetAt(j);
+						if (pO2==ppoly)
+						{
+							m_cPolygonSet.RemoveAt(j);
+							break;
+						}
+					}
+				}
+				/*if (DYNAMIC_DOWNCAST(CPolygon3D,pObj))
 				{
 					for (int j=0;j<m_cPolygonSet.GetSize();j++)
 					{
@@ -843,7 +878,7 @@ BOOL CCalques3DDoc::OnDoRedo(CView *pView)
 							break;
 						}
 					}
-				}
+				}*/
 
 
 				UpdateAllViews(pView,WM_UPDATEOBJ_DEL,pObj);
@@ -902,7 +937,23 @@ BOOL CCalques3DDoc::OnDoUndo(CView *pView)
 				pMyObj->SetInGraph(FALSE);
 				RenumberObjects();
 
-				if (DYNAMIC_DOWNCAST(CPolygon3D,pObj))
+				CxObject3DSet polylist;
+				pObj->GetPolygons(&polylist);
+				for (int z=0;z<polylist.GetSize();z++)
+				{
+					CObject3D* ppoly = polylist.GetAt(z);
+					if (!ppoly) continue;
+					for (int j=0;j<m_cPolygonSet.GetSize();j++)
+					{
+						CObject3D* pO2 = m_cPolygonSet.GetAt(j);
+						if (pO2==ppoly)
+						{
+							m_cPolygonSet.RemoveAt(j);
+							break;
+						}
+					}
+				}
+				/*if (DYNAMIC_DOWNCAST(CPolygon3D,pObj))
 				{
 					for (int j=0;j<m_cPolygonSet.GetSize();j++)
 					{
@@ -913,7 +964,7 @@ BOOL CCalques3DDoc::OnDoUndo(CView *pView)
 							break;
 						}
 					}
-				}
+				}*/
 
 
 				UpdateAllViews(pView,WM_UPDATEOBJ_DEL,pObj);
@@ -1049,8 +1100,9 @@ BOOL CCalques3DDoc::OnDoUndo(CView *pView)
 				pObj->SetInGraph();
 				OnCountObjects(pObj,TRUE);
 
-				if (DYNAMIC_DOWNCAST(CPolygon3D,pObj))
-					m_cPolygonSet.Add(pObj);
+				//if (DYNAMIC_DOWNCAST(CPolygon3D,pObj))
+				//	m_cPolygonSet.Add(pObj);
+				pObj->GetPolygons(&m_cPolygonSet);
 
 				UpdateAllViews(pView,WM_UPDATEOBJ_ADD,pObj);
 				if (pView)
