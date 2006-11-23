@@ -139,6 +139,8 @@ public:
 	virtual CxObject3DSet* GetParents();
 	virtual UINT  CalculConceptuel();
 	virtual CString GetObjectDef();
+	virtual void	GetPolygons(CxObject3DSet*);
+	virtual BOOL ChangeParent(CObject3D *pOld,CObject3D *pNew,BOOL bUpGraph=FALSE);
 
 	virtual UINT GetHelpID() const { return IDS_HELP_POLYGON;};
 	virtual UINT GetDefID() const { return IDS_DEF_POLYGON;};

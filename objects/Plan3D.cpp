@@ -1338,6 +1338,43 @@ CxObject3DSet* CPolygon3D::GetParents()
     return list;
 }
 
+//////////////////////////////////////////////////////////////////////
+/// Get the polygons defined in the object.
+///
+/// \param pList    A pointer to the object list to fill in.
+//////////////////////////////////////////////////////////////////////
+void CPolygon3D::GetPolygons(CxObject3DSet* pList)
+{
+	if (pList) pList->Add(this);
+}
+
+
+BOOL CPolygon3D::ChangeParent(CObject3D *pOld,CObject3D *pNew,BOOL bUpGraph)
+{
+    for (int i=0;i<m_pPointSet.GetSize();i++)
+    {
+		CObject3D *pObj = m_pPointSet.GetAt(i);
+		if (!pObj) continue;
+
+		if (pObj == pOld)
+		{
+			SetInGraph(FALSE);
+			m_pPointSet.RemoveAt(i);
+			m_pPointSet.InsertAt(i,pNew);
+			if (bUpGraph) SetInGraph(TRUE);
+			CPoint3D *pA = (CPoint3D *)m_pPointSet.GetAt(0);
+			CPoint3D *pB = (CPoint3D *)m_pPointSet.GetAt(1);
+			CPoint3D *pC = (CPoint3D *)m_pPointSet.GetAt(2);
+
+			P1 = pA;
+			P2 = pB;
+			P3 = pC;
+			return TRUE;
+		}
+    }
+    return FALSE;
+}
+
 BOOL CPolygon3D::IsPointInside(CVector4& pt,BOOL bLim/*=TRUE*/)
 {
     BOOL bInside = TRUE;
