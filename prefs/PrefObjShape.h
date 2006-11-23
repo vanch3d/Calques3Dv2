@@ -9,7 +9,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 // CPrefObjShape dialog
-#include "..\GridCtrl\GridCtrl.h"
+//#include "..\GridCtrl\GridCtrl.h"
 
 /////////////////////////////////////////////////////////////////////////////
 /// CPrefObjShape
@@ -30,47 +30,49 @@ public:
 	//CComboBox	m_cCstr;
 	//CComboBox	m_cDep;
 	//CSpinButtonCtrl	m_cSpinSize;
-	BOOL	m_bGrayHidden;
-	int		m_idxFree;
-	int		m_idxCstr;
-	int		m_idxDep;
-	int		m_idxRetro;
-	int		m_nPtSize;
+	//BOOL	m_bGrayHidden;
+	//int		m_idxFree;
+	//int		m_idxCstr;
+	//int		m_idxDep;
+	//int		m_idxRetro;
+	//int		m_nPtSize;
 	//}}AFX_DATA
-	CGridCtrl	m_cColorlist;
+	//CGridCtrl	m_cColorlist;
 
 	CStatic			m_wndPropListLocation;
 	CBCGPPropList	m_wndProp;
+	//BOOL		n_bShowColors;
 
-	void FillColorList();
-
-	void FillPoint();
-	void FillLocus();
-	void FillSphere();
-	void FillLine();
-
+	//void SetColors(BOOL bShow = TRUE);
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CPrefObjShape)
 	public:
-	virtual void OnOK();
-	virtual void OnCancel();
+	//virtual void OnOK();
+	//virtual void OnCancel();
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	//}}AFX_VIRTUAL
 
 // Implementation
 protected:
+	//void FillColorList();
+
+	void FillPoint();
+	void FillLocus();
+	void FillSphere();
+	void FillLine();
+
 
 	// Generated message map functions
 	//{{AFX_MSG(CPrefObjShape)
 	virtual BOOL OnInitDialog();
-	afx_msg void OnGrayHidden();
-	afx_msg void OnClose();
+//	afx_msg void OnGrayHidden();
+//	afx_msg void OnClose();
 	afx_msg void OnDestroy();
-	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+//	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	//}}AFX_MSG
-	afx_msg void OnGridClick(NMHDR *pNotifyStruct, LRESULT* pResult);
+//	afx_msg void OnGridClick(NMHDR *pNotifyStruct, LRESULT* pResult);
 	DECLARE_MESSAGE_MAP()
 };
 

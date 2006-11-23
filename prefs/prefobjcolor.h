@@ -6,11 +6,12 @@
 #endif // _MSC_VER > 1000
 // prefobjcolor.h : header file
 //
+#include "..\GridCtrl\GridCtrl.h"
 
 /////////////////////////////////////////////////////////////////////////////
 // CPrefObjColor dialog
 
-class CPrefObjColor : public CPropertyPage
+class CPrefObjColor : public CBCGPPropertyPage
 {
 	DECLARE_DYNCREATE(CPrefObjColor)
 
@@ -22,9 +23,9 @@ public:
 // Dialog Data
 	//{{AFX_DATA(CPrefObjColor)
 	enum { IDD = IDD_PREF_COLORS_PAGE };
-		// NOTE - ClassWizard will add data members here.
-		//    DO NOT EDIT what you see in these blocks of generated code !
+	BOOL	m_bGrayHidden;
 	//}}AFX_DATA
+	CGridCtrl	m_cColorlist;
 
 
 // Overrides
@@ -36,10 +37,15 @@ public:
 
 // Implementation
 protected:
+	void FillColorList();
+
 	// Generated message map functions
 	//{{AFX_MSG(CPrefObjColor)
-		// NOTE: the ClassWizard will add member functions here
+	virtual BOOL OnInitDialog();
+	afx_msg void OnGrayHidden();
+	afx_msg void OnDestroy();
 	//}}AFX_MSG
+	afx_msg void OnGridClick(NMHDR *pNotifyStruct, LRESULT* pResult);
 	DECLARE_MESSAGE_MAP()
 
 };

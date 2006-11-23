@@ -23,13 +23,14 @@ IMPLEMENT_DYNCREATE(CPrefObjShape, CBCGPPropertyPage)
 CPrefObjShape::CPrefObjShape()
 	: CBCGPPropertyPage(CPrefObjShape::IDD)
 {
+//	n_bShowColors = TRUE;
 	//{{AFX_DATA_INIT(CPrefObjShape)
-	m_bGrayHidden = (TPref::GrayedHidden);
-	m_idxFree = TPref::TPoint.nPtFree;
-	m_idxCstr = TPref::TPoint.nPtConst;
-	m_idxDep = TPref::TPoint.nPtDep;
-	m_idxRetro = 2;
-	m_nPtSize = TPref::TPoint.nSize;
+	//m_bGrayHidden = (TPref::GrayedHidden);
+	//m_idxFree = TPref::TPoint.nPtFree;
+	//m_idxCstr = TPref::TPoint.nPtConst;
+	//m_idxDep = TPref::TPoint.nPtDep;
+	//m_idxRetro = 2;
+	//m_nPtSize = TPref::TPoint.nSize;
 	//}}AFX_DATA_INIT
 
 //	for (int i=0;i<10;i++)
@@ -48,7 +49,7 @@ void CPrefObjShape::DoDataExchange(CDataExchange* pDX)
 //	DDX_Control(pDX, IDC_SHAPE_CSTR, m_cCstr);
 //	DDX_Control(pDX, IDC_SHAPE_CALC, m_cDep);
 //	DDX_Control(pDX, IDC_SHAPE_SPINSIZE, m_cSpinSize);
-	DDX_Check(pDX, IDC_SHAPE_HIDDEN, m_bGrayHidden);
+//	DDX_Check(pDX, IDC_SHAPE_HIDDEN, m_bGrayHidden);
 //	DDX_CBIndex(pDX, IDC_SHAPE_FREE, m_idxFree);
 //	DDX_CBIndex(pDX, IDC_SHAPE_CSTR, m_idxCstr);
 //	DDX_CBIndex(pDX, IDC_SHAPE_CALC, m_idxDep);
@@ -56,12 +57,12 @@ void CPrefObjShape::DoDataExchange(CDataExchange* pDX)
 //	DDX_Text(pDX, IDC_SHAPE_POINTSIZE, m_nPtSize);
 //	DDV_MinMaxInt(pDX, m_nPtSize, 1, 10);
 	//}}AFX_DATA_MAP
-	DDX_GridControl(pDX, IDC_SHAPE_DEFCOLOR, m_cColorlist);
+	//DDX_GridControl(pDX, IDC_SHAPE_DEFCOLOR, m_cColorlist);
 	DDX_Control(pDX, IDC_SHAPE_APP, m_wndPropListLocation);
 
 	if (pDX->m_bSaveAndValidate)
 	{
-		TPref::GrayedHidden = m_bGrayHidden;
+/*		TPref::GrayedHidden = m_bGrayHidden;
 		for (int j=0;j<8;j++)
 		{
 			TPref::custColors[j] = m_cColorlist.GetItemBkColour(j+1,1);
@@ -70,7 +71,7 @@ void CPrefObjShape::DoDataExchange(CDataExchange* pDX)
 				TPref::custColors[j+8] = m_cColorlist.GetItemBkColour(j+1,2);
 			}
 			TPref::custColorsString[j] = m_cColorlist.GetItemText(j+1,0);
-		}
+		}*/
 
 		int nb = m_wndProp.GetPropertyCount();
 		for (int i=0;i<nb;i++)
@@ -137,17 +138,24 @@ void CPrefObjShape::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CPrefObjShape, CBCGPPropertyPage)
 	//{{AFX_MSG_MAP(CPrefObjShape)
-	ON_BN_CLICKED(IDC_SHAPE_HIDDEN, OnGrayHidden)
-	ON_WM_CLOSE()
+//	ON_BN_CLICKED(IDC_SHAPE_HIDDEN, OnGrayHidden)
+//	ON_WM_CLOSE()
 	ON_WM_DESTROY()
-	ON_WM_CREATE()
+//	ON_WM_CREATE()
 	//}}AFX_MSG_MAP
-    ON_NOTIFY(NM_DBLCLK , IDC_SHAPE_DEFCOLOR, OnGridClick)
+//    ON_NOTIFY(NM_DBLCLK , IDC_SHAPE_DEFCOLOR, OnGridClick)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CPrefObjShape message handlers
-void CPrefObjShape::FillColorList()
+
+/*void CPrefObjShape::SetColors(BOOL bShow)
+{
+	n_bShowColors = bShow		;
+}*/
+
+
+/*void CPrefObjShape::FillColorList()
 {
 	const char *strDefaultTitle[]={
 				"Name",
@@ -221,7 +229,7 @@ void CPrefObjShape::FillColorList()
 	int nsb = m_cColorlist.GetColumnWidth(2);
 	nsb*=2;
 	m_cColorlist.SetColumnWidth(0,rect.Width()-nsb+3);
-}
+}*/
 
 
 void CPrefObjShape::FillLine()
@@ -249,7 +257,7 @@ void CPrefObjShape::FillPoint()
 	strName.LoadString(PREF_NAME_PT);
 	CBCGPProp* pGroup1 = new CBCGPProp (strName);
 
-	int *intPt[5]={	&TPref::TPoint.nPtFree,&TPref::TPoint.nPtConst,&TPref::TPoint.nPtDep,&m_idxRetro,
+	int *intPt[5]={	&TPref::TPoint.nPtFree,&TPref::TPoint.nPtConst,&TPref::TPoint.nPtDep,&TPref::TPoint.nPtFree,
 					&TPref::TPoint.nSize};
 
 	/// Point default shape
@@ -278,7 +286,7 @@ void CPrefObjShape::FillPoint()
 		CString strName,strDef;
 		strName.LoadString(PREF_NAME_PTSIZE);
 		strDef.LoadString(PREF_DEF_PTSIZE);
-		CBCGPProp* pProp = new CBCGPProp (strName, (_variant_t) (short)m_nPtSize,strDef);
+		CBCGPProp* pProp = new CBCGPProp (strName, (_variant_t) (short)TPref::TPoint.nSize,strDef);
 
 		pProp->SetData((DWORD)intPt[4]);
 		pProp->Enable (FALSE);
@@ -305,6 +313,7 @@ void CPrefObjShape::FillPoint()
 		//pColorProp->EnableAutomaticButton (strBtn, ::GetSysColor (COLOR_3DFACE));
 		pGroup1->AddSubItem (pColorProp);
 	}
+
 	m_wndProp.AddProperty (pGroup1);
 }
 
@@ -431,6 +440,7 @@ BOOL CPrefObjShape::OnInitDialog()
 	m_wndProp.EnableDesciptionArea(TRUE);
 	m_wndProp.EnableHeaderCtrl(FALSE);
 	m_wndProp.SetVSDotNetLook(TRUE);
+	//m_wndProp.SetAlphabeticMode(TRUE);
 
 	FillPoint();
 	FillLine();
@@ -438,7 +448,27 @@ BOOL CPrefObjShape::OnInitDialog()
 	FillLocus();
 
 
-	FillColorList();
+	//FillColorList();
+
+/*	if (n_bShowColors==TRUE)
+	{
+		m_wndPropListLocation.ShowWindow (SW_HIDE);
+		m_wndProp.ShowWindow (SW_HIDE);
+	}
+	else
+	{
+		CWnd *pWndOK = GetDlgItem (IDC_SHAPE_DEFCOLOR);
+		if (pWndOK != NULL)
+			pWndOK->ShowWindow (SW_HIDE);
+		pWndOK = GetDlgItem (IDC_SHAPE_DEFC);
+		if (pWndOK != NULL)
+			pWndOK->ShowWindow (SW_HIDE);
+		pWndOK = GetDlgItem (IDC_SHAPE_HIDDEN);
+		if (pWndOK != NULL)
+			pWndOK->ShowWindow (SW_HIDE);
+	}*/
+
+
 
 
 /*	////////////////////
@@ -474,7 +504,7 @@ BOOL CPrefObjShape::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
-void CPrefObjShape::OnGrayHidden() 
+/*void CPrefObjShape::OnGrayHidden() 
 {
 	// TODO: Add your control notification handler code here
 	m_bGrayHidden = ! m_bGrayHidden;
@@ -518,9 +548,9 @@ void CPrefObjShape::OnGridClick(NMHDR *pNotifyStruct, LRESULT* pResult)
 			m_cColorlist.RedrawCell(nRow,nCol);
 		}
 	}
-}
+}*/
 
-void CPrefObjShape::OnOK() 
+/*void CPrefObjShape::OnOK() 
 {
 	// TODO: Add your specialized code here and/or call the base class
 	
@@ -531,14 +561,14 @@ void CPrefObjShape::OnCancel()
 {
 	// TODO: Add your specialized code here and/or call the base class
 	CBCGPPropertyPage::OnCancel();
-}
+}*/
 
-void CPrefObjShape::OnClose() 
+/*void CPrefObjShape::OnClose() 
 {
 	// TODO: Add your message handler code here and/or call default
 	
 	CBCGPPropertyPage::OnClose();
-}
+}*/
 
 void CPrefObjShape::OnDestroy() 
 {
@@ -548,7 +578,7 @@ void CPrefObjShape::OnDestroy()
 	// TODO: Add your message handler code here	
 }
 
-int CPrefObjShape::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+/*int CPrefObjShape::OnCreate(LPCREATESTRUCT lpCreateStruct) 
 {
 	if (CBCGPPropertyPage::OnCreate(lpCreateStruct) == -1)
 		return -1;
@@ -558,4 +588,4 @@ int CPrefObjShape::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 
 	return 0;
-}
+}*/
