@@ -108,6 +108,23 @@ BOOL CCompositeObj3D::IsInActiveArea(CPoint thePt)
     return bRet;
 }
 
+//////////////////////////////////////////////////////////////////////
+/// Get the polygons defined in the object.
+/// This virtual method is for ensuring the detection of polygons embedded in composite object.
+/// \param pList    A pointer to the object list to fill in.
+//////////////////////////////////////////////////////////////////////
+void CCompositeObj3D::GetPolygons(CxObject3DSet* pList)
+{
+    if (!pList) return;
+    int nb = m_cSubObjects.GetSize();
+    for (int i=0;i<nb;i++)
+    {
+        CObject3D *pObj = m_cSubObjects.GetAt(i);
+        if (!pObj) continue;
+		pObj->GetPolygons(pList);
+	}
+}
+
 void CCompositeObj3D::GetDependList(CxObject3DSet* pList,BOOL bAll)
 {
     if (!pList) return;
@@ -352,6 +369,8 @@ void CCompositeObj3D::Draw(CDC* pDC,CVisualParam *vp,BOOL bSM)
     for (int i=nStartShow;i<nb;i++)
      {
         CObject3D * obj = m_cSubObjects.GetAt(i);
+        if (DYNAMIC_DOWNCAST(CPolygon3D,obj)) continue;
+
         obj->Draw(pDC,vp,bSM);
      }
 

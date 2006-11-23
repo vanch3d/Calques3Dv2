@@ -58,6 +58,7 @@ public:
 	virtual int ValideCompositeObject(int nIdx);
 
 	virtual void GetDependList(CxObject3DSet*,BOOL bAll=TRUE);
+	virtual void	GetPolygons(CxObject3DSet*);
 	virtual void	TranslateBy(CVector4 ptVec);
 
 	virtual CObject3D* HitTest(CPoint pt,UINT mask=0,int nCalcNum = 0,BOOL bSub = TRUE,CxObject3DSet* pSet = NULL);
