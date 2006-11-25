@@ -29,6 +29,7 @@ protected:
 	CBCGPToolBar			m_wndToolBar;		///< Control for the main toolbar
 	CBCGPStatusBar			m_wndStatusBar;		///< Control for the status bar
 
+	CBCGPToolBar			m_wndTextBar;		///< Control for the Format toolbar
 	CBCGPToolBar			m_wndVisuBar;		///< Control for the Visualisation toolbar
 	CBCGPToolBar			m_wndObjBar;		///< Control for the Object toolbar
 	CBCGPToolBar			m_wndConstrBar;		///< Control for the Construction toolbar
