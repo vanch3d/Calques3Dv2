@@ -71,7 +71,7 @@ unsigned CLabelTask::GetHelpResID()
 
 DWORD CLabelTask::GetMask()
 {
-    return (TAllPointClass | TAllDroiteClass | TAllPlanClass | TSphere3DClass);
+    return (TAllPointClass /*| TAllDroiteClass | TAllPlanClass | TSphere3DClass*/);
 }
 
 void CLabelTask::CreateObject3D()
