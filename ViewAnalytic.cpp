@@ -538,7 +538,7 @@ void CViewAnalytic::OnUpdateProperty(CCmdUI* pCmdUI)
 void CViewAnalytic::OnUpdateEditUndo(CCmdUI* pCmdUI) 
 {
 	// TODO: Add your command update UI handler code here
-	pCmdUI->Enable(GetDocument()->m_nUndoState);
+	pCmdUI->Enable(GetDocument()->m_nDocUndoState);
 }
 
 void CViewAnalytic::OnUpdateAddComment(CCmdUI* pCmdUI) 
