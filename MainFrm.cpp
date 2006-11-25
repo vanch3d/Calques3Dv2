@@ -262,6 +262,22 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndToolBar.SetWindowText (strMainToolbarTitle);
 
 	//----------------------
+	// Create Format toolbar:
+	//----------------------
+	if (!m_wndTextBar.CreateEx(this, TBSTYLE_FLAT, WS_CHILD | WS_VISIBLE | CBRS_TOP
+		| CBRS_GRIPPER | CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_DYNAMIC,CRect(1, 1, 1, 1),
+			ID_VIEW_FORMAT) ||
+		!m_wndTextBar.LoadToolBar(IDR_TEXTPALETTE_TB))
+	{
+		TRACE0("Failed to create toolbar\n");
+		return -1;      // fail to create
+	}
+
+	CString strTextBarTitle;
+	strTextBarTitle.LoadString (IDR_TEXTPALETTE_TB);
+	m_wndTextBar.SetWindowText (strTextBarTitle);
+
+	//----------------------
 	// Create Objects toolbar:
 	//----------------------
 	if (!m_wndObjBar.CreateEx(this, TBSTYLE_FLAT, WS_CHILD | WS_VISIBLE | CBRS_TOP
@@ -368,10 +384,12 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndVisuBar.EnableDocking(CBRS_ALIGN_ANY); 
 	m_wndPropertyBar.EnableDocking(CBRS_ALIGN_ANY);
 	m_wndDependentBar.EnableDocking(CBRS_ALIGN_ANY);
+	m_wndTextBar.EnableDocking(CBRS_ALIGN_ANY);
 
 	DockControlBar(&m_wndMenuBar);
-	DockControlBar(&m_wndToolBar);
+	DockControlBar(&m_wndTextBar);
 	DockControlBar(&m_wndExplorBar);
+	DockControlBarLeftOf(&m_wndToolBar,&m_wndTextBar);
 	DockControlBarLeftOf(&m_wndConstrBar,&m_wndExplorBar);
 	DockControlBarLeftOf(&m_wndObjBar,&m_wndConstrBar);
 	DockControlBarLeftOf(&m_wndVisuBar,&m_wndObjBar);
@@ -387,13 +405,31 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndDependentBar.AttachToTabWnd (&m_wndPropertyBar, DM_SHOW, FALSE, &pTabbedBar);
 
 
-	BOOL bRet = CBCGPToolBar::AddToolBarForImageCollection(IDR_COMMANDS_TB);
-//	bRet = CBCGPToolBar::AddToolBarForImageCollection(IDR_VISUALISATION_TB);
-	bRet = CBCGPToolBar::AddToolBarForImageCollection(IDR_INTERSECT_TB);
-	bRet = CBCGPToolBar::AddToolBarForImageCollection(IDR_POINTON_TB);
-	bRet = CBCGPToolBar::AddToolBarForImageCollection(IDR_POINTDIV_TB);
-	bRet = CBCGPToolBar::AddToolBarForImageCollection(IDR_GRAPH_TB);
-	bRet = CBCGPToolBar::AddToolBarForImageCollection(IDR_VERIFY_TB);
+
+	//-----------------------
+	// Reload toolbar images:
+	//-----------------------
+	CBCGPToolBar::ResetAllImages ();
+
+	m_wndPointOnBar.LoadBitmap (theApp.m_bHiColorIcons ? IDR_POINTON_TB : IDR_POINTON_TB);
+	m_wndIntersectBar.LoadBitmap (theApp.m_bHiColorIcons ? IDR_INTERSECT_TB : IDR_INTERSECT_TB);
+	m_wndDivPointBar.LoadBitmap (theApp.m_bHiColorIcons ? IDR_POINTDIV_TB : IDR_POINTDIV_TB);
+	m_wndToolBar.LoadBitmap (theApp.m_bHiColorIcons ? IDR_MAINFRAME24 : IDR_MAINFRAME);
+	m_wndTextBar.LoadBitmap (theApp.m_bHiColorIcons ? IDR_TEXTPALETTE_TB24 : IDR_TEXTPALETTE_TB);
+	m_wndObjBar.LoadBitmap (theApp.m_bHiColorIcons ? IDR_OBJECTS_TB : IDR_OBJECTS_TB);
+	m_wndExplorBar.LoadBitmap (theApp.m_bHiColorIcons ? IDR_EXPLORATION_TB : IDR_EXPLORATION_TB);
+	m_wndConstrBar.LoadBitmap (theApp.m_bHiColorIcons ? IDR_CONSTRUCTION_TB : IDR_CONSTRUCTION_TB);
+	m_wndVisuBar.LoadBitmap (theApp.m_bHiColorIcons ? IDR_VISUALISATION_TB : IDR_VISUALISATION_TB);
+	m_wndPropertyBar.m_wndToolBar.LoadBitmap (theApp.m_bHiColorIcons ? IDR_PROPERTY_TB24 : IDR_PROPERTY_TB);
+	m_wndDependentBar.m_wndToolBar.LoadBitmap (theApp.m_bHiColorIcons ? IDR_PROPERTY_TB24 : IDR_PROPERTY_TB);
+
+	//CBCGPToolBar::AddToolBarForImageCollection (IDR_MENU_IMAGES,theApp.m_bHiColorIcons ? IDB_MENUIMAGES24 : 0);
+	CBCGPToolBar::AddToolBarForImageCollection(IDR_COMMANDS_TB,theApp.m_bHiColorIcons ? IDR_COMMANDS_TB24 : 0);
+	CBCGPToolBar::AddToolBarForImageCollection(IDR_INTERSECT_TB,0);
+	CBCGPToolBar::AddToolBarForImageCollection(IDR_POINTON_TB,0);
+	CBCGPToolBar::AddToolBarForImageCollection(IDR_POINTDIV_TB,0);
+	CBCGPToolBar::AddToolBarForImageCollection(IDR_GRAPH_TB,0);
+	CBCGPToolBar::AddToolBarForImageCollection(IDR_VERIFY_TB,0);
 
 	// Allow user-defined toolbars operations:
 	InitUserToobars (NULL,uiFirstUserToolBarId,uiLastUserToolBarId);
@@ -643,6 +679,39 @@ afx_msg LRESULT CMainFrame::OnToolbarReset(WPARAM wp,LPARAM)
 		{
 		}
 		break;
+	case IDR_TEXTPALETTE_TB:
+		{
+		m_wndTextBar.ReplaceButton (ID_CHAR_FONT, 
+			CBCGPToolbarFontCombo(ID_CHAR_FONT, 
+				CImageHash::GetImageOfCommand (ID_CHAR_FONT, FALSE),
+				DEVICE_FONTTYPE | RASTER_FONTTYPE | TRUETYPE_FONTTYPE,
+				DEFAULT_CHARSET,
+				WS_VISIBLE | WS_TABSTOP | WS_VSCROLL | CBS_DROPDOWN,
+				150));
+		m_wndTextBar.ReplaceButton (ID_CHAR_SIZE, 
+			CBCGPToolbarFontSizeCombo(ID_CHAR_SIZE, 
+		CImageHash::GetImageOfCommand (ID_CHAR_SIZE, FALSE),
+		WS_VISIBLE | WS_TABSTOP | WS_VSCROLL | CBS_DROPDOWN,
+		40)
+		);	
+		
+		CBCGPColorMenuButton tt(ID_CHAR_TXTCOLOR,"dfd fd fds ");
+			tt.EnableAutomaticButton (_T("Automatic"), RGB (0, 0, 0));
+	tt.EnableOtherButton (_T("More Colors..."));
+	tt.EnableDocumentColors (_T("Document's Colors"));
+	tt.SetColumnsNumber (8);
+
+		m_wndTextBar.ReplaceButton (ID_CHAR_TXTCOLOR, tt);
+
+		CBCGPColorMenuButton tt2(ID_CHAR_OBJCOLOR,"dfd fd fds ");
+			tt2.EnableAutomaticButton (_T("Automatic"), RGB (0, 0, 0));
+	tt2.EnableOtherButton (_T("More Colors..."));
+	tt2.EnableDocumentColors (_T("Document's Colors"));
+	tt2.SetColumnsNumber (8);
+
+		m_wndTextBar.ReplaceButton (ID_CHAR_OBJCOLOR, tt2);
+		}
+		break;
 	case IDR_CONSTRUCTION_TB:
 		{
 			//-----------------------------------
@@ -736,7 +805,7 @@ BOOL CMainFrame::OnShowPopupMenu (CBCGPPopupMenu* pMenuPopup)
 		{
 		
 			CCalques3DDoc *pDoc = DYNAMIC_DOWNCAST(CCalques3DDoc,pChild->GetActiveDocument());
-			if (pDoc && pDoc->m_nUndoState)
+			if (pDoc /*&& pDoc->m_nDocUndoState*/)
 			{
 				//CUndoButton::m_lstActions.RemoveAll();
 				//CRedoButton::m_lstActions.RemoveAll();
@@ -1427,6 +1496,7 @@ void CMainFrame::OnAppLook(UINT id)
 
 	m_nAppLook = id;
 
+	CBCGPTabbedControlBar::m_StyleTabWnd = CBCGPTabWnd::STYLE_3D;
 	switch (m_nAppLook)
 	{
 	case ID_VIEW_APPLOOK_2000:
@@ -1443,6 +1513,8 @@ void CMainFrame::OnAppLook(UINT id)
 		// enable Windows XP look (in other OS Office XP look will be used):
 		CBCGPWinXPVisualManager::m_b3DTabsXPTheme = TRUE;
 		CBCGPVisualManager::SetDefaultManager (RUNTIME_CLASS (CBCGPWinXPVisualManager));
+		CBCGPDockManager::SetDockMode (DT_SMART);
+		((CBCGPWinXPVisualManager*)CBCGPVisualManager::GetInstance ())->SetOfficeStyleMenus ();
 		break;
 
 	case ID_VIEW_APPLOOK_2003:
@@ -1454,7 +1526,7 @@ void CMainFrame::OnAppLook(UINT id)
 	case ID_VIEW_APPLOOK_VS2005:
 		// enable VS.NET 2005 look:
 		CBCGPVisualManager::SetDefaultManager (RUNTIME_CLASS (CBCGPVisualManagerVS2005));
-		CBCGPVisualManager::GetInstance ();
+		CBCGPTabbedControlBar::m_StyleTabWnd = CBCGPTabWnd::STYLE_3D_ROUNDED;
 		CBCGPDockManager::SetDockMode (DT_SMART);
 		break;
 
@@ -1469,6 +1541,14 @@ void CMainFrame::OnAppLook(UINT id)
 	{
 		ASSERT_VALID (pDockManager);
 		pDockManager->AdjustBarFrames ();
+	}
+
+	CWindowDC dc (NULL);
+	theApp.m_bHiColorIcons = dc.GetDeviceCaps (BITSPIXEL) >= 16;
+
+	if (globalData.bIsWindows9x && dc.GetDeviceCaps (BITSPIXEL) == 16)
+	{
+		theApp.m_bHiColorIcons = FALSE;
 	}
 
 	RecalcLayout ();
