@@ -49,8 +49,9 @@ public:
 	void OnChangeVisualStyle ();
 
 // Attributes
+public:
+	CPropertiesToolBar	m_wndToolBar;		///< The local toolbar associated with the control
 protected:
-	CPropertiesToolBar	m_wndToolBar;		///< The private toolbar associated with the control
 	CBCGPPropList		m_wndProp;			///< The property list of the control
 	CPalette			m_palColorPicker;	///< The local colour palette used by color properties
 	CImageList			m_pImgList;			///< The list of icons used for CObject3D properties
