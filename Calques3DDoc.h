@@ -107,7 +107,7 @@ public:
 			UndoRedefine		///< Undo an object redefinition
 			};
 
-	int				m_nUndoState;	///< Current undoable action
+	int				m_nDocUndoState;	///< Current undoable action
 
 	CxUndoObjectSet	m_cNewUndoSet;	///< List of the actions to undo
 	CxUndoObjectSet	m_cNewRedoSet;	///< List of the actions to redo
@@ -131,6 +131,7 @@ public:
 	BOOL MoveObject(CObject3D* pObj);
 
 	void OnPrepareUndo();
+	void CleanUndo();
 	BOOL OnDoUndo(CView *pView=NULL);
 	BOOL OnDoRedo(CView *pView=NULL);
 	BOOL OnSetUndo();
