@@ -247,7 +247,8 @@ int CPropertyBar::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	}
 
 	m_wndToolBar.Create (this, dwDefaultToolbarStyle, IDR_PROPERTY_TB);
-	m_wndToolBar.LoadToolBar (IDR_PROPERTY_TB, 0, 0, TRUE /* Is locked */);
+	m_wndToolBar.LoadToolBar (IDR_PROPERTY_TB);
+
 	OnChangeVisualStyle ();
 	m_wndToolBar.SetBarStyle(m_wndToolBar.GetBarStyle() |
 		CBRS_TOOLTIPS | CBRS_FLYBY);
@@ -401,7 +402,7 @@ int CDependentBar::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	}
 
 	m_wndToolBar.Create (this, dwDefaultToolbarStyle, IDR_DEPENDENT_TB);
-	m_wndToolBar.LoadToolBar (IDR_PROPERTY_TB, 0, 0, TRUE /* Is locked */);
+	m_wndToolBar.LoadToolBar (IDR_PROPERTY_TB);
 	OnChangeVisualStyle ();
 	m_wndToolBar.SetBarStyle(m_wndToolBar.GetBarStyle() |
 		CBRS_TOOLTIPS | CBRS_FLYBY);
