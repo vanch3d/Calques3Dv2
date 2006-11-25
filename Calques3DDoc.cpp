@@ -175,7 +175,7 @@ END_MESSAGE_MAP()
 CCalques3DDoc::CCalques3DDoc()
 {
 	// TODO: add one-time construction code here
-	m_nUndoState = UndoNone;
+	m_nDocUndoState = UndoNone;
 
 	m_cObjectSet.RemoveAll();
 	m_cPolygonSet.RemoveAll();
@@ -199,21 +199,8 @@ CCalques3DDoc::~CCalques3DDoc()
 	//if (m_pMemObj)
 	//	delete m_pMemObj;
 	//m_pMemObj = NULL;
-
-	for (POSITION pos = m_cNewUndoSet.GetHeadPosition (); pos != NULL;)
-	{
-		CUndoObject *pObj = m_cNewUndoSet.GetNext (pos);
-		delete pObj;
-	}
-	m_cNewUndoSet.RemoveAll();
-	for (pos = m_cNewRedoSet.GetHeadPosition (); pos != NULL;)
-	{
-		CUndoObject *pObj = m_cNewRedoSet.GetNext (pos);
-		delete pObj;
-	}
-	m_cNewRedoSet.RemoveAll();
-
 	//OnPrepareUndo();
+	CleanUndo();
 }
 
 BOOL CCalques3DDoc::OnNewDocument()
@@ -286,7 +273,7 @@ void CCalques3DDoc::Serialize(CArchive& ar)
 		{
 			CObject3D *pObj = pObjectSet.GetAt(i);
 			if (!pObj) continue;
-			AddObject(pObj);
+			AddObject(pObj,FALSE);
 		}
 		CCalques3DDoc::GLOBALObjectSet = NULL;
 	}
@@ -447,7 +434,7 @@ BOOL CCalques3DDoc::AddObject(CObject3D* pObj,BOOL bUndo)
 	//OnPrepareUndo();
 	if (bUndo)
 	{
-		m_nUndoState = UndoAppend;
+		m_nDocUndoState = UndoAppend;
 		//m_cUndoSet.Add(pObj);
 
 		CUndoObject * pUndoObj = new CUndoObject();
@@ -467,7 +454,8 @@ BOOL CCalques3DDoc::AddObject(CObject3D* pObj,BOOL bUndo)
 	}
 	else
 	{
-		m_nUndoState = UndoNone;
+		CleanUndo();
+		m_nDocUndoState = UndoNone;
 	}
 
 	SetModifiedFlag(TRUE);
@@ -547,7 +535,7 @@ BOOL CCalques3DDoc::RemoveObject(CObject3D* pObj,BOOL bUndo)
 	}
 
 	AddUndoObject(pUndoObj);
-	m_nUndoState = UndoDelete;
+	m_nDocUndoState = UndoDelete;
 	SetModifiedFlag(TRUE);
 
 	return TRUE;
@@ -582,7 +570,7 @@ BOOL CCalques3DDoc::ModifyPropObject(CObject3D* pObj,CObject3DAttr *pAttr /*= NU
 			pObj->nCalque = pObj->nCalque & 1;*/
 
 			OnPrepareUndo();
-			m_nUndoState = UndoModify;
+			m_nDocUndoState = UndoModify;
 			//m_cUndoSet.Add(pObj);
 			//m_pMemObj = temp;
 
@@ -605,7 +593,7 @@ BOOL CCalques3DDoc::ModifyPropObject(CObject3D* pObj,CObject3DAttr *pAttr /*= NU
 	{
 		pObj->SetAttributes(*pAttr);
 		OnPrepareUndo();
-		m_nUndoState = UndoModify;
+		m_nDocUndoState = UndoModify;
 		//m_cUndoSet.Add(pObj);
 		//m_pMemObj = temp;
 
@@ -629,7 +617,7 @@ BOOL CCalques3DDoc::MoveObject(CObject3D* pObj)
 //	if (!temp) return FALSE;
 
 	OnPrepareUndo();
-	m_nUndoState = UndoMove;
+	m_nDocUndoState = UndoMove;
 	//m_cUndoSet.Add(pObj);
 	//m_pMemObj = temp;
 
@@ -680,6 +668,24 @@ void CCalques3DDoc::OnPrepareUndo()
 BOOL CCalques3DDoc::OnSetUndo()
 {
 	return TRUE;
+}
+
+void CCalques3DDoc::CleanUndo()
+{
+
+	for (POSITION pos = m_cNewUndoSet.GetHeadPosition (); pos != NULL;)
+	{
+		CUndoObject *pObj = m_cNewUndoSet.GetNext (pos);
+		delete pObj;
+	}
+	m_cNewUndoSet.RemoveAll();
+	for (pos = m_cNewRedoSet.GetHeadPosition (); pos != NULL;)
+	{
+		CUndoObject *pObj = m_cNewRedoSet.GetNext (pos);
+		delete pObj;
+	}
+	m_cNewRedoSet.RemoveAll();
+
 }
 
 BOOL CCalques3DDoc::OnDoRedo(CView *pView)
