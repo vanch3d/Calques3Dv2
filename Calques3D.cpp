@@ -75,6 +75,7 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 CCalques3DApp::CCalques3DApp() : CBCGPWorkspace(TRUE)
 {
+	m_bHiColorIcons = FALSE;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -571,7 +572,6 @@ void CCalques3DApp::PreLoadState ()
 	CString mstr;
 
 	// Initialise the mouse manager for the given views
-	//GetMouseManager()->AddView (IDR_CALQUETYPE, _T("My view"), IDR_CALQUETYPE);
 	//GetMouseManager()->AddView (IDR_VIEWUNIVERSE, _T("Universe"), IDR_VIEWUNIVERSE);
 
 	// Initialise the various contextual menus
