@@ -319,7 +319,7 @@ public:
 	/// These functions are used to access or modify the analytical definition of the geometrical
 	/// object: coordinates of the points, equations of the lines, etc.
 	//@{
-	virtual UINT		CalculConceptuel();
+	virtual UINT	CalculConceptuel();
 	virtual void	CalculVisuel(CVisualParam *);
 	virtual void	PrepareMoveObject(BOOL bMove = TRUE) {};
 	virtual BOOL	MoveObject(CVisualParam *,UINT,CPoint ,CVector4&) { return FALSE;};
