@@ -22,6 +22,7 @@
 #include "Cylinder3D.h"
 
 #include "ObjectPropPage.h"
+#include "ObjectFontPage.h"
 #include "..\HelpPrSheet.h"
 
 #ifdef _DEBUG
@@ -106,7 +107,8 @@ void CText3D::SetFont(LOGFONT *pLogFont)
 {
     if (!pLogFont) return;
 
-    mTextFont.CreateFontIndirect(pLogFont);
+    mTextFont.DeleteObject();
+	mTextFont.CreateFontIndirect(pLogFont);
 }
 
 UINT  CText3D::CalculConceptuel()
@@ -135,6 +137,7 @@ int CText3D::SetProperties(CxObject3DSet *pSet)
     CObjectTextPage pPage;
     CObjectInfoPage pPage2;
     CObjectDepPage pPage3;
+    //CObjectFontPage pPage4;
 
     ////// Set Text Information Page
     pPage.m_bMod = isA();
@@ -167,6 +170,7 @@ int CText3D::SetProperties(CxObject3DSet *pSet)
     }
     pPage3.m_pList = &pMyList2;
 
+    //pSheet.AddPage(&pPage4);
     pSheet.AddPage(&pPage);
     pSheet.AddPage(&pPage2);
     pSheet.AddPage(&pPage3);
@@ -176,7 +180,6 @@ int CText3D::SetProperties(CxObject3DSet *pSet)
         bMarked = pPage.m_bMarked;
 
         lFont = pPage.m_lFont;
-        mTextFont.DeleteObject();
         SetFont(&lFont);
         if (!pPage.m_strVarName.IsEmpty())
             strObjectName = pPage.m_strVarName;
@@ -326,10 +329,14 @@ void CLabel3D::Draw(CDC* pDC,CVisualParam *mV,BOOL bSm)
     int oldBM = pDC->SetBkMode(TRANSPARENT);
     CFont *oldF = pDC->SelectObject(&mTextFont);
 
+	COLORREF oldC = pDC->GetTextColor();
+	pDC->SetTextColor(mColorText);
+
     pDC->DrawText(mstr,rActZone,DT_CALCRECT);
     pDC->DrawText(mstr,rActZone,dwFormat);
+	pDC->SetTextColor(oldC);
 
-    if (pSource->IsSelected())
+    if (pSource->IsSelected() || IsSelected())
     {
         CRect mrect = rActZone;
         mrect.InflateRect(1,1,1,1);
