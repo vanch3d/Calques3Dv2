@@ -13,6 +13,7 @@
 #include <math.h>
 //#include "BCGCBPro.h"
 #include "BCGPShapeBar.h"
+#include "BCGPShapeMenuButton.h"
 //#include "BCGPColorMenuButton.h"
 //#include "BCGPPopupMenu.h"
 //#include "BCGPColorDialog.h"
@@ -142,7 +143,7 @@ void CBCGPCShapeToolbarButton::OnDraw (CDC* pDC, const CRect& rect, CBCGPToolBar
 	}
 
 	CRect rectFrame = rect;
-	int cxBorder2=2,cyBorder2=2;
+	int cxBorder2=1,cyBorder2=1;
 	rectFrame.DeflateRect (cxBorder2, cyBorder2);
 
 	//if (m_bIsOther || m_bIsAutomatic || m_bIsLabel)
@@ -184,7 +185,7 @@ void CBCGPCShapeToolbarButton::OnDraw (CDC* pDC, const CRect& rect, CBCGPToolBar
 			CRect shaperect = rectFrame;
 			shaperect.left = rectText.left;
 		shaperect.DeflateRect (cxBorder2, cyBorder2);
-				CShape::DrawShapes(m_Type,pDC,shaperect,m_nShape);
+				CShape::DrawShapes(m_Type,pDC,shaperect,m_nShape,TRUE);
 		}
 
 		//------------
@@ -390,8 +391,8 @@ void CBCGPShapeBar::AdjustLocations ()
 				{
 					rectButton = CRect (
 						CPoint (x, y),
-						CSize (rectClient.Width (), m_nRowHeight /*- m_nVertMargin / 2*/));
-					y += m_nRowHeight /*- m_nVertMargin / 2*/;
+						CSize (rectClient.Width (), (m_nRowHeight-5) /*- m_nVertMargin / 2*/));
+					y += (m_nRowHeight-5) /*- m_nVertMargin / 2*/;
 					x = rectClient.left;
 				}
 
@@ -409,7 +410,10 @@ void CBCGPShapeBar::AdjustLocations ()
 CSize CBCGPShapeBar::CalcSize (BOOL bVertDock)
 {
 	CRect wndrect;
-	m_pParentBtn->GetWindowRect(wndrect);
+	if (m_pParentBtn)
+		m_pParentBtn->GetWindowRect(wndrect);
+	else
+		wndrect = CRect(0,0,80,20);
 	CSize sizeGrid = GetColorGridSize (bVertDock);
 
 	return CSize(
@@ -470,7 +474,7 @@ int CBCGPShapeBar::GetExtraHeight (int nNumColumns) const
 {
 	int nExtraHeight = 0;
 
-		nExtraHeight += m_nRowHeight*(nNumColumns);
+		nExtraHeight += (m_nRowHeight-5)*(nNumColumns);
 //		nExtraHeight += m_nVertMargin;
 
 /*	if (!m_strOtherColor.IsEmpty ())
@@ -665,25 +669,25 @@ void CBCGPShapeBar::Rebuild ()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-/// CBCGPColorCCmdUI
+/// CBCGPShapeCCmdUI
 ///
 /////////////////////////////////////////////////////////////////////////////
-class CBCGPColorCCmdUI : public CCmdUI
+class CBCGPShapeCCmdUI : public CCmdUI
 {
 public:
-	CBCGPColorCCmdUI();
+	CBCGPShapeCCmdUI();
 
 public: // re-implementations only
 	virtual void Enable(BOOL bOn);
 	BOOL m_bEnabled;
 };
 
-CBCGPColorCCmdUI::CBCGPColorCCmdUI()
+CBCGPShapeCCmdUI::CBCGPShapeCCmdUI()
 {
 	m_bEnabled = TRUE;  // assume it is enabled
 }
 //*************************************************************************************
-void CBCGPColorCCmdUI::Enable(BOOL bOn)
+void CBCGPShapeCCmdUI::Enable(BOOL bOn)
 {
 	m_bEnabled = bOn;
 	m_bEnableChanged = TRUE;
@@ -699,7 +703,7 @@ void CBCGPShapeBar::OnUpdateCmdUI(CFrameWnd* pTarget, BOOL bDisableIfNoHndler)
 		return;
 	}
 
-	CBCGPColorCCmdUI state;
+	CBCGPShapeCCmdUI state;
 	state.m_pOther = this;
 	state.m_nIndexMax = 1;
 	state.m_nID = m_nCommandID;
@@ -756,22 +760,33 @@ BOOL CBCGPShapeBar::OnSendCommand (const CBCGPToolbarButton* pButton)
 
  int shape = (COLORREF) -1;
 
+	CBCGPShapeMenuButton* pShapeMenuButton = NULL;
+
 	CBCGPPopupMenu* pParentMenu = DYNAMIC_DOWNCAST (CBCGPPopupMenu, GetParent ());
-	CBCGPCShapeToolbarButton* pColorButton = DYNAMIC_DOWNCAST (CBCGPCShapeToolbarButton, pButton);
-	if (pColorButton == NULL)
+	if (pParentMenu != NULL)
+	{
+		pShapeMenuButton = DYNAMIC_DOWNCAST (CBCGPShapeMenuButton, pParentMenu->GetParentButton ());
+	}
+	CBCGPCShapeToolbarButton* pShapeButton = DYNAMIC_DOWNCAST (CBCGPCShapeToolbarButton, pButton);
+	if (pShapeButton == NULL)
 	{
 		ASSERT (FALSE);
 	}
-	if (pColorButton->m_bIsAutomatic)
+	if (pShapeButton->m_bIsAutomatic)
 	{
 		shape = (COLORREF) -1;
 	}
 	else
 	{
-		shape = pColorButton->m_nShape;
+		shape = pShapeButton->m_nShape;
 	}
 
-	if (m_pParentBtn != NULL)
+	if (pShapeMenuButton != NULL)
+	{
+		pShapeMenuButton->SetShape(m_Type,shape);
+		InvokeMenuCommand (pShapeMenuButton->m_nID, pShapeMenuButton);
+	}
+	else if (m_pParentBtn != NULL)
 	{
 		m_pParentBtn->UpdateShape (shape);
 		GetParent ()->SendMessage (WM_CLOSE);
@@ -801,13 +816,13 @@ BOOL CBCGPShapeBar::OnSendCommand (const CBCGPToolbarButton* pButton)
 			}
 		}
 
-		CBCGPColorMenuButton::SetColorByCmdID (m_nCommandID, color);
+		CBCGPColorMenuButton::SetColorByCmdID (m_nCommandID, color);*/
 		GetOwner()->SendMessage (WM_COMMAND, m_nCommandID);    // send command
 
 		if (BCGCBProGetTopLevelFrame (this) != NULL)
 		{
 			BCGCBProGetTopLevelFrame (this)->SetFocus ();
-		}**/
+		}
 	}
 
 	return TRUE;
