@@ -264,8 +264,8 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	//----------------------
 	// Create Format toolbar:
 	//----------------------
-	if (!m_wndTextBar.CreateEx(this, TBSTYLE_FLAT, WS_CHILD | WS_VISIBLE | CBRS_TOP
-		| CBRS_GRIPPER | CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_DYNAMIC,CRect(1, 1, 1, 1),
+	if (!m_wndTextBar.CreateEx(this, TBSTYLE_FLAT, WS_CHILD | WS_VISIBLE | CBRS_TOP | CBRS_BORDER_3D
+		| CBRS_GRIPPER | CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_HIDE_INPLACE | CBRS_SIZE_DYNAMIC,CRect(1, 1, 1, 1),
 			ID_VIEW_FORMAT) ||
 		!m_wndTextBar.LoadToolBar(IDR_TEXTPALETTE_TB))
 	{
@@ -679,7 +679,7 @@ afx_msg LRESULT CMainFrame::OnToolbarReset(WPARAM wp,LPARAM)
 		{
 		}
 		break;
-	case IDR_TEXTPALETTE_TB:
+/*	case IDR_TEXTPALETTE_TB:
 		{
 		m_wndTextBar.ReplaceButton (ID_CHAR_FONT, 
 			CBCGPToolbarFontCombo(ID_CHAR_FONT, 
@@ -711,7 +711,7 @@ afx_msg LRESULT CMainFrame::OnToolbarReset(WPARAM wp,LPARAM)
 
 		m_wndTextBar.ReplaceButton (ID_CHAR_OBJCOLOR, tt2);
 		}
-		break;
+		break;*/
 	case IDR_CONSTRUCTION_TB:
 		{
 			//-----------------------------------
