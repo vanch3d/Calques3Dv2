@@ -71,8 +71,8 @@ IMPLEMENT_DYNCREATE(CPrefUniverse, CBCGPPropertyPage)
 
 
 CPrefUniverse::CPrefUniverse()
-	:	CBCGPPropertyPage(CPrefUniverse::IDD),
-		m_cPOVList(this)
+	:	CBCGPPropertyPage(CPrefUniverse::IDD)//,
+		//m_cPOVList(this)
 {	
 	//{{AFX_DATA_INIT(CPrefUniverse)
 	m_bMagnet = TPref::TUniv.bMagnet;
@@ -86,7 +86,7 @@ void CPrefUniverse::DoDataExchange(CDataExchange* pDX)
 {
 	CBCGPPropertyPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CPrefUniverse)
-	DDX_Control(pDX, IDC_PUNIV_POVLIST, m_cPOVList);
+//	DDX_Control(pDX, IDC_PUNIV_POVLIST, m_cPOVList);
 	DDX_Check(pDX, IDC_PUNIV_MAGNET, m_bMagnet);
 	DDX_Check(pDX, IDC_PUNIV_SYNCHRO, m_bSynchro);
 	DDX_CBIndex(pDX, IDC_PUNIV_REFINIT, m_nRefInit);
@@ -130,12 +130,12 @@ BOOL CPrefUniverse::OnInitDialog()
 	//-------------
 	// Add buttons:
 	//-------------
-	m_cPOVList.SetStandardButtons (BGCEDITLISTBOX_BTN_NEW|BGCEDITLISTBOX_BTN_DELETE);
+//	m_cPOVList.SetStandardButtons (BGCEDITLISTBOX_BTN_NEW|BGCEDITLISTBOX_BTN_DELETE);
 
 	//------------
 	// Fill tools:
 	//------------
-	int nb = TPref::TPOVList.GetCount();
+/*	int nb = TPref::TPOVList.GetCount();
 	if (!nb)
 	{
 		m_cPOVList.AddItem(_T("< Default >"),NULL);
@@ -146,7 +146,7 @@ BOOL CPrefUniverse::OnInitDialog()
 		CMacroUserTool* pTool = (CMacroUserTool*)TPref::TPOVList.GetNext( pos );
 		if (pTool)
 			m_cPOVList.AddItem (pTool->m_strLabel, (DWORD) pTool);
-	}
+	}*/
 
 	// Initialize color names:
 	int m_nNumColours2 = sizeof (TPref::crColours)/sizeof(TPref::ColourTableEntry);

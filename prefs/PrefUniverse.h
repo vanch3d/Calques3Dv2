@@ -46,7 +46,7 @@ public:
 	//{{AFX_DATA(CPrefUniverse)
 	enum { IDD = IDD_PREF_UNIVERSE_PAGE };
 	CBCGPColorButton		m_wndTraceColor;
-	CPOVList			m_cPOVList;
+//	CPOVList			m_cPOVList;
 	BOOL	m_bMagnet;
 	BOOL	m_bSynchro;
 	int		m_nRefInit;
