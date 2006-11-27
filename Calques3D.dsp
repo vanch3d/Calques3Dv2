@@ -113,6 +113,10 @@ SOURCE=.\BCGPShapeButton.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\BCGPShapeMenuButton.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\BCGPShapePopup.cpp
 # End Source File
 # Begin Source File
@@ -246,6 +250,10 @@ SOURCE=.\Tasks\ExtractTask.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\FormatToolBar.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Fraction.cpp
 # End Source File
 # Begin Source File
@@ -326,6 +334,11 @@ SOURCE=.\objects\Object3D.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\objects\ObjectFontPage.cpp
+# ADD CPP /I ".."
+# End Source File
+# Begin Source File
+
 SOURCE=.\objects\ObjectPropPage.cpp
 # End Source File
 # Begin Source File
@@ -372,6 +385,11 @@ SOURCE=.\prefs\PrefMacros.cpp
 # Begin Source File
 
 SOURCE=.\prefs\prefmathpad.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\prefs\prefobjcolor.cpp
+# ADD CPP /I ".."
 # End Source File
 # Begin Source File
 
@@ -532,6 +550,10 @@ SOURCE=.\BCGPShapeButton.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\BCGPShapeMenuButton.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\BCGPShapePopup.h
 # End Source File
 # Begin Source File
@@ -589,6 +611,10 @@ SOURCE=.\objects\Cylinder3D.h
 # Begin Source File
 
 SOURCE=.\objects\Droite3D.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\FormatToolBar.h
 # End Source File
 # Begin Source File
 
@@ -660,6 +686,10 @@ SOURCE=.\objects\Object3D.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\objects\ObjectFontPage.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\objects\ObjectPropPage.h
 # End Source File
 # Begin Source File
@@ -689,6 +719,10 @@ SOURCE=.\prefs\PrefMacros.h
 # Begin Source File
 
 SOURCE=.\prefs\prefmathpad.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\prefs\prefobjcolor.h
 # End Source File
 # Begin Source File
 
@@ -1015,6 +1049,10 @@ SOURCE=.\res\tb_command.bmp
 # End Source File
 # Begin Source File
 
+SOURCE=.\res\tb_command24.bmp
+# End Source File
+# Begin Source File
+
 SOURCE=.\res\tb_construction.bmp
 # End Source File
 # Begin Source File
@@ -1035,6 +1073,10 @@ SOURCE=.\res\tb_mainframe.bmp
 # End Source File
 # Begin Source File
 
+SOURCE=.\res\tb_mainframe24.bmp
+# End Source File
+# Begin Source File
+
 SOURCE=.\res\tb_objects.bmp
 # End Source File
 # Begin Source File
@@ -1051,6 +1093,10 @@ SOURCE=.\res\tb_property.bmp
 # End Source File
 # Begin Source File
 
+SOURCE=.\res\tb_property24.bmp
+# End Source File
+# Begin Source File
+
 SOURCE=.\res\tb_univh.bmp
 # End Source File
 # Begin Source File
@@ -1064,6 +1110,14 @@ SOURCE=.\res\tb_verify.bmp
 # Begin Source File
 
 SOURCE=.\res\tb_visual.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\text_tb.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\text_tb24.bmp
 # End Source File
 # Begin Source File
 
