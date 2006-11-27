@@ -10,33 +10,46 @@
 /////////////////////////////////////////////////////////////////////////////
 // CBCGPShapeMenuButton window
 
-class CBCGPShapeMenuButton : public CWnd
+class CBCGPShapeMenuButton : public CBCGPToolbarMenuButton
 {
+	DECLARE_SERIAL(CBCGPShapeMenuButton)
 // Construction
 public:
 	CBCGPShapeMenuButton();
+	CBCGPShapeMenuButton(UINT uiCmdID,int type,int shape);
 
 // Attributes
 public:
+	int		m_nShapeType;				///<
+	int		m_nShape;					///<
+
+	static CMap<UINT,UINT,CPoint, CPoint> m_ShapesByID;
+	static CPoint GetShapeByCmdID (UINT uiCmdID);
 
 // Operations
 public:
-
-// Overrides
-	// ClassWizard generated virtual function overrides
-	//{{AFX_VIRTUAL(CBCGPShapeMenuButton)
-	//}}AFX_VIRTUAL
+	int GetShape() const;
+	void SetShape(int type, int index =-1/* automatic*/);
 
 // Implementation
 public:
 	virtual ~CBCGPShapeMenuButton();
+	virtual void OnChangeParentWnd (CWnd* pWndParent);
+	virtual SIZE OnCalculateSize (CDC* pDC, const CSize& sizeDefault, BOOL bHorz);
+	virtual void OnDraw (CDC* pDC, const CRect& rect, CBCGPToolBarImages* pImages,
+						BOOL bHorz = TRUE, BOOL bCustomizeMode = FALSE,
+						BOOL bHighlight = FALSE,
+						BOOL bDrawBorder = TRUE,
+						BOOL bGrayDisabledButtons = TRUE);
 
-	// Generated message map functions
 protected:
-	//{{AFX_MSG(CBCGPShapeMenuButton)
-		// NOTE - the ClassWizard will add and remove member functions here.
-	//}}AFX_MSG
-	DECLARE_MESSAGE_MAP()
+		virtual CBCGPPopupMenu* CreatePopupMenu ();
+	virtual int OnDrawOnCustomizeList (CDC* pDC, const CRect& rect, BOOL bSelected);
+	virtual BOOL IsEmptyMenuAllowed () const
+	{
+		return TRUE;
+	}
+
 };
 
 /////////////////////////////////////////////////////////////////////////////
