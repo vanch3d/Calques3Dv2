@@ -13,6 +13,7 @@ HID_VIEW_RENDERING                      0x17538
 HID_VIEW_PLACEMENT_SAVE                 0x1753A
 HID_VIEW_PLACEMENT_RESTORE              0x1753B
 HID_VIEW_CUSTOMIZE                      0x1753C
+HID_VIEW_OPTIONS                        0x1753D
 HID_VIEW_USER_TOOLBAR1                  0x17544
 HID_VIEW_USER_TOOLBAR2                  0x17545
 HID_VIEW_USER_TOOLBAR3                  0x17546
@@ -169,7 +170,15 @@ HID_MATHPAD_ADDCOMMENT                  0x17850
 HID_MATHPAD_ADDEQUATION                 0x17851
 HID_RENDERER_PROPERTY                   0x178B4
 HID_VIEW_TOOLBARS                       0x18003
-HID_TOOLS_ENTRY                         0x18025
+HID_CHAR_OBJCOLOR                       0x18020
+HID_CHAR_OBJSHAPE                       0x18021
+HID_CHAR_FONT                           0x18022
+HID_CHAR_SIZE                           0x18023
+HID_CHAR_TXTCOLOR                       0x18024
+HID_CHAR_BOLD                           0x18025
+HID_CHAR_ITALIC                         0x18026
+HID_CHAR_UNDERLINE                      0x18027
+HID_TOOLS_ENTRY                         0x1803E
 HID_VIEW_APPLOOK_2000                   0x18041
 HID_VIEW_APPLOOK_XP                     0x18042
 HID_VIEW_APPLOOK_2003                   0x18043
@@ -190,6 +199,7 @@ HID_VIEW_VISUALISATION                  0x180A3
 HID_VIEW_EXPLORATION                    0x180A4
 HID_VIEW_PROPERTYBAR                    0x180A5
 HID_VIEW_DEPENDENTBAR                   0x180A6
+HID_VIEW_FORMAT                         0x180A7
 HID_DUMMY_POINTON                       0x180C0
 HID_DUMMY_INTERS                        0x180C1
 HID_DUMMY_POINTDIV                      0x180C2
@@ -207,7 +217,6 @@ HIDP_OLE_INIT_FAILED                    0x30064
  
 // Resources (IDR_*) 
 HIDR_MAINFRAME                          0x20080
-HIDR_CALQUETYPE                         0x20081
 HIDR_ABOUTDLG                           0x20081
 HIDR_CONTEXT_MENU                       0x20082
 HIDR_POPUP_TOOLBAR                      0x20083
@@ -228,11 +237,15 @@ HIDR_POPUP_PROJECTION                   0x200A8
 HIDR_POPUP_POINTOFVIEW                  0x200A9
 HIDR_POPUP_SHAPE                        0x200AA
 HIDR_POPUP_MACRO                        0x200AB
+HIDR_CREDITS                            0x200AC
 HIDR_ZOOM                               0x200AD
-HIDR_CREDITS                            0x200AD
 HIDR_REFERENTIEL                        0x200AE
 HIDR_POPUP_VERIFY                       0x200AF
 HIDR_POPUP_MEASURE                      0x200B0
+HIDR_MAINFRAME24                        0x20258
+HIDR_COMMANDS_TB24                      0x20262
+HIDR_TEXTPALETTE_TB24                   0x20267
+HIDR_PROPERTY_TB24                      0x2026C
 HIDR_COMMANDS_TB                        0x211C6
 HIDR_OBJECTS_TB                         0x211C7
 HIDR_VISUALISATION_TB                   0x211C8
@@ -247,29 +260,33 @@ HIDR_GRAPH_TB                           0x211D1
 HIDR_VERIFY_TB                          0x211D2
 HIDR_PROPERTY_TB                        0x211D6
 HIDR_DEPENDENT_TB                       0x211D7
+HIDR_TEXTPALETTE_TB                     0x211D8
  
 // Dialogs (IDD_*) 
-HIDD_ABOUTBOX                           0x20064
-HIDD_SUPPRESS_DLG                       0x2006B
-HIDD_OBJECTPROP_PAGE                    0x2006C
-HIDD_OBJECTDEP_PAGE                     0x2006D
-HIDD_OBJECTINFO_PAGE                    0x2006E
-HIDD_PREF_SHAPE_PAGE                    0x2006F
-HIDD_OBJECTCPT_PAGE                     0x20070
-HIDD_PREF_UNIVERSE_PAGE                 0x20071
-HIDD_VERIFY_DLG                         0x20076
-HIDD_SAVE_PROFILE_DLG                   0x20098
-HIDD_SPLASH                             0x2009D
-HIDD_MACROINFO_DLG                      0x200B1
-HIDD_PREF_MACROS_PAGE                   0x249F0
-HIDD_PREF_SESSION_PAGE                  0x249F1
-HIDD_ABOUTCREDIT                        0x249F2
-HIDD_ABOUTCALQUE                        0x249F3
-HIDD_ABOUTPROP                          0x249F4
-HIDD_ZOOM_DLG                           0x249F6
-HIDD_PREF_MATHPAD_PAGE                  0x249F7
-HIDD_OBJECTTEXT_PAGE                    0x249F8
-HIDD_PREF_DISCOVERY_PAGE                0x249F9
-HIDD_UNDO_DLG                           0x249FA
+HIDD_SUPPRESS_DLG                       0x2012C
+HIDD_VERIFY_DLG                         0x2012D
+HIDD_SAVE_PROFILE_DLG                   0x2012E
+HIDD_SPLASH                             0x2012F
+HIDD_MACROINFO_DLG                      0x20130
+HIDD_ZOOM_DLG                           0x20131
+HIDD_UNDO_DLG                           0x20132
+HIDD_OBJECTPROP_PAGE                    0x20137
+HIDD_OBJECTDEP_PAGE                     0x20138
+HIDD_OBJECTINFO_PAGE                    0x20139
+HIDD_OBJECTCPT_PAGE                     0x2013A
+HIDD_OBJECTTEXT_PAGE                    0x2013B
+HIDD_OBJECTFONT_PAGE                    0x2013C
+HIDD_PREF_SESSION_PAGE                  0x20140
+HIDD_PREF_SHAPE_PAGE                    0x20141
+HIDD_PREF_COLORS_PAGE                   0x20142
+HIDD_PREF_UNIVERSE_PAGE                 0x20143
+HIDD_PREF_MACROS_PAGE                   0x20144
+HIDD_PREF_MATHPAD_PAGE                  0x20145
+HIDD_PREF_POV_PAGE                      0x20146
+HIDD_PREF_DISCOVERY_PAGE                0x20147
+HIDD_ABOUTBOX                           0x2014B
+HIDD_ABOUTCREDIT                        0x2014C
+HIDD_ABOUTCALQUE                        0x2014D
+HIDD_ABOUTPROP                          0x2014E
  
 // Frame Controls (IDW_*) 
