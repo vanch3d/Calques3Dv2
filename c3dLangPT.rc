@@ -51,10 +51,12 @@ IDR_DEPENDENT_TB        ICON       DISCARDABLE        "res\\dep_bar.ico"
 //
 
 IDR_MAINFRAME           BITMAP     MOVEABLE PURE      "res\\tb_mainframe.bmp"
+IDR_MAINFRAME24         BITMAP     MOVEABLE PURE      "res\\tb_mainframe24.bmp"
 IDB_WORKSPACE           BITMAP     DISCARDABLE        "res\\workspace.bmp"
 IDR_OBJECTS_TB          BITMAP     MOVEABLE PURE      "res\\tb_objects.bmp"
 IDR_VISUALISATION_TB    BITMAP     MOVEABLE PURE      "res\\tb_visual.bmp"
 IDR_COMMANDS_TB         BITMAP     MOVEABLE PURE      "res\\tb_command.bmp"
+IDR_COMMANDS_TB24       BITMAP     MOVEABLE PURE      "res\\tb_command24.bmp"
 IDR_CONSTRUCTION_TB     BITMAP     MOVEABLE PURE      "res\\tb_construction.bmp"
 IDB_VAR_ICONS           BITMAP     DISCARDABLE        "res\\smallcpn.bmp"
 IDB_OBJECTS_ICONS       BITMAP     DISCARDABLE        "res\\obj_icon.bmp"
@@ -74,17 +76,20 @@ IDB_PREFS_ICONS         BITMAP     DISCARDABLE        "res\\preficons.bmp"
 IDR_EXPLORATION_TB      BITMAP     DISCARDABLE        "res\\tb_exploration.bmp"
 IDB_SLIDERS             BITMAP     DISCARDABLE        "res\\sliders.bmp"
 IDR_PROPERTY_TB         BITMAP     DISCARDABLE        "res\\tb_property.bmp"
+IDR_PROPERTY_TB24       BITMAP     DISCARDABLE        "res\\tb_property24.bmp"
 IDB_LIST_ADDITEM        BITMAP     DISCARDABLE        "res\\list_add.bmp"
 IDB_LIST_BROWSE         BITMAP     DISCARDABLE        "res\\list_browse.bmp"
 IDB_LIST_DELITEM        BITMAP     DISCARDABLE        "res\\list_delete.bmp"
 IDB_PROJECTION          BITMAP     DISCARDABLE        "res\\project.bmp"
+IDR_FORMAT_TB           BITMAP     DISCARDABLE        "res\\text_tb.bmp"
+IDR_FORMAT_TB24         BITMAP     DISCARDABLE        "res\\text_tb24.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // Toolbar
 //
 
-IDR_MAINFRAME TOOLBAR DISCARDABLE  16, 15
+IDR_MAINFRAME TOOLBAR DISCARDABLE  16, 16
 BEGIN
     BUTTON      ID_FILE_NEW
     BUTTON      ID_FILE_OPEN
@@ -104,7 +109,7 @@ BEGIN
     BUTTON      ID_CONTEXT_HELP
 END
 
-IDR_OBJECTS_TB TOOLBAR DISCARDABLE  16, 15
+IDR_OBJECTS_TB TOOLBAR DISCARDABLE  16, 16
 BEGIN
     BUTTON      ID_OBJECT_POINT
     SEPARATOR
@@ -122,7 +127,7 @@ BEGIN
     BUTTON      ID_OBJECT_SPHERE
 END
 
-IDR_VISUALISATION_TB TOOLBAR DISCARDABLE  16, 15
+IDR_VISUALISATION_TB TOOLBAR DISCARDABLE  16, 16
 BEGIN
     BUTTON      ID_VISUALISATION_DEFAULTTASK
     SEPARATOR
@@ -132,10 +137,12 @@ BEGIN
     BUTTON      ID_VISUALISATION_SHOWMARKS
 END
 
-IDR_COMMANDS_TB TOOLBAR DISCARDABLE  16, 15
+IDR_COMMANDS_TB TOOLBAR DISCARDABLE  16, 16
 BEGIN
     BUTTON      ID_VIEW_CUSTOMIZE
+    BUTTON      ID_VIEW_OPTIONS
     SEPARATOR
+    BUTTON      ID_VIEW_FULLSCREEN
     BUTTON      ID_WINDOW_TILE_VERT
     BUTTON      ID_WINDOW_TILE_HORZ
     BUTTON      ID_WINDOW_CASCADE
@@ -180,7 +187,7 @@ BEGIN
     BUTTON      ID_HISTORY_PROPERTY
 END
 
-IDR_CONSTRUCTION_TB TOOLBAR DISCARDABLE  16, 15
+IDR_CONSTRUCTION_TB TOOLBAR DISCARDABLE  16, 16
 BEGIN
     BUTTON      ID_DUMMY_POINTON
     BUTTON      ID_DUMMY_INTERS
@@ -194,18 +201,18 @@ BEGIN
     BUTTON      ID_CONSTRUCTION_PERPENDICULARPLANE
 END
 
-IDR_UNIVERSEH_TB TOOLBAR DISCARDABLE  16, 15
+IDR_UNIVERSEH_TB TOOLBAR DISCARDABLE  16, 16
 BEGIN
     BUTTON      ID_VISUALISATION_POINTSOFVIEW
     BUTTON      ID_VISUALISATION_POV_HSLIDER
 END
 
-IDR_UNIVERSEV_TB TOOLBAR DISCARDABLE  16, 15
+IDR_UNIVERSEV_TB TOOLBAR DISCARDABLE  16, 16
 BEGIN
     BUTTON      ID_VISUALISATION_POV_VSLIDER
 END
 
-IDR_POINTON_TB TOOLBAR DISCARDABLE  16, 15
+IDR_POINTON_TB TOOLBAR DISCARDABLE  16, 16
 BEGIN
     BUTTON      ID_CONSTRUCTION_POINTON_LINE
     BUTTON      ID_CONSTRUCTION_POINTON_CIRCLE
@@ -214,7 +221,7 @@ BEGIN
     BUTTON      ID_CONSTRUCTION_POINTON_CYLINDER
 END
 
-IDR_INTERSECT_TB TOOLBAR DISCARDABLE  16, 15
+IDR_INTERSECT_TB TOOLBAR DISCARDABLE  16, 16
 BEGIN
     BUTTON      ID_CONSTRUCTION_INTERSECTION_LINELINE
     BUTTON      ID_CONSTRUCTION_INTERSECTION_LINEPLANE
@@ -223,7 +230,7 @@ BEGIN
     BUTTON      ID_CONSTRUCTION_INTERSECTION_PLANEPLANE
 END
 
-IDR_POINTDIV_TB TOOLBAR DISCARDABLE  16, 15
+IDR_POINTDIV_TB TOOLBAR DISCARDABLE  16, 16
 BEGIN
     BUTTON      ID_CONSTRUCTION_MIDPOINT
     BUTTON      ID_CONSTRUCTION_SYMMETRICALPOINT
@@ -233,7 +240,7 @@ BEGIN
     BUTTON      ID_CONSTRUCTION_DIVSEGMENT
 END
 
-IDR_GRAPH_TB TOOLBAR DISCARDABLE  16, 15
+IDR_GRAPH_TB TOOLBAR DISCARDABLE  16, 16
 BEGIN
     BUTTON      ID_GRAPH_SHOWCHILDREN
     BUTTON      ID_GRAPH_SHOWPARENTS
@@ -241,7 +248,7 @@ BEGIN
     BUTTON      ID_GRAPH_SHOWBASEPT
 END
 
-IDR_VERIFY_TB TOOLBAR DISCARDABLE  16, 15
+IDR_VERIFY_TB TOOLBAR DISCARDABLE  16, 16
 BEGIN
     BUTTON      ID_EXPLORATION_VERIFY_PAR
     BUTTON      ID_EXPLORATION_VERIFY_PERP
@@ -249,7 +256,7 @@ BEGIN
     BUTTON      ID_EXPLORATION_VERIFY_PTALIGN
 END
 
-IDR_EXPLORATION_TB TOOLBAR DISCARDABLE  16, 15
+IDR_EXPLORATION_TB TOOLBAR DISCARDABLE  16, 16
 BEGIN
     BUTTON      ID_EXPLORATION_MOVE
     SEPARATOR
@@ -262,6 +269,19 @@ IDR_PROPERTY_TB TOOLBAR DISCARDABLE  16, 16
 BEGIN
     BUTTON      ID_PROPERTY_EXPAND
     BUTTON      ID_PROPERTY_SORTING
+END
+
+IDR_FORMAT_TB TOOLBAR DISCARDABLE  16, 16
+BEGIN
+    BUTTON      ID_FORMAT_OBJCOLOR
+    BUTTON      ID_FORMAT_OBJSHAPE
+    SEPARATOR
+    BUTTON      ID_FORMAT_TXTFONT
+    BUTTON      ID_FORMAT_TXTSIZE
+    BUTTON      ID_FORMAT_TXTCOLOR
+    BUTTON      ID_FORMAT_ITALIC
+    BUTTON      ID_FORMAT_UNDERLINE
+    BUTTON      ID_FORMAT_BOLD
 END
 
 
@@ -361,19 +381,13 @@ BEGIN
                     HIDC_OBJ_DEF
 END
 
-IDD_PREF_SHAPE_PAGE DIALOGEX 0, 0, 272, 146
+IDD_PREF_SHAPE_PAGE DIALOGEX 0, 0, 212, 196
 STYLE DS_CONTEXTHELP | WS_CHILD | WS_CAPTION
-CAPTION "Aparência (*)"
+CAPTION "Aparência"
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    GROUPBOX        "Aparência inicial dos pontos",IDC_SHAPE_APP,4,4,140,136,
-                    BS_FLAT,0,HIDC_SHAPE_APP
-    GROUPBOX        "Cores padrão",IDC_STATIC,148,4,120,136,BS_FLAT
-    CONTROL         "&Partes escondidas em cinza",IDC_SHAPE_HIDDEN,"Button",
-                    BS_AUTOCHECKBOX | BS_LEFTTEXT | BS_RIGHT | BS_VCENTER | 
-                    WS_TABSTOP,163,128,101,8,0,HIDC_SHAPE_HIDDEN
-    CONTROL         "CustomColor",IDC_SHAPE_DEFCOLOR,"MFCGridCtrl",
-                    WS_TABSTOP,152,16,112,108,0,HIDC_SHAPE_DEFCOLOR
+    GROUPBOX        "Aparência inicial",IDC_SHAPE_APP,4,4,204,188,BS_FLAT | 
+                    NOT WS_VISIBLE,0,HIDC_SHAPE_APP
 END
 
 IDD_OBJECTCPT_PAGE DIALOGEX 0, 0, 212, 73
@@ -387,53 +401,26 @@ BEGIN
     PUSHBUTTON      "&P",IDC_SWITCH_MODE,4,4,10,14,NOT WS_VISIBLE
 END
 
-IDD_PREF_UNIVERSE_PAGE DIALOGEX 0, 0, 272, 146
+IDD_PREF_UNIVERSE_PAGE DIALOGEX 0, 0, 212, 196
 STYLE DS_CONTEXTHELP | WS_CHILD | WS_CAPTION
-CAPTION "Universo (*)"
-FONT 8, "MS Sans Serif"
+CAPTION "Universo"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    GROUPBOX        "Sistema de referência",IDC_STATIC,4,4,140,48,BS_FLAT
+    GROUPBOX        "Sistema de referência",IDC_STATIC,4,4,204,48,BS_FLAT
     LTEXT           "&Sistema inicial:",IDC_STATIC,8,18,46,9,
                     SS_CENTERIMAGE
-    COMBOBOX        IDC_PUNIV_REFINIT,56,16,76,48,CBS_DROPDOWNLIST | 
+    COMBOBOX        IDC_PUNIV_REFINIT,68,16,100,48,CBS_DROPDOWNLIST | 
                     WS_VSCROLL | WS_TABSTOP,0,HIDC_PUNIV_REFINIT
     CONTROL         "&Magnetismo",IDC_PUNIV_MAGNET,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,8,36,50,10,0,HIDC_PUNIV_MAGNET
-    CONTROL         "Sincronizar &a apresentação",IDC_PUNIV_SYNCHRO,
-                    "Button",BS_AUTOCHECKBOX | BS_MULTILINE | WS_TABSTOP,8,
-                    126,121,10,0,HIDC_PUNIV_SYNCHRO
-    GROUPBOX        "Ponto de vista do observador",IDC_STATIC,148,4,120,136,
-                    BS_FLAT
-    LTEXT           "",IDC_PUNIV_POVLIST,156,16,108,60,WS_TABSTOP,0,
-                    HIDC_PUNIV_POVLIST
+                    WS_TABSTOP,20,36,50,10,0,HIDC_PUNIV_MAGNET
+    CONTROL         "Sincronizar &a apresentação",
+                    IDC_PUNIV_SYNCHRO,"Button",BS_AUTOCHECKBOX | 
+                    BS_MULTILINE | WS_TABSTOP,20,105,120,20,0,
+                    HIDC_PUNIV_SYNCHRO
     PUSHBUTTON      "Forma",IDC_PUNIV_TRACE,35,68,97,12,0,0,HIDC_PUNIV_TRACE
-    GROUPBOX        "Rastrear",IDC_STATIC,4,56,140,32,BS_FLAT
+    GROUPBOX        "Rastrear",IDC_STATIC,4,56,204,32,BS_FLAT
     LTEXT           "Cor:",IDC_STATIC,16,70,17,9,SS_CENTERIMAGE
-    CONTROL         191,IDC_STATIC,"Static",SS_BITMAP,152,84,60,52
-    EDITTEXT        IDC_EDIT1,228,84,36,12,ES_CENTER | ES_AUTOHSCROLL | 
-                    ES_NUMBER
-    CONTROL         "Spin1",IDC_SPIN1,"msctls_updown32",UDS_SETBUDDYINT | 
-                    UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,252,84,11,
-                    12
-    EDITTEXT        IDC_EDIT2,228,97,36,12,ES_CENTER | ES_AUTOHSCROLL | 
-                    ES_NUMBER
-    CONTROL         "Spin1",IDC_SPIN2,"msctls_updown32",UDS_SETBUDDYINT | 
-                    UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,252,97,11,
-                    12
-    EDITTEXT        IDC_EDIT3,228,112,36,12,ES_CENTER | ES_AUTOHSCROLL | 
-                    ES_NUMBER
-    CONTROL         "Spin1",IDC_SPIN3,"msctls_updown32",UDS_SETBUDDYINT | 
-                    UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,252,112,
-                    11,12
-    EDITTEXT        IDC_EDIT4,228,124,36,12,ES_CENTER | ES_AUTOHSCROLL | 
-                    ES_NUMBER
-    CONTROL         "Spin1",IDC_SPIN4,"msctls_updown32",UDS_SETBUDDYINT | 
-                    UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,252,124,
-                    11,12
-    CTEXT           "&r=",IDC_STATIC,216,84,12,12,SS_CENTERIMAGE
-    CTEXT           "&t=",IDC_STATIC,216,96,12,12,SS_CENTERIMAGE
-    CTEXT           "&d=",IDC_STATIC,216,112,12,12,SS_CENTERIMAGE
-    CTEXT           "&n=",IDC_STATIC,216,124,12,12,SS_CENTERIMAGE
+    GROUPBOX        "Synchronisation",IDC_STATIC,4,92,204,40,BS_FLAT
 END
 
 IDD_ABOUTPROP DIALOG DISCARDABLE  0, 0, 214, 190
@@ -486,41 +473,44 @@ BEGIN
     PUSHBUTTON      "Aj&uda",IDHELP,132,132,50,14
 END
 
-IDD_PREF_MACROS_PAGE DIALOGEX 0, 0, 272, 146
+IDD_PREF_MACROS_PAGE DIALOGEX 0, 0, 212, 196
 STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
-CAPTION "Macros (*)"
+CAPTION "Macros"
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    CONTROL         "&Outras macros podem ser carregadas pelo usuário",
-                    IDC_PMAC_LOADMACRO,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,
-                    8,4,174,10,0,HIDC_PMAC_LOADMACRO
-    LTEXT           "&Conteúdo do menu de macros",IDC_PMAC_LIST,8,20,256,56,
-                    WS_TABSTOP,0,HIDC_PMAC_LIST
-    LTEXT           "&Arquivo :",IDC_STATIC,17,84,31,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_PMAC_PATH,52,84,212,12,ES_AUTOHSCROLL | ES_READONLY,
+    GROUPBOX        "User-Defined Macros",IDC_STATIC,4,4,204,148,BS_FLAT
+    LTEXT           "&Conteúdo do menu:",IDC_PMAC_LIST,8,16,196,72,WS_TABSTOP,0,
+                    HIDC_PMAC_LIST
+    RTEXT           "Macros &File :",IDC_STATIC,8,92,40,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_PMAC_PATH,52,92,152,12,ES_AUTOHSCROLL | ES_READONLY,
                     0,HIDC_PMAC_PATH
-    LTEXT           "&Nome :",IDC_STATIC,23,100,25,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_PMAC_NAME,52,100,212,12,ES_MULTILINE | ES_READONLY,0,
+    RTEXT           "&Nome :",IDC_STATIC,23,100,25,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_PMAC_NAME,52,108,152,12,ES_MULTILINE | ES_READONLY,0,
                     HIDC_PMAC_NAME
-    LTEXT           "&Def. :",IDC_STATIC,28,116,20,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_PMAC_DEF,52,116,212,24,ES_MULTILINE | ES_READONLY,0,
+    RTEXT           "&Def. :",IDC_STATIC,24,124,24,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_PMAC_DEF,52,124,152,24,ES_MULTILINE | ES_READONLY,0,
                     HIDC_PMAC_DEF
+    GROUPBOX        "Loading Macros",IDC_STATIC,4,156,204,36,BS_FLAT
+    CONTROL         "&Outras macros podem ser carregadas pelo usuário",
+                    IDC_PMAC_LOADMACRO,"Button",BS_AUTOCHECKBOX | 
+                    BS_MULTILINE | WS_TABSTOP,8,4,174,10,0,
+                    HIDC_PMAC_LOADMACRO
 END
 
-IDD_PREF_SESSION_PAGE DIALOGEX 0, 0, 272, 146
+IDD_PREF_SESSION_PAGE DIALOGEX 0, 0, 212, 196
 STYLE DS_CONTEXTHELP | WS_CHILD | WS_CAPTION
-CAPTION "Sessão (*)"
+CAPTION "Sessão"
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     PUSHBUTTON      "&Gravar a configuração atual como um novo perfil ...",
                     IDC_PSESS_SAVEAS,79,124,189,16,0,0,HIDC_PSESS_SAVEAS
-    GROUPBOX        "&Iniciar a sessão com o perfil",IDC_STATIC,4,4,264,
-                    116,BS_FLAT
-    LISTBOX         IDC_PSESS_LIST,12,16,248,68,LBS_USETABSTOPS | 
+    GROUPBOX        "&Iniciar a sessão com o perfil",IDC_STATIC,4,4,204,
+                    160,BS_FLAT
+    LISTBOX         IDC_PSESS_LIST,12,16,188,112,LBS_USETABSTOPS | 
                     LBS_NOINTEGRALHEIGHT | LBS_DISABLENOSCROLL | WS_VSCROLL | 
                     WS_HSCROLL | WS_TABSTOP,0,HIDC_PSESS_LIST
-    EDITTEXT        IDC_PSESS_DESCR,12,88,248,28,ES_MULTILINE | ES_READONLY,
-                    0,HIDC_PSESS_DESCR
+    LTEXT           "Static",IDC_PSESS_DESCR,12,132,188,28,SS_SUNKEN | NOT 
+                    WS_GROUP | WS_TABSTOP
 END
 
 IDD_SAVE_PROFILE_DLG DIALOGEX 0, 0, 162, 146
@@ -556,7 +546,7 @@ FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     CONTROL         "",IDC_BIGICON,"Button",BS_OWNERDRAW | WS_DISABLED,4,4,
                     34,30
-    LTEXT           "Calques 3D version 2.3.0",IDC_STATIC,52,4,140,8,NOT 
+    LTEXT           "Calques 3D version 2.3.1",IDC_STATIC,52,4,140,8,NOT 
                     WS_GROUP
     LTEXT           "Microsoft Foundation Classes version 4.2",IDC_STATIC,52,
                     13,140,8,NOT WS_GROUP
@@ -638,38 +628,38 @@ BEGIN
                     HIDC_VERIFY_TARGET
 END
 
-IDD_PREF_MATHPAD_PAGE DIALOGEX 0, 0, 272, 146
+IDD_PREF_MATHPAD_PAGE DIALOGEX 0, 0, 212, 196
 STYLE DS_CONTEXTHELP | WS_CHILD | WS_CAPTION
-CAPTION "MathPad (*)"
+CAPTION "MathPad"
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    GROUPBOX        "Display",IDC_STATIC,8,4,160,40,BS_FLAT
+    GROUPBOX        "Precision of numbers",IDC_STATIC,4,4,204,40,BS_FLAT
     CONTROL         "&Real value",IDC_MATHPAD_REAL,"Button",
-                    BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP,16,16,52,12,0,
+                    BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP,12,16,52,12,0,
                     HIDC_MATHPAD_REAL
     CONTROL         "&Fraction",IDC_MATHPAD_FRACTION,"Button",
-                    BS_AUTORADIOBUTTON,16,28,52,12,0,HIDC_MATHPAD_FRACTION
-    EDITTEXT        IDC_MATHPAD_PRV,72,16,36,12,ES_AUTOHSCROLL | WS_GROUP,0,
+                    BS_AUTORADIOBUTTON,12,28,52,12,0,HIDC_MATHPAD_FRACTION
+    EDITTEXT        IDC_MATHPAD_PRV,68,16,36,12,ES_AUTOHSCROLL | WS_GROUP,0,
                     HIDC_MATHPAD_PRV
-    LTEXT           "i.e. 1.45000",IDC_MATHPAD_EXRV,120,16,40,12,
+    LTEXT           "i.e. 1.45000",IDC_MATHPAD_EXRV,116,16,40,12,
                     SS_CENTERIMAGE
-    EDITTEXT        IDC_MATHPAD_PFR,72,28,36,12,ES_AUTOHSCROLL | WS_GROUP,0,
+    EDITTEXT        IDC_MATHPAD_PFR,68,28,36,12,ES_AUTOHSCROLL | WS_GROUP,0,
                     HIDC_MATHPAD_PFR
-    LTEXT           "i.e. 1 9/20",IDC_MATHPAD_EXFR,120,28,40,12,
+    LTEXT           "i.e. 1 9/20",IDC_MATHPAD_EXFR,116,28,40,12,
                     SS_CENTERIMAGE
-    GROUPBOX        "Unidades",IDC_STATIC,172,4,96,40,BS_FLAT
-    RTEXT           "&Angular : ",IDC_STATIC,180,12,32,12,SS_CENTERIMAGE
-    COMBOBOX        IDC_MATHPAD_ANGLE,212,12,52,48,CBS_DROPDOWNLIST | 
+    GROUPBOX        "Units",IDC_STATIC,4,48,204,40,BS_FLAT
+    RTEXT           "&Angular : ",IDC_STATIC,12,60,32,12,SS_CENTERIMAGE
+    COMBOBOX        IDC_MATHPAD_ANGLE,44,60,52,48,CBS_DROPDOWNLIST | 
                     WS_VSCROLL | WS_TABSTOP,0,HIDC_MATHPAD_ANGLE
-    RTEXT           "&Linear : ",IDC_STATIC,180,28,32,12,SS_CENTERIMAGE
-    COMBOBOX        IDC_MATHPAD_DIST,212,28,52,48,CBS_DROPDOWNLIST | 
+    RTEXT           "&Linear : ",IDC_STATIC,112,60,32,12,SS_CENTERIMAGE
+    COMBOBOX        IDC_MATHPAD_DIST,144,60,52,48,CBS_DROPDOWNLIST | 
                     WS_VSCROLL | WS_TABSTOP,0,HIDC_MATHPAD_DIST
-    GROUPBOX        "System of Reference",IDC_STATIC,8,48,260,32,BS_FLAT
-    LTEXT           "&One division in SoR =",IDC_STATIC,16,60,72,12,
+    GROUPBOX        "System of Reference",IDC_STATIC,4,92,204,40,BS_FLAT
+    LTEXT           "&One division in SoR =",IDC_STATIC,12,105,72,12,
                     SS_CENTERIMAGE
-    EDITTEXT        IDC_MATHPAD_SCALE,88,60,52,12,ES_AUTOHSCROLL | WS_GROUP,
+    EDITTEXT        IDC_MATHPAD_SCALE,84,105,52,12,ES_AUTOHSCROLL | WS_GROUP,
                     0,HIDC_MATHPAD_SCALE
-    LTEXT           "unit(s)",IDC_STATIC,144,60,24,12,SS_CENTERIMAGE
+    LTEXT           "unit(s)",IDC_STATIC,140,105,24,12,SS_CENTERIMAGE
 END
 
 IDD_OBJECTTEXT_PAGE DIALOGEX 0, 0, 212, 73
@@ -679,46 +669,45 @@ CAPTION "Text"
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     LTEXT           "&Definition:",IDC_STATIC,4,24,52,8
-    EDITTEXT        IDC_TXT_EQUATION,4,36,204,12,ES_AUTOHSCROLL,0,
+    EDITTEXT        IDC_TXT_EQUATION,4,36,140,12,ES_AUTOHSCROLL,0,
                     HIDC_TXT_EQUATION
     LTEXT           "Va&riável:",IDC_STATIC,4,8,32,12,SS_CENTERIMAGE
     EDITTEXT        IDC_TXT_VARNAME,36,8,64,12,ES_AUTOHSCROLL,0,
                     HIDC_TXT_VARNAME
-    PUSHBUTTON      "&Fonte...",IDC_TXT_FONT,152,4,48,16,WS_DISABLED,0,
-                    HIDC_TXT_FONT
+    PUSHBUTTON      "&Fonte...",IDC_TXT_FONT,108,8,48,16,0,0,HIDC_TXT_FONT
     PUSHBUTTON      "&Insert Variables",IDC_TXT_VAR,28,52,76,16,0,0,
                     HIDC_TXT_VAR
-    EDITTEXT        IDC_TXT_EDIT,4,36,204,32,ES_MULTILINE | ES_AUTOVSCROLL | 
+    EDITTEXT        IDC_TXT_EDIT,4,36,140,32,ES_MULTILINE | ES_AUTOVSCROLL | 
                     NOT WS_VISIBLE | WS_VSCROLL,0,HIDC_TXT_EDIT
     CONTROL         "&Marked",IDC_OBJ_MARK,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,152,24,40,10,0,HIDC_OBJ_MARK
+                    WS_TABSTOP,160,8,40,10,0,HIDC_OBJ_MARK
 END
 
-IDD_PREF_DISCOVERY_PAGE DIALOGEX 0, 0, 272, 146
+IDD_PREF_DISCOVERY_PAGE DIALOGEX 0, 0, 212, 196
 STYLE DS_CONTEXTHELP | WS_CHILD | WS_CAPTION
-CAPTION "Discovery (*)"
+CAPTION "Discovery"
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    GROUPBOX        "Discovery System",IDC_STATIC,4,4,264,64,BS_FLAT
-    RTEXT           "CAS Engine:",IDC_STATIC,16,16,48,12,SS_CENTERIMAGE
-    COMBOBOX        IDC_DISCOV_CAS,68,16,84,48,CBS_DROPDOWNLIST | WS_VSCROLL | 
-                    WS_TABSTOP,0,HIDC_DISCOV_CAS
-    RTEXT           "Command Line:",IDC_STATIC_CMD,9,32,55,12,
-                    SS_CENTERIMAGE
-    EDITTEXT        IDC_DISCOV_RUNTIME,68,32,180,12,ES_AUTOHSCROLL,0,
+    GROUPBOX        "Discovery System",IDC_STATIC,4,4,204,48,BS_FLAT
+    RTEXT           "CAS Engine:",IDC_STATIC,8,16,56,12,SS_CENTERIMAGE
+    COMBOBOX        IDC_DISCOV_CAS,68,16,132,48,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP,0,HIDC_DISCOV_CAS
+    RTEXT           "Command Line:",IDC_STATIC_CMD,9,32,55,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_DISCOV_RUNTIME,68,68,120,12,ES_AUTOHSCROLL,0,
                     HIDC_DISCOV_RUNTIME
-    PUSHBUTTON      "...",IDC_DISCOV_BROWSECMD,248,32,13,12,0,0,
+    PUSHBUTTON      "...",IDC_DISCOV_BROWSECMD,188,68,13,12,0,0,
                     HIDC_DISCOV_BROWSECMD
-    RTEXT           "Script:",IDC_STATIC_SCRIPT,16,48,48,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_DISCOV_SCRIPT,68,48,180,12,ES_AUTOHSCROLL,0,
+    RTEXT           "Script:",IDC_STATIC_SCRIPT,8,84,56,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_DISCOV_SCRIPT,68,84,120,12,ES_AUTOHSCROLL,0,
                     HIDC_DISCOV_SCRIPT
-    PUSHBUTTON      "...",IDC_DISCOV_BROWSE,248,48,13,12,0,0,
+    PUSHBUTTON      "...",IDC_DISCOV_BROWSE,188,84,13,12,0,0,
                     HIDC_DISCOV_BROWSE
-    RTEXT           "version:",IDC_STATIC,168,16,28,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_DISCOV_VERSION,200,16,28,12,ES_CENTER | 
+    RTEXT           "version:",IDC_STATIC,8,32,56,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_DISCOV_VERSION,68,32,28,12,ES_CENTER | 
                     ES_AUTOHSCROLL | ES_READONLY,0,HIDC_DISCOV_VERSION
-    CTEXT           "Neither Mathematica nor CocoA are installed in your computer.\nPlease install one of these systems in order to use this feature.",
-                    IDC_STATIC_NONE,32,40,204,19
+    LTEXT           "Neither Mathematica nor CocoA are installed in your computer. Please install one of these systems in order to use this feature.",
+                    IDC_STATIC_NONE,12,108,188,28
+    GROUPBOX        "Discovery Script",IDC_STATIC,4,56,204,48,BS_FLAT
 END
 
 IDD_UNDO_DLG DIALOGEX 0, 0, 144, 20
@@ -731,6 +720,63 @@ BEGIN
     PUSHBUTTON      "",IDC_UNDO_REDO,120,4,20,12
     CTEXT           "Text",IDC_UNDO_TXT,24,4,96,12,SS_CENTERIMAGE,
                     WS_EX_STATICEDGE
+END
+
+IDD_PREF_POV_PAGE DIALOGEX 0, 0, 212, 196
+STYLE DS_CONTEXTHELP | WS_CHILD | WS_CAPTION
+CAPTION "Points of View"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
+BEGIN
+    GROUPBOX        "Observer's Points of View",-1,4,4,204,188,BS_FLAT
+    LTEXT           "",IDC_PUNIV_POVLIST,8,16,196,116,WS_BORDER | WS_TABSTOP,
+                    0,HIDC_PUNIV_POVLIST
+    CONTROL         191,-1,"Static",SS_BITMAP,20,136,63,52
+    EDITTEXT        IDC_EDIT1,140,136,36,12,ES_CENTER | ES_AUTOHSCROLL | 
+                    ES_NUMBER
+    CONTROL         "Spin1",IDC_SPIN1,"msctls_updown32",UDS_SETBUDDYINT | 
+                    UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,164,136,
+                    11,12
+    EDITTEXT        IDC_EDIT2,140,149,36,12,ES_CENTER | ES_AUTOHSCROLL | 
+                    ES_NUMBER
+    CONTROL         "Spin1",IDC_SPIN2,"msctls_updown32",UDS_SETBUDDYINT | 
+                    UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,164,149,
+                    11,12
+    EDITTEXT        IDC_EDIT3,140,164,36,12,ES_CENTER | ES_AUTOHSCROLL | 
+                    ES_NUMBER
+    CONTROL         "Spin1",IDC_SPIN3,"msctls_updown32",UDS_SETBUDDYINT | 
+                    UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,164,164,
+                    11,12
+    EDITTEXT        IDC_EDIT4,140,176,36,12,ES_CENTER | ES_AUTOHSCROLL | 
+                    ES_NUMBER
+    CONTROL         "Spin1",IDC_SPIN4,"msctls_updown32",UDS_SETBUDDYINT | 
+                    UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,164,176,
+                    11,12
+    CTEXT           "&r=",-1,128,136,12,12,SS_CENTERIMAGE
+    CTEXT           "&t=",-1,128,148,12,12,SS_CENTERIMAGE
+    CTEXT           "&d=",-1,128,164,12,12,SS_CENTERIMAGE
+    CTEXT           "&n=",-1,128,176,12,12,SS_CENTERIMAGE
+END
+
+IDD_PREF_COLORS_PAGE DIALOGEX 0, 0, 212, 196
+STYLE DS_CONTEXTHELP | WS_CHILD | WS_CAPTION
+CAPTION "Cores"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
+BEGIN
+    GROUPBOX        "Cores padrão",IDC_SHAPE_DEFC,4,4,204,144,BS_FLAT
+    CONTROL         "&Hidden part in grey",IDC_SHAPE_HIDDEN,"Button",
+                    BS_AUTOCHECKBOX | BS_LEFTTEXT | BS_RIGHT | BS_VCENTER | 
+                    WS_TABSTOP,132,132,72,8,0,HIDC_SHAPE_HIDDEN
+    CONTROL         "CustomColor",IDC_SHAPE_DEFCOLOR,"MFCGridCtrl",
+                    WS_TABSTOP,8,16,196,108,0,HIDC_SHAPE_DEFCOLOR
+END
+
+IDD_OBJECTFONT_PAGE DIALOGEX 0, 0, 212, 73
+STYLE DS_MODALFRAME | DS_CONTEXTHELP | WS_POPUP | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_CONTEXTHELP
+CAPTION "Font"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
+BEGIN
+    CONTROL         "",IDC_TXT_PALETTE,"Static",SS_BLACKFRAME,4,4,110,66
 END
 
 
@@ -777,9 +823,9 @@ BEGIN
     IDD_PREF_SHAPE_PAGE, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 265
+        RIGHTMARGIN, 205
         TOPMARGIN, 7
-        BOTTOMMARGIN, 139
+        BOTTOMMARGIN, 189
     END
 
     IDD_OBJECTCPT_PAGE, DIALOG
@@ -793,9 +839,9 @@ BEGIN
     IDD_PREF_UNIVERSE_PAGE, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 265
+        RIGHTMARGIN, 205
         TOPMARGIN, 7
-        BOTTOMMARGIN, 139
+        BOTTOMMARGIN, 189
     END
 
     IDD_ABOUTPROP, DIALOG
@@ -830,19 +876,18 @@ BEGIN
     IDD_PREF_MACROS_PAGE, DIALOG
     BEGIN
         LEFTMARGIN, 8
-        RIGHTMARGIN, 264
+        RIGHTMARGIN, 204
         VERTGUIDE, 69
-        VERTGUIDE, 247
         TOPMARGIN, 8
-        BOTTOMMARGIN, 138
+        BOTTOMMARGIN, 188
     END
 
     IDD_PREF_SESSION_PAGE, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 265
+        RIGHTMARGIN, 205
         TOPMARGIN, 7
-        BOTTOMMARGIN, 139
+        BOTTOMMARGIN, 189
     END
 
     IDD_SAVE_PROFILE_DLG, DIALOG
@@ -896,9 +941,9 @@ BEGIN
     IDD_PREF_MATHPAD_PAGE, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 265
+        RIGHTMARGIN, 205
         TOPMARGIN, 7
-        BOTTOMMARGIN, 139
+        BOTTOMMARGIN, 189
     END
 
     IDD_OBJECTTEXT_PAGE, DIALOG
@@ -912,9 +957,9 @@ BEGIN
     IDD_PREF_DISCOVERY_PAGE, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 265
+        RIGHTMARGIN, 205
         TOPMARGIN, 7
-        BOTTOMMARGIN, 139
+        BOTTOMMARGIN, 189
     END
 
     IDD_UNDO_DLG, DIALOG
@@ -923,6 +968,30 @@ BEGIN
         RIGHTMARGIN, 137
         TOPMARGIN, 7
         BOTTOMMARGIN, 13
+    END
+
+    IDD_PREF_POV_PAGE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 205
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 189
+    END
+
+    IDD_PREF_COLORS_PAGE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 205
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 189
+    END
+
+    IDD_OBJECTFONT_PAGE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 205
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 66
     END
 END
 #endif    // APSTUDIO_INVOKED
@@ -1048,9 +1117,10 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "&Imprimir...\tCtrl+P",           ID_FILE_PRINT
         MENUITEM "&Visualizar impressão",              ID_FILE_PRINT_PREVIEW
-        MENUITEM "&Configurar impressão",             ID_FILE_PRINT_SETUP
+        MENUITEM "&Configurar impressão...",             ID_FILE_PRINT_SETUP
         MENUITEM SEPARATOR
-        MENUITEM "C&onfiguração",                ID_VIEW_CUSTOMIZE
+        MENUITEM "&Personalizar...",               ID_VIEW_CUSTOMIZE
+        MENUITEM "&Opções...",                 ID_VIEW_OPTIONS
         MENUITEM SEPARATOR
         MENUITEM "Arquivos recentes",                 ID_FILE_MRU_FILE1, GRAYED
         MENUITEM SEPARATOR
@@ -1292,9 +1362,10 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "&Imprimir...\tCtrl+P",           ID_FILE_PRINT
         MENUITEM "&Visualizar impressão",              ID_FILE_PRINT_PREVIEW
-        MENUITEM "&Configurar impressão",             ID_FILE_PRINT_SETUP
+        MENUITEM "&Configurar impressão...",             ID_FILE_PRINT_SETUP
         MENUITEM SEPARATOR
-        MENUITEM "C&onfiguração",                ID_VIEW_CUSTOMIZE
+        MENUITEM "&Personalizar...",               ID_VIEW_CUSTOMIZE
+        MENUITEM "&Opções...",                 ID_VIEW_OPTIONS
         MENUITEM SEPARATOR
         MENUITEM "Arquivos recentes",                 ID_FILE_MRU_FILE1, GRAYED
         MENUITEM SEPARATOR
@@ -1536,9 +1607,10 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "&Imprimir...\tCtrl+P",           ID_FILE_PRINT
         MENUITEM "&Visualizar impressão",              ID_FILE_PRINT_PREVIEW
-        MENUITEM "&Configurar impressão",             ID_FILE_PRINT_SETUP
+        MENUITEM "&Configurar impressão...",             ID_FILE_PRINT_SETUP
         MENUITEM SEPARATOR
-        MENUITEM "C&onfiguração",                ID_VIEW_CUSTOMIZE
+        MENUITEM "&Personalizar...",               ID_VIEW_CUSTOMIZE
+        MENUITEM "&Opções...",                 ID_VIEW_OPTIONS
         MENUITEM SEPARATOR
         MENUITEM "Arquivos recentes",                 ID_FILE_MRU_FILE1, GRAYED
         MENUITEM SEPARATOR
@@ -1626,9 +1698,10 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "&Imprimir...\tCtrl+P",           ID_FILE_PRINT
         MENUITEM "&Visualizar impressão",              ID_FILE_PRINT_PREVIEW
-        MENUITEM "&Configurar impressão",             ID_FILE_PRINT_SETUP
+        MENUITEM "&Configurar impressão...",             ID_FILE_PRINT_SETUP
         MENUITEM SEPARATOR
-        MENUITEM "C&onfiguração",                ID_VIEW_CUSTOMIZE
+        MENUITEM "&Personalizar...",               ID_VIEW_CUSTOMIZE
+        MENUITEM "&Opções...",                 ID_VIEW_OPTIONS
         MENUITEM SEPARATOR
         MENUITEM "Arquivos recentes",                 ID_FILE_MRU_FILE1, GRAYED
         MENUITEM SEPARATOR
@@ -1717,9 +1790,10 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "&Imprimir...\tCtrl+P",           ID_FILE_PRINT
         MENUITEM "&Visualizar impressão",              ID_FILE_PRINT_PREVIEW
-        MENUITEM "&Configurar impressão",             ID_FILE_PRINT_SETUP
+        MENUITEM "&Configurar impressão...",             ID_FILE_PRINT_SETUP
         MENUITEM SEPARATOR
-        MENUITEM "C&onfiguração",                ID_VIEW_CUSTOMIZE
+        MENUITEM "&Personalizar...",               ID_VIEW_CUSTOMIZE
+        MENUITEM "&Opções...",                 ID_VIEW_OPTIONS
         MENUITEM SEPARATOR
         MENUITEM "Arquivos recentes",                 ID_FILE_MRU_FILE1, GRAYED
         MENUITEM SEPARATOR
@@ -1875,9 +1949,10 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "&Imprimir...\tCtrl+P",           ID_FILE_PRINT
         MENUITEM "&Visualizar impressão",              ID_FILE_PRINT_PREVIEW
-        MENUITEM "&Configurar impressão",             ID_FILE_PRINT_SETUP
+        MENUITEM "&Configurar impressão...",             ID_FILE_PRINT_SETUP
         MENUITEM SEPARATOR
-        MENUITEM "C&onfiguração",                ID_VIEW_CUSTOMIZE
+        MENUITEM "&Personalizar...",               ID_VIEW_CUSTOMIZE
+        MENUITEM "&Opções...",                 ID_VIEW_OPTIONS
         MENUITEM SEPARATOR
         MENUITEM "Arquivos recentes",                 ID_FILE_MRU_FILE1, GRAYED
         MENUITEM SEPARATOR
@@ -2128,9 +2203,10 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "&Imprimir...\tCtrl+P",           ID_FILE_PRINT
         MENUITEM "&Visualizar impressão",              ID_FILE_PRINT_PREVIEW
-        MENUITEM "&Configurar impressão",             ID_FILE_PRINT_SETUP
+        MENUITEM "&Configurar impressão...",             ID_FILE_PRINT_SETUP
         MENUITEM SEPARATOR
-        MENUITEM "C&onfiguração",                ID_VIEW_CUSTOMIZE
+        MENUITEM "&Personalizar...",               ID_VIEW_CUSTOMIZE
+        MENUITEM "&Opções...",                 ID_VIEW_OPTIONS
         MENUITEM SEPARATOR
         MENUITEM "Arquivos recentes",                 ID_FILE_MRU_FILE1, GRAYED
         MENUITEM SEPARATOR
@@ -2221,7 +2297,7 @@ END
 
 IDR_POPUP_MEASURE MENU DISCARDABLE 
 BEGIN
-    POPUP "Medir"
+    POPUP "Measure"
     BEGIN
         MENUITEM "&Ângulo",                      ID_EXPLORATION_MEASURE_ANGLE
         MENUITEM "&Distância",                   ID_EXPLORATION_MEASURE_DISTANCE
@@ -2242,14 +2318,15 @@ BEGIN
         MENUITEM "&Novo\tCtrl+N",                ID_FILE_NEW
         MENUITEM "A&brir...\tCtrl+O",            ID_FILE_OPEN
         MENUITEM "&Fechar",                      ID_FILE_CLOSE
-        MENUITEM "&Salvar\tCtrl+S",               ID_FILE_SAVE
+        MENUITEM "&Gravar\tCtrl+S",               ID_FILE_SAVE
         MENUITEM "Save &As...",                 ID_FILE_SAVE_AS
         MENUITEM SEPARATOR
         MENUITEM "&Imprimir...\tCtrl+P",           ID_FILE_PRINT
         MENUITEM "&Visualizar impressão",              ID_FILE_PRINT_PREVIEW
-        MENUITEM "C&onfigurar impressão...",             ID_FILE_PRINT_SETUP
+        MENUITEM "&Configurar impressão...",             ID_FILE_PRINT_SETUP
         MENUITEM SEPARATOR
-        MENUITEM "Pre&ferences",                ID_VIEW_CUSTOMIZE
+        MENUITEM "&Personalizar...",               ID_VIEW_CUSTOMIZE
+        MENUITEM "&Opções...",                 ID_VIEW_OPTIONS
         MENUITEM SEPARATOR
         MENUITEM "Arquivos recentes",                 ID_FILE_MRU_FILE1, GRAYED
         MENUITEM SEPARATOR
@@ -2330,8 +2407,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,3,0,0
- PRODUCTVERSION 2,3,0,0
+ FILEVERSION 2,3,1,0
+ PRODUCTVERSION 2,3,1,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x29L
@@ -2349,14 +2426,14 @@ BEGIN
             VALUE "Comments", "Micromundo da Geometria Dinâmica no Espaço\0"
             VALUE "CompanyName", "SCRE - University of Glasgow\0"
             VALUE "FileDescription", "Calques 3D\0"
-            VALUE "FileVersion", "2.3.0\0"
+            VALUE "FileVersion", "2.3.1\0"
             VALUE "InternalName", "Calques3D\0"
             VALUE "LegalCopyright", "Copyright © 2001-2006\0"
             VALUE "LegalTrademarks", "N. Van Labeke / P. Bernat / J. Morinet-Lambert\0"
             VALUE "OriginalFilename", "Calques3D.exe\0"
             VALUE "PrivateBuild", "Beta Version\0"
             VALUE "ProductName", "Calques 3D\0"
-            VALUE "ProductVersion", "2.3.0\0"
+            VALUE "ProductVersion", "2.3.1\0"
             VALUE "SpecialBuild", "Build with BCGControlBar Library version 7.31\0"
         END
     END
@@ -2390,8 +2467,8 @@ IDR_CREDITS             CREDITS DISCARDABLE     "res\\credits.txt"
 
 STRINGTABLE PRELOAD DISCARDABLE 
 BEGIN
-    IDR_MAINFRAME           "Calques3D"
-    IDR_ABOUTDLG            "Sobre o Calques3D ..."
+    IDR_MAINFRAME           "Calques 3D"
+    IDR_ABOUTDLG            "Sobre o Calques 3D ..."
     IDR_VIEWUNIVERSE        "Universo\n\nUniverso\nUniverso Calques 3D (*.c3d)\n.c3d\nCalques3D.Documento\nUniverso Calques 3D"
     IDR_VIEWMACRO           "Construção de macro\n\nConstrução de macro\nConstrução de macro (*.m3d)\n.m3d\nCalques3D.Macros\nCalques 3D Construção de macro"
     IDR_VIEWHISTORIQUE      "Histórico\n\nHistórico\n\n\n\nHistórico. Aparece quando uma janela 'Histórico' está ativa."
@@ -2408,7 +2485,7 @@ END
 
 STRINGTABLE PRELOAD DISCARDABLE 
 BEGIN
-    AFX_IDS_APP_TITLE       "Calques3D"
+    AFX_IDS_APP_TITLE       "Calques 3D"
     AFX_IDS_IDLEMESSAGE     "Para Ajuda, pressione F1"
     AFX_IDS_HELPMODEMESSAGE "Selecione um objeto sobre o qual se deseja ajuda"
     AFX_IDS_OBJPROP         "Propriedades do Objeto"
@@ -2578,12 +2655,13 @@ BEGIN
     ID_VIEW_PLACEMENT_SAVE  "Gravar a localização de todos os pontos de vista deste documento\nGravar localização"
     ID_VIEW_PLACEMENT_RESTORE 
                             "Restaurar a localização de todos os pontos de vista deste documento\nRestaurar localização"
-    ID_VIEW_CUSTOMIZE       "Configura as tarefas, barras de ferramentas e menus do Calques 3D\nConfigurar"
+    ID_VIEW_CUSTOMIZE       "Configura as barras de ferramentas e menus do Calques 3D\nConfigurar"
+    ID_VIEW_OPTIONS         "Change the options of Calques 3D\nOptions"
 END
 
 STRINGTABLE DISCARDABLE 
 BEGIN
-    IDS_MAIN_TOOLBAR        "Standard"
+    IDS_MAIN_TOOLBAR        "Padrão"
     ID_WINDOW_MANAGER       "Ativar esta janela\nAtivar Janela"
     IDS_WINDOW_MANAGER      "&Janelas..."
 END
@@ -2672,6 +2750,7 @@ BEGIN
     ID_VIEW_APPLOOK_2003    "Activate Office 2003 application look\nOffice 2003 Look"
     ID_VIEW_APPLOOK_WIN_XP  "Activate Windows XP application look\nWindows XP Look"
     ID_VIEW_APPLOOK_VS2005  "Activate Visual Studio.NET 2005 application look\nVS.NET 2005 Look"
+    ID_VIEW_FULLSCREEN      "Toggles full screen mode\nFull Screen"
     ID_VISUALISATION_HORSLIDER 
                             "Modificar a posição do observador para um plano horizontal\nModificar Ponto de Vista"
     ID_VISUALISATION_VERSLIDER 
@@ -3051,6 +3130,8 @@ BEGIN
                             "Copiar  o formato de um objeto e aplicá-lo a outro\nDuplicar formato"
     ID_VISUALISATION_STYLE_HIDE "Esconder o objeto selecionado\nEsconder Objeto"
     ID_VISUALISATION_STYLE_MARK "Mostrar as marcas do objeto selecionado\nMarcar Objeto"
+    ID_VISUALISATION_POV_HSLIDER 
+                            "Rotate the point of view horizontally\nRotate View"
 END
 
 STRINGTABLE DISCARDABLE 
@@ -3072,6 +3153,12 @@ END
 STRINGTABLE DISCARDABLE 
 BEGIN
     ID_EDIT_UNDO_DUMMY      "Desfazer esta ação"
+    ID_EDIT_UNDO_MORE       "More ..."
+    ID_VIEW_OBJECT          "Mostrar ou esconder a barra de objetos\nBarra de Objetos"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
     ID_SESSION_DEF          "< Sessão Padrão >"
 END
 
@@ -3130,11 +3217,7 @@ STRINGTABLE DISCARDABLE
 BEGIN
     IDR_PROPERTY_TB         "Property"
     IDR_DEPENDENT_TB        "Dependent"
-END
-
-STRINGTABLE DISCARDABLE 
-BEGIN
-    ID_VIEW_OBJECT          "Mostrar ou esconder a barra de objetos\nBarra de Objetos"
+    IDR_FORMAT_TB           "Formato"
 END
 
 STRINGTABLE DISCARDABLE 
@@ -3144,6 +3227,7 @@ BEGIN
     ID_VIEW_EXPLORATION     "Show or hide the exploration bar\nToggle Exploration"
     ID_VIEW_PROPERTYBAR     "Show or hide the property bar\nToggle Property"
     ID_VIEW_DEPENDENTBAR    "Show or hide the dependent bar\nToggle Dependent"
+    ID_VIEW_FORMAT          "Show or hide the format bar\nToggle Format"
 END
 
 STRINGTABLE DISCARDABLE 
@@ -3325,6 +3409,30 @@ BEGIN
     PROP_DEPENDENT_DESC     "The list of all objects built from this one"
     PROP_COMPOSITE_DESC     "The list of all internal constituents of this object"
     PROP_PARENTS_DESC       "The objects from which this one is built"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_FORMAT_OBJCOLOR      "Change the color of the selected object\nObject Color"
+    ID_FORMAT_OBJSHAPE      "Change the shape of the selected object\nObject Shape"
+    ID_FORMAT_TXTFONT       "Change the font of the selected text\nFont"
+    ID_FORMAT_TXTSIZE       "Changes the font size of the selected text\nFont Size"
+    ID_FORMAT_TXTCOLOR      "Change the color of the selected text\nText Color"
+    ID_FORMAT_BOLD          "Make the selected text bold (toggle)\nBold"
+    ID_FORMAT_ITALIC        "Make the selected text italic (toggle)\nItalic"
+    ID_FORMAT_UNDERLINE     "Format the selected text with a continuous underline (toggle)\nUnderline"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ID_VISUALISATION_POV_VSLIDER 
+                            "Rotate the point of view vertically\nRotate View"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_NEWCOMMENT          "new comment ..."
+    IDS_MACROS              "Macros"
 END
 
 #endif    // English (U.K.) resources
