@@ -112,6 +112,10 @@ SOURCE=.\BCGPShapeButton.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\BCGPShapeMenuButton.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\BCGPShapePopup.cpp
 # End Source File
 # Begin Source File
@@ -245,6 +249,10 @@ SOURCE=.\Tasks\ExtractTask.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\FormatToolBar.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Fraction.cpp
 # End Source File
 # Begin Source File
@@ -370,6 +378,10 @@ SOURCE=.\prefs\PrefMacros.cpp
 # Begin Source File
 
 SOURCE=.\prefs\prefmathpad.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\prefs\prefobjcolor.cpp
 # End Source File
 # Begin Source File
 
@@ -518,6 +530,18 @@ SOURCE=.\Collection\ArrayEx.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\BCGPShapeBar.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\BCGPShapeButton.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\BCGPShapeMenuButton.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\BCGPShapePopup.h
 # End Source File
 # Begin Source File
@@ -563,6 +587,10 @@ SOURCE=.\objects\Cylinder3D.h
 # Begin Source File
 
 SOURCE=.\objects\Droite3D.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\FormatToolBar.h
 # End Source File
 # Begin Source File
 
@@ -647,6 +675,10 @@ SOURCE=.\prefs\PrefMacros.h
 # Begin Source File
 
 SOURCE=.\prefs\prefmathpad.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\prefs\prefobjcolor.h
 # End Source File
 # Begin Source File
 

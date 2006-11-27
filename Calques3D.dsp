@@ -334,11 +334,6 @@ SOURCE=.\objects\Object3D.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\objects\ObjectFontPage.cpp
-# ADD CPP /I ".."
-# End Source File
-# Begin Source File
-
 SOURCE=.\objects\ObjectPropPage.cpp
 # End Source File
 # Begin Source File
@@ -683,10 +678,6 @@ SOURCE=.\MemDC.h
 # Begin Source File
 
 SOURCE=.\objects\Object3D.h
-# End Source File
-# Begin Source File
-
-SOURCE=.\objects\ObjectFontPage.h
 # End Source File
 # Begin Source File
 

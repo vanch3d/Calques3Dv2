@@ -112,6 +112,10 @@ SOURCE=.\BCGPShapeButton.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\BCGPShapeMenuButton.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\BCGPShapePopup.cpp
 # End Source File
 # Begin Source File
@@ -193,6 +197,10 @@ SOURCE=.\Tasks\DrTask.cpp
 # Begin Source File
 
 SOURCE=.\Tasks\ExtractTask.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\FormatToolBar.cpp
 # End Source File
 # Begin Source File
 
@@ -321,6 +329,10 @@ SOURCE=.\prefs\PrefMacros.cpp
 # Begin Source File
 
 SOURCE=.\prefs\prefmathpad.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\prefs\prefobjcolor.cpp
 # End Source File
 # Begin Source File
 
