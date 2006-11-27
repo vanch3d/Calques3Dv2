@@ -71,7 +71,10 @@ unsigned CLabelTask::GetHelpResID()
 
 DWORD CLabelTask::GetMask()
 {
-    return (TAllPointClass /*| TAllDroiteClass | TAllPlanClass | TSphere3DClass*/);
+	if (m_nTaskID== ID_EXPLORATION_LABEL)
+		return (TAllPointClass /*| TAllDroiteClass | TAllPlanClass | TSphere3DClass*/);
+    else //if (m_nTaskID== ID_EXPLORATION_EQUATION)
+		return (TAllPointClass | TAllDroiteClass | TAllPlanClass | TSphere3DClass);
 }
 
 void CLabelTask::CreateObject3D()
