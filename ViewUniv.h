@@ -121,7 +121,9 @@ protected:
 	afx_msg void	OnUpdateSliders(CCmdUI* pCmdUI);
 	afx_msg void	OnUpdatePerspective(CCmdUI* pCmdUI);
 	LRESULT			OnUpdateObjTooltip(WPARAM wp, LPARAM lp=0);
-	
+	afx_msg void	OnUpdateFormat(CCmdUI* pCmdUI);
+	afx_msg void	OnFormat(UINT);
+
 	DECLARE_MESSAGE_MAP()
 };
 
