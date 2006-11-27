@@ -170,14 +170,14 @@ HID_MATHPAD_ADDCOMMENT                  0x17850
 HID_MATHPAD_ADDEQUATION                 0x17851
 HID_RENDERER_PROPERTY                   0x178B4
 HID_VIEW_TOOLBARS                       0x18003
-HID_CHAR_OBJCOLOR                       0x18020
-HID_CHAR_OBJSHAPE                       0x18021
-HID_CHAR_FONT                           0x18022
-HID_CHAR_SIZE                           0x18023
-HID_CHAR_TXTCOLOR                       0x18024
-HID_CHAR_BOLD                           0x18025
-HID_CHAR_ITALIC                         0x18026
-HID_CHAR_UNDERLINE                      0x18027
+HID_FORMAT_OBJCOLOR                     0x18020
+HID_FORMAT_OBJSHAPE                     0x18021
+HID_FORMAT_TXTFONT                      0x18022
+HID_FORMAT_TXTSIZE                      0x18023
+HID_FORMAT_TXTCOLOR                     0x18024
+HID_FORMAT_BOLD                         0x18025
+HID_FORMAT_ITALIC                       0x18026
+HID_FORMAT_UNDERLINE                    0x18027
 HID_TOOLS_ENTRY                         0x1803E
 HID_VIEW_APPLOOK_2000                   0x18041
 HID_VIEW_APPLOOK_XP                     0x18042
@@ -193,6 +193,8 @@ HID_PROPERTY_SORTING                    0x1806F
 HID_EDIT_UNDO_DELETE                    0x1808B
 HID_EDIT_UNDO_APPEND                    0x1808C
 HID_EDIT_UNDO_MODIFY                    0x1808D
+HID_EDIT_UNDO_DUMMY                     0x18093
+HID_EDIT_UNDO_MORE                      0x18094
 HID_VIEW_OBJECT                         0x1809F
 HID_VIEW_CONSTRUCTION                   0x180A2
 HID_VIEW_VISUALISATION                  0x180A3
@@ -203,7 +205,6 @@ HID_VIEW_FORMAT                         0x180A7
 HID_DUMMY_POINTON                       0x180C0
 HID_DUMMY_INTERS                        0x180C1
 HID_DUMMY_POINTDIV                      0x180C2
-HID_EDIT_UNDO_DUMMY                     0x180DE
 HID_SESSION_DEF                         0x180DF
 HID_SESSION_DESCR                       0x180E0
 HID_FREE_TEAROFF1                       0x180E1
@@ -244,7 +245,7 @@ HIDR_POPUP_VERIFY                       0x200AF
 HIDR_POPUP_MEASURE                      0x200B0
 HIDR_MAINFRAME24                        0x20258
 HIDR_COMMANDS_TB24                      0x20262
-HIDR_TEXTPALETTE_TB24                   0x20267
+HIDR_FORMAT_TB24                        0x20267
 HIDR_PROPERTY_TB24                      0x2026C
 HIDR_COMMANDS_TB                        0x211C6
 HIDR_OBJECTS_TB                         0x211C7
@@ -260,7 +261,7 @@ HIDR_GRAPH_TB                           0x211D1
 HIDR_VERIFY_TB                          0x211D2
 HIDR_PROPERTY_TB                        0x211D6
 HIDR_DEPENDENT_TB                       0x211D7
-HIDR_TEXTPALETTE_TB                     0x211D8
+HIDR_FORMAT_TB                          0x211D8
  
 // Dialogs (IDD_*) 
 HIDD_SUPPRESS_DLG                       0x2012C
