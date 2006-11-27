@@ -18,6 +18,7 @@
 #include "objects\Sphere3D.h"
 #include "objects\Plan3D.h"
 #include "objects\Text3D.h"
+#include "BCGPShapeMenuButton.h"
 
 #include "objects\Macro3D.h"
 #include "MacroInfoDlg.h"
@@ -72,6 +73,11 @@ BEGIN_MESSAGE_MAP(CViewUniv, CView)
     ON_COMMAND(ID_FILE_PRINT, CView::OnFilePrint)
     ON_COMMAND(ID_FILE_PRINT_DIRECT, CView::OnFilePrint)
     ON_COMMAND(ID_FILE_PRINT_PREVIEW, OnFilePrintPreview)
+
+    ON_UPDATE_COMMAND_UI_RANGE(ID_CHAR_OBJCOLOR, ID_CHAR_UNDERLINE, OnUpdateFormat)
+    ON_COMMAND_RANGE(ID_CHAR_OBJCOLOR, ID_CHAR_UNDERLINE, OnFormat)
+	ON_CBN_SELENDOK(ID_CHAR_FONT, OnFormat)
+	ON_CBN_SELENDOK(ID_CHAR_SIZE, OnFormat)
 
     ON_COMMAND_RANGE(ID_VISUALISATION_ZOOM,ID_VISUALISATION_ZOOM_ADJUST, OnChangeZoom)
     ON_UPDATE_COMMAND_UI_RANGE(ID_VISUALISATION_ZOOM, ID_VISUALISATION_ZOOM_ADJUST, OnUpdateZoom)
@@ -1266,7 +1272,7 @@ void CViewUniv::OnEditRedo()
 void CViewUniv::OnUpdateEditUndo(CCmdUI* pCmdUI)
 {
     // TODO: Add your command update UI handler code here
-    pCmdUI->Enable(GetDocument()->m_nUndoState);
+    pCmdUI->Enable(GetDocument()->m_nDocUndoState);
 
 }
 
@@ -1743,4 +1749,79 @@ void CViewUniv::SetSliderPosition(UINT sliderID,int pos)
 			pSlider->SetValue(pos,FALSE);
 		}
 
+}
+
+
+void CViewUniv::OnUpdateFormat(CCmdUI* pCmdUI)
+{
+	BOOL bEnable = FALSE;
+    switch (pCmdUI->m_nID)
+    {
+		case ID_CHAR_FONT:
+		case ID_CHAR_TXTCOLOR:
+		case ID_CHAR_SIZE:
+			{
+				CObject3D *pObj= DYNAMIC_DOWNCAST(CLabel3D,pSelectObj);
+				bEnable = (pObj!=NULL);
+			}
+			break;
+		case ID_CHAR_OBJCOLOR:
+		case ID_CHAR_OBJSHAPE:
+			{
+				CObject3D *pObj= DYNAMIC_DOWNCAST(CLabel3D,pSelectObj);
+				bEnable = (pObj==NULL && pSelectObj!=NULL);
+			}
+			break;
+			
+	}
+    pCmdUI->Enable(bEnable);
+
+}
+
+void CViewUniv::OnFormat(UINT m_nID)
+{
+  //  switch (m_nID)
+    //{
+	//	case ID_CHAR_FONT:
+	//	case ID_CHAR_TXTCOLOR:
+	//	case ID_CHAR_SIZE:
+	//		{
+				CLabel3D *pObj= DYNAMIC_DOWNCAST(CLabel3D,pSelectObj);
+				if (pObj)
+				{
+					COLORREF clr = CBCGPColorMenuButton::GetColorByCmdID(ID_CHAR_TXTCOLOR);
+					pObj->mColorText = clr;
+
+					int nb = CFormatToolBar::GetFontSizeByCmdID (ID_CHAR_SIZE);
+					const CBCGPFontDesc* pfDesc = CFormatToolBar::GetFontByCmdID (ID_CHAR_FONT);
+					if (pfDesc)
+					{
+						LOGFONT lf;
+						pObj->mTextFont.GetLogFont(&lf);
+						if (nb!=-1)
+							lf.lfHeight = nb;
+						lf.lfCharSet = pfDesc->m_nCharSet;
+						lf.lfPitchAndFamily = pfDesc->m_nPitchAndFamily;
+						_tcscpy (lf.lfFaceName, pfDesc->m_strName);
+						pObj->SetFont(&lf);
+
+					};
+
+				}
+				else if (pSelectObj)
+				{
+					CPoint shape = CBCGPShapeMenuButton::GetShapeByCmdID(ID_CHAR_OBJSHAPE);
+					pSelectObj->SetStyle(shape.y);
+
+				}
+				else
+				{
+					return;
+				}
+			SetFocus();
+            GetDocument()->UpdateAllViews(NULL,WM_UPDATEOBJ_MOD,pSelectObj);
+
+	//		}
+	//		break;
+	//}
 }
