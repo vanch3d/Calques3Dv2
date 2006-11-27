@@ -5,6 +5,8 @@
 #include "stdafx.h"
 #include "calques3d.h"
 #include "CustomizeCalques3D.h"
+#include "FormatToolBar.h"
+#include "BCGPShapeMenuButton.h"
 
 #include "prefs\Prefs.h"
 
@@ -65,6 +67,11 @@ void CCustomizeCalques3D::InitCalques3DPrefs()
 {
 	EnableUserDefinedToolbars ();
 
+
+	CString strTitle;
+	strTitle.LoadString (IDR_TEXTPALETTE_TB);
+	AddToolBar (strTitle, IDR_TEXTPALETTE_TB);
+
 	//-----------------------------------
 	// Add dropdown resources button:
 	//-----------------------------------
@@ -118,5 +125,27 @@ void CCustomizeCalques3D::InitCalques3DPrefs()
 		ReplaceButton (ID_EDIT_REDO, CBCGPToolbarMenuButton 
 			(ID_EDIT_REDO, pPopupMenu->GetSafeHmenu (), 
 			CImageHash::GetImageOfCommand (ID_EDIT_REDO, FALSE)));
+	}
+	//-------------------------
+	// Setup undo/redo buttons:
+	//-------------------------
+	{	
+		CBCGPToolbarFontCombo* pFontBtn = CFormatToolBar::CreateTextFontButton ();
+		ReplaceButton (ID_CHAR_FONT, *pFontBtn); 
+		delete pFontBtn;
+
+		CBCGPToolbarFontSizeCombo* pFontSizeBtn = CFormatToolBar::CreateTextFontSizeButton ();
+		ReplaceButton (ID_CHAR_SIZE, *pFontSizeBtn); 
+		delete pFontSizeBtn;
+
+		CBCGPColorMenuButton* pTextClrBtn = CFormatToolBar::CreateTextColorButton ();
+		ReplaceButton (ID_CHAR_TXTCOLOR, *pTextClrBtn);
+		delete pTextClrBtn;
+
+		CBCGPColorMenuButton* pObjClrBtn = CFormatToolBar::CreateObjectColorButton ();
+		ReplaceButton (ID_CHAR_OBJCOLOR, *pObjClrBtn);
+		delete pObjClrBtn;
+
+		ReplaceButton (ID_CHAR_OBJSHAPE, CBCGPShapeMenuButton(ID_CHAR_OBJSHAPE,1,1));
 	}
 }
