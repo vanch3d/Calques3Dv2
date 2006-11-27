@@ -114,14 +114,14 @@ public:
 	LOGPEN GetHiddenPenStyle(COLORREF clr = RGB(192,192,192));
 
 	static CString GetShapeDef(int type,int index);
-	static void DrawShapes(int type,CDC* pDC, CRect rect,int nIndex);
+	static void DrawShapes(int type,CDC* pDC, CRect rect,int nIndex,BOOL bEnable);
 private:
 	virtual void DrawPoint(CDC*,CRect);
 
-	static void DrawShapesLn(CDC* pDC, CRect rect,int nIndex);
-	static void DrawShapesPt(CDC* pDC, CRect rect,int nIndex);
-	static void DrawShapesVol(CDC* pDC, CRect rect,int nIndex);
-	static void DrawShapesPol(CDC* pDC, CRect rect,int nIndex);
+	static void DrawShapesLn(CDC* pDC, CRect rect,int nIndex,BOOL bEnable);
+	static void DrawShapesPt(CDC* pDC, CRect rect,int nIndex,BOOL bEnable);
+	static void DrawShapesVol(CDC* pDC, CRect rect,int nIndex,BOOL bEnable);
+	static void DrawShapesPol(CDC* pDC, CRect rect,int nIndex,BOOL bEnable);
 };
 
 #endif // !defined(AFX_SHAPE_H__4315D5D6_71DA_4852_AE32_7A1F1725A20D__INCLUDED_)

@@ -276,21 +276,21 @@ void CShape::Serialize( CArchive& ar )
 }
 
 
-void CShape::DrawShapes(int type,CDC* pDC, CRect rect,int nIndex)
+void CShape::DrawShapes(int type,CDC* pDC, CRect rect,int nIndex,BOOL bEnable)
 {
 	switch(type)
 	{
 		case TShapeType::PointShape:
-			CShape::DrawShapesPt(pDC,rect,nIndex);
+			CShape::DrawShapesPt(pDC,rect,nIndex,bEnable);
 			break;
 		case TShapeType::LineShape:
-			CShape::DrawShapesLn(pDC,rect,nIndex);
+			CShape::DrawShapesLn(pDC,rect,nIndex,bEnable);
 			break;
 		case TShapeType::VolShape:
-			CShape::DrawShapesVol(pDC,rect,nIndex);
+			CShape::DrawShapesVol(pDC,rect,nIndex,bEnable);
 			break;
 		case TShapeType::PolShape:
-			CShape::DrawShapesPol(pDC,rect,nIndex);
+			CShape::DrawShapesPol(pDC,rect,nIndex,bEnable);
 			break;
 		default:
 			break;
@@ -298,31 +298,32 @@ void CShape::DrawShapes(int type,CDC* pDC, CRect rect,int nIndex)
 	}
 };
 
-void CShape::DrawShapesPol(CDC* pDC, CRect rect,int nIndex)
+void CShape::DrawShapesPol(CDC* pDC, CRect rect,int nIndex,BOOL bEnable)
 {
 	switch(nIndex)
 	{
 		case 0:	// Transparent
 		case 1:	// Opaque
-			CShape::DrawShapesVol(pDC, rect,nIndex);
+			CShape::DrawShapesVol(pDC, rect,nIndex,bEnable);
 			break;
 		default:
-			CShape::DrawShapesLn(pDC,rect,nIndex-2);
+			CShape::DrawShapesLn(pDC,rect,nIndex-2,bEnable);
 
 
 	}
 }
 
-void CShape::DrawShapesVol(CDC* pDC, CRect rect,int nIndex)
+void CShape::DrawShapesVol(CDC* pDC, CRect rect,int nIndex,BOOL bEnable)
 {
     rect.DeflateRect(1,1);
 	int ww = min(rect.Height(),rect.Width());
 
 	CPen pen,pen2;
 	CBrush brush;
-	if (!pen.CreatePen(PS_SOLID, 1, RGB(0,0,0))) return;
-	if (!pen2.CreatePen(PS_DOT, 1, RGB(0,0,0))) return;
-	if (!brush.CreateSolidBrush(RGB(0,0,0))) return;
+	COLORREF color = (bEnable) ? RGB(0,0,0) : globalData.clrGrayedText;
+	if (!pen.CreatePen(PS_SOLID, 1, color)) return;
+	if (!pen2.CreatePen(PS_DOT, 1, color)) return;
+	if (!brush.CreateSolidBrush(color)) return;
 	CPen *pOldPen = NULL; 
 	CBrush *pOldBrush = NULL;
 
@@ -335,6 +336,13 @@ void CShape::DrawShapesVol(CDC* pDC, CRect rect,int nIndex)
 				rect.top+(rect.Height() - ww)/2,
 				rect.left + (rect.Width() - ww*5)/2 + ww*2,
 				rect.top+(rect.Height() - ww)/2 + ww);
+
+	mrect = CRect(
+		rect.left+rect.Width()/6,
+		rect.top,
+		rect.right - rect.Width()/6,
+		rect.bottom
+		);
 
 	switch(nIndex){
 	case 0:	// Transparent
@@ -374,6 +382,13 @@ void CShape::DrawShapesVol(CDC* pDC, CRect rect,int nIndex)
 		}
 	case 2: // Composite
 		{
+	mrect2 = CRect(
+		rect.left+rect.Width()/9,
+		rect.top,
+		rect.left+4*rect.Width()/9,
+		rect.bottom
+		);
+
 			pOldPen = pDC->SelectObject(&pen);
 			pDC->Rectangle(mrect2);
 
@@ -383,6 +398,13 @@ void CShape::DrawShapesVol(CDC* pDC, CRect rect,int nIndex)
 			pDC->LineTo(rect.right, (rect.top+rect.bottom)/2);
 
 			mrect2.OffsetRect(ww*3,0);
+	mrect2 = CRect(
+		rect.left+5*rect.Width()/9,
+		rect.top,
+		rect.left+8*rect.Width()/9,
+		rect.bottom
+		);
+
 			pDC->Rectangle(mrect2);
 
 			int oldM = pDC->SetBkMode(TRANSPARENT);
@@ -402,16 +424,17 @@ void CShape::DrawShapesVol(CDC* pDC, CRect rect,int nIndex)
 
 };
 
-void CShape::DrawShapesPt(CDC* pDC, CRect rect,int nIndex)
+void CShape::DrawShapesPt(CDC* pDC, CRect rect,int nIndex,BOOL bEnable)
 {
     rect.DeflateRect(2,2);
 	int ww = min(rect.Height(),rect.Width())-2;
 
 	CPen pen,pen2;
 	CBrush brush;
-	if (!pen.CreatePen(PS_SOLID, 1, RGB(0,0,0))) return;
-	if (!pen2.CreatePen(PS_SOLID, 2, RGB(0,0,0))) return;
-	if (!brush.CreateSolidBrush(RGB(0,0,0))) return;
+	COLORREF color = (bEnable) ? RGB(0,0,0) : globalData.clrGrayedText;
+	if (!pen.CreatePen(PS_SOLID, 1, color)) return;
+	if (!pen2.CreatePen(PS_SOLID, 2, color)) return;
+	if (!brush.CreateSolidBrush(color)) return;
 	CPen *pOldPen = NULL; 
 	CBrush *pOldBrush = NULL;
 
@@ -472,16 +495,17 @@ void CShape::DrawShapesPt(CDC* pDC, CRect rect,int nIndex)
 
 };
 
-void CShape::DrawShapesLn(CDC* pDC, CRect rect,int nIndex)
+void CShape::DrawShapesLn(CDC* pDC, CRect rect,int nIndex,BOOL bEnable)
 {
 //	CRect rectColor = rect;
 	int nStyle[]={PS_DOT,PS_DASH,PS_DASHDOT,PS_DASHDOTDOT,PS_SOLID,PS_SOLID,PS_SOLID,PS_SOLID};
 	int nSize[]={1,1,1,1,1,2,3,4};
 	CPen pen;
 	CBrush brush;
+	COLORREF color = (bEnable) ? RGB(0,0,0) : globalData.clrGrayedText;
 	//int ww = min(rect.Height(),rect.Width())-2;
-	if (!pen.CreatePen(nStyle[nIndex], nSize[nIndex], RGB(0,0,0))) return;
-	if (!brush.CreateSolidBrush(RGB(0,0,0))) return;
+	if (!pen.CreatePen(nStyle[nIndex], nSize[nIndex], color)) return;
+	if (!brush.CreateSolidBrush(color)) return;
 	CPen *pOldPen = NULL; 
 	CBrush *pOldBrush = NULL;
 	pOldPen = pDC->SelectObject(&pen);

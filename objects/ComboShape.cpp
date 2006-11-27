@@ -70,7 +70,7 @@ CComboBox* CBCGPShapeProp::CreateCombo (CWnd* pWndParent, CRect rect)
 /////////////////////////////////////////////////////////////////////////////
 void CBCGPShapeProp::OnDrawValue (CDC* pDC, CRect rect)
 {
-	CShape::DrawShapes(m_type,pDC,rect,(long)GetValue());
+	CShape::DrawShapes(m_type,pDC,rect,(long)GetValue(),TRUE);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -134,7 +134,7 @@ void CComboShape::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 	else
 		pDC->FillRect(rect, &globalData.brWindow);
 
-	CShape::DrawShapes(m_type,pDC,rect,lpDrawItemStruct->itemID);
+	CShape::DrawShapes(m_type,pDC,rect,lpDrawItemStruct->itemID,TRUE);
 }
 
 //***************************************************************************

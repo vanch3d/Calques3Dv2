@@ -163,7 +163,7 @@ void CBCGPShapeButton::OnDraw (CDC* pDC, const CRect& rect, UINT uiState)
 
 		CBrush br (color);
 		//pDC->FillRect (rectColor, &br);
-		CShape::DrawShapes(m_nShapeType,pDC,rectColor,m_nShape);
+		CShape::DrawShapes(m_nShapeType,pDC,rectColor,m_nShape,TRUE);
 
 	}
 
