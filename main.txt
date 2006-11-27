@@ -1,3 +1,9 @@
+/**
+ \defgroup BCGControlBarGroup BCGControlBar Library Professional Edition (v. 7.31)
+ \defgroup MFCGridCtrlGroup MFC Grid Control (v. 2.20)
+ \defgroup MFCGroup MFC Microsoft Foundation Class Library 
+ **/
+
 /*!
 \mainpage 
 
@@ -17,7 +23,9 @@ Calques 3D is a microworld designed for constructing, observing and manipulating
 */
 
 /**
- \page BCGControlBar BCGControlBar Library Professional Edition (v. 7.31)
+\page BCGControlBar
+ \ingroup BCGControlBarGroup
+
 BCGControlBar (Business Components Gallery Control Bar) Professional Edition is an MFC extension framework library 
 with which you can make your apps look like Office XP, Office 2000, Office 2003, Visual Studio, Visual Studio. NET 
 and Internet Explorer - complete with full toolbars, menu, and keyboard customization, docking control bars, menu bars, 
@@ -84,7 +92,8 @@ Here is a list of the BCGControlBar Library used in this project, with brief des
 **/
 
 /**
-\page MFCGridCtrl MFC Grid Control (v. 2.20)
+\page MFCGridCtrl
+\ingroup MFCGridCtrlGroup
 
 \author Chris Maunder - cmaunder@mail.com
 
@@ -132,5 +141,7 @@ The control features:
 **/
 
 /**
- \page MFC Microsoft Foundation Class Library 
+ \page MFC
+ \ingroup MFCGroup
+
 **/
