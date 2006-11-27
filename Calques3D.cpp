@@ -18,11 +18,8 @@
 #include "View3DRender.h"
 
 #include "SplashScreen.h"
-
 #include "AboutInfoDlg.h"
-
 #include "Prefs\Prefs.h"
-
 #include "BCGXMLSettings.h"
 
 #ifdef _DEBUG
@@ -31,21 +28,16 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-// Uncomment to use the BCG file dialog (with "recent" and "new document" tabs)
-//#define OPENDLG_BCG
-
 // Registry keys used for recovering customized aspects of Calques 3D
 #define REG_KEY			_T("CREDIT")			// The main key for the registry
 #define REG_SETTINGS	_T("Settings")			// Key for the preferences
-#define REG_SESSION		_T("Session")			// Key for the session
+#define REG_WORKSPACE	_T("BCGWorkspace")		// Key for the BCGP workspace
+#define REG_SESSION		_T("Session")			// Key for the sessions
 #define REG_PROFILE		_T("Profile")			
 #define REG_PROFILEDES	_T("Description")
-#define REG_VERMAJOR	_T("VersionMajor")
+#define REG_VERMAJOR	_T("VersionMajor")		// Keys for the version
 #define REG_VERMINOR	_T("VersionMinor")
 #define REG_VERREVIS	_T("VersionRevision")
-
-// Specify the base item for the registry
-CString CCalques3DApp::g_strBCGPRegBase = _T("BCGWorkspace");
 
 //////////////////////////////////////////////////////////////////////////////
 /// The one and only CCalques3DApp object
@@ -133,12 +125,10 @@ BOOL CCalques3DApp::InitInstance()
 	Enable3dControlsStatic();	// Call this when linking to MFC statically
 #endif
 
-
 	//------------------------------------------------------------
 	// Load the registry information
 	//------------------------------------------------------------
 	SetRegistryKey(REG_KEY);
-	g_strBCGPRegBase = GetRegistryBase();
 
 	// Load standard INI file options (including MRU)
 	LoadStdProfileSettings(6);  
@@ -156,7 +146,7 @@ BOOL CCalques3DApp::InitInstance()
 
 	if (vmajor==-1 || (vmajor!=major || vminor!=minor))
 	{
-		if (IsStateExists(g_strBCGPRegBase))
+		if (IsStateExists(REG_WORKSPACE))
 		{
 			MessageBox(NULL,
 				_T("Due to major modifications in Calques 3D, the configuration saved\n"
@@ -165,7 +155,7 @@ BOOL CCalques3DApp::InitInstance()
 				   "This problem will not occur anymore after this launch."),
 				_T("Warning !"),MB_ICONWARNING|MB_OK);
 		}
-		CleanState(g_strBCGPRegBase);
+		CleanState(REG_WORKSPACE);
 	}
 	SetRegistryBase(NULL);
 	WriteInt(REG_VERMAJOR,major);
@@ -176,7 +166,7 @@ BOOL CCalques3DApp::InitInstance()
 	// If appropriate, load the information form the specify user profile
 	SetRegistryBase (REG_SESSION);
 	TPref::strProfile = GetSectionString(REG_PROFILE,REG_PROFILE, TPref::strProfile);
-	SetRegistryBase (g_strBCGPRegBase);
+	SetRegistryBase (REG_WORKSPACE);
 	if (!TPref::strProfile.IsEmpty())
 	{
 		// All registry read/write operations will be produced via CBCGXMLSettings gateway:
@@ -352,34 +342,7 @@ void CCalques3DApp::OnFileOpen()
 	CString title;
 	VERIFY(title.LoadString(nIDSTitle));
 
-#ifdef OPENDLG_BCG
-	CBCGPFileDialog dlgFile (title, bOpenFileDialog);
-
-	////*************************
-	CBitmap bmpLogo;
-	bmpLogo.LoadBitmap (IDB_LOGO);
-	//dlgFile.SetLogoBitmap (&bmpLogo);
-
-	CImageList newItemImages;
-	newItemImages.Create (32, 32, ILC_MASK, 0, 1);
-	newItemImages.Add (AfxGetApp ()->LoadIcon (IDR_VIEWUNIVERSE));
-	newItemImages.Add (AfxGetApp ()->LoadIcon (IDR_VIEWMACRO));
-
-	dlgFile.SetNewImagesList (&newItemImages);
-
-	CString strItem;
-	strItem.LoadString (IDR_VIEWUNIVERSE);
-	dlgFile.AddNewItem (strItem.SpanExcluding (_T("\n")), 0);
-
-	strItem.LoadString (IDR_VIEWMACRO);
-	dlgFile.AddNewItem (strItem.SpanExcluding (_T("\n")), 1);
-
-	HICON hiconOpenDlg = AfxGetApp ()->LoadIcon (IDR_MAINFRAME);
-	dlgFile.SetDlgIcon (hiconOpenDlg);
-	////************************* 
-#else 
 	CFileDialog dlgFile(bOpenFileDialog);
-#endif
 
 	dlgFile.m_ofn.Flags |= lFlags;
 	CString strFilter;
@@ -435,50 +398,10 @@ void CCalques3DApp::OnFileOpen()
 
 	int nResult = dlgFile.DoModal();
 
-#ifdef OPENDLG_BCG
-	////*************************
-	::DestroyIcon (hiconOpenDlg);
-	////************************* 
-#endif
-
 	fileName.ReleaseBuffer();
 	if (nResult == IDOK)
 	{
-#ifdef OPENDLG_BCG
-		 ////*************************
-		int nNewItem = -1;
-		switch (dlgFile.GetPage()){
-		case CBCGPFileDialog::BCGFileNew :
-			nNewItem = dlgFile.GetNewItemIndex();
-			break;
-		case CBCGPFileDialog::BCGFileOpen :
-			break;
-		case CBCGPFileDialog::BCGFileRecent :
-			fileName = dlgFile.GetRecentFilePath();
-			break;
-		default:
-			return;
-		}
-		if (nNewItem !=-1)
-		{
-			POSITION pos = GetFirstDocTemplatePosition();
-			CDocTemplate *pTemplate2 = NULL;
-			int nb =-1;
-			while (pos != NULL && nb != nNewItem)
-			{
-				pTemplate2 = GetNextDocTemplate(pos);
-				nb++;
-			}
-			if (pTemplate2)
-				pTemplate2->OpenDocumentFile(NULL);
-
-		}
-		else
-			OpenDocumentFile(fileName);
-		////************************* 
-#else
 		OpenDocumentFile(fileName);
-#endif
 	}
 }
 
@@ -513,7 +436,7 @@ void CCalques3DApp::LoadCustomState ()
 
 	// Call the default initialisation of the preferences
 	TPref::DefaultInit();
-	SetRegistryBase (g_strBCGPRegBase);
+	SetRegistryBase (REG_WORKSPACE);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -543,7 +466,7 @@ void CCalques3DApp::SaveCustomState ()
 	SetRegistryBase (REG_SESSION);
 	WriteSectionString(REG_PROFILE,REG_PROFILE, TPref::strProfile);
 	WriteSectionString(REG_PROFILE,REG_PROFILEDES, TPref::strProfileDesc);
-	SetRegistryBase (g_strBCGPRegBase);
+	SetRegistryBase (REG_WORKSPACE);
 }
 
 

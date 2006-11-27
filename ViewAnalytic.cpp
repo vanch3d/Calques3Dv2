@@ -556,8 +556,9 @@ void CViewAnalytic::OnEditUndo()
 void CViewAnalytic::OnAddComment() 
 {
 	// TODO: Add your command handler code here
-	CComment3D* pObj = new CComment3D(_T("ddd"));
-	pObj->m_strComment = _T("new comment ...");
+	CString strComment;
+	strComment.LoadString(IDS_NEWCOMMENT);
+	CComment3D* pObj = new CComment3D(strComment);
 
 	if (GetDocument()->AddObject(pObj))
 	{
@@ -571,8 +572,7 @@ void CViewAnalytic::OnAddComment()
 void CViewAnalytic::OnAddEquation() 
 {
 	// TODO: Add your command handler code here
-	CMathOp3D* pObj = new CMathOp3D(_T("ddd"));
-	pObj->m_strComment = _T("1+1");
+	CMathOp3D* pObj = new CMathOp3D(_T("1+1"));
 
 	if (GetDocument()->AddObject(pObj))
 	{

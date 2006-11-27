@@ -389,7 +389,7 @@ void CPrefObjShape::FillSphere()
 		_T("Display the equator of the spheres"),
 		_T("Display the two great circles of the spheres")
 	};*/
-	int *optS[2]={&TPref::TSphere.bEquator,&TPref::TSphere.bGCircle};
+	BOOL *optS[2]={&TPref::TSphere.bEquator,&TPref::TSphere.bGCircle};
 
 	for (int i=0;i<2;i++)
 	{

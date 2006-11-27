@@ -129,7 +129,7 @@ static UINT indicators[] =
 CMainFrame::CMainFrame()
 {
 	// TODO: add member initialization code here
-	m_nAppLook = theApp.GetInt (_T("ApplicationLook"), ID_VIEW_APPLOOK_VS2005);
+	m_nAppLook = theApp.GetInt (_T("ApplicationLook"), ID_VIEW_APPLOOK_2003);
 }
 
 CMainFrame::~CMainFrame()
@@ -267,14 +267,14 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if (!m_wndTextBar.CreateEx(this, TBSTYLE_FLAT, WS_CHILD | WS_VISIBLE | CBRS_TOP | CBRS_BORDER_3D
 		| CBRS_GRIPPER | CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_HIDE_INPLACE | CBRS_SIZE_DYNAMIC,CRect(1, 1, 1, 1),
 			ID_VIEW_FORMAT) ||
-		!m_wndTextBar.LoadToolBar(IDR_TEXTPALETTE_TB))
+		!m_wndTextBar.LoadToolBar(IDR_FORMAT_TB))
 	{
 		TRACE0("Failed to create toolbar\n");
 		return -1;      // fail to create
 	}
 
 	CString strTextBarTitle;
-	strTextBarTitle.LoadString (IDR_TEXTPALETTE_TB);
+	strTextBarTitle.LoadString (IDR_FORMAT_TB);
 	m_wndTextBar.SetWindowText (strTextBarTitle);
 
 	//----------------------
@@ -415,7 +415,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndIntersectBar.LoadBitmap (theApp.m_bHiColorIcons ? IDR_INTERSECT_TB : IDR_INTERSECT_TB);
 	m_wndDivPointBar.LoadBitmap (theApp.m_bHiColorIcons ? IDR_POINTDIV_TB : IDR_POINTDIV_TB);
 	m_wndToolBar.LoadBitmap (theApp.m_bHiColorIcons ? IDR_MAINFRAME24 : IDR_MAINFRAME);
-	m_wndTextBar.LoadBitmap (theApp.m_bHiColorIcons ? IDR_TEXTPALETTE_TB24 : IDR_TEXTPALETTE_TB);
+	m_wndTextBar.LoadBitmap (theApp.m_bHiColorIcons ? IDR_FORMAT_TB24 : IDR_FORMAT_TB);
 	m_wndObjBar.LoadBitmap (theApp.m_bHiColorIcons ? IDR_OBJECTS_TB : IDR_OBJECTS_TB);
 	m_wndExplorBar.LoadBitmap (theApp.m_bHiColorIcons ? IDR_EXPLORATION_TB : IDR_EXPLORATION_TB);
 	m_wndConstrBar.LoadBitmap (theApp.m_bHiColorIcons ? IDR_CONSTRUCTION_TB : IDR_CONSTRUCTION_TB);
@@ -679,39 +679,6 @@ afx_msg LRESULT CMainFrame::OnToolbarReset(WPARAM wp,LPARAM)
 		{
 		}
 		break;
-/*	case IDR_TEXTPALETTE_TB:
-		{
-		m_wndTextBar.ReplaceButton (ID_CHAR_FONT, 
-			CBCGPToolbarFontCombo(ID_CHAR_FONT, 
-				CImageHash::GetImageOfCommand (ID_CHAR_FONT, FALSE),
-				DEVICE_FONTTYPE | RASTER_FONTTYPE | TRUETYPE_FONTTYPE,
-				DEFAULT_CHARSET,
-				WS_VISIBLE | WS_TABSTOP | WS_VSCROLL | CBS_DROPDOWN,
-				150));
-		m_wndTextBar.ReplaceButton (ID_CHAR_SIZE, 
-			CBCGPToolbarFontSizeCombo(ID_CHAR_SIZE, 
-		CImageHash::GetImageOfCommand (ID_CHAR_SIZE, FALSE),
-		WS_VISIBLE | WS_TABSTOP | WS_VSCROLL | CBS_DROPDOWN,
-		40)
-		);	
-		
-		CBCGPColorMenuButton tt(ID_CHAR_TXTCOLOR,"dfd fd fds ");
-			tt.EnableAutomaticButton (_T("Automatic"), RGB (0, 0, 0));
-	tt.EnableOtherButton (_T("More Colors..."));
-	tt.EnableDocumentColors (_T("Document's Colors"));
-	tt.SetColumnsNumber (8);
-
-		m_wndTextBar.ReplaceButton (ID_CHAR_TXTCOLOR, tt);
-
-		CBCGPColorMenuButton tt2(ID_CHAR_OBJCOLOR,"dfd fd fds ");
-			tt2.EnableAutomaticButton (_T("Automatic"), RGB (0, 0, 0));
-	tt2.EnableOtherButton (_T("More Colors..."));
-	tt2.EnableDocumentColors (_T("Document's Colors"));
-	tt2.SetColumnsNumber (8);
-
-		m_wndTextBar.ReplaceButton (ID_CHAR_OBJCOLOR, tt2);
-		}
-		break;*/
 	case IDR_CONSTRUCTION_TB:
 		{
 			//-----------------------------------
@@ -850,9 +817,11 @@ BOOL CMainFrame::OnShowPopupMenu (CBCGPPopupMenu* pMenuPopup)
 				}
 				if (bMore)
 				{
+					CString mstr;
+					mstr.LoadString(ID_EDIT_UNDO_MORE);
 					pMenuPopup->InsertSeparator();
 					pMenuPopup->InsertItem (CBCGPToolbarMenuButton (
-						ID_EDIT_UNDO_DUMMY, NULL, -1, _T("More ...")));
+						ID_EDIT_UNDO_DUMMY, NULL, -1,mstr));
 				}
 
 
@@ -1448,7 +1417,8 @@ void CMainFrame::OnDrawMenuLogo (CDC* pDC, CBCGPPopupMenu* pMenu, const CRect& r
     COLORREF clrOldText = pDC->SetTextColor (RGB (255, 255, 255));
 
     CFont* pOldFont = pDC->SelectObject (&m_fontVertCaption);
-    CString sTitle = _T("Calques 3D");
+    CString sTitle;
+	sTitle.LoadString(AFX_IDS_APP_TITLE);
 
     CPoint ptOrg = CPoint(rectLogo.left + 5, rectLogo.bottom - 10);
 

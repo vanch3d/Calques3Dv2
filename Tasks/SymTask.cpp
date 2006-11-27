@@ -1232,7 +1232,7 @@ void CAnimation3DTask::CreateObject3D()
         {
             CVector4 pDirV =pPtSurD->S->GetDirVector();
             FCoord pVecN = pDirV.Norme();
-            ddd = m_nDeltaT/2 + (pPtSurD->lambda -  m_nOldN) / (FCoord)(m_nDeltaT-1);//*pDirV;
+            ddd = (int)(m_nDeltaT/2 + (pPtSurD->lambda -  m_nOldN) / (FCoord)(m_nDeltaT-1));//*pDirV;
         }
     }
 

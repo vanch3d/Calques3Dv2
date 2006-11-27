@@ -22,7 +22,6 @@
 #include "Cylinder3D.h"
 
 #include "ObjectPropPage.h"
-#include "ObjectFontPage.h"
 #include "..\HelpPrSheet.h"
 
 #ifdef _DEBUG

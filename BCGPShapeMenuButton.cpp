@@ -28,9 +28,16 @@ CBCGPShapeMenuButton::CBCGPShapeMenuButton()
 
 CBCGPShapeMenuButton::CBCGPShapeMenuButton(UINT uiCmdID,int type,int shape):
 	CBCGPToolbarMenuButton (uiCmdID, NULL,
-		CImageHash::GetImageOfCommand (uiCmdID, FALSE), "dffd")
+		CImageHash::GetImageOfCommand (uiCmdID, FALSE), NULL)
 {
 	SetShape(type, shape);
+
+	CString strName;
+	strName.LoadString(uiCmdID);
+	int nfind = strName.Find('\n',0);
+	if (nfind!=-1) strName.Delete(0,nfind+1);
+	m_strText = strName;
+
 }
 
 CBCGPShapeMenuButton::~CBCGPShapeMenuButton()

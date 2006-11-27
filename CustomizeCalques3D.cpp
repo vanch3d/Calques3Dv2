@@ -69,8 +69,8 @@ void CCustomizeCalques3D::InitCalques3DPrefs()
 
 
 	CString strTitle;
-	strTitle.LoadString (IDR_TEXTPALETTE_TB);
-	AddToolBar (strTitle, IDR_TEXTPALETTE_TB);
+	strTitle.LoadString (IDR_FORMAT_TB);
+	AddToolBar (strTitle, IDR_FORMAT_TB);
 
 	//-----------------------------------
 	// Add dropdown resources button:
@@ -88,8 +88,12 @@ void CCustomizeCalques3D::InitCalques3DPrefs()
 		CMacroUserTool *pTool = (CMacroUserTool*) TPref::TMacroList.GetNext (pos);
 		ASSERT_VALID (pTool);
 
-		AddButton (_T("Macros"),
-			CBCGPToolbarButton (ID_MACROS_USER1+index, CBCGPToolBar::GetDefaultImage(ID_MACROS_USER1), pTool->m_strLabel));
+		CString strName;
+		strName.LoadString(IDS_MACROS);
+		AddButton (strName,CBCGPToolbarButton(
+				ID_MACROS_USER1+index, 
+				CBCGPToolBar::GetDefaultImage(ID_MACROS_USER1), 
+				pTool->m_strLabel));
 		index++;
 	}
 	//	AddButton (_T("zzzzzzzzzzz"),
@@ -131,21 +135,21 @@ void CCustomizeCalques3D::InitCalques3DPrefs()
 	//-------------------------
 	{	
 		CBCGPToolbarFontCombo* pFontBtn = CFormatToolBar::CreateTextFontButton ();
-		ReplaceButton (ID_CHAR_FONT, *pFontBtn); 
+		ReplaceButton (ID_FORMAT_TXTFONT, *pFontBtn); 
 		delete pFontBtn;
 
 		CBCGPToolbarFontSizeCombo* pFontSizeBtn = CFormatToolBar::CreateTextFontSizeButton ();
-		ReplaceButton (ID_CHAR_SIZE, *pFontSizeBtn); 
+		ReplaceButton (ID_FORMAT_TXTSIZE, *pFontSizeBtn); 
 		delete pFontSizeBtn;
 
 		CBCGPColorMenuButton* pTextClrBtn = CFormatToolBar::CreateTextColorButton ();
-		ReplaceButton (ID_CHAR_TXTCOLOR, *pTextClrBtn);
+		ReplaceButton (ID_FORMAT_TXTCOLOR, *pTextClrBtn);
 		delete pTextClrBtn;
 
 		CBCGPColorMenuButton* pObjClrBtn = CFormatToolBar::CreateObjectColorButton ();
-		ReplaceButton (ID_CHAR_OBJCOLOR, *pObjClrBtn);
+		ReplaceButton (ID_FORMAT_OBJCOLOR, *pObjClrBtn);
 		delete pObjClrBtn;
 
-		ReplaceButton (ID_CHAR_OBJSHAPE, CBCGPShapeMenuButton(ID_CHAR_OBJSHAPE,1,1));
+		ReplaceButton (ID_FORMAT_OBJSHAPE, CBCGPShapeMenuButton(ID_FORMAT_OBJSHAPE,1,1));
 	}
 }

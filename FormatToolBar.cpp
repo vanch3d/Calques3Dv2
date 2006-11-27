@@ -39,8 +39,8 @@ CFormatToolBar::~CFormatToolBar()
 CBCGPToolbarFontCombo* CFormatToolBar::CreateTextFontButton ()
 {
 	return new CBCGPToolbarFontCombo(
-				ID_CHAR_FONT, 
-				CImageHash::GetImageOfCommand (ID_CHAR_FONT, FALSE),
+				ID_FORMAT_TXTFONT, 
+				CImageHash::GetImageOfCommand (ID_FORMAT_TXTFONT, FALSE),
 				DEVICE_FONTTYPE | RASTER_FONTTYPE | TRUETYPE_FONTTYPE,
 				DEFAULT_CHARSET,
 				WS_VISIBLE | WS_TABSTOP | WS_VSCROLL | CBS_DROPDOWN |
@@ -51,18 +51,28 @@ CBCGPToolbarFontCombo* CFormatToolBar::CreateTextFontButton ()
 CBCGPToolbarFontSizeCombo* CFormatToolBar::CreateTextFontSizeButton ()
 {
 	return new CBCGPToolbarFontSizeCombo(
-				ID_CHAR_SIZE, 
-				CImageHash::GetImageOfCommand (ID_CHAR_SIZE, FALSE),
+				ID_FORMAT_TXTSIZE, 
+				CImageHash::GetImageOfCommand (ID_FORMAT_TXTSIZE, FALSE),
 				WS_VISIBLE | WS_TABSTOP | WS_VSCROLL | CBS_DROPDOWN,
 				40);
 }
 
 CBCGPColorMenuButton* CFormatToolBar::CreateTextColorButton ()
 {
-	CBCGPColorMenuButton* pColorButton = new CBCGPColorMenuButton(ID_CHAR_TXTCOLOR,"dfd fd fds ");
-	pColorButton->EnableAutomaticButton (_T("Automatic"), RGB (0, 0, 0));
-	pColorButton->EnableOtherButton (_T("More Colors..."));
-	pColorButton->EnableDocumentColors (_T("Document's Colors"));
+	CString strName;
+	strName.LoadString(ID_FORMAT_TXTCOLOR);
+	int nfind = strName.Find('\n',0);
+	if (nfind!=-1) strName.Delete(0,nfind+1);
+	CBCGPColorMenuButton* pColorButton = new CBCGPColorMenuButton(ID_FORMAT_TXTCOLOR,strName);
+
+	CString strDef,strOther,strDoc;
+	strDef.LoadString(PREF_NAME_CLRAUTO);
+	strOther.LoadString(PREF_NAME_CLROTHER);
+	strDoc.LoadString(PREF_NAME_CLRDOC);
+	
+	pColorButton->EnableAutomaticButton (strDef, RGB (0, 0, 0));
+	pColorButton->EnableOtherButton (strOther);
+	pColorButton->EnableDocumentColors (strDoc);
 	//pColorButton->EnableTearOff (ID_FREE_TEAROFF1, 5, 2);
 
 	pColorButton->SetColumnsNumber (8);
@@ -103,8 +113,12 @@ CBCGPColorMenuButton* CFormatToolBar::CreateObjectColorButton ()
 		CBCGPColorMenuButton::SetColorName (TPref::crColours[i].crColour, TPref::crColours[i].szName);
 	}
 
+	CString strName;
+	strName.LoadString(ID_FORMAT_OBJCOLOR);
+	int nfind = strName.Find('\n',0);
+	if (nfind!=-1) strName.Delete(0,nfind+1);
 
-	CBCGPColorMenuButton* pColorButton = new CBCGPColorMenuButton(ID_CHAR_OBJCOLOR,"dfd fd fds ",&m_palObjectColorPicker);
+	CBCGPColorMenuButton* pColorButton = new CBCGPColorMenuButton(ID_FORMAT_OBJCOLOR,strName,&m_palObjectColorPicker);
 
 	CString strDef,strOther,strDoc;
 	strDef.LoadString(PREF_NAME_CLRAUTO);
@@ -126,22 +140,22 @@ CBCGPColorMenuButton* CFormatToolBar::CreateObjectColorButton ()
 void CFormatToolBar::OnReset ()
 {
 	CBCGPToolbarFontCombo* pFontBtn = CreateTextFontButton ();
-	ReplaceButton (ID_CHAR_FONT, *pFontBtn); 
+	ReplaceButton (ID_FORMAT_TXTFONT, *pFontBtn); 
 	delete pFontBtn;
 
 	CBCGPToolbarFontSizeCombo* pFontSizeBtn = CreateTextFontSizeButton ();
-	ReplaceButton (ID_CHAR_SIZE, *pFontSizeBtn); 
+	ReplaceButton (ID_FORMAT_TXTSIZE, *pFontSizeBtn); 
 	delete pFontSizeBtn;
 
 	CBCGPColorMenuButton* pTextClrBtn = CreateTextColorButton ();
-	ReplaceButton (ID_CHAR_TXTCOLOR, *pTextClrBtn);
+	ReplaceButton (ID_FORMAT_TXTCOLOR, *pTextClrBtn);
 	delete pTextClrBtn;
 
 	CBCGPColorMenuButton* pObjClrBtn = CreateObjectColorButton ();
-	ReplaceButton (ID_CHAR_OBJCOLOR, *pObjClrBtn);
+	ReplaceButton (ID_FORMAT_OBJCOLOR, *pObjClrBtn);
 	delete pObjClrBtn;
 
-	ReplaceButton (ID_CHAR_OBJSHAPE, CBCGPShapeMenuButton(ID_CHAR_OBJSHAPE,1,1));
+	ReplaceButton (ID_FORMAT_OBJSHAPE, CBCGPShapeMenuButton(ID_FORMAT_OBJSHAPE,1,1));
 
 }
 
@@ -169,7 +183,7 @@ void CFormatToolBar::OnUpdateCmdUI(CObject3D *pObj)
 		}
 	}
 
-	if (CBCGPToolBar::GetCommandButtons (ID_CHAR_FONT, listButtons) > 0)
+	if (CBCGPToolBar::GetCommandButtons (ID_FORMAT_TXTFONT, listButtons) > 0)
 	{
 		for (POSITION posCombo = listButtons.GetHeadPosition (); posCombo != NULL;)
 		{
@@ -190,7 +204,7 @@ void CFormatToolBar::OnUpdateCmdUI(CObject3D *pObj)
 		}
 	}
 
-	if (CBCGPToolBar::GetCommandButtons (ID_CHAR_SIZE, listButtons) > 0)
+	if (CBCGPToolBar::GetCommandButtons (ID_FORMAT_TXTSIZE, listButtons) > 0)
 	{
 		for (POSITION posCombo = listButtons.GetHeadPosition (); posCombo != NULL;)
 		{
@@ -209,7 +223,7 @@ void CFormatToolBar::OnUpdateCmdUI(CObject3D *pObj)
 		}
 	}
 
-	if (CBCGPToolBar::GetCommandButtons (ID_CHAR_TXTCOLOR, listButtons) > 0)
+	if (CBCGPToolBar::GetCommandButtons (ID_FORMAT_TXTCOLOR, listButtons) > 0)
 	{
 		for (POSITION posCombo = listButtons.GetHeadPosition (); posCombo != NULL;)
 		{
@@ -228,7 +242,7 @@ void CFormatToolBar::OnUpdateCmdUI(CObject3D *pObj)
 		}
 	}
 
-	if (CBCGPToolBar::GetCommandButtons (ID_CHAR_OBJCOLOR, listButtons) > 0)
+	if (CBCGPToolBar::GetCommandButtons (ID_FORMAT_OBJCOLOR, listButtons) > 0)
 	{
 		for (POSITION posCombo = listButtons.GetHeadPosition (); posCombo != NULL;)
 		{
@@ -242,7 +256,7 @@ void CFormatToolBar::OnUpdateCmdUI(CObject3D *pObj)
 		}
 	}
 
-	if (CBCGPToolBar::GetCommandButtons (ID_CHAR_OBJSHAPE, listButtons) > 0)
+	if (CBCGPToolBar::GetCommandButtons (ID_FORMAT_OBJSHAPE, listButtons) > 0)
 	{
 		for (POSITION posCombo = listButtons.GetHeadPosition (); posCombo != NULL;)
 		{

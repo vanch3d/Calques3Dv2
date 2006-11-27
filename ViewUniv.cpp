@@ -74,10 +74,10 @@ BEGIN_MESSAGE_MAP(CViewUniv, CView)
     ON_COMMAND(ID_FILE_PRINT_DIRECT, CView::OnFilePrint)
     ON_COMMAND(ID_FILE_PRINT_PREVIEW, OnFilePrintPreview)
 
-    ON_UPDATE_COMMAND_UI_RANGE(ID_CHAR_OBJCOLOR, ID_CHAR_UNDERLINE, OnUpdateFormat)
-    ON_COMMAND_RANGE(ID_CHAR_OBJCOLOR, ID_CHAR_UNDERLINE, OnFormat)
-	ON_CBN_SELENDOK(ID_CHAR_FONT, OnFormat)
-	ON_CBN_SELENDOK(ID_CHAR_SIZE, OnFormat)
+    ON_UPDATE_COMMAND_UI_RANGE(ID_FORMAT_OBJCOLOR, ID_FORMAT_UNDERLINE, OnUpdateFormat)
+    ON_COMMAND_RANGE(ID_FORMAT_OBJCOLOR, ID_FORMAT_UNDERLINE, OnFormat)
+	ON_CBN_SELENDOK(ID_FORMAT_TXTFONT, OnFormat)
+	ON_CBN_SELENDOK(ID_FORMAT_TXTSIZE, OnFormat)
 
     ON_COMMAND_RANGE(ID_VISUALISATION_ZOOM,ID_VISUALISATION_ZOOM_ADJUST, OnChangeZoom)
     ON_UPDATE_COMMAND_UI_RANGE(ID_VISUALISATION_ZOOM, ID_VISUALISATION_ZOOM_ADJUST, OnUpdateZoom)
@@ -1167,9 +1167,12 @@ int CViewUniv::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		TRACE0("Failed to create toolbar\n");
 		return -1;      // fail to create
 	}
-	m_wndVertBar.SetWindowText (_T("dfdffdf"));
+	CString strHor,strVer;
+	strHor.LoadString(IDR_UNIVERSEH_TB);
+	strVer.LoadString(IDR_UNIVERSEV_TB);
+	m_wndVertBar.SetWindowText (strVer);
 	m_wndVertBar.SetPermament();
-	m_wndHorizBar.SetWindowText (_T("dfdffdf"));
+	m_wndHorizBar.SetWindowText (strHor);
 	m_wndHorizBar.SetPermament();
 
 	pChild->AddControlBar(&m_wndHorizBar);
@@ -1757,16 +1760,16 @@ void CViewUniv::OnUpdateFormat(CCmdUI* pCmdUI)
 	BOOL bEnable = FALSE;
     switch (pCmdUI->m_nID)
     {
-		case ID_CHAR_FONT:
-		case ID_CHAR_TXTCOLOR:
-		case ID_CHAR_SIZE:
+		case ID_FORMAT_TXTFONT:
+		case ID_FORMAT_TXTCOLOR:
+		case ID_FORMAT_TXTSIZE:
 			{
 				CObject3D *pObj= DYNAMIC_DOWNCAST(CLabel3D,pSelectObj);
 				bEnable = (pObj!=NULL);
 			}
 			break;
-		case ID_CHAR_OBJCOLOR:
-		case ID_CHAR_OBJSHAPE:
+		case ID_FORMAT_OBJCOLOR:
+		case ID_FORMAT_OBJSHAPE:
 			{
 				CObject3D *pObj= DYNAMIC_DOWNCAST(CLabel3D,pSelectObj);
 				bEnable = (pObj==NULL && pSelectObj!=NULL);
@@ -1780,48 +1783,39 @@ void CViewUniv::OnUpdateFormat(CCmdUI* pCmdUI)
 
 void CViewUniv::OnFormat(UINT m_nID)
 {
-  //  switch (m_nID)
-    //{
-	//	case ID_CHAR_FONT:
-	//	case ID_CHAR_TXTCOLOR:
-	//	case ID_CHAR_SIZE:
-	//		{
-				CLabel3D *pObj= DYNAMIC_DOWNCAST(CLabel3D,pSelectObj);
-				if (pObj)
-				{
-					COLORREF clr = CBCGPColorMenuButton::GetColorByCmdID(ID_CHAR_TXTCOLOR);
-					pObj->mColorText = clr;
+	CLabel3D *pObj= DYNAMIC_DOWNCAST(CLabel3D,pSelectObj);
+	if (pObj)
+	{
+		COLORREF clr = CBCGPColorMenuButton::GetColorByCmdID(ID_FORMAT_TXTCOLOR);
+		pObj->mColorText = clr;
 
-					int nb = CFormatToolBar::GetFontSizeByCmdID (ID_CHAR_SIZE);
-					const CBCGPFontDesc* pfDesc = CFormatToolBar::GetFontByCmdID (ID_CHAR_FONT);
-					if (pfDesc)
-					{
-						LOGFONT lf;
-						pObj->mTextFont.GetLogFont(&lf);
-						if (nb!=-1)
-							lf.lfHeight = nb;
-						lf.lfCharSet = pfDesc->m_nCharSet;
-						lf.lfPitchAndFamily = pfDesc->m_nPitchAndFamily;
-						_tcscpy (lf.lfFaceName, pfDesc->m_strName);
-						pObj->SetFont(&lf);
+		int nb = CFormatToolBar::GetFontSizeByCmdID (ID_FORMAT_TXTSIZE);
+		const CBCGPFontDesc* pfDesc = CFormatToolBar::GetFontByCmdID (ID_FORMAT_TXTFONT);
+		if (pfDesc)
+		{
+			LOGFONT lf;
+			pObj->mTextFont.GetLogFont(&lf);
+			if (nb!=-1)
+				lf.lfHeight = nb;
+			lf.lfCharSet = pfDesc->m_nCharSet;
+			lf.lfPitchAndFamily = pfDesc->m_nPitchAndFamily;
+			_tcscpy (lf.lfFaceName, pfDesc->m_strName);
+			pObj->SetFont(&lf);
 
-					};
+		};
 
-				}
-				else if (pSelectObj)
-				{
-					CPoint shape = CBCGPShapeMenuButton::GetShapeByCmdID(ID_CHAR_OBJSHAPE);
-					pSelectObj->SetStyle(shape.y);
-
-				}
-				else
-				{
-					return;
-				}
-			SetFocus();
-            GetDocument()->UpdateAllViews(NULL,WM_UPDATEOBJ_MOD,pSelectObj);
-
-	//		}
-	//		break;
-	//}
+	}
+	else if (pSelectObj)
+	{
+		CPoint shape = CBCGPShapeMenuButton::GetShapeByCmdID(ID_FORMAT_OBJSHAPE);
+		COLORREF clr = CBCGPColorMenuButton::GetColorByCmdID(ID_FORMAT_OBJCOLOR);
+		pSelectObj->SetStyle(shape.y);
+		pSelectObj->SetColor(clr);
+	}
+	else
+	{
+		return;
+	}
+	SetFocus();
+	GetDocument()->UpdateAllViews(NULL,WM_UPDATEOBJ_MOD,pSelectObj);
 }
