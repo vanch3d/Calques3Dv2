@@ -7,20 +7,35 @@
 // FormatToolBar.h : header file
 //
 
+class CObject3D;
 /////////////////////////////////////////////////////////////////////////////
 // CFormatToolBar window
 
-class CFormatToolBar : public CWnd
+class CFormatToolBar : public CBCGPToolBar
 {
+	DECLARE_SERIAL(CFormatToolBar)
+
 // Construction
 public:
 	CFormatToolBar();
 
 // Attributes
 public:
+	static CBCGPToolbarFontCombo*		CreateTextFontButton ();
+	static CBCGPToolbarFontSizeCombo*	CreateTextFontSizeButton ();
+	static CBCGPColorMenuButton*		CreateTextColorButton ();
+	static CBCGPColorMenuButton*		CreateObjectColorButton ();
+	static void OnUpdateCmdUI(CObject3D *pObj);
+
+	static const CBCGPFontDesc* GetFontByCmdID (UINT uiCmdID);
+	static int		GetFontSizeByCmdID (UINT uiCmdID);
+
+private:
+	static CPalette	m_palObjectColorPicker;	// Palette for color picker
 
 // Operations
 public:
+	virtual void OnUpdateCmdUI(CFrameWnd* pTarget, BOOL bDisableIfNoHndler);
 
 // Overrides
 	// ClassWizard generated virtual function overrides
@@ -33,6 +48,8 @@ public:
 
 	// Generated message map functions
 protected:
+	virtual void OnReset ();
+
 	//{{AFX_MSG(CFormatToolBar)
 		// NOTE - the ClassWizard will add and remove member functions here.
 	//}}AFX_MSG
