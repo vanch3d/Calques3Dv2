@@ -81,8 +81,8 @@ IDB_LIST_ADDITEM        BITMAP  DISCARDABLE     "res\\list_add.bmp"
 IDB_LIST_BROWSE         BITMAP  DISCARDABLE     "res\\list_browse.bmp"
 IDB_LIST_DELITEM        BITMAP  DISCARDABLE     "res\\list_delete.bmp"
 IDB_PROJECTION          BITMAP  DISCARDABLE     "res\\project.bmp"
-IDR_TEXTPALETTE_TB      BITMAP  DISCARDABLE     "res\\text_tb.bmp"
-IDR_TEXTPALETTE_TB24    BITMAP  DISCARDABLE     "res\\text_tb24.bmp"
+IDR_FORMAT_TB           BITMAP  DISCARDABLE     "res\\text_tb.bmp"
+IDR_FORMAT_TB24         BITMAP  DISCARDABLE     "res\\text_tb24.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -271,17 +271,17 @@ BEGIN
     BUTTON      ID_PROPERTY_SORTING
 END
 
-IDR_TEXTPALETTE_TB TOOLBAR DISCARDABLE  16, 16
+IDR_FORMAT_TB TOOLBAR DISCARDABLE  16, 16
 BEGIN
-    BUTTON      ID_CHAR_OBJCOLOR
-    BUTTON      ID_CHAR_OBJSHAPE
+    BUTTON      ID_FORMAT_OBJCOLOR
+    BUTTON      ID_FORMAT_OBJSHAPE
     SEPARATOR
-    BUTTON      ID_CHAR_FONT
-    BUTTON      ID_CHAR_SIZE
-    BUTTON      ID_CHAR_TXTCOLOR
-    BUTTON      ID_CHAR_ITALIC
-    BUTTON      ID_CHAR_UNDERLINE
-    BUTTON      ID_CHAR_BOLD
+    BUTTON      ID_FORMAT_TXTFONT
+    BUTTON      ID_FORMAT_TXTSIZE
+    BUTTON      ID_FORMAT_TXTCOLOR
+    BUTTON      ID_FORMAT_ITALIC
+    BUTTON      ID_FORMAT_UNDERLINE
+    BUTTON      ID_FORMAT_BOLD
 END
 
 
@@ -1111,8 +1111,8 @@ BEGIN
         MENUITEM "Print Pre&view",              ID_FILE_PRINT_PREVIEW
         MENUITEM "P&rint Setup...",             ID_FILE_PRINT_SETUP
         MENUITEM SEPARATOR
-        MENUITEM "Pre&ferences",                ID_VIEW_CUSTOMIZE
-        MENUITEM "Options",                     ID_VIEW_OPTIONS
+        MENUITEM "C&ustomize...",               ID_VIEW_CUSTOMIZE
+        MENUITEM "Op&tions...",                 ID_VIEW_OPTIONS
         MENUITEM SEPARATOR
         MENUITEM "Recent File",                 ID_FILE_MRU_FILE1, GRAYED
         MENUITEM SEPARATOR
@@ -1356,7 +1356,8 @@ BEGIN
         MENUITEM "Print Pre&view",              ID_FILE_PRINT_PREVIEW
         MENUITEM "P&rint Setup...",             ID_FILE_PRINT_SETUP
         MENUITEM SEPARATOR
-        MENUITEM "Pre&ferences",                ID_VIEW_CUSTOMIZE
+        MENUITEM "C&ustomize...",               ID_VIEW_CUSTOMIZE
+        MENUITEM "Op&tions...",                 ID_VIEW_OPTIONS
         MENUITEM SEPARATOR
         MENUITEM "Recent File",                 ID_FILE_MRU_FILE1, GRAYED
         MENUITEM SEPARATOR
@@ -1600,7 +1601,8 @@ BEGIN
         MENUITEM "Print Pre&view",              ID_FILE_PRINT_PREVIEW
         MENUITEM "P&rint Setup...",             ID_FILE_PRINT_SETUP
         MENUITEM SEPARATOR
-        MENUITEM "Pre&ferences",                ID_VIEW_CUSTOMIZE
+        MENUITEM "C&ustomize...",               ID_VIEW_CUSTOMIZE
+        MENUITEM "Op&tions...",                 ID_VIEW_OPTIONS
         MENUITEM SEPARATOR
         MENUITEM "Recent File",                 ID_FILE_MRU_FILE1, GRAYED
         MENUITEM SEPARATOR
@@ -1690,7 +1692,8 @@ BEGIN
         MENUITEM "Print Pre&view",              ID_FILE_PRINT_PREVIEW
         MENUITEM "P&rint Setup...",             ID_FILE_PRINT_SETUP
         MENUITEM SEPARATOR
-        MENUITEM "Pre&ferences",                ID_VIEW_CUSTOMIZE
+        MENUITEM "C&ustomize...",               ID_VIEW_CUSTOMIZE
+        MENUITEM "Op&tions...",                 ID_VIEW_OPTIONS
         MENUITEM SEPARATOR
         MENUITEM "Recent File",                 ID_FILE_MRU_FILE1, GRAYED
         MENUITEM SEPARATOR
@@ -1781,7 +1784,8 @@ BEGIN
         MENUITEM "Print Pre&view",              ID_FILE_PRINT_PREVIEW
         MENUITEM "P&rint Setup...",             ID_FILE_PRINT_SETUP
         MENUITEM SEPARATOR
-        MENUITEM "Pre&ferences",                ID_VIEW_CUSTOMIZE
+        MENUITEM "C&ustomize...",               ID_VIEW_CUSTOMIZE
+        MENUITEM "Op&tions...",                 ID_VIEW_OPTIONS
         MENUITEM SEPARATOR
         MENUITEM "Recent File",                 ID_FILE_MRU_FILE1, GRAYED
         MENUITEM SEPARATOR
@@ -1939,7 +1943,8 @@ BEGIN
         MENUITEM "Print Pre&view",              ID_FILE_PRINT_PREVIEW
         MENUITEM "P&rint Setup...",             ID_FILE_PRINT_SETUP
         MENUITEM SEPARATOR
-        MENUITEM "Pre&ferences",                ID_VIEW_CUSTOMIZE
+        MENUITEM "C&ustomize...",               ID_VIEW_CUSTOMIZE
+        MENUITEM "Op&tions...",                 ID_VIEW_OPTIONS
         MENUITEM SEPARATOR
         MENUITEM "Recent File",                 ID_FILE_MRU_FILE1, GRAYED
         MENUITEM SEPARATOR
@@ -2192,7 +2197,8 @@ BEGIN
         MENUITEM "Print Pre&view",              ID_FILE_PRINT_PREVIEW
         MENUITEM "P&rint Setup...",             ID_FILE_PRINT_SETUP
         MENUITEM SEPARATOR
-        MENUITEM "Pre&ferences",                ID_VIEW_CUSTOMIZE
+        MENUITEM "C&ustomize...",               ID_VIEW_CUSTOMIZE
+        MENUITEM "Op&tions...",                 ID_VIEW_OPTIONS
         MENUITEM SEPARATOR
         MENUITEM "Recent File",                 ID_FILE_MRU_FILE1, GRAYED
         MENUITEM SEPARATOR
@@ -2283,7 +2289,7 @@ END
 
 IDR_POPUP_MEASURE MENU DISCARDABLE 
 BEGIN
-    POPUP "Measure ..."
+    POPUP "Measure"
     BEGIN
         MENUITEM "&Angle",                      ID_EXPLORATION_MEASURE_ANGLE
         MENUITEM "&Distance",                   ID_EXPLORATION_MEASURE_DISTANCE
@@ -2311,7 +2317,8 @@ BEGIN
         MENUITEM "Print Pre&view",              ID_FILE_PRINT_PREVIEW
         MENUITEM "P&rint Setup...",             ID_FILE_PRINT_SETUP
         MENUITEM SEPARATOR
-        MENUITEM "Pre&ferences",                ID_VIEW_CUSTOMIZE
+        MENUITEM "C&ustomize...",               ID_VIEW_CUSTOMIZE
+        MENUITEM "Op&tions...",                 ID_VIEW_OPTIONS
         MENUITEM SEPARATOR
         MENUITEM "Recent File",                 ID_FILE_MRU_FILE1, GRAYED
         MENUITEM SEPARATOR
@@ -2452,8 +2459,8 @@ IDR_CREDITS             CREDITS DISCARDABLE     "res\\credits.txt"
 
 STRINGTABLE PRELOAD DISCARDABLE 
 BEGIN
-    IDR_MAINFRAME           "Calques3D"
-    IDR_ABOUTDLG            "About Calques3D ..."
+    IDR_MAINFRAME           "Calques 3D"
+    IDR_ABOUTDLG            "About Calques 3D ..."
     IDR_VIEWUNIVERSE        "Universe\n\nUniverse\nCalques 3D Universe (*.c3d)\n.c3d\nCalques3D.Document\nCalques 3D Universe"
     IDR_VIEWMACRO           "Macro - Construction\n\nMacro-construction\nMacro-construction (*.m3d)\n.m3d\nCalques3D.Macros\nCalques 3D Macro-construction"
     IDR_VIEWHISTORIQUE      "History\n\nHistory\n\n\n\nHistory menu. Appears when a 'History' window is active."
@@ -2470,7 +2477,7 @@ END
 
 STRINGTABLE PRELOAD DISCARDABLE 
 BEGIN
-    AFX_IDS_APP_TITLE       "Calques3D"
+    AFX_IDS_APP_TITLE       "Calques 3D"
     AFX_IDS_IDLEMESSAGE     "For Help, press F1"
     AFX_IDS_HELPMODEMESSAGE "Select an object on which to get Help"
     AFX_IDS_OBJPROP         "Object Properties"
@@ -3138,6 +3145,12 @@ END
 STRINGTABLE DISCARDABLE 
 BEGIN
     ID_EDIT_UNDO_DUMMY      "Undo this action"
+    ID_EDIT_UNDO_MORE       "More ..."
+    ID_VIEW_OBJECT          "Show or hide the objects bar\nToggle Objects"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
     ID_SESSION_DEF          "< Default Session >"
 END
 
@@ -3196,12 +3209,7 @@ STRINGTABLE DISCARDABLE
 BEGIN
     IDR_PROPERTY_TB         "Property"
     IDR_DEPENDENT_TB        "Dependent"
-    IDR_TEXTPALETTE_TB      "Format"
-END
-
-STRINGTABLE DISCARDABLE 
-BEGIN
-    ID_VIEW_OBJECT          "Show or hide the objects bar\nToggle Objects"
+    IDR_FORMAT_TB           "Format"
 END
 
 STRINGTABLE DISCARDABLE 
@@ -3397,20 +3405,26 @@ END
 
 STRINGTABLE DISCARDABLE 
 BEGIN
-    ID_CHAR_OBJCOLOR        "Change the color of the selected object\nObject Color"
-    ID_CHAR_OBJSHAPE        "Change the shape of the selected object\nObject Shape"
-    ID_CHAR_FONT            "Change the font of the selected text\nFont"
-    ID_CHAR_SIZE            "Changes the font size of the selected text\nFont Size"
-    ID_CHAR_TXTCOLOR        "Change the color of the selected text\nText Color"
-    ID_CHAR_BOLD            "Make the selected text bold (toggle)\nBold"
-    ID_CHAR_ITALIC          "Make the selected text italic (toggle)\nItalic"
-    ID_CHAR_UNDERLINE       "Format the selected text with a continuous underline (toggle)\nUnderline"
+    ID_FORMAT_OBJCOLOR      "Change the color of the selected object\nObject Color"
+    ID_FORMAT_OBJSHAPE      "Change the shape of the selected object\nObject Shape"
+    ID_FORMAT_TXTFONT       "Change the font of the selected text\nFont"
+    ID_FORMAT_TXTSIZE       "Changes the font size of the selected text\nFont Size"
+    ID_FORMAT_TXTCOLOR      "Change the color of the selected text\nText Color"
+    ID_FORMAT_BOLD          "Make the selected text bold (toggle)\nBold"
+    ID_FORMAT_ITALIC        "Make the selected text italic (toggle)\nItalic"
+    ID_FORMAT_UNDERLINE     "Format the selected text with a continuous underline (toggle)\nUnderline"
 END
 
 STRINGTABLE DISCARDABLE 
 BEGIN
     ID_VISUALISATION_POV_VSLIDER 
                             "Rotate the point of view vertically\nRotate View"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_NEWCOMMENT          "new comment ..."
+    IDS_MACROS              "Macros"
 END
 
 #endif    // English (U.K.) resources
