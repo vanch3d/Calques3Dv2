@@ -103,7 +103,7 @@ public:
 	virtual void LoadCustomState ();
 	virtual void SaveCustomState ();
 
-	static CString	g_strRegistryBase;
+	static CString	g_strBCGPRegBase;
 	BOOL			m_bHiColorIcons;
 
 // Overrides

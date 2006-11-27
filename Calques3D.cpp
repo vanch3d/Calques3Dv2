@@ -35,17 +35,17 @@ static char THIS_FILE[] = __FILE__;
 //#define OPENDLG_BCG
 
 // Registry keys used for recovering customized aspects of Calques 3D
-#define REG_SETTINGS	_T("Settings")
-#define REG_SESSION		_T("Session")
-#define REG_BUILD		_T("BuildDate")
-#define REG_PROFILE		_T("Profile")
+#define REG_KEY			_T("CREDIT")			// The main key for the registry
+#define REG_SETTINGS	_T("Settings")			// Key for the preferences
+#define REG_SESSION		_T("Session")			// Key for the session
+#define REG_PROFILE		_T("Profile")			
 #define REG_PROFILEDES	_T("Description")
 #define REG_VERMAJOR	_T("VersionMajor")
 #define REG_VERMINOR	_T("VersionMinor")
 #define REG_VERREVIS	_T("VersionRevision")
 
 // Specify the base item for the registry
-CString CCalques3DApp::g_strRegistryBase = REG_SETTINGS;
+CString CCalques3DApp::g_strBCGPRegBase = _T("BCGWorkspace");
 
 //////////////////////////////////////////////////////////////////////////////
 /// The one and only CCalques3DApp object
@@ -136,57 +136,47 @@ BOOL CCalques3DApp::InitInstance()
 
 	//------------------------------------------------------------
 	// Load the registry information
-	// \todo SetRegistryKey() - Modify this string to be something more appropriate
 	//------------------------------------------------------------
-	SetRegistryKey(_T("CREDIT"));
+	SetRegistryKey(REG_KEY);
+	g_strBCGPRegBase = GetRegistryBase();
 
 	// Load standard INI file options (including MRU)
 	LoadStdProfileSettings(6);  
 
-	SetRegistryBase();
-	//CString mstr1 = GetRegSectionPath();
+	// For compatibility reasons, check the build version from the registry
+	SetRegistryBase(NULL);
 
-	CProjectRCVersion applVersion;
 	int major=-1,minor=-1,revision=-1;
+	CProjectRCVersion applVersion;
 	applVersion.GetProductVersion(major,minor,revision);
 
-	int vmajor = GetSectionInt(REG_SETTINGS,REG_VERMAJOR,-1);
-	int vminor = GetSectionInt(REG_SETTINGS,REG_VERMINOR,-1);
-	int vrev = GetSectionInt(REG_SETTINGS,REG_VERREVIS,-1);
+	int vmajor = GetInt(REG_VERMAJOR,-1);
+	int vminor = GetInt(REG_VERMINOR,-1);
+	int vrev = GetInt(REG_VERREVIS,-1);
 
 	if (vmajor==-1 || (vmajor!=major || vminor!=minor))
 	{
-		MessageBox(NULL,
+		if (IsStateExists(g_strBCGPRegBase))
+		{
+			MessageBox(NULL,
 				_T("Due to major modifications in Calques 3D, the configuration saved\n"
 				   "during the last session cannot be retrieved by this new version.\n"
 				   "Calques 3D will be initialised with its default configuration.\n"
 				   "This problem will not occur anymore after this launch."),
 				_T("Warning !"),MB_ICONWARNING|MB_OK);
-		CleanState(CCalques3DApp::g_strRegistryBase);
-		WriteInt(REG_VERMAJOR,major);
-		WriteInt(REG_VERMINOR,minor);
-		WriteInt(REG_VERREVIS,revision);
+		}
+		CleanState(g_strBCGPRegBase);
 	}
+	SetRegistryBase(NULL);
+	WriteInt(REG_VERMAJOR,major);
+	WriteInt(REG_VERMINOR,minor);
+	WriteInt(REG_VERREVIS,revision);
 
-/*	// For compatibility reasons, check the build date from the registry
-	CString strRegDate = GetString(REG_BUILD, _T(""));
-	CString strBuildDate = __DATE__;
-	if (!strRegDate.IsEmpty() && strRegDate != strBuildDate)
-	{
-		MessageBox(NULL,
-				_T("Due to major modifications in Calques 3D, the configuration saved\n"
-				   "during the last session cannot be retrieved by this new version.\n"
-				   "Calques 3D will be initialised with its default configuration.\n"
-				   "This problem will not occur anymore after this launch."),
-				_T("Warning !"),MB_ICONWARNING|MB_OK);
-		WriteString(REG_BUILD,strBuildDate);
-		CleanState(CCalques3DApp::g_strRegistryBase);
-	}*/
 
 	// If appropriate, load the information form the specify user profile
 	SetRegistryBase (REG_SESSION);
 	TPref::strProfile = GetSectionString(REG_PROFILE,REG_PROFILE, TPref::strProfile);
-	SetRegistryBase (CCalques3DApp::g_strRegistryBase);
+	SetRegistryBase (g_strBCGPRegBase);
 	if (!TPref::strProfile.IsEmpty())
 	{
 		// All registry read/write operations will be produced via CBCGXMLSettings gateway:
@@ -513,18 +503,17 @@ void CCalques3DApp::LoadCustomState ()
 	//TPref::strProfile = GetSectionString(REG_PROFILE,REG_PROFILE, TPref::strProfile);
 	//TPref::strProfileDesc = GetSectionString(REG_PROFILE,REG_PROFILEDES, TPref::strProfileDesc);
 
-	//SetRegistryBase (CCalques3DApp::g_strRegistryBase);
+	SetRegistryBase (REG_SETTINGS);
 	TPref::TUniv.nDefRep = GetSectionInt(_T("Universe"),_T("DefRep"), TPref::TUniv.nDefRep);
 	TPref::TUniv.bMagnet = GetSectionInt(_T("Universe"),_T("Magnet"), TPref::TUniv.bMagnet);
 	TPref::TUniv.bSynchron = GetSectionInt(_T("Universe"),_T("Synchron"), TPref::TUniv.bSynchron);
 	TPref::GrayedHidden = GetSectionInt(_T("Universe"),_T("GrayHidden"), TPref::GrayedHidden);
 	TPref::bMacroLoading = GetSectionInt(_T("Macro"),_T("UserLoading"), TPref::bMacroLoading);
 	BOOL brest = GetSectionObject(_T("Macro"),_T("UserMacros"),TPref::TMacroList);
-	//CString mstr = TPref::strProfile ;
-	//TPref::strProfile = mstr;
 
 	// Call the default initialisation of the preferences
 	TPref::DefaultInit();
+	SetRegistryBase (g_strBCGPRegBase);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -537,14 +526,11 @@ void CCalques3DApp::SaveCustomState ()
 	//WriteSectionString(REG_PROFILE,REG_PROFILE, TPref::strProfile);
 	//WriteSectionString(REG_PROFILE,REG_PROFILEDES, TPref::strProfileDesc);
 
-	SetRegistryBase (CCalques3DApp::g_strRegistryBase);
+	SetRegistryBase (REG_SETTINGS);
 	WriteSectionInt(_T("Universe"),_T("DefRep"), TPref::TUniv.nDefRep);
 	WriteSectionInt(_T("Universe"),_T("Magnet"), TPref::TUniv.bMagnet);
 	WriteSectionInt(_T("Universe"),_T("Synchron"), TPref::TUniv.bSynchron);
 	WriteSectionInt(_T("Universe"),_T("GrayHidden"), TPref::GrayedHidden);
-	//WriteInt (_T("GradientCaption"), CBCGSizingControlBar::IsCaptionGradient ());
-	//WriteInt (_T("TabFlatBorders"), m_bTabFlatBorders);
-
 	WriteSectionInt(_T("Macro"),_T("UserLoading"), TPref::bMacroLoading);
 	WriteSectionObject(_T("Macro"),_T("UserMacros"),TPref::TMacroList);
 	POSITION pos = TPref::TMacroList.GetHeadPosition();
@@ -554,11 +540,10 @@ void CCalques3DApp::SaveCustomState ()
 	}
 	TPref::TMacroList.RemoveAll();
 
-	//CBCGRegistrySP::SetRuntimeClass (RUNTIME_CLASS (CBCGRegistry));
 	SetRegistryBase (REG_SESSION);
 	WriteSectionString(REG_PROFILE,REG_PROFILE, TPref::strProfile);
 	WriteSectionString(REG_PROFILE,REG_PROFILEDES, TPref::strProfileDesc);
-	SetRegistryBase (CCalques3DApp::g_strRegistryBase);
+	SetRegistryBase (g_strBCGPRegBase);
 }
 
 
