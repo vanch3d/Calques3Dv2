@@ -23,6 +23,8 @@
 #include "objects\Text3D.h"
 
 #include "MainFrm.h"
+#include "FormatToolBar.h"
+
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -1392,6 +1394,7 @@ void CCalques3DDoc::UpdateAllViews(CView* pSender, LPARAM lHint, CObject* pHint)
 			{
 		        pWnd->GetPropertyBar()->AddProperties(pObj);
 		        pWnd->GetDependentBar()->AddProperties(pObj);
+				CFormatToolBar::OnUpdateCmdUI(pObj);
 			}
 			else if (pWnd)
 			{
