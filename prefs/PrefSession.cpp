@@ -102,18 +102,18 @@ void CPrefSession::OnSaveAs()
 		//theApp.CleanState();
 		//exit(EXIT_SUCCESS);
 		//theApp.LoadState(pObj);
-		CString strCommandLine;
-		CString strSettingsPath = theApp.GetRegSectionPath ();
-		// to be on the safe side and do not export the entire registry :)
-		if (strSettingsPath.Find (CCalques3DApp::g_strRegistryBase) >= 0)
-		{
-			int nb = strSettingsPath.GetLength();
-			strSettingsPath.Delete(nb-1);
-			//strCommandLine.Format (_T ("regedit.exe /s /E \"%s.cfg\" \"HKEY_CURRENT_USER\\%s\""), 
-			//						strProfileName, strSettingsPath);
-
-			//theApp.ImportExportRegFile (strCommandLine);
-		}
+		//CString strCommandLine;
+		//CString strSettingsPath = theApp.GetRegSectionPath ();
+		//// to be on the safe side and do not export the entire registry :)
+		//if (strSettingsPath.Find (CCalques3DApp::g_strRegistryBase) >= 0)
+		//{
+		//	int nb = strSettingsPath.GetLength();
+		//	strSettingsPath.Delete(nb-1);
+		//	//strCommandLine.Format (_T ("regedit.exe /s /E \"%s.cfg\" \"HKEY_CURRENT_USER\\%s\""), 
+		//	//						strProfileName, strSettingsPath);
+		//
+		//	//theApp.ImportExportRegFile (strCommandLine);
+		//}
 		UpdateProfileList();
 	}
 }

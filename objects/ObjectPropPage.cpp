@@ -542,6 +542,7 @@ void CObjectTextPage::DoDataExchange(CDataExchange* pDX)
 {
 	CPropertyPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CObjectTextPage)
+//	DDX_Control(pDX, IDC_TXT_PALETTE, m_wndPaletteBarLocation);
 	DDX_Control(pDX, IDC_TXT_EQUATION, m_cEquation);
 	DDX_Text(pDX, IDC_TXT_EDIT, m_strText);
 	DDX_Text(pDX, IDC_TXT_EQUATION, m_strEqu);
@@ -606,6 +607,8 @@ END_MESSAGE_MAP()
 
 BOOL CObjectTextPage::OnInitDialog() 
 {
+	BOOL bRet = CPropertyPage::OnInitDialog();
+
 	CWnd *pWnd = GetDlgItem(IDC_TXT_EDIT);
 	if (pWnd)
 	{
@@ -625,6 +628,7 @@ BOOL CObjectTextPage::OnInitDialog()
 		pWnd->EnableWindow(bRet);
 		pWnd->ShowWindow(bRet ? SW_SHOW : SW_HIDE);
 	}
+
 
 	m_menu.CreatePopupMenu();
 	//m_menu.LoadMenu (IDR_POPUP_DEFAULT);
@@ -663,7 +667,8 @@ BOOL CObjectTextPage::OnInitDialog()
 		pWnd->ShowWindow((m_bMod==TMathOp3DClass) ? SW_SHOW : SW_HIDE);
 	}
 
-	return CPropertyPage::OnInitDialog();
+
+	return bRet;
 }
 
 
