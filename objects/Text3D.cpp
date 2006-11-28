@@ -817,8 +817,9 @@ void CEquation3D::DrawMathPad(CDC* pDC)
 
     COLORREF oldC = pDC->SetTextColor(COLOR_VAR);
     pDC->DrawText(nstr,rName,dwFormat);
-    pDC->SetTextColor(oldC);
+	pDC->SetTextColor(mColorText);
     pDC->DrawText(mstr,rEqu,dwFormat);
+    pDC->SetTextColor(oldC);
 
     CPen pLine(PS_SOLID,1,COLOR_VAR);
     CPen *oldP = pDC->SelectObject(&pLine);
@@ -1138,8 +1139,9 @@ void CDistance3D::DrawMathPad(CDC* pDC)
 
     COLORREF oldC = pDC->SetTextColor(COLOR_VAR);
     pDC->DrawText(nstr,rName,dwFormat);
-    pDC->SetTextColor(oldC);
+	pDC->SetTextColor(mColorText);
     pDC->DrawText(mstr,rEqu,dwFormat);
+    pDC->SetTextColor(oldC);
 
 //  if ((pSource && pSource->IsSelected()) ||
 //      (pSource2 && pSource2->IsSelected()))
@@ -1538,8 +1540,9 @@ void CAngle3D::DrawMathPad(CDC* pDC)
 
     COLORREF oldC = pDC->SetTextColor(COLOR_VAR);
     pDC->DrawText(nstr,rName,dwFormat);
-    pDC->SetTextColor(oldC);
+	pDC->SetTextColor(mColorText);
     pDC->DrawText(mstr,rEqu,dwFormat);
+    pDC->SetTextColor(oldC);
 
     CPen mPen(PS_SOLID,1,COLOR_VAR);
     CPen *oldP = pDC->SelectObject(&mPen);
@@ -1843,8 +1846,9 @@ void CVolume3D::DrawMathPad(CDC* pDC)
 
     COLORREF oldC = pDC->SetTextColor(COLOR_VAR);
     pDC->DrawText(nstr,rName,dwFormat);
-    pDC->SetTextColor(oldC);
+	pDC->SetTextColor(mColorText);
     pDC->DrawText(mstr,rEqu,dwFormat);
+    pDC->SetTextColor(oldC);
 
     //if (m_pSource.GetAt(0)->IsSelected())
     if (IsSelected())
@@ -2025,8 +2029,9 @@ void CArea3D::DrawMathPad(CDC* pDC)
 
     COLORREF oldC = pDC->SetTextColor(COLOR_VAR);
     pDC->DrawText(nstr,rName,dwFormat);
-    pDC->SetTextColor(oldC);
+	pDC->SetTextColor(mColorText);
     pDC->DrawText(mstr,rEqu,dwFormat);
+    pDC->SetTextColor(oldC);
 
     if (m_pSource.GetAt(0)->IsSelected() || IsSelected())
     {
@@ -2199,7 +2204,9 @@ void CComment3D::DrawMathPad(CDC* pDC)
 
     rName.OffsetRect(rActZone.TopLeft());
 
+	COLORREF oldC = pDC->SetTextColor(mColorText);
     pDC->DrawText(mstr,rName,dwFormat);
+	pDC->SetTextColor(oldC);
 
     rActZone = rName;
 
@@ -2499,8 +2506,9 @@ void CMathOp3D::DrawMathPad(CDC* pDC)
 
     COLORREF oldC = pDC->SetTextColor(COLOR_VAR);
     pDC->DrawText(mstr,rName,dwFormat);
-    pDC->SetTextColor(oldC);
+	pDC->SetTextColor(mColorText);
     pDC->DrawText(nstr,rEqu,dwFormat);
+    pDC->SetTextColor(oldC);
 
     if (IsSelected())
     {

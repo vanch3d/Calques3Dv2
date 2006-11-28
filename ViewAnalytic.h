@@ -84,6 +84,8 @@ protected:
 	afx_msg void OnUpdateProperty(CCmdUI* pCmdUI);
 	//}}AFX_MSG
 	afx_msg void OnFilePrintPreview();
+	afx_msg void OnUpdateFormat(CCmdUI* pCmdUI);
+	afx_msg void OnFormat(UINT);
 	LRESULT OnUpdateObjTooltip(WPARAM wp, LPARAM lp=0);
 	DECLARE_MESSAGE_MAP()
 };

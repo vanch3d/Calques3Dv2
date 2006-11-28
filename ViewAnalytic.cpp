@@ -14,6 +14,7 @@
 #include "MemDC.h"
 
 #include "tasks\SuppressDlg.h"
+#include "FormatToolBar.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -63,6 +64,11 @@ BEGIN_MESSAGE_MAP(CViewAnalytic, CScrollView)
 	ON_COMMAND(ID_FILE_PRINT, CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, OnFilePrintPreview)
+
+    ON_UPDATE_COMMAND_UI_RANGE(ID_FORMAT_TXTFONT, ID_FORMAT_UNDERLINE, OnUpdateFormat)
+    ON_COMMAND_RANGE(ID_FORMAT_TXTFONT, ID_FORMAT_UNDERLINE, OnFormat)
+	ON_CBN_SELENDOK(ID_FORMAT_TXTFONT, OnFormat)
+	ON_CBN_SELENDOK(ID_FORMAT_TXTSIZE, OnFormat)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -428,13 +434,11 @@ void CViewAnalytic::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 	switch (lHint)
 	{
 	case WM_UPDATEOBJ_ADD:	// Object Added
-		break;
 	case WM_UPDATEOBJ_SEL:	// Object Selected
-		break;
 	case WM_UPDATEOBJ_MOV:	// Object Moved
 	case WM_UPDATEOBJ_DEL:	// Object Deleted
-		break;
 	case WM_UPDATEOBJ_MOD:	// Object Modified
+		break;
 	default:
 		bRedraw = FALSE;
 		break;
@@ -604,4 +608,54 @@ BOOL CViewAnalytic::PreTranslateMessage(MSG* pMsg)
 		myToolTip.RelayEvent(pMsg);
 	
 	return CScrollView::PreTranslateMessage(pMsg);
+}
+
+void CViewAnalytic::OnUpdateFormat(CCmdUI* pCmdUI)
+{
+	BOOL bEnable = FALSE;
+    switch (pCmdUI->m_nID)
+    {
+		case ID_FORMAT_TXTFONT:
+		case ID_FORMAT_TXTCOLOR:
+		case ID_FORMAT_TXTSIZE:
+			{
+				CObject3D *pObj= DYNAMIC_DOWNCAST(CEquation3D,m_pSelObject);
+				bEnable = (pObj!=NULL);
+			}
+			break;
+	}
+    pCmdUI->Enable(bEnable);
+
+}
+
+void CViewAnalytic::OnFormat(UINT m_nID)
+{
+	CEquation3D *pObj= DYNAMIC_DOWNCAST(CEquation3D,m_pSelObject);
+	if (pObj)
+	{
+		COLORREF clr = CBCGPColorMenuButton::GetColorByCmdID(ID_FORMAT_TXTCOLOR);
+		pObj->mColorText = clr;
+
+		int nb = CFormatToolBar::GetFontSizeByCmdID (ID_FORMAT_TXTSIZE);
+		const CBCGPFontDesc* pfDesc = CFormatToolBar::GetFontByCmdID (ID_FORMAT_TXTFONT);
+		if (pfDesc)
+		{
+			LOGFONT lf;
+			pObj->mTextFont.GetLogFont(&lf);
+			if (nb!=-1)
+				lf.lfHeight = nb;
+			lf.lfCharSet = pfDesc->m_nCharSet;
+			lf.lfPitchAndFamily = pfDesc->m_nPitchAndFamily;
+			_tcscpy (lf.lfFaceName, pfDesc->m_strName);
+			pObj->SetFont(&lf);
+
+		};
+
+	}
+	else
+	{
+		return;
+	}
+	SetFocus();
+	GetDocument()->UpdateAllViews(NULL,WM_UPDATEOBJ_MOD,m_pSelObject);
 }
