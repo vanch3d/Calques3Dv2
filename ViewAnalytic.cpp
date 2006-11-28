@@ -8,6 +8,8 @@
 #include "Prefs\Prefs.h"
 
 #include "objects\Text3D.h"
+#include "objects\EditLabel.h"
+#include "objects\InPlaceEditor.h"
 
 #include "ViewAnalytic.h"
 
@@ -30,6 +32,8 @@ IMPLEMENT_DYNCREATE(CViewAnalytic, CScrollView)
 CViewAnalytic::CViewAnalytic()
 {
 	m_pSelObject = NULL;
+	m_pDialog = NULL;
+	m_pEdit = NULL;
 	m_bSelection = FALSE;
 	m_rSelect.SetRectEmpty();
 	m_rViewSize.SetRect(0,0,800,600);
@@ -52,14 +56,16 @@ BEGIN_MESSAGE_MAP(CViewAnalytic, CScrollView)
 	ON_COMMAND(ID_EDIT_COPY, OnEditCopy)
 	ON_COMMAND(ID_EDIT_CUT, OnEditCut)
 	ON_UPDATE_COMMAND_UI(ID_EDIT_CUT, OnUpdateEditCut)
+	ON_UPDATE_COMMAND_UI(ID_EDIT_UNDO, OnUpdateEditUndo)
 	ON_COMMAND(ID_EDIT_UNDO, OnEditUndo)
-//	ON_UPDATE_COMMAND_UI(ID_EDIT_UNDO, OnUpdateEditUndo)
 	ON_UPDATE_COMMAND_UI(ID_MATHPAD_ADDCOMMENT, OnUpdateAddComment)
-	ON_UPDATE_COMMAND_UI(ID_MATHPAD_ADDEQUATION, OnUpdateAddComment)
 	ON_COMMAND(ID_MATHPAD_ADDCOMMENT, OnAddComment)
 	ON_COMMAND(ID_MATHPAD_ADDEQUATION, OnAddEquation)
 	ON_COMMAND(ID_HISTORY_PROPERTY, OnProperty)
 	ON_UPDATE_COMMAND_UI(ID_HISTORY_PROPERTY, OnUpdateProperty)
+	ON_WM_MOUSEACTIVATE()
+	ON_UPDATE_COMMAND_UI(ID_MATHPAD_ADDEQUATION, OnUpdateAddComment)
+	ON_WM_CONTEXTMENU()
 	//}}AFX_MSG_MAP
 	ON_COMMAND(ID_FILE_PRINT, CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, CView::OnFilePrint)
@@ -88,6 +94,8 @@ void CViewAnalytic::OnInitialUpdate()
 	//sizeTotal.cx = sizeTotal.cy = 100;
 	
 	SetScrollSizes(MM_TEXT, sizeTotal);
+
+	m_oldP = CPoint(0,0);
 }
 
 
@@ -301,7 +309,8 @@ void CViewAnalytic::OnLButtonDown(UINT nFlags, CPoint point)
 		//m_bSelection = TRUE;
 		m_ptSelStart = point;
 	}
-	CScrollView::OnLButtonDown(nFlags, point);
+	//if (m_pEdit==NULL || m_pEdit->GetSafeHwnd()==NULL)
+		CScrollView::OnLButtonDown(nFlags, point);
 }
 
 void CViewAnalytic::OnLButtonUp(UINT nFlags, CPoint point) 
@@ -330,7 +339,8 @@ void CViewAnalytic::OnLButtonUp(UINT nFlags, CPoint point)
 		}
 	}
 	
-	CScrollView::OnLButtonUp(nFlags, point);
+	//if (m_pEdit==NULL || m_pEdit->GetSafeHwnd()==NULL)
+		CScrollView::OnLButtonUp(nFlags, point);
 }
 
 void CViewAnalytic::OnMouseMove(UINT nFlags, CPoint point) 
@@ -381,6 +391,7 @@ void CViewAnalytic::OnMouseMove(UINT nFlags, CPoint point)
 			OnUpdateObjTooltip(NULL,FALSE);
 		}
 	}
+	//if (m_pEdit==NULL || m_pEdit->GetSafeHwnd()==NULL)
 	CScrollView::OnMouseMove(nFlags, point);
 }
 
@@ -411,6 +422,7 @@ LRESULT CViewAnalytic::OnUpdateObjTooltip(WPARAM wp, LPARAM lp)
 void CViewAnalytic::OnLButtonDblClk(UINT nFlags, CPoint point) 
 {
 	// TODO: Add your message handler code here and/or call default
+
 	CClientDC dc(this);
 	OnPrepareDC(&dc);
 	dc.DPtoLP(&point);
@@ -420,7 +432,27 @@ void CViewAnalytic::OnLButtonDblClk(UINT nFlags, CPoint point)
 		CObject3D *pObj = m_pSelObject->HitTest(point,TText3DClass);
 		if (pObj && pObj==m_pSelObject)
 		{
-			OnProperty();
+			//OnProperty();
+			//if (m_pEdit) delete m_pEdit;
+			OnUpdateObjTooltip(NULL,FALSE);
+			SetRedraw(FALSE);
+
+			//if (m_pDialog) delete m_pDialog;
+			//m_pDialog = new CInPlaceEditor(this);
+			//m_pDialog->ShowWindow(SW_SHOW);
+		//			m_pDialog->SetFocus();
+	
+			m_pEdit = new CEditLabel(GetParent(),m_pSelObject,&(GetDocument()->m_cObjectSet));
+			m_pEdit->Invalidate(TRUE);
+			m_pEdit->SetFocus();
+			//SendMessage(WM_SIZE,SIZE_RESTORED,MAKEWORD(20,30));
+			CRect tt;
+			GetParent()->GetWindowRect(&tt);
+			GetParent()->SetWindowPos(NULL,0,0,tt.Width(),tt.Height()+1,SWP_NOACTIVATE|SWP_NOMOVE);
+			GetParent()->SetWindowPos(NULL,0,0,tt.Width(),tt.Height(),SWP_NOACTIVATE|SWP_NOMOVE);
+			SetRedraw(TRUE);
+			return;
+			
 		}
 	}
 	
@@ -559,11 +591,14 @@ void CViewAnalytic::OnEditUndo()
 
 void CViewAnalytic::OnAddComment() 
 {
-	// TODO: Add your command handler code here
+	CPoint point = m_oldP;
+	ScreenToClient(&point);
+
 	CString strComment;
 	strComment.LoadString(IDS_NEWCOMMENT);
 	CComment3D* pObj = new CComment3D(strComment);
-
+	
+	pObj->rActZone.OffsetRect(point.x,point.y);
 	if (GetDocument()->AddObject(pObj))
 	{
 		GetDocument()->UpdateAllViews(NULL,WM_UPDATEOBJ_ADD,pObj);
@@ -575,9 +610,12 @@ void CViewAnalytic::OnAddComment()
 
 void CViewAnalytic::OnAddEquation() 
 {
+	CPoint point = m_oldP;
+	ScreenToClient(&point);
+
 	// TODO: Add your command handler code here
 	CMathOp3D* pObj = new CMathOp3D(_T("1+1"));
-
+	pObj->rActZone.OffsetRect(point.x,point.y);
 	if (GetDocument()->AddObject(pObj))
 	{
 		GetDocument()->UpdateAllViews(NULL,WM_UPDATEOBJ_ADD,pObj);
@@ -658,4 +696,17 @@ void CViewAnalytic::OnFormat(UINT m_nID)
 	}
 	SetFocus();
 	GetDocument()->UpdateAllViews(NULL,WM_UPDATEOBJ_MOD,m_pSelObject);
+}
+
+int CViewAnalytic::OnMouseActivate(CWnd* pDesktopWnd, UINT nHitTest, UINT message) 
+{
+	// TODO: Add your message handler code here and/or call default
+
+	return CScrollView::OnMouseActivate(pDesktopWnd, nHitTest, message);
+}
+
+void CViewAnalytic::OnContextMenu(CWnd* pWnd, CPoint point) 
+{
+	m_oldP = point;
+    theApp.ShowPopupMenu (IDR_POPUP_MATHPAD, point, pWnd);
 }
