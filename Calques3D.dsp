@@ -1012,6 +1012,10 @@ SOURCE=.\res\Point.cur
 # End Source File
 # Begin Source File
 
+SOURCE=.\res\prefc3dicons.bmp
+# End Source File
+# Begin Source File
+
 SOURCE=.\res\preficons.bmp
 # End Source File
 # Begin Source File
