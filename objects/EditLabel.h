@@ -7,6 +7,8 @@
 // EditLabel.h : header file
 //
 
+class CObject3D;
+class CxObject3DSet;
 /////////////////////////////////////////////////////////////////////////////
 // CEditLabel window
 
@@ -14,17 +16,27 @@ class CEditLabel : public CEdit
 {
 // Construction
 public:
-	CEditLabel();
+	CEditLabel(CWnd* pParent,CObject3D* pObj,CxObject3DSet* pSet);
 
 // Attributes
 public:
-
+    CRect   m_Rect;
+    CRect   m_InitRect;
+	CObject3D*		m_pObj;
+	CxObject3DSet*	m_pSet;
+	CMenu	m_pPopup;
 // Operations
 public:
+     void EndEdit();
 
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CEditLabel)
+	public:
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
+	virtual BOOL OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo);
+	protected:
+	virtual void PostNcDestroy();
 	//}}AFX_VIRTUAL
 
 // Implementation
@@ -34,7 +46,12 @@ public:
 	// Generated message map functions
 protected:
 	//{{AFX_MSG(CEditLabel)
-		// NOTE - the ClassWizard will add and remove member functions here.
+	afx_msg void OnKillFocus(CWnd* pNewWnd);
+	afx_msg UINT OnGetDlgCode();
+	afx_msg void OnChar(UINT nChar, UINT nRepCnt, UINT nFlags);
+	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
+	afx_msg void OnEditCut();
+	afx_msg void OnUpdateEditCut(CCmdUI* pCmdUI);
 	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()
