@@ -687,6 +687,7 @@ int CObject3D::SetProperties(CxObject3DSet *pSet)
 
     //CHelpPrSheet pSheet("Object Properties");
     CHelpPrSheet pSheet(AFX_IDS_OBJPROP);
+	pSheet.m_psh.dwFlags |= PSH_NOAPPLYNOW;
     CObjectPropPage pPage;
     CObjectInfoPage pPage2;
     CObjectDepPage pPage3;
