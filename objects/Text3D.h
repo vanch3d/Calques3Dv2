@@ -37,10 +37,13 @@ public:
     virtual UINT GetHelpID() const { return IDS_HELP_TEXT;};
     virtual UINT GetDefID() const { return IDS_DEF_TEXT;};
 
+	virtual BOOL IsMultiLine() { return FALSE;};
+
     virtual BOOL IsInActiveArea(CPoint);
     virtual CRgn* InvalideRect();
     virtual int SetProperties(CxObject3DSet *pSet=NULL);
     virtual CString GetText();
+    virtual void SetText(CString txt);
 
     virtual void SetFont(LOGFONT *pLogFont);
 
@@ -268,6 +271,7 @@ public:
 
     virtual DWORD isA() const { return TCComment3DClass; }
     virtual CString GetText();
+	virtual BOOL IsMultiLine() { return TRUE;};
 
     virtual void Serialize( CArchive& ar );
     virtual int SetProperties(CxObject3DSet *pSet=NULL);
@@ -311,6 +315,7 @@ public:
 
     virtual DWORD isA() const { return TMathOp3DClass; }
     virtual CString GetText();
+    virtual void SetText(CString txt);
     virtual void Draw(CDC*,CVisualParam *vp,BOOL bSm=FALSE);
     virtual void DrawMathPad(CDC* pDC);
     virtual int SetProperties(CxObject3DSet *pSet=NULL);
