@@ -343,6 +343,7 @@ void CViewUniv::OnInitialUpdate()
         m_wndToolTip.AddTool(this);
         m_wndToolTip.SetDelayTime(TTDT_INITIAL,100);
         m_wndToolTip.SetDelayTime(TTDT_RESHOW,100);
+        m_wndToolTip.Activate(FALSE);
 
         int r = (int)(GetVisualParam()->ProjParam.phi - 180 -TPref::TUniv.sDefParam.phi);
         r = (r < 0) ? r + 360 : ((r > 360) ? r-360 : r);
@@ -397,10 +398,11 @@ BOOL CViewUniv::OnToolTipText(UINT nID, NMHDR* pNMHDR, LRESULT* pResult)
 
 BOOL CViewUniv::PreTranslateMessage(MSG* pMsg)
 {
-    if(pMsg->message== WM_LBUTTONDOWN ||
-        pMsg->message== WM_LBUTTONUP ||
-        pMsg->message== WM_MOUSEMOVE)
-        m_wndToolTip.RelayEvent(pMsg);
+//	if (IsWindowActivated())
+	    if(pMsg->message== WM_LBUTTONDOWN ||
+		    pMsg->message== WM_LBUTTONUP ||
+			pMsg->message== WM_MOUSEMOVE)
+				m_wndToolTip.RelayEvent(pMsg);
 
 
     return CView::PreTranslateMessage(pMsg);
@@ -1006,10 +1008,6 @@ void CViewUniv::OnMouseMove(UINT nFlags, CPoint point)
 
 LRESULT CViewUniv::OnUpdateObjTooltip(WPARAM pObjSet, LPARAM bShowToolTip)
 {
-
-    //  CWnd* pMessageBar = GetMessageBar();
-    //  pMessageBar->SetWindowText(lpsz);
-
     if (!bShowToolTip|| pObjSet==NULL)
     {
         m_wndToolTip.Activate(FALSE);
