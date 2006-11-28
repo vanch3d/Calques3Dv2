@@ -127,6 +127,12 @@ CString CText3D::GetText()
     return mStrText;
 }
 
+void CText3D::SetText(CString txt)
+{
+	mStrText = txt;
+}
+
+
 int CText3D::SetProperties(CxObject3DSet *pSet)
 {
     CString mstr = GetObjectName();
@@ -2089,11 +2095,13 @@ CComment3D::CComment3D(): CEquation3D()
 CComment3D::CComment3D(CString mstr): CEquation3D()
 {
     m_strComment  = mstr;
+	mStrText = mstr;
 }
 
 CComment3D::CComment3D(const CObject3D &src): CEquation3D(src)
 {
     m_strComment = ((CComment3D&)src).m_strComment;
+    mStrText = ((CComment3D&)src).mStrText;
 }
 
 CComment3D::~CComment3D()
@@ -2102,7 +2110,7 @@ CComment3D::~CComment3D()
 
 CString CComment3D::GetText()
 {
-    return m_strComment;
+    return mStrText;
 }
 
 void CComment3D::Serialize( CArchive& ar )
@@ -2290,6 +2298,12 @@ CString CMathOp3D::GetText()
 {
     return m_strComment;//CAngle3D::GetText();
 }
+
+void CMathOp3D::SetText(CString txt)
+{
+	m_strComment = txt;
+}
+
 
 void CMathOp3D::Serialize( CArchive& ar )
 {
