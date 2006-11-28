@@ -30,23 +30,22 @@ static const DWORD dwBCGResHelpIDs [] =
 IMPLEMENT_DYNAMIC(CPreferenceDialog, CBCGPPropertySheet)
 
 CPreferenceDialog::CPreferenceDialog(CWnd* pParentWnd, UINT iSelectPage)
-	:CBCGPPropertySheet("dfdfd", pParentWnd, iSelectPage)
+	:CBCGPPropertySheet(_T(""), pParentWnd, iSelectPage)
 {
 	m_psh.dwFlags |= PSH_NOAPPLYNOW;
-
-	SetLook (CBCGPPropertySheet::PropSheetLook_OutlookBar
-		);
-	SetIconsList (IDB_PREFS_ICONS, 16);
+	m_strCaption.LoadString(IDB_PREFC3D_ICONS);
+	SetLook (CBCGPPropertySheet::PropSheetLook_OutlookBar);
+	SetIconsList (IDB_PREFC3D_ICONS, 16);
 	AddPage(&m_wndSession);
-	AddPage(&m_wndUniverse);
 	AddPage(&m_wndShape);
 	AddPage(&m_wndColours);
+	AddPage(&m_wndUniverse);
 	AddPage(&m_wndMathPad);
 	AddPage(&m_wndMacros);
 
 
 /*	SetLook (CBCGPPropertySheet::PropSheetLook_Tree, 150);
-	SetIconsList (IDB_PREFS_ICONS, 16);
+	SetIconsList (IDB_PREFC3D_ICONS, 16);
 
 	CBCGPPropSheetCategory* pCat1 = AddTreeCategory (_T("Starting Calques 3D"), 0, 0);
 

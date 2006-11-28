@@ -39,12 +39,12 @@ CCustomizeCalques3D::CCustomizeCalques3D(CFrameWnd* pWndParentFrame,
 	CBCGPToolbarCustomize(pWndParentFrame,bAutoSetFromMenus,uiFlags,NULL)
 {
 	CImageList pImageList;
-	pImageList.Create(IDB_PREFS_ICONS,16,0,RGB (255, 0, 255));
+	pImageList.Create(IDB_PREFBCG_ICONS,16,0,RGB (255, 0, 255));
 
 	CBCGPToolBarImages	m_cImage;
 	m_cImage.SetImageSize(CSize(16,16));
 	m_cImage.SetTransparentColor(RGB(255,0,255));
-	BOOL bRes = m_cImage.Load(IDB_PREFS_ICONS);
+	BOOL bRes = m_cImage.Load(IDB_PREFBCG_ICONS);
 
 
 	//EnableStackedTabs(FALSE);

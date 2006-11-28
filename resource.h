@@ -81,7 +81,8 @@
 #define IDB_PROJECTION                  513
 #define IDB_OBJECTS_ICONS               514
 #define IDB_BTNICON                     515
-#define IDB_PREFS_ICONS                 516
+#define IDB_PREFBCG_ICONS               516
+#define IDB_PREFC3D_ICONS               517
 #define IDR_MAINFRAME24                 600
 #define IDR_COMMANDS_TB24               610
 #define IDR_FORMAT_TB24                 615

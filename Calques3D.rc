@@ -72,7 +72,8 @@ IDB_BITMAP48            BITMAP  DISCARDABLE     "res\\calque48.bmp"
 IDB_LOGO                BITMAP  DISCARDABLE     "res\\logo.bmp"
 IDR_VERIFY_TB           BITMAP  MOVEABLE PURE   "res\\tb_verify.bmp"
 IDB_BTNICON             BITMAP  DISCARDABLE     "res\\btnicon.bmp"
-IDB_PREFS_ICONS         BITMAP  DISCARDABLE     "res\\preficons.bmp"
+IDB_PREFBCG_ICONS       BITMAP  DISCARDABLE     "res\\preficons.bmp"
+IDB_PREFC3D_ICONS       BITMAP  DISCARDABLE     "res\\prefc3dicons.bmp"
 IDR_EXPLORATION_TB      BITMAP  DISCARDABLE     "res\\tb_exploration.bmp"
 IDB_SLIDERS             BITMAP  DISCARDABLE     "res\\sliders.bmp"
 IDR_PROPERTY_TB         BITMAP  DISCARDABLE     "res\\tb_property.bmp"
@@ -3425,6 +3426,11 @@ STRINGTABLE DISCARDABLE
 BEGIN
     IDS_NEWCOMMENT          "new comment ..."
     IDS_MACROS              "Macros"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDB_PREFC3D_ICONS       "Preferences"
 END
 
 #endif    // English (U.K.) resources
