@@ -517,6 +517,11 @@ void CCalques3DApp::PreLoadState ()
 	menu.GetMenuString(0,mstr,MF_BYPOSITION);
 	menu.Detach();
 	GetContextMenuManager()->AddMenu (mstr, IDR_POPUP_MEASURE);
+
+	menu.LoadMenu(IDR_POPUP_MATHPAD);
+	menu.GetMenuString(0,mstr,MF_BYPOSITION);
+	menu.Detach();
+	GetContextMenuManager()->AddMenu (mstr, IDR_POPUP_MATHPAD);
 }
 
 
