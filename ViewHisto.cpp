@@ -58,6 +58,8 @@ BEGIN_MESSAGE_MAP(CViewHisto, CTreeView)//CListView)
 	ON_COMMAND(ID_HISTORY_COLLAPSEALL, OnCollapseAll)
 	ON_COMMAND(ID_HISTORY_EXPORTSYMBOLIC, OnHistoryExport)
 	ON_NOTIFY_REFLECT(TVN_ITEMEXPANDED, OnItemExpanded)
+	ON_WM_CONTEXTMENU()
+	ON_NOTIFY_REFLECT(NM_RCLICK, OnRclick)
 	//}}AFX_MSG_MAP
 	ON_NOTIFY_REFLECT(NM_CUSTOMDRAW, OnCustomDraw)
 	ON_COMMAND(ID_FILE_PRINT, CTreeView::OnFilePrint)
@@ -1200,3 +1202,16 @@ CString CViewHisto::OnExportSymbolic()
 
 }
 
+
+void CViewHisto::OnContextMenu(CWnd* pWnd, CPoint point) 
+{
+	// TODO: Add your message handler code here
+	
+}
+
+void CViewHisto::OnRclick(NMHDR* pNMHDR, LRESULT* pResult) 
+{
+	// TODO: Add your control notification handler code here
+	
+	*pResult = 1;
+}

@@ -75,6 +75,7 @@ protected:
 	afx_msg void OnLButtonDblClk(UINT nFlags, CPoint point);
 	afx_msg void OnEditCopy();
 	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
+	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
 	//}}AFX_MSG
 	afx_msg void OnGraphShowCmd(UINT);
 	afx_msg void OnUpdateGraphShow(CCmdUI* pCmdUI);

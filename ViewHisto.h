@@ -87,6 +87,8 @@ protected:
 	afx_msg void OnCollapseAll();
 	afx_msg void OnHistoryExport();
 	afx_msg void OnItemExpanded(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
+	afx_msg void OnRclick(NMHDR* pNMHDR, LRESULT* pResult);
 	//}}AFX_MSG
 	afx_msg void OnFilePrintPreview();
 	afx_msg void OnCustomDraw(NMHDR* pNMHDR, LRESULT* pResult);

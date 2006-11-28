@@ -44,6 +44,7 @@ BEGIN_MESSAGE_MAP(CViewGraph, CScrollView)
 	ON_WM_LBUTTONDBLCLK()
 	ON_COMMAND(ID_EDIT_COPY, OnEditCopy)
 	ON_WM_RBUTTONDOWN()
+	ON_WM_CONTEXTMENU()
 	//}}AFX_MSG_MAP
 	ON_COMMAND(ID_FILE_PRINT, CScrollView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, CScrollView::OnFilePrint)
@@ -851,4 +852,10 @@ BOOL CViewGraph::PreTranslateMessage(MSG* pMsg)
 		m_wndToolTip.RelayEvent(pMsg);
 	
 	return CScrollView::PreTranslateMessage(pMsg);
+}
+
+void CViewGraph::OnContextMenu(CWnd* pWnd, CPoint point) 
+{
+	// TODO: Add your message handler code here
+	
 }
