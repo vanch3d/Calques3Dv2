@@ -780,6 +780,14 @@ BEGIN
     CONTROL         "",IDC_TXT_PALETTE,"Static",SS_BLACKFRAME,4,4,110,66
 END
 
+IDD_INPLACEEDIT DIALOG DISCARDABLE  0, 0, 124, 48
+STYLE WS_CHILD
+FONT 8, "MS Sans Serif"
+BEGIN
+    EDITTEXT        IDC_EDIT1,0,12,120,36,ES_MULTILINE | ES_AUTOHSCROLL
+    PUSHBUTTON      "Button1",IDC_BUTTON1,96,0,28,12,NOT WS_TABSTOP
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -993,6 +1001,14 @@ BEGIN
         RIGHTMARGIN, 205
         TOPMARGIN, 7
         BOTTOMMARGIN, 66
+    END
+
+    IDD_INPLACEEDIT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 117
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 41
     END
 END
 #endif    // APSTUDIO_INVOKED
@@ -2389,6 +2405,17 @@ BEGIN
         MENUITEM "&Keyboard Map...",            ID_HELP_KEYBOARDMAP
         MENUITEM SEPARATOR
         MENUITEM "&About Calques3D...",         ID_APP_ABOUT
+    END
+END
+
+IDR_POPUP_MATHPAD MENU DISCARDABLE 
+BEGIN
+    POPUP "MathPad"
+    BEGIN
+        MENUITEM "&Property ...",               ID_HISTORY_PROPERTY
+        MENUITEM SEPARATOR
+        MENUITEM "Add &Comment",                ID_MATHPAD_ADDCOMMENT
+        MENUITEM "Add &Expression",             ID_MATHPAD_ADDEQUATION
     END
 END
 

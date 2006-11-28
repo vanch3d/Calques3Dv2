@@ -42,6 +42,7 @@
 #define IDR_REFERENTIEL                 174
 #define IDR_POPUP_VERIFY                175
 #define IDR_POPUP_MEASURE               176
+#define IDR_POPUP_MATHPAD               178
 #define IDC_PLACEHOLDER                 250
 #define IDD_SUPPRESS_DLG                300
 #define IDD_VERIFY_DLG                  301
@@ -64,6 +65,7 @@
 #define IDD_PREF_MATHPAD_PAGE           325
 #define IDD_PREF_POV_PAGE               326
 #define IDD_PREF_DISCOVERY_PAGE         327
+#define IDD_INPLACEEDIT                 330
 #define IDD_ABOUTBOX                    331
 #define IDD_ABOUTCREDIT                 332
 #define IDD_ABOUTCALQUE                 333
@@ -185,6 +187,7 @@
 #define IDC_EDIT1                       1178
 #define IDC_SPIN1                       1179
 #define IDC_EDIT2                       1180
+#define IDC_BUTTON1                     1180
 #define IDC_SPIN2                       1183
 #define IDC_EDIT3                       1184
 #define IDC_SPIN3                       1185
@@ -703,9 +706,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        194
+#define _APS_NEXT_RESOURCE_VALUE        196
 #define _APS_NEXT_COMMAND_VALUE         32996
-#define _APS_NEXT_CONTROL_VALUE         1180
+#define _APS_NEXT_CONTROL_VALUE         1181
 #define _APS_NEXT_SYMED_VALUE           124
 #endif
 #endif

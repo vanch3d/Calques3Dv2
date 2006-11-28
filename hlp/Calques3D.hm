@@ -243,6 +243,7 @@ HIDR_ZOOM                               0x200AD
 HIDR_REFERENTIEL                        0x200AE
 HIDR_POPUP_VERIFY                       0x200AF
 HIDR_POPUP_MEASURE                      0x200B0
+HIDR_POPUP_MATHPAD                      0x200B2
 HIDR_MAINFRAME24                        0x20258
 HIDR_COMMANDS_TB24                      0x20262
 HIDR_FORMAT_TB24                        0x20267
@@ -285,6 +286,7 @@ HIDD_PREF_MACROS_PAGE                   0x20144
 HIDD_PREF_MATHPAD_PAGE                  0x20145
 HIDD_PREF_POV_PAGE                      0x20146
 HIDD_PREF_DISCOVERY_PAGE                0x20147
+HIDD_INPLACEEDIT                        0x2014A
 HIDD_ABOUTBOX                           0x2014B
 HIDD_ABOUTCREDIT                        0x2014C
 HIDD_ABOUTCALQUE                        0x2014D
