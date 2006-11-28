@@ -37,6 +37,9 @@ public:
 	CRect			m_rViewSize;
 	CToolTipCtrl	myToolTip;
 
+	CEdit *			m_pEdit;
+	CDialog*		m_pDialog;
+
 // Operations
 public:
 	CCalques3DDoc* GetDocument();
@@ -75,13 +78,15 @@ protected:
 	afx_msg void OnEditCopy();
 	afx_msg void OnEditCut();
 	afx_msg void OnUpdateEditCut(CCmdUI* pCmdUI);
-	afx_msg void OnEditUndo();
 	afx_msg void OnUpdateEditUndo(CCmdUI* pCmdUI);
+	afx_msg void OnEditUndo();
 	afx_msg void OnUpdateAddComment(CCmdUI* pCmdUI);
 	afx_msg void OnAddComment();
 	afx_msg void OnAddEquation();
 	afx_msg void OnProperty();
 	afx_msg void OnUpdateProperty(CCmdUI* pCmdUI);
+	afx_msg int OnMouseActivate(CWnd* pDesktopWnd, UINT nHitTest, UINT message);
+	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
 	//}}AFX_MSG
 	afx_msg void OnFilePrintPreview();
 	afx_msg void OnUpdateFormat(CCmdUI* pCmdUI);
