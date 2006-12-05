@@ -655,6 +655,7 @@
 #define ID_GRAPH_SHOWBASEPT             30703
 #define ID_MATHPAD_ADDCOMMENT           30800
 #define ID_MATHPAD_ADDEQUATION          30801
+#define ID_MATHPAD_LISTVARS             30802
 #define ID_RENDERER_PROPERTY            30900
 #define ID_VIEW_TOOLBARS                32771
 #define ID_FORMAT_OBJCOLOR              32800
@@ -707,7 +708,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        196
-#define _APS_NEXT_COMMAND_VALUE         32996
+#define _APS_NEXT_COMMAND_VALUE         32997
 #define _APS_NEXT_CONTROL_VALUE         1181
 #define _APS_NEXT_SYMED_VALUE           124
 #endif
