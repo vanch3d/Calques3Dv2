@@ -246,6 +246,11 @@ SOURCE=.\Tasks\DrTask.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\objects\EditLabel.cpp
+# ADD CPP /I ".."
+# End Source File
+# Begin Source File
+
 SOURCE=.\Tasks\ExtractTask.cpp
 # End Source File
 # Begin Source File
@@ -606,6 +611,10 @@ SOURCE=.\objects\Cylinder3D.h
 # Begin Source File
 
 SOURCE=.\objects\Droite3D.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\objects\EditLabel.h
 # End Source File
 # Begin Source File
 
