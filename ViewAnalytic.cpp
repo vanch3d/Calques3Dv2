@@ -9,7 +9,6 @@
 
 #include "objects\Text3D.h"
 #include "objects\EditLabel.h"
-#include "objects\InPlaceEditor.h"
 
 #include "ViewAnalytic.h"
 
@@ -429,8 +428,9 @@ void CViewAnalytic::OnLButtonDblClk(UINT nFlags, CPoint point)
 
 	if (m_pSelObject)
 	{
-		CObject3D *pObj = m_pSelObject->HitTest(point,TText3DClass);
-		if (pObj && pObj==m_pSelObject)
+		CText3D *pObj = DYNAMIC_DOWNCAST(CText3D,m_pSelObject->HitTest(point,TText3DClass));
+
+		if (pObj && pObj==m_pSelObject && pObj->IsEditable())
 		{
 			//OnProperty();
 			//if (m_pEdit) delete m_pEdit;
@@ -598,7 +598,7 @@ void CViewAnalytic::OnAddComment()
 	strComment.LoadString(IDS_NEWCOMMENT);
 	CComment3D* pObj = new CComment3D(strComment);
 	
-	pObj->rActZone.OffsetRect(point.x,point.y);
+	pObj->rActZone.OffsetRect(__max(0,point.x),__max(0,point.y));
 	if (GetDocument()->AddObject(pObj))
 	{
 		GetDocument()->UpdateAllViews(NULL,WM_UPDATEOBJ_ADD,pObj);
@@ -615,7 +615,7 @@ void CViewAnalytic::OnAddEquation()
 
 	// TODO: Add your command handler code here
 	CMathOp3D* pObj = new CMathOp3D(_T("1+1"));
-	pObj->rActZone.OffsetRect(point.x,point.y);
+	pObj->rActZone.OffsetRect(__max(0,point.x),__max(0,point.y));
 	if (GetDocument()->AddObject(pObj))
 	{
 		GetDocument()->UpdateAllViews(NULL,WM_UPDATEOBJ_ADD,pObj);
