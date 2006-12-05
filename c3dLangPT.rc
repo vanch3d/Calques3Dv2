@@ -73,7 +73,7 @@ IDB_LOGO                BITMAP     DISCARDABLE        "res\\logo.bmp"
 IDR_VERIFY_TB           BITMAP     MOVEABLE PURE      "res\\tb_verify.bmp"
 IDB_BTNICON             BITMAP     DISCARDABLE        "res\\btnicon.bmp"
 IDB_PREFBCG_ICONS       BITMAP     DISCARDABLE        "res\\preficons.bmp"
-IDB_PREFC3D_ICONS       BITMAP	   DISCARDABLE        "res\\prefc3dicons.bmp"
+IDB_PREFC3D_ICONS       BITMAP     DISCARDABLE        "res\\prefc3dicons.bmp"
 IDR_EXPLORATION_TB      BITMAP     DISCARDABLE        "res\\tb_exploration.bmp"
 IDB_SLIDERS             BITMAP     DISCARDABLE        "res\\sliders.bmp"
 IDR_PROPERTY_TB         BITMAP     DISCARDABLE        "res\\tb_property.bmp"
@@ -477,7 +477,7 @@ END
 IDD_PREF_MACROS_PAGE DIALOGEX 0, 0, 212, 196
 STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Macros"
-FONT 8, "MS Sans Serif", 0, 0, 0x1
+FONT 8, "MS Sans Serif"
 BEGIN
     GROUPBOX        "User-Defined Macros",IDC_STATIC,4,4,204,148,BS_FLAT
     LTEXT           "&Conteúdo do menu:",IDC_PMAC_LIST,8,16,196,72,WS_TABSTOP,0,
@@ -501,7 +501,7 @@ END
 IDD_PREF_SESSION_PAGE DIALOGEX 0, 0, 212, 196
 STYLE DS_CONTEXTHELP | WS_CHILD | WS_CAPTION
 CAPTION "Sessão"
-FONT 8, "MS Sans Serif", 0, 0, 0x1
+FONT 8, "MS Sans Serif"
 BEGIN
     PUSHBUTTON      "&Gravar a configuração atual como um novo perfil ...",
                     IDC_PSESS_SAVEAS,79,124,189,16,0,0,HIDC_PSESS_SAVEAS
@@ -667,7 +667,7 @@ IDD_OBJECTTEXT_PAGE DIALOGEX 0, 0, 212, 73
 STYLE DS_MODALFRAME | DS_CONTEXTHELP | WS_POPUP | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_CONTEXTHELP
 CAPTION "Text"
-FONT 8, "MS Sans Serif", 0, 0, 0x1
+FONT 8, "MS Sans Serif"
 BEGIN
     LTEXT           "&Definition:",IDC_STATIC,4,24,52,8
     EDITTEXT        IDC_TXT_EQUATION,4,36,140,12,ES_AUTOHSCROLL,0,
@@ -675,7 +675,8 @@ BEGIN
     LTEXT           "Va&riável:",IDC_STATIC,4,8,32,12,SS_CENTERIMAGE
     EDITTEXT        IDC_TXT_VARNAME,36,8,64,12,ES_AUTOHSCROLL,0,
                     HIDC_TXT_VARNAME
-    PUSHBUTTON      "&Fonte...",IDC_TXT_FONT,108,8,48,16,0,0,HIDC_TXT_FONT
+    PUSHBUTTON      "&Fonte...",IDC_TXT_FONT,160,20,48,16,NOT WS_VISIBLE | 
+                    WS_DISABLED,0,HIDC_TXT_FONT
     PUSHBUTTON      "&Insert Variables",IDC_TXT_VAR,28,52,76,16,0,0,
                     HIDC_TXT_VAR
     EDITTEXT        IDC_TXT_EDIT,4,36,140,32,ES_MULTILINE | ES_AUTOVSCROLL | 
@@ -778,6 +779,14 @@ CAPTION "Font"
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     CONTROL         "",IDC_TXT_PALETTE,"Static",SS_BLACKFRAME,4,4,110,66
+END
+
+IDD_INPLACEEDIT DIALOG DISCARDABLE  0, 0, 124, 48
+STYLE WS_CHILD
+FONT 8, "MS Sans Serif"
+BEGIN
+    EDITTEXT        IDC_EDIT1,0,12,120,36,ES_MULTILINE | ES_AUTOHSCROLL
+    PUSHBUTTON      "Button1",IDC_BUTTON1,96,0,28,12,NOT WS_TABSTOP
 END
 
 
@@ -993,6 +1002,14 @@ BEGIN
         RIGHTMARGIN, 205
         TOPMARGIN, 7
         BOTTOMMARGIN, 66
+    END
+
+    IDD_INPLACEEDIT, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 117
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 41
     END
 END
 #endif    // APSTUDIO_INVOKED
@@ -2249,9 +2266,20 @@ IDR_CONTEXT_MENU MENU DISCARDABLE
 BEGIN
     POPUP "_POPUP_"
     BEGIN
-        MENUITEM "Cort&ar",                        ID_EDIT_CUT
-        MENUITEM "&Copiar",                       ID_EDIT_COPY
-        MENUITEM "C&olar",                      ID_EDIT_PASTE
+        MENUITEM "Undo",                        ID_EDIT_UNDO
+        MENUITEM SEPARATOR
+        MENUITEM "Cort&ar",                         ID_EDIT_CUT
+        MENUITEM "&Copiar",                        ID_EDIT_COPY
+        MENUITEM "C&olar",                       ID_EDIT_PASTE
+        MENUITEM "Clear",                       ID_EDIT_CLEAR
+        MENUITEM SEPARATOR
+        MENUITEM "Select All",                  ID_EDIT_SELECT_ALL
+        MENUITEM SEPARATOR
+        POPUP "Variables"
+        BEGIN
+            MENUITEM "< VARIABLE >",                ID_MATHPAD_LISTVARS
+            , GRAYED
+        END
     END
 END
 
@@ -2400,6 +2428,17 @@ BEGIN
     END
 END
 
+IDR_POPUP_MATHPAD MENU DISCARDABLE 
+BEGIN
+    POPUP "MathPad"
+    BEGIN
+        MENUITEM "&Property ...",               ID_HISTORY_PROPERTY
+        MENUITEM SEPARATOR
+        MENUITEM "Add &Comment",                ID_MATHPAD_ADDCOMMENT
+        MENUITEM "Add &Expression",             ID_MATHPAD_ADDEQUATION
+    END
+END
+
 
 #ifndef _MAC
 /////////////////////////////////////////////////////////////////////////////
@@ -2470,7 +2509,7 @@ STRINGTABLE PRELOAD DISCARDABLE
 BEGIN
     IDR_MAINFRAME           "Calques 3D"
     IDR_ABOUTDLG            "Sobre o Calques 3D ..."
-    IDR_VIEWUNIVERSE        "Universo\n\nUniverso\nUniverso Calques 3D (*.c3d)\n.c3d\nCalques3D.Documento\nUniverso Calques 3D"
+    IDR_VIEWUNIVERSE        "Universo\n\nUniverso\nUniverso Calques 3D (*.c3d)\n.c3d\nCalques3D.Document\nUniverso Calques 3D"
     IDR_VIEWMACRO           "Construção de macro\n\nConstrução de macro\nConstrução de macro (*.m3d)\n.m3d\nCalques3D.Macros\nCalques 3D Construção de macro"
     IDR_VIEWHISTORIQUE      "Histórico\n\nHistórico\n\n\n\nHistórico. Aparece quando uma janela 'Histórico' está ativa."
     IDR_VIEWCALQUE          "Quadro\n\nQuadro\n\n\n\nQuadro. Aparece quando uma janela 'Quadro' está ativa."
@@ -3167,6 +3206,7 @@ STRINGTABLE DISCARDABLE
 BEGIN
     ID_MATHPAD_ADDCOMMENT   "Inserir um comentário na janela MathPad\nInserir Comentário"
     ID_MATHPAD_ADDEQUATION  "Inserir um expressão matemática configurável na janela MathPad\n Inserir Expressão"
+    ID_MATHPAD_LISTVARS     "Insert this variable into the mathematical expression\nInsert Variable"
 END
 
 STRINGTABLE DISCARDABLE 
@@ -3434,6 +3474,11 @@ STRINGTABLE DISCARDABLE
 BEGIN
     IDS_NEWCOMMENT          "new comment ..."
     IDS_MACROS              "Macros"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDB_PREFC3D_ICONS       "Preferences"
 END
 
 #endif    // English (U.K.) resources
