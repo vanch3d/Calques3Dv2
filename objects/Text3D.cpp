@@ -139,21 +139,21 @@ int CText3D::SetProperties(CxObject3DSet *pSet)
 
     //CHelpPrSheet pSheet("Object Properties");
     CHelpPrSheet pSheet(AFX_IDS_OBJPROP);
-    CObjectTextPage pPage;
+    //CObjectTextPage pPage;
     CObjectInfoPage pPage2;
     CObjectDepPage pPage3;
     //CObjectFontPage pPage4;
 
     ////// Set Text Information Page
-    pPage.m_bMod = isA();
-    pPage.m_bMarked = bMarked;
+    //pPage.m_bMod = isA();
+    //pPage.m_bMarked = bMarked;
 
-    LOGFONT lFont;
-    mTextFont.GetLogFont(&lFont);
-    pPage.m_lFont = lFont;
+   // LOGFONT lFont;
+    //mTextFont.GetLogFont(&lFont);
+    //pPage.m_lFont = lFont;
 
-    if (!strObjectName.IsEmpty())
-        pPage.m_strVarName = strObjectName;
+    //if (!strObjectName.IsEmpty())
+    //    pPage.m_strVarName = strObjectName;
 
     ////// Set Object Information Page
     pPage2.m_strObjDef = GetObjectDef();
@@ -176,20 +176,20 @@ int CText3D::SetProperties(CxObject3DSet *pSet)
     pPage3.m_pList = &pMyList2;
 
     //pSheet.AddPage(&pPage4);
-    pSheet.AddPage(&pPage);
+    //pSheet.AddPage(&pPage);
     pSheet.AddPage(&pPage2);
     pSheet.AddPage(&pPage3);
     int nRet = pSheet.DoModal();
     if (nRet == IDOK)
     {
-        bMarked = pPage.m_bMarked;
+        //bMarked = pPage.m_bMarked;
 
-        lFont = pPage.m_lFont;
-        SetFont(&lFont);
-        if (!pPage.m_strVarName.IsEmpty())
-            strObjectName = pPage.m_strVarName;
-        else
-            strObjectName.Empty();
+        //lFont = pPage.m_lFont;
+        //SetFont(&lFont);
+        //if (!pPage.m_strVarName.IsEmpty())
+        //    strObjectName = pPage.m_strVarName;
+        //else
+         //   strObjectName.Empty();
     }
 
     return (nRet == IDOK);
@@ -390,18 +390,25 @@ CEquation3D::~CEquation3D()
 
 int CEquation3D::SetProperties(CxObject3DSet *pSet)
 {
-    return CText3D::SetProperties(pSet);
-    /*CString mstr = GetObjectName();
+    CString mstr = GetObjectName();
 
     //CHelpPrSheet pSheet("Object Properties");
     CHelpPrSheet pSheet(AFX_IDS_OBJPROP);
     CObjectTextPage pPage;
     CObjectInfoPage pPage2;
     CObjectDepPage pPage3;
+    //CObjectFontPage pPage4;
 
     ////// Set Text Information Page
+    //pPage.m_bMod = isA();
+    //pPage.m_bMarked = bMarked;
 
+   // LOGFONT lFont;
+    //mTextFont.GetLogFont(&lFont);
+    //pPage.m_lFont = lFont;
 
+    if (!strObjectName.IsEmpty())
+        pPage.m_strVarName = strObjectName;
 
     ////// Set Object Information Page
     pPage2.m_strObjDef = GetObjectDef();
@@ -423,15 +430,24 @@ int CEquation3D::SetProperties(CxObject3DSet *pSet)
     }
     pPage3.m_pList = &pMyList2;
 
+    //pSheet.AddPage(&pPage4);
     pSheet.AddPage(&pPage);
     pSheet.AddPage(&pPage2);
     pSheet.AddPage(&pPage3);
     int nRet = pSheet.DoModal();
     if (nRet == IDOK)
     {
+        //bMarked = pPage.m_bMarked;
+
+        //lFont = pPage.m_lFont;
+        //SetFont(&lFont);
+        if (!pPage.m_strVarName.IsEmpty())
+            strObjectName = pPage.m_strVarName;
+        else
+			strObjectName.Empty();
     }
 
-    return (nRet == IDOK);*/
+    return (nRet == IDOK);
 }
 
 

@@ -38,6 +38,7 @@ public:
     virtual UINT GetDefID() const { return IDS_DEF_TEXT;};
 
 	virtual BOOL IsMultiLine() { return FALSE;};
+	virtual BOOL IsEditable() { return FALSE;};
 
     virtual BOOL IsInActiveArea(CPoint);
     virtual CRgn* InvalideRect();
@@ -70,6 +71,7 @@ public:
     virtual ~CLabel3D();
 
     virtual DWORD isA() const { return TLabel3DClass; }
+	virtual BOOL IsEditable() { return TRUE;};
 
     virtual CObject3D* CopyObject();
     virtual CxObject3DSet* GetParents();
@@ -272,6 +274,7 @@ public:
     virtual DWORD isA() const { return TCComment3DClass; }
     virtual CString GetText();
 	virtual BOOL IsMultiLine() { return TRUE;};
+	virtual BOOL IsEditable() { return TRUE;};
 
     virtual void Serialize( CArchive& ar );
     virtual int SetProperties(CxObject3DSet *pSet=NULL);
@@ -307,6 +310,7 @@ public:
 
     virtual UINT GetHelpID() const { return IDS_HELP_VALUE;};
     virtual UINT GetDefID() const { return IDS_DEF_VALUE;};
+	virtual BOOL IsEditable() { return TRUE;};
 
     virtual CxObject3DSet* GetParents();
 
