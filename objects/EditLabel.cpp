@@ -22,7 +22,6 @@ CEditLabel::CEditLabel(CWnd* pParent,CObject3D* pObj,CxObject3DSet* pSet)
 	UINT nID = 15000;
 	m_pObj = pObj;
 	m_pSet = pSet;
-	VERIFY(m_pPopup.LoadMenu (IDR_CONTEXT_MENU));
 
 	CText3D *pt = DYNAMIC_DOWNCAST(CText3D,pObj);
     
@@ -176,6 +175,50 @@ BOOL CEditLabel::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO*
 
 void CEditLabel::OnContextMenu(CWnd* pWnd, CPoint point) 
 {
+    SetFocus();
+
+	CMenu	m_pPopup;
+	VERIFY(m_pPopup.LoadMenu (IDR_CONTEXT_MENU));
+	
+	CMenu * menu = m_pPopup.GetSubMenu(0);
+	int nCount = menu->GetMenuItemCount();
+
+    BOOL bReadOnly = GetStyle() & ES_READONLY;
+	UINT flags = (CanUndo() && !bReadOnly) ? MF_ENABLED : MF_GRAYED;
+	menu->EnableMenuItem(ID_EDIT_UNDO,flags);
+
+    DWORD sel = GetSel();
+    flags = (LOWORD(sel) == HIWORD(sel)) ? MF_GRAYED : MF_ENABLED;
+	menu->EnableMenuItem(ID_EDIT_COPY,flags);
+
+    flags = (flags == MF_GRAYED || bReadOnly) ? MF_GRAYED : MF_ENABLED;
+	menu->EnableMenuItem(ID_EDIT_CUT,flags);
+	menu->EnableMenuItem(ID_EDIT_CLEAR,flags);
+
+	flags = IsClipboardFormatAvailable(CF_TEXT) && !bReadOnly ? MF_ENABLED : MF_GRAYED;
+	menu->EnableMenuItem(ID_EDIT_PASTE,flags);
+
+	int len = GetWindowTextLength();
+    flags = (!len || (LOWORD(sel) == 0 && HIWORD(sel) == len)) ? MF_GRAYED : MF_ENABLED;
+	menu->EnableMenuItem(ID_EDIT_SELECT_ALL,flags);
+
+	menu->EnableMenuItem(nCount-1,MF_GRAYED|MF_BYPOSITION);
+	/*CMenu *pVars = menu->GetSubMenu(nCount-1);
+	if (pVars)
+	{
+		UINT varID = pVars->GetMenuItemID(0);
+		pVars->AppendMenu(MF_STRING,varID,"ddfssdfsfd");
+	}*/
+
+	if (point.x == -1 || point.y == -1)
+	{
+		CRect rc;
+		GetClientRect(&rc);
+		point = rc.CenterPoint();
+		ClientToScreen(&point);
+	}
+
+    menu->TrackPopupMenu(TPM_LEFTALIGN | TPM_LEFTBUTTON | TPM_RIGHTBUTTON, point.x, point.y, this);
 
 //	CMenu * menu = m_pPopup.GetSubMenu(0);
 //	ASSERT(menu != NULL);
@@ -196,4 +239,35 @@ void CEditLabel::OnUpdateEditCut(CCmdUI* pCmdUI)
 	// TODO: Add your command update UI handler code here
 	pCmdUI->Enable(FALSE);
 	
+}
+
+BOOL CEditLabel::OnCommand(WPARAM wParam, LPARAM lParam) 
+{
+	BOOL bRet = FALSE;
+	// TODO: Add your specialized code here and/or call the base class
+	switch (LOWORD(wParam))
+    {
+		case ID_EDIT_UNDO:
+			bRet = SendMessage(WM_UNDO);
+			break;
+		case ID_EDIT_CUT:
+			bRet = SendMessage(WM_CUT);
+			break;
+		case ID_EDIT_COPY:
+			bRet = SendMessage(WM_COPY);
+			break;
+		case ID_EDIT_PASTE:
+			bRet = SendMessage(WM_PASTE);
+			break;
+		case ID_EDIT_CLEAR:
+			bRet = SendMessage(WM_CLEAR);
+			break;
+		case ID_EDIT_SELECT_ALL:
+			bRet = SendMessage (EM_SETSEL, 0, -1);
+			break;
+		default:
+			return CEdit::OnCommand(wParam, lParam);
+    }
+    SendMessage(WM_CHAR, VK_LBUTTON);
+	return bRet;
 }

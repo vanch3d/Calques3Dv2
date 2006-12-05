@@ -24,7 +24,6 @@ public:
     CRect   m_InitRect;
 	CObject3D*		m_pObj;
 	CxObject3DSet*	m_pSet;
-	CMenu	m_pPopup;
 // Operations
 public:
      void EndEdit();
@@ -37,6 +36,7 @@ public:
 	virtual BOOL OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo);
 	protected:
 	virtual void PostNcDestroy();
+	virtual BOOL OnCommand(WPARAM wParam, LPARAM lParam);
 	//}}AFX_VIRTUAL
 
 // Implementation
