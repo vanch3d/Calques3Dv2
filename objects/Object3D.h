@@ -27,7 +27,7 @@
 const DWORD TObject3DClass			=	MAKELONG(1,1);		///< ALL geometrical objects
 
 	const DWORD TAllPointClass		= 	MAKELONG(2,1);		///< ALL points
-	const DWORD TAllBasePointClass	= 	MAKELONG(2,8674);	///< ALL base-points (ie with at leat of degree of freedom)
+	const DWORD TAllBasePointClass	= 	MAKELONG(2,8674);	///< ALL base-points (ie with at least of degree of freedom)
 
 const DWORD TPoint3DClass			= 	MAKELONG(2,2);		///< Free point
 const DWORD TPointMilieu3DClass		=	MAKELONG(2,4);		///< Point middle of a bipoint or a segment
@@ -39,7 +39,7 @@ const DWORD TPointSurP3DClass 		=	MAKELONG(2,128);	///< Point on a plane
 const DWORD TPointSurS3DClass 		=	MAKELONG(2,256);	///< Point on a sphere
 const DWORD TPointCalc3DClass 		=	MAKELONG(2,512);	///< Point internally calculated
 const DWORD TPointCenter3DClass		=	MAKELONG(2,1024);	///< Point center of a circle
-const DWORD TPointSymetric3DClass	=	MAKELONG(2,2048);	///< Point symetrical of a point/line/plane
+const DWORD TPointSymetric3DClass	=	MAKELONG(2,2048);	///< Point symmetrical of a point/line/plane
 const DWORD TPointTranslat3DClass	=	MAKELONG(2,4096);	///< Point translated according to a vector
 const DWORD TPointSurCyl3DClass 	=	MAKELONG(2,8192);	///< Point on a cylinder
 
@@ -157,7 +157,7 @@ public:
 /////////////////////////////////////////////////////////////////////////////
 /// Extract all the visual attributes of a geometrical object into a single class.
 /// 
-/// This class is used for transfering, copying or exchanging more easily attributes (ie shape,
+/// This class is used for transferring, copying or exchanging more easily attributes (ie shape,
 /// color, markers, etc.) between objects.
 ///
 /// See CCalques3DDoc::ModifyPropObject and the CCopyShapeTask task.
@@ -168,7 +168,7 @@ class CObject3DAttr: public CObject
 {
 public:
 	BOOL		m_bVisible;			///< TRUE if the object is visible, FALSE otherwise
-	BOOL		m_bMarked;			///< TRUE if the visual marks of the object are visibles, FALSE otherwise
+	BOOL		m_bMarked;			///< TRUE if the visual marks of the object are visible, FALSE otherwise
 	CString		m_strObjectName;	///< The name of the object
 	int			m_nCalque;			///< The object is extracted in tracing X (bit X)
 	CShape		m_pObjectShape;		///< The shape of the object
@@ -223,7 +223,7 @@ inline void CObject3DAttr::operator =(const CObject3DAttr& other)
 /// - Display of the object in the different views available in Calques 3D
 /// - Definition and modification of the attributes (shape, color, etc.) of the object
 ///
-/// All geometrical objects (like points, lines, cubes, etc.) are specialisations of this class.
+/// All geometrical objects (like points, lines, cubes, etc.) are specializations of this class.
 /////////////////////////////////////////////////////////////////////////////
 class CObject3D : public CObject  
 {
@@ -242,7 +242,7 @@ public:
 		GRAPH_BASE		///< Highlight the base points connected to the object
 	};
 
-	BOOL		bValidate;			///< TRUE if the object is analytically valide, FALSE otherwise
+	BOOL		bValidate;			///< TRUE if the object is analytically valid, FALSE otherwise
 	BOOL		bVisible;			///< TRUE if the object is visible, FALSE if it is hidden
 	BOOL		bMarked;			///< TRUE if the object has its visual marks activated, FALSE otherwise 
 	BOOL		bDrawInGraph;		///< TRUE if the object can be displayed in the Graph, FALSE otherwise
@@ -255,11 +255,11 @@ public:
 	CString		strObjectHelp;		///< Designation
 	CString		strObjectDef;		///< Definition
 	CShape		pObjectShape;		///< Shape and color of the object
-	int			nSortKind;			///< Sort order for object (0 Zorder, 1 depth) \deprecated Not used anymore
+	int			nSortKind;			///< Sort order for object (0 Z-order, 1 depth) \deprecated Not used anymore
 	int			nDepth;				///< Depth of the object in the dependency graph
 	int			nCalque;			///< The object is extracted in Tracing X (bit X)
 
-	CObject3D*	pComposite;			///< Pointeur to the composite this object belongs to, NULL if not
+	CObject3D*	pComposite;			///< Pointer to the composite this object belongs to, NULL if not
 
 	HTREEITEM	pHistItem;			///< Item in the History View
 	CRect		rGraphRect;			///< Location of the object in the Graph Window
@@ -279,7 +279,7 @@ public:
 	BOOL operator == ( const CObject3D &other ) const ;
 	BOOL operator < ( const CObject3D &other ) const ;
 
-	/// @name Serialisation Functions
+	/// @name Serialization Functions
 	/// These functions are used to store/retrieve the geometrical object.
 	//@{
 	virtual void Serialize( CArchive& ar );
@@ -334,7 +334,7 @@ public:
 
 
 	/// @name Region Functions
-	/// These functions are used, mostly in the Universe/Traving views, to handle the detection of objects
+	/// These functions are used, mostly in the Universe/Tracing views, to handle the detection of objects
 	/// by mouse-clicks.
 	//@{
 	virtual CObject3D*	HitTest(CPoint pt,UINT mask=0,int nCalcNum = 0,BOOL bSub = TRUE,CxObject3DSet* pSet = NULL);
@@ -345,7 +345,7 @@ public:
 
 	/// @name Attribute/Information Functions
 	/// These functions are used to access or to modify the attributes of the geometrical object: 
-	/// name, colour, shape, tracing, etc.
+	/// name, color, shape, tracing, etc.
 	//@{
 	virtual BOOL		IsVisible() {return bVisible;};
 	virtual void		SetVisible(BOOL bVis) { bVisible = bVis;};

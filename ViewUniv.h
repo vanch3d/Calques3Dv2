@@ -19,7 +19,7 @@ class CTask;
 /////////////////////////////////////////////////////////////////////////////
 /// Display the complete construction in a 2½D environment.
 ///
-/// This is the main interface for creating, visualising and manipulation geometrical constructions
+/// This is the main interface for creating, visualizing and manipulation geometrical constructions
 /// in Calques 3D.
 /////////////////////////////////////////////////////////////////////////////
 class CViewUniv : public CView
@@ -30,7 +30,7 @@ protected:
 
 // Attributes
 private:
-	CVisualParam*	m_pVisParam;		///< Pointer to the local visualisation parameters
+	CVisualParam*	m_pVisParam;		///< Pointer to the local visualization parameters
 	CTask*			m_pCurrentTask;		///< Pointer to the current activated task
 	CToolTipCtrl	m_wndToolTip;			///< Reimplementation of the tooltip
 

@@ -11,9 +11,9 @@
 #endif // _MSC_VER > 1000
 
 /////////////////////////////////////////////////////////////////////////////
-/// A custom-made popup menu containing the name of objects in an ambiguous designation.
+/// A custom-made pop-up menu containing the name of objects in an ambiguous designation.
 ///
-/// \todo The popup menu is in fact generic. It may be a good idea to merge it with the 
+/// \todo The pop-up menu is in fact generic. It may be a good idea to merge it with the 
 /// list of selected objects and get rid of the item-by-item construction of the menu items.
 /////////////////////////////////////////////////////////////////////////////
 class CAmbiguityList : public CBCGPToolBar
