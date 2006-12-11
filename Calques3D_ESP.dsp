@@ -196,6 +196,10 @@ SOURCE=.\Tasks\DrTask.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\objects\EditLabel.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\Tasks\ExtractTask.cpp
 # End Source File
 # Begin Source File
