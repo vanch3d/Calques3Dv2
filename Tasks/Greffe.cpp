@@ -137,7 +137,7 @@ void CGreffe3DTask::OnLoadMacro(UINT nID)
 	{
 		CObject3D *pObj = mdoc.m_cObjectSet.GetAt(i);
 		pObj->bDrawInGraph = FALSE;
-		pObj->SetAvailHisto();
+		pObj->SetHistoryVisibility();
 		pMacro->m_cSubObjects.Add(pObj);
 	}
 	mdoc.m_cObjectSet.RemoveAll();

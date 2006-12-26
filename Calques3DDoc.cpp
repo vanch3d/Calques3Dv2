@@ -1542,7 +1542,6 @@ void CCalques3DDoc::OnDiscovery()
 {
 	return;
 	static BOOL bD = TRUE;
-	// TODO: Add your command handler code here
 	CString strSymb;
 
 	//strSymb = _T("Range[-8.0,8.0,-8.0,8.0,-6.0,8.0];\n");
@@ -1564,7 +1563,7 @@ void CCalques3DDoc::OnDiscovery()
 		maxa.y = max(omax.y,maxa.y);
 		maxa.z = max(omax.z,maxa.z);
 
-		CString mstr = pObj->DrawSymbolic();
+		CString mstr = pObj->ExportSymbolic(0);
 		//if (!mstr.IsEmpty())
 		{
 			strSymb += mstr + _T("\n");

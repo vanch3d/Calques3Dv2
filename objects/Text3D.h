@@ -51,7 +51,7 @@ public:
     virtual UINT  CalculConceptuel();
     virtual void CalculVisuel(CVisualParam *);
     virtual void Draw(CDC*,CVisualParam *vp,BOOL bSm=FALSE);
-    virtual HTREEITEM DrawHistorique(CTreeCtrl& mListCtrl,HTREEITEM pParent=TVI_ROOT);
+    virtual HTREEITEM DrawHistory(CTreeCtrl& mListCtrl,HTREEITEM pParent=TVI_ROOT);
     virtual void DrawDepGraph(CDC* pDC,CImageList *pImgList=NULL,int nTrace=GRAPH_NONE,BOOL bDrawNode=TRUE,BOOL bDrawLink=TRUE);
 };
 
@@ -123,7 +123,7 @@ public:
     virtual UINT  CalculConceptuel();
     virtual void Draw(CDC*,CVisualParam *vp,BOOL bSm=FALSE);
     virtual void DrawMathPad(CDC* pDC);
-    virtual HTREEITEM DrawHistorique(CTreeCtrl& mListCtrl,HTREEITEM pParent=TVI_ROOT);
+    virtual HTREEITEM DrawHistory(CTreeCtrl& mListCtrl,HTREEITEM pParent=TVI_ROOT);
 
 
     static FCoord   Round(FCoord nVal);

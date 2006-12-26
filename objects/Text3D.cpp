@@ -200,7 +200,7 @@ void CText3D::Draw(CDC* pDC,CVisualParam *mV,BOOL bSm)
 {
 }
 
-HTREEITEM CText3D::DrawHistorique(CTreeCtrl& mListCtrl,HTREEITEM pParent)
+HTREEITEM CText3D::DrawHistory(CTreeCtrl& mListCtrl,HTREEITEM pParent)
 {
     HTREEITEM pHItem = NULL;
     return NULL;
@@ -801,9 +801,9 @@ void CEquation3D::CalculVisuel(CVisualParam *vp)
     //nCalque = 1;
 }
 
-HTREEITEM CEquation3D::DrawHistorique(CTreeCtrl& mListCtrl,HTREEITEM pParent)
+HTREEITEM CEquation3D::DrawHistory(CTreeCtrl& mListCtrl,HTREEITEM pParent)
 {
-    return CText3D::DrawHistorique(mListCtrl,pParent);
+    return CText3D::DrawHistory(mListCtrl,pParent);
 }
 
 void CEquation3D::DrawMathPad(CDC* pDC)
