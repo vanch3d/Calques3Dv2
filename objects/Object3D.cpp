@@ -153,8 +153,18 @@ CObject3D* CObject3D::CopyObject()
     return pObj;
 }
 
+BOOL CObject3D::operator == ( const CObject3D &other ) const
+{
+    return TRUE;
+}
+
+BOOL CObject3D::operator < ( const CObject3D &other ) const
+{
+    return TRUE;
+}
+
 //----------------------------------------------------------------------
-// Serialisation
+// Serialization
 //----------------------------------------------------------------------
 
 //////////////////////////////////////////////////////////////////////
@@ -335,11 +345,11 @@ DWORD CObject3D::isA() const
 /// - Y=1 if the identifier related to the generic type (ie all points)
 /// - X=1 and Y=1 for the generic object (TObject3DClass)
 ///
-/// The mask is a combination of object identifiers describing all the possible objects that could be recognised.
+/// The mask is a combination of object identifiers describing all the possible objects that could be recognized.
 /// For easier definition, some of the generic combinations have been hard-coded in the identifiers (see
 /// TAllPointClass for retrieving all points, TAllDroiteClass for all lines, etc.).
 /// This method combine bitwise both the mask and the object identifier in order to verify if this
-/// object is recognised by the mask.
+/// object is recognized by the mask.
 ///
 /// \param mask A bitwise combination of object identifiers
 /// \return     TRUE if this object fits the mask, FALSE otherwise.
@@ -508,7 +518,7 @@ void CObject3D::SetInGraph(BOOL bAdd)
 
 //////////////////////////////////////////////////////////////////////
 /// Change one of the parents of the object
-/// @param pOld		A pointer to the oarent object to change.
+/// @param pOld		A pointer to the parent object to change.
 /// @param pNew		A pointer to the object to replace the current parent with.
 /// @param bUpGraph	TRUE if the dependence graph needs to be updated, FALSE otherwise
 /// @return TRUE is the parent has been properly changed, FALSE otherwise
@@ -538,7 +548,46 @@ BOOL CObject3D::GraftOn(CObject3D * pNew)
 // Attribute/Information Functions
 //----------------------------------------------------------------------
 
+//////////////////////////////////////////////////////////////////////
+/// Determine if the object is visible or not.
+/// @return TRUE if the object is visible, FALSE otherwise
+//////////////////////////////////////////////////////////////////////
+BOOL CObject3D::IsVisible() 
+{
+	return bVisible;
+}
 
+//////////////////////////////////////////////////////////////////////
+/// Set the visibility of the object.
+/// @param bVis	TRUE if the object is visible, FALSE otherwise
+//////////////////////////////////////////////////////////////////////
+void CObject3D::SetVisible(BOOL bVis)
+{ 
+	bVisible = bVis;
+}
+
+//////////////////////////////////////////////////////////////////////
+/// Determine if the object is selected by the user or not.
+/// @return TRUE if the object is selected, FALSE otherwise
+//////////////////////////////////////////////////////////////////////
+BOOL CObject3D::IsSelected() 
+{ 
+	return bIsSelected;
+}
+
+//////////////////////////////////////////////////////////////////////
+/// Set the selection flag for the object.
+/// @param bSel	TRUE if the object is selected, FALSE otherwise
+//////////////////////////////////////////////////////////////////////
+void CObject3D::SetSelected(BOOL bSel/*=TRUE*/)
+{
+	bIsSelected = bSel; 
+}
+
+//////////////////////////////////////////////////////////////////////
+/// Get the visual attributes associated with the object
+/// @return An instance of the attribute class containing the objet's description
+//////////////////////////////////////////////////////////////////////
 CObject3DAttr CObject3D::GetAttributes()
 {
     CObject3DAttr pAttr;
@@ -553,12 +602,10 @@ CObject3DAttr CObject3D::GetAttributes()
 
 }
 
-COLORREF CObject3D::GetDefaultColor()
-{
-    return TPref::Color;
-}
-
-
+//////////////////////////////////////////////////////////////////////
+/// Set all the visual attributes associated with the object
+/// @param pAttr	An instance of the attribute class containing the objet's new description
+//////////////////////////////////////////////////////////////////////
 void CObject3D::SetAttributes(CObject3DAttr pAttr)
 {
     SetVisible(pAttr.m_bVisible);
@@ -571,121 +618,98 @@ void CObject3D::SetAttributes(CObject3DAttr pAttr)
     SetName(pAttr.m_strObjectName);
 }
 
-
-
-
-
-
-
-
-BOOL CObject3D::operator == ( const CObject3D &other ) const
-{
-    return TRUE;
-}
-
-BOOL CObject3D::operator < ( const CObject3D &other ) const
-{
-    return TRUE;
-}
-
 //////////////////////////////////////////////////////////////////////
-/// Verify if this object is analytically identical to another one.
-/// @param other	A reference to the object to compare with this one.
-/// @return			TRUE if both object are analytically the same, FALSE otherwise
+/// Determine if the object is extracted in a given tracing.
+/// @param	CalcNum	The index of the tracing to check (0 <= CalcNum <= 3).
+/// @return TRUE if the object is in tracing CalcNum, FALSE otherwise.
 //////////////////////////////////////////////////////////////////////
-BOOL CObject3D::IsEqual(CObject3D &other)
-{
-    return FALSE;
-}
-
-//////////////////////////////////////////////////////////////////////
-/// Verify if this object is analytically parallel to another one.
-/// @param pObj		A pointer to the object to compare with this one.
-/// @return			The code for the property verification
-/// @see \ref C3DCodes_Verif
-//////////////////////////////////////////////////////////////////////
-UINT CObject3D::IsParallelTo(CObject3D *pObj)
-{
-    return VER_ERROR;
-}
-
-//////////////////////////////////////////////////////////////////////
-/// Verify if this object is analytically align with two other ones.
-/// @param pObj1	A pointer to the first object to compare with this one.
-/// @param pObj2	A pointer to the second object to compare with this one.
-/// @return			The code for the property verification
-/// @see \ref C3DCodes_Verif
-//////////////////////////////////////////////////////////////////////
-UINT CObject3D::IsAlignedWith(CObject3D *pObj1,CObject3D *pObj2)
-{
-    return VER_ERROR;
-}
-
-
-//////////////////////////////////////////////////////////////////////
-/// Verify if this object is analytically perpendicular to another one.
-/// @param pObj		A pointer to the object to compare with this one.
-/// @return			The code for the property verification
-/// @see \ref C3DCodes_Verif
-//////////////////////////////////////////////////////////////////////
-UINT CObject3D::IsPerpendicularTo(CObject3D *pObj)
-{
-    return VER_ERROR;
-}
-
-void CObject3D::TranslateBy(CVector4 ptVec)
-{
-}
-
-
-
-
-CObject3D* CObject3D::HitTest(CPoint pt,UINT mask,int nCalcNum,BOOL bSub,CxObject3DSet* pSet)
-{
-    CObject3D *pObj=NULL;
-    if (bValidate && bVisible && IsInCalque(nCalcNum) &&
-        IsInActiveArea(pt)  && MaskObject(mask))
-    {
-        pObj = this;
-        if (pSet) // && (bSub ||(!bSub && !pComposite )))
-            pSet->Add(this);
-    }
-    return pObj;
-}
-
-
-
-
 BOOL CObject3D::IsInCalque(int CalcNum)
 {
     BOOL bTest = (nCalque & (int)pow(2,CalcNum));
     return bTest;
 }
 
-BOOL CObject3D::AddInCalque(int CalcNum,BOOL add)
+//////////////////////////////////////////////////////////////////////
+/// Add (or remove) the object to (or from) the given tracing.
+/// @param	CalcNum	The index of the tracing to check (0 <= CalcNum <= 3).
+/// @param	bAdd	TRUE if the object is to be added, FALSE if the object is to be removed.
+/// @return TRUE if the object was properly added/removed, FALSE otherwise.
+//////////////////////////////////////////////////////////////////////
+BOOL CObject3D::AddInCalque(int CalcNum,BOOL bAdd/*=TRUE*/)
 {
-    if (add)    // ajoute dans le calque CalcNum
+    if (bAdd)    // add in tracing CalcNum
         nCalque |= (int)pow(2,CalcNum);
-    else        // retire du calque CalcNum
+    else        // remove from tracing CalcNum
         nCalque &= ~((int)pow(2,CalcNum));
     return TRUE;
 }
 
-CRgn* CObject3D::InvalideRect()
+//////////////////////////////////////////////////////////////////////
+/// Set the object (unique) identifier.
+/// @param	nID		The new identifier for the object.
+/// @return The last identifier used by this object or one of its constituents (if any).
+//////////////////////////////////////////////////////////////////////
+int CObject3D::SetObjectID(int nID)
 {
-    return NULL;
+    nObjectId = nID;
+    return nID;
 }
 
-void CObject3D::TestAcces()
+//////////////////////////////////////////////////////////////////////
+/// Set the name of the object.
+/// @param	strName		The new name for the object.
+/// @todo Need to do some duplication check.
+//////////////////////////////////////////////////////////////////////
+void CObject3D::SetName(CString strName)
 {
-    MessageBeep(MB_ICONEXCLAMATION);
+    strObjectName = strName;
 }
 
+//////////////////////////////////////////////////////////////////////
+/// Set the color of the object.
+/// @param	rColor	The new color for the object.
+//////////////////////////////////////////////////////////////////////
+void CObject3D::SetColor(COLORREF rColor)
+{
+    pObjectShape.clrObject = rColor;
+}
+
+//////////////////////////////////////////////////////////////////////
+/// Set the shape of the object.
+/// @param	nStyle	The new shape for the object.
+//////////////////////////////////////////////////////////////////////
+void CObject3D::SetStyle(int nStyle)
+{
+    pObjectShape.nShapeId = nStyle;
+}
+
+//////////////////////////////////////////////////////////////////////
+/// Get the default color associated with the object
+/// @return The default color (RGB)
+//////////////////////////////////////////////////////////////////////
+COLORREF CObject3D::GetDefaultColor()
+{
+    return TPref::Color;
+}
+
+//////////////////////////////////////////////////////////////////////
+/// Determine whether the object - as a composite constituent - is visible in the history.
+//////////////////////////////////////////////////////////////////////
+void CObject3D::SetHistoryVisibility()
+{
+    bNotInHisto = FALSE;
+    if (!bVisible) bNotInHisto = TRUE;
+}
+
+//////////////////////////////////////////////////////////////////////
+/// Call the property dialog box and modify the object's attributes
+/// @param pSet	A pointer to the list of all objects in the construction.
+/// @return TRUE if attributes have been modified, FALSE otherwise
+//////////////////////////////////////////////////////////////////////
 int CObject3D::SetProperties(CxObject3DSet *pSet)
 {
-    CString mstr = GetObjectName();
+    //CString strName = GetObjectName();
 
-    //CHelpPrSheet pSheet("Object Properties");
     CHelpPrSheet pSheet(AFX_IDS_OBJPROP);
 	pSheet.m_psh.dwFlags |= PSH_NOAPPLYNOW;
     CObjectPropPage pPage;
@@ -694,12 +718,8 @@ int CObject3D::SetProperties(CxObject3DSet *pSet)
 
     ////// Set Object Property Page
     CLocus3D *pLoc = DYNAMIC_DOWNCAST(CLocus3D,this);
-
     pPage.m_bIsLocus = (BOOL)(pLoc);
-    if (pLoc)
-    {
-        pPage.m_nLocus = pLoc->nDeltaT;
-    }
+    if (pLoc) pPage.m_nLocus = pLoc->nDeltaT;
 
     pPage.m_bHidden = (!bVisible);
     pPage.m_bMarked = bMarked;
@@ -707,14 +727,14 @@ int CObject3D::SetProperties(CxObject3DSet *pSet)
 
 	pPage.m_cShape.SetShape((int)pObjectShape.GetShapeType(),pObjectShape.nShapeId);
 
-//    pPage.m_cShapePick.SetType((int)pObjectShape.GetShapeType());
- //   pPage.m_cShapePick.SetShape(pObjectShape.nShapeId);
- //   pPage.m_cStrShape.RemoveAll();
- //   for (int i=0;i<pObjectShape.GetShapeSize();i++)
- //   {
-  //      CString mstr = pObjectShape.GetShapeDef(i);
-   //     pPage.m_cStrShape.Add(mstr);
-   // }
+	//pPage.m_cShapePick.SetType((int)pObjectShape.GetShapeType());
+	//pPage.m_cShapePick.SetShape(pObjectShape.nShapeId);
+	//pPage.m_cStrShape.RemoveAll();
+	//for (int i=0;i<pObjectShape.GetShapeSize();i++)
+	//{
+	//	CString mstr = pObjectShape.GetShapeDef(i);
+	//	pPage.m_cStrShape.Add(mstr);
+	//}
     CString mstr2;
     mstr2.LoadString(GetNameID());
     pPage.m_strDefName.Format("%s%d",mstr2,nObjectId);
@@ -770,46 +790,43 @@ int CObject3D::SetProperties(CxObject3DSet *pSet)
     return (nRet == IDOK);
 }
 
-int CObject3D::SetObjectID(int nID)
+//////////////////////////////////////////////////////////////////////
+/// Retrieve the list of possible redefinition schemes of the object.
+/// @param pSet	A pointer to the current list of schemes to be populated.
+/// @return		A pointer to the populated list of schemes.
+//////////////////////////////////////////////////////////////////////
+CxSchemeSet* CObject3D::GetRedefineSchemes(CxSchemeSet* pSet) 
+{ 
+	return pSet;
+};
+
+//----------------------------------------------------------------------
+// Analytical Functions
+//----------------------------------------------------------------------
+
+//////////////////////////////////////////////////////////////////////
+/// Recompute the analytical representation of the object.
+/// @return 0 if the computation is correct, an error code otherwise. 
+/// @see Description of all \ref C3DCodes_Errors
+//////////////////////////////////////////////////////////////////////
+UINT CObject3D::CalculConceptuel()
 {
-    nObjectId = nID;
-    return nID;
+    return 0;
 }
 
-void CObject3D::SetName(CString mstr)
+//////////////////////////////////////////////////////////////////////
+/// Recompute the graphical representation of the object (in the universe or tracing view).
+/// @param mV	The visual parameters associated with the view.
+//////////////////////////////////////////////////////////////////////
+void CObject3D::CalculVisuel(CVisualParam *mV)
 {
-    strObjectName = mstr;
 }
 
-void CObject3D::SetColor(COLORREF rColor)
-{
-    pObjectShape.clrObject = rColor;
-}
-
-void CObject3D::SetStyle(int nStyle)
-{
-    pObjectShape.nShapeId = nStyle;
-}
-
-void CObject3D::SetAvailHisto()
-{
-    bNotInHisto = FALSE;
-    if (!bVisible) bNotInHisto = TRUE;
-}
-
-
-
-void CObject3D::HandleObjectError(int errNo,BOOL bShow)
-{
-    bValidate = (errNo ==0);
-    if (!bShow) return;
-
-    CString mstr;
-    mstr.LoadString(errNo);
-    AfxGetMainWnd()->MessageBox(mstr,NULL,MB_OK | MB_ICONERROR);
-    //Geom3DApp->ShowErrorMsg(errNo);
-}
-
+//////////////////////////////////////////////////////////////////////
+/// Recompute the definition range (in terms of spatial coordinates) of the object.
+/// @param min	The minimum coordinates of the objects in the X, Y and Z axis.
+/// @param max	The maximum coordinates of the objects in the X, Y and Z axis.
+//////////////////////////////////////////////////////////////////////
 void CObject3D::GetRange(CVector4 &min,CVector4 &max)
 {
     CVector4 pt(0,0,0,0);
@@ -817,26 +834,143 @@ void CObject3D::GetRange(CVector4 &min,CVector4 &max)
     max = pt;
 }
 
-
-
-
-
-
-
-UINT CObject3D::CalculConceptuel()
+//////////////////////////////////////////////////////////////////////
+/// Verify if this object is analytically identical to another one.
+/// @param other	A reference to the object to compare with this one.
+/// @return			TRUE if both object are analytically the same, FALSE otherwise
+//////////////////////////////////////////////////////////////////////
+BOOL CObject3D::IsEqual(CObject3D &other)
 {
-    return 0;
+    return FALSE;
 }
 
-void CObject3D::CalculVisuel(CVisualParam *mV)
+//////////////////////////////////////////////////////////////////////
+/// Verify if this object is analytically parallel to another one.
+/// @param pObj		A pointer to the object to compare with this one.
+/// @return			The code for the property verification
+/// @see \ref C3DCodes_Verif
+//////////////////////////////////////////////////////////////////////
+UINT CObject3D::IsParallelTo(CObject3D *pObj)
 {
+    return VER_ERROR;
 }
 
+//////////////////////////////////////////////////////////////////////
+/// Verify if this object is analytically align with two other ones.
+/// @param pObj1	A pointer to the first object to compare with this one.
+/// @param pObj2	A pointer to the second object to compare with this one.
+/// @return			The code for the property verification
+/// @see \ref C3DCodes_Verif
+//////////////////////////////////////////////////////////////////////
+UINT CObject3D::IsAlignedWith(CObject3D *pObj1,CObject3D *pObj2)
+{
+    return VER_ERROR;
+}
 
 
 //////////////////////////////////////////////////////////////////////
-// Static Functions
+/// Verify if this object is analytically perpendicular to another one.
+/// @param pObj		A pointer to the object to compare with this one.
+/// @return			The code for the property verification
+/// @see \ref C3DCodes_Verif
 //////////////////////////////////////////////////////////////////////
+UINT CObject3D::IsPerpendicularTo(CObject3D *pObj)
+{
+    return VER_ERROR;
+}
+
+//////////////////////////////////////////////////////////////////////
+/// Called by the framework, before or after the object is dragged in, to prepare or conclude its deformation.
+/// @param bMove	TRUE if the object is being dragged in, FALSE if it is being released.
+//////////////////////////////////////////////////////////////////////
+void CObject3D::PrepareMoveObject(BOOL bMove /*= TRUE*/)
+{
+}
+
+//////////////////////////////////////////////////////////////////////
+/// Called by the framework to perform the deformation of the object.
+/// @param pVisual	A pointer to the visual parameters of the view the deformation is taking place in.
+/// @param nModKey	Indicates whether various virtual keys are down.
+/// @param pt		The location - in view coordinates - of the cursor during deformation
+/// @param loc		A reference to the 3D coordinate corresponding to the new object's location.
+/// @return			TRUE if the deformation took place, FALSE otherwise
+//////////////////////////////////////////////////////////////////////
+BOOL CObject3D::MoveObject(CVisualParam *pVisual,UINT nModKey,CPoint pt,CVector4& loc) 
+{ 
+	return FALSE;
+}
+
+//////////////////////////////////////////////////////////////////////
+/// Translate the position of this object by the specified vector.
+/// @param ptVec	A reference to the translation vector.
+//////////////////////////////////////////////////////////////////////
+void CObject3D::TranslateBy(CVector4 ptVec)
+{
+}
+
+//////////////////////////////////////////////////////////////////////
+/// Apply - if adequate - the coordinates of the given object to this object.
+/// @param pObj		A pointer to the object whose coordinates will be duplicated.
+//////////////////////////////////////////////////////////////////////
+void CObject3D::CopyPointPosition(CObject3D* pObj)
+{
+}
+
+//////////////////////////////////////////////////////////////////////
+/// Apply - if adequate - the coordinates of the given object to this object.
+/// @param ptLoc	The 3D coordinates to apply to this object.
+//////////////////////////////////////////////////////////////////////
+void CObject3D::CopyPointPosition(CVector4 ptLoc)
+{
+}
+
+
+
+//----------------------------------------------------------------------
+// Region Functions
+//----------------------------------------------------------------------
+
+//////////////////////////////////////////////////////////////////////
+/// Verify if this object is under the cursor.
+/// @param pt		The location - in view's coordinates - of the cursor.
+/// @param mask		The mask used for object selection.
+/// @param nCalcNum	The identifier of the tracing associated with the view.
+/// @param bSub		TRUE if constituents of composites should be tested and retrieved, FALSE if only
+///					the composite itself is to be retrieved.
+/// @param pSet		A pointer to the list to be populated with all successfully tested objects.
+/// @return			A pointer to the first object verifying the hit test.
+//////////////////////////////////////////////////////////////////////
+CObject3D* CObject3D::HitTest(CPoint pt,UINT mask,int nCalcNum,BOOL bSub,CxObject3DSet* pSet)
+{
+    CObject3D *pObj=NULL;
+    if (bValidate && bVisible && IsInCalque(nCalcNum) &&
+        IsInActiveArea(pt)  && MaskObject(mask))
+    {
+        pObj = this;
+        if (pSet) // && (bSub ||(!bSub && !pComposite )))
+            pSet->Add(this);
+    }
+    return pObj;
+}
+
+//////////////////////////////////////////////////////////////////////
+/// Verify if the cursor lies within the active region of this object.
+/// @param pt	The location - in view's coordinates - of the cursor.
+/// @return		TRUE if the cursor is hovering the object, FALSE otherwise.
+//////////////////////////////////////////////////////////////////////
+BOOL CObject3D::IsInActiveArea(CPoint pt)
+{
+	return FALSE;
+}
+
+//////////////////////////////////////////////////////////////////////
+/// Create a GDI region covering this object.
+/// @return		A new instance of an encompassing region.
+//////////////////////////////////////////////////////////////////////
+CRgn* CObject3D::InvalideRect()
+{
+    return NULL;
+}
 
 //////////////////////////////////////////////////////////////////////
 /// Method CObject3D::DoSegRgn
@@ -862,6 +996,34 @@ CRgn* CObject3D::DoSegRgn(CPoint p1,CPoint p2)
     return myReg;
 }
 
+//----------------------------------------------------------------------
+// Error Functions
+//----------------------------------------------------------------------
+
+//////////////////////////////////////////////////////////////////////
+/// Notify the user-selection of this object
+/// @deprecated Not in use anymore.
+//////////////////////////////////////////////////////////////////////
+void CObject3D::TestAcces()
+{
+    MessageBeep(MB_ICONEXCLAMATION);
+}
+
+
+//////////////////////////////////////////////////////////////////////
+/// @param errNo	The error code generated by previous function calls.
+/// @param bShow	TRUE if the error message is to be displayed, FALSE otherwise
+/// @see Description of all \ref C3DCodes_Errors
+//////////////////////////////////////////////////////////////////////
+void CObject3D::HandleObjectError(int errNo,BOOL bShow)
+{
+    bValidate = (errNo ==0);
+    if (!bShow) return;
+
+    CString mstr;
+    mstr.LoadString(errNo);
+    AfxGetMainWnd()->MessageBox(mstr,NULL,MB_OK | MB_ICONERROR);
+}
 
 //----------------------------------------------------------------------
 // Display Functions
@@ -893,13 +1055,13 @@ void CObject3D::DrawRetro(CDC *pDC,CVisualParam *vp) {}
 void CObject3D::DrawSelected(CDC* pDC,CVisualParam *vp) {}
 
 //////////////////////////////////////////////////////////////////////
-/// Method CObject3D::DrawHistorique
+/// Method CObject3D::DrawHistory
 ///
 /// \param mListCtrl	A reference to the Tree List Control
 /// \param pParent		A handler to the parent tree item for this object
 /// \return A handler to the tree item associated with this object.
 //////////////////////////////////////////////////////////////////////
-HTREEITEM CObject3D::DrawHistorique(CTreeCtrl& mListCtrl,HTREEITEM pParent)
+HTREEITEM CObject3D::DrawHistory(CTreeCtrl& mListCtrl,HTREEITEM pParent)
 {
     HTREEITEM pHItem = NULL;
     if (!mListCtrl) return NULL;
@@ -948,16 +1110,14 @@ HTREEITEM CObject3D::DrawHistorique(CTreeCtrl& mListCtrl,HTREEITEM pParent)
 }
 
 //////////////////////////////////////////////////////////////////////
-/// Method CObject3D::DrawSymbolic
+/// Method CObject3D::ExportSymbolic
 ///
+/// @param nFormat	The format to use for exporting the object (see CObject3D::TGraphType)
 /// @return A String containing the symbolic representation of the object
-/// @todo	Add a parameter for identifying the export format (currently only COCOA) and implements
-///			the other formats (eg DOT) locally with each object.
 //////////////////////////////////////////////////////////////////////
-CString CObject3D::DrawSymbolic()
+CString CObject3D::ExportSymbolic(int nFormat)
 {
     CString mstr;
-    //mstr.Format(_T("****"));
     mstr.Empty();
     return mstr;
 }
@@ -972,7 +1132,7 @@ void CObject3D::DrawMathPad(CDC*) {}
 //////////////////////////////////////////////////////////////////////
 /// Method CObject3D::Draw3DRendering
 ///
-/// @todo	Add the OpenGL representastion for all objects
+/// @todo	Add the OpenGL representation for all objects
 //////////////////////////////////////////////////////////////////////
 void CObject3D::Draw3DRendering() {}
 
@@ -1283,9 +1443,9 @@ void CObject3D::DrawGraphArrow(CDC *pDC,CPoint ptStart, CPoint ptEnd, int nArrow
 \page CObject3DCodes CObject3D Internal Identifiers
 
 \section C3DCodes_Errors Error Codes
-The following codes are generated by the CObject3D::CalculConceptuel() method upon the failure of contruction of a 
+The following codes are generated by the CObject3D::CalculConceptuel() method upon the failure of construction of a 
 geometrical object and indicate the reason for such failure. 
-Use the  CObject3D::HandleObjectError() method to report the error to the user.
+Use the CObject3D::HandleObjectError() method to report the error to the user.
 
 <table border="0" cellspacing="3" cellpadding="3">
   <tr><td class="indexkey">Code</td><td class="indexvalue">Description</td></tr>

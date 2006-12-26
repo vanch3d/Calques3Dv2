@@ -15,7 +15,7 @@
 #include "Shape.h"
 
 /// @name Objects Identifiers
-/// These identifiers are used to uniquely identify each geometrical objects.of Calques 3D 
+/// These identifiers are used to uniquely identify each geometrical objects of Calques 3D. 
 /// 
 /// All identifiers have the following form : MAKELONG(X,Y), where 
 /// - X (low-order) is the category of the object (i.e. point, line, sphere, etc.)
@@ -23,6 +23,8 @@
 /// 
 /// See CObject3D::MaskObject for information about how the bitwise combination of identifiers is
 /// used.
+/// @todo Will reach the limit of 16bits data pretty soon; need an alternative for identifiers 
+///		  and masks.
 //@{
 const DWORD TObject3DClass			=	MAKELONG(1,1);		///< ALL geometrical objects
 
@@ -30,7 +32,7 @@ const DWORD TObject3DClass			=	MAKELONG(1,1);		///< ALL geometrical objects
 	const DWORD TAllBasePointClass	= 	MAKELONG(2,8674);	///< ALL base-points (ie with at least of degree of freedom)
 
 const DWORD TPoint3DClass			= 	MAKELONG(2,2);		///< Free point
-const DWORD TPointMilieu3DClass		=	MAKELONG(2,4);		///< Point middle of a bipoint or a segment
+const DWORD TPointMilieu3DClass		=	MAKELONG(2,4);		///< Point middle of a bi-point or a segment
 const DWORD TPointInterDD3DClass	=	MAKELONG(2,8);		///< Point intersection of 2 lines
 const DWORD TPointInterDP3DClass	=	MAKELONG(2,16);		///< Point intersection of a line and a plane
 const DWORD TPointSurD3DClass 		=	MAKELONG(2,32);		///< Point on a line
@@ -70,7 +72,7 @@ const DWORD TCercleInterSS3D		=	MAKELONG(32,16);	///< Circle defined by the inte
 
 const DWORD TCompositeObject3DClass	=	MAKELONG(64,1);		///< ALL composites objects
 const DWORD TCube3DClass			=	MAKELONG(64,4);		///< Cube defined by 3 points
-const DWORD TInterSphDr3DClass		=	MAKELONG(64,8);		///< Bipoint defined by intersection of a sphere and a line
+const DWORD TInterSphDr3DClass		=	MAKELONG(64,8);		///< Bi-point defined by intersection of a sphere and a line
 const DWORD TMacro3DClass			=	MAKELONG(64,16);	///< Macro-construction
 const DWORD TDivSegment3DClass		=	MAKELONG(64,32);	///< Points equally spread on a segment
 
@@ -231,7 +233,8 @@ class CObject3D : public CObject
 
 public:
 	//////////////////////////////////////////////////////////////////////
-	/// Used to identify the type of shape of a given object
+	/// Used to identify the type of graph highlighted with the object.
+	/// @see CObject3D::DrawDepGraph()
 	//////////////////////////////////////////////////////////////////////
 	enum TGraphType 
 	{ 
@@ -240,6 +243,16 @@ public:
 		GRAPH_CHILDREN,	///< Highlight the (direct) children of the object
 		GRAPH_FULL,		///< Highlight all the dependents of the object
 		GRAPH_BASE		///< Highlight the base points connected to the object
+	};
+
+	//////////////////////////////////////////////////////////////////////
+	/// Used to identify the format for the symbolic export of construction
+	/// @see CObject3D::ExportSymbolic()
+	//////////////////////////////////////////////////////////////////////
+	enum TExportType
+	{
+		EXPORT_COCOA = 0,	///< CoCoA export - used for property discovery
+		EXPORT_DOT			///< DOT export - used for graph visualization 
 	};
 
 	BOOL		bValidate;			///< TRUE if the object is analytically valid, FALSE otherwise
@@ -305,14 +318,14 @@ public:
 	/// figure.
 	//@{
 	virtual int		SetDepth();
-	virtual CxObject3DSet* GetParents();
 	virtual void	GetDependList(CxObject3DSet*,BOOL bAll=TRUE);
 	virtual void	GetPolygons(CxObject3DSet*);
 	virtual BOOL	AddObjToDependList(CxObject3DSet* pList);
 	virtual void	SetInGraph(BOOL bAdd=TRUE);
+	virtual BOOL	GraftOn(CObject3D *pNew);
 	virtual BOOL	ChangeParent(CObject3D *pOld,CObject3D *pNew,BOOL bUpGraph=FALSE);
 	virtual BOOL	SetParents(CxObject3DSet* pSet);
-	virtual BOOL	GraftOn(CObject3D *pNew);
+	virtual CxObject3DSet* GetParents();
    //@}
 
 	/// @name Analytical Functions
@@ -321,15 +334,16 @@ public:
 	//@{
 	virtual UINT	CalculConceptuel();
 	virtual void	CalculVisuel(CVisualParam *);
-	virtual void	PrepareMoveObject(BOOL bMove = TRUE) {};
-	virtual BOOL	MoveObject(CVisualParam *,UINT,CPoint ,CVector4&) { return FALSE;};
-	virtual void	TranslateBy(CVector4 ptVec);
-	virtual void	CopyPointPosition(CObject3D* ) {};
-	virtual void	CopyPointPosition(CVector4 ) {};
+	virtual void	GetRange(CVector4 &min,CVector4 &max);
 	virtual BOOL	IsEqual(CObject3D &other);
 	virtual UINT	IsParallelTo(CObject3D *pObj);
 	virtual UINT	IsPerpendicularTo(CObject3D *pObj);
 	virtual UINT	IsAlignedWith(CObject3D *pObj1,CObject3D *pObj2);
+	virtual void	PrepareMoveObject(BOOL bMove = TRUE);
+	virtual BOOL	MoveObject(CVisualParam *pVisual,UINT nModKey,CPoint pt,CVector4& loc);
+	virtual void	TranslateBy(CVector4 ptVec);
+	virtual void	CopyPointPosition(CObject3D* pObj);
+	virtual void	CopyPointPosition(CVector4 ptLoc);
     //@}
 
 
@@ -338,7 +352,7 @@ public:
 	/// by mouse-clicks.
 	//@{
 	virtual CObject3D*	HitTest(CPoint pt,UINT mask=0,int nCalcNum = 0,BOOL bSub = TRUE,CxObject3DSet* pSet = NULL);
-	virtual BOOL		IsInActiveArea(CPoint pt) {return FALSE;}
+	virtual BOOL		IsInActiveArea(CPoint pt);
 	virtual CRgn*		InvalideRect();
 	virtual	CRgn*		DoSegRgn(CPoint p1,CPoint p2);
     //@}
@@ -347,23 +361,21 @@ public:
 	/// These functions are used to access or to modify the attributes of the geometrical object: 
 	/// name, color, shape, tracing, etc.
 	//@{
-	virtual BOOL		IsVisible() {return bVisible;};
-	virtual void		SetVisible(BOOL bVis) { bVisible = bVis;};
-	virtual BOOL		IsSelected() { return bIsSelected;};
-	virtual void		SetSelected(BOOL bSel=TRUE) {bIsSelected = bSel; };
+	virtual BOOL		IsVisible();
+	virtual void		SetVisible(BOOL bVis);
+	virtual BOOL		IsSelected();
+	virtual void		SetSelected(BOOL bSel=TRUE);
 	virtual BOOL		IsInCalque(int CalcNum);
-	virtual BOOL		AddInCalque(int CalcNum,BOOL add=1);
-	virtual void		SetName(CString mstr);
+	virtual BOOL		AddInCalque(int CalcNum,BOOL bAdd=TRUE);
+	virtual void		SetName(CString strName);
 	virtual int			SetObjectID(int nID);
 	virtual void		SetColor(COLORREF rColor);
 	virtual COLORREF	GetDefaultColor();
 	virtual void		SetStyle(int nStyle);
-	virtual void		SetAvailHisto();
-	virtual void		GetRange(CVector4 &min,CVector4 &max);
 	virtual int			SetProperties(CxObject3DSet *pSet=NULL);
 	virtual	void		SetAttributes(CObject3DAttr pAttr);
  	virtual CObject3DAttr	GetAttributes();
-  	virtual CxSchemeSet*	GetRedefineSchemes(CxSchemeSet* pSet) { return pSet;};
+  	virtual CxSchemeSet*	GetRedefineSchemes(CxSchemeSet* pSet);
   //@}
 
 	/// @name Display Functions
@@ -373,9 +385,10 @@ public:
 	virtual void		Draw(CDC* pDC,CVisualParam *vp,BOOL bSm=0);
 	virtual void		DrawRetro(CDC *pDC,CVisualParam *vp);
 	virtual void		DrawSelected(CDC* pDC,CVisualParam *vp);
-	virtual HTREEITEM	DrawHistorique(CTreeCtrl& mListCtrl,HTREEITEM pParent=TVI_ROOT);
-	virtual void		ClearHistorique() { pHistItem = NULL;};
-	virtual CString		DrawSymbolic(); 
+	virtual void		SetHistoryVisibility();
+	virtual HTREEITEM	DrawHistory(CTreeCtrl& mListCtrl,HTREEITEM pParent=TVI_ROOT);
+	virtual void		ClearHistory() { pHistItem = NULL;};
+	virtual CString		ExportSymbolic(int nFormat); 
 	virtual void		DrawMathPad(CDC*);
 	virtual void		Draw3DRendering();
 
