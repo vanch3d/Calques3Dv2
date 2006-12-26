@@ -46,13 +46,13 @@ public:
 	virtual UINT GetDefID() const { return IDS_DEF_CPTOBJECT;};
 
 	virtual int SetObjectID(int nID);
-	virtual void SetAvailHisto();
+	virtual void SetHistoryVisibility();
 	virtual void SetVisible(BOOL bVis);
 	virtual void SetInGraph(BOOL bAdd=TRUE);
 
 	virtual BOOL IsInActiveArea(CPoint pt);
 	virtual BOOL IsInCalque(int CalcNum);
-	virtual BOOL AddInCalque(int CalcNum,BOOL add=1);
+	virtual BOOL AddInCalque(int CalcNum,BOOL bAdd=TRUE);
 	virtual BOOL IsVisible();
 	virtual CRgn* InvalideRect();
 	virtual int ValideCompositeObject(int nIdx);
@@ -70,8 +70,8 @@ public:
 	virtual void HandleObjectError(int,BOOL bShow=FALSE);
 
 	virtual void DrawDepGraph(CDC* pDC,CImageList *pImgList=NULL,int nTrace=GRAPH_NONE,BOOL bDrawNode=TRUE,BOOL bDrawLink=TRUE);
-	virtual HTREEITEM DrawHistorique(CTreeCtrl& mListCtrl,HTREEITEM pParent=TVI_ROOT);
-	virtual void ClearHistorique();
+	virtual HTREEITEM DrawHistory(CTreeCtrl& mListCtrl,HTREEITEM pParent=TVI_ROOT);
+	virtual void ClearHistory();
 
 	virtual int SetProperties(CxObject3DSet *pSet=NULL);
 };
@@ -178,7 +178,7 @@ public:
 	virtual void CalculVisuel(CVisualParam *);
 	virtual void Draw(CDC*,CVisualParam *vp,BOOL bSM=FALSE);
 
-	virtual CString DrawSymbolic(); 
+	virtual CString ExportSymbolic(int nFormat); 
 	virtual void	GetRange(CVector4 &min,CVector4 &max);
 };
 
@@ -215,7 +215,7 @@ public:
 	virtual void CalculVisuel(CVisualParam *);
 	virtual void Draw(CDC*,CVisualParam *vp,BOOL bSM=FALSE);
 
-	virtual CString DrawSymbolic(); 
+	virtual CString ExportSymbolic(int nFormat); 
 	virtual void	GetRange(CVector4 &min,CVector4 &max);
 };
 

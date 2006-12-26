@@ -38,7 +38,7 @@ CViewHisto::~CViewHisto()
 		CObject3D* pObj = GetDocument()->m_cObjectSet.GetAt(i);
 		if (!pObj) continue;
 		//if (DYNAMIC_DOWNCAST(CEquation3D,pObj)) continue;
-		pObj->ClearHistorique();
+		pObj->ClearHistory();
 	}
 
 }
@@ -127,7 +127,7 @@ void CViewHisto::OnInitialUpdate()
 			if (!pObj) continue;
 			//if (DYNAMIC_DOWNCAST(CEquation3D,pObj)) continue;
 
-			pObj->DrawHistorique(mListCtrl);
+			pObj->DrawHistory(mListCtrl);
 
 /*			CString mstr = pObj->GetObjectDef();
 
@@ -170,7 +170,7 @@ void CViewHisto::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 			CObject3D *pObj=NULL;
 			pObj = DYNAMIC_DOWNCAST(CObject3D,pHint);
 			//if (!pObj) break;
-			pObj->DrawHistorique(mListCtrl);
+			pObj->DrawHistory(mListCtrl);
 			m_bRefit = FALSE;
 			SetRedraw(TRUE);
 		}
@@ -181,7 +181,7 @@ void CViewHisto::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 			if (!mListCtrl) break;
 			CObject3D *pObj = DYNAMIC_DOWNCAST(CObject3D,pHint);
 			if (!pObj) break;
-			pObj->DrawHistorique(mListCtrl);
+			pObj->DrawHistory(mListCtrl);
 
 			CxObject3DSet mySet;
 			pObj->GetDependList(&mySet);
@@ -192,7 +192,7 @@ void CViewHisto::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 				CObject3D* pObj2 = mySet.GetAt(i);
 				if (!pObj2) continue;
 
-				pObj2->DrawHistorique(mListCtrl);
+				pObj2->DrawHistory(mListCtrl);
 			}
 		}
 		break;
@@ -211,7 +211,7 @@ void CViewHisto::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 				if (!pObj) continue;
 				if (pObj->pComposite) continue;
 
-				pObj->DrawHistorique(mListCtrl);
+				pObj->DrawHistory(mListCtrl);
 			}
 		}
 		break;
@@ -248,7 +248,7 @@ void CViewHisto::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 			if (pObj2 && pObj2->pHistItem)
 			{
 				mListCtrl.DeleteItem(pObj2->pHistItem);
-				pObj2->ClearHistorique();
+				pObj2->ClearHistory();
 			}
 
 			int nb = GetDocument()->m_cObjectSet.GetSize();
@@ -258,7 +258,7 @@ void CViewHisto::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 				//if (DYNAMIC_DOWNCAST(CEquation3D,pObj)) continue;
 				if (!pObj) continue;
 
-				pObj->DrawHistorique(mListCtrl);
+				pObj->DrawHistory(mListCtrl);
 			}
 			SetRedraw(TRUE);
 		}
@@ -1040,7 +1040,7 @@ CString CViewHisto::OnExportSymbolic()
 		maxa.y = max(omax.y,maxa.y);
 		maxa.z = max(omax.z,maxa.z);
 
-		CString mstr = pObj->DrawSymbolic();
+		CString mstr = pObj->ExportSymbolic(CObject3D::EXPORT_COCOA);
 		//if (!mstr.IsEmpty())
 		{
 			strSymb += mstr + _T("\n");

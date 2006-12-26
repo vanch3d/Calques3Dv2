@@ -388,31 +388,31 @@ void CCompositeObj3D::DrawSelected(CDC* pDC,CVisualParam *vp)
 
 
 
-void CCompositeObj3D::ClearHistorique()
+void CCompositeObj3D::ClearHistory()
 {
     pHistItem = NULL;
     int nb = m_cSubObjects.GetSize();
     for (int i=nStartShow;i<nb;i++)
     {
         CObject3D * obj = m_cSubObjects.GetAt(i);
-        if (obj) obj->ClearHistorique();
+        if (obj) obj->ClearHistory();
     }
 }
 
 
-HTREEITEM CCompositeObj3D::DrawHistorique(CTreeCtrl& mListCtrl,HTREEITEM pParent)
+HTREEITEM CCompositeObj3D::DrawHistory(CTreeCtrl& mListCtrl,HTREEITEM pParent)
 {
     HTREEITEM pHItem = NULL;
     if (!mListCtrl) return NULL;
 
-    pHItem = CObject3D::DrawHistorique(mListCtrl,pParent);
+    pHItem = CObject3D::DrawHistory(mListCtrl,pParent);
     if (!pHItem) return NULL;
 
     int nb = m_cSubObjects.GetSize();
     for (int i=nStartShow;i<nb;i++)
      {
         CObject3D * obj = m_cSubObjects.GetAt(i);
-        obj->DrawHistorique(mListCtrl,pHItem);
+        obj->DrawHistory(mListCtrl,pHItem);
     }
     return pHItem;
 }
@@ -457,15 +457,15 @@ int CCompositeObj3D::SetObjectID(int nID)
     return nb;
 }
 
-void CCompositeObj3D::SetAvailHisto()
+void CCompositeObj3D::SetHistoryVisibility()
 {
-    CObject3D::SetAvailHisto();
+    CObject3D::SetHistoryVisibility();
     int nObj = m_cSubObjects.GetSize();
     for (int i=0;i<nObj;i++)
     {
         CObject3D * obj = m_cSubObjects.GetAt(i);
         if (!obj) continue;
-        obj->SetAvailHisto();
+        obj->SetHistoryVisibility();
     }
 }
 
@@ -1301,7 +1301,7 @@ void CInterSphDr3D::GetRange(CVector4 &min,CVector4 &max)
 
 
 
-CString CInterSphDr3D::DrawSymbolic()
+CString CInterSphDr3D::ExportSymbolic(int nFormat)
 {
     CString mstr;
     mstr.Empty();
@@ -1515,7 +1515,7 @@ void CDivSegment3D::GetRange(CVector4 &min,CVector4 &max)
 
 
 
-CString CDivSegment3D::DrawSymbolic()
+CString CDivSegment3D::ExportSymbolic(int nFormat)
 {
     CString mstr;
     mstr.Empty();
