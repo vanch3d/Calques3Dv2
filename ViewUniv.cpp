@@ -763,7 +763,7 @@ void CViewUniv::OnUpdateTasks(CCmdUI* pCmdUI)
 
 /////////////////////////////////////////////////////////////////////////////
 // CViewUniv Action Handlers
-LRESULT CViewUniv::OnRotateHor(WPARAM,LPARAM)
+void CViewUniv::OnRotateHor()
 {
 	int idx = m_wndHorizBar.CommandToIndex(ID_VISUALISATION_POV_HSLIDER);
 	CBCGPSliderButton* pSlider = DYNAMIC_DOWNCAST(CBCGPSliderButton,m_wndHorizBar.GetButton(idx));
@@ -783,10 +783,6 @@ LRESULT CViewUniv::OnRotateHor(WPARAM,LPARAM)
 		Invalidate();
 		UpdateWindow();
 	}
-
-
-
-    return 0;
 }
 
 void CViewUniv::OnChangePointsOfView()
@@ -808,7 +804,7 @@ void CViewUniv::OnChangePointsOfView()
     UpdateWindow();
 }
 
-LRESULT CViewUniv::OnRotateVer(WPARAM,LPARAM)
+void CViewUniv::OnRotateVer()
 {
 	int idx = m_wndVertBar.CommandToIndex(ID_VISUALISATION_POV_VSLIDER);
 	CBCGPSliderButton* pSlider = DYNAMIC_DOWNCAST(CBCGPSliderButton,m_wndVertBar.GetButton(idx));
@@ -826,7 +822,6 @@ LRESULT CViewUniv::OnRotateVer(WPARAM,LPARAM)
 		UpdateWindow();
 
 	}
-    return 0;
 }
 
 void CViewUniv::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)

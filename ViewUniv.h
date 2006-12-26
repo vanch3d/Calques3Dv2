@@ -111,8 +111,8 @@ protected:
 	afx_msg void	OnChangeReferential(UINT);
 	afx_msg void	OnStartTask(UINT);
 	afx_msg BOOL	OnToolTipText(UINT nID, NMHDR* pNMHDR, LRESULT* pResult);
-	afx_msg LRESULT OnRotateHor(WPARAM,LPARAM);
-	afx_msg LRESULT OnRotateVer(WPARAM,LPARAM);
+	afx_msg void	OnRotateHor();
+	afx_msg void	OnRotateVer();
 	afx_msg LRESULT OnToolbarReset(WPARAM,LPARAM);
 	afx_msg void	OnUpdateMacrosInfo(CCmdUI* pCmdUI);
 	afx_msg void	OnUpdateTasks(CCmdUI* pCmdUI);
