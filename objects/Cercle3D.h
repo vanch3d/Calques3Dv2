@@ -71,7 +71,7 @@ public:
 	virtual void CalculVisuel(CVisualParam *);
 	virtual void Draw(CDC*,CVisualParam *,BOOL bSM=FALSE);
 
-	virtual CString DrawSymbolic(); 
+	virtual CString ExportSymbolic(int nFormat); 
 };
 
 
@@ -95,7 +95,7 @@ public:
 	virtual BOOL IsEqual(CObject3D &other);
 	virtual UINT  CalculConceptuel();
 
-	virtual CString DrawSymbolic(); 
+	virtual CString ExportSymbolic(int nFormat); 
 
 };
 
@@ -156,7 +156,7 @@ public:
 	virtual BOOL IsEqual(CObject3D &other);
 	virtual UINT  CalculConceptuel();
 
-	virtual CString DrawSymbolic(); 
+	virtual CString ExportSymbolic(int nFormat); 
 	virtual void Serialize( CArchive& ar );
 };
 

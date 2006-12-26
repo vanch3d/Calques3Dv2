@@ -489,7 +489,7 @@ void CLocus3D::CalculVisuel(CVisualParam *myVisuParam)
     }*/
 }
 
-CString CLocus3D::DrawSymbolic()
+CString CLocus3D::ExportSymbolic(int nFormat)
 {
     CString mstr;
     mstr.Empty();

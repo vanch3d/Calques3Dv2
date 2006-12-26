@@ -520,7 +520,7 @@ UINT  CDroite3D::CalculConceptuel()
     return 0;
 }
 
-CString CDroite3D::DrawSymbolic()
+CString CDroite3D::ExportSymbolic(int nFormat)
 {
     CString mstr;
     mstr.Empty();
@@ -942,7 +942,7 @@ CRgn*   CSegment3D::InvalideRect()
     return DoSegRgn(p1,p2);
 }
 
-CString CSegment3D::DrawSymbolic()
+CString CSegment3D::ExportSymbolic(int nFormat)
 {
     CString mstr;
     mstr.Empty();
@@ -1007,7 +1007,7 @@ BOOL CDemiDroite3D::IsInActiveArea(CPoint thePt)
     return ret;
 }
 
-CString CDemiDroite3D::DrawSymbolic()
+CString CDemiDroite3D::ExportSymbolic(int nFormat)
 {
     CString mstr;
     mstr.Empty();
@@ -1049,7 +1049,7 @@ CObject3D* CDroitePar3D::CopyObject()
     return temp;
 }
 
-CString CDroitePar3D::DrawSymbolic()
+CString CDroitePar3D::ExportSymbolic(int nFormat)
 {
     CString mstr;
     mstr.Empty();
@@ -1456,7 +1456,7 @@ UINT  CDroiteInterPP3D::CalculConceptuel()
 }
 
 
-CString CDroiteInterPP3D::DrawSymbolic()
+CString CDroiteInterPP3D::ExportSymbolic(int nFormat)
 {
     CString mstr;
     mstr.Empty();
@@ -1698,7 +1698,7 @@ void CDroitePerp3D::Draw(CDC* pDC,CVisualParam *mV,BOOL bSm)
 
 }
 
-CString CDroitePerp3D::DrawSymbolic()
+CString CDroitePerp3D::ExportSymbolic(int nFormat)
 {
     CString mstr;
     mstr.Empty();
@@ -1913,7 +1913,7 @@ UINT  CDroitePerpDD3D::CalculConceptuel()
 }
 
 
-CString CDroitePerpDD3D::DrawSymbolic()
+CString CDroitePerpDD3D::ExportSymbolic(int nFormat)
 {
     CString mstr;
     mstr.Empty();

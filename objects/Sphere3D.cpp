@@ -417,7 +417,7 @@ CString CSphere3D::GetObjectDef()
 	return mstr;
 }
 
-CString CSphere3D::DrawSymbolic()
+CString CSphere3D::ExportSymbolic(int nFormat)
 {
 	CString mstr;
 	mstr.Empty();

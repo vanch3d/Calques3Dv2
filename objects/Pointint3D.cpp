@@ -211,7 +211,7 @@ UINT  CPointInterDD3D::CalculConceptuel()
 }
 
 
-CString CPointInterDD3D::DrawSymbolic()
+CString CPointInterDD3D::ExportSymbolic(int nFormat)
 {
 	CString mstr;
 	mstr.Empty();
@@ -491,7 +491,7 @@ CString CPointInterDP3D::GetObjectDef()
 	return mstr;
 }
 
-CString CPointInterDP3D::DrawSymbolic()
+CString CPointInterDP3D::ExportSymbolic(int nFormat)
 {
 	CString mstr;
 	mstr.Empty();

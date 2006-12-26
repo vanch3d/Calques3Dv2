@@ -382,7 +382,7 @@ void CCercle3D::CalculVisuel(CVisualParam *myVisuParam)
      }
 }
 
-CString CCercle3D::DrawSymbolic()
+CString CCercle3D::ExportSymbolic(int nFormat)
 {
     CString mstr;
     mstr.Empty();
@@ -577,7 +577,7 @@ CString CArcCercle3D::GetObjectDef()
     return mstr;
 }
 
-CString CArcCercle3D::DrawSymbolic()
+CString CArcCercle3D::ExportSymbolic(int nFormat)
 {
     CString mstr;
     mstr.Empty();
@@ -916,7 +916,7 @@ CString CCercleInterSS3D::GetObjectDef()
     return mstr;
 }
 
-CString CCercleInterSS3D::DrawSymbolic()
+CString CCercleInterSS3D::ExportSymbolic(int nFormat)
 {
     CString mstr;
     mstr.Empty();

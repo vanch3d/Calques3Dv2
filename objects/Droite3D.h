@@ -89,7 +89,7 @@ public:
 	virtual UINT  CalculConceptuel();
 	virtual void Draw(CDC*,CVisualParam *vp,BOOL bSm=0);
 
-	virtual CString DrawSymbolic(); 
+	virtual CString ExportSymbolic(int nFormat); 
 
 	virtual CVector4  GetDirVector();
 	virtual CVector4  GetBasePoint();
@@ -119,7 +119,7 @@ public:
 
 	virtual DWORD isA() const { return TSegment3DClass; }
 
-	virtual CString DrawSymbolic(); 
+	virtual CString ExportSymbolic(int nFormat); 
 
 	virtual CRgn* InvalideRect();
 } ;
@@ -141,7 +141,7 @@ public:
 	virtual BOOL IsInLimit(FCoord x);
 	virtual BOOL IsInActiveArea(CPoint pt);
 
-	virtual CString DrawSymbolic(); 
+	virtual CString ExportSymbolic(int nFormat); 
 
 	virtual DWORD isA() const { return TDemiDroite3DClass; }
 };
@@ -161,7 +161,7 @@ public:
 	virtual UINT GetDefID() const { return IDS_DEF_DROITEPAR;};
 	virtual CObject3D* CopyObject();
 
-	virtual CString DrawSymbolic(); 
+	virtual CString ExportSymbolic(int nFormat); 
 
 	virtual DWORD isA() const { return TDroitePar3DClass; }
 } ;
@@ -198,7 +198,7 @@ public:
 	virtual CVector4  GetBasePoint();
 	virtual UINT  CalculConceptuel();
 
-	virtual CString DrawSymbolic(); 
+	virtual CString ExportSymbolic(int nFormat); 
 
 } ;
 
@@ -233,7 +233,7 @@ public:
 	virtual CVector4  GetBasePoint();
 	virtual UINT  CalculConceptuel();
 
-	virtual CString DrawSymbolic(); 
+	virtual CString ExportSymbolic(int nFormat); 
 
 } ;
 
@@ -273,7 +273,7 @@ public:
 
 	virtual void Draw(CDC*,CVisualParam *vp,BOOL bSm=FALSE);
 
-	virtual CString DrawSymbolic(); 
+	virtual CString ExportSymbolic(int nFormat); 
 } ;
 
 #endif // !defined(AFX_DROITE3D_H__F7E630B3_D1B9_11D4_A2FA_00D0B71C8709__INCLUDED_)

@@ -63,7 +63,7 @@ public:
 	virtual void Draw(CDC*,CVisualParam *vp,BOOL bSm=FALSE);
 	virtual void DrawRetro(CDC*,CVisualParam *vp);
 
-	virtual CString DrawSymbolic(); 
+	virtual CString ExportSymbolic(int nFormat); 
 
 	virtual UINT IsParallelTo(CObject3D *pObj);
 	virtual UINT IsPerpendicularTo(CObject3D *pObj);
@@ -106,7 +106,7 @@ public:
 	virtual DWORD isA() const { return TPlanPerp3DClass; }
 
 	virtual void Draw(CDC*,CVisualParam *vp,BOOL bSm=FALSE);
-	virtual CString DrawSymbolic(); 
+	virtual CString ExportSymbolic(int nFormat); 
 
 };
 

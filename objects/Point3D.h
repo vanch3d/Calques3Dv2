@@ -69,7 +69,7 @@ public:
 	virtual void Draw(CDC* pDC,CVisualParam *vp,BOOL bSm=0);
 	virtual void DrawRetro(CDC *pDC,CVisualParam *vp);
 	virtual void DrawSelected(CDC* pDC,CVisualParam *vp);
-	virtual CString DrawSymbolic(); 
+	virtual CString ExportSymbolic(int nFormat); 
 	virtual void	GetRange(CVector4 &min,CVector4 &max);
 	virtual void	Draw3DRendering();
 
@@ -137,7 +137,7 @@ public:
 
 	virtual DWORD isA() const { return TPointMilieu3DClass; }
 
-	virtual CString DrawSymbolic(); 
+	virtual CString ExportSymbolic(int nFormat); 
 
 	virtual UINT  CalculConceptuel();
 };
@@ -199,7 +199,7 @@ public:
 	virtual void CopyPointPosition(CVector4 );
 	virtual UINT  CalculConceptuel();
 
-	virtual CString DrawSymbolic(); 
+	virtual CString ExportSymbolic(int nFormat); 
 
 	virtual BOOL MoveObject(CVisualParam *,UINT,CPoint ,CVector4&);
 };
@@ -234,7 +234,7 @@ public:
 	virtual UINT  CalculConceptuel();
 	virtual void DrawRetro(CDC*,CVisualParam *vp);
 
-	virtual CString DrawSymbolic(); 
+	virtual CString ExportSymbolic(int nFormat); 
 
 	virtual BOOL MoveObject(CVisualParam *,UINT,CPoint ,CVector4&);
 };
@@ -270,7 +270,7 @@ public:
 	virtual void CopyPointPosition(CVector4 );
 	virtual UINT CalculConceptuel();
 	virtual void DrawRetro(CDC*,CVisualParam *vp);
-	virtual CString DrawSymbolic(); 
+	virtual CString ExportSymbolic(int nFormat); 
 
 	virtual BOOL MoveObject(CVisualParam *,UINT,CPoint ,CVector4&);
 };
@@ -308,7 +308,7 @@ public:
 	virtual UINT  CalculConceptuel();
 
 	virtual void DrawRetro(CDC*,CVisualParam *vp);
-	virtual CString DrawSymbolic(); 
+	virtual CString ExportSymbolic(int nFormat); 
 
 	virtual BOOL MoveObject(CVisualParam *,UINT,CPoint ,CVector4&);
 };
@@ -348,7 +348,7 @@ public:
 	virtual UINT  CalculConceptuel();
 	virtual void DrawRetro(CDC*,CVisualParam *vp);
 
-	virtual CString DrawSymbolic(); 
+	virtual CString ExportSymbolic(int nFormat); 
 
 	virtual BOOL MoveObject(CVisualParam *,UINT,CPoint ,CVector4&);
 };
@@ -397,7 +397,7 @@ public:
 
 	virtual DWORD isA() const { return TPointInterDD3DClass; }
 
-	virtual CString DrawSymbolic(); 
+	virtual CString ExportSymbolic(int nFormat); 
 
 	virtual UINT  CalculConceptuel();
 };
@@ -434,7 +434,7 @@ public:
 	virtual DWORD isA() const { return TPointInterDP3DClass; }
 	virtual UINT  CalculConceptuel();
 
-	virtual CString DrawSymbolic(); 
+	virtual CString ExportSymbolic(int nFormat); 
 
 };
 
@@ -465,7 +465,7 @@ public:
 
 	virtual DWORD isA() const { return TPointCenter3DClass; }
 
-	virtual CString DrawSymbolic(); 
+	virtual CString ExportSymbolic(int nFormat); 
 
 	virtual UINT  CalculConceptuel();
 };
@@ -502,7 +502,7 @@ public:
 
 	virtual DWORD isA() const { return TPointSymetric3DClass; }
 
-	virtual CString DrawSymbolic(); 
+	virtual CString ExportSymbolic(int nFormat); 
 
 	virtual UINT  CalculConceptuel();
 };
@@ -536,7 +536,7 @@ public:
 
 	virtual DWORD isA() const { return TPointTranslat3DClass; }
 
-	virtual CString DrawSymbolic(); 
+	virtual CString ExportSymbolic(int nFormat); 
 
 	virtual UINT  CalculConceptuel();
 };

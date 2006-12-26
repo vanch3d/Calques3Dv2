@@ -117,7 +117,7 @@ CxSchemeSet* CPointSurD3D::GetRedefineSchemes(CxSchemeSet* pSet)
 	return pSet;
 }
 
-CString CPointSurD3D::DrawSymbolic()
+CString CPointSurD3D::ExportSymbolic(int nFormat)
 {
 	CString mstr;
 	mstr.Empty();
@@ -666,7 +666,7 @@ UINT  CPointSurC3D::CalculConceptuel()
 	return 0;
 }
 
-CString CPointSurC3D::DrawSymbolic()
+CString CPointSurC3D::ExportSymbolic(int nFormat)
 {
 	CString mstr;
 	mstr.Empty();
@@ -1124,7 +1124,7 @@ UINT  CPointSurP3D::CalculConceptuel()
 	return 0;
 }
 
-CString CPointSurP3D::DrawSymbolic()
+CString CPointSurP3D::ExportSymbolic(int nFormat)
 {
 	CString mstr;
 	mstr.Empty();
@@ -1549,7 +1549,7 @@ BOOL CPointSurS3D::MoveObject(CVisualParam *myVisuParam,UINT,CPoint MouseClic ,C
 	return 1;
 }
 
-CString CPointSurS3D::DrawSymbolic()
+CString CPointSurS3D::ExportSymbolic(int nFormat)
 {
 	CString mstr;
 	mstr.Empty();
@@ -1795,7 +1795,7 @@ UINT  CPointSurCyl3D::CalculConceptuel()
 	return 0;
 }
 
-CString CPointSurCyl3D::DrawSymbolic()
+CString CPointSurCyl3D::ExportSymbolic(int nFormat)
 {
 	CString mstr;
 	mstr.Empty();

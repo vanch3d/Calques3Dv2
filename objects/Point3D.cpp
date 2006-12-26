@@ -382,7 +382,7 @@ BOOL CPoint3D::GetDistanceFrom(CObject3D *pObj,FCoord& dis)
 
 
 
-CString CPoint3D::DrawSymbolic()
+CString CPoint3D::ExportSymbolic(int nFormat)
 {
     CString mstr;
     mstr.Empty();
@@ -821,7 +821,7 @@ UINT  CPointMilieu3D::CalculConceptuel()
     return 0;
 }
 
-CString CPointMilieu3D::DrawSymbolic()
+CString CPointMilieu3D::ExportSymbolic(int nFormat)
 {
     CString mstr;
     mstr.Empty();
@@ -952,7 +952,7 @@ CString CPointCenter3D::GetObjectDef()
 }
 
 
-CString CPointCenter3D::DrawSymbolic()
+CString CPointCenter3D::ExportSymbolic(int nFormat)
 {
     CString mstr;
     mstr.Empty();
@@ -1177,7 +1177,7 @@ UINT CPointSymetric3D::CalculConceptuel()
     return 0;
 }
 
-CString CPointSymetric3D::DrawSymbolic()
+CString CPointSymetric3D::ExportSymbolic(int nFormat)
 {
     CString mstr;
     mstr.Empty();
@@ -1355,7 +1355,7 @@ UINT  CPointTranslat3D::CalculConceptuel()
     return 0;
 }
 
-CString CPointTranslat3D::DrawSymbolic()
+CString CPointTranslat3D::ExportSymbolic(int nFormat)
 {
     CString mstr;
     mstr.Empty();

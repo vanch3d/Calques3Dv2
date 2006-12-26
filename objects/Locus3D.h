@@ -72,7 +72,7 @@ public:
 	virtual void CalculVisuel(CVisualParam *);
 	virtual void Draw(CDC*,CVisualParam *,BOOL bSM=FALSE);
 
-	virtual CString DrawSymbolic(); 
+	virtual CString ExportSymbolic(int nFormat); 
 };
 
 #endif // !defined(AFX_LOCUS3D_H__71BE2320_F769_11D4_A2FA_00D0B71C8709__INCLUDED_)

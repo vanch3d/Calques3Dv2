@@ -979,7 +979,7 @@ void CPlan3D::GetRange(CVector4 &min,CVector4 &max)
 
 
 
-CString CPlan3D::DrawSymbolic()
+CString CPlan3D::ExportSymbolic(int nFormat)
 {
     CString mstr;
     mstr.Empty();
@@ -1230,7 +1230,7 @@ void CPlanPerp3D::Draw(CDC* pDC,CVisualParam *mV,BOOL bSm)
 }
 
 
-CString CPlanPerp3D::DrawSymbolic()
+CString CPlanPerp3D::ExportSymbolic(int nFormat)
 {
     CString mstr;
     mstr.Empty();
