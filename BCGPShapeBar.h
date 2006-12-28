@@ -24,9 +24,6 @@ class CBCGPShapeBar : public CBCGPPopupMenuBar
 	friend class CBCGPShapeButton;
 	friend class CBCGPCShapeToolbarButton;
 	friend class CBCGPShapePopup;
-	//friend class CBCGPColorMenuButton;
-	//friend class CBCGPImageEditDlg;
-	//friend class CBCGPColorProp;
 
 	DECLARE_SERIAL(CBCGPShapeBar)
 
@@ -173,6 +170,40 @@ protected:
 
 	CSize GetColorGridSize (BOOL bVertDock) const;
 	int GetExtraHeight (int nNumColumns) const;
+};
+
+
+/////////////////////////////////////////////////////////////////////////////
+/// CBCGPCShapeToolbarButton 
+/////////////////////////////////////////////////////////////////////////////
+class CBCGPCShapeToolbarButton : public CBCGPToolbarButton  
+{
+	friend class CBCGPShapeBar;
+
+	DECLARE_SERIAL(CBCGPCShapeToolbarButton)
+
+protected:
+	CBCGPCShapeToolbarButton(int type=0,int index=0, 
+				BOOL bIsAutomatic = FALSE, 
+				LPCTSTR lpszColorName = NULL, BOOL bHighlight = FALSE);
+
+// Overrides
+	virtual void OnDraw (CDC* pDC, const CRect& rect, CBCGPToolBarImages* pImages,
+						BOOL bHorz = TRUE, BOOL bCustomizeMode = FALSE,
+						BOOL bHighlight = FALSE,
+						BOOL bDrawBorder = TRUE,
+						BOOL bGrayDisabledButtons = TRUE);
+
+	virtual BOOL OnToolHitTest(const CWnd* pWnd, TOOLINFO* pTI);
+	virtual void OnChangeParentWnd (CWnd* pWndParent);
+
+// Attributes
+protected:
+	int m_Type;
+	int m_nShape;
+	BOOL			m_bHighlight;
+	BOOL			m_bIsAutomatic;
+	CBCGPShapeBar*	m_pParentBar;
 };
 
 /////////////////////////////////////////////////////////////////////////////

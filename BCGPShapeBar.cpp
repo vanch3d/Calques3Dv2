@@ -31,74 +31,53 @@ static char THIS_FILE[] = __FILE__;
 
 static const int SEPARATOR_SIZE = 2;
 
-/////////////////////////////////////////////////////////////////////////////
-/// CBCGPCShapeToolbarButton 
-/////////////////////////////////////////////////////////////////////////////
-class CBCGPCShapeToolbarButton : public CBCGPToolbarButton  
-{
-	friend class CBCGPShapeBar;
-	//friend class CBCGPColorMenuButton;
-
-	DECLARE_SERIAL(CBCGPCShapeToolbarButton)
-
-protected:
-	CBCGPCShapeToolbarButton(int type=0,int index=0, 
-				BOOL bIsAutomatic = FALSE, 
-				LPCTSTR lpszColorName = NULL, BOOL bHighlight = FALSE)
-	{
-		m_Type = type;
-		m_nShape = index;
-		m_bHighlight = bHighlight;
-		m_strText = (lpszColorName == NULL) ? _T("") : lpszColorName;
-		m_bIsAutomatic = bIsAutomatic;
-		m_pParentBar = NULL;
-		m_bLocked = TRUE;
-	}
-
-	virtual void OnDraw (CDC* pDC, const CRect& rect, CBCGPToolBarImages* pImages,
-						BOOL bHorz = TRUE, BOOL bCustomizeMode = FALSE,
-						BOOL bHighlight = FALSE,
-						BOOL bDrawBorder = TRUE,
-						BOOL bGrayDisabledButtons = TRUE);
-
-	virtual BOOL OnToolHitTest(const CWnd* /*pWnd*/, TOOLINFO* pTI)
-	{
-		if (m_nStyle & TBBS_DISABLED)
-		{
-			return FALSE;
-		}
-
-		if (!CBCGPToolBar::GetShowTooltips () || pTI == NULL)
-		{
-			return FALSE;
-		}
-
-		CString str = m_strText;
-		//if (!m_bIsAutomatic && !m_bIsOther && !m_bIsLabel)
-		{
-				str = CShape::GetShapeDef(m_Type,m_nShape);
-		}
-
-		pTI->lpszText = (LPTSTR) ::calloc ((str.GetLength () + 1), sizeof (TCHAR));
-		_tcscpy (pTI->lpszText, str);
-
-		return TRUE;
-	}
-
-	virtual void OnChangeParentWnd (CWnd* pWndParent)
-	{
-		CBCGPToolbarButton::OnChangeParentWnd (pWndParent);
-		m_pParentBar = DYNAMIC_DOWNCAST (CBCGPShapeBar, pWndParent);
-	}
-
-	int m_Type;
-	int m_nShape;
-	BOOL			m_bHighlight;
-	BOOL			m_bIsAutomatic;
-	CBCGPShapeBar*	m_pParentBar;
-};
-
 IMPLEMENT_SERIAL(CBCGPCShapeToolbarButton, CBCGPToolbarButton, 1)
+
+CBCGPCShapeToolbarButton::CBCGPCShapeToolbarButton(
+			int type/*=0*/,
+			int index/*=0*/, 
+			BOOL bIsAutomatic /*= FALSE*/, 
+			LPCTSTR lpszColorName /*= NULL*/, 
+			BOOL bHighlight /*= FALSE*/)
+{
+	m_Type = type;
+	m_nShape = index;
+	m_bHighlight = bHighlight;
+	m_strText = (lpszColorName == NULL) ? _T("") : lpszColorName;
+	m_bIsAutomatic = bIsAutomatic;
+	m_pParentBar = NULL;
+	m_bLocked = TRUE;
+}
+
+void CBCGPCShapeToolbarButton::OnChangeParentWnd (CWnd* pWndParent)
+{
+	CBCGPToolbarButton::OnChangeParentWnd (pWndParent);
+	m_pParentBar = DYNAMIC_DOWNCAST (CBCGPShapeBar, pWndParent);
+}
+
+BOOL CBCGPCShapeToolbarButton::OnToolHitTest(const CWnd* /*pWnd*/, TOOLINFO* pTI)
+{
+	if (m_nStyle & TBBS_DISABLED)
+	{
+		return FALSE;
+	}
+
+	if (!CBCGPToolBar::GetShowTooltips () || pTI == NULL)
+	{
+		return FALSE;
+	}
+
+	CString str = m_strText;
+	//if (!m_bIsAutomatic && !m_bIsOther && !m_bIsLabel)
+	{
+			str = CShape::GetShapeDef(m_Type,m_nShape);
+	}
+
+	pTI->lpszText = (LPTSTR) ::calloc ((str.GetLength () + 1), sizeof (TCHAR));
+	_tcscpy (pTI->lpszText, str);
+
+	return TRUE;
+}
 
 void CBCGPCShapeToolbarButton::OnDraw (CDC* pDC, const CRect& rect, CBCGPToolBarImages* /*pImages*/,
 								BOOL bHorz, BOOL bCustomizeMode, BOOL bHighlight,
