@@ -24,7 +24,7 @@ static const int iDefaultHeight = 24;
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-CBCGPSliderButton::CBCGPSliderButton() :
+CBCGPSliderButton::CBCGPSliderButton() : CBCGPToolbarButton(),
 	m_wndSlider (*this)
 {
 	m_dwStyle = WS_CHILD | WS_VISIBLE | TBS_HORZ | TBS_NOTICKS;
