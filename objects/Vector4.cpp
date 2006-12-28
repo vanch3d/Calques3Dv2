@@ -349,10 +349,63 @@ CVector4 CVisualParam::GetProjectedPoint(CPoint MouseClic)
 		temp.x = aa/den;
 		temp.y = bb/den;
 	}
-	TRACE(" >>>>> %d %d \n",(int)temp.x,(int)temp.y);
+	//TRACE(" >>>>> %d %d \n",(int)temp.x,(int)temp.y);
 	//return (CPoint) ConceptPt;
 	return temp;
 }
+
+CVector4 CVisualParam::GetScreenProjection(CVector4 vec)
+{
+	FCoord
+		st = ST,
+		sp = SP,
+		ct = CT,
+		cp = CP,
+		RCx = ptRepCoord.x,
+		RCy = ptRepCoord.y,
+		x0 = vec.x-RCx,
+		y0 = RCy-vec.y;
+
+	////////////// ZOOM
+	x0 = (1/nZoom)*x0;
+	y0 = (1/nZoom)*y0;
+
+	FCoord
+		z0 = ProjParam.dis,
+		Rh = ProjParam.rho,
+		z = -sp*z0 + sp*Rh + y0*cp,
+		y = -sp*y0*st + x0*ct -cp*z0*st + cp*Rh*st,
+		x = -ct*sp*y0 - ct*cp*z0 + ct*cp*Rh - x0*st;
+	CVector4 ecran(x,y,z);
+	return ecran;
+}
+
+CVector4 CVisualParam::GetScreenProjectionInf(CVector4 vec)
+{
+	FCoord
+		st = ST,
+		sp = SP,
+		ct = CT,
+		cp = CP,
+		RCx = ptRepCoord.x,
+		RCy = ptRepCoord.y,
+		x0 = vec.x-RCx,
+		y0 = RCy-vec.y;
+
+	////////////// ZOOM
+	x0 = (1/nZoom)*x0;
+	y0 = (1/nZoom)*y0;
+
+	FCoord
+		z0 = vec.z,
+		Rh = ProjParam.rho,
+		z = -sp*z0 + sp*Rh + y0*cp,
+		y = -sp*y0*st + x0*ct -cp*z0*st + cp*Rh*st,
+		x = -ct*sp*y0 - ct*cp*z0 + ct*cp*Rh - x0*st;
+	CVector4 ecran(x,y,z);
+	return ecran;
+}
+
 
 void CVisualParam::ApplyMagnet(CVector4& pt)
 {

@@ -323,7 +323,7 @@ UINT  CPointSurD3D::CalculConceptuel()
 	 return 0;
 }
 
-CVector4 GetPrjPt(CVisualParam *myVisuParam,CVector4& res)
+/*CVector4 GetPrjPt(CVisualParam *myVisuParam,CVector4& res)
 {
 	FCoord
 		st = myVisuParam->ST,
@@ -347,9 +347,9 @@ CVector4 GetPrjPt(CVisualParam *myVisuParam,CVector4& res)
 		x = -ct*sp*y0 - ct*cp*z0 + ct*cp*Rh - x0*st;
 	CVector4 ecran(x,y,z);
 	return ecran;
-}
+}*/
 
-CVector4 GetPrjPt2(CVisualParam *myVisuParam,CVector4& res)
+/*CVector4 GetPrjPt2(CVisualParam *myVisuParam,CVector4& res)
 {
 	FCoord
 		st = myVisuParam->ST,
@@ -373,7 +373,8 @@ CVector4 GetPrjPt2(CVisualParam *myVisuParam,CVector4& res)
 		x = -ct*sp*y0 - ct*cp*z0 + ct*cp*Rh - x0*st;
 	CVector4 ecran(x,y,z);
 	return ecran;
-}
+}*/
+
 BOOL CPointSurD3D::MoveObject(CVisualParam *myVisuParam,UINT,CPoint MouseClic,CVector4&TempCpt)
 {
 	CVector4 dir = S->GetDirVector();
@@ -394,8 +395,10 @@ BOOL CPointSurD3D::MoveObject(CVisualParam *myVisuParam,UINT,CPoint MouseClic,CV
 		d2 = CVector4(res.x,res.y+100.,0);
 	else
 		d2 = CVector4(res.x+100.,res.y,0);
-	d1 = GetPrjPt2(myVisuParam,d1);
-	d2 = GetPrjPt2(myVisuParam,d2);
+	//d1 = GetPrjPt2(myVisuParam,d1);
+	//d2 = GetPrjPt2(myVisuParam,d2);
+	d1 = myVisuParam->GetScreenProjectionInf(d1);
+	d2 = myVisuParam->GetScreenProjectionInf(d2);
 	CVector4*	r = S->IntersectPlan(ecran,d1,d2,false);
 	if (!r)
 	 {
@@ -733,10 +736,12 @@ BOOL CPointSur3D::IntersectPlanDroite(CVector4& PP1,CVector4& U,
 BOOL CPointSurC3D::MoveObject(CVisualParam *myVisuParam,UINT,CPoint MouseClic,CVector4& TempCpt)
 {
 	CVector4 res(MouseClic.x,MouseClic.y,0,1);
-	CVector4 ecran = GetPrjPt(myVisuParam,res);
+	//CVector4 ecran = GetPrjPt(myVisuParam,res);
+	CVector4 ecran = myVisuParam->GetScreenProjection(res);
 	CVector4 d1(res.x,res.y,0);
 //	Vector4 d1(res.x,0,0);
-	d1 = GetPrjPt2(myVisuParam,d1);
+	//d1 = GetPrjPt2(myVisuParam,d1);
+	d1 = myVisuParam->GetScreenProjectionInf(d1);
 //	Vector4*	tmp = IntersectPlanDroite(ecran,MakeVector(ecran,d1),
 //															S->P1->Concept_pt,
 //															S->P2->Concept_pt,
@@ -1489,9 +1494,11 @@ BOOL CPointSur3D::IntersectSphereRay(CVector4 raybase,CVector4 raycos,CVector4 c
 BOOL CPointSurS3D::MoveObject(CVisualParam *myVisuParam,UINT,CPoint MouseClic ,CVector4& TempCpt )
 {
 	CVector4 res(MouseClic.x,MouseClic.y,0,1);
-	CVector4 p1 = GetPrjPt(myVisuParam,res);
+	//CVector4 p1 = GetPrjPt(myVisuParam,res);
+	CVector4 p1 = myVisuParam->GetScreenProjection(res);
 	CVector4 p2(res.x,res.y,0);
-	p2 = GetPrjPt2(myVisuParam,p2);
+	//p2 = GetPrjPt2(myVisuParam,p2);
+	p2 = myVisuParam->GetScreenProjectionInf(p2);
 
 	CVector4 t  = p2 - p1;
 	t = t * (1/t.Norme());
@@ -1967,9 +1974,11 @@ BOOL CPointSur3D::IntersectCylindreRay(CVector4 raybase,CVector4 raycos,CVector4
 BOOL CPointSurCyl3D::MoveObject(CVisualParam *myVisuParam,UINT,CPoint MouseClic,CVector4& TempCpt)
 {
 	CVector4 res(MouseClic.x,MouseClic.y,0,1);
-	CVector4 p1 = GetPrjPt(myVisuParam,res);
+	//CVector4 p1 = GetPrjPt(myVisuParam,res);
+	CVector4 p1 = myVisuParam->GetScreenProjection(res);
 	CVector4 p2(res.x,res.y,0);
-	p2 = GetPrjPt2(myVisuParam,p2);
+	//p2 = GetPrjPt2(myVisuParam,p2);
+	p2 = myVisuParam->GetScreenProjectionInf(p2);
 
 	CVector4 t  = p2 - p1;
 	t = t * (1/t.Norme());
