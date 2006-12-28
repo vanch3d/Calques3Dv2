@@ -12,6 +12,7 @@
 #endif
 
 class CObject3D;
+class CText3D;
 
 /////////////////////////////////////////////////////////////////////////////
 /// Private toolbar used in the CPropertyBar class
@@ -59,7 +60,8 @@ protected:
 
 // Operations
 protected:
-	CBCGPProp* AddAppearance(CObject3D* pObj);
+	CBCGPProp* GetObjectAppearance(CObject3D* pObj);
+	CBCGPProp* GetTextAppearance(CText3D* pObj);
 
 public:
     void EnableBar(BOOL bOpen=TRUE);

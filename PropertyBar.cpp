@@ -8,6 +8,7 @@
 #include "PropertyBar.h"
 #include "objects/ComboShape.h"
 #include "objects/Object3D.h"
+#include "objects/Text3D.h"
 #include "objects/CompositeObj3D.h"
 
 #include "Prefs\Prefs.h"
@@ -86,7 +87,7 @@ void CPropertyBar::EnableBar(BOOL bOpen/*=TRUE*/)
 	m_wndProp.Invalidate(TRUE);
 }
 
-CBCGPProp* CPropertyBar::AddAppearance(CObject3D* pObj)
+CBCGPProp* CPropertyBar::GetObjectAppearance(CObject3D* pObj)
 {
 	CString strRes,strDefRes;
 
@@ -166,6 +167,64 @@ CBCGPProp* CPropertyBar::AddAppearance(CObject3D* pObj)
 	return pGroup;
 }
 
+
+CBCGPProp* CPropertyBar::GetTextAppearance(CText3D* pObj)
+{
+	CString strRes,strDefRes;
+
+	strRes.LoadString(PROP_APPEARANCE);
+	strDefRes.LoadString(PROP_APPEARANCE_DESC);
+	CBCGPProp* pGroup = new CBCGPProp (strRes);
+	pGroup->SetDescription(strDefRes);
+
+	strRes.LoadString(PROP_OBJNAME);
+	strDefRes.LoadString(PROP_OBJNAME_DESC);
+	CBCGPProp* pProp = new CBCGPProp (strRes, (LPCTSTR) pObj->GetObjectName(),strDefRes);
+	pGroup->AddSubItem (pProp);
+	pProp->SetData((DWORD)&pObj->strObjectName);
+
+	if (m_palColorPicker.GetSafeHandle () == NULL)
+	{	// Create the palette
+		int m_nNumColours = 8;
+		struct 
+		{
+			LOGPALETTE    LogPalette;
+			PALETTEENTRY  PalEntry[8];
+		}pal;
+
+		LOGPALETTE* pLogPalette = (LOGPALETTE*) &pal;
+		pLogPalette->palVersion    = 0x300;
+		pLogPalette->palNumEntries = (WORD) m_nNumColours; 
+
+		for (int i = 0; i < m_nNumColours; i++)
+		{
+			pLogPalette->palPalEntry[i].peRed   = GetRValue(TPref::custColors[i]);
+			pLogPalette->palPalEntry[i].peGreen = GetGValue(TPref::custColors[i]);
+			pLogPalette->palPalEntry[i].peBlue  = GetBValue(TPref::custColors[i]);
+			pLogPalette->palPalEntry[i].peFlags = 0;
+		}
+
+		m_palColorPicker.CreatePalette (pLogPalette);
+	}
+
+	strRes.LoadString(PROP_OBJCOLOR);
+	strDefRes.LoadString(PROP_OBJCOLOR_DESC);
+	CBCGPColorProp* pColorProp = new CBCGPColorProp (strRes, 
+						pObj->mColorText, &m_palColorPicker, 
+						strDefRes);
+	pColorProp->AllowEdit(FALSE);
+	pColorProp->SetData((DWORD)&pObj->mColorText);
+
+	CString strDef,strOther,strDoc;
+	strDef.LoadString(PREF_NAME_CLRAUTO);
+	strOther.LoadString(PREF_NAME_CLROTHER);
+	pColorProp->EnableAutomaticButton (strDef, pObj->GetDefaultColor());
+	pColorProp->EnableOtherButton (strOther);
+
+	pGroup->AddSubItem (pColorProp);
+
+	return pGroup;
+}
 void CPropertyBar::AddProperties(CObject3D* pObj)
 {
 	if (pObj == m_pSelObj)
@@ -196,27 +255,14 @@ void CPropertyBar::AddProperties(CObject3D* pObj)
 	pProp->SetImageList(&m_pImgList);
 	pGroup0->AddSubItem (pProp);
 	pTopItem = pProp;
-
-
-	/*CxObject3DSet* pParent = pObj->GetParents();
-	if (pParent) for (int j=0;j<pParent->GetSize();j++)
-	{
-		CObject3D *pPar = pParent->GetAt(j);
-		if (!pPar) continue;
-		CBCGPObjectProp* pProp2 = new CBCGPObjectProp(
-									pPar->GetObjectHelp(),
-									pPar->GetObjectDef(),
-									pPar->GetNameID() - IDS_NAME_OBJECT,
-									FALSE);
-		pProp2->SetImageList(&m_pImgList);
-		pProp->AddSubItem (pProp2);
-
-	}
-	delete pParent;*/
 	m_wndProp.AddProperty (pGroup0);
 
 	// Set the appearance group
-	m_wndProp.AddProperty (AddAppearance(pObj));
+	CText3D *pTextObj = DYNAMIC_DOWNCAST (CText3D, pObj);
+	if (pTextObj==NULL)
+		m_wndProp.AddProperty (GetObjectAppearance(pObj));
+	else
+		m_wndProp.AddProperty (GetTextAppearance(pTextObj));
 
 	if (pTopItem) m_wndProp.SetCurSel(pTopItem);
 }
@@ -510,7 +556,7 @@ void CDependentBar::AddProperties(CObject3D* pObj)
 			m_wndProp.AddProperty (pGroup3);
 		}
 	}
-	/*// Set Composites
+	// Set Composites
 	if (pObj->MaskObject(TCompositeObject3DClass))
 	{
 		CCompositeObj3D *pComp = DYNAMIC_DOWNCAST( CCompositeObj3D, pObj);
@@ -518,13 +564,16 @@ void CDependentBar::AddProperties(CObject3D* pObj)
 		int nsize = pComp->m_cSubObjects.GetSize();
 		if (nsize > 0)
 		{
-			CBCGPProp* pGroup3 = new CBCGPProp ("Composites");
+			strRes.LoadString(PROP_COMPOSITE);
+			strDefRes.LoadString(PROP_COMPOSITE_DESC);
+			CBCGPProp* pGroup3 = new CBCGPProp (strRes);
+			pGroup3->SetDescription(strDefRes);
 			for (int i=0;i<nsize;i++)
 			{
 				CObject3D* pDep = (CObject3D*)pComp->m_cSubObjects.GetAt(i);
 				if (!pDep) continue;
 				if (pDep==pObj) continue;
-				CBCGObjectProp* pProp = new CBCGObjectProp(pDep->GetObjectHelp(),pDep->GetObjectDef(),pDep->GetNameID() - IDS_NAME_OBJECT,FALSE);
+				CBCGPObjectProp* pProp = new CBCGPObjectProp(pDep->GetObjectHelp(),pDep->GetObjectDef(),pDep->GetNameID() - IDS_NAME_OBJECT,FALSE);
 				pProp->SetImageList(&m_pImgList);
 				//pProp->AddSubItem  (AddAppearance(pDep));
 				pGroup3->AddSubItem (pProp);
@@ -534,7 +583,7 @@ void CDependentBar::AddProperties(CObject3D* pObj)
 		}
 
 		
-	}*/
+	}
 	if (pTopItem) m_wndProp.SetCurSel(pTopItem);
 }
 
