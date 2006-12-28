@@ -23,6 +23,36 @@ static char THIS_FILE[]=__FILE__;
 
 //extern CRgn* DoSegRgn(CPoint p1,CPoint p2);
 
+int CxVectorSSSet::AddSorted(CVector4SSide theo)
+{
+    int nb = GetSize();
+    for (int i=0;i<nb;i++)
+    {
+        CVector4SSide myo = GetAt(i);
+        if (theo < myo)
+        {
+            InsertAt(i,theo);
+            return i;
+        }
+    }
+    Add(theo);
+    return nb;
+}
+
+void CxVectorSSSet::AddtoList(CDroite3D *d, CSegment3D *p,CPoint3D  *myA[4],int *nbpt,
+							  FCoord dp1,  CVector4 base, int n,bool b)
+{
+    CPointInterDD3D *pt = new CPointInterDD3D(d,p);
+    if (!pt->CalculConceptuel())
+     {
+        CVector4 cpt =  pt->Concept_pt;
+        myA[(*nbpt)++]=pt;
+        //AddSorted(mylist,CVector4SSide(cpt,dp1+(FCoord)(cpt - base),n,b));
+        AddSorted(CVector4SSide(cpt,dp1+(FCoord)(cpt - base),n,b));
+     }
+    else delete pt;
+}
+
 
 FCoord CPlan3D::GetDistancePt(CVector4 Nf, CVector4 pt)
 {
@@ -369,7 +399,7 @@ void CPlan3D::GetProjectedMinMax(CObject3D* pObj,CVector4 P1,CVector4 I,CVector4
     {
         CDroitePerp3D *dr = ((CDroitePerp3D*)pObj);
         if (!dr) return;
-        thept = dr->IntPt;
+        thept = dr->GetIntersectionPoint();
     }
     else if (pObj->MaskObject(TDroiteInterPP3DClass))
     {
@@ -515,39 +545,8 @@ void CPlan3D::CalculVisuel(CVisualParam *myVisuParam)
 //  ptonRep.O = p1;
 }
 
-class CSVector4 : public CVector4
-{
-public:
-    int vis,side;
-    FCoord dis;
-    CSVector4() : CVector4() {};
-    CSVector4(CVector4 v,FCoord n,int s=0,int vi=1) :
-        CVector4(v)
-        {dis=n;vis=vi;side=s;};
-     bool operator <(const CSVector4& other) const;
-};
 
-inline bool CSVector4::operator <(const CSVector4& other) const {
-  return (dis < other.dis);
-}
 
-typedef CArray<CSVector4,CSVector4> CSVectorSet;
-
-int AddSorted(CSVectorSet* pList,CSVector4 theo)
-{
-    int nb = pList->GetSize();
-    for (int i=0;i<nb;i++)
-    {
-        CSVector4 myo = pList->GetAt(i);
-        if (theo < myo)
-        {
-            pList->InsertAt(i,theo);
-            return i;
-        }
-    }
-    pList->Add(theo);
-    return nb;
-}
 
 /*bool testv(CVector4 o,CVisualParam *myVisuParamExt)
 {
@@ -692,18 +691,6 @@ void MyDraw22(int code,CPoint3D  *myA[4],int *nbpt,CDC* HandleDC,
 }
 
 
-void AddtoList(CDroite3D *d, CSegment3D *p,CPoint3D  *myA[4],int *nbpt,
-                CSVectorSet* mylist, FCoord dp1,  CVector4 base, int n,bool b)
-{
-    CPointInterDD3D *pt = new CPointInterDD3D(d,p);
-    if (!pt->CalculConceptuel())
-     {
-        CVector4 cpt =  pt->Concept_pt;
-        myA[(*nbpt)++]=pt;
-        AddSorted(mylist,CSVector4(cpt,dp1+(FCoord)(cpt - base),n,b));
-     }
-    else delete pt;
-}
 
 void CPlan3D::Draw(CDC* pDC,CVisualParam *mV,BOOL bSm)
 {
@@ -770,17 +757,17 @@ void CPlan3D::Draw(CDC* pDC,CVisualParam *mV,BOOL bSm)
             howmuch=theside = -1;
      }
 
-    CSVectorSet mylist;
+    CxVectorSSSet mylist;
 
-    AddSorted(&mylist,CSVector4(p1,dp1,1,
+    mylist.AddSorted(CVector4SSide(p1,dp1,1,
             (theside == 1 || howmuch==1 || theside == 4 || howmuch==4)));
-    AddSorted(&mylist,CSVector4(p2,dp2,2,
+    mylist.AddSorted(CVector4SSide(p2,dp2,2,
             (theside == 2 || howmuch==2 || theside == 1 || howmuch==1)));
-    AddSorted(&mylist,CSVector4(p3,dp3,3,
+    mylist.AddSorted(CVector4SSide(p3,dp3,3,
             (theside == 2 || howmuch==2 || theside == 3 || howmuch==3)));
-    AddSorted(&mylist,CSVector4(p4,dp4,4,
+    mylist.AddSorted(CVector4SSide(p4,dp4,4,
             (theside == 3 || howmuch==3 || theside == 4 || howmuch==4)));
-    AddSorted(&mylist,CSVector4(p1,dp5,1,
+    mylist.AddSorted(CVector4SSide(p1,dp5,1,
             (theside == 4 || howmuch==4 || theside == 1 || howmuch==1)));
 
     if (mV->nVisuKind == CVisualParam::VisuPlane)
@@ -808,8 +795,8 @@ void CPlan3D::Draw(CDC* pDC,CVisualParam *mV,BOOL bSm)
                 pDC->LineTo(aa2);
                 pDC->SelectObject(oldP);
              }
-            AddSorted(&mylist,CSVector4(A,dp2,2,(theside == 2 || howmuch==2)));
-            AddSorted(&mylist,CSVector4(B,dp4,4,(theside == 4 || howmuch==4)));
+            mylist.AddSorted(CVector4SSide(A,dp2,2,(theside == 2 || howmuch==2)));
+            mylist.AddSorted(CVector4SSide(B,dp4,4,(theside == 4 || howmuch==4)));
          }
      }
     else if (mV->nVisuKind == CVisualParam::VisuClois)
@@ -837,27 +824,27 @@ void CPlan3D::Draw(CDC* pDC,CVisualParam *mV,BOOL bSm)
 
         if (!r1)
          {
-            AddtoList(&d1,&p1p2,myA,&nbpt,&mylist,dp1,p1, 1,(theside == 1 || howmuch==1));
-            AddtoList(&d1,&p2p3,myA,&nbpt,&mylist,dp2,p2, 2,(theside == 2 || howmuch==2));
-            AddtoList(&d1,&p3p4,myA,&nbpt,&mylist,dp3,p3, 3,(theside == 3 || howmuch==3));
-            AddtoList(&d1,&p4p1,myA,&nbpt,&mylist,dp4,p4, 4,(theside == 4 || howmuch==4));
+            mylist.AddtoList(&d1,&p1p2,myA,&nbpt,dp1,p1, 1,(theside == 1 || howmuch==1));
+            mylist.AddtoList(&d1,&p2p3,myA,&nbpt,dp2,p2, 2,(theside == 2 || howmuch==2));
+            mylist.AddtoList(&d1,&p3p4,myA,&nbpt,dp3,p3, 3,(theside == 3 || howmuch==3));
+            mylist.AddtoList(&d1,&p4p1,myA,&nbpt,dp4,p4, 4,(theside == 4 || howmuch==4));
             MyDraw22(1,myA,&nbpt,pDC,mV,nf,(bMarked && mV->bDrawMark));
         }
         if (!r2)
          {
-            AddtoList(&d2,&p1p2,myA,&nbpt,&mylist,dp1,p1, 1,(theside == 1 || howmuch==1));
-            AddtoList(&d2,&p2p3,myA,&nbpt,&mylist,dp2,p2, 2,(theside == 2 || howmuch==2));
-            AddtoList(&d2,&p3p4,myA,&nbpt,&mylist,dp3,p3, 3,(theside == 3 || howmuch==3));
-            AddtoList(&d2,&p4p1,myA,&nbpt,&mylist,dp4,p4, 4,(theside == 4 || howmuch==4));
+            mylist.AddtoList(&d2,&p1p2,myA,&nbpt,dp1,p1, 1,(theside == 1 || howmuch==1));
+            mylist.AddtoList(&d2,&p2p3,myA,&nbpt,dp2,p2, 2,(theside == 2 || howmuch==2));
+            mylist.AddtoList(&d2,&p3p4,myA,&nbpt,dp3,p3, 3,(theside == 3 || howmuch==3));
+            mylist.AddtoList(&d2,&p4p1,myA,&nbpt,dp4,p4, 4,(theside == 4 || howmuch==4));
             MyDraw22(2,myA,&nbpt,pDC,mV,nf,(bMarked && mV->bDrawMark));
          }
 
         if (!r3)
          {
-            AddtoList(&d3,&p1p2,myA,&nbpt,&mylist,dp1,p1, 1,(theside == 1 || howmuch==1));
-            AddtoList(&d3,&p2p3,myA,&nbpt,&mylist,dp2,p2, 2,(theside == 2 || howmuch==2));
-            AddtoList(&d3,&p3p4,myA,&nbpt,&mylist,dp3,p3, 3,(theside == 3 || howmuch==3));
-            AddtoList(&d3,&p4p1,myA,&nbpt,&mylist,dp4,p4, 4,(theside == 4 || howmuch==4));
+            mylist.AddtoList(&d3,&p1p2,myA,&nbpt,dp1,p1, 1,(theside == 1 || howmuch==1));
+            mylist.AddtoList(&d3,&p2p3,myA,&nbpt,dp2,p2, 2,(theside == 2 || howmuch==2));
+            mylist.AddtoList(&d3,&p3p4,myA,&nbpt,dp3,p3, 3,(theside == 3 || howmuch==3));
+            mylist.AddtoList(&d3,&p4p1,myA,&nbpt,dp4,p4, 4,(theside == 4 || howmuch==4));
             MyDraw22(3,myA,&nbpt,pDC,mV,nf,(bMarked && mV->bDrawMark));
          }
 
@@ -866,10 +853,10 @@ void CPlan3D::Draw(CDC* pDC,CVisualParam *mV,BOOL bSm)
 
     int nbItem = mylist.GetSize();
     BOOL bfirst =TRUE;
-    CSVector4 start;
+    CVector4SSide start;
     for (int i=0;i<nbItem;i++)
     {
-        CSVector4 current = mylist.GetAt(i);
+        CVector4SSide current = mylist.GetAt(i);
         if (bfirst)
         {
             bfirst = FALSE;

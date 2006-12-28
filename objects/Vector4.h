@@ -18,19 +18,13 @@
 /////////////////////////////////////////////////////////////////////////////
 typedef double	FCoord;
 
-#define M_ZERO	0.0001
-#define M_PI 3.1415926535  
+#define M_ZERO	0.0001			///< Tolerance for zero test
+#define M_PI	3.1415926535	///< Internal encoding for PI
 
+/////////////////////////////////////////////////////////////////////////////
+/// Test for null value
+/////////////////////////////////////////////////////////////////////////////
 #define FCZero(a)	(fabsl(a) < M_ZERO)
-
-/*typedef struct tagPOINT3D
-{
-    FCoord  x;
-    FCoord  y;
-    FCoord  z;
-    FCoord  w;
-    FCoord  N;
-} POINT3D;*/
 
 class CPoint3D;
 class CPlan3D;
@@ -113,7 +107,9 @@ protected :
 /////////////////////////////////////////////////////////////////////////////
 /// Redefinition of CArray<CVector4,CVector4> as CxVector4Set
 /////////////////////////////////////////////////////////////////////////////
-typedef CArray<CVector4,CVector4> CxVector4Set;
+class CxVectorSet : public CArray<CVector4,CVector4>
+{};
+//typedef CArray<CVector4,CVector4> CxVector4Set;
 
 /////////////////////////////////////////////////////////////////////////////
 /// CLocalRep
@@ -121,10 +117,10 @@ typedef CArray<CVector4,CVector4> CxVector4Set;
 /////////////////////////////////////////////////////////////////////////////
 class CLocalRep {
 public :
-	CVector4 O;
-	CVector4 I;
-	CVector4 J;
-	CVector4 K;
+	CVector4 O;		///< Origin of the local referential
+	CVector4 I;		///< X-axis of the local referential
+	CVector4 J;		///< Y-axis of the local referential
+	CVector4 K;		///< Z-axis of the local referential
 	
 	CLocalRep(	CVector4 o = CVector4(0,0,0),CVector4 i = CVector4(0,0,0),
 				CVector4 j = CVector4(0,0,0),CVector4 k = CVector4(0,0,0))
@@ -140,10 +136,10 @@ public :
 ///
 /////////////////////////////////////////////////////////////////////////////
 typedef struct TSProjection
-{   FCoord phi;         			//0
-	FCoord theta;					//0
-	FCoord rho;					//400
-	FCoord dis;					//400
+{   FCoord phi;		///< Rotation according to the Z axis (default: 25)
+	FCoord theta;	///< Elevation according the the xOy plane (default: 45)
+	FCoord rho;		///< Distance of the observer point of view.
+	FCoord dis;		///< Distance of the projection plane.
 }  SProjection;
 
 /////////////////////////////////////////////////////////////////////////////
@@ -158,9 +154,9 @@ public:
 	//////////////////////////////////////////////////////////////////////
 	enum TVisuType { 
 			VisuNone,		///< No SoR is visible
-			VisuRep,		///< SoR materialised by the three axes
-			VisuPlane,		///< SoR materialised by an horizontal floor
-			VisuClois		///< SoR materialised by three perpendicular walls
+			VisuRep,		///< SoR materialized by the three axes
+			VisuPlane,		///< SoR materialized by an horizontal floor
+			VisuClois		///< SoR materialized by three perpendicular walls
 		};
 
 	//////////////////////////////////////////////////////////////////////
@@ -173,27 +169,37 @@ public:
 			ID_DIS			///< Distance from the observer
 		};
 
-	int				nVisuKind;			// Type of Visual
-	FCoord 			ST,SP,CT,CP;		// sauvegarde des params
-	BOOL			bParProj;			// Projection parallèle
-	SProjection 	ProjParam;			// Paramètres de projection
+public:
+	int				nVisuKind;		///< Nature of the SoR
+	BOOL			bParProj;		///< TRUE if parallel projection, FALSE otherwise
+	SProjection 	ProjParam;		///< The current projection parameters
 
-	int				nWndWidth,
-					nWndHeight;			// dimension de l'espace
-	CPoint			ptRepCoord;			// position du centre du repere
-	int 			nCalqueNum;			// numero du calque
-	FCoord 			nZoom;				// Facteur de zoom de l'univers
-	BOOL			bDrawMark;			// Display objects' marks
-	BOOL			bFixed;				// Don't move the observer's PoV
-	BOOL			bKeepProj;			// Keep a given projection when moving
-	BOOL			bFeedPlane;			// TRUE if the base plane (for point creation/deplacement) is materialised
+	int				nWndWidth,		///< Width of the projection plane
+					nWndHeight;		///< Height of the projection plane
+	CPoint			ptRepCoord;		///< Center of the projected SoR
+	int 			nCalqueNum;		///< Index of the current tracing
+	FCoord 			nZoom;			///< Zoom factor of the projection
 
-	//CWindow*		Parent;				// Fenêtre proprietaire
-	CPoint3D		*Orig;
-	CPlan3D			*F,*G,*H;
+	BOOL			bDrawMark;		///< TRUE if the objects' marks are drawn, FALSE otherwise
+	BOOL			bFixed;			///< TRUE if the projection parameters are fixed, FALSE otherwise
+	BOOL			bKeepProj;		///< TRUE if the projection is maintained during deformation, FALSE otherwise
+	BOOL			bFeedPlane;		///< TRUE if the base plane (for point creation/deformation) is materialized
+
+	CPoint3D		*Orig;			///< A pointer to the point materializing the origin of the SoR
+	CPlan3D			*F,				///< A pointer to the plane materializing the horizontal wall
+					*G,				///< A pointer to the plane materializing the left wall
+					*H;				///< A pointer to the plane materializing the right wall
+
+private:
+	FCoord 			ST,	///< Saving computation of sin(t)
+					SP,	///< Saving computation of sin(p)
+					CT,	///< Saving computation of cos(t)
+					CP;	///< Saving computation of cos(p)
+public:
 	CVisualParam();
 	CVisualParam(const CVisualParam& param);
 	CVisualParam(SProjection proj);
+
 	virtual ~CVisualParam();
 	virtual void Serialize( CArchive& ar );
 
@@ -208,12 +214,18 @@ public:
 	CVector4 GetEyePos();
 	CVector4 ProjectPoint(CVector4 src);
 	CVector4 GetProjectedPoint(CPoint MouseClic);
+	CVector4 GetScreenProjection(CVector4 vec);
+	CVector4 GetScreenProjectionInf(CVector4 vec);
 	void ApplyMagnet(CVector4& pt);
 
 	virtual void Draw(CDC*) {};
 	virtual void DrawFeedBack(CDC*,CPoint3D*){};
 };
 
+/////////////////////////////////////////////////////////////////////////////
+/// CVisualParam
+///
+/////////////////////////////////////////////////////////////////////////////
 class CVisuNone : public CVisualParam
 {
 public:
@@ -226,6 +238,10 @@ public:
 	virtual void DrawFeedBack(CDC*,CPoint3D*);
 };
 
+/////////////////////////////////////////////////////////////////////////////
+/// CVisualParam
+///
+/////////////////////////////////////////////////////////////////////////////
 class CVisuRep : public CVisualParam
 {
 public:
@@ -240,6 +256,10 @@ public:
 	virtual void DrawFeedBack(CDC*,CPoint3D*);
 };
 
+/////////////////////////////////////////////////////////////////////////////
+/// CVisualParam
+///
+/////////////////////////////////////////////////////////////////////////////
 class CVisuPlane : public CVisualParam
 {
 public:
@@ -259,6 +279,10 @@ public:
 	virtual void DrawFeedBack(CDC*,CPoint3D*);
 };
 
+/////////////////////////////////////////////////////////////////////////////
+/// CVisualParam
+///
+/////////////////////////////////////////////////////////////////////////////
 class CVisuCloison : public CVisuPlane
 {
 public:
@@ -333,7 +357,7 @@ inline CVector4 CVector4::operator +(const CVector4& other) const {
 }
 
 //////////////////////////////////////////////////////////////////////
-/// Substract the two vectors
+/// Subtract the two vectors
 //////////////////////////////////////////////////////////////////////
 inline CVector4 CVector4::operator -(const CVector4& other) const {
 	return CVector4(x-other.x,y-other.y,z-other.z,1);

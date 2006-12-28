@@ -13,6 +13,40 @@
 
 class CPoint3D;
 class CDroite3D;
+class CSegment3D;
+
+//////////////////////////////////////////////////////////////////////
+/// Specialization of CVector4 for sorting according to planar distance.
+/// Note that both the distance, the visibility and side flags are computed externally.
+//////////////////////////////////////////////////////////////////////
+class CVector4SSide : public CVector4
+{
+public:
+    int vis,side;
+    FCoord dis;
+public:
+    CVector4SSide() : CVector4() {};
+    CVector4SSide(CVector4 v,FCoord n,int s=0,int vi=1) : CVector4(v)
+        {dis=n;vis=vi;side=s;};
+
+	inline bool operator <(const CVector4SSide& other) const
+	{
+		return (dis < other.dis);
+	}
+
+};
+
+/////////////////////////////////////////////////////////////////////////////
+/// Redefinition of CArray<CVector4SDist,CVector4SDist> as CxVectorSSSet
+/////////////////////////////////////////////////////////////////////////////
+class CxVectorSSSet : public CArray<CVector4SSide,CVector4SSide>
+{
+public:
+	int AddSorted(CVector4SSide theo);
+	void AddtoList(CDroite3D *d, CSegment3D *p,CPoint3D  *myA[4],int *nbpt,
+				   FCoord dp1,  CVector4 base, int n,bool b);
+};
+//typedef CArray<CVector4SSide,CVector4SSide> CSVectorSet;
 
 //////////////////////////////////////////////////////////////////////
 /// Construction/Destruction
