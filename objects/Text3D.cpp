@@ -2106,17 +2106,19 @@ IMPLEMENT_SERIAL(CComment3D, CEquation3D, VERSIONABLE_SCHEMA | 1)
 
 CComment3D::CComment3D(): CEquation3D()
 {
+    //m_strComment.Empty();
+	mStrText.Empty();
 }
 
 CComment3D::CComment3D(CString mstr): CEquation3D()
 {
-    m_strComment  = mstr;
+    //m_strComment  = mstr;
 	mStrText = mstr;
 }
 
 CComment3D::CComment3D(const CObject3D &src): CEquation3D(src)
 {
-    m_strComment = ((CComment3D&)src).m_strComment;
+    //m_strComment = ((CComment3D&)src).m_strComment;
     mStrText = ((CComment3D&)src).mStrText;
 }
 
@@ -2134,11 +2136,11 @@ void CComment3D::Serialize( CArchive& ar )
     CEquation3D::Serialize(ar);
     if (ar.IsStoring())
     {
-        ar << m_strComment;
+        ar << mStrText;
     }
     else
     {
-        ar >> m_strComment;
+        ar >> mStrText;
     }
 }
 
@@ -2170,7 +2172,7 @@ int CComment3D::SetProperties(CxObject3DSet *pSet)
     LOGFONT lFont;
     mTextFont.GetLogFont(&lFont);
     pPage.m_lFont = lFont;
-    pPage.m_strText = m_strComment;
+    pPage.m_strText = mStrText;
 
 
     ////// Set Object Information Page
@@ -2199,7 +2201,8 @@ int CComment3D::SetProperties(CxObject3DSet *pSet)
     int nRet = pSheet.DoModal();
     if (nRet == IDOK)
     {
-        m_strComment = pPage.m_strText;
+        //m_strComment = pPage.m_strText;
+        mStrText = pPage.m_strText;
         lFont = pPage.m_lFont;
 
         mTextFont.DeleteObject();
