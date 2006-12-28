@@ -554,7 +554,7 @@ void CViewUniv::OnChangeZoom(UINT nID)
     case ID_VISUALISATION_ZOOM_ADJUST:
         {
             CZoomDlg dlg(this);
-            dlg.m_nZoom = (GetVisualParam()->nZoom * 100 - 25)/5;
+            dlg.m_nZoom = (int)((GetVisualParam()->nZoom * 100 - 25)/5);
             if (dlg.DoModal())
             {
                 GetVisualParam()->nZoom = (25+5*dlg.m_nZoom)/100.;
