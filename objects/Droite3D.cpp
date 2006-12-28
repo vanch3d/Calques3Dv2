@@ -20,13 +20,6 @@ static char THIS_FILE[]=__FILE__;
 
 #define MRG_ZERO 1.0e-8
 
-
-inline bool CDVector4::operator <(const CDVector4& other) const {
-  return (dis < other.dis);
-}
-
-
-
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
@@ -415,13 +408,13 @@ bool testin(CVector4* o,CVisualParam *myVisuParam,TCloison cl=Front)
 }*/
 
 
-void CDroite3D::AddVisualPt(CDVector4 mv)
+void CDroite3D::AddVisualPt(CVector4SDist mv)
 {
     int nb = VisualPts.GetSize();
     BOOL bFound = FALSE;
     for (int i=0;i<nb;i++)
     {
-        CDVector4 mbb = VisualPts.GetAt(i);
+        CVector4SDist mbb = VisualPts.GetAt(i);
         if (mv < mbb)
         {
             bFound = TRUE;
@@ -445,23 +438,23 @@ void CDroite3D::CalculVisuel(CVisualParam *myVisuParam)
 
     if (CLP1)
      {
-        CDVector4 ttt(*CLP1,0);
-        ttt.in = 1;
+        CVector4SDist ttt(*CLP1,0);
+        ttt.in = TRUE;
         CVector4 AM = A - *CLP1;
         ttt.dis = dir * AM; //AM - dir;
         AddVisualPt(ttt);
      }
     if (CLP2)
      {
-        CDVector4 ttt(*CLP2,0);
-        ttt.in = 1;
+        CVector4SDist ttt(*CLP2,0);
+        ttt.in = TRUE;
         CVector4 AM = A - *CLP2;
         ttt.dis = dir * AM;
         AddVisualPt(ttt);
      }
     if (LP1 && testin(LP1,myVisuParam,Front))
      {
-        CDVector4 ttt(*LP1,0);
+        CVector4SDist ttt(*LP1,0);
         ttt.in = ((LP1->y >= 0.0) && (LP1->z >= 0.0));
         CVector4 AM = A - *LP1;
         ttt.dis = dir * AM;
@@ -469,7 +462,7 @@ void CDroite3D::CalculVisuel(CVisualParam *myVisuParam)
       }
     if (LP2 && testin(LP2,myVisuParam,Gauche))
      {
-        CDVector4 ttt(*LP2,0);
+        CVector4SDist ttt(*LP2,0);
         ttt.in = ((LP2->x >= 0.0) && (LP2->z >= 0.0));
         CVector4 AM = A - *LP2;
         ttt.dis = dir * AM;
@@ -477,7 +470,7 @@ void CDroite3D::CalculVisuel(CVisualParam *myVisuParam)
      }
     if (LP3 && testin(LP3,myVisuParam,Horiz))
      {
-        CDVector4 ttt(*LP3,0);
+        CVector4SDist ttt(*LP3,0);
         ttt.in = (myVisuParam->nVisuKind == CVisualParam::VisuPlane) ?
                         1 : ((LP3->x >= 0.0) && (LP3->y >= 0.0));
         CVector4 AM = A - *LP3;
@@ -600,11 +593,11 @@ void CDroite3D::Draw(CDC* pDC,CVisualParam *mV,BOOL bSm)
     CVector4 base = GetBasePoint();
     CVector4 dir = GetDirVector();
 
-    CDVector4 start = VisualPts.GetAt(0);
+    CVector4SDist start = VisualPts.GetAt(0);
     int gggg = VisualPts.GetSize();
     for (int gg = 1;gg < gggg;gg++)
     {
-        CDVector4 mm = VisualPts.GetAt(gg);
+        CVector4SDist mm = VisualPts.GetAt(gg);
         //bool insi = !(testv(start,mV) || testv(mm,mV));
         bool insi = mV->IsPointVisible(start) && mV->IsPointVisible(mm);
             oldP = pDC->SelectObject(insi ? &curPen : &disPen);
@@ -1605,6 +1598,12 @@ CVector4  CDroitePerp3D::GetBasePoint()
 {
     return CDroite3D::GetBasePoint();
 }
+
+CVector4  CDroitePerp3D::GetIntersectionPoint()
+{
+	return IntPt;
+}
+
 
 UINT  CDroitePerp3D::CalculConceptuel()
 {

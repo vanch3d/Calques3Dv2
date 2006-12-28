@@ -38,7 +38,7 @@ public:
 	//TVisualList* 	Visual_pts;		// listes des coord. visuelles
 
 	//CArray<CVector4,CVector4>	m_cConcept_pts;
-	CxVector4Set	m_cConcept_pts;
+	CxVectorSet	m_cConcept_pts;
 	CArray<CPoint,CPoint>		m_cVisual_pts;
 
 	virtual UINT GetNameID() const { return IDS_NAME_CIRCLE;};
