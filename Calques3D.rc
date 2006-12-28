@@ -450,7 +450,7 @@ IDD_MACROINFO_DLG DIALOGEX 0, 0, 212, 153
 STYLE DS_MODALFRAME | DS_CONTEXTHELP | WS_POPUP | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_CONTEXTHELP
 CAPTION "Macro-Construction"
-FONT 8, "MS Sans Serif", 0, 0, 0x1
+FONT 8, "MS Sans Serif"
 BEGIN
     LTEXT           "Set the following information for the current macro-construction",
                     IDC_STATIC,4,4,200,12,SS_CENTERIMAGE
@@ -465,8 +465,8 @@ BEGIN
                     HIDC_DMACRO_DEF
     LTEXT           "&Icon :",IDC_STATIC,4,92,20,12,SS_CENTERIMAGE
     LTEXT           "&Save as :",IDC_STATIC,4,112,32,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_DMACRO_PATH,40,112,156,12,ES_MULTILINE | ES_READONLY,
-                    0,HIDC_DMACRO_PATH
+    EDITTEXT        IDC_DMACRO_PATH,40,112,156,12,ES_AUTOHSCROLL | 
+                    ES_READONLY,0,HIDC_DMACRO_PATH
     PUSHBUTTON      "...",IDC_DMACRO_SAVEAS,196,112,12,12,0,0,
                     HIDC_DMACRO_SAVEAS
     DEFPUSHBUTTON   "OK",IDOK,20,132,50,14
@@ -781,14 +781,6 @@ BEGIN
     CONTROL         "",IDC_TXT_PALETTE,"Static",SS_BLACKFRAME,4,4,110,66
 END
 
-IDD_INPLACEEDIT DIALOG DISCARDABLE  0, 0, 124, 48
-STYLE WS_CHILD
-FONT 8, "MS Sans Serif"
-BEGIN
-    EDITTEXT        IDC_EDIT1,0,12,120,36,ES_MULTILINE | ES_AUTOHSCROLL
-    PUSHBUTTON      "Button1",IDC_BUTTON1,96,0,28,12,NOT WS_TABSTOP
-END
-
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -1002,14 +994,6 @@ BEGIN
         RIGHTMARGIN, 205
         TOPMARGIN, 7
         BOTTOMMARGIN, 66
-    END
-
-    IDD_INPLACEEDIT, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 117
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 41
     END
 END
 #endif    // APSTUDIO_INVOKED
@@ -2049,8 +2033,8 @@ IDR_POPUP_TOOLBAR MENU DISCARDABLE
 BEGIN
     POPUP "< TOOLBAR >"
     BEGIN
-        MENUITEM "&Property",                   ID_VIEW_PROPERTYBAR
-        MENUITEM "&Dependents",                 ID_VIEW_DEPENDENTBAR
+        MENUITEM "&Attributes",                 ID_VIEW_PROPERTYBAR
+        MENUITEM "&Structure",                  ID_VIEW_DEPENDENTBAR
         MENUITEM SEPARATOR
         MENUITEM "&Standard Toolbar",           ID_VIEW_TOOLBAR
         MENUITEM "&Objects",                    ID_VIEW_OBJECT
@@ -2561,8 +2545,8 @@ BEGIN
     ID_VIEW_USER_TOOLBAR8   "Show or hide the user toolbar\nToggle User ToolBar"
     ID_VIEW_USER_TOOLBAR9   "Show or hide the user toolbar\nToggle User ToolBar"
     ID_VIEW_USER_TOOLBAR10  "Show or hide the user toolbar\nToggle User ToolBar"
-    ID_USER_TOOL1           "Activates user-defined tool\nUser Tool"
-    ID_USER_TOOL2           "Activates user-defined tool\nUser Tool"
+    ID_USER_TOOL1           "Activate user-defined tool\nUser Tool"
+    ID_USER_TOOL2           "Activate user-defined tool\nUser Tool"
 END
 
 STRINGTABLE DISCARDABLE 
@@ -2572,21 +2556,21 @@ END
 
 STRINGTABLE DISCARDABLE 
 BEGIN
-    ID_USER_TOOL3           "Activates user-defined tool\nUser Tool"
-    ID_USER_TOOL4           "Activates user-defined tool\nUser Tool"
-    ID_USER_TOOL5           "Activates user-defined tool\nUser Tool"
-    ID_USER_TOOL6           "Activates user-defined tool\nUser Tool"
-    ID_USER_TOOL7           "Activates user-defined tool\nUser Tool"
-    ID_USER_TOOL8           "Activates user-defined tool\nUser Tool"
-    ID_USER_TOOL9           "Activates user-defined tool\nUser Tool"
-    ID_USER_TOOL10          "Activates user-defined tool\nUser Tool"
+    ID_USER_TOOL3           "Activate user-defined tool\nUser Tool"
+    ID_USER_TOOL4           "Activate user-defined tool\nUser Tool"
+    ID_USER_TOOL5           "Activate user-defined tool\nUser Tool"
+    ID_USER_TOOL6           "Activate user-defined tool\nUser Tool"
+    ID_USER_TOOL7           "Activate user-defined tool\nUser Tool"
+    ID_USER_TOOL8           "Activate user-defined tool\nUser Tool"
+    ID_USER_TOOL9           "Activate user-defined tool\nUser Tool"
+    ID_USER_TOOL10          "Activate user-defined tool\nUser Tool"
 END
 
 STRINGTABLE DISCARDABLE 
 BEGIN
     ID_APP_ABOUT            "Display program information, version number and copyright\nAbout"
     ID_APP_EXIT             "Quit the application; prompts to save documents\nExit"
-    ID_HELP_INDEX           "Opens Help\nHelp Topics"
+    ID_HELP_INDEX           "Open Help\nHelp Topics"
     ID_HELP_FINDER          "List Help topics\nHelp Topics"
     ID_HELP_USING           "Display instructions about how to use help\nHelp"
     ID_CONTEXT_HELP         "Display help for clicked on buttons, menus and windows\nHelp"
@@ -2782,12 +2766,12 @@ BEGIN
     ID_VIEW_APPLOOK_2003    "Activate Office 2003 application look\nOffice 2003 Look"
     ID_VIEW_APPLOOK_WIN_XP  "Activate Windows XP application look\nWindows XP Look"
     ID_VIEW_APPLOOK_VS2005  "Activate Visual Studio.NET 2005 application look\nVS.NET 2005 Look"
-    ID_VIEW_FULLSCREEN      "Toggles full screen mode\nFull Screen"
+    ID_VIEW_FULLSCREEN      "Toggle full screen mode\nFull Screen"
     ID_VISUALISATION_HORSLIDER 
                             "Modify the position of the observer along the horizontal plane\nMove Point of View"
     ID_VISUALISATION_VERSLIDER 
                             "Modify the position of the observer along a vertical plane\nMove Point of View"
-    ID_HELP_KEYBOARDMAP     "Displays all keyboard commands\nKeyboard Map"
+    ID_HELP_KEYBOARDMAP     "Display all keyboard commands\nKeyboard Map"
 END
 
 STRINGTABLE DISCARDABLE 
@@ -3248,8 +3232,8 @@ END
 
 STRINGTABLE DISCARDABLE 
 BEGIN
-    IDR_PROPERTY_TB         "Property"
-    IDR_DEPENDENT_TB        "Dependent"
+    IDR_PROPERTY_TB         "Attributes"
+    IDR_DEPENDENT_TB        "Structure"
     IDR_FORMAT_TB           "Format"
 END
 
@@ -3258,8 +3242,8 @@ BEGIN
     ID_VIEW_CONSTRUCTION    "Show or hide the construction bar\nToggle Construction"
     ID_VIEW_VISUALISATION   "Show or hide the visualisation bar\nToggle Visualisation"
     ID_VIEW_EXPLORATION     "Show or hide the exploration bar\nToggle Exploration"
-    ID_VIEW_PROPERTYBAR     "Show or hide the property bar\nToggle Property"
-    ID_VIEW_DEPENDENTBAR    "Show or hide the dependent bar\nToggle Dependent"
+    ID_VIEW_PROPERTYBAR     "Show or hide the object attributes bar\nToggle Attributes Bar"
+    ID_VIEW_DEPENDENTBAR    "Show or hide the object structure bar\nToggle Structure Bar"
     ID_VIEW_FORMAT          "Show or hide the format bar\nToggle Format"
 END
 
@@ -3449,7 +3433,7 @@ BEGIN
     ID_FORMAT_OBJCOLOR      "Change the color of the selected object\nObject Color"
     ID_FORMAT_OBJSHAPE      "Change the shape of the selected object\nObject Shape"
     ID_FORMAT_TXTFONT       "Change the font of the selected text\nFont"
-    ID_FORMAT_TXTSIZE       "Changes the font size of the selected text\nFont Size"
+    ID_FORMAT_TXTSIZE       "Change the font size of the selected text\nFont Size"
     ID_FORMAT_TXTCOLOR      "Change the color of the selected text\nText Color"
     ID_FORMAT_BOLD          "Make the selected text bold (toggle)\nBold"
     ID_FORMAT_ITALIC        "Make the selected text italic (toggle)\nItalic"
