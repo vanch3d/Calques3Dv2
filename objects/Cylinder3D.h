@@ -68,6 +68,9 @@ public:
 	virtual void DrawRetro(CDC*,CVisualParam *vp);
 
 	BOOL	IntersectLine(CDroite3D *dr,CVector4 *in,CVector4 *out);
+
+	static BOOL InterCylLine(CVector4 raybase,CVector4 raycos,CVector4 base,CVector4 axis,
+							 FCoord radius,FCoord* in,FCoord* out);
 };
 
 //////////////////////////////////////////////////////////////////////

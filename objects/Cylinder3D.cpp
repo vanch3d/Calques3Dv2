@@ -641,7 +641,7 @@ BOOL CCylinder3D::IntersectLine(CDroite3D *Dr,CVector4 *pt1,CVector4 *pt2)
     FCoord      in,out;
     //pt1 =pt2 = 0;
 
-    BOOL ret = intcyl(raybase,raycos,base,axis,radius,&in,&out);
+    BOOL ret = CCylinder3D::InterCylLine(raybase,raycos,base,axis,radius,&in,&out);
     if (ret)
      {
         CVector4 dir2 = raycos * (in/raycos.Norme());
@@ -653,68 +653,34 @@ BOOL CCylinder3D::IntersectLine(CDroite3D *Dr,CVector4 *pt1,CVector4 *pt2)
     return ret;
 }
 
-
-/*
- * ANSI C code from the article
- * "Intersecting a Ray with a Cylinder"
- * by Joseph M. Cychosz and Warren N. Waggenspack, Jr.,
- * (3ksnn64@ecn.purdue.edu, mewagg@mewnw.dnet.lsu.edu)
- * in "Graphics Gems IV", Academic Press, 1994
- */
-
-/* ---- intcyl - Intersect a ray with a cylinder. --------------------- */
-/*                                  */
-/*                                  */
-/*  Description:                            */
-/*      Intcyl determines the intersection of a ray with a      */
-/*      cylinder.                           */
-/*                                  */
-/*  On entry:                           */
-/*      raybase = The base point of the intersecting ray.       */
-/*      raycos  = The direction cosines of the above ray. (unit)    */
-/*      base    = The base location of the cylinder.        */
-/*      axis    = The axis of symmetry for the cylinder.  (unit)    */
-/*      radius  = The radius of the cylinder.           */
-/*                                  */
-/*  On return:                          */
-/*      in      = The entering distance of the intersection.    */
-/*      out     = The leaving  distance of the intersection.    */
-/*                                  */
-/*  Returns:  True if the ray intersects the cylinder.      */
-/*                                  */
-/*  Note:     In and/or out may be negative indicating the      */
-/*        cylinder is located behind the origin of the ray. */
-/*                                  */
-/* -------------------------------------------------------------------- */
-
-//#define MYHUGE        1.0e21      /* Huge value           */
-
-
-BOOL intcyl(
-        CVector4        raybase,    // Base of the intersection ray
-        CVector4        raycos,     // Direction cosines of the ray
-        CVector4        base,       // Base of the cylinder
-        CVector4        axis,       // Axis of the cylinder
-        FCoord      radius,     // Radius of the cylinder
-        FCoord      *in,            // Entering distance
-        FCoord      *out            // Leaving distance
-    )
-
+/////////////////////////////////////////////////////////////////////////////
+/// Determine the intersection of a ray with a cylinder. 
+/// Note that in and/or out may be negative indicating the cylinder is located behind the 
+/// origin of the ray.
+///		ANSI C code from the article "Intersecting a Ray with a Cylinder"
+///		by Joseph M. Cychosz and Warren N. Waggenspack, Jr.
+///		"Graphics Gems IV", Academic Press, 1994
+/// @param raybase	Base of the intersection ray
+/// @param raycos	Direction cosines of the ray
+/// @param base		Base of the cylinder
+/// @param axis		Axis of the cylinder
+/// @param radius	Radius of the cylinder
+/// @param in		Entering distance
+/// @param out		Leaving distance
+/// @return			TRUE if the ray intersects the cylinder, FALSE otherwise
+/////////////////////////////////////////////////////////////////////////////
+BOOL CCylinder3D::InterCylLine(CVector4 raybase,CVector4 raycos,CVector4 base,CVector4 axis,
+							   FCoord radius,FCoord* in,FCoord* out)
 {
-    BOOL        hit;        // True if ray intersects cyl
-    CVector4    RC;     // Ray base to cylinder base
-    FCoord      d;          // Shortest distance between the ray and the cylinder
-    FCoord      t, s;       // Distances along the ray
+    BOOL        hit;			// True if ray intersects cyl
+    CVector4    RC;				// Ray base to cylinder base
+    FCoord      d;				// Shortest distance between the ray and the cylinder
+    FCoord      t, s;			// Distances along the ray
     CVector4    n, D, O;
     FCoord      ln;
-    FCoord      pinf = HUGE;    /* Positive infinity        */
 
     RC = raybase - base;
-/*  RC.x = raybase->x - base->x;
-    RC.y = raybase->y - base->y;
-    RC.z = raybase->z - base->z;*/
     n = raycos % axis;
-    //V3Cross (raycos,axis,&n);
     ln = n.Norme();
 
     if  ( n.NullVector())
@@ -722,36 +688,28 @@ BOOL intcyl(
          d   = RC * axis;
          axis = axis*d;
          D = RC - axis;
-/*       D.x     = RC.x - d*axis->x;
-         D.y     = RC.y - d*axis->y;
-         D.z     = RC.z - d*axis->z;*/
          d = D.Norme();
-//       d   = V3Length (&D);
-         *in     = -pinf;
-         *out =  pinf;
+         *in = -HUGE;
+         *out =  HUGE;
          return (d <= radius);      /* true if ray is in cyl*/
     }
 
     ln = 1/ln;
     n = n * ln;
-    //V3Normalize (&n);
     d    = fabsl (RC * n);      /* shortest distance    */
     hit  = (d <= radius);
 
-    if  (hit) {             /* if ray hits cylinder */
-//       V3Cross (&RC,axis,&O);
-         O = RC % axis;
-         t = - (O * n) / ln;
-//       V3Cross (&n,axis,&O);
-         O = (n % axis);
-         ln = 1 / O.Norme();
-         n = n * ln;
-//       V3Normalize (&O);
-         s = fabsl (sqrt(radius*radius - d*d) / (raycos * O));
-         *in     = t - s;           /* entering distance    */
-         *out = t + s;          /* exiting  distance    */
+    if  (hit) 
+	{	/* if ray hits cylinder */
+		O = RC % axis;
+		t = - (O * n) / ln;
+		O = (n % axis);
+		ln = 1 / O.Norme();
+		n = n * ln;
+		s = fabsl (sqrt(radius*radius - d*d) / (raycos * O));
+		*in  = t - s;           /* entering distance    */
+		*out = t + s;          /* exiting  distance    */
     }
-
     return (hit);
 }
 
