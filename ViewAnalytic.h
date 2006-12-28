@@ -14,7 +14,7 @@
 //
 
 class CEquation3D;
-
+//class MTParser;
 /////////////////////////////////////////////////////////////////////////////
 /// Display all the analytic elements of the construction in a notebook-type environment.
 ///
@@ -39,6 +39,8 @@ public:
 
 	CEdit *			m_pEdit;
 	CDialog*		m_pDialog;
+
+	//MTParser *m_pParser;
 
 // Operations
 public:

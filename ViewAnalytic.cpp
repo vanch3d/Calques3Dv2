@@ -1,6 +1,5 @@
 // ViewAnalytic.cpp : implementation file
 //
-
 #include "stdafx.h"
 #include "calques3d.h"
 #include "Calques3DDoc.h"
@@ -16,6 +15,9 @@
 
 #include "tasks\SuppressDlg.h"
 #include "FormatToolBar.h"
+
+//#include "..\MTParser\MTParserLib\MTParser.h"
+//#include "..\MTParser\MTParserLib\MTParserLocalizer.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -36,11 +38,15 @@ CViewAnalytic::CViewAnalytic()
 	m_bSelection = FALSE;
 	m_rSelect.SetRectEmpty();
 	m_rViewSize.SetRect(0,0,800,600);
+
+	//m_pParser = new MTParser ();
+	//m_pParser->enableAutoVarDefinition(true);
 }
 
 CViewAnalytic::~CViewAnalytic()
 {
 	m_pSelObject = NULL;
+	//delete m_pParser; 
 }
 
 
@@ -417,10 +423,60 @@ LRESULT CViewAnalytic::OnUpdateObjTooltip(WPARAM wp, LPARAM lp)
 	return 0L;
 }
 
+/*MTSTRING getAllExceptionString(const MTParserException &e)
+{
+	MTSTRING msg;
+	
+	for( unsigned int t=0; t<e.getNbDescs(); t++ )
+	{
+		MTSTRING desc;
+		
+		// Take the localized exception description if available 
+		try
+		{
+			desc = MTParserLocalizer::getInstance()->getExcep(e.getException(t)->getData());
+		}
+		catch( MTParserException )
+		{
+			// description not available...so take the default english message
+			desc = e.getDesc(t).c_str();
+		}
+		msg += desc;
 
+		if( t != e.getNbDescs()-1 )
+		{
+			msg +=  _T("\r\n");
+		}		
+	}	
+
+	return msg;
+}
+*/
 void CViewAnalytic::OnLButtonDblClk(UINT nFlags, CPoint point) 
 {
 	// TODO: Add your message handler code here and/or call default
+	/*try
+	{
+		m_pParser->compile(_T("x+y+z"));
+		int nb = m_pParser->getNbUsedVars();
+		m_pParser->compile(_T("a*b"));
+		nb = m_pParser->getNbUsedVars();
+
+		double *pVars = new double[m_pParser->getNbUsedVars()];
+
+		for( unsigned int t=0; t < m_pParser->getNbUsedVars(); t++ )
+		{        
+			pVars[t] = t+1;
+			m_pParser->redefineVar(m_pParser->getUsedVar(t).c_str(), &pVars[t]);
+		}	
+		MTDOUBLE dd = m_pParser->evaluate(_T("x+y+z"));
+		dd++;
+	}
+	catch (MTParserException &e)
+	{
+		MessageBox(getAllExceptionString(e).c_str(),"Error", MB_OK|MB_ICONSTOP);
+	}*/
+
 
 	CClientDC dc(this);
 	OnPrepareDC(&dc);
