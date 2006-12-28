@@ -1,3 +1,9 @@
+//////////////////////////////////////////////////////////////////////
+/// @file BCGPShapeMenuButton.h
+/// @brief interface for the CBCGPShapeMenuButton class
+///
+///
+//////////////////////////////////////////////////////////////////////
 #if !defined(AFX_BCGPSHAPEMENUBUTTON_H__BCABDD04_841E_4B6A_8F61_E7EBE08212D4__INCLUDED_)
 #define AFX_BCGPSHAPEMENUBUTTON_H__BCABDD04_841E_4B6A_8F61_E7EBE08212D4__INCLUDED_
 

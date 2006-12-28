@@ -179,7 +179,7 @@ public :
 		int			nDefPres;		///< Precision for designation area
 		float		fZoom;			///< Zoom factor for the universe. 
 		BOOL		bMagnet;		///< Magnetism of SoR activated
-		BOOL		bSynchron;		///< Synchronise updates between views
+		BOOL		bSynchron;		///< Synchronize updates between views
 		BOOL		bShowMarks;		///< Show the marks of objects
 	};
 
@@ -189,7 +189,7 @@ public :
 	static COLORREF	custColors[16];				///< List of user-defined colors (8 primary + 8 hidden)
 	static CString	custColorsString[8];		///< List of user-defined color names
 	static CList<COLORREF,COLORREF> docColors;	///< List of other colors used in the documents
-	static ColourTableEntry crColours[40];		///< List of predefined colors and (english) names 
+	static ColourTableEntry crColours[40];		///< List of predefined colors and (English) names 
 
 
 	//static int			MoveType; 		///< Axis of deformation (O horizontal, 1 left, 2 right)
@@ -201,19 +201,19 @@ public :
 //	static float		Zoom;			///< Zoom factor for the universe. 
 //	static SProjection	DefParam;		///< Parameters for the projection on the universe view
 //	static BOOL			ShowMarks;		///< Show the marks of objects
-//	static BOOL			Synchron;		///< Synchronise updates between views
-	static BOOL			GrayedHidden;	///< Hiden part of objects in gray
+//	static BOOL			Synchron;		///< Synchronize updates between views
+	static BOOL			GrayedHidden;	///< hidden part of objects in gray
 
 
 	static CTCube3D		TCube;			///< Default preferences for cubes
 	static CTSphere3D	TSphere;		///< Default preferences for spheres
 	static CTPoint3D	TPoint;			///< Default preferences for points
-	static CTCercle3D	TCercle;		///< Default preferences for cercles
+	static CTCercle3D	TCercle;		///< Default preferences for circles
 	static CTLocus3D	TLocus;			///< Default preferences for loci
 	static CTLine3D		TLine;			///< Default preferences for lines
 
 	static CTUniverse	TUniv;			///< Default preferences for the universe view	
-	static CTMathPad	TMathPad;		///< Default preferences for the mathpad view	
+	static CTMathPad	TMathPad;		///< Default preferences for the MathPad view	
 
 	static CObList		TMacroList;		///< List of user-defined macros available
 	static BOOL			bMacroLoading;	///< Allow user to load any macros

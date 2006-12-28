@@ -1,19 +1,19 @@
 //////////////////////////////////////////////////////////////////////
-// @file Fraction.h
-// @brief Interface of the CFraction class - Code for handling fraction strings
-//
-// \author Dean Wyant  dwyant@mindspring.com
-//
-// This class is used like a double. Do anything you would do with a double,
-// plus assign strings to it. When you need to get a string representation, use one of the 
-// String calls. My favorite is ForceToStockString which returns a string for the closest
-// valid stock transaction denominator up to MaxDen (default 256). This is great for 
-// applications that need to show stock prices in fractions without resorting to a table
-// lookup or showing unusual prices in decimal. 
-//
-// C calls and plain calls for ASCIIZ support are provided
-//
-// A description of the \ref Fraction is also given.
+/// @file Fraction.h
+/// @brief Interface of the CFraction class - Code for handling fraction strings
+///
+/// \author Dean Wyant  dwyant@mindspring.com
+//////////////////////////////////////////////////////////////////////
+/// This class is used like a double. Do anything you would do with a double,
+/// plus assign strings to it. When you need to get a string representation, use one of the 
+/// String calls. My favorite is ForceToStockString which returns a string for the closest
+/// valid stock transaction denominator up to MaxDen (default 256). This is great for 
+/// applications that need to show stock prices in fractions without resorting to a table
+/// lookup or showing unusual prices in decimal. 
+///
+/// C calls and plain calls for ASCIIZ support are provided
+///
+/// A description of the \ref Fraction is also given.
 //////////////////////////////////////////////////////////////////////
 #ifndef __FRACTION_H__
 #define __FRACTION_H__

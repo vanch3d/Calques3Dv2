@@ -1,7 +1,9 @@
-// BCGXMLSettings.h: interface for the CBCGXMLSettings class.
-//
 //////////////////////////////////////////////////////////////////////
-
+/// @file BCGXMLSettings.h
+/// @brief interface for the CBCGXMLSettings and CBCGXMLNode classes.
+///
+///
+//////////////////////////////////////////////////////////////////////
 #if !defined(AFX_BCGXMLSETTINGS_H__290A1AF4_79E3_402D_BD32_7C8A4F8BBBE4__INCLUDED_)
 #define AFX_BCGXMLSETTINGS_H__290A1AF4_79E3_402D_BD32_7C8A4F8BBBE4__INCLUDED_
 
@@ -13,11 +15,13 @@
 	#include "afxtempl.h"
 #endif
 
-//#include "BCGRegistry.h"
 #include "BCGPRegistry.h"
 
 #define BCGXMLSETTINGS_PRIVATE	1
 
+/////////////////////////////////////////////////////////////////////////////
+/// CBCGXMLNode
+/////////////////////////////////////////////////////////////////////////////
 class CBCGXMLNode : public CObject
 {
 	friend class CBCGXMLSettings;
@@ -68,6 +72,9 @@ public:
 	BOOL ReadFromBuffer (CString& strBuffer);
 };
 
+/////////////////////////////////////////////////////////////////////////////
+/// CBCGXMLSettings
+/////////////////////////////////////////////////////////////////////////////
 class CBCGXMLSettings : public CBCGPRegistry  
 {
 	DECLARE_DYNCREATE(CBCGXMLSettings)

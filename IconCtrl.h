@@ -10,8 +10,8 @@
 #define ICONCTRL_CLASSNAME    _T("MFCIconCtrl")  // Window class name
 
 /////////////////////////////////////////////////////////////////////////////
-// CIconCtrl window
-
+/// CIconCtrl
+/////////////////////////////////////////////////////////////////////////////
 class CIconCtrl : public CWnd
 {
 	DECLARE_DYNCREATE(CIconCtrl)
@@ -23,8 +23,8 @@ public:
 
 // Attributes
 public:
-	int m_nImage;
-	CBCGPToolBarImages	m_cImage;
+	int					m_nImage;	///< Zero-based index of the image to display
+	CBCGPToolBarImages	m_cImage;	///< List of images
 
 // Operations
 public:
