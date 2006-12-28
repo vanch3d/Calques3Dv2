@@ -5,12 +5,12 @@
 #pragma once
 #endif // _MSC_VER > 1000
 // FormatToolBar.h : header file
-//
 
 class CObject3D;
-/////////////////////////////////////////////////////////////////////////////
-// CFormatToolBar window
 
+/////////////////////////////////////////////////////////////////////////////
+/// CFormatToolBar window
+/////////////////////////////////////////////////////////////////////////////
 class CFormatToolBar : public CBCGPToolBar
 {
 	DECLARE_SERIAL(CFormatToolBar)
@@ -31,7 +31,7 @@ public:
 	static int		GetFontSizeByCmdID (UINT uiCmdID);
 
 private:
-	static CPalette	m_palObjectColorPicker;	// Palette for color picker
+	static CPalette	m_palObjectColorPicker;	///< Palette for color picker
 
 // Operations
 public:
