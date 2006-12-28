@@ -450,7 +450,7 @@ IDD_MACROINFO_DLG DIALOGEX 0, 0, 212, 153
 STYLE DS_MODALFRAME | DS_CONTEXTHELP | WS_POPUP | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_CONTEXTHELP
 CAPTION "Construção de macros"
-FONT 8, "MS Sans Serif", 0, 0, 0x1
+FONT 8, "MS Sans Serif"
 BEGIN
     LTEXT           "Introduz a informação que se segue para a macro atual",
                     IDC_STATIC,4,4,200,12,SS_CENTERIMAGE
@@ -465,8 +465,8 @@ BEGIN
                     HIDC_DMACRO_DEF
     LTEXT           "Íc&one",IDC_STATIC,4,92,20,12,SS_CENTERIMAGE
     LTEXT           "&Salvar como:",IDC_STATIC,4,112,42,10,SS_CENTERIMAGE
-    EDITTEXT        IDC_DMACRO_PATH,48,112,148,12,ES_MULTILINE | ES_READONLY,
-                    0,HIDC_DMACRO_PATH
+    EDITTEXT        IDC_DMACRO_PATH,40,112,156,12,ES_AUTOHSCROLL | 
+                    ES_READONLY,0,HIDC_DMACRO_PATH
     PUSHBUTTON      "...",IDC_DMACRO_SAVEAS,196,112,12,12,0,0,
                     HIDC_DMACRO_SAVEAS
     DEFPUSHBUTTON   "OK",IDOK,20,132,50,14
@@ -543,11 +543,11 @@ END
 
 IDD_SPLASH DIALOGEX 0, 0, 204, 233
 STYLE DS_MODALFRAME | WS_POPUP
-FONT 8, "MS Sans Serif", 0, 0, 0x1
+FONT 8, "MS Sans Serif"
 BEGIN
     CONTROL         "",IDC_BIGICON,"Button",BS_OWNERDRAW | WS_DISABLED,4,4,
                     34,30
-    LTEXT           "Calques 3D version 2.3.1",IDC_STATIC,52,4,140,8,NOT 
+    LTEXT           "Calques 3D version 2.3.2",IDC_STATIC,52,4,140,8,NOT 
                     WS_GROUP
     LTEXT           "Microsoft Foundation Classes version 4.2",IDC_STATIC,52,
                     13,140,8,NOT WS_GROUP
@@ -781,14 +781,6 @@ BEGIN
     CONTROL         "",IDC_TXT_PALETTE,"Static",SS_BLACKFRAME,4,4,110,66
 END
 
-IDD_INPLACEEDIT DIALOG DISCARDABLE  0, 0, 124, 48
-STYLE WS_CHILD
-FONT 8, "MS Sans Serif"
-BEGIN
-    EDITTEXT        IDC_EDIT1,0,12,120,36,ES_MULTILINE | ES_AUTOHSCROLL
-    PUSHBUTTON      "Button1",IDC_BUTTON1,96,0,28,12,NOT WS_TABSTOP
-END
-
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -1002,14 +994,6 @@ BEGIN
         RIGHTMARGIN, 205
         TOPMARGIN, 7
         BOTTOMMARGIN, 66
-    END
-
-    IDD_INPLACEEDIT, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 117
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 41
     END
 END
 #endif    // APSTUDIO_INVOKED
@@ -2057,8 +2041,8 @@ IDR_POPUP_TOOLBAR MENU DISCARDABLE
 BEGIN
     POPUP "< TOOLBAR >"
     BEGIN
-        MENUITEM "P&ropriedade",                   ID_VIEW_PROPERTYBAR
-        MENUITEM "&Dependents",                 ID_VIEW_DEPENDENTBAR
+        MENUITEM "&Atributos",                 ID_VIEW_PROPERTYBAR
+        MENUITEM "&Structure",                  ID_VIEW_DEPENDENTBAR
         MENUITEM SEPARATOR
         MENUITEM "&Barra de ferramentas padrão",           ID_VIEW_TOOLBAR
         MENUITEM "&Objetos",                    ID_VIEW_OBJECT
@@ -2447,8 +2431,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,3,1,0
- PRODUCTVERSION 2,3,1,0
+ FILEVERSION 2,3,2,0
+ PRODUCTVERSION 2,3,2,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x29L
@@ -2466,14 +2450,14 @@ BEGIN
             VALUE "Comments", "Micromundo da Geometria Dinâmica no Espaço\0"
             VALUE "CompanyName", "SCRE - University of Glasgow\0"
             VALUE "FileDescription", "Calques 3D\0"
-            VALUE "FileVersion", "2.3.1\0"
+            VALUE "FileVersion", "2.3.2\0"
             VALUE "InternalName", "Calques3D\0"
             VALUE "LegalCopyright", "Copyright © 2001-2006\0"
             VALUE "LegalTrademarks", "N. Van Labeke / P. Bernat / J. Morinet-Lambert\0"
             VALUE "OriginalFilename", "Calques3D.exe\0"
             VALUE "PrivateBuild", "Beta Version\0"
             VALUE "ProductName", "Calques 3D\0"
-            VALUE "ProductVersion", "2.3.1\0"
+            VALUE "ProductVersion", "2.3.2\0"
             VALUE "SpecialBuild", "Build with BCGControlBar Library version 7.31\0"
         END
     END
@@ -2790,7 +2774,7 @@ BEGIN
     ID_VIEW_APPLOOK_2003    "Activate Office 2003 application look\nOffice 2003 Look"
     ID_VIEW_APPLOOK_WIN_XP  "Activate Windows XP application look\nWindows XP Look"
     ID_VIEW_APPLOOK_VS2005  "Activate Visual Studio.NET 2005 application look\nVS.NET 2005 Look"
-    ID_VIEW_FULLSCREEN      "Toggles full screen mode\nFull Screen"
+    ID_VIEW_FULLSCREEN      "Toggle full screen mode\nFull Screen"
     ID_VISUALISATION_HORSLIDER 
                             "Modificar a posição do observador para um plano horizontal\nModificar Ponto de Vista"
     ID_VISUALISATION_VERSLIDER 
@@ -3256,8 +3240,8 @@ END
 
 STRINGTABLE DISCARDABLE 
 BEGIN
-    IDR_PROPERTY_TB         "Property"
-    IDR_DEPENDENT_TB        "Dependent"
+    IDR_PROPERTY_TB         "Atributos"
+    IDR_DEPENDENT_TB        "Structure"
     IDR_FORMAT_TB           "Formato"
 END
 
@@ -3266,8 +3250,8 @@ BEGIN
     ID_VIEW_CONSTRUCTION    "Mostrar ou esconder a barra de construção\nBarra de Construção"
     ID_VIEW_VISUALISATION   "Mostrar ou esconder a barra de visualização\nBarra de Visualização"
     ID_VIEW_EXPLORATION     "Show or hide the exploration bar\nToggle Exploration"
-    ID_VIEW_PROPERTYBAR     "Show or hide the property bar\nToggle Property"
-    ID_VIEW_DEPENDENTBAR    "Show or hide the dependent bar\nToggle Dependent"
+    ID_VIEW_PROPERTYBAR     "Show or hide the object attributes bar\nToggle Attributes Bar"
+    ID_VIEW_DEPENDENTBAR    "Show or hide the object structure bar\nToggle Structure Bar"
     ID_VIEW_FORMAT          "Show or hide the format bar\nToggle Format"
 END
 
@@ -3457,7 +3441,7 @@ BEGIN
     ID_FORMAT_OBJCOLOR      "Change the color of the selected object\nObject Color"
     ID_FORMAT_OBJSHAPE      "Change the shape of the selected object\nObject Shape"
     ID_FORMAT_TXTFONT       "Change the font of the selected text\nFont"
-    ID_FORMAT_TXTSIZE       "Changes the font size of the selected text\nFont Size"
+    ID_FORMAT_TXTSIZE       "Change the font size of the selected text\nFont Size"
     ID_FORMAT_TXTCOLOR      "Change the color of the selected text\nText Color"
     ID_FORMAT_BOLD          "Make the selected text bold (toggle)\nBold"
     ID_FORMAT_ITALIC        "Make the selected text italic (toggle)\nItalic"

@@ -450,7 +450,7 @@ IDD_MACROINFO_DLG DIALOGEX 0, 0, 212, 153
 STYLE DS_MODALFRAME | DS_CONTEXTHELP | WS_POPUP | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_CONTEXTHELP
 CAPTION "Macro-Construction"
-FONT 8, "MS Sans Serif", 0, 0, 0x1
+FONT 8, "MS Sans Serif"
 BEGIN
     LTEXT           "Définir les informations suivantes pour la macro-construction",
                     IDC_STATIC,4,4,200,12,SS_CENTERIMAGE
@@ -465,8 +465,8 @@ BEGIN
                     HIDC_DMACRO_DEF
     LTEXT           "&Icône :",IDC_STATIC,4,92,25,12,SS_CENTERIMAGE
     LTEXT           "&Sauver sous :",IDC_STATIC,4,112,45,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_DMACRO_PATH,53,112,143,12,ES_MULTILINE | ES_READONLY,
-                    0,HIDC_DMACRO_PATH
+    EDITTEXT        IDC_DMACRO_PATH,40,112,156,12,ES_AUTOHSCROLL | 
+                    ES_READONLY,0,HIDC_DMACRO_PATH
     PUSHBUTTON      "...",IDC_DMACRO_SAVEAS,196,112,12,12,0,0,
                     HIDC_DMACRO_SAVEAS
     DEFPUSHBUTTON   "OK",IDOK,20,132,50,14
@@ -543,11 +543,11 @@ END
 
 IDD_SPLASH DIALOGEX 0, 0, 204, 233
 STYLE DS_MODALFRAME | WS_POPUP
-FONT 8, "MS Sans Serif", 0, 0, 0x1
+FONT 8, "MS Sans Serif"
 BEGIN
     CONTROL         "",IDC_BIGICON,"Button",BS_OWNERDRAW | WS_DISABLED,4,4,
                     34,30
-    LTEXT           "Calques 3D version 2.3.1",IDC_STATIC,52,4,140,8,NOT 
+    LTEXT           "Calques 3D version 2.3.2",IDC_STATIC,52,4,140,8,NOT 
                     WS_GROUP
     LTEXT           "Microsoft Foundation Classes version 4.2",IDC_STATIC,52,
                     13,140,8,NOT WS_GROUP
@@ -781,14 +781,6 @@ BEGIN
     CONTROL         "",IDC_TXT_PALETTE,"Static",SS_BLACKFRAME,4,4,110,66
 END
 
-IDD_INPLACEEDIT DIALOG DISCARDABLE  0, 0, 124, 48
-STYLE WS_CHILD
-FONT 8, "MS Sans Serif"
-BEGIN
-    EDITTEXT        IDC_EDIT1,0,12,120,36,ES_MULTILINE | ES_AUTOHSCROLL
-    PUSHBUTTON      "Button1",IDC_BUTTON1,78,0,46,12,NOT WS_TABSTOP
-END
-
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -1002,14 +994,6 @@ BEGIN
         RIGHTMARGIN, 205
         TOPMARGIN, 7
         BOTTOMMARGIN, 66
-    END
-
-    IDD_INPLACEEDIT, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 117
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 41
     END
 END
 #endif    // APSTUDIO_INVOKED
@@ -2057,10 +2041,10 @@ IDR_POPUP_TOOLBAR MENU DISCARDABLE
 BEGIN
     POPUP "< TOOLBAR >"
     BEGIN
-        MENUITEM "&Attributs",                   ID_VIEW_PROPERTYBAR
-        MENUITEM "&Dépendance",                 ID_VIEW_DEPENDENTBAR
+        MENUITEM "&Attributs",                 ID_VIEW_PROPERTYBAR
+        MENUITEM "&Structure",                  ID_VIEW_DEPENDENTBAR
         MENUITEM SEPARATOR
-        MENUITEM "&Standard",           ID_VIEW_TOOLBAR
+        MENUITEM "S&tandard",           ID_VIEW_TOOLBAR
         MENUITEM "&Objets",                    ID_VIEW_OBJECT
         MENUITEM "&Construction",               ID_VIEW_CONSTRUCTION
         MENUITEM "&Visualisation",              ID_VIEW_VISUALISATION
@@ -2447,8 +2431,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,3,1,0
- PRODUCTVERSION 2,3,1,0
+ FILEVERSION 2,3,2,0
+ PRODUCTVERSION 2,3,2,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x29L
@@ -2466,14 +2450,14 @@ BEGIN
             VALUE "Comments", "Micromonde de Géométrie dans l'espace\0"
             VALUE "CompanyName", "SCRE - University of Glasgow\0"
             VALUE "FileDescription", "Calques 3D\0"
-            VALUE "FileVersion", "2.3.1\0"
+            VALUE "FileVersion", "2.3.2\0"
             VALUE "InternalName", "Calques3D\0"
             VALUE "LegalCopyright", "Copyright © 2001-2006\0"
             VALUE "LegalTrademarks", "N. Van Labeke / P. Bernat / J. Morinet-Lambert\0"
             VALUE "OriginalFilename", "Calques3D.exe\0"
             VALUE "PrivateBuild", "Beta Version\0"
             VALUE "ProductName", "Calques 3D\0"
-            VALUE "ProductVersion", "2.3.1\0"
+            VALUE "ProductVersion", "2.3.2\0"
             VALUE "SpecialBuild", "Construit avec BCGControlBar version 7.31\0"
         END
     END
@@ -3368,29 +3352,29 @@ END
 
 STRINGTABLE DISCARDABLE 
 BEGIN
-    PREF_DEF_PTFREE         "Set the default shape for the free points"
-    PREF_DEF_PTCSTR         "Set the default shape for the constrained point (i.e. on line, on plane, etc.)"
-    PREF_DEF_PTDEP          "Set the default shape for the dependent point (i.e. intersection)"
-    PREF_DEF_PTVIS          "Set the default shape for the visual point"
+    PREF_DEF_PTFREE         "Définie la forme par défaut des points libres"
+    PREF_DEF_PTCSTR         "Définie la forme par défaut des points contraints (sur droite, sur plan, etc)"
+    PREF_DEF_PTDEP          "Définie la forme par défaut des points dépendants (intersection)"
+    PREF_DEF_PTVIS          "Définie la forme par défaut des points visuels"
 END
 
 STRINGTABLE DISCARDABLE 
 BEGIN
-    PREF_DEF_PTSIZE         "Set the default size of the points (in pixel)"
-    PREF_DEF_PT             "Set the properties for the points"
-    PREF_DEF_SPH            "Set the properties for the spheres"
-    PREF_DEF_COLOR          "Set the default colour"
+    PREF_DEF_PTSIZE         "Définie la taille par défaut des points (en pixel)"
+    PREF_DEF_PT             "Définie les propriétés visuelles des points"
+    PREF_DEF_SPH            "Définie les propriétés visuelles des sphères"
+    PREF_DEF_COLOR          "Définie la couleur par défaut de l'objet"
     PREF_DEF_CLROTHER       "Set the properties for the spheres"
     PREF_DEF_CLRAUTO        "Set the properties for the spheres"
-    PREF_DEF_SPHEQ          "Display the equator of the spheres"
-    PREF_DEF_SPHGCR         "Display the two great circles of the spheres"
+    PREF_DEF_SPHEQ          "Affiche l'équateur de la sphère"
+    PREF_DEF_SPHGCR         "Affiche les deux grands cercles de la sphère"
     PREF_DEF_LOCUS          "Display the two great circles of the spheres"
-    PREF_DEF_LOCSIZE        "Set the size of the loci's mesh"
+    PREF_DEF_LOCSIZE        "Définie la taille du maillage des lieux géométriques"
 END
 
 STRINGTABLE DISCARDABLE 
 BEGIN
-    PREF_NAME_CLROTHER      "Other colours..."
+    PREF_NAME_CLROTHER      "Autres couleurs ..."
     PREF_NAME_CLRAUTO       "Automatique"
     PREF_NAME_SPHEQ         "Équateur"
     PREF_NAME_SPHGCR        "Grand cercles"
@@ -3408,15 +3392,15 @@ END
 
 STRINGTABLE DISCARDABLE 
 BEGIN
-    CTX_MACRO_UNLOAD        "click anywhere to load the macro-construction."
-    CTX_MACRO_POINT         "select a point to graft this base-point on or double-click to end up the graft."
-    CTX_MOVE_TRACE          "select a point to trace"
+    CTX_MACRO_UNLOAD        "Cliquer n'importe où pour charger la macro-construction"
+    CTX_MACRO_POINT         "désigner un point sur lequel greffer ce point-base ou double-clic pour finir automatiquement la greffe"
+    CTX_MOVE_TRACE          "désigner un point pour en afficher la trace"
 END
 
 STRINGTABLE DISCARDABLE 
 BEGIN
-    ID_PROPERTY_EXPAND      "Expand the property list\nExpand"
-    ID_PROPERTY_SORTING     "Sort the property list alphabetically\nSort"
+    ID_PROPERTY_EXPAND      "développe la liste des propriétés\nDéveloppe "
+    ID_PROPERTY_SORTING     "Trie la liste des propriétés par ordre alphabétique\nTrie"
 END
 
 STRINGTABLE DISCARDABLE 
@@ -3440,25 +3424,25 @@ END
 
 STRINGTABLE DISCARDABLE 
 BEGIN
-    PROP_DEFINITION_DESC    "The nature and name of the object"
-    PROP_APPEARANCE_DESC    "The graphical properties of the object"
-    PROP_OBJNAME_DESC       "The name of the object"
-    PROP_OBJCOLOR_DESC      "The colour of the object"
-    PROP_OBJSHAPE_DESC      "The shape of the object"
-    PROP_OBJVISIBLE_DESC    "Specify if the object is visible or not"
-    PROP_OBJMARKED_DESC     "Specify if the visual marks of the object are visible or not"
-    PROP_DEPENDENT_DESC     "The list of all objects built from this one"
-    PROP_COMPOSITE_DESC     "The list of all internal constituents of this object"
-    PROP_PARENTS_DESC       "The objects from which this one is built"
+    PROP_DEFINITION_DESC    "Définition de l'objet géométrique"
+    PROP_APPEARANCE_DESC    "Propriétés visuelles de l'objet"
+    PROP_OBJNAME_DESC       "Le nom de l'objet"
+    PROP_OBJCOLOR_DESC      "La couleur de l'objet"
+    PROP_OBJSHAPE_DESC      "La forme de l'objet"
+    PROP_OBJVISIBLE_DESC    "Définie si l'objet est visible ou non"
+    PROP_OBJMARKED_DESC     "Définie si les marques visuelles de l'objet sont visibles ou non"
+    PROP_DEPENDENT_DESC     "La liste de tous les objets géométriques dépendant de celui-ci"
+    PROP_COMPOSITE_DESC     "La liste de tous les composants internes de cet objet"
+    PROP_PARENTS_DESC       "Les objets géométriques dont celui-ci dépend"
 END
 
 STRINGTABLE DISCARDABLE 
 BEGIN
-    ID_FORMAT_OBJCOLOR      "Change the color of the selected object\nObject Color"
-    ID_FORMAT_OBJSHAPE      "Change the shape of the selected object\nObject Shape"
-    ID_FORMAT_TXTFONT       "Change the font of the selected text\nFont"
-    ID_FORMAT_TXTSIZE       "Changes the font size of the selected text\nFont Size"
-    ID_FORMAT_TXTCOLOR      "Change the color of the selected text\nText Color"
+    ID_FORMAT_OBJCOLOR      "Change la couleur de l'objet sélectionné\nCouleur de l'objet"
+    ID_FORMAT_OBJSHAPE      "Change la forme de l'objet sélectionné\nForme de l'objet"
+    ID_FORMAT_TXTFONT       "Change la police de l'objet sélectionné\nPolice de l'objet"
+    ID_FORMAT_TXTSIZE       "Change la taille de police de l'objet sélectionné\nTaille de police de l'objet"
+    ID_FORMAT_TXTCOLOR      "Change la couleur du texte sélectionné\nCouleur du texte"
     ID_FORMAT_BOLD          "Make the selected text bold (toggle)\nBold"
     ID_FORMAT_ITALIC        "Make the selected text italic (toggle)\nItalic"
     ID_FORMAT_UNDERLINE     "Format the selected text with a continuous underline (toggle)\nUnderline"
@@ -3467,7 +3451,7 @@ END
 STRINGTABLE DISCARDABLE 
 BEGIN
     ID_VISUALISATION_POV_VSLIDER 
-                            "Rotate the point of view vertically\nRotate View"
+                            "Change le point de vue de l'observateur\nChange point de vue"
 END
 
 STRINGTABLE DISCARDABLE 
