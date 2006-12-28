@@ -278,7 +278,7 @@ public:
 	CRect		rGraphRect;			///< Location of the object in the Graph Window
 
 	CxObject3DSet	cDependList;	///< List of dependents
-	CxVector4Set	cTracePosition;	///< List of the object's coordinates, used for the trace.
+	CxVectorSet	cTracePosition;	///< List of the object's coordinates, used for the trace.
 
 protected:
 	BOOL 		bIsSelected;		///< TRUE if the object is selected, FALSE otherwise

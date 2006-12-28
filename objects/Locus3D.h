@@ -41,7 +41,7 @@ private:
 	CArrayEx<CPArray, CPArray &>			a2D;		///< Two-dimensional list of Point
 
 	//CArray<CVector4,CVector4>	m_cCpts;
-	CxVector4Set	m_cCpts;
+	CxVectorSet	m_cCpts;
 	CArray<CPoint,CPoint>		m_cVpts;
 
 public:
