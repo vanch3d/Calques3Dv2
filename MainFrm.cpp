@@ -373,7 +373,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 
 	EnableDocking(CBRS_ALIGN_ANY);
-	//EnableAutoHideBars(CBRS_ALIGN_ANY);
+	EnableAutoHideBars(CBRS_ALIGN_RIGHT);
 
 	// TODO: Delete these three lines if you don't want the toolbar to be dockable
 	m_wndMenuBar.EnableDocking(CBRS_ALIGN_TOP);
