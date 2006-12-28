@@ -51,7 +51,7 @@ CComboBox* CBCGPShapeProp::CreateCombo (CWnd* pWndParent, CRect rect)
 
 	rect.bottom = rect.top + 400;
 
-	CComboBox* pWndCombo = new CComboShape(m_type);
+	CComboBox* pWndCombo = new CPropShapeCombo(m_type);
 	if (!pWndCombo->Create (WS_CHILD | CBS_NOINTEGRALHEIGHT | CBS_DROPDOWNLIST |CBS_HASSTRINGS|CBS_OWNERDRAWFIXED| WS_VSCROLL, 
 		rect, pWndParent, BCGPROPLIST_ID_INPLACE))
 	{
@@ -95,7 +95,7 @@ CWnd* CBCGPShapeProp::CreateInPlaceEdit (CRect rectEdit, BOOL& bDefaultFormat)
 // CComboShape
 //***************************************************************************
 
-BEGIN_MESSAGE_MAP(CComboShape, CComboBox)
+BEGIN_MESSAGE_MAP(CPropShapeCombo, CComboBox)
 	//{{AFX_MSG_MAP(CComboShape)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
@@ -103,7 +103,7 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 /// Default constructor
 /////////////////////////////////////////////////////////////////////////////
-CComboShape::CComboShape()
+CPropShapeCombo::CPropShapeCombo()
 {
 	m_type = CShape::PointShape;
 }
@@ -111,7 +111,7 @@ CComboShape::CComboShape()
 /////////////////////////////////////////////////////////////////////////////
 /// Constructor
 /////////////////////////////////////////////////////////////////////////////
-CComboShape::CComboShape(int type)
+CPropShapeCombo::CPropShapeCombo(int type)
 {
 	m_type = type;
 }
@@ -121,7 +121,7 @@ CComboShape::CComboShape(int type)
 ///	@param lpDrawItemStruct		A  pointer to a DRAWITEMSTRUCT structure that contains information 
 ///								about the type of drawing required.  
 /////////////////////////////////////////////////////////////////////////////
-void CComboShape::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct) 
+void CPropShapeCombo::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct) 
 {
 	ASSERT(lpDrawItemStruct);
     
@@ -184,7 +184,7 @@ void CBCGPObjectProp::OnDrawName (CDC* pDC, CRect rect)
 /////////////////////////////////////////////////////////////////////////////
 BOOL CBCGPObjectProp::OnDblClick (CPoint point)
 {
-	AfxMessageBox("fdfdfddf dd f");
+	//AfxMessageBox("fdfdfddf dd f");
 	return TRUE;
 }
 
