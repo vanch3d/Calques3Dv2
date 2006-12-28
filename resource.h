@@ -187,7 +187,6 @@
 #define IDC_EDIT1                       1178
 #define IDC_SPIN1                       1179
 #define IDC_EDIT2                       1180
-#define IDC_BUTTON1                     1180
 #define IDC_SPIN2                       1183
 #define IDC_EDIT3                       1184
 #define IDC_SPIN3                       1185
