@@ -123,6 +123,7 @@ protected:
 	LRESULT			OnUpdateObjTooltip(WPARAM wp, LPARAM lp=0);
 	afx_msg void	OnUpdateFormat(CCmdUI* pCmdUI);
 	afx_msg void	OnFormat(UINT);
+	afx_msg void	OnFormat();
 
 	DECLARE_MESSAGE_MAP()
 };

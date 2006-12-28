@@ -722,7 +722,7 @@ void CViewAnalytic::OnUpdateFormat(CCmdUI* pCmdUI)
 
 }
 
-void CViewAnalytic::OnFormat(UINT m_nID)
+void CViewAnalytic::OnFormat()
 {
 	CEquation3D *pObj= DYNAMIC_DOWNCAST(CEquation3D,m_pSelObject);
 	if (pObj)
@@ -754,6 +754,10 @@ void CViewAnalytic::OnFormat(UINT m_nID)
 	GetDocument()->UpdateAllViews(NULL,WM_UPDATEOBJ_MOD,m_pSelObject);
 }
 
+void CViewAnalytic::OnFormat(UINT m_nID)
+{
+	OnFormat();
+}
 int CViewAnalytic::OnMouseActivate(CWnd* pDesktopWnd, UINT nHitTest, UINT message) 
 {
 	// TODO: Add your message handler code here and/or call default

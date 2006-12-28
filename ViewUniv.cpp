@@ -1774,7 +1774,7 @@ void CViewUniv::OnUpdateFormat(CCmdUI* pCmdUI)
 
 }
 
-void CViewUniv::OnFormat(UINT m_nID)
+void CViewUniv::OnFormat()
 {
 	CLabel3D *pObj= DYNAMIC_DOWNCAST(CLabel3D,pSelectObj);
 	if (pObj)
@@ -1811,4 +1811,9 @@ void CViewUniv::OnFormat(UINT m_nID)
 	}
 	SetFocus();
 	GetDocument()->UpdateAllViews(NULL,WM_UPDATEOBJ_MOD,pSelectObj);
+}
+
+void CViewUniv::OnFormat(UINT m_nID)
+{
+	OnFormat();
 }
