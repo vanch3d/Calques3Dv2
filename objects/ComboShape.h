@@ -14,19 +14,19 @@
 #include "Shape.h"
 
 /////////////////////////////////////////////////////////////////////////////
-/// CComboShape
+/// CPropShapeCombo
 ///
 /////////////////////////////////////////////////////////////////////////////
-class CComboShape : public CComboBox
+class CPropShapeCombo : public CComboBox
 {
-// Construction
-public:
-	CComboShape();
-	CComboShape(int type);
-
 // Attributes
 private:
 	int	m_type;		///< Type of the shape widget
+
+// Construction
+public:
+	CPropShapeCombo();
+	CPropShapeCombo(int type);
 
 // Operations
 public:
@@ -58,19 +58,20 @@ protected:
 };
 
 /////////////////////////////////////////////////////////////////////////////
-/// CBCGPShapeProp
+/// A property widget for object shapes.
 ///
 /////////////////////////////////////////////////////////////////////////////
 class CBCGPShapeProp : public CBCGPProp
 {
+// Attributes
+private:
+	int	m_type;		///< Type of the shape widget
+
+// Construction
 public:
 	CBCGPShapeProp(	const CString& strName, int index = 0, int size = 0,
 					int type=CShape::PointShape,
 					LPCTSTR lpszDescr = NULL);
-
-// Attributes
-private:
-	int	m_type;		///< Type of the shape widget
 
 // Overrides
 public:
@@ -83,19 +84,23 @@ protected:
 };
 
 /////////////////////////////////////////////////////////////////////////////
-/// CBCGPObjectProp
+/// A property widget for CObject3D objects.
 ///
 /////////////////////////////////////////////////////////////////////////////
 class CBCGPObjectProp : public CBCGPProp
 {
+// Attributes
 protected:
 	CImageList*		m_pImgList;	///< A pointer to the image list containing the object icons
 	int				m_nIcon;	///< Index of the icon to draw
 
+// Construction
 public:
 	CBCGPObjectProp(const CString& strName, const CString& strHelp,int ndx,BOOL bHasList,DWORD dwData = 0);
 	//CBCGObjectProp();
 
+// Overrides
+public:
 	virtual BOOL HasValueField () const
 	{
 		return FALSE;
@@ -106,16 +111,19 @@ public:
 	virtual BOOL OnSetCursor () const { return FALSE;};
 	virtual BOOL OnDblClick (CPoint point);
 
+// Operations
+public:
 	void SetImageList(CImageList* pImgList) { m_pImgList = pImgList;};
 };
 
 
 /////////////////////////////////////////////////////////////////////////////
-/// CBCGPSliderProp
+/// A property widget for integer values (with slider).
 ///
 /////////////////////////////////////////////////////////////////////////////
 class CBCGPSliderProp : public CBCGPProp
 {
+// Construction
 public:
 	CBCGPSliderProp(
 		const CString& strName,
@@ -123,6 +131,8 @@ public:
 		LPCTSTR lpszDescr = NULL,
 		DWORD dwData = 0);
 
+// Overrides
+public:
 	virtual BOOL OnUpdateValue ();
 
 protected:
@@ -131,19 +141,24 @@ protected:
 };
 
 /////////////////////////////////////////////////////////////////////////////
-/// CBCGPCheckBoxProp
+/// A property widget for boolean values (with check box).
 ///
 /////////////////////////////////////////////////////////////////////////////
 class CBCGPCheckBoxProp : public CBCGPProp
 {
+// Attributes
+protected:
+	CRect	m_rectCheck;	///< The bounding rect of the check box
+
+// Construction
 public:
 	CBCGPCheckBoxProp(
 		const CString& strName,
 		BOOL bCheck,
 		LPCTSTR lpszDescr = NULL,
-		DWORD dwData = 0
-	);
+		DWORD dwData = 0);
 
+// Overrides
 protected:
 	virtual CWnd* CreateInPlaceEdit (CRect rectEdit, BOOL& bDefaultFormat);
 	virtual BOOL OnEdit(LPPOINT lptClick)				{	return FALSE;	}
@@ -158,8 +173,6 @@ protected:
 	virtual BOOL OnClickValue (UINT uiMsg, CPoint point);
 	virtual BOOL OnDblClick (CPoint point);
 
-protected:
-	CRect	m_rectCheck;	///< The bounding rect of the checkbox
 };
 
 
@@ -169,15 +182,15 @@ protected:
 /////////////////////////////////////////////////////////////////////////////
 class CPropSliderCtrl : public CSliderCtrl
 {
-// Construction
-public:
-	CPropSliderCtrl(CBCGPSliderProp* pProp, COLORREF clrBack);
-
 // Attributes
 protected:
 	CBrush				m_brBackground;		///< The background brush used for the slider
 	COLORREF			m_clrBack;			///< The background color used for the slider
 	CBCGPSliderProp*	m_pProp;			///< The property widget associated with this control
+
+// Construction
+public:
+	CPropSliderCtrl(CBCGPSliderProp* pProp, COLORREF clrBack);
 
 // Operations
 public:
