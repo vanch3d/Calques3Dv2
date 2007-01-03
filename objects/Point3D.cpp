@@ -15,6 +15,7 @@
 
 #include "..\fraction.h"
 #include "..\OGLTools\OGLT.h"
+#include "..\OGLTools\glut.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -436,13 +437,39 @@ CString CPoint3D::ExportSymbolic(int nFormat)
 
 void CPoint3D::Draw3DRendering()
 {
-	GLfloat x = (Concept_pt.x/TPref::TUniv.nUnitRep)*TPref::TMathPad.UnitScale;
-	GLfloat y = (Concept_pt.y/TPref::TUniv.nUnitRep)*TPref::TMathPad.UnitScale;
-	GLfloat z = (Concept_pt.z/TPref::TUniv.nUnitRep)*TPref::TMathPad.UnitScale;
-	glBegin (GL_POINTS);
+    if ((!bVisible) || (!bValidate)) return;
+
+	float no_mat[] = {0.0f, 0.0f, 0.0f, 1.0f};
+    float mat_ambient[] = {0.7f, 0.7f, 0.7f, 1.0f};
+    float mat_ambient_color[] = {255/255., 255/255.,100/255. , 1.0f};
+    float mat_diffuse[] = {0.9f, 0.1f, 0.1f, 1.0f};
+    float mat_specular[] = {1.0f, 1.0f, 1.0f, 1.0f};
+    float no_shininess = 0.0f;
+    float low_shininess = 5.0f;
+    float high_shininess = 100.0f;
+    float mat_emission[] = {0.3f, 0.2f, 0.2f, 0.0f};
+
+	GLdouble x = (Concept_pt.x/TPref::TUniv.nUnitRep/3);
+	GLdouble y = (Concept_pt.y/TPref::TUniv.nUnitRep/3);
+	GLdouble z = (Concept_pt.z/TPref::TUniv.nUnitRep/3);
+	GLUquadricObj*m_quadrObj=gluNewQuadric();
+// 	gluQuadricNormals(m_quadrObj,GLU_SMOOTH);
+// 	gluQuadricTexture(m_quadrObj,GL_TRUE);
+// 	gluQuadricDrawStyle(m_quadrObj,GLU_FILL);
+// 	gluQuadricOrientation(m_quadrObj,GLU_OUTSIDE);
+// 
+	glPushMatrix();
+	glTranslated(x, y, z);
+	glColor3f(.2f,.5f,.8f);
+    glMaterialfv(GL_FRONT, GL_AMBIENT, mat_diffuse);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
+    glMaterialf(GL_FRONT, GL_SHININESS, no_shininess);
+	gluSphere(m_quadrObj,0.04,16,16);
+	glPopMatrix();
+	/*glBegin (GL_POINTS);
 	glColor3f(1.0f,0.0f,0.0f);			// Red
 	glVertex3f (x,y,z);
-	glEnd ();
+	glEnd ();*/
 }
 
 
