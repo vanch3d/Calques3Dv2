@@ -85,10 +85,12 @@ BOOL CAboutInfoPage::OnInitDialog()
 		  m_cDebug.SetWindowText(debug);
 
  	m_cMail.SetURLPrefix (_T("mailto:"));
-	m_cMail.SetURL (_T("nvl@psychology.nottingham.ac.uk"));
+	m_cMail.SetURL (_T("n.vanlabeke@scre.ac.uk"));
 	m_cMail.SizeToContent ();
 	m_cMail.SetTooltip (_T("Send mail to author"));
 
+ 	m_cURL.SetURLPrefix (_T("http://"));
+	m_cURL.SetURL (_T("uk.geocities.com/nicolas.vanlabeke@btinternet.com/"));
 	m_cURL.SizeToContent ();
 
 	return TRUE;  // return TRUE unless you set the focus to a control
