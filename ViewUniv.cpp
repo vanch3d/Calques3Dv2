@@ -117,7 +117,7 @@ BEGIN_MESSAGE_MAP(CViewUniv, CView)
     ON_COMMAND_RANGE(ID_MACROS_USER1, ID_MACROS_USER15, OnStartTask)
     ON_UPDATE_COMMAND_UI_RANGE(ID_MACROS_USER1, ID_MACROS_USER15, OnUpdateTasks)
 
-    ON_NOTIFY_EX(TTN_NEEDTEXT, 0, OnToolTipText)
+    //ON_NOTIFY_EX(TTN_NEEDTEXT, 0, OnToolTipText)
     ON_MESSAGE(WM_SHOWOBJ_TOOLTIPS, OnUpdateObjTooltip)
     ON_REGISTERED_MESSAGE(BCGM_RESETTOOLBAR, OnToolbarReset)
     ON_MESSAGE(WM_UPDATEZOOM_MANUAL, OnChangeZoom)
@@ -398,7 +398,7 @@ BOOL CViewUniv::OnToolTipText(UINT nID, NMHDR* pNMHDR, LRESULT* pResult)
 
 BOOL CViewUniv::PreTranslateMessage(MSG* pMsg)
 {
-//	if (IsWindowActivated())
+	if (IsWindowActivated())
 	    if(pMsg->message== WM_LBUTTONDOWN ||
 		    pMsg->message== WM_LBUTTONUP ||
 			pMsg->message== WM_MOUSEMOVE)
