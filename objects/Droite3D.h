@@ -108,6 +108,7 @@ public:
 	virtual UINT  CalculConceptuel();
 	virtual void Draw(CDC*,CVisualParam *vp,BOOL bSm=0);
 	virtual CString ExportSymbolic(int nFormat); 
+	virtual void	Draw3DRendering();
 
 public:
 	virtual CVector4	GetDirVector();

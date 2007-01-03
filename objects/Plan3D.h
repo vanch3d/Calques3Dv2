@@ -96,6 +96,7 @@ public:
 	virtual void CalculVisuel(CVisualParam *);
 	virtual void Draw(CDC*,CVisualParam *vp,BOOL bSm=FALSE);
 	virtual void DrawRetro(CDC*,CVisualParam *vp);
+	virtual void	Draw3DRendering();
 
 	virtual CString ExportSymbolic(int nFormat); 
 
@@ -188,6 +189,7 @@ public:
 	virtual void CalculVisuel(CVisualParam *);
 	virtual void Draw(CDC*,CVisualParam *vp,BOOL bSm=FALSE);
 	virtual void DrawRetro(CDC*,CVisualParam *vp);
+	virtual void	Draw3DRendering();
 
 	virtual BOOL IsInActiveArea(CPoint);
 

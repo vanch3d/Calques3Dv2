@@ -1032,6 +1032,51 @@ void CPlan3D::DrawRetro(CDC* pDC,CVisualParam *mV)
      }
 }
 
+void CPlan3D::Draw3DRendering()
+{
+    if ((!bVisible) || (!bValidate)) return;
+
+	float no_mat[] = {0.0f, 0.0f, 0.0f, 1.0f};
+    float mat_ambient[] = {0.7f, 0.7f, 0.7f, 1.0f};
+    float mat_ambient_color[] = {255/255., 255/255.,100/255. , 1.0f};
+    float mat_diffuse[] = {0.9f, 0.1f, 0.1f, 1.0f};
+    float mat_specular[] = {1.0f, 1.0f, 1.0f, 1.0f};
+    float no_shininess = 0.0f;
+    float low_shininess = 5.0f;
+    float high_shininess = 100.0f;
+    float mat_emission[] = {0.3f, 0.2f, 0.2f, 0.0f};
+
+	CVector4 vec=VecNorm;
+	vec = vec.Normalized();
+	GLdouble vertex[]=
+	{
+		(p1.x/TPref::TUniv.nUnitRep/3),
+		(p1.y/TPref::TUniv.nUnitRep/3),
+		(p1.z/TPref::TUniv.nUnitRep/3),
+		(p2.x/TPref::TUniv.nUnitRep/3),
+		(p2.y/TPref::TUniv.nUnitRep/3),
+		(p2.z/TPref::TUniv.nUnitRep/3),
+		(p3.x/TPref::TUniv.nUnitRep/3),
+		(p3.y/TPref::TUniv.nUnitRep/3),
+		(p3.z/TPref::TUniv.nUnitRep/3),
+		(p4.x/TPref::TUniv.nUnitRep/3),
+		(p4.y/TPref::TUniv.nUnitRep/3),
+		(p4.z/TPref::TUniv.nUnitRep/3)
+	};
+	glPushMatrix();
+		glBegin(GL_QUADS);
+// 			glMaterialfv(GL_FRONT, GL_AMBIENT, mat_diffuse);
+// 			glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
+// 			glMaterialf(GL_FRONT, GL_SHININESS, no_shininess);
+			glNormal3d(vec.x, vec.y, vec.z);   //N1
+			glVertex3d( vertex[0], vertex[1], vertex[2]);   //V2
+			glVertex3d( vertex[3], vertex[4], vertex[5]);   //V2
+			glVertex3d( vertex[6], vertex[7], vertex[8]);   //V2
+			glVertex3d( vertex[9], vertex[10], vertex[11]);   //V2
+		glEnd();
+	glPopMatrix();
+}
+
 /*CVector4 GetNormalForm(CVector4 Pt1,CVector4 Pt2,CVector4 Pt3)
 {
     FCoord  x1 = Pt1.x,x2 = Pt2.x,x3 = Pt3.x,
@@ -1764,6 +1809,12 @@ void CPolygon3D::DrawRetro(CDC* pDC,CVisualParam *mV)
     CRect mrect(pt,pt);
     mrect.InflateRect(2,2);
     pDC->Rectangle(mrect);
+}
+
+void CPolygon3D::Draw3DRendering()
+{
+    if ((!bVisible) || (!bValidate)) return;
+
 }
 
 void CPolygon3D::GetRange(CVector4 &min,CVector4 &max)

@@ -14,6 +14,7 @@
 #include "Sphere3D.h"
 
 #include "Point3D.h"
+#include "../OGLTools/glut.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -479,6 +480,59 @@ void CCercle3D::Draw(CDC* pDC,CVisualParam *mV,BOOL bSM)
 
 }
 
+void CCercle3D::Draw3DRendering()
+{
+    if ((!bVisible) || (!bValidate)) return;
+
+	CVector4 base = Center;
+	GLdouble bx = (base.x/TPref::TUniv.nUnitRep/3);
+	GLdouble by = (base.y/TPref::TUniv.nUnitRep/3);
+	GLdouble bz = (base.z/TPref::TUniv.nUnitRep/3);
+	CVector4 dl = VecNorm;
+	dl = dl.Normalized();
+	dl.Norme();
+	CVector4 dz(0,0,1);
+	CVector4 drot = dz % dl;
+	double dd = 0;
+		drot = drot.Normalized();
+		drot.Norme();
+	if (drot.N!=0)
+	{
+		FCoord cosangle = dz * dl;
+		dd = acos(cosangle);
+		dd = RTD(dd);
+	}
+	else
+	{
+		drot = dz;
+	}
+	FCoord rad = Radius/TPref::TUniv.nUnitRep/3;
+	float no_mat[] = {0.0f, 0.0f, 0.0f, 1.0f};
+    float mat_ambient[] = {0.7f, 0.7f, 0.7f, 1.0f};
+    float mat_ambient_color[] = {0.8f, 0.8f, 0.2f, 1.0f};
+    float mat_diffuse[] = {0.1f, 0.5f, 0.8f, 1.0f};
+    float mat_specular[] = {1.0f, 1.0f, 1.0f, 1.0f};
+    float no_shininess = 0.0f;
+    float low_shininess = 5.0f;
+    float high_shininess = 100.0f;
+    float mat_emission[] = {0.3f, 0.2f, 0.2f, 0.0f};
+
+	GLUquadricObj*m_quadrObj=gluNewQuadric();
+// 	gluQuadricNormals(m_quadrObj,GLU_SMOOTH);
+// 	gluQuadricTexture(m_quadrObj,GL_TRUE);
+// 	gluQuadricDrawStyle(m_quadrObj,GLU_FILL);
+// 	gluQuadricOrientation(m_quadrObj,GLU_OUTSIDE);
+	glPushMatrix();
+	glTranslated(bx, by, bz);
+	glRotated(dd,drot.x,drot.y,drot.z);
+	glColor3f(.8f,.5f,.8f);
+    glMaterialfv(GL_FRONT, GL_AMBIENT, mat_diffuse);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
+    glMaterialf(GL_FRONT, GL_SHININESS, no_shininess);
+	glutSolidTorus (0.02,rad,16,64);
+	glPopMatrix();
+}
+
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
@@ -737,6 +791,11 @@ UINT  CEllipse3D::CalculConceptuel()
      }
     bValidate = 1;
     return 0;
+}
+
+void CEllipse3D::Draw3DRendering()
+{
+    if ((!bVisible) || (!bValidate)) return;
 }
 
 void CEllipse3D::Serialize( CArchive& ar )
