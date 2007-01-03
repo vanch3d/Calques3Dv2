@@ -389,7 +389,9 @@ inline CVector4 CVector4::operator -() const {
 //////////////////////////////////////////////////////////////////////
 inline CVector4	CVector4::Normalized()  {
 	N = (FCoord) (*this);
-	return CVector4(x/N,y/N,z/N);
+	CVector4 vec(x/N,y/N,z/N);
+	vec.N = this->N;
+	return vec;
 }
 
 //////////////////////////////////////////////////////////////////////
