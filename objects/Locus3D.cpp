@@ -898,3 +898,53 @@ void CLocus3D::Draw(CDC *pDC,CVisualParam *mV,BOOL bSM)
         pDC->InvertRect(theR5);*/
      }
 }
+
+void CLocus3D::Draw3DRendering()
+{
+    float mat_diffuse[] = {0.9f, 0.1f, 0.1f, 1.0f};
+    float no_shininess = 0.0f;
+    if ((!bVisible) || (!bValidate)) return;
+    int nb1 = a3D.GetSize();
+	if (nb1==1)
+	{
+	}
+	else
+	{
+		for (int i=0;i<nb1-1;i+=1)
+		{
+			int nb2 = a3D[i].GetSize();
+			int nb3 = a3D[i+1].GetSize();
+			for (int j=0;j<__min(nb2,nb3)-1;j++)
+			{
+				CVector4 pt1 = a3D[i].GetAt(j);
+				CVector4 pt2 = a3D[i].GetAt(j+1);
+				CVector4 pt3 = a3D[i+1].GetAt(j+1);
+				CVector4 pt4 = a3D[i+1].GetAt(j);
+				CVector4 n = pt2-pt1;
+				CVector4 m = pt4-pt1;
+				CVector4 k = n % m;
+				k.Normalized();
+				
+				FCoord scale = 1/(TPref::TUniv.nUnitRep*3.);
+				pt1=pt1*scale;
+				pt2=pt2*scale;
+				pt3=pt3*scale;
+				pt4=pt4*scale;
+			glBegin (GL_TRIANGLES);
+// 			glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, mat_diffuse);
+// 			glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, mat_diffuse);
+// 			glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, no_shininess);
+				glNormal3d (k.x, k.y, k.z);
+				glColor3f (1.0f, 0.0f, 0.f);
+				glVertex3d (pt1.x, pt1.y, pt1.z);
+				glColor3f (0.0f, 1.0f, 0.f);
+				glVertex3d (pt2.x, pt2.y, pt2.z);
+				glColor3f (1.0f, 0.0f, 1.0f);
+				glVertex3d (pt4.x, pt4.y, pt4.z);
+		         glEnd();
+			}
+		}
+
+	}
+}
+
