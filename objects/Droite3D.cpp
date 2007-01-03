@@ -5,6 +5,8 @@
 #include "stdafx.h"
 #include "..\Calques3D.h"
 #include "..\Prefs\Prefs.h"
+#include "..\OGLTools\OGLT.h"
+#include "..\OGLTools\glut.h"
 
 #include "Vector4.h"
 #include "Point3D.h"
@@ -19,6 +21,7 @@ static char THIS_FILE[]=__FILE__;
 #endif
 
 #define MRG_ZERO 1.0e-8
+
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
@@ -58,7 +61,7 @@ CDroite3D::CDroite3D(CPoint3D *s1,CPoint3D *s2): CObject3D()
     LPt1=LPt2=0;
     //VisualPts = 0;
     if (s1 && s2)
-        nDepth = max(s1->nDepth,s2->nDepth)+1;
+        nDepth = __max(s1->nDepth,s2->nDepth)+1;
     pObjectShape.clrObject = RGB(0,0,255);
     bIsSegment = FALSE;
     VisualPts.RemoveAll();
@@ -74,7 +77,7 @@ CDroite3D::CDroite3D(CPoint3D *s1,CDroite3D *s2): CObject3D()
     CLP1=CLP2=0;
     LPt1=LPt2=0;
     //VisualPts = 0;
-    nDepth = max(s1->nDepth,s2->nDepth)+1;
+    nDepth = __max(s1->nDepth,s2->nDepth)+1;
     pObjectShape.clrObject = RGB(0,0,255);
     bIsSegment = FALSE;
     VisualPts.RemoveAll();
@@ -83,9 +86,9 @@ CDroite3D::CDroite3D(CPoint3D *s1,CDroite3D *s2): CObject3D()
 int CDroite3D::SetDepth()
 {
     if (P1 && P2)
-        nDepth = max(P1->nDepth,P2->nDepth)+1;
+        nDepth = __max(P1->nDepth,P2->nDepth)+1;
     else if (P1 && D2)
-        nDepth = max(P1->nDepth,D2->nDepth)+1;
+        nDepth = __max(P1->nDepth,D2->nDepth)+1;
     return nDepth;
 }
 
@@ -255,17 +258,17 @@ BOOL CDroite3D::IsInActiveArea(CPoint thePt)
     if (VP1.x == VP2.x)
     {
         CRect theRect(VP1.x-TPref::TUniv.nDefPres,
-                (!bIsSegment) ? -1 : min(VP1.y,VP2.y),
+                (!bIsSegment) ? -1 : __min(VP1.y,VP2.y),
                 VP1.x+TPref::TUniv.nDefPres,
-                (!bIsSegment) ? WndHeight+1 : max(VP1.y,VP2.y));
+                (!bIsSegment) ? WndHeight+1 : __max(VP1.y,VP2.y));
         return(theRect.PtInRect(thePt));
     }
 
     if (VP1.y == VP2.y)
     {
-        CRect theRect((!bIsSegment) ? -1 : min(VP1.x,VP2.x),
+        CRect theRect((!bIsSegment) ? -1 : __min(VP1.x,VP2.x),
                 VP1.y-TPref::TUniv.nDefPres,
-                (!bIsSegment) ? WndWidth+1 : max(VP1.x,VP2.x),
+                (!bIsSegment) ? WndWidth+1 : __max(VP1.x,VP2.x),
                 VP2.y+TPref::TUniv.nDefPres);
         return(theRect.PtInRect(thePt));
     }
@@ -287,10 +290,10 @@ BOOL CDroite3D::IsInActiveArea(CPoint thePt)
 
     BOOL test = theRect.PtInRect(thePt) || theRect2.PtInRect(thePt);
     if ((test) && (bIsSegment))
-        test = ( (thePt.x >= min(VP1.x,VP2.x))
-                && (thePt.x <= max(VP1.x,VP2.x))
-                && (thePt.y >= min(VP1.y,VP2.y))
-                && (thePt.y <= max(VP1.y,VP2.y)));
+        test = ( (thePt.x >= __min(VP1.x,VP2.x))
+                && (thePt.x <= __max(VP1.x,VP2.x))
+                && (thePt.y >= __min(VP1.y,VP2.y))
+                && (thePt.y <= __max(VP1.y,VP2.y)));
     return test;
 }
 
@@ -688,6 +691,74 @@ void CDroite3D::Draw(CDC* pDC,CVisualParam *mV,BOOL bSm)
 
 }
 
+void CDroite3D::Draw3DRendering()
+{
+    if ((!bVisible) || (!bValidate)) return;
+	CVector4 base = GetBasePoint();
+	GLdouble bx = (base.x/TPref::TUniv.nUnitRep/3);
+	GLdouble by = (base.y/TPref::TUniv.nUnitRep/3);
+	GLdouble bz = (base.z/TPref::TUniv.nUnitRep/3);
+
+	CVector4 dl = GetDirVector().Normalized();
+	CVector4 dz(0,0,1);
+	CVector4 drot = dz % dl;
+	double dd = 0;
+		drot = drot.Normalized();
+		drot.Norme();
+	if (drot.N!=0)
+	{
+		FCoord cosangle = dz * dl;
+		dd = acos(cosangle);
+		dd = RTD(dd);
+	}
+	else
+	{
+		drot = dz;
+	}
+
+	GLdouble	size=20;
+	if (isA()==TSegment3DClass)
+	{
+		CVector4 base = GetDirVector();
+		FCoord N = base.Norme();
+		size = (N/TPref::TUniv.nUnitRep/3);
+	}
+	float no_mat[] = {0.0f, 0.0f, 0.0f, 1.0f};
+    float mat_ambient[] = {0.7f, 0.7f, 0.7f, 1.0f};
+    float mat_ambient_color[] = {0.8f, 0.8f, 0.2f, 1.0f};
+    float mat_diffuse[] = {0.1f, 0.5f, 0.8f, 1.0f};
+    float mat_specular[] = {1.0f, 1.0f, 1.0f, 1.0f};
+    float no_shininess = 0.0f;
+    float low_shininess = 5.0f;
+    float high_shininess = 100.0f;
+    float mat_emission[] = {0.3f, 0.2f, 0.2f, 0.0f};
+
+	GLUquadricObj*m_quadrObj=gluNewQuadric();
+// 	gluQuadricNormals(m_quadrObj,GLU_SMOOTH);
+// 	gluQuadricTexture(m_quadrObj,GL_TRUE);
+// 	gluQuadricDrawStyle(m_quadrObj,GLU_FILL);
+// 	gluQuadricOrientation(m_quadrObj,GLU_OUTSIDE);
+	glPushMatrix();
+	glTranslated(bx, by, bz);
+	glRotated(dd,drot.x,drot.y,drot.z);
+	glColor3f(.8f,.5f,.8f);
+    glMaterialfv(GL_FRONT, GL_AMBIENT, mat_diffuse);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
+    glMaterialf(GL_FRONT, GL_SHININESS, no_shininess);
+	if (isA()==TDemiDroite3DClass || isA()==TSegment3DClass)
+	{
+		gluCylinder(m_quadrObj,0.02,0.02,size,16,16);
+	}
+	else
+	{
+		gluCylinder(m_quadrObj,0.02,0.02,size,16,16);
+		glRotated(180,drot.x,drot.y,drot.z);
+		gluCylinder(m_quadrObj,0.02,0.02,size,16,16);
+	}
+	//glutSolidTorus (0.02,1.00,16,64);
+	glPopMatrix();
+}
+
 COLORREF CDroite3D::GetDefaultColor()
 {
     return TPref::TLine.clrDefault;
@@ -965,7 +1036,7 @@ CDemiDroite3D::CDemiDroite3D(CPoint3D *s1,CPoint3D *s2) : CDroite3D()
     bIsSegment = FALSE;
     P1 = s1;
     P2 = s2;
-    nDepth = max(s1->nDepth,s2->nDepth)+1;
+    nDepth = __max(s1->nDepth,s2->nDepth)+1;
 }
 
 CDemiDroite3D::CDemiDroite3D(const CObject3D & src) : CDroite3D(src)
@@ -1073,7 +1144,7 @@ CDroiteInterPP3D::CDroiteInterPP3D(CPlan3D *s1,CPlan3D *s2) : CDroite3D()
     bIsSegment = FALSE;
     Pl1 = s1;
     Pl2 = s2;
-    nDepth = max(s1->nDepth,s2->nDepth)+1;
+    nDepth = __max(s1->nDepth,s2->nDepth)+1;
     PtonDr = CVector4(0,0,0);
 }
 
@@ -1088,7 +1159,7 @@ CDroiteInterPP3D::CDroiteInterPP3D(const CObject3D & src) : CDroite3D(src)
 int CDroiteInterPP3D::SetDepth()
 {
     if (Pl1 && Pl2)
-        nDepth = max(Pl1->nDepth,Pl2->nDepth)+1;
+        nDepth = __max(Pl1->nDepth,Pl2->nDepth)+1;
     return nDepth;
 }
 
@@ -1491,7 +1562,7 @@ CDroitePerp3D::CDroitePerp3D(CPoint3D *s1,CPlan3D *s2) : CDroite3D()
     P3 = P4 = NULL;
     Pl1 = s2;
     bIsSegment = FALSE;
-    nDepth = max(s1->nDepth,s2->nDepth)+1;
+    nDepth = __max(s1->nDepth,s2->nDepth)+1;
     //Concept_pt = s2->GetDirVector();
 }
 
@@ -1503,16 +1574,16 @@ CDroitePerp3D::CDroitePerp3D(CPoint3D *s1,CPoint3D *p1,CPoint3D *p2,CPoint3D *p3
     P4 = p3;
     Pl1 = 0;
     bIsSegment = FALSE;
-    nDepth = max(s1->nDepth,max(p1->nDepth,max(p2->nDepth,p3->nDepth)))+1;
+    nDepth = __max(s1->nDepth,__max(p1->nDepth,__max(p2->nDepth,p3->nDepth)))+1;
 
 }
 
 int CDroitePerp3D::SetDepth()
 {
     if (P1 && Pl1)
-        nDepth = max(P1->nDepth,Pl1->nDepth)+1;
+        nDepth = __max(P1->nDepth,Pl1->nDepth)+1;
     else if (P1 && P2 && P3 && P4)
-        nDepth = max(P1->nDepth,max(P2->nDepth,max(P3->nDepth,P4->nDepth)))+1;
+        nDepth = __max(P1->nDepth,__max(P2->nDepth,__max(P3->nDepth,P4->nDepth)))+1;
 
     return nDepth;
 }
@@ -1739,7 +1810,7 @@ CDroitePerpDD3D::CDroitePerpDD3D(CDroite3D *s1,CDroite3D *s2) : CDroite3D()
     bIsSegment = FALSE;
     D2 = s1;
     D3 = s2;
-    nDepth = max(s1->nDepth,s2->nDepth)+1;
+    nDepth = __max(s1->nDepth,s2->nDepth)+1;
 }
 
 CDroitePerpDD3D::CDroitePerpDD3D(const CObject3D & src) : CDroite3D(src)
@@ -1752,7 +1823,7 @@ CDroitePerpDD3D::CDroitePerpDD3D(const CObject3D & src) : CDroite3D(src)
 int CDroitePerpDD3D::SetDepth()
 {
     if (D2 && D3)
-        nDepth = max(D2->nDepth,D3->nDepth)+1;
+        nDepth = __max(D2->nDepth,D3->nDepth)+1;
     return nDepth;
 }
 
