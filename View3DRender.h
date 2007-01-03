@@ -6,12 +6,15 @@
 #endif // _MSC_VER > 1000
 // View3DRender.h : header file
 //
-#include "OGLTools\OGLT.h"
+#include "OGLTools\GLEnabledView.h"
+#include "OGLTools/BallController.h"
+
+class CRenderPropDlg;
 
 /////////////////////////////////////////////////////////////////////////////
 // CView3DRender view
 
-class CView3DRender : public CView
+class CView3DRender : public CGLEnabledView
 {
 protected:
 	CView3DRender();           // protected constructor used by dynamic creation
@@ -19,26 +22,28 @@ protected:
 
 // Attributes
 public:
-	CWGL m_wgl;
-	float m_rtri;
-	float m_rquad;
-	bool m_bResizing;
-
+	CPoint MouseDownPoint;
+	CBallController trackball;
+	CRenderPropDlg* m_pDlg;
+    int   m_LightParam[11];  // Graphics dimension (along X-axis)
 // Operations
 public:
 	CCalques3DDoc* GetDocument();
-	int DrawGLScene();
 
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CView3DRender)
 	public:
 	virtual void OnInitialUpdate();
-	protected:
-	virtual void OnDraw(CDC* pDC);      // overridden to draw this view
 	//}}AFX_VIRTUAL
 
 // Implementation
+public:
+	void OnCreateGL();
+	void OnDrawGL();
+	void GetLightParams(int *pPos);			// Get lighting parameters
+	void SetLightParam (short lp, int nPos);	// Set lighting parameters
+	void SetLight();
 protected:
 	virtual ~CView3DRender();
 #ifdef _DEBUG
@@ -48,10 +53,15 @@ protected:
 
 	// Generated message map functions
 protected:
+	void OnSizeGL(int cx, int cy);
 	//{{AFX_MSG(CView3DRender)
-	afx_msg void OnSize(UINT nType, int cx, int cy);
-	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
+	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
+	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
+	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
+	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
 	//}}AFX_MSG
+	afx_msg void OnEditProp();
 	DECLARE_MESSAGE_MAP()
 };
 
@@ -60,6 +70,36 @@ protected:
 inline CCalques3DDoc* CView3DRender::GetDocument()
    { return (CCalques3DDoc*)m_pDocument; }
 #endif
+
+
+class CRenderPropDlg : public CDialog
+{
+public:
+	CView3DRender *m_pView;
+	int m_Pos[11];
+
+	CRenderPropDlg(CView3DRender* p);
+	int GetSliderNum(HWND hwnd, UINT& nID);
+
+
+	//{{AFX_DATA(CRenderPropDlg)
+	enum { IDD = IDD_RENDERER_PROP };
+	//}}AFX_DATA
+
+	//{{AFX_VIRTUAL(CRenderPropDlg)
+	protected:
+	virtual void DoDataExchange(CDataExchange* pDX);
+	//}}AFX_VIRTUAL
+
+protected:
+
+	//{{AFX_MSG(CRenderPropDlg)
+	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
+	afx_msg void OnClose();
+	virtual BOOL OnInitDialog();
+	//}}AFX_MSG
+	DECLARE_MESSAGE_MAP()
+};
 
 /////////////////////////////////////////////////////////////////////////////
 
