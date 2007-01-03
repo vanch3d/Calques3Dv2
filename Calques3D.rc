@@ -84,6 +84,7 @@ IDB_LIST_DELITEM        BITMAP  DISCARDABLE     "res\\list_delete.bmp"
 IDB_PROJECTION          BITMAP  DISCARDABLE     "res\\project.bmp"
 IDR_FORMAT_TB           BITMAP  DISCARDABLE     "res\\text_tb.bmp"
 IDR_FORMAT_TB24         BITMAP  DISCARDABLE     "res\\text_tb24.bmp"
+IDB_MATHPAD             BITMAP  DISCARDABLE     "res\\notebook.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -441,16 +442,15 @@ BEGIN
     LTEXT           "Author : ",IDC_STATIC,12,146,38,12,SS_CENTERIMAGE
     CONTROL         "Nicolas VAN LABEKE",IDC_MAIL,"Button",BS_OWNERDRAW | 
                     BS_LEFT | WS_TABSTOP,50,146,152,12
-    LTEXT           "Homepage: ",IDC_STATIC,12,166,38,12,SS_CENTERIMAGE
-    CONTROL         "http://www.psyc.nott.ac.uk/staff/nvl/",IDC_URL,"Button",
-                    BS_OWNERDRAW | WS_TABSTOP,50,166,152,12
+    CONTROL         "Visit Calques 3D online",IDC_URL,"Button",BS_OWNERDRAW | 
+                    WS_TABSTOP,12,166,87,12
 END
 
 IDD_MACROINFO_DLG DIALOGEX 0, 0, 212, 153
 STYLE DS_MODALFRAME | DS_CONTEXTHELP | WS_POPUP | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_CONTEXTHELP
 CAPTION "Macro-Construction"
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     LTEXT           "Set the following information for the current macro-construction",
                     IDC_STATIC,4,4,200,12,SS_CENTERIMAGE
@@ -477,7 +477,7 @@ END
 IDD_PREF_MACROS_PAGE DIALOGEX 0, 0, 212, 196
 STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Macros"
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     GROUPBOX        "User-Defined Macros",IDC_STATIC,4,4,204,148,BS_FLAT
     LTEXT           "&Menu content:",IDC_PMAC_LIST,8,16,196,72,WS_TABSTOP,0,
@@ -501,7 +501,7 @@ END
 IDD_PREF_SESSION_PAGE DIALOGEX 0, 0, 212, 196
 STYLE DS_CONTEXTHELP | WS_CHILD | WS_CAPTION
 CAPTION "Session"
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     PUSHBUTTON      "&Save current configuration as a new profile ...",
                     IDC_PSESS_SAVEAS,4,172,168,16,0,0,HIDC_PSESS_SAVEAS
@@ -543,7 +543,7 @@ END
 
 IDD_SPLASH DIALOGEX 0, 0, 204, 233
 STYLE DS_MODALFRAME | WS_POPUP
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     CONTROL         "",IDC_BIGICON,"Button",BS_OWNERDRAW | WS_DISABLED,4,4,
                     34,30
@@ -667,7 +667,7 @@ IDD_OBJECTTEXT_PAGE DIALOGEX 0, 0, 212, 73
 STYLE DS_MODALFRAME | DS_CONTEXTHELP | WS_POPUP | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_CONTEXTHELP
 CAPTION "Text"
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     LTEXT           "&Definition:",IDC_STATIC,4,24,52,8
     EDITTEXT        IDC_TXT_EQUATION,4,36,140,12,ES_AUTOHSCROLL,0,
@@ -779,6 +779,61 @@ CAPTION "Font"
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     CONTROL         "",IDC_TXT_PALETTE,"Static",SS_BLACKFRAME,4,4,110,66
+END
+
+IDD_RENDERER_PROP DIALOGEX 0, 0, 182, 166
+STYLE WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "Graph Properties"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "Ambient",IDC_STATIC,20,17,26,8
+    LTEXT           "X",IDC_STATIC,118,17,8,8
+    LTEXT           "Y",IDC_STATIC,118,38,8,8
+    LTEXT           "Diffuse",IDC_STATIC,20,36,23,8
+    LTEXT           "Specular",IDC_STATIC,20,55,29,8
+    LTEXT           "Z",IDC_STATIC,118,57,8,8
+    GROUPBOX        "Lighting",IDC_STATIC,6,7,81,71
+    GROUPBOX        "Light Coordinates",IDC_STATIC,92,7,83,71
+    LTEXT           "Shininess",IDC_STATIC,106,99,31,8
+    CTEXT           "",IDC_RENDERER_AMBTXT,62,26,19,8,SS_CENTERIMAGE
+    CTEXT           "",IDC_RENDERER_DIFFUSETXT,62,44,19,8,SS_CENTERIMAGE
+    CTEXT           "",IDC_RENDERER_SPECULARTXT,62,63,19,8,SS_CENTERIMAGE
+    CTEXT           "",IDC_RENDERER_LGTXTXT,150,26,19,8,SS_CENTERIMAGE
+    CTEXT           "",IDC_RENDERER_LGTYTXT,150,46,19,8,SS_CENTERIMAGE
+    CTEXT           "",IDC_RENDERER_LGTZTXT,150,65,19,8,SS_CENTERIMAGE
+    CONTROL         "Slider1",IDC_RENDERER_AMBIENT,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,6,25,56,11,
+                    WS_EX_TRANSPARENT
+    CONTROL         "Slider1",IDC_RENDERER_DIFFUSE,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,6,44,56,11
+    CONTROL         "Slider1",IDC_RENDERER_SPECULAR,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,6,65,56,11
+    CONTROL         "Slider1",IDC_RENDERER_SHINE,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,96,107,56,11
+    CONTROL         "Slider1",IDC_RENDERER_LGTX,"msctls_trackbar32",TBS_BOTH | 
+                    TBS_NOTICKS | WS_TABSTOP,94,25,56,11
+    CONTROL         "Slider1",IDC_RENDERER_LGTY,"msctls_trackbar32",TBS_BOTH | 
+                    TBS_NOTICKS | WS_TABSTOP,94,44,56,11
+    CONTROL         "Slider1",IDC_RENDERER_LGTZ,"msctls_trackbar32",TBS_BOTH | 
+                    TBS_NOTICKS | WS_TABSTOP,94,65,56,11
+    LTEXT           "Ambient",IDC_STATIC,30,94,26,8
+    LTEXT           "Diffuse",IDC_STATIC,30,113,23,8
+    LTEXT           "Specular",IDC_STATIC,30,134,29,8
+    GROUPBOX        "Material",IDC_STATIC,7,83,168,76
+    CTEXT           "",IDC_RENDERER_AMBMATTXT,72,103,19,8,SS_CENTERIMAGE
+    CTEXT           "",IDC_RENDERER_DIFFMATTXT,72,124,19,8,SS_CENTERIMAGE
+    CTEXT           "",IDC_RENDERER_SPECMATTXT,72,143,19,8,SS_CENTERIMAGE
+    CONTROL         "Slider1",IDC_RENDERER_AMBMAT,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,16,103,56,11
+    CONTROL         "Slider1",IDC_RENDERER_DIFFMAT,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,16,122,56,11
+    CONTROL         "Slider1",IDC_RENDERER_SPECMAT,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,16,143,56,11
+    CTEXT           "",IDC_RENDERER_SHINETXT,150,108,19,8,SS_CENTERIMAGE
+    LTEXT           "Emission",IDC_STATIC,106,124,28,8
+    CONTROL         "Slider1",IDC_RENDERER_EMISSION,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,96,132,56,11
+    CTEXT           "",IDC_RENDERER_EMISSIONTXT,150,135,19,8,SS_CENTERIMAGE
 END
 
 
@@ -994,6 +1049,14 @@ BEGIN
         RIGHTMARGIN, 205
         TOPMARGIN, 7
         BOTTOMMARGIN, 66
+    END
+
+    IDD_RENDERER_PROP, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 175
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 159
     END
 END
 #endif    // APSTUDIO_INVOKED
@@ -1960,6 +2023,8 @@ BEGIN
         MENUITEM "Cu&t\tCtrl+X",                ID_EDIT_CUT
         MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
         MENUITEM "&Paste\tCtrl+V",              ID_EDIT_PASTE
+        MENUITEM SEPARATOR
+        MENUITEM "Select &All\tCtrl+A",         ID_EDIT_SELECT_ALL
     END
     POPUP "&View"
     BEGIN
