@@ -580,50 +580,55 @@ void CLocus3D::Draw(CDC *pDC,CVisualParam *mV,BOOL bSM)
             {
                 CVector4 p1 = a3D[i][j];
                 CVector4 p2 = a3D[i][j+1];
-                CVector4 p3,p4;
+                CVector4 /*p3,*/p4;
                 if (i!=nb1-1)
                 {
-                    p3 = a3D[i+1][j];
-                    p4 = a3D[i+1][j+1];
+                    //p3 = a3D[i+1][j];
+					int sarr = a3D[i+1].GetSize();
+					if (j+1>=sarr)
+						 x = bVis1 ? 0 : 1;
+					else
+						p4 = a3D[i+1][j+1];
                 }
                 else
                 {
-                    p3 = a3D[0][j];
-                    p4 = a3D[0][j+1];
+					int sarr = a3D[0].GetSize();
+					if (j+1>=sarr)
+						 x = bVis1 ? 0 : 1;
+					else
+						p4 = a3D[0][j+1];
                 }
 
-                CVector4    FaceNorm = ((p2 - p1) % (p4 - p1));
-                FCoord n1 = FaceNorm.Norme();
-                FaceNorm = FaceNorm * (1/n1);
-                CVector4 oeil= mV->GetEyePos();
-                CVector4 origin(0,0,0,1);
-                CVector4 VisuNorm= oeil -
-                    ((mV->bParProj) ? origin : p1);
-                FCoord n2 = VisuNorm.Norme();
-                VisuNorm = VisuNorm*(1/n2);
-                FCoord dot = VisuNorm * FaceNorm;
-                int vis = 0;
-                if (pPtSurS)
-                    vis = (dot > 0) ? 0 : 4;
-                if (pPtSurP)
-                    vis = (dot < 0) ? 0 : 4;
-                //if (pPtSurS && (i%2==0))
-                //  vis = (vis==0) ? 4 : 0;
+				if (x==-1)
+				{
+					CVector4    FaceNorm = ((p2 - p1) % (p4 - p1));
+					FCoord n1 = FaceNorm.Norme();
+					FaceNorm = FaceNorm * (1/n1);
+					CVector4 oeil= mV->GetEyePos();
+					CVector4 origin(0,0,0,1);
+					CVector4 VisuNorm= oeil -
+						((mV->bParProj) ? origin : p1);
+					FCoord n2 = VisuNorm.Norme();
+					VisuNorm = VisuNorm*(1/n2);
+					FCoord dot = VisuNorm * FaceNorm;
+					int vis = 0;
+					if (pPtSurS)
+						vis = (dot > 0) ? 0 : 4;
+					if (pPtSurP)
+						vis = (dot < 0) ? 0 : 4;
 
-                if (vis)
-                {
-                    //**pOldP = pDC->SelectObject(bVis1 ? &curPen2 : &disPen2);
-                    x = bVis1 ? 2 : 3;
-                }
-                else
-                {
-                    //**pOldP = pDC->SelectObject(bVis1 ? &curPen : &disPen);
-                    x = bVis1 ? 0 : 1;
-                }
+					if (vis)
+					{
+						x = bVis1 ? 2 : 3;
+					}
+					else
+					{
+						x = bVis1 ? 0 : 1;
+					}
+				}
             }
             else
             {
-                //**pOldP = pDC->SelectObject(bVis1 ? &curPen : &disPen);
                 x = bVis1 ? 0 : 1;
             }
 
@@ -658,22 +663,6 @@ void CLocus3D::Draw(CDC *pDC,CVisualParam *mV,BOOL bSM)
                 bpt4[npt4] = PT_LINETO;
                 pt4[npt4++] = endpt;
             }
-
-//**            pDC->MoveTo(start);
-//**            pDC->LineTo(endpt);
-
-
-/*          if (j==0)
-            {
-                CRect mrect(start,start);
-                mrect.InflateRect(5,5,5,5);
-                CRect mrect2(endpt,endpt);
-                mrect2.InflateRect(5,5,5,5);
-                pDC->Rectangle(mrect);
-                pDC->Ellipse(mrect2);
-            }*/
-
-        //**    pDC->SelectObject(pOldP);
         }
     }
     if (nb1>1)
@@ -690,6 +679,7 @@ void CLocus3D::Draw(CDC *pDC,CVisualParam *mV,BOOL bSM)
                 int nbb2 = a3D[i+1].GetSize();
 
                 if (!nbb1 || !nbb2) continue;
+				if (j>=nbb1 || (j+1)>=nbb2) continue;
 
                 U = a3D[i].GetAt(j),
                 V = a3D[i+1].GetAt(j);
@@ -704,46 +694,57 @@ void CLocus3D::Draw(CDC *pDC,CVisualParam *mV,BOOL bSM)
 
                 if (pPtSurS || pPtSurP)
                 {
-                    CVector4 p1,p2,p3,p4;
+                    CVector4 p1,p2,p3/*,p4*/;
                     p1 = a3D[i][j];
                     p3 = a3D[i+1][j];
                     if (j!=nb2-1)
-                    {
-                        p2 = a3D[i][j+1];
-                        p4 = a3D[i+1][j+1];
+                    {	
+						int sarr = a3D[i].GetSize();
+						if (j+1>=sarr)
+		                    x = bVis1 ? 0 : 1;
+						else
+							p2 = a3D[i][j+1];
+							//p4 = a3D[i+1][j+1];
                     }
                     else
                     {
-                        p2 = a3D[i][0];
-                        p4 = a3D[i+1][0];
+						int sarr = a3D[i].GetSize();
+						if (0>=sarr)
+		                    x = bVis1 ? 0 : 1;
+						else
+							p2 = a3D[i][0];
+							//p4 = a3D[i+1][0];
                     }
 
-                    CVector4    FaceNorm = ((p2 - p1) % (p3 - p1));
-                    FCoord n1 = FaceNorm.Norme();
-                    FaceNorm = FaceNorm * (1/n1);
-                    CVector4 oeil= mV->GetEyePos();
-                    CVector4 origin(0,0,0,1);
-                    CVector4 VisuNorm= oeil -
-                        ((mV->bParProj) ? origin : p1);
-                    FCoord n2 = VisuNorm.Norme();
-                    VisuNorm = VisuNorm*(1/n2);
-                    FCoord dot = VisuNorm * FaceNorm;
-                    int vis = 0;
-                    if (pPtSurS)
-                        vis = (dot > 0) ? 0 : 4;
-                    if (pPtSurP)
-                        vis = (dot < 0) ? 0 : 4;
+					if (x==-1)
+					{
+						CVector4    FaceNorm = ((p2 - p1) % (p3 - p1));
+						FCoord n1 = FaceNorm.Norme();
+						FaceNorm = FaceNorm * (1/n1);
+						CVector4 oeil= mV->GetEyePos();
+						CVector4 origin(0,0,0,1);
+						CVector4 VisuNorm= oeil -
+							((mV->bParProj) ? origin : p1);
+						FCoord n2 = VisuNorm.Norme();
+						VisuNorm = VisuNorm*(1/n2);
+						FCoord dot = VisuNorm * FaceNorm;
+						int vis = 0;
+						if (pPtSurS)
+							vis = (dot > 0) ? 0 : 4;
+						if (pPtSurP)
+							vis = (dot < 0) ? 0 : 4;
 
-                    if (vis)
-                    {
-                        //**pOldP = pDC->SelectObject(bVis1 ? &curPen2 : &disPen2);
-                        x = bVis1 ? 2 : 3;
-                    }
-                    else
-                    {
-                        //**pOldP = pDC->SelectObject(bVis1 ? &curPen : &disPen);
-                        x = bVis1 ? 0 : 1;
-                    }
+						if (vis)
+						{
+							//**pOldP = pDC->SelectObject(bVis1 ? &curPen2 : &disPen2);
+							x = bVis1 ? 2 : 3;
+						}
+						else
+						{
+							//**pOldP = pDC->SelectObject(bVis1 ? &curPen : &disPen);
+							x = bVis1 ? 0 : 1;
+						}
+					}
                 }
                 else
                 {
