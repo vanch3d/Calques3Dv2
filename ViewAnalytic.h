@@ -13,6 +13,7 @@
 // ViewAnalytic.h : header file
 //
 
+
 class CEquation3D;
 //class MTParser;
 /////////////////////////////////////////////////////////////////////////////
@@ -40,7 +41,10 @@ public:
 	CEdit *			m_pEdit;
 	CDialog*		m_pDialog;
 
+private:
+	BOOL			m_bIsEditMode;
 	//MTParser *m_pParser;
+	CBCGPToolBarImages	m_bmpBack;
 
 // Operations
 public:
@@ -89,12 +93,17 @@ protected:
 	afx_msg void OnUpdateProperty(CCmdUI* pCmdUI);
 	afx_msg int OnMouseActivate(CWnd* pDesktopWnd, UINT nHitTest, UINT message);
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
+	afx_msg BOOL OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message);
+	afx_msg void OnEditSelectAll();
+	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	afx_msg void OnSysCommand(UINT nID, LPARAM lParam);
 	//}}AFX_MSG
 	afx_msg void OnFilePrintPreview();
 	afx_msg void OnUpdateFormat(CCmdUI* pCmdUI);
 	afx_msg void OnFormat(UINT);
 	afx_msg void OnFormat();
 	LRESULT OnUpdateObjTooltip(WPARAM wp, LPARAM lp=0);
+	afx_msg LRESULT OnEndEdit(WPARAM,LPARAM);
 	DECLARE_MESSAGE_MAP()
 };
 

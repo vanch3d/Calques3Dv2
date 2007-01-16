@@ -38,6 +38,9 @@ CViewAnalytic::CViewAnalytic()
 	m_bSelection = FALSE;
 	m_rSelect.SetRectEmpty();
 	m_rViewSize.SetRect(0,0,800,600);
+	m_bIsEditMode = FALSE;
+	//multiTrack.SetTrackerView(this);
+
 
 	//m_pParser = new MTParser ();
 	//m_pParser->enableAutoVarDefinition(true);
@@ -69,8 +72,12 @@ BEGIN_MESSAGE_MAP(CViewAnalytic, CScrollView)
 	ON_COMMAND(ID_HISTORY_PROPERTY, OnProperty)
 	ON_UPDATE_COMMAND_UI(ID_HISTORY_PROPERTY, OnUpdateProperty)
 	ON_WM_MOUSEACTIVATE()
-	ON_UPDATE_COMMAND_UI(ID_MATHPAD_ADDEQUATION, OnUpdateAddComment)
 	ON_WM_CONTEXTMENU()
+	ON_WM_SETCURSOR()
+	ON_COMMAND(ID_EDIT_SELECT_ALL, OnEditSelectAll)
+	ON_WM_CREATE()
+	ON_UPDATE_COMMAND_UI(ID_MATHPAD_ADDEQUATION, OnUpdateAddComment)
+	ON_WM_SYSCOMMAND()
 	//}}AFX_MSG_MAP
 	ON_COMMAND(ID_FILE_PRINT, CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, CView::OnFilePrint)
@@ -80,6 +87,7 @@ BEGIN_MESSAGE_MAP(CViewAnalytic, CScrollView)
     ON_COMMAND_RANGE(ID_FORMAT_TXTFONT, ID_FORMAT_UNDERLINE, OnFormat)
 	ON_CBN_SELENDOK(ID_FORMAT_TXTFONT, OnFormat)
 	ON_CBN_SELENDOK(ID_FORMAT_TXTSIZE, OnFormat)
+    ON_MESSAGE(WM_MATHPAD_ENDEDIT, OnEndEdit)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -89,8 +97,26 @@ void CViewAnalytic::OnInitialUpdate()
 {
 	CScrollView::OnInitialUpdate();
 
+	if (m_bmpBack.GetCount () > 0)
+	{
+		m_bmpBack.Clear ();
+	}
+
+
+	HBITMAP hbmp = (HBITMAP) ::LoadImage (
+				AfxGetResourceHandle (),
+				MAKEINTRESOURCE (IDB_MATHPAD),
+				IMAGE_BITMAP,
+				0, 0,
+				LR_CREATEDIBSECTION | LR_LOADMAP3DCOLORS);
+	BITMAP bitmap;
+	::GetObject (hbmp, sizeof (BITMAP), (LPVOID) &bitmap);
+	m_bmpBack.SetImageSize (CSize (bitmap.bmWidth, bitmap.bmHeight));
+	m_bmpBack.AddImage (hbmp);
+
 	myToolTip.Create(this);
 	myToolTip.AddTool(this);
+	myToolTip.Activate(FALSE);
 	myToolTip.SetDelayTime(TTDT_INITIAL,500);
 	myToolTip.SetDelayTime(TTDT_RESHOW,100);
 	
@@ -166,28 +192,47 @@ void CViewAnalytic::OnDraw(CDC* rDC)
 	pDC->GetClipBox(ClipRect);
 	pDC->FillRect(ClipRect,&br);
 
-	CPen pNew(PS_SOLID,1,RGB(220,220,220));
+	CSize sizeBack(0,0);
+	if (m_bmpBack.GetCount () == 1)
+	{
+		CRect rectWorkArea=m_rViewSize;
+		//GetClientRect(rectWorkArea);
+
+		if (!pDC->IsPrinting())
+		{
+			CBCGPDrawState ds;
+			m_bmpBack.PrepareDrawImage (ds);
+			sizeBack = m_bmpBack.GetImageSize ();
+
+			for (int y = rectWorkArea.top; y < rectWorkArea.bottom; y += sizeBack.cy)
+			{
+				m_bmpBack.Draw (pDC, 0, y, 0);
+			}
+
+			m_bmpBack.EndDrawImage (ds);
+		}
+	}
+
+	CPen pNew(PS_SOLID,1,RGB(236,236,236));
 
 	CPen *pOld = pDC->SelectObject(&pNew);
 
-	int nMaxW = max(m_rViewSize.Width(),ClipRect.Width());
+	int nMaxW = max(m_rViewSize.Width()-sizeBack.cx,ClipRect.Width());
 	int nMaxH = max(m_rViewSize.Height(),ClipRect.Height());
 
 	int nbS = 25;
 	int nbX = 1 + nMaxW / nbS;
 	int nbY = 1 + nMaxH / nbS;
 	for (int i=0;i<nbX;i++)
-	//	for (int j=0;j<nbY;j++)
-		{
-			pDC->MoveTo(i*nbS,0);
-			pDC->LineTo(i*nbS,nMaxH);
-		}
+	{
+		pDC->MoveTo(sizeBack.cx+i*nbS,0);
+		pDC->LineTo(sizeBack.cx+i*nbS,nMaxH);
+	}
 	for (i=0;i<nbY;i++)
-	//	for (int j=0;j<nbY;j++)
-		{
-			pDC->MoveTo(0,i*nbS);
-			pDC->LineTo(nMaxW,i*nbS);
-		}
+	{
+		pDC->MoveTo(sizeBack.cx,i*nbS);
+		pDC->LineTo(nMaxW,i*nbS);
+	}
 
 	pDC->SelectObject(pOld);
 	OnDrawAnalytic(pDC);
@@ -277,10 +322,11 @@ void CViewAnalytic::OnLButtonDown(UINT nFlags, CPoint point)
 	OnPrepareDC(&dc);
 	dc.DPtoLP(&point);
 
-	BOOL bNotEmpty = (BOOL) m_cSelObjectSet.GetSize();
-
 	CCalques3DDoc* pDoc = GetDocument();
 	int nb = pDoc->m_cObjectSet.GetSize();
+
+	BOOL bNotEmpty = (BOOL) m_cSelObjectSet.GetSize();
+
 	if (m_pSelObject)
 		m_pSelObject->SetSelected(FALSE);
 	m_pSelObject = NULL;
@@ -310,7 +356,8 @@ void CViewAnalytic::OnLButtonDown(UINT nFlags, CPoint point)
 	}
 	else
 	{
-		/*if (!bNotEmpty) */GetDocument()->UpdateAllViews(NULL,WM_UPDATEOBJ_SEL,NULL);
+		//if (!bNotEmpty)
+			GetDocument()->UpdateAllViews(NULL,WM_UPDATEOBJ_SEL,NULL);
 		//m_bSelection = TRUE;
 		m_ptSelStart = point;
 	}
@@ -493,15 +540,13 @@ void CViewAnalytic::OnLButtonDblClk(UINT nFlags, CPoint point)
 			OnUpdateObjTooltip(NULL,FALSE);
 			SetRedraw(FALSE);
 
-			//if (m_pDialog) delete m_pDialog;
-			//m_pDialog = new CInPlaceEditor(this);
-			//m_pDialog->ShowWindow(SW_SHOW);
-		//			m_pDialog->SetFocus();
-	
-			m_pEdit = new CEditLabel(GetParent(),m_pSelObject,&(GetDocument()->m_cObjectSet));
+			CPoint anchor(0,0);
+			dc.DPtoLP(&anchor);
+			m_pEdit = new CEditLabel(this,anchor,m_pSelObject,&(GetDocument()->m_cObjectSet));
 			m_pEdit->Invalidate(TRUE);
 			m_pEdit->SetFocus();
-			//SendMessage(WM_SIZE,SIZE_RESTORED,MAKEWORD(20,30));
+			m_bIsEditMode = TRUE;
+
 			CRect tt;
 			GetParent()->GetWindowRect(&tt);
 			GetParent()->SetWindowPos(NULL,0,0,tt.Width(),tt.Height()+1,SWP_NOACTIVATE|SWP_NOMOVE);
@@ -513,6 +558,14 @@ void CViewAnalytic::OnLButtonDblClk(UINT nFlags, CPoint point)
 	}
 	
 	CScrollView::OnLButtonDblClk(nFlags, point);
+}
+
+LRESULT CViewAnalytic::OnEndEdit(WPARAM,LPARAM)
+{
+	m_bIsEditMode = FALSE;
+	Invalidate();
+	UpdateWindow();
+	return 0L;
 }
 
 void CViewAnalytic::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint) 
@@ -630,7 +683,7 @@ void CViewAnalytic::OnUpdateProperty(CCmdUI* pCmdUI)
 void CViewAnalytic::OnUpdateEditUndo(CCmdUI* pCmdUI) 
 {
 	// TODO: Add your command update UI handler code here
-	pCmdUI->Enable(GetDocument()->m_nDocUndoState);
+	pCmdUI->Enable(GetDocument()->m_nDocUndoState && !m_bIsEditMode);
 }
 
 void CViewAnalytic::OnUpdateAddComment(CCmdUI* pCmdUI) 
@@ -769,4 +822,32 @@ void CViewAnalytic::OnContextMenu(CWnd* pWnd, CPoint point)
 {
 	m_oldP = point;
     theApp.ShowPopupMenu (IDR_POPUP_MATHPAD, point, pWnd);
+}
+
+BOOL CViewAnalytic::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message) 
+{
+	// forward to multitracker
+// 	if (pWnd == this && multiTrack.SetCursor(this, nHitTest))
+// 		return TRUE;
+	return CScrollView::OnSetCursor(pWnd, nHitTest, message);
+}
+
+void CViewAnalytic::OnEditSelectAll() 
+{
+	// TODO: Add your command handler code here
+	
+}
+
+int CViewAnalytic::OnCreate(LPCREATESTRUCT lpCreateStruct) 
+{
+	if (CScrollView::OnCreate(lpCreateStruct) == -1)
+		return -1;
+	return 0;
+}
+
+void CViewAnalytic::OnSysCommand(UINT nID, LPARAM lParam) 
+{
+	// TODO: Add your message handler code here and/or call default
+	
+	CScrollView::OnSysCommand(nID, lParam);
 }
