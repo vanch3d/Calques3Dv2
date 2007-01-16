@@ -229,9 +229,9 @@ UINT CPoint3D::CalculConceptuel()
     return 0;
 }
 
-void CPoint3D::CalculVisuel(CVisualParam *myVisuParam)
+void CPoint3D::CalculVisuel(CVisualParam *pVisParam)
 {
-    CVector4 T(myVisuParam->ProjectPoint(Concept_pt));
+    CVector4 T(pVisParam->ProjectPoint(Concept_pt));
     Visual_pt.x = (long)T.x; // + WndWidth/2;
     Visual_pt.y = (long)T.y; //WndHeight/2 - T.y;
     bUp = (Concept_pt.z > 0) ;
@@ -243,7 +243,7 @@ void CPoint3D::CalculVisuel(CVisualParam *myVisuParam)
         CPointSurP3D *pl = (CPointSurP3D*)this;
         if (pl)
             if (pl->P)
-                pl->P->CalculVisuel(myVisuParam);
+                pl->P->CalculVisuel(pVisParam);
     }
 }
 

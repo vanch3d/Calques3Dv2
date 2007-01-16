@@ -370,7 +370,7 @@ UINT  CCercle3D::CalculConceptuel()
     return 0;
 }
 
-void CCercle3D::CalculVisuel(CVisualParam *myVisuParam)
+void CCercle3D::CalculVisuel(CVisualParam *pVisParam)
 {
     m_cVisual_pts.RemoveAll();
     m_cVisual_pts.SetSize(nDeltaT);
@@ -378,7 +378,7 @@ void CCercle3D::CalculVisuel(CVisualParam *myVisuParam)
     for (int t=0;t<nDeltaT;t++)
      {
         CVector4 V = m_cConcept_pts.GetAt(t);
-        CPoint pt = (CPoint)myVisuParam->ProjectPoint(V);
+        CPoint pt = (CPoint)pVisParam->ProjectPoint(V);
         m_cVisual_pts.SetAt(t,pt);
      }
 }

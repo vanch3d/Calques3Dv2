@@ -429,7 +429,7 @@ void CDroite3D::AddVisualPt(CVector4SDist mv)
 }
 
 
-void CDroite3D::CalculVisuel(CVisualParam *myVisuParam)
+void CDroite3D::CalculVisuel(CVisualParam *pVisParam)
 {
     if (LPt1) delete LPt1;
     if (LPt2) delete LPt2;
@@ -455,7 +455,7 @@ void CDroite3D::CalculVisuel(CVisualParam *myVisuParam)
         ttt.dis = dir * AM;
         AddVisualPt(ttt);
      }
-    if (LP1 && testin(LP1,myVisuParam,Front))
+    if (LP1 && testin(LP1,pVisParam,Front))
      {
         CVector4SDist ttt(*LP1,0);
         ttt.in = ((LP1->y >= 0.0) && (LP1->z >= 0.0));
@@ -463,7 +463,7 @@ void CDroite3D::CalculVisuel(CVisualParam *myVisuParam)
         ttt.dis = dir * AM;
         AddVisualPt(ttt);
       }
-    if (LP2 && testin(LP2,myVisuParam,Gauche))
+    if (LP2 && testin(LP2,pVisParam,Gauche))
      {
         CVector4SDist ttt(*LP2,0);
         ttt.in = ((LP2->x >= 0.0) && (LP2->z >= 0.0));
@@ -471,10 +471,10 @@ void CDroite3D::CalculVisuel(CVisualParam *myVisuParam)
         ttt.dis = dir * AM;
         AddVisualPt(ttt);
      }
-    if (LP3 && testin(LP3,myVisuParam,Horiz))
+    if (LP3 && testin(LP3,pVisParam,Horiz))
      {
         CVector4SDist ttt(*LP3,0);
-        ttt.in = (myVisuParam->nVisuKind == CVisualParam::VisuPlane) ?
+        ttt.in = (pVisParam->nVisuKind == CVisualParam::VisuPlane) ?
                         1 : ((LP3->x >= 0.0) && (LP3->y >= 0.0));
         CVector4 AM = A - *LP3;
         ttt.dis = dir * AM;
@@ -483,16 +483,16 @@ void CDroite3D::CalculVisuel(CVisualParam *myVisuParam)
 
     if (bIsSegment)
      {
-        VP1 = myVisuParam->ProjectPoint(P1->Concept_pt);
-        VP2 = myVisuParam->ProjectPoint(P2->Concept_pt);
+        VP1 = pVisParam->ProjectPoint(P1->Concept_pt);
+        VP2 = pVisParam->ProjectPoint(P2->Concept_pt);
      }
     else
      {
         CVector4 dir = GetDirVector();
         CVector4 a = GetBasePoint();
         CVector4 b = a+dir;
-        VP1 = myVisuParam->ProjectPoint(a);
-        VP2 = myVisuParam->ProjectPoint(b);
+        VP1 = pVisParam->ProjectPoint(a);
+        VP2 = pVisParam->ProjectPoint(b);
      }
 }
 

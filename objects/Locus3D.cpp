@@ -449,7 +449,7 @@ UINT  CLocus3D::CalculConceptuel()
     return 0;
 }
 
-void CLocus3D::CalculVisuel(CVisualParam *myVisuParam)
+void CLocus3D::CalculVisuel(CVisualParam *pVisParam)
 {
     //m_cVpts.RemoveAll();
     //m_cVpts.SetSize(nDeltaT);
@@ -476,7 +476,7 @@ void CLocus3D::CalculVisuel(CVisualParam *myVisuParam)
         for (int jj=0;jj<nbb3;jj++)
         {
             mvvv = a3D[ii].GetAt(jj);
-            CPoint pt  = (CPoint)myVisuParam->ProjectPoint(mvvv);
+            CPoint pt  = (CPoint)pVisParam->ProjectPoint(mvvv);
             a2D[ii].Add(pt);
         }
     }

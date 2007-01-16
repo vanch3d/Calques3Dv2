@@ -395,24 +395,24 @@ UINT  CCylinder3D::CalculConceptuel()
     return 0;
 }
 
-void CCylinder3D::CalculVisuel(CVisualParam *myVisuParam)
+void CCylinder3D::CalculVisuel(CVisualParam *pVisParam)
 {
     if (C1)
      {
         C1->nCalque = nCalque;
-        C1->CalculVisuel(myVisuParam);
+        C1->CalculVisuel(pVisParam);
      }
     if (C2)
      {  C2->nCalque = nCalque;
-        C2->CalculVisuel(myVisuParam);
+        C2->CalculVisuel(pVisParam);
      }
     if (C3)
      {  C3->nCalque = nCalque;
-        C3->CalculVisuel(myVisuParam);
+        C3->CalculVisuel(pVisParam);
      }
 
     CVector4 p1p2 = C1->VecNorm;
-    CVector4 oeil= myVisuParam->GetEyePos();
+    CVector4 oeil= pVisParam->GetEyePos();
     CVector4 beep = oeil;// * ((FCoord)1/Norme(oeil));
     CVector4 beep2 = p1p2;// * ((FCoord)1/Norme(p1p2));
     CVector4 aa = beep % beep2;
@@ -458,9 +458,9 @@ void CCylinder3D::CalculVisuel(CVisualParam *myVisuParam)
             spt2->Concept_pt = V2;
          }
         spt1->CalculConceptuel();
-        spt1->CalculVisuel(myVisuParam);
+        spt1->CalculVisuel(pVisParam);
         spt2->CalculConceptuel();
-        spt2->CalculVisuel(myVisuParam);
+        spt2->CalculVisuel(pVisParam);
         CSegment3D *seg = 0;
         if (!nbSeg)
         {
@@ -473,7 +473,7 @@ void CCylinder3D::CalculVisuel(CVisualParam *myVisuParam)
             seg = (CSegment3D*)cGenerList.GetAt(t);
         }
         seg->CalculConceptuel();
-        seg->CalculVisuel(myVisuParam);
+        seg->CalculVisuel(pVisParam);
         seg->nCalque = nCalque;
      }
 }
@@ -752,7 +752,7 @@ UINT  CCone3D::CalculConceptuel()
     return 0;
 }
 
-void CCone3D::CalculVisuel(CVisualParam *)
+void CCone3D::CalculVisuel(CVisualParam *pVisParam)
 {
 }
 

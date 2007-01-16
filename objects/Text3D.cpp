@@ -116,7 +116,7 @@ UINT  CText3D::CalculConceptuel()
     return 0;
 }
 
-void CText3D::CalculVisuel(CVisualParam *vp)
+void CText3D::CalculVisuel(CVisualParam *pVisParam)
 {
     bVisible = TRUE;
     //nCalque = pSource->nCalque;
@@ -285,7 +285,7 @@ UINT  CLabel3D::CalculConceptuel()
     return 0;
 }
 
-void CLabel3D::CalculVisuel(CVisualParam *vp)
+void CLabel3D::CalculVisuel(CVisualParam *pVisParam)
 {
     if (!pSource) return;
     if (rActZone.IsRectEmpty())
@@ -304,7 +304,7 @@ void CLabel3D::CalculVisuel(CVisualParam *vp)
         CVector4 ptDir = ((CSegment3D*)pSource)->GetDirVector();
         ptDir = ptDir * (0.5);
         ptSrc = ptSrc + ptDir;
-        CPoint pt = (CPoint)vp->ProjectPoint(ptSrc);
+        CPoint pt = (CPoint)pVisParam->ProjectPoint(ptSrc);
         rActZone.left = pt.x;
         rActZone.top = pt.y;
     }
@@ -788,7 +788,7 @@ CString CEquation3D::GetSphereText(CObject3D *pObj)
     return strObj;
 }
 
-void CEquation3D::CalculVisuel(CVisualParam *vp)
+void CEquation3D::CalculVisuel(CVisualParam *pVisParam)
 {
     //CText3D::CalculVisuel(vp);
     //bValidate = (pSource && pSource->bValidate);
@@ -1090,7 +1090,7 @@ void CDistance3D::Serialize( CArchive& ar )
     }
 }
 
-void CDistance3D::CalculVisuel(CVisualParam *vp)
+void CDistance3D::CalculVisuel(CVisualParam *pVisParam)
 {
     //CValue3D::CalculVisuel(vp);
 }
@@ -1469,7 +1469,7 @@ void CAngle3D::Serialize( CArchive& ar )
     }
 }
 
-void CAngle3D::CalculVisuel(CVisualParam *vp)
+void CAngle3D::CalculVisuel(CVisualParam *pVisParam)
 {
     //CValue3D::CalculVisuel(vp);
     //bValidate = TRUE;
@@ -2144,7 +2144,7 @@ void CComment3D::Serialize( CArchive& ar )
     }
 }
 
-void CComment3D::CalculVisuel(CVisualParam *)
+void CComment3D::CalculVisuel(CVisualParam *pVisParam)
 {
     bValidate = TRUE;
 }
