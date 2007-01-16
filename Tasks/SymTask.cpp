@@ -1340,7 +1340,10 @@ void CPolygonTask::CancelTache()
 
 unsigned CPolygonTask::GetHelpResID()
 {
-    return CTX_SELECT_POINT1;
+	if (m_nStep<2)
+		return CTX_SELECT_POINT1;
+	else
+		return CTX_SELECT_CLOSE_POLYGON;
 }
 
 DWORD CPolygonTask::GetMask()
@@ -1369,7 +1372,7 @@ void CPolygonTask::OnMouseL(UINT, CPoint thepos)
 
     if (!nb)
     {
-        m_cObjectsTarget.Add(temp);
+        m_nStep=m_cObjectsTarget.Add(temp);
     }
     else
     {
@@ -1423,7 +1426,7 @@ void CPolygonTask::OnMouseL(UINT, CPoint thepos)
                     return;
                 }
             }
-            m_cObjectsTarget.Add(temp);
+            m_nStep = m_cObjectsTarget.Add(temp);
         }
     }
 }
