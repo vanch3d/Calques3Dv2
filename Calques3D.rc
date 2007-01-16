@@ -781,59 +781,65 @@ BEGIN
     CONTROL         "",IDC_TXT_PALETTE,"Static",SS_BLACKFRAME,4,4,110,66
 END
 
-IDD_RENDERER_PROP DIALOGEX 0, 0, 182, 166
+IDD_RENDERER_PROP DIALOGEX 0, 0, 188, 204
 STYLE WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 CAPTION "Graph Properties"
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    LTEXT           "Ambient",IDC_STATIC,20,17,26,8
-    LTEXT           "X",IDC_STATIC,118,17,8,8
-    LTEXT           "Y",IDC_STATIC,118,38,8,8
-    LTEXT           "Diffuse",IDC_STATIC,20,36,23,8
-    LTEXT           "Specular",IDC_STATIC,20,55,29,8
-    LTEXT           "Z",IDC_STATIC,118,57,8,8
-    GROUPBOX        "Lighting",IDC_STATIC,6,7,81,71
-    GROUPBOX        "Light Coordinates",IDC_STATIC,92,7,83,71
-    LTEXT           "Shininess",IDC_STATIC,106,99,31,8
-    CTEXT           "",IDC_RENDERER_AMBTXT,62,26,19,8,SS_CENTERIMAGE
-    CTEXT           "",IDC_RENDERER_DIFFUSETXT,62,44,19,8,SS_CENTERIMAGE
-    CTEXT           "",IDC_RENDERER_SPECULARTXT,62,63,19,8,SS_CENTERIMAGE
-    CTEXT           "",IDC_RENDERER_LGTXTXT,150,26,19,8,SS_CENTERIMAGE
-    CTEXT           "",IDC_RENDERER_LGTYTXT,150,46,19,8,SS_CENTERIMAGE
-    CTEXT           "",IDC_RENDERER_LGTZTXT,150,65,19,8,SS_CENTERIMAGE
+    GROUPBOX        "Lighting",IDC_STATIC,8,4,84,74
     CONTROL         "Slider1",IDC_RENDERER_AMBIENT,"msctls_trackbar32",
-                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,6,25,56,11,
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,12,24,56,12,
                     WS_EX_TRANSPARENT
     CONTROL         "Slider1",IDC_RENDERER_DIFFUSE,"msctls_trackbar32",
-                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,6,44,56,11
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,12,44,56,12
     CONTROL         "Slider1",IDC_RENDERER_SPECULAR,"msctls_trackbar32",
-                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,6,65,56,11
-    CONTROL         "Slider1",IDC_RENDERER_SHINE,"msctls_trackbar32",
-                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,96,107,56,11
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,12,64,56,12
     CONTROL         "Slider1",IDC_RENDERER_LGTX,"msctls_trackbar32",TBS_BOTH | 
-                    TBS_NOTICKS | WS_TABSTOP,94,25,56,11
+                    TBS_NOTICKS | WS_TABSTOP,100,24,56,12
     CONTROL         "Slider1",IDC_RENDERER_LGTY,"msctls_trackbar32",TBS_BOTH | 
-                    TBS_NOTICKS | WS_TABSTOP,94,44,56,11
+                    TBS_NOTICKS | WS_TABSTOP,100,44,56,11
     CONTROL         "Slider1",IDC_RENDERER_LGTZ,"msctls_trackbar32",TBS_BOTH | 
-                    TBS_NOTICKS | WS_TABSTOP,94,65,56,11
-    LTEXT           "Ambient",IDC_STATIC,30,94,26,8
-    LTEXT           "Diffuse",IDC_STATIC,30,113,23,8
-    LTEXT           "Specular",IDC_STATIC,30,134,29,8
-    GROUPBOX        "Material",IDC_STATIC,7,83,168,76
-    CTEXT           "",IDC_RENDERER_AMBMATTXT,72,103,19,8,SS_CENTERIMAGE
-    CTEXT           "",IDC_RENDERER_DIFFMATTXT,72,124,19,8,SS_CENTERIMAGE
-    CTEXT           "",IDC_RENDERER_SPECMATTXT,72,143,19,8,SS_CENTERIMAGE
+                    TBS_NOTICKS | WS_TABSTOP,100,64,56,12
     CONTROL         "Slider1",IDC_RENDERER_AMBMAT,"msctls_trackbar32",
-                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,16,103,56,11
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,12,100,56,12
     CONTROL         "Slider1",IDC_RENDERER_DIFFMAT,"msctls_trackbar32",
-                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,16,122,56,11
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,12,121,56,12
     CONTROL         "Slider1",IDC_RENDERER_SPECMAT,"msctls_trackbar32",
-                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,16,143,56,11
-    CTEXT           "",IDC_RENDERER_SHINETXT,150,108,19,8,SS_CENTERIMAGE
-    LTEXT           "Emission",IDC_STATIC,106,124,28,8
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,12,140,56,12
+    CONTROL         "Slider1",IDC_RENDERER_SHINE,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,100,100,56,12
     CONTROL         "Slider1",IDC_RENDERER_EMISSION,"msctls_trackbar32",
-                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,96,132,56,11
-    CTEXT           "",IDC_RENDERER_EMISSIONTXT,150,135,19,8,SS_CENTERIMAGE
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,100,121,56,12
+    CTEXT           "Ambient",IDC_STATIC,12,16,56,8
+    CTEXT           "0",IDC_RENDERER_AMBTXT,68,24,20,8,SS_CENTERIMAGE
+    CTEXT           "Diffuse",IDC_STATIC,12,36,56,8
+    CTEXT           "0",IDC_RENDERER_DIFFUSETXT,68,44,20,8,SS_CENTERIMAGE
+    CTEXT           "0",IDC_RENDERER_SPECULARTXT,68,64,20,8,SS_CENTERIMAGE
+    GROUPBOX        "Light Coordinates",IDC_STATIC,96,4,84,74
+    CTEXT           "X",IDC_STATIC,100,16,56,8
+    CTEXT           "0",IDC_RENDERER_LGTXTXT,156,24,20,8,SS_CENTERIMAGE
+    CTEXT           "Y",IDC_STATIC,100,36,56,8
+    CTEXT           "0",IDC_RENDERER_LGTYTXT,156,44,20,8,SS_CENTERIMAGE
+    CTEXT           "Z",IDC_STATIC,100,56,56,8
+    CTEXT           "0",IDC_RENDERER_LGTZTXT,156,64,20,8,SS_CENTERIMAGE
+    GROUPBOX        "Material",IDC_STATIC,8,80,172,76
+    CTEXT           "Ambient",IDC_STATIC,12,92,56,8
+    CTEXT           "0",IDC_RENDERER_AMBMATTXT,68,100,20,8,SS_CENTERIMAGE
+    CTEXT           "Diffuse",IDC_STATIC,12,113,56,8
+    CTEXT           "0",IDC_RENDERER_DIFFMATTXT,68,121,20,8,SS_CENTERIMAGE
+    CTEXT           "0",IDC_RENDERER_SPECMATTXT,68,140,20,8,SS_CENTERIMAGE
+    CTEXT           "Shininess",IDC_STATIC,100,92,56,8
+    CTEXT           "0",IDC_RENDERER_SHINETXT,156,100,20,8,SS_CENTERIMAGE
+    CTEXT           "Emission",IDC_STATIC,100,113,56,8
+    CTEXT           "Specular",IDC_STATIC,12,56,56,8
+    CTEXT           "Specular",IDC_STATIC,12,132,56,8
+    CTEXT           "0",IDC_RENDERER_EMISSIONTXT,156,121,20,8,SS_CENTERIMAGE
+    GROUPBOX        "Perspective",IDC_STATIC,8,160,172,36
+    CONTROL         "Slider1",IDC_RENDERER_FIELDVIEW,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,12,180,144,12
+    CTEXT           "Field of View",IDC_STATIC,12,172,144,8
+    CTEXT           "0",IDC_RENDERER_FIELDVIEWTXT,156,180,20,8,
+                    SS_CENTERIMAGE
 END
 
 
@@ -1054,9 +1060,9 @@ BEGIN
     IDD_RENDERER_PROP, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 175
+        RIGHTMARGIN, 181
         TOPMARGIN, 7
-        BOTTOMMARGIN, 159
+        BOTTOMMARGIN, 197
     END
 END
 #endif    // APSTUDIO_INVOKED
@@ -1247,6 +1253,8 @@ BEGIN
         END
         POPUP "&Zoom"
         BEGIN
+            MENUITEM "15&0%",                       ID_VISUALISATION_ZOOM_150
+
             MENUITEM "&100%",                       ID_VISUALISATION_ZOOM_100
 
             MENUITEM "&75%",                        ID_VISUALISATION_ZOOM_75
@@ -1325,10 +1333,14 @@ BEGIN
 
             MENUITEM "Li&ne-plane",                 ID_CONSTRUCTION_INTERSECTION_LINEPLANE
 
+            MENUITEM "Li&ne-circle",                ID_CONSTRUCTION_INTERSECTION_LINECIRCLE
+
             MENUITEM "Line-&sphere",                ID_CONSTRUCTION_INTERSECTION_LINESPHERE
 
             MENUITEM SEPARATOR
             MENUITEM "&Plane-plane",                ID_CONSTRUCTION_INTERSECTION_PLANEPLANE
+
+            MENUITEM "&Plane-circle",               ID_CONSTRUCTION_INTERSECTION_PLANECIRCLE
 
             MENUITEM SEPARATOR
             MENUITEM "Sphere-Sphere",               ID_CONSTRUCTION_INTERSECTION_SPHERESPHERE
@@ -1492,6 +1504,8 @@ BEGIN
         END
         POPUP "&Zoom"
         BEGIN
+            MENUITEM "15&0%",                       ID_VISUALISATION_ZOOM_150
+
             MENUITEM "&100%",                       ID_VISUALISATION_ZOOM_100
 
             MENUITEM "&75%",                        ID_VISUALISATION_ZOOM_75
@@ -1919,6 +1933,8 @@ BEGIN
         END
         POPUP "&Zoom"
         BEGIN
+            MENUITEM "15&0%",                       ID_VISUALISATION_ZOOM_150
+
             MENUITEM "&100%",                       ID_VISUALISATION_ZOOM_100
 
             MENUITEM "&75%",                        ID_VISUALISATION_ZOOM_75
@@ -2328,6 +2344,7 @@ IDR_ZOOM MENU DISCARDABLE
 BEGIN
     POPUP "< ZOOM >"
     BEGIN
+        MENUITEM "15&0%",                       ID_VISUALISATION_ZOOM_150
         MENUITEM "&100%",                       ID_VISUALISATION_ZOOM_100
         MENUITEM "&75%",                        ID_VISUALISATION_ZOOM_75
         MENUITEM "&50%",                        ID_VISUALISATION_ZOOM_50
@@ -3372,6 +3389,7 @@ BEGIN
     IDS_DEF_CROSSPRODUCT    "%s is the cross-product of %s and %s"
     IDS_DEF_CIRCLEISS       "%s is the circle at the intersection of %s and %s"
     IDS_DEF_SECTIONSEG      "%s is the trisection of %s"
+    IDS_DEF_INTCIRCDR       "%s is the intersection of %s and %s"
 END
 
 STRINGTABLE DISCARDABLE 
@@ -3452,6 +3470,8 @@ BEGIN
     CTX_MACRO_UNLOAD        "click anywhere to load the macro-construction."
     CTX_MACRO_POINT         "select a point to graft this base-point on or double-click to end up the graft."
     CTX_MOVE_TRACE          "select a point to trace"
+    CTX_SELECT_CLOSE_POLYGON 
+                            "select a point (or select the first point to close and construct the polygon)"
 END
 
 STRINGTABLE DISCARDABLE 
