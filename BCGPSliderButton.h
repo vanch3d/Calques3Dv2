@@ -67,9 +67,10 @@ protected:
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
-	afx_msg void OnPaint();
-	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
+	//afx_msg void OnPaint();
+	//afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 	//}}AFX_MSG
+	afx_msg void OnCustomDraw(NMHDR* pNMHDR, LRESULT* pResult);
 
 	DECLARE_MESSAGE_MAP()
 };

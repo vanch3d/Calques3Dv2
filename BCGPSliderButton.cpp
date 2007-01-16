@@ -295,10 +295,11 @@ CBCGPSliderCtrl::~CBCGPSliderCtrl()
 BEGIN_MESSAGE_MAP(CBCGPSliderCtrl, CSliderCtrl)
 	//{{AFX_MSG_MAP(CBCGPSliderCtrl)
 	ON_WM_MOUSEMOVE()
-	ON_WM_PAINT()
+	//ON_WM_PAINT()
 	//ON_WM_ERASEBKGND()
 	ON_WM_KEYDOWN()
 	ON_WM_LBUTTONUP()
+	ON_NOTIFY_REFLECT(NM_CUSTOMDRAW, OnCustomDraw)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -340,18 +341,61 @@ BOOL CBCGPSliderCtrl::PreCreateWindow( CREATESTRUCT& cs )
 	CSliderCtrl::PreCreateWindow(cs);
 	// TODO: Modify the Window class or styles here by modifying
 	//  the CREATESTRUCT cs
-		//cs.dwExStyle |= WS_EX_TRANSPARENT;
+	//cs.dwExStyle |= WS_EX_TRANSPARENT;
 
 	return TRUE;
 }
 
 
-BOOL CBCGPSliderCtrl::OnEraseBkgnd(CDC* pDC)
+/*BOOL CBCGPSliderCtrl::OnEraseBkgnd(CDC* pDC)
 {
 	return FALSE;
+}*/
+
+void CBCGPSliderCtrl::OnCustomDraw(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	LPNMCUSTOMDRAW lpCustDraw = (LPNMCUSTOMDRAW)pNMHDR;
+	if (lpCustDraw->dwDrawStage == CDDS_PREPAINT)
+	{
+		*pResult = CDRF_NOTIFYITEMDRAW;	// send messages for each piece-part
+		return;
+	}
+	if((lpCustDraw->dwDrawStage == CDDS_ITEMPREPAINT) && (lpCustDraw->dwItemSpec != TBCD_THUMB))
+	{
+		*pResult = CDRF_DODEFAULT;
+		return;
+	}
+
+	CRect clientRect,channelRect,thumbRect;
+	CDC *pDC = CDC::FromHandle(lpCustDraw->hdc);
+	CBCGPMemDC MemDC (*pDC, this);
+	CDC* memDC = &MemDC.GetDC();
+
+   	GetClientRect(&clientRect);
+   	GetChannelRect(&channelRect);
+	if (GetStyle( )& TBS_VERT)
+	{
+		int temp = channelRect.top;
+		channelRect.top = channelRect.left;
+		channelRect.left = temp;
+		temp = channelRect.bottom;
+		channelRect.bottom = channelRect.right;
+		channelRect.right = temp;
+		channelRect.DeflateRect(-1, 5);
+	}
+	else
+		channelRect.DeflateRect(5, -1);
+	
+	CBCGPVisualManager::GetInstance ()->OnFillBarBackground (memDC, m_btnSlider.m_pToolBar,
+		clientRect, clientRect);
+
+   	memDC->FillSolidRect(&channelRect,GetSysColor(COLOR_WINDOW));
+   	memDC->DrawEdge(&channelRect, BDR_SUNKENOUTER|BDR_SUNKENINNER, BF_RECT);
+	*pResult = CDRF_DODEFAULT;
+
 }
 
-void CBCGPSliderCtrl::OnPaint()
+/*void CBCGPSliderCtrl::OnPaint()
 {
  	CPaintDC dc(this); // device context for painting
 	CBCGPMemDC MemDC (dc, this);
@@ -371,10 +415,10 @@ void CBCGPSliderCtrl::OnPaint()
 		temp = channelRect.bottom;
 		channelRect.bottom = channelRect.right;
 		channelRect.right = temp;
-		channelRect.DeflateRect(-2, 5);
+		channelRect.DeflateRect(-1, 5);
 	}
 	else
-		channelRect.DeflateRect(5, -2);
+		channelRect.DeflateRect(5, -1);
 
    	GetThumbRect(&thumbRect);
 
@@ -383,23 +427,53 @@ void CBCGPSliderCtrl::OnPaint()
 
    	memDC->FillSolidRect(&channelRect,GetSysColor(COLOR_WINDOW));
    	memDC->DrawEdge(&channelRect, BDR_SUNKENOUTER|BDR_SUNKENINNER, BF_RECT);
-	//memDC->FillSolidRect(&thumbRect,RGB(255,0,0));
 
-	CBCGPDrawState ds;
-	m_Images.PrepareDrawImage (ds);
-	BOOL enable = IsWindowEnabled();
-	BOOL hilite = (GetFocus()== this);
-	int index = (GetStyle( )& TBS_VERT)?2:3;
-	if (!enable) index+=2;
-	else if (hilite) index-=2;
+ 	BOOL enable = IsWindowEnabled();
+ 	BOOL hilite = (GetFocus()== this);
 
-	if (GetStyle( )& TBS_VERT)
-		m_Images.Draw (memDC, thumbRect.left, thumbRect.top-5, index);
-	else
-		m_Images.Draw (memDC, thumbRect.left-5, thumbRect.top, index);
-	m_Images.EndDrawImage (ds);
+	//if (GetStyle( )& TBS_VERT)
+	{
+		COLORREF clrNormal = RGB(102,204,102),
+				 clrHilite = RGB(255,204,51),
+				 clrDisable = RGB(160,160,164);
+		COLORREF clrBNormal = RGB(51,153,51),
+				 clrBHilite = RGB(204,153,51),
+				 clrBDisable = RGB(119,119,119);
+		COLORREF clrBg = (enable)? ((hilite)? clrHilite : clrNormal) : clrDisable;
+		COLORREF clrBBg = (enable)? ((hilite)? clrBHilite : clrBNormal) : clrBDisable;
+		int y = thumbRect.Height()/2;
+		memDC->FillSolidRect(thumbRect.left+1,thumbRect.top+1,thumbRect.Width()-2,thumbRect.Height()-2,clrBBg);
+		memDC->FillSolidRect(thumbRect.left+1,thumbRect.top+1,thumbRect.Width()-3,thumbRect.Height()-3,RGB(255,255,255));
+		memDC->FillSolidRect(thumbRect.left+1,thumbRect.top+1,4,thumbRect.Height()-3,clrBg);
+		memDC->FillSolidRect(thumbRect.right-7,thumbRect.top+1,5,thumbRect.Height()-3,clrBg);
 
-}
+		memDC->FillSolidRect(thumbRect.left,thumbRect.top+1,1,thumbRect.Height()-2,RGB(192,192,192));
+		memDC->FillSolidRect(thumbRect.left+1,thumbRect.top,thumbRect.Width()-2-2,1,RGB(192,192,192));
+		memDC->FillSolidRect(thumbRect.right-3,thumbRect.top+1,1,thumbRect.Height()-2,RGB(134,134,134));
+		memDC->FillSolidRect(thumbRect.left+1,thumbRect.bottom-1,thumbRect.Width()-2-2,1,RGB(134,134,134));
+
+
+		//memDC->FillSolidRect(thumbRect.right-4,thumbRect.top+1,1,thumbRect.Height()-2,clrBBg);
+		//memDC->FillSolidRect(thumbRect.left+2,thumbRect.bottom-1,thumbRect.Width()-2-2,1,clrBBg);
+
+		//memDC->FillSolidRect(thumbRect.left+4,thumbRect.top,thumbRect.Width()-7-4,thumbRect.Height(),RGB(0,255,0));
+	}
+
+// 	CBCGPDrawState ds;
+// 	m_Images.PrepareDrawImage (ds);
+// 	BOOL enable = IsWindowEnabled();
+// 	BOOL hilite = (GetFocus()== this);
+// 	int index = (GetStyle( )& TBS_VERT)?2:3;
+// 	if (!enable) index+=2;
+// 	else if (hilite) index-=2;
+// 
+// 	if (GetStyle( )& TBS_VERT)
+// 		m_Images.Draw (memDC, thumbRect.left, thumbRect.top-5, index);
+// 	else
+// 		m_Images.Draw (memDC, thumbRect.left-5, thumbRect.top, index);
+// 	m_Images.EndDrawImage (ds);
+
+}*/
 
 CBCGPSliderToolbar::CBCGPSliderToolbar()
 {
