@@ -11,9 +11,12 @@
 
 class CRenderPropDlg;
 
-/////////////////////////////////////////////////////////////////////////////
-// CView3DRender view
+#define NBVIEWPARAMS 12
 
+/////////////////////////////////////////////////////////////////////////////
+/// Display the construction in real 3D, using OpenGL.
+///
+/////////////////////////////////////////////////////////////////////////////
 class CView3DRender : public CGLEnabledView
 {
 protected:
@@ -25,7 +28,7 @@ public:
 	CPoint MouseDownPoint;
 	CBallController trackball;
 	CRenderPropDlg* m_pDlg;
-    int   m_LightParam[11];  // Graphics dimension (along X-axis)
+    int   m_LightParam[NBVIEWPARAMS];  // Graphics dimension (along X-axis)
 // Operations
 public:
 	CCalques3DDoc* GetDocument();
@@ -72,11 +75,15 @@ inline CCalques3DDoc* CView3DRender::GetDocument()
 #endif
 
 
+/////////////////////////////////////////////////////////////////////////////
+/// Dialog for the OpenGL rendering attributes.
+///
+/////////////////////////////////////////////////////////////////////////////
 class CRenderPropDlg : public CDialog
 {
 public:
 	CView3DRender *m_pView;
-	int m_Pos[11];
+	int m_Pos[NBVIEWPARAMS];
 
 	CRenderPropDlg(CView3DRender* p);
 	int GetSliderNum(HWND hwnd, UINT& nID);
