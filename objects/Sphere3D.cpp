@@ -231,9 +231,47 @@ UINT  CSphere3D::CalculConceptuel()
 	return 0;
 }
 
-void CSphere3D::CalculVisuel(CVisualParam *myVisuParam)
+void CSphere3D::CalculVisuel(CVisualParam *pVisParam)
 {
-	locVisParam = myVisuParam;
+	locVisParam = pVisParam;
+}
+
+void CSphere3D::Draw3DRendering()
+{
+    if ((!bVisible) || (!bValidate)) return;
+
+	float no_mat[] = {0.0f, 0.0f, 0.0f, 1.0f};
+    float mat_ambient[] = {0.7f, 0.7f, 0.7f, 1.0f};
+    float mat_ambient_color[] = {255/255., 255/255.,100/255. , 1.0f};
+    float mat_diffuse[] = {0.9f, 0.1f, 0.1f, 1.0f};
+    float mat_specular[] = {1.0f, 1.0f, 1.0f, 1.0f};
+    float no_shininess = 0.0f;
+    float low_shininess = 5.0f;
+    float high_shininess = 100.0f;
+    float mat_emission[] = {0.3f, 0.2f, 0.2f, 0.0f};
+
+	GLdouble x = (P1->Concept_pt.x/TPref::TUniv.nUnitRep/3);
+	GLdouble y = (P1->Concept_pt.y/TPref::TUniv.nUnitRep/3);
+	GLdouble z = (P1->Concept_pt.z/TPref::TUniv.nUnitRep/3);
+	GLdouble ray = (Rayon/TPref::TUniv.nUnitRep/3);
+	GLUquadricObj*m_quadrObj=gluNewQuadric();
+// 	gluQuadricNormals(m_quadrObj,GLU_SMOOTH);
+// 	gluQuadricTexture(m_quadrObj,GL_TRUE);
+ 	gluQuadricDrawStyle(m_quadrObj,GLU_SILHOUETTE);
+// 	gluQuadricOrientation(m_quadrObj,GLU_OUTSIDE);
+// 
+	glPushMatrix();
+	glTranslated(x, y, z);
+	glColor3f(.2f,.5f,.8f);
+    glMaterialfv(GL_FRONT, GL_AMBIENT, mat_diffuse);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
+    glMaterialf(GL_FRONT, GL_SHININESS, no_shininess);
+	gluSphere(m_quadrObj,ray,16,16);
+	glPopMatrix();
+	/*glBegin (GL_POINTS);
+	glColor3f(1.0f,0.0f,0.0f);			// Red
+	glVertex3f (x,y,z);
+	glEnd ();*/
 }
 
 void CSphere3D::Draw(CDC* pDC,CVisualParam *mV,BOOL bSm)
