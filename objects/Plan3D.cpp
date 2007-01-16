@@ -418,7 +418,7 @@ void CPlan3D::GetProjectedMinMax(CObject3D* pObj,CVector4 P1,CVector4 I,CVector4
     minmax.w = max(minmax.w,ap3.y);
 }
 
-void CPlan3D::CalculVisuel(CVisualParam *myVisuParam)
+void CPlan3D::CalculVisuel(CVisualParam *pVisParam)
 {
     if (!bValidate) return;
     if (bUpdateMe)
@@ -534,10 +534,10 @@ void CPlan3D::CalculVisuel(CVisualParam *myVisuParam)
         p3 = lim2[2];
         p4 = lim2[3];*/
     }
-    tp1 = (CPoint) myVisuParam->ProjectPoint(p1);
-    tp2 = (CPoint) myVisuParam->ProjectPoint(p2);
-    tp3 = (CPoint) myVisuParam->ProjectPoint(p3);
-    tp4 = (CPoint) myVisuParam->ProjectPoint(p4);
+    tp1 = (CPoint) pVisParam->ProjectPoint(p1);
+    tp2 = (CPoint) pVisParam->ProjectPoint(p2);
+    tp3 = (CPoint) pVisParam->ProjectPoint(p3);
+    tp4 = (CPoint) pVisParam->ProjectPoint(p4);
 
 //  ptonRep.I = (p2 - p1) * (1/(p2-p1).Norme());
 //  ptonRep.J = (p4 - p1) * (1/(p4-p1).Norme());
@@ -1759,13 +1759,13 @@ CString CPolygon3D::GetObjectDef()
 }
 
 
-void CPolygon3D::CalculVisuel(CVisualParam *myParam)
+void CPolygon3D::CalculVisuel(CVisualParam *pVisParam)
 {
     p1 = m_vCentroid;
     p3 = m_vCentroid;
 
 
-    CVector4 oeil= myParam->GetEyePos();
+    CVector4 oeil= pVisParam->GetEyePos();
 
 //  oeil = oeil*-150.;
     CVector4 origin(0,0,0,1);
@@ -1814,7 +1814,42 @@ void CPolygon3D::DrawRetro(CDC* pDC,CVisualParam *mV)
 void CPolygon3D::Draw3DRendering()
 {
     if ((!bVisible) || (!bValidate)) return;
+	float no_mat[] = {0.0f, 0.0f, 0.0f, 1.0f};
+    float mat_ambient[] = {0.7f, 0.7f, 0.7f, 1.0f};
+    float mat_ambient_color[] = {255/255., 255/255.,100/255. , 1.0f};
+    float mat_diffuse[] = {0.9f, 0.1f, 0.1f, 1.0f};
+    float mat_specular[] = {1.0f, 1.0f, 1.0f, 1.0f};
+    float no_shininess = 0.0f;
+    float low_shininess = 5.0f;
+    float high_shininess = 100.0f;
+    float mat_emission[] = {0.3f, 0.2f, 0.2f, 0.0f};
 
+	CVector4 vec=VecNorm;
+	vec = vec.Normalized();
+
+	int nb = m_pPointSet.GetSize();
+	glPushMatrix();
+	if (nb<=3)
+		glBegin(GL_TRIANGLES);
+	else 
+		glBegin(GL_QUADS);
+	glNormal3d(vec.x, vec.y, vec.z);   //N1
+
+	for (int i=0;i<nb;i++)
+    {
+        CPoint3D *pObj = (CPoint3D *)m_pPointSet.GetAt(i);
+		if (!pObj) continue;
+		CVector4 pt = pObj->Concept_pt;
+		GLdouble vertex[]=
+		{
+			(pt.x/TPref::TUniv.nUnitRep/3),
+			(pt.y/TPref::TUniv.nUnitRep/3),
+			(pt.z/TPref::TUniv.nUnitRep/3),
+		};
+		glVertex3d( vertex[0], vertex[1], vertex[2]);   //V2
+	}
+	glEnd();
+	glPopMatrix();
 }
 
 void CPolygon3D::GetRange(CVector4 &min,CVector4 &max)
