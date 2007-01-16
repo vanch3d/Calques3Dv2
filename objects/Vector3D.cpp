@@ -75,9 +75,9 @@ CString CVector3D::GetObjectDef()
 	return mstr;
 }
 
-void CVector3D::CalculVisuel(CVisualParam *vp)
+void CVector3D::CalculVisuel(CVisualParam *pVisParam)
 {
-	CSegment3D::CalculVisuel(vp);
+	CSegment3D::CalculVisuel(pVisParam);
 }
 
 UINT  CVector3D::CalculConceptuel()

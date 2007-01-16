@@ -23,6 +23,8 @@ END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 /// CAmbiguityList
+/// @param title	The string containing the title of the menu
+/// @param parent	A pointer to the window owning the menu
 /////////////////////////////////////////////////////////////////////////////
 CAmbiguityList::CAmbiguityList(const char far* title, CWnd* parent)
 
@@ -39,6 +41,8 @@ CAmbiguityList::CAmbiguityList(const char far* title, CWnd* parent)
 
 /////////////////////////////////////////////////////////////////////////////
 /// CAmbiguityList
+/// @param sid		The identifier of the string resource containing the title of the menu
+/// @param parent	A pointer to the window owning the menu
 /////////////////////////////////////////////////////////////////////////////
 CAmbiguityList::CAmbiguityList(UINT sid, CWnd* parent)
 {
@@ -64,6 +68,8 @@ CAmbiguityList::~CAmbiguityList()
 
 /////////////////////////////////////////////////////////////////////////////
 /// CAmbiguityList
+/// @param n		The zero-based index of the menu item.
+/// @param mstr		The string containing the contextual help.
 /////////////////////////////////////////////////////////////////////////////
 void CAmbiguityList::AddHelper(int n,CString mstr)
 {
@@ -119,7 +125,7 @@ int CAmbiguityList::Execute()
 	// Call the MenuManager's TrackPopupMenu to get the selected item
 	m_nIndex = theApp.GetContextMenuManager()->TrackPopupMenu(m_wndPopup, loc.x, loc.y, this);
 
-	// Substract 2 from the index (to take into account title and separator)
+	// Subtract 2 from the index (to take into account title and separator)
 	return (m_nIndex>=2) ? m_nIndex-2 : -1;
 }
 
