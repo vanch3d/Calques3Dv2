@@ -72,11 +72,22 @@ public:
 // Implementation
 public:
 	virtual ~CMainFrame();
+
 #ifdef _DEBUG
 	virtual void AssertValid() const;
 	virtual void Dump(CDumpContext& dc) const;
 #endif
 
+protected:
+	virtual BOOL OnShowPopupMenu (CBCGPPopupMenu* pMenuPopup);
+	virtual void OnDrawMenuLogo (CDC* pDC, CBCGPPopupMenu* pMenu, const CRect& rectLogo);
+
+public:
+	CFrameWnd* LaunchView(UINT nID);
+private:
+	CFrameWnd*  LaunchViews(const CRuntimeClass* pClass,UINT nID);
+	CFrameWnd*  LaunchUniverse();
+	CFrameWnd*	LaunchCalques(UINT nID);
 
 // Generated message map functions
 protected:
@@ -103,7 +114,6 @@ protected:
 	afx_msg LRESULT OnSetTaskMessageString(WPARAM wp, LPARAM lp);
 	afx_msg LRESULT OnSetMessageString(WPARAM wParam, LPARAM lParam);
 	afx_msg LRESULT OnSetObjectSelectionString(WPARAM wParam, LPARAM lParam);
-	afx_msg void OnViewCalque(UINT id);
 	afx_msg void OnViewObject();
 	afx_msg void OnUpdateViewObject(CCmdUI* pCmdUI);
 	afx_msg void OnViewConstruction();
@@ -119,15 +129,12 @@ protected:
 	afx_msg void OnWindowManager();
 	afx_msg void OnAppLook(UINT id);
 	afx_msg void OnUpdateAppLook(CCmdUI* pCmdUI);
+	afx_msg void OnViewCalque(UINT id);
 
 //	afx_msg void OnPlacementRestore();
 //	afx_msg void OnPlacementSave();
 //	afx_msg void OnUpdatePlacement(CCmdUI* pCmdUI);
 	DECLARE_MESSAGE_MAP()
-	
-	void LaunchViews(const CRuntimeClass* pClass,UINT nID);
-	virtual BOOL OnShowPopupMenu (CBCGPPopupMenu* pMenuPopup);
-	virtual void OnDrawMenuLogo (CDC* pDC, CBCGPPopupMenu* pMenu, const CRect& rectLogo);
 };
 
 /////////////////////////////////////////////////////////////////////////////

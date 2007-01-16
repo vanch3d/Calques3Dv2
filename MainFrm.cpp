@@ -1069,16 +1069,45 @@ LRESULT CMainFrame::OnSetObjectSelectionString(WPARAM wParam, LPARAM lParam)
 }
 
 
+CFrameWnd* CMainFrame::LaunchView(UINT nID)
+{
+	CFrameWnd* pFrame =NULL;
+	switch (nID)
+	{
+		case ID_VIEW_UNIVERSE:
+			pFrame = LaunchUniverse();
+			break;
+		case ID_VIEW_HISTORIQUE:
+			pFrame = LaunchViews(RUNTIME_CLASS(CViewHisto),IDR_VIEWHISTORIQUE);
+			break;
+		case ID_VIEW_GRAPH:
+			pFrame = LaunchViews(RUNTIME_CLASS(CViewGraph),IDR_VIEWGRAPH);
+			break;
+		case ID_VIEW_ANALYTIC:
+			pFrame = LaunchViews(RUNTIME_CLASS(CViewAnalytic),IDR_VIEWANALYTIC);
+			break;
+		case ID_VIEW_RENDERING:
+			pFrame = LaunchViews(RUNTIME_CLASS(CView3DRender),IDR_VIEWRENDERING);
+			break;
+		case ID_VIEW_CALQUE:
+		case ID_VIEW_CALQUE2:
+		case ID_VIEW_CALQUE3:
+		case ID_VIEW_CALQUE4:
+			pFrame = LaunchCalques(nID);
+			break;
+	}
+	return pFrame;
+}
 
-void CMainFrame::LaunchViews(const CRuntimeClass* pClass,UINT nID)
+CFrameWnd* CMainFrame::LaunchViews(const CRuntimeClass* pClass,UINT nID)
 {
 	// TODO: Add your command handler code here
 	CMDIChildWnd*pChild = MDIGetActive();
-	if (!pChild) return;
+	if (!pChild) return NULL;
 	
 	CDocument* pDoc = pChild->GetActiveDocument();
 	//CDocument* pDoc = GetDocument();
-    if (!pDoc) return; // only for views with document
+    if (!pDoc) return NULL; // only for views with document
 
 	CView* pView;
 	POSITION pos = pDoc->GetFirstViewPosition();
@@ -1088,7 +1117,7 @@ void CMainFrame::LaunchViews(const CRuntimeClass* pClass,UINT nID)
 		if (pView->IsKindOf(pClass)) 
 		{
 			pView->GetParentFrame()->ActivateFrame();
-			return;
+			return pView->GetParentFrame();
 		}
 	}
 
@@ -1109,26 +1138,25 @@ void CMainFrame::LaunchViews(const CRuntimeClass* pClass,UINT nID)
 			{
 				CMDIChildWnd* pNewFrame =
 					(CMDIChildWnd*)(ptempl->CreateNewFrame(pDoc, NULL));
-				if (pNewFrame == NULL) return ;  // not created
+				if (pNewFrame == NULL) return NULL;  // not created
 				ptempl->InitialUpdateFrame(pNewFrame, pDoc);
-				return;
+				return pNewFrame;
 			}
 		}
 	}
-	
+	return NULL;
 }
 
-void CMainFrame::OnViewUniverse() 
+CFrameWnd*  CMainFrame::LaunchUniverse()
 {
 	// TODO: Add your command handler code here
-
 	CMDIChildWnd*pChild = MDIGetActive();
-	if (!pChild) return;
+	if (!pChild) return NULL;
 	
 
 	CDocument* pDoc = pChild->GetActiveDocument();
 	//CDocument* pDoc = GetDocument();
-    if (!pDoc) return; // only for views with document
+    if (!pDoc) return NULL; // only for views with document
 
 	CView* pView;
 	POSITION pos = pDoc->GetFirstViewPosition();
@@ -1139,7 +1167,7 @@ void CMainFrame::OnViewUniverse()
 			!pView->IsKindOf( RUNTIME_CLASS(CViewCalque))) 
 		{
 			pView->GetParentFrame()->ActivateFrame();
-			return;
+			return pView->GetParentFrame();
 		}
 	}
 
@@ -1160,13 +1188,90 @@ void CMainFrame::OnViewUniverse()
 			{
 				CMDIChildWnd* pNewFrame =
 					(CMDIChildWnd*)(ptempl->CreateNewFrame(pDoc, NULL));
-				if (pNewFrame == NULL) return ;  // not created
+				if (pNewFrame == NULL) return NULL;  // not created
 				ptempl->InitialUpdateFrame(pNewFrame, pDoc);
-				return;
+				return pNewFrame;
 			}
 		}
 	}
+	return NULL;
+}
+
+CFrameWnd*	CMainFrame::LaunchCalques(UINT id)
+{
+	CMDIChildWnd*pChild = MDIGetActive();
+	if (!pChild) return NULL;
 	
+	CDocument* pDoc = pChild->GetActiveDocument();
+    if (!pDoc) return NULL; 
+
+	// Get the tracing number from the view command
+	int nCalque = id - ID_VIEW_CALQUE + 1;
+
+	// Look if the view is already open. If so, activate it.
+	POSITION pos = pDoc->GetFirstViewPosition();
+	while (pos != NULL)
+	{
+		CView* pView = pDoc->GetNextView(pos);
+		if (pView->IsKindOf( RUNTIME_CLASS(CViewCalque))) 
+		{
+			CViewCalque *pClq = DYNAMIC_DOWNCAST(CViewCalque,pView);
+			if (pClq && pClq->GetVisualParam()->nCalqueNum == nCalque)
+			{
+				pView->GetParentFrame()->ActivateFrame();
+				return pView->GetParentFrame();
+			}
+		}
+	}
+
+	// Find the document template corresponding to the Tracing view
+	POSITION pos2 = AfxGetApp()->GetFirstDocTemplatePosition();
+	while (pos2 != NULL)
+	{
+		CDocTemplate* ptempl = AfxGetApp()->GetNextDocTemplate(pos2) ;
+		if (!ptempl) continue;
+
+		CString rString;
+		ptempl->GetDocString(rString,CDocTemplate::windowTitle);
+		CString mstr;
+		mstr.LoadString(IDR_VIEWCALQUE);
+		int nb = mstr.Find('\n');
+		CString tt = mstr.Left(nb);
+		if (tt != rString) continue;
+
+		CMDIChildWnd* pNewFrame =
+				(CMDIChildWnd*)(ptempl->CreateNewFrame(pDoc, NULL));
+		if (pNewFrame == NULL) return NULL;  // not created
+
+		// Initialise the Tracing attribute for the local visualisation parameter
+		CView *pView = pNewFrame->GetActiveView();
+		CViewCalque *pClq = DYNAMIC_DOWNCAST(CViewCalque,pView);
+		if (pClq)
+			pClq->GetVisualParam()->nCalqueNum = nCalque;
+		ptempl->InitialUpdateFrame(pNewFrame, pDoc);
+		pView = pNewFrame->GetActiveView();
+		pClq = DYNAMIC_DOWNCAST(CViewCalque,pView);
+		if (pClq)
+			pClq->GetVisualParam()->nCalqueNum = nCalque;
+
+		// Restore the previous window position
+		CCalques3DDoc *pMyDoc= DYNAMIC_DOWNCAST(CCalques3DDoc,pDoc);
+		CCalques3DDocTemplate *pMyTP= DYNAMIC_DOWNCAST(CCalques3DDocTemplate,ptempl);
+		if (pMyDoc && pMyTP)
+		{
+			UINT nID = pMyTP->GetViewID();
+			CWinPlacement mypl;
+			BOOL bRet = pMyDoc->m_cWinPos.Lookup(nID,mypl);
+			if (bRet)
+			{
+				mypl.m_pl.length = sizeof(WINDOWPLACEMENT);
+				pNewFrame->SetWindowPlacement(&(mypl.m_pl));
+			}
+
+		}
+		return pNewFrame;
+	}
+	return NULL;
 }
 
 void CMainFrame::OnUpdateViews(CCmdUI* pCmdUI) 
@@ -1177,8 +1282,8 @@ void CMainFrame::OnUpdateViews(CCmdUI* pCmdUI)
 	CDocument* pDoc = pChild->GetActiveDocument();
     if (!pDoc) return; // only for views with document
 
-	if (pCmdUI->m_nID==ID_VIEW_RENDERING)
-		pCmdUI->Enable(FALSE);
+	//if (pCmdUI->m_nID==ID_VIEW_RENDERING)
+	//	pCmdUI->Enable(FALSE);
 
 
 
@@ -1228,82 +1333,6 @@ void CMainFrame::OnUpdateViews(CCmdUI* pCmdUI)
 	}
 }
 
-void CMainFrame::OnViewCalque(UINT id) 
-{
-	CMDIChildWnd*pChild = MDIGetActive();
-	if (!pChild) return;
-	
-	CDocument* pDoc = pChild->GetActiveDocument();
-    if (!pDoc) return; 
-
-	// Get the tracing number from the view command
-	int nCalque = id - ID_VIEW_CALQUE + 1;
-
-	// Look if the view is already open. If so, activate it.
-	POSITION pos = pDoc->GetFirstViewPosition();
-	while (pos != NULL)
-	{
-		CView* pView = pDoc->GetNextView(pos);
-		if (pView->IsKindOf( RUNTIME_CLASS(CViewCalque))) 
-		{
-			CViewCalque *pClq = DYNAMIC_DOWNCAST(CViewCalque,pView);
-			if (pClq && pClq->GetVisualParam()->nCalqueNum == nCalque)
-			{
-				pView->GetParentFrame()->ActivateFrame();
-				return;
-			}
-		}
-	}
-
-	// Find the document template corresponding to the Tracing view
-	POSITION pos2 = AfxGetApp()->GetFirstDocTemplatePosition();
-	while (pos2 != NULL)
-	{
-		CDocTemplate* ptempl = AfxGetApp()->GetNextDocTemplate(pos2) ;
-		if (!ptempl) continue;
-
-		CString rString;
-		ptempl->GetDocString(rString,CDocTemplate::windowTitle);
-		CString mstr;
-		mstr.LoadString(IDR_VIEWCALQUE);
-		int nb = mstr.Find('\n');
-		CString tt = mstr.Left(nb);
-		if (tt != rString) continue;
-
-		CMDIChildWnd* pNewFrame =
-				(CMDIChildWnd*)(ptempl->CreateNewFrame(pDoc, NULL));
-		if (pNewFrame == NULL) return ;  // not created
-
-		// Initialise the Tracing attribute for the local visualisation parameter
-		CView *pView = pNewFrame->GetActiveView();
-		CViewCalque *pClq = DYNAMIC_DOWNCAST(CViewCalque,pView);
-		if (pClq)
-			pClq->GetVisualParam()->nCalqueNum = nCalque;
-		ptempl->InitialUpdateFrame(pNewFrame, pDoc);
-		pView = pNewFrame->GetActiveView();
-		pClq = DYNAMIC_DOWNCAST(CViewCalque,pView);
-		if (pClq)
-			pClq->GetVisualParam()->nCalqueNum = nCalque;
-
-		// Restore the previous window position
-		CCalques3DDoc *pMyDoc= DYNAMIC_DOWNCAST(CCalques3DDoc,pDoc);
-		CCalques3DDocTemplate *pMyTP= DYNAMIC_DOWNCAST(CCalques3DDocTemplate,ptempl);
-		if (pMyDoc && pMyTP)
-		{
-			UINT nID = pMyTP->GetViewID();
-			CWinPlacement mypl;
-			BOOL bRet = pMyDoc->m_cWinPos.Lookup(nID,mypl);
-			if (bRet)
-			{
-				mypl.m_pl.length = sizeof(WINDOWPLACEMENT);
-				pNewFrame->SetWindowPlacement(&(mypl.m_pl));
-			}
-
-		}
-		return;
-	}
-}
-
 void CMainFrame::OnViewFullScreen()
 {
 	CMDIChildWnd* pChild = MDIGetActive();
@@ -1344,6 +1373,16 @@ void CMainFrame::OnViewFullScreen()
 				pWnd->ShowControlBar (pToolBar, TRUE,FALSE, FALSE);
 		}
 	}
+}
+
+void CMainFrame::OnViewUniverse() 
+{
+	LaunchUniverse();
+}
+
+void CMainFrame::OnViewCalque(UINT id) 
+{
+	LaunchCalques(id);
 }
 
 void CMainFrame::OnViewAnalytic() 
