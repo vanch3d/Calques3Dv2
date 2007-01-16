@@ -349,13 +349,13 @@ UINT  CCompositeObj3D::CalculConceptuel()
     return ret;
 }
 
-void CCompositeObj3D::CalculVisuel(CVisualParam *myVisuParam)
+void CCompositeObj3D::CalculVisuel(CVisualParam *pVisParam)
 {
     int nb = m_cSubObjects.GetSize();
     for (int i=0;i<nb;i++)
      {
         CObject3D * obj = m_cSubObjects.GetAt(i);
-        obj->CalculVisuel(myVisuParam);
+        obj->CalculVisuel(pVisParam);
         //if (rGraphRect == CRect(-1,-1,-1,-1))
             obj->rGraphRect = rGraphRect;
      }
@@ -925,10 +925,10 @@ UINT  CCube3D::CalculConceptuel()
     return ValideCompositeObject(0);
 }
 
-void CCube3D::CalculVisuel(CVisualParam *myVisuParam)
+void CCube3D::CalculVisuel(CVisualParam *pVisParam)
 {
-    if (cr) cr->CalculVisuel(myVisuParam);
-    CCompositeObj3D::CalculVisuel(myVisuParam);
+    if (cr) cr->CalculVisuel(pVisParam);
+    CCompositeObj3D::CalculVisuel(pVisParam);
 
     if (pObjectShape.nShapeId == 2) return;
     for (int i=0;i<12;i++)
@@ -954,10 +954,10 @@ void CCube3D::CalculVisuel(CVisualParam *myVisuParam)
         FCoord n1 = FaceNorm.Norme();
         FaceNorm = FaceNorm * (1/n1);
 
-        CVector4 oeil= myVisuParam->GetEyePos();
+        CVector4 oeil= pVisParam->GetEyePos();
         CVector4 origin(0,0,0,1);
         CVector4 VisuNorm= oeil -
-                ((myVisuParam->bParProj) ? origin : p1->Concept_pt);
+                ((pVisParam->bParProj) ? origin : p1->Concept_pt);
         FCoord n2 = VisuNorm.Norme();
         VisuNorm = VisuNorm*(1/n2);
         FCoord dot = VisuNorm * FaceNorm;
@@ -1257,9 +1257,9 @@ UINT  CInterSphDr3D::CalculConceptuel()
 }
 
 
-void CInterSphDr3D::CalculVisuel(CVisualParam *myVisuParam)
+void CInterSphDr3D::CalculVisuel(CVisualParam *pVisParam)
 {
-    CCompositeObj3D::CalculVisuel(myVisuParam);
+    CCompositeObj3D::CalculVisuel(pVisParam);
 }
 
 void CInterSphDr3D::Draw(CDC *pDC,CVisualParam *vp,BOOL bSM)
@@ -1492,9 +1492,9 @@ UINT  CDivSegment3D::CalculConceptuel()
 }
 
 
-void CDivSegment3D::CalculVisuel(CVisualParam *myVisuParam)
+void CDivSegment3D::CalculVisuel(CVisualParam *pVisParam)
 {
-    CCompositeObj3D::CalculVisuel(myVisuParam);
+    CCompositeObj3D::CalculVisuel(pVisParam);
 }
 
 void CDivSegment3D::Draw(CDC *pDC,CVisualParam *vp,BOOL bSM)
@@ -1540,4 +1540,224 @@ CString CDivSegment3D::ExportSymbolic(int nFormat)
     {
     }
     return mstr;
+}
+
+//////////////////////////////////////////////////////////////////////
+// Construction/Destruction
+//////////////////////////////////////////////////////////////////////
+IMPLEMENT_SERIAL(CInterCircDr3D, CCompositeObj3D, VERSIONABLE_SCHEMA | 1)
+
+CInterCircDr3D::CInterCircDr3D() : CCompositeObj3D()
+{
+    Circ = NULL;
+    Dr = NULL;
+    ptA = ptB = NULL;
+}
+
+CInterCircDr3D::CInterCircDr3D(CCercle3D* sp1,CDroite3D* dr2) :
+    CCompositeObj3D()
+{
+    Circ = sp1;
+    Dr = dr2;
+    ptA = ptB = NULL;
+    ptA = new CPointCalc3D(this);
+    ptB = new CPointCalc3D(this);
+
+    SetDepth();//nDepth = max(Sph->nDepth,Dr->nDepth)+1;
+    //ptA->nDepth = nDepth+1;
+    //ptB->nDepth = nDepth+1;
+    ptA->SetInGraph();
+    ptB->SetInGraph();
+
+    m_cSubObjects.Add(ptA);
+    m_cSubObjects.Add(ptB);
+    InitIntersection();
+}
+
+CInterCircDr3D::CInterCircDr3D(const CObject3D & obj) :
+    CCompositeObj3D(obj)
+{
+    Circ = ((CInterCircDr3D &)obj).Circ;
+    Dr = ((CInterCircDr3D &)obj).Dr;
+    ptA = ptB = NULL;
+    ptA = new CPointCalc3D(this);
+    ptB = new CPointCalc3D(this);
+    SetDepth();
+    //ptA->nDepth = nDepth+1;
+    //ptB->nDepth = nDepth+1;
+    ptA->SetInGraph();
+    ptB->SetInGraph();
+
+    m_cSubObjects.Add(ptA);
+    m_cSubObjects.Add(ptB);
+    InitIntersection();
+}
+
+void CInterCircDr3D::InitIntersection()
+{
+    nStartShow = 0;
+}
+
+int CInterCircDr3D::SetDepth()
+{
+    if (Circ && Dr)
+    {
+        nDepth = max(Circ->nDepth,Dr->nDepth)+1;
+        if (ptA) ptA->nDepth = nDepth+1;
+        if (ptB) ptB->nDepth = nDepth+1;
+    }
+    return nDepth;
+}
+
+CObject3D* CInterCircDr3D::CopyObject()
+{
+    CObject3D *temp = new CInterCircDr3D((CObject3D&)*this);
+    return temp;
+}
+
+CxObject3DSet* CInterCircDr3D::GetParents()
+{
+    CxObject3DSet* list = new CxObject3DSet();
+    list->Add(Circ);
+    list->Add(Dr);
+    return list;
+}
+
+BOOL CInterCircDr3D::IsEqual(CObject3D &other)
+{
+    return FALSE;
+}
+
+void CInterCircDr3D::Serialize( CArchive& ar )
+{
+    CCompositeObj3D::Serialize(ar);
+
+    if (ar.IsStoring())
+    {
+        ar << ((Circ) ? Circ->nObjectId : -1);
+        ar << ((Dr) ? Dr->nObjectId : -1);
+    }
+    else
+    {
+        Circ = (CCercle3D*)SerializeObj(ar);
+        Dr = (CDroite3D*)SerializeObj(ar);
+        int nb = m_cSubObjects.GetSize();
+        for (int i=0;i<nb;i++)
+        {
+            CObject3D* ppp = m_cSubObjects.GetAt(i);
+            if (i==0)
+                ptA = (CPoint3D*)ppp;
+            else if (i==1)
+                ptB = (CPoint3D*)ppp;
+            if (ptA) ptA->SetInGraph();
+            if (ptB) ptB->SetInGraph();
+        }
+        InitIntersection();
+    }
+}
+
+void CInterCircDr3D::SetColor(COLORREF rColor)
+{
+    CCompositeObj3D::SetColor(rColor);
+}
+
+void CInterCircDr3D::SetStyle(int nStyle)
+{
+    CCompositeObj3D::SetStyle(nStyle);
+}
+
+CString CInterCircDr3D::GetObjectDef()
+{
+    CString mstr(_T("???")),sFormat(_T("???")),sName(_T("???"));
+    sName = GetObjectName();
+    sFormat.LoadString(GetDefID());
+
+    CString sn1(_T("???")),sn2(_T("???"));
+    if (Circ) sn1 = Circ->GetObjectHelp();
+    if (Dr) sn2 = Dr->GetObjectHelp();
+    mstr.Format(sFormat,sName,sn1,sn2);
+    return mstr;
+}
+
+UINT  CInterCircDr3D::CalculConceptuel()
+{
+    bValidate = ((Circ->bValidate) && (Dr->bValidate));
+    if (!bValidate)
+        return ValideCompositeObject(ERR_NOINTER);
+
+	CPoint3D ptcenter(Circ->Center);
+	ptcenter.CalculConceptuel();
+	CPlan3D plcirc(&ptcenter,Circ->VecNorm);
+	plcirc.CalculConceptuel();
+	CPointInterDP3D inter(Dr,&plcirc);
+	UINT res = inter.CalculConceptuel();
+	if (res ==ERR_DRPLANPAR)
+	{
+		CSphere3D sp(&ptcenter,Circ->P1);
+		sp.CalculConceptuel();
+		CInterSphDr3D intsd(&sp,Dr);
+		res = intsd.CalculConceptuel();
+        bValidate=(res==0);
+		ValideCompositeObject(res);
+		ptA->bValidate = intsd.ptA->bValidate;
+		ptB->bValidate = intsd.ptB->bValidate;
+		ptA->Concept_pt = intsd.ptA->Concept_pt;
+		ptB->Concept_pt = intsd.ptB->Concept_pt;
+
+		if (ptA->bValidate)
+		{
+			CVector4 U = ptA->Concept_pt - Circ->Center;
+
+			U = U * (1/U.Norme());
+			FCoord sa = Circ->LocRep.I * U;
+			FCoord ca = Circ->LocRep.J * U;
+			if (fabsl(sa) > 1.)
+			{
+				//::MessageBox(0,"erreur arcos","ici",MB_OK);
+				sa = (sa < 0.00) ? -1.00 : 1.00;
+				//return 0;
+			}
+			FCoord lambda = acosl(sa);
+			if (ca <0) lambda = 2*M_PI - lambda;
+			if (lambda  > (Circ->nArcAngle+1E-5))
+				ptA->bValidate = FALSE;
+
+		}
+		if (ptB->bValidate)
+		{
+			CVector4 U = ptB->Concept_pt - Circ->Center;
+
+			U = U * (1/U.Norme());
+			FCoord sa = Circ->LocRep.I * U;
+			FCoord ca = Circ->LocRep.J * U;
+			if (fabsl(sa) > 1.)
+			{
+				//::MessageBox(0,"erreur arcos","ici",MB_OK);
+				sa = (sa < 0.00) ? -1.00 : 1.00;
+				//return 0;
+			}
+			FCoord lambda = acosl(sa);
+			if (ca <0) lambda = 2*M_PI - lambda;
+			if (lambda  > (Circ->nArcAngle+1E-5))
+				ptB->bValidate = FALSE;
+		}
+		if (!ptA->bValidate && !ptB->bValidate)
+			res = ERR_NOINTER;
+
+		return res;
+	}
+	else
+	{
+		CVector4 dis = inter.Concept_pt - Circ->Center;
+		FCoord dist = dis.Norme();
+		FCoord dcirc = Circ->Radius;
+		if (dcirc<=dist)
+		{
+			return ValideCompositeObject(ERR_NOINTER);
+		}
+		ptA->Concept_pt = inter.Concept_pt;
+		ptA->bValidate = TRUE;
+		ptB->bValidate = FALSE;
+	}
+	return 0;
 }
