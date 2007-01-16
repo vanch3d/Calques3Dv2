@@ -18,10 +18,9 @@ typedef CList <CRuntimeClass*, CRuntimeClass*> CustomPageList;
 								 BCGCUSTOMIZE_LOOK_2000 | BCGCUSTOMIZE_MENU_ANIMATIONS)
 
 /////////////////////////////////////////////////////////////////////////////
-/// Main dialog for the customization of Calques3D
+/// Main dialog for the customization of Calques3D GUI.
 ///
-/// For the preferences of Calques 3D per se, see CPrefMacros, CPrefMathPad, CPrefObjShape, 
-/// CPrefSession and CPrefUniverse.
+/// For the preferences of Calques 3D, see CPreferenceDialog.
 /////////////////////////////////////////////////////////////////////////////
 class CCustomizeCalques3D : public CBCGPToolbarCustomize  
 {

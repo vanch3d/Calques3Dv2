@@ -816,9 +816,9 @@ UINT CObject3D::CalculConceptuel()
 
 //////////////////////////////////////////////////////////////////////
 /// Recompute the graphical representation of the object (in the universe or tracing view).
-/// @param mV	The visual parameters associated with the view.
+/// @param pVisParam	The visual parameters associated with the view.
 //////////////////////////////////////////////////////////////////////
-void CObject3D::CalculVisuel(CVisualParam *mV)
+void CObject3D::CalculVisuel(CVisualParam *pVisParam)
 {
 }
 

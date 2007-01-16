@@ -1,7 +1,9 @@
-// Point3D.h: interface for the CPoint3D class.
-//
 //////////////////////////////////////////////////////////////////////
-
+/// @file Point3D.h
+/// @brief interface of the CPoint3D class and its derived classes.
+///
+///
+//////////////////////////////////////////////////////////////////////
 #if !defined(AFX_POINT3D_H__E53DB5CE_D0E2_11D4_A2FA_00D0B71C8709__INCLUDED_)
 #define AFX_POINT3D_H__E53DB5CE_D0E2_11D4_A2FA_00D0B71C8709__INCLUDED_
 
@@ -19,18 +21,19 @@ class CSphere3D;
 class CCylinder3D;
 
 /////////////////////////////////////////////////////////////////////////////
-/// CPoint3D:
-/// See Point3D.cpp for the implementation of this class
+/// The basic point, defined by its coordinates in space.
 ///
 /////////////////////////////////////////////////////////////////////////////
 class CPoint3D : public CObject3D  
 {
-public:
 	DECLARE_SERIAL(CPoint3D);
-	CVector4	Concept_pt;		// Conceptual Coord
-	CPoint		Visual_pt;		// Visual Coord
-	BOOL		bUp;			// Above horiz. plane ?
 
+public:
+	CVector4	Concept_pt;		///< 3D coordinates of the point
+	CPoint		Visual_pt;		///< 2D coordinates of the point's projection
+	BOOL		bUp;			///< TRUE is Z-coordinate positive
+
+public:
 	CPoint3D();
 	CPoint3D(CPoint pt);
 	CPoint3D(CVector4 pt);
@@ -79,13 +82,16 @@ public:
 };
 
 //////////////////////////////////////////////////////////////////////
-/// Construction/Destruction
+/// A point whose coordinates are calculated internally by another object.
+/// Usually used in composite objects such a bi-point intersections.
 //////////////////////////////////////////////////////////////////////
 class CPointCalc3D : public CPoint3D
 {
-public:
 	DECLARE_SERIAL(CPointCalc3D);
-	CObject3D	*pSource;
+
+public:
+	CObject3D	*pSource;	///< Pointer to the object responsible for the calculation.
+
 public:
 	CPointCalc3D();
 	CPointCalc3D(CObject3D *s);
@@ -108,14 +114,17 @@ public:
 };
 
 //////////////////////////////////////////////////////////////////////
-/// Construction/Destruction
+/// The midpoint of two distinct points or of a segment line.
 //////////////////////////////////////////////////////////////////////
 class CPointMilieu3D : public CPoint3D
 {
-public:
 	DECLARE_SERIAL(CPointMilieu3D);
-	CPoint3D	*P1,*P2;		// milieu défini par 2 pts existants
-	CSegment3D	*S;				// milieu d'ubn segment
+
+public:
+	CPoint3D	*P1;	///< Pointer to the first point of the middle
+	CPoint3D	*P2;	///< Pointer to the second point of the middle
+	CSegment3D	*S;		///< Pointer to the segment this point is the middle
+
 public:
 	CPointMilieu3D();
 	CPointMilieu3D(CPoint3D *s1,CPoint3D *s2);
@@ -143,12 +152,13 @@ public:
 };
 
 //////////////////////////////////////////////////////////////////////
-/// Construction/Destruction
+/// A generic class for every points built on another object
 //////////////////////////////////////////////////////////////////////
 class CPointSur3D : public CPoint3D
 {
-public:
 	DECLARE_SERIAL(CPointSur3D);
+
+public:
 	CPointSur3D();
 	CPointSur3D(const CObject3D & );
 	//virtual void Serialize( CArchive& ar );
@@ -168,14 +178,16 @@ public:
 };
 
 //////////////////////////////////////////////////////////////////////
-/// Construction/Destruction
+/// A point built on a line, ray or segment line.
 //////////////////////////////////////////////////////////////////////
 class CPointSurD3D : public CPointSur3D
 {
-public:
 	DECLARE_SERIAL(CPointSurD3D);
-	CDroite3D	*S;
-	FCoord		lambda;
+
+public:
+	CDroite3D	*S;			///< A pointer to the target line.
+	FCoord		lambda;		///< The location of the point, relative to the base of the target line.
+
 public:
 	CPointSurD3D();
 	CPointSurD3D(CDroite3D *s1);
@@ -205,14 +217,14 @@ public:
 };
 
 //////////////////////////////////////////////////////////////////////
-/// Construction/Destruction
+/// A point built on a circle or an arc of circle.
 //////////////////////////////////////////////////////////////////////
 class CPointSurC3D : public CPointSur3D
 {
-public:
 	DECLARE_SERIAL(CPointSurC3D);
-	CCercle3D	*S;
-	FCoord		lambda;
+public:
+	CCercle3D	*S;			///< A pointer to the target circle.
+	FCoord		lambda;		///< The location of the point on the circle, relative to its base
 public:
 	CPointSurC3D();
 	CPointSurC3D(CCercle3D *s1);
@@ -240,7 +252,7 @@ public:
 };
 
 //////////////////////////////////////////////////////////////////////
-/// Construction/Destruction
+/// CPointSurP3D
 //////////////////////////////////////////////////////////////////////
 class CPointSurP3D : public CPointSur3D
 {
@@ -276,7 +288,7 @@ public:
 };
 
 //////////////////////////////////////////////////////////////////////
-/// Construction/Destruction
+/// CPointSurS3D
 //////////////////////////////////////////////////////////////////////
 class CPointSurS3D : public CPointSur3D
 {
@@ -315,7 +327,7 @@ public:
 
 
 //////////////////////////////////////////////////////////////////////
-/// Construction/Destruction
+/// CPointSurCyl3D
 //////////////////////////////////////////////////////////////////////
 class CPointSurCyl3D : public CPointSur3D
 {
@@ -355,7 +367,7 @@ public:
 
 
 //////////////////////////////////////////////////////////////////////
-/// Construction/Destruction
+/// CPointInter3D
 //////////////////////////////////////////////////////////////////////
 class CPointInter3D : public CPoint3D
 {
@@ -367,7 +379,7 @@ public:
 };
 
 //////////////////////////////////////////////////////////////////////
-/// Construction/Destruction
+/// CPointInterDD3D
 //////////////////////////////////////////////////////////////////////
 class CPointInterDD3D : public CPointInter3D
 {
@@ -404,7 +416,7 @@ public:
 
 
 //////////////////////////////////////////////////////////////////////
-// Construction/Destruction
+/// CPointInterDP3D
 //////////////////////////////////////////////////////////////////////
 class CPointInterDP3D : public CPointInter3D
 {
@@ -440,7 +452,7 @@ public:
 
 
 //////////////////////////////////////////////////////////////////////
-/// Construction/Destruction
+/// CPointCenter3D
 //////////////////////////////////////////////////////////////////////
 class CPointCenter3D : public CPoint3D
 {
@@ -471,7 +483,7 @@ public:
 };
 
 //////////////////////////////////////////////////////////////////////
-/// Construction/Destruction
+/// CPointSymetric3D
 //////////////////////////////////////////////////////////////////////
 class CPointSymetric3D : public CPoint3D
 {
@@ -508,7 +520,7 @@ public:
 };
 
 //////////////////////////////////////////////////////////////////////
-/// Construction/Destruction
+/// CPointTranslat3D
 //////////////////////////////////////////////////////////////////////
 class CPointTranslat3D : public CPoint3D
 {

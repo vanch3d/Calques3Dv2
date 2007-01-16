@@ -49,61 +49,79 @@
 	};
 
 /////////////////////////////////////////////////////////////////////////////
-// CGLEnabledView view
-
+/// CGLEnabledView - An MDI view class supporting OpenGL.
+/////////////////////////////////////////////////////////////////////////////
+/// CGEnabledView is a view class designed to wrap all OpenGL stuff (initialization, managing of Rendering 
+/// Contexts and palettes, destruction, etc.) allowing the creation of multiple views in a MDI application.
+///
+/// CGEnabledView also offers these basic services:
+/// - a function to get various information about the OpenGL implementation which is currently being used 
+///   (separate information for the OPENGL and GLU libraries).
+/// - manages internally the creation of display lists and offers a primitive interface for display lists execution.
+/// - defines mouse cursor to be used inside the views.
+/// - offers an object oriented encapsulation of quadric objects for drawing of spheres, cylinders and disks.
+/// - offers an object oriented encapsulation of glu tessellator routines for translating non simple polygons 
+///   (concave, self-intersecting and with holes) in groups of simple ones (triangle strips and fans).
+/// - presents a simple interface to draw text strings as 2D bitmaps or complete 3D glyphs. 
+/////////////////////////////////////////////////////////////////////////////
 class CGLEnabledView : public CView
 {
+	DECLARE_DYNCREATE(CGLEnabledView)
+
 protected:
 	CGLEnabledView();// protected constructor used by dynamic creation
-	DECLARE_DYNCREATE(CGLEnabledView)
-/** CGLDispList
-DESC:-this is an helper class which let you create "display list objects",
-       use these objects to define the key elements in your scene (a disp.
-	   list is faster than the corresponding GL commands).
-      -Through the class members functions you have total control on a
-       single display list.
-      -An isolated display list save OGL parameters before execution
-	   (so it's not affected by preceding transformations or settings).
-*******/
+
+	/////////////////////////////////////////////////////////////////////////////
+	/// CGLDispList - an helper class which let you create "display list objects".
+	/////////////////////////////////////////////////////////////////////////////
+	/// - Use these objects to define the key elements in your scene (a display
+	///   list is faster than the corresponding GL commands).
+	/// - Through the class members functions you have total control on a single display list.
+	/// - An isolated display list save OGL parameters before execution 
+	///   (so it's not affected by preceding transformations or settings).
+	/////////////////////////////////////////////////////////////////////////////
 	class CGLDispList
 	{
-	friend class CGLEnabledView;
-	private:
-		BOOL m_bIsolated;
-		int m_glListId;
-	public:
-		CGLDispList();  // constructor
-		~CGLDispList(); // destructor
-		void StartDef(BOOL bImmediateExec=FALSE);// enclose a disp.list def.
-		void EndDef();
-		void Draw();// execute disp list GL commands 
-		void SetIsolation(BOOL bValue) {m_bIsolated=bValue;}; // set isolation property
+		friend class CGLEnabledView;
+		private:
+			BOOL m_bIsolated;
+			int m_glListId;
+		public:
+			CGLDispList();  // constructor
+			~CGLDispList(); // destructor
+			void StartDef(BOOL bImmediateExec=FALSE);// enclose a disp.list def.
+			void EndDef();
+			void Draw();// execute disp list GL commands 
+			void SetIsolation(BOOL bValue) {m_bIsolated=bValue;}; // set isolation property
 	};
 
-/** CGLTesselator
-DESC:-this is a wrapper class which let you create "tesselator objects",
-      use these objects to create concave or self intersecting polygons.
-     -OGL tessellation objects converts a vertices list describing a convex
-	  or self-intersecting polygon in one or more GL primitives.Read the
-	  docs to understand the callbacks mechanism.
-	 -The callbacks have been defined as a simple and direct mapping to
-	  corresponding GL primitive (no per vertex color or texture information).
-	 -The callbacks have to be global functions.
-	 -A very simple garbage collection list has been implemented to manage new
-	  vertices create by combine callback.
-	 -Elaboration and drawing occur after EndDef().
-*******/
+	/////////////////////////////////////////////////////////////////////////////
+	/// CGLTesselator - A wrapper class to create "tesselator objects", for concave 
+	/// or self intersecting polygons.
+	/////////////////////////////////////////////////////////////////////////////
+    /// - OGL tessellation objects converts a vertices list describing a convex
+	///   or self-intersecting polygon in one or more GL primitives. Read the
+	///   docs to understand the callbacks mechanism.
+	/// - The callbacks have been defined as a simple and direct mapping to
+	///   corresponding GL primitive (no per vertex color or texture information).
+	/// - The callbacks have to be global functions.
+	/// - A very simple garbage collection list has been implemented to manage new
+	///   vertices create by combine callback.
+	/// - Elaboration and drawing occur after EndDef().
+	/////////////////////////////////////////////////////////////////////////////
 	class CGLTesselator
 	{
 	public:
 		CGLTesselator();  // constructor
 		~CGLTesselator(); // destructor
-// properties functions
+		
+		// properties functions
 		void SetFilling(BOOL bFill=TRUE);
 		BOOL GetFilling();
 		void SetWindingRule(GLdouble which);
 		GLdouble GetWindingRule();
-// definition functions
+		
+		// definition functions
 		void StartDef();
 		void AddVertexArray(GLdouble arr[][3],int size);
 		void AddVertex(GLdouble vertData[3]);

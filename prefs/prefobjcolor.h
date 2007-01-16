@@ -9,8 +9,9 @@
 #include "..\GridCtrl\GridCtrl.h"
 
 /////////////////////////////////////////////////////////////////////////////
-// CPrefObjColor dialog
-
+/// CPrefObjColor
+///
+/////////////////////////////////////////////////////////////////////////////
 class CPrefObjColor : public CBCGPPropertyPage
 {
 	DECLARE_DYNCREATE(CPrefObjColor)
@@ -25,6 +26,8 @@ public:
 	enum { IDD = IDD_PREF_COLORS_PAGE };
 	BOOL	m_bGrayHidden;
 	//}}AFX_DATA
+
+private:
 	CGridCtrl	m_cColorlist;
 
 
