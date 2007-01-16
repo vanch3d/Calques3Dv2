@@ -53,6 +53,11 @@
 /// @param WPARAM An integer (UINT) defining the percentage of the zoom factor (cannot be 0).
 #define WM_UPDATEZOOM_MANUAL	(WM_APP + 15)
 
+/// Notify the end of editing in the in-place editor.
+///
+/// @param WPARAM The string containing the text in the editor.
+#define WM_MATHPAD_ENDEDIT		(WM_APP + 16)
+
 #define WM_UPDATEOBJ_ADD		(WM_APP + 20)		///< An object has been added to the document
 #define WM_UPDATEOBJ_MOD		(WM_APP + 21)		///< The properties of an object have been modified
 #define WM_UPDATEOBJ_MOV		(WM_APP + 22)		///< An object has been moved in one of the view
