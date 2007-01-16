@@ -12,6 +12,7 @@
 #include "ViewCalque.h"
 #include "ViewGraph.h"
 #include "ViewAnalytic.h"
+#include "View3DRender.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -135,6 +136,16 @@ void CChildFrame::OnUpdateFrameTitle(BOOL bAddToTitle)
 	{
 		CString mstr;
 		mstr.LoadString(IDR_VIEWANALYTIC);
+		int nb = mstr.Find('\n');
+		CString tt = mstr.Left(nb);
+		wStrng = tt + _T(" - ") + wStrng;
+		//SetWindowText(wStrng);
+		AfxSetWindowText(m_hWnd, wStrng);
+	}
+	else if (DYNAMIC_DOWNCAST(CView3DRender,pView))
+	{
+		CString mstr;
+		mstr.LoadString(IDR_VIEWRENDERING);
 		int nb = mstr.Find('\n');
 		CString tt = mstr.Left(nb);
 		wStrng = tt + _T(" - ") + wStrng;
