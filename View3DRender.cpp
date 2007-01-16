@@ -71,7 +71,7 @@ CCalques3DDoc* CView3DRender::GetDocument() // non-debug version is inline
 // CView3DRender message handlers
 void CView3DRender::GetLightParams(int *pPos)
 {
-	for (int i=0; i<11; i++)
+	for (int i=0; i<NBVIEWPARAMS; i++)
 		pPos[i] = m_LightParam[i];
 }
 
@@ -146,6 +146,16 @@ void CView3DRender::SetLight ()
 // 	glEnable(GL_DEPTH_TEST);
 // 	//====== Material colors will be taken into account
 // 	glEnable(GL_COLOR_MATERIAL);
+
+	 		glPushMatrix();
+			glMatrixMode(GL_PROJECTION);
+				glLoadIdentity();
+				gluPerspective(m_LightParam[11]+20,m_dAspectRatio,1.0f, 100.0f);
+				glTranslatef(0.0f,0.0f,-6.0f);
+				glTranslatef(0.0f,-0.667f,0.0f);
+			glMatrixMode(GL_MODELVIEW);
+		glPopMatrix();
+
 }
 
 
@@ -187,6 +197,7 @@ void CView3DRender::OnCreateGL()
    m_LightParam[8] = 40;   // Specular material
    m_LightParam[9] = 70;   // Shininess material
    m_LightParam[10] = 0;   // Emission material
+   m_LightParam[11] = 50;   // Perspective Field of View
  
 	//====== Now you can issue OpenGL commands (i.e. call gl*** functions)
 	glEnable(GL_LIGHTING);		// Lighting will be used
@@ -371,7 +382,7 @@ void CView3DRender::OnSizeGL(int cx, int cy)
  		glPushMatrix();
 			glMatrixMode(GL_PROJECTION);
 				glLoadIdentity();
-				gluPerspective(70.0,m_dAspectRatio,1.0f, 100.0f);
+				gluPerspective(m_LightParam[11]+20,m_dAspectRatio,1.0f, 100.0f);
 				glTranslatef(0.0f,0.0f,-6.0f);
 				glTranslatef(0.0f,-0.667f,0.0f);
 			glMatrixMode(GL_MODELVIEW);
@@ -495,6 +506,9 @@ int CRenderPropDlg::GetSliderNum(HWND hwnd, UINT& nID)
 	case IDC_RENDERER_EMISSION:
 		nID = IDC_RENDERER_EMISSIONTXT;
 		return 10;
+	case IDC_RENDERER_FIELDVIEW:
+		nID = IDC_RENDERER_FIELDVIEWTXT;
+		return 11;
 	}
 	return 0;
 }
@@ -510,7 +524,7 @@ BOOL CRenderPropDlg::OnInitDialog()
 		IDC_RENDERER_LGTX,	IDC_RENDERER_LGTY,	IDC_RENDERER_LGTZ,
 		IDC_RENDERER_AMBIENT,IDC_RENDERER_DIFFUSE,IDC_RENDERER_SPECULAR,
 		IDC_RENDERER_AMBMAT,	IDC_RENDERER_DIFFMAT,IDC_RENDERER_SPECMAT,
-		IDC_RENDERER_SHINE,	IDC_RENDERER_EMISSION 
+		IDC_RENDERER_SHINE,	IDC_RENDERER_EMISSION, IDC_RENDERER_FIELDVIEW
 	};
 
 	for (int i=0; i<sizeof(IDs)/sizeof(IDs[0]); i++)
