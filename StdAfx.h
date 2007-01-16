@@ -22,9 +22,10 @@
 #endif // _AFX_NO_AFXCMN_SUPPORT
 
 
-//#include <bcgcb.h>			// BCG Control Bar
-#include <BCGCBProInc.h>			// BCG Control Bar
-#include <afxcview.h>
+#include <BCGCBProInc.h>	// BCG Control Bar
+#include "OGLTools/OGLT.h"	// OpenGL support
+
+#include <afxcview.h>		// RichEdit classes
 
 
 //{{AFX_INSERT_LOCATION}}
