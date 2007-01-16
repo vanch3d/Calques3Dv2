@@ -70,6 +70,7 @@
 #define IDD_ABOUTCREDIT                 332
 #define IDD_ABOUTCALQUE                 333
 #define IDD_ABOUTPROP                   334
+#define IDD_RENDERER_PROP               335
 #define IDB_SPLASH                      500
 #define IDB_WORKSPACE                   501
 #define IDB_SLIDERS                     502
@@ -77,6 +78,7 @@
 #define IDB_BITMAP48                    504
 #define IDB_MENU_LOGO                   505
 #define IDB_LOGO                        506
+#define IDB_MATHPAD                     507
 #define IDB_LIST_ADDITEM                510
 #define IDB_LIST_BROWSE                 511
 #define IDB_LIST_DELITEM                512
@@ -193,6 +195,30 @@
 #define IDC_EDIT4                       1186
 #define IDC_SPIN4                       1187
 #define IDC_ABOUTCALQUE                 1201
+#define IDC_RENDERER_AMBTXT             1300
+#define IDC_RENDERER_DIFFUSETXT         1301
+#define IDC_RENDERER_SPECULARTXT        1302
+#define IDC_RENDERER_LGTXTXT            1303
+#define IDC_RENDERER_LGTYTXT            1304
+#define IDC_RENDERER_LGTZTXT            1305
+#define IDC_RENDERER_AMBIENT            1306
+#define IDC_RENDERER_DIFFUSE            1307
+#define IDC_RENDERER_SPECULAR           1308
+#define IDC_RENDERER_SHINE              1309
+#define IDC_RENDERER_LGTX               1310
+#define IDC_RENDERER_LGTY               1311
+#define IDC_RENDERER_LGTZ               1312
+#define IDC_RENDERER_AMBMATTXT          1313
+#define IDC_RENDERER_DIFFMATTXT         1314
+#define IDC_RENDERER_SPECMATTXT         1315
+#define IDC_RENDERER_AMBMAT             1316
+#define IDC_RENDERER_DIFFMAT            1317
+#define IDC_RENDERER_SPECMAT            1318
+#define IDC_RENDERER_SHINETXT           1319
+#define IDC_RENDERER_EMISSION           1320
+#define IDC_RENDERER_EMISSIONTXT        1321
+#define IDC_RENDERER_FIELDVIEW          1322
+#define IDC_RENDERER_FIELDVIEWTXT       1323
 #define IDS_LINESHAPE                   3000
 #define IDS_LINESHAPE1                  3001
 #define IDS_LINESHAPE2                  3002
@@ -365,6 +391,8 @@
 #define IDS_DEF_CROSSPRODUCT            5237
 #define IDS_DEF_CIRCLEISS               5238
 #define IDS_DEF_SECTIONSEG              5239
+#define IDS_DEF_INTCIRCDR               5240
+#define IDS_DEF_INTCIRCPL               5241
 #define CTX_DEFAULT                     6000
 #define CTX_POINT                       6001
 #define CTX_DROITE                      6003
@@ -434,6 +462,7 @@
 #define CTX_MACRO_UNLOAD                6080
 #define CTX_MACRO_POINT                 6081
 #define CTX_MOVE_TRACE                  6082
+#define CTX_SELECT_CLOSE_POLYGON        6083
 #define PREF_NAME_PTFREE                7000
 #define PREF_NAME_PTCSTR                7001
 #define PREF_NAME_PTDEP                 7002
@@ -545,6 +574,7 @@
 #define ID_VISUALISATION_PROJECTION     30123
 #define ID_VISUALISATION_CENTERON       30124
 #define ID_VISUALISATION_APPLYSTYLE     30125
+#define ID_VISUALISATION_ZOOM_150       30130
 #define ID_VISUALISATION_SHOWMARKS      30150
 #define ID_VISUALISATION_PROJECTION_FRONT 30160
 #define ID_VISUALISATION_PROJECTION_PROFIL 30161
@@ -593,6 +623,8 @@
 #define ID_CONSTRUCTION_TRANSLATION     30320
 #define ID_CONSTRUCTION_CROSSPRODUCT    30321
 #define ID_CONSTRUCTION_DIVSEGMENT      30322
+#define ID_CONSTRUCTION_INTERSECTION_LINECIRCLE 30323
+#define ID_CONSTRUCTION_INTERSECTION_PLANECIRCLE 30324
 #define ID_EXPLORATION_MOVE             30400
 #define ID_EXPLORATION_EXTRACTION       30401
 #define ID_EXPLORATION_LOCUS            30402
@@ -706,7 +738,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        196
+#define _APS_NEXT_RESOURCE_VALUE        199
 #define _APS_NEXT_COMMAND_VALUE         32997
 #define _APS_NEXT_CONTROL_VALUE         1181
 #define _APS_NEXT_SYMED_VALUE           124
