@@ -83,6 +83,10 @@ public:
 class CCube3D : public CCompositeObj3D
 {
 protected:
+
+	//////////////////////////////////////////////////////////////////////
+	/// Internal structure for cube's faces.
+	//////////////////////////////////////////////////////////////////////
 	class CFacette
 	{
 	public:
@@ -220,6 +224,43 @@ public:
 	virtual void	GetRange(CVector4 &min,CVector4 &max);
 };
 
+///
+/// This is the main class
+///
+class CInterCircDr3D : public CCompositeObj3D
+{
+public:
+	DECLARE_SERIAL(CInterCircDr3D);
+	CCercle3D	*Circ;  		// sphere
+	CDroite3D	*Dr;			// droite
+	CPoint3D	*ptA,*ptB;		// les points intersection
 
+	CInterCircDr3D();
+	CInterCircDr3D(CCercle3D* sp1,CDroite3D* dr2);
+	CInterCircDr3D(const CObject3D & );
+
+	virtual int SetDepth();
+	void InitIntersection();
+
+	virtual CObject3D* CopyObject();
+	virtual CxObject3DSet* GetParents();
+	virtual BOOL IsEqual(CObject3D &other);
+
+	virtual DWORD isA() const { return TInterSphDr3DClass; }
+
+	virtual UINT GetDefID() const { return IDS_DEF_INTCIRCDR;};
+
+	virtual void Serialize( CArchive& ar );
+	virtual void SetColor(COLORREF rColor);
+	virtual void SetStyle(int nStyle);
+
+	virtual CString GetObjectDef();
+	virtual UINT  CalculConceptuel();
+	//virtual void CalculVisuel(CVisualParam *);
+	//virtual void Draw(CDC*,CVisualParam *vp,BOOL bSM=FALSE);
+
+	//virtual CString ExportSymbolic(int nFormat); 
+	//virtual void	GetRange(CVector4 &min,CVector4 &max);
+};
 
 #endif // !defined(AFX_COMPOSITEOBJ3D_H__D97907A0_D720_11D4_A2FA_00D0B71C8709__INCLUDED_)
