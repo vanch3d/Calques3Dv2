@@ -120,6 +120,8 @@ void CViewAnalytic::OnInitialUpdate()
 	myToolTip.SetDelayTime(TTDT_INITIAL,500);
 	myToolTip.SetDelayTime(TTDT_RESHOW,100);
 	
+	m_rMargin = CRect(bitmap.bmWidth,10,0,0);
+
 	CSize sizeTotal = m_rViewSize.Size();
 	// TODO: calculate the total size of this view
 	//sizeTotal.cx = sizeTotal.cy = 100;
@@ -196,6 +198,8 @@ void CViewAnalytic::OnDraw(CDC* rDC)
 	if (m_bmpBack.GetCount () == 1)
 	{
 		CRect rectWorkArea=m_rViewSize;
+		rectWorkArea.NormalizeRect();
+		rectWorkArea |= ClipRect;
 		//GetClientRect(rectWorkArea);
 
 		if (!pDC->IsPrinting())
@@ -376,6 +380,7 @@ void CViewAnalytic::OnLButtonUp(UINT nFlags, CPoint point)
 	}
 	else if (m_pSelObject)
 	{
+		//ReleaseCapture();
 		m_rViewSize.NormalizeRect();
 		CRect objrect = m_pSelObject->rActZone;
 		objrect.NormalizeRect();
@@ -383,7 +388,7 @@ void CViewAnalytic::OnLButtonUp(UINT nFlags, CPoint point)
 
 		if (m_rViewSize != objrect)
 		{
-			m_rViewSize == objrect;
+			m_rViewSize = objrect;
 			CSize sizeTotal = m_rViewSize.Size();
 			// TODO: calculate the total size of this view
 			//sizeTotal.cx = sizeTotal.cy = 100;
@@ -412,9 +417,15 @@ void CViewAnalytic::OnMouseMove(UINT nFlags, CPoint point)
 	}
 	else if (m_pSelObject && (nFlags & MK_LBUTTON))
 	{
-		CRect mrect;
-		//InvalidateRect(m_Obj->rGraphRect);
-		m_pSelObject->rActZone.OffsetRect(ms.cx,ms.cy);
+		CRect mrect = m_pSelObject->rActZone;
+		mrect.OffsetRect(ms.cx,ms.cy);
+		int deltax = mrect.left - (m_rMargin.left+5);
+		int deltay = mrect.top - (m_rMargin.top+5);
+		if (deltax<0)
+			mrect.OffsetRect(-deltax,0);
+		if (deltay<0)
+			mrect.OffsetRect(0,-deltay);
+		m_pSelObject->rActZone = mrect;
 		//InvalidateRect(m_Obj->rGraphRect);
 		Invalidate();
 		UpdateWindow();
@@ -575,6 +586,13 @@ void CViewAnalytic::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 	switch (lHint)
 	{
 	case WM_UPDATEOBJ_ADD:	// Object Added
+		{
+			CEquation3D *pEqu =DYNAMIC_DOWNCAST(CEquation3D,pHint);
+			if (pEqu && pEqu->rActZone.TopLeft()==CPoint(0,0))
+			{
+				pEqu->rActZone.OffsetRect(m_rMargin.left+5,m_rMargin.top+5);
+			}
+		}
 	case WM_UPDATEOBJ_SEL:	// Object Selected
 	case WM_UPDATEOBJ_MOV:	// Object Moved
 	case WM_UPDATEOBJ_DEL:	// Object Deleted
