@@ -246,7 +246,7 @@ public:
 	virtual CxObject3DSet* GetParents();
 	virtual BOOL IsEqual(CObject3D &other);
 
-	virtual DWORD isA() const { return TInterSphDr3DClass; }
+	virtual DWORD isA() const { return TInterCircDr3DClass; }
 
 	virtual UINT GetDefID() const { return IDS_DEF_INTCIRCDR;};
 
@@ -261,6 +261,37 @@ public:
 
 	//virtual CString ExportSymbolic(int nFormat); 
 	//virtual void	GetRange(CVector4 &min,CVector4 &max);
+};
+
+///
+/// This is the main class
+///
+class CInterCircPlane3D : public CCompositeObj3D
+{
+public:
+	DECLARE_SERIAL(CInterCircPlane3D);
+	CCercle3D	*Circ;  		// sphere
+	CPlan3D		*Pl;			// plane
+	CPoint3D	*ptA,*ptB;		// les points intersection
+
+	CInterCircPlane3D();
+	CInterCircPlane3D(CCercle3D* sp1,CPlan3D* dr2);
+	CInterCircPlane3D(const CObject3D & );
+
+	virtual int SetDepth();
+	void InitIntersection();
+
+	virtual CObject3D* CopyObject();
+	virtual CxObject3DSet* GetParents();
+
+	virtual DWORD isA() const { return TInterCircPl3DClass; }
+
+	virtual UINT GetDefID() const { return IDS_DEF_INTCIRCDR;};
+
+	virtual void Serialize( CArchive& ar );
+
+	virtual CString GetObjectDef();
+	virtual UINT  CalculConceptuel();
 };
 
 #endif // !defined(AFX_COMPOSITEOBJ3D_H__D97907A0_D720_11D4_A2FA_00D0B71C8709__INCLUDED_)
