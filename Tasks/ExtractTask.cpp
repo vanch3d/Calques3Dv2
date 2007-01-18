@@ -56,12 +56,18 @@ CExtractCalcTask::~CExtractCalcTask()
 
 DWORD CExtractCalcTask::GetMask()
 {
-	return CTask::GetMask();
+	if (nCalcNum==-1)
+		return 0;
+	else 
+		return CTask::GetMask();
 }
 
 unsigned CExtractCalcTask::GetHelpResID()
 {
-	return CTX_SELECT_OBJECT;
+	if (nCalcNum==-1)
+		return CTX_SELECT_TASKOPTION;
+	else 
+		return CTX_SELECT_OBJECT;
 }
 
 
@@ -73,7 +79,7 @@ void CExtractCalcTask::OnMouseL(UINT modkey, CPoint thepos)
 void CExtractCalcTask::OnMouseMove(UINT modkey, CPoint thepos)
 {
 	BOOL bSubobj = (modkey & MK_SHIFT);
-	FindObject(thepos,TObject3DClass,TRUE,bSubobj);
+	FindObject(thepos,GetMask(),TRUE,bSubobj);
 
 }
 
@@ -212,37 +218,7 @@ BOOL CExtractCalcTask::OnDoTasksOption(UINT nID)
 				//m_pParent->UpdateWindow();
 			}
 			m_cObjExtracted.RemoveAll();
-			CMainFrame *pMFrame = DYNAMIC_DOWNCAST(CMainFrame,AfxGetMainWnd());
-			if (pMFrame)
-			{
-				CMDIChildWnd* pChild = pMFrame->MDIGetActive();
-				if (!pChild) break;
-				CDocument* pDoc = pChild->GetActiveDocument();
-				if (!pDoc) break; // only for views with document
-
-				BOOL bCheck = FALSE;
-				CView* pView=NULL;
-				POSITION pos = pDoc->GetFirstViewPosition();
-				while (pos != NULL && !bCheck)
-				{
-					pView = pDoc->GetNextView(pos);
-					if (!pView) continue;
-					bCheck = pView->IsKindOf(RUNTIME_CLASS(CViewCalque));
-					if (bCheck)
-					{
-						int nID = nCalcNum;
-						CViewCalque *pClq = DYNAMIC_DOWNCAST(CViewCalque,pView);
-						bCheck = (pClq && pClq->GetVisualParam()->nCalqueNum == nID);
-					}
-
-				}
-
-				if (!bCheck)
-				{
-					pMFrame->SendMessage(WM_COMMAND,nCalcNum + ID_VIEW_CALQUE - 1);
-					m_pParent->GetParentFrame()->ActivateFrame();
-				}
-			}
+			DoLaunchView(ID_VIEW_CALQUE+nCalcNum-1);
 		}
 		break;
 	case ID_EXPLORATION_EXTRACTION_ADDALL:
@@ -262,8 +238,6 @@ BOOL CExtractCalcTask::OnDoTasksOption(UINT nID)
 			if (m_pParent->GetSafeHwnd())
 			{
 				InvalidateParent(TRUE);
-				//m_pParent->Invalidate();
-				//m_pParent->UpdateWindow();
 			}
 		}
 		break;
