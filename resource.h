@@ -465,6 +465,7 @@
 #define CTX_MACRO_POINT                 6081
 #define CTX_MOVE_TRACE                  6082
 #define CTX_SELECT_CLOSE_POLYGON        6083
+#define CTX_SELECT_TASKOPTION           6084
 #define PREF_NAME_PTFREE                7000
 #define PREF_NAME_PTCSTR                7001
 #define PREF_NAME_PTDEP                 7002

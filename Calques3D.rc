@@ -3475,6 +3475,7 @@ BEGIN
     CTX_MOVE_TRACE          "select a point to trace"
     CTX_SELECT_CLOSE_POLYGON 
                             "select a point (or select the first point to close and construct the polygon)"
+    CTX_SELECT_TASKOPTION   "Choose an option with the contextual menu."
 END
 
 STRINGTABLE DISCARDABLE 
