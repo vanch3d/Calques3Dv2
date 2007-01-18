@@ -151,7 +151,40 @@ void CTask::InvalidateParent(BOOL bForce/*=FALSE*/)
     }
 }
 
+void CTask::DoLaunchView(UINT nID)
+{
+	CMainFrame *pMFrame = DYNAMIC_DOWNCAST(CMainFrame,AfxGetMainWnd());
+	if (!pMFrame) return;
 
+	::LockWindowUpdate(pMFrame->m_hWndMDIClient);
+	CFrameWnd* tt = pMFrame->LaunchView(nID);
+	HWND hwndT = ::GetWindow(pMFrame->m_hWndMDIClient, GW_CHILD);
+	CArray<CFrameWnd*,CFrameWnd*> dd;
+	while (hwndT != NULL)
+	{
+		CBCGPMDIChildWnd* pFrame = DYNAMIC_DOWNCAST (CBCGPMDIChildWnd, 
+		CWnd::FromHandle (hwndT));
+		if (pFrame != NULL)
+		{
+			dd.Add(pFrame);
+		}
+		hwndT=::GetWindow(hwndT,GW_HWNDNEXT);
+	}
+	
+	for (int i=0;i<dd.GetSize();i++)
+	{
+		CFrameWnd* pFrame = dd.GetAt(i);
+		if (pFrame==NULL) continue;
+		if (pFrame==tt || pFrame==m_pParent->GetParentFrame())
+				::ShowWindow(pFrame->GetSafeHwnd(),SW_RESTORE);
+			else
+				::ShowWindow(pFrame->GetSafeHwnd(),SW_MINIMIZE);
+	}
+	m_pParent->GetParentFrame()->ActivateFrame();
+	::SendMessage(pMFrame->m_hWndMDIClient,WM_MDITILE, MDITILE_VERTICAL,0);	
+	::LockWindowUpdate(NULL);
+
+}
 
 void CTask::OnMouseL(UINT, CPoint pt)
 {
