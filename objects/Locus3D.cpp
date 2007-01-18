@@ -931,10 +931,10 @@ void CLocus3D::Draw3DRendering()
 				pt2=pt2*scale;
 				pt3=pt3*scale;
 				pt4=pt4*scale;
-			glBegin (GL_TRIANGLES);
-// 			glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, mat_diffuse);
-// 			glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, mat_diffuse);
-// 			glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, no_shininess);
+				glBegin (GL_TRIANGLES);
+//				glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, mat_diffuse);
+//				glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, mat_diffuse);
+// 				glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, no_shininess);
 				glNormal3d (k.x, k.y, k.z);
 				glColor3f (1.0f, 0.0f, 0.f);
 				glVertex3d (pt1.x, pt1.y, pt1.z);
@@ -942,7 +942,18 @@ void CLocus3D::Draw3DRendering()
 				glVertex3d (pt2.x, pt2.y, pt2.z);
 				glColor3f (1.0f, 0.0f, 1.0f);
 				glVertex3d (pt4.x, pt4.y, pt4.z);
-		         glEnd();
+				glEnd();
+
+				/*GLUquadricObj*m_quadrObj=gluNewQuadric();
+				glPushMatrix();
+				glTranslated(pt1.x, pt1.y, pt1.z);
+				glColor3f(.2f,.5f,.8f);
+				glMaterialfv(GL_FRONT, GL_AMBIENT, mat_diffuse);
+				glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
+				glMaterialf(GL_FRONT, GL_SHININESS, no_shininess);
+				gluSphere(m_quadrObj,0.04,16,16);
+				glPopMatrix();*/
+
 			}
 		}
 
