@@ -438,12 +438,13 @@ BEGIN
     CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME,7,44,200,95
     LTEXT           "Copyright",IDC_COPYRIGHT,12,50,190,12,SS_CENTERIMAGE
     LTEXT           "",IDC_INFO,12,68,190,67
-    CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME,7,141,200,42
-    LTEXT           "Author : ",IDC_STATIC,12,146,38,12,SS_CENTERIMAGE
+    CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME,7,141,200,43
+    LTEXT           "Contact the author : ",IDC_STATIC,12,146,64,12,
+                    SS_CENTERIMAGE
     CONTROL         "Nicolas VAN LABEKE",IDC_MAIL,"Button",BS_OWNERDRAW | 
-                    BS_LEFT | WS_TABSTOP,50,146,152,12
+                    BS_LEFT | BS_FLAT,76,144,128,16
     CONTROL         "Visit Calques 3D online",IDC_URL,"Button",BS_OWNERDRAW | 
-                    WS_TABSTOP,12,166,87,12
+                    BS_FLAT,12,164,192,18
 END
 
 IDD_MACROINFO_DLG DIALOGEX 0, 0, 212, 153
@@ -3377,6 +3378,8 @@ BEGIN
     ERR_NOPOLYGON           "Some properties result in mis-specification of one of the objects.\nThus, the polygon cannot be defined."
     ERR_POLYGON_NOCONVEX    "This polygon is not convex.\nThus, it cannot be defined."
     ERR_AMBIGUITY           "More than one object are detected. Clear the ambiguity by using the contextual menu."
+    ERR_CIRCLELINE_NOTPLANE "The circle and the line are not in the same plane.\nTheir intersection cannot be defined."
+    ERR_CIRCLEPLANE_PLANE   "The circle is in the plane.\nTheir intersection cannot be defined."
 END
 
 STRINGTABLE DISCARDABLE 
