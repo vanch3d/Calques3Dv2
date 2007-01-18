@@ -288,6 +288,8 @@
 #define ERR_NOPOLYGON                   4037
 #define ERR_POLYGON_NOCONVEX            4038
 #define ERR_AMBIGUITY                   4039
+#define ERR_CIRCLELINE_NOTPLANE         4040
+#define ERR_CIRCLEPLANE_PLANE           4041
 #define IDS_UNDO_NONE                   4100
 #define IDS_UNDO_DELETE                 4101
 #define IDS_UNDO_APPEND                 4102
