@@ -194,6 +194,20 @@ CString CMacro3D::GetObjectName()
     return CCompositeObj3D::GetObjectName();
 }
 
+CString CMacro3D::ExportSymbolic(int nFormat)
+{
+    CString mstr;
+	int nb = m_cSubObjects.GetSize();
+	for (int i=0;i<nb;i++)
+	{
+		CObject3D * pObj = m_cSubObjects.GetAt(i);
+		if (!pObj) continue;
+		mstr += pObj->ExportSymbolic(nFormat);
+		mstr += _T("\n");
+	}
+	return mstr;
+}
+
 void CMacro3D::Draw(CDC* pDC,CVisualParam *vp,BOOL bSM)
 {
     if ((!IsVisible()) || (!bValidate) /*|| (!IsInCalque(vp->nCalqueNum))*/) return;

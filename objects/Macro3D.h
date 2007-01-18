@@ -41,6 +41,7 @@ public:
 	virtual CString GetObjectName();
 
 	virtual void Draw(CDC*,CVisualParam *vp,BOOL bSM=FALSE);
+	virtual CString		ExportSymbolic(int nFormat); 
 
 };
 
