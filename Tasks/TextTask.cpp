@@ -130,7 +130,8 @@ void CLabelTask::CreateObject3D()
     {
         if (m_nTaskID== ID_EXPLORATION_EQUATION)
         {
-            m_cSelObject.Add(pSource);
+			DoLaunchView(ID_VIEW_ANALYTIC);
+           m_cSelObject.Add(pSource);
             pSource->SetSelected(TRUE);
             GetDocument()->UpdateAllViews(m_pParent,WM_UPDATEOBJ_SEL,pSource);
         }
@@ -290,6 +291,7 @@ void CMeasureTask::CreateObject3D()
 
     if (!temp) return;
 
+	DoLaunchView(ID_VIEW_ANALYTIC);
     BOOL bFound = FALSE;
 /*  CxObject3DSet cDependList;
     pSource->GetDependList(&cDependList,FALSE);
