@@ -898,9 +898,11 @@ void CViewHisto::CollapseBranch( HTREEITEM hti )
 
 void CViewHisto::OnHistoryExport() 
 {
-
-
-	static char BASED_CODE szFilter[] = "Symbolic Description (*.txt)|*.txt|DOT Graph Layout (*.dot)|*.dot||";
+	static nDefFormat = 1;
+	static char BASED_CODE szFilter[] = 
+		"Mathematica Symbolic Description (*.txt)|*.txt|"
+		"Maple Symbolic Description (*.txt)|*.txt|"
+		"DOT Graph Layout (*.dot)|*.dot||";
  
 	CFileDialog mdlg(FALSE,"txt","*.txt",
 			OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT,
@@ -909,17 +911,21 @@ void CViewHisto::OnHistoryExport()
 
 	DWORD mFlag = OFN_HIDEREADONLY | OFN_PATHMUSTEXIST;
 	mdlg.m_ofn.Flags |= mFlag;
+	mdlg.m_ofn.nFilterIndex = nDefFormat;
 	int ret = mdlg.DoModal();
 
 	if (ret!=IDOK) return;
 
 	CString m_strPath = mdlg.m_ofn.lpstrFile;
 	int nformat = mdlg.m_ofn.nFilterIndex;
+	nDefFormat = nformat;
 
 	CString strSymb;
-	if (nformat==1)
-		strSymb = OnExportSymbolic();
+	if (nformat==1) 
+		strSymb = OnExportSymbolic(CObject3D::EXPORT_MATHEMATICA);
 	else if (nformat==2)
+		strSymb = OnExportSymbolic(CObject3D::EXPORT_MAPLE);
+	else if (nformat==3)
 		strSymb = OnExportDot();
 	else 
 		return;
@@ -1016,7 +1022,7 @@ CString CViewHisto::OnExportDot()
 	return strSymb;
 }
 
-CString CViewHisto::OnExportSymbolic() 
+CString CViewHisto::OnExportSymbolic(UINT nFormat) 
 {
 	// TODO: Add your command handler code here
 	CString strSymb;
@@ -1040,7 +1046,7 @@ CString CViewHisto::OnExportSymbolic()
 		maxa.y = max(omax.y,maxa.y);
 		maxa.z = max(omax.z,maxa.z);
 
-		CString mstr = pObj->ExportSymbolic(CObject3D::EXPORT_COCOA);
+		CString mstr = pObj->ExportSymbolic(nFormat);
 		//if (!mstr.IsEmpty())
 		{
 			strSymb += mstr + _T("\n");
@@ -1058,148 +1064,18 @@ CString CViewHisto::OnExportSymbolic()
 	mina = mina - delta;
 	maxa = maxa + delta;
 
-/*	mina.x --;
-	mina.y --;
-	mina.z --;
-	maxa.x ++;
-	maxa.y ++;
-	maxa.z ++;
-*/
 	CString strRange;
-	strRange.Format(_T("Range[%.1f,%.1f,%.1f,%.1f,%.1f,%.1f];\n"),
-						mina.x,maxa.x,mina.y,maxa.y,mina.z,maxa.z);
+	if (nFormat==CObject3D::EXPORT_MATHEMATICA)
+		strRange.Format(_T("Range[%.1f,%.1f,%.1f,%.1f,%.1f,%.1f];\n"),
+							mina.x,maxa.x,mina.y,maxa.y,mina.z,maxa.z);
+	else 
+	if (nFormat==CObject3D::EXPORT_MAPLE)
+		strRange.Format(_T("Range(%.1f,%.1f,%.1f,%.1f,%.1f,%.1f);\n"),
+							mina.x,maxa.x,mina.y,maxa.y,mina.z,maxa.z);
 	
 	strSymb = strRange + strSymb;
-/*	if (strSymb.IsEmpty()) return;
-
-	static char BASED_CODE szFilter[] = "Symbolic Description (*.txt)||";
- 
-	CFileDialog mdlg(FALSE,"txt","*.txt",
-			OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT,
-			szFilter,
-			this);
-
-	DWORD mFlag = OFN_HIDEREADONLY | OFN_PATHMUSTEXIST;
-	mdlg.m_ofn.Flags |= mFlag;
-	int ret = mdlg.DoModal();
-
-	if (ret!=IDOK) return;
-
-	CString m_strPath = mdlg.m_ofn.lpstrFile;
-
-
-	FILE *fp = NULL;
-		fp = fopen(m_strPath,"w+");
-	TRY
-	{
-
-		CStdioFile f(fp);
-		f.WriteString(strSymb);
-		f.WriteString(_T("\n"));
-		f.Close();
-	}
-	CATCH( CFileException, e )
-	{
-#ifdef _DEBUG
-		afxDump << "File could not be opened " << e->m_cause << "\n";
-#endif
-	}
-	END_CATCH*/
 
 	return strSymb;
-
-/*	CFileFind mfile;
-	mfile.FindFile(TPref::Verif.strConvert);
-	BOOL bRes = mfile.FindNextFile();
-	CString strff = mfile.GetFilePath();
-
-
-
-	int nErrNo = _access(TPref::Verif.strConvert,00);
-	if (nErrNo!=0)
-	{
-	}
-	nErrNo = _access(TPref::Verif.strRunTime,00);
-	if (nErrNo!=0)
-	{
-	}
-
-	CString lpszCommandLine;
-
-	//lpszCommandLine = _T("command.com /E:2048 /C c:\\progra~1\\cocoa-4.1\\cocoa.bat -q c:\\progra~1\\cocoa-4.1\\test.coc");
-	lpszCommandLine.Format(_T("%s %s %s"),
-		TPref::Verif.strCommand,
-		TPref::Verif.strRunTime,
-		TPref::Verif.strConvert);
-
-	STARTUPINFO siStartInfo;
-	PROCESS_INFORMATION piProcInfo;
-	memset(&siStartInfo, 0, sizeof(siStartInfo));
-	memset(&piProcInfo, 0, sizeof(piProcInfo));
-	siStartInfo.cb = sizeof(STARTUPINFO);
-	siStartInfo.wShowWindow = (WORD)SW_HIDE;
-	siStartInfo.dwFlags = STARTF_USESHOWWINDOW;
-
-
-	// export the selected file into registry using command line
-	if (CreateProcess (NULL, lpszCommandLine.GetBuffer(lpszCommandLine.GetLength()), 
-							NULL, NULL, FALSE, 0, 
-							NULL, NULL, &siStartInfo, &piProcInfo))
-	{
-		DWORD dResult = WaitForSingleObject (piProcInfo.hProcess, 5000);
-		DWORD d1 = WAIT_ABANDONED;
-		DWORD d2 = WAIT_OBJECT_0;
-		DWORD d3 = WAIT_TIMEOUT;
-		DWORD d4 = WAIT_FAILED;
-		if (dResult==d2)
-		{
-			int nErrNo = _access(TPref::Verif.strResult,00);
-			if (nErrNo!=0)
-			{
-			}
-		FILE *fp = NULL;
-			fp = fopen(TPref::Verif.strResult,"r");
-		TRY
-		{
-	
-			CStdioFile f(fp);
-			f.ReadString(strSymb);
-			f.Close();
-		}
-		CATCH( CFileException, e )
-		{
-#ifdef _DEBUG
-			afxDump << "File could not be opened " << e->m_cause << "\n";
-#endif
-		}
-		END_CATCH
-
-		MessageBox(strSymb);
-		}
-		else if (dResult==d3)
-		{
-		}
-		else if (dResult==d4)
-		{
-			LPVOID lpMsgBuf;
-			FormatMessage( 
-				FORMAT_MESSAGE_ALLOCATE_BUFFER | 
-				FORMAT_MESSAGE_FROM_SYSTEM | 
-				FORMAT_MESSAGE_IGNORE_INSERTS,
-				NULL,
-				GetLastError(),
-				MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // Default language
-				(LPTSTR) &lpMsgBuf,
-				0,
-				NULL);
-			// Display the string.
-			::MessageBox( NULL, (LPCTSTR)lpMsgBuf, "Error", MB_OK | MB_ICONINFORMATION );
-			// Free the buffer.
-			LocalFree( lpMsgBuf );
- 		}
-	}*/
-
-
 }
 
 

@@ -971,19 +971,19 @@ CString CPlan3D::ExportSymbolic(int nFormat)
     CString mstr;
     mstr.Empty();
 
-    if (bValidate && P1 && P2 && P3)
+    if (/*bValidate && */P1 && P2 && P3)
     {
-        CString mstr2,strName,strObj1,strObj2,strObj3;
-        mstr2.LoadString(GetNameID());
-        strName.Format("%s%d",mstr2,nObjectId);
-        mstr2.LoadString(P1->GetNameID());
-        strObj1.Format("%s%d",mstr2,P1->nObjectId);
-        mstr2.LoadString(P2->GetNameID());
-        strObj2.Format("%s%d",mstr2,P2->nObjectId);
-        mstr2.LoadString(P3->GetNameID());
-        strObj3.Format("%s%d",mstr2,P3->nObjectId);
+        CString strName,strObj1,strObj2,strObj3;
+		strName = GetObjectNameRedux();
+		strObj1 = P1->GetObjectNameRedux();
+		strObj2 = P2->GetObjectNameRedux();
+		strObj3 = P3->GetObjectNameRedux();
 
-        mstr.Format(_T("PlaneD[%s,%s,%s,%s];"),strName,strObj1,strObj2,strObj3);
+		if (nFormat==EXPORT_MATHEMATICA)
+	        mstr.Format(_T("PlaneD[%s,%s,%s,%s];"),strName,strObj1,strObj2,strObj3);
+		else if (nFormat==EXPORT_MAPLE)
+			mstr.Format(_T("PlaneD(%s,%s,%s,%s);"),strName,strObj1,strObj2,strObj3);
+
     }
     return mstr;
 }
@@ -1267,17 +1267,17 @@ CString CPlanPerp3D::ExportSymbolic(int nFormat)
     CString mstr;
     mstr.Empty();
 
-    if (bValidate && P1 && D)
+    if (/*bValidate && */P1 && D)
     {
-        CString mstr2,strName,strObj1,strObj2;
-        mstr2.LoadString(GetNameID());
-        strName.Format("%s%d",mstr2,nObjectId);
-        mstr2.LoadString(P1->GetNameID());
-        strObj1.Format("%s%d",mstr2,P1->nObjectId);
-        mstr2.LoadString(D->GetNameID());
-        strObj2.Format("%s%d",mstr2,D->nObjectId);
+        CString strName,strObj1,strObj2;
+		strName = GetObjectNameRedux();
+		strObj1 = P1->GetObjectNameRedux();
+		strObj2 = D->GetObjectNameRedux();
 
-        mstr.Format(_T("NormalPlane[%s,%s,%s];"),strName,strObj1,strObj2);
+		if (nFormat==EXPORT_MATHEMATICA)
+	        mstr.Format(_T("NormalPlane[%s,%s,%s];"),strName,strObj1,strObj2);
+		else if (nFormat==EXPORT_MAPLE)
+		    mstr.Format(_T("NormalPlane(%s,%s,%s);"),strName,strObj1,strObj2);
     }
     return mstr;
 }
@@ -1810,6 +1810,12 @@ void CPolygon3D::DrawRetro(CDC* pDC,CVisualParam *mV)
     mrect.InflateRect(2,2);
     pDC->Rectangle(mrect);
 }
+
+CString CPolygon3D::ExportSymbolic(int nFormat)
+{
+	return CObject3D::ExportSymbolic(nFormat);
+}
+
 
 void CPolygon3D::Draw3DRendering()
 {

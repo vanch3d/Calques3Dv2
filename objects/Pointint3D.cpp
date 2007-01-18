@@ -216,28 +216,30 @@ CString CPointInterDD3D::ExportSymbolic(int nFormat)
 	CString mstr;
 	mstr.Empty();
 
-	if (bValidate && D1 && D2)
+	if (/*bValidate && */D1 && D2)
 	{
-		CString mstr2,strName,strObj1,strObj2;
-		mstr2.LoadString(GetNameID());
-		strName.Format("%s%d",mstr2,nObjectId);
-		mstr2.LoadString(D1->GetNameID());
-		strObj1.Format("%s%d",mstr2,D1->nObjectId);
-		mstr2.LoadString(D2->GetNameID());
-		strObj2.Format("%s%d",mstr2,D2->nObjectId);
+        CString strFunc,strName,strObj1,strObj2;
+		strName = GetObjectNameRedux();
+		strObj1 = D1->GetObjectNameRedux();
+		strObj2 = D1->GetObjectNameRedux();
+
 
 		UINT nType1 = D1->isA();
 		UINT nType2 = D2->isA();
 		if (nType1==nType2)
 		{
-			//if (nType1==TDroite3DClass)
 			if (nType1==TSegment3DClass)
-				mstr.Format(_T("IntersectionSegments[%s,%s,%s];"),strName,strObj1,strObj2);
+				strFunc = _T("IntersectionSegments");
 			else 
-				mstr.Format(_T("IntersectionLines[%s,%s,%s];"),strName,strObj1,strObj2);
+				strFunc = _T("IntersectionLines");
 		}
 		else
-			mstr.Format(_T("IntersectionLines[%s,%s,%s];"),strName,strObj1,strObj2);
+			strFunc = _T("IntersectionLines");
+
+		if (nFormat==EXPORT_MATHEMATICA)
+			mstr.Format(_T("%s[%s,%s,%s];"),strFunc,strName,strObj1,strObj2);
+		else if (nFormat==EXPORT_MAPLE)
+			mstr.Format(_T("%s(%s,%s,%s);"),strFunc,strName,strObj1,strObj2);
 	}
 	return mstr;
 }
@@ -496,20 +498,22 @@ CString CPointInterDP3D::ExportSymbolic(int nFormat)
 	CString mstr;
 	mstr.Empty();
 
-	if (bValidate && D1 && P)
+	if (/*bValidate && */D1 && P)
 	{
-		CString mstr2,strName,strObj1,strObj2;
-		mstr2.LoadString(GetNameID());
-		strName.Format("%s%d",mstr2,nObjectId);
-		mstr2.LoadString(D1->GetNameID());
-		strObj1.Format("%s%d",mstr2,D1->nObjectId);
-		mstr2.LoadString(P->GetNameID());
-		strObj2.Format("%s%d",mstr2,P->nObjectId);
+        CString strName,strObj1,strObj2;
+		strName = GetObjectNameRedux();
+		strObj1 = D1->GetObjectNameRedux();
+		strObj2 = P->GetObjectNameRedux();
 
 		UINT nType1 = D1->isA();
 		UINT nType2 = P->isA();
 
-		mstr.Format(_T("IntersectionLinePlane[%s,%s,%s];"),strName,strObj1,strObj2);
+		if (nFormat==EXPORT_MATHEMATICA)
+			mstr.Format(_T("IntersectionLinePlane[%s,%s,%s];"),strName,strObj1,strObj2);
+		else if (nFormat==EXPORT_MAPLE)
+			mstr.Format(_T("IntersectionLinePlane(%s,%s,%s);"),strName,strObj1,strObj2);
+
+
 	}
 	return mstr;
 }

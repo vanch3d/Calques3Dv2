@@ -388,12 +388,12 @@ CString CPoint3D::ExportSymbolic(int nFormat)
     CString mstr;
     mstr.Empty();
 
-    if (bValidate)
+    //if (bValidate)
     {
-        CString mstr2,strName;
-        mstr2.LoadString(GetNameID());
-        strName.Format("%s%d",mstr2,nObjectId);
-
+        CString strName;
+        //mstr2.LoadString(GetNameID());
+        //strName.Format("%s%d",mstr2,nObjectId);
+		strName = GetObjectNameRedux();
         CFraction F1,F2,F3;
 
         __int64 x1,x2,x3;
@@ -429,7 +429,10 @@ CString CPoint3D::ExportSymbolic(int nFormat)
         CString strCoord;
         strCoord.Format(_T("%s,%s,%s"),strX,strY,strZ);
 
-        mstr.Format(_T("FreePointD[%s,%s];"),strName,strCoord);
+		if (nFormat==EXPORT_MATHEMATICA)
+			mstr.Format(_T("FreePointD[%s,%s];"),strName,strCoord);
+		else if (nFormat==EXPORT_MAPLE)
+			mstr.Format(_T("FreePointD(%s,%s);"),strName,strCoord);
     }
     return mstr;
 }
@@ -853,29 +856,30 @@ CString CPointMilieu3D::ExportSymbolic(int nFormat)
     CString mstr;
     mstr.Empty();
 
-    if (bValidate && P1 && P2)
+    if (/*bValidate &&*/ P1 && P2)
     {
-        CString mstr2,strName,strObj1,strObj2;
-        mstr2.LoadString(GetNameID());
-        strName.Format("%s%d",mstr2,nObjectId);
-        mstr2.LoadString(P1->GetNameID());
-        strObj1.Format("%s%d",mstr2,P1->nObjectId);
-        mstr2.LoadString(P2->GetNameID());
-        strObj2.Format("%s%d",mstr2,P2->nObjectId);
+        CString strName,strObj1,strObj2;
+		strName = GetObjectNameRedux();
+		strObj1 = P1->GetObjectNameRedux();
+		strObj2 = P2->GetObjectNameRedux();
 
-        mstr.Format(_T("MidPoint[%s,%s,%s];"),strName,strObj1,strObj2);
+		if (nFormat==EXPORT_MATHEMATICA)
+	        mstr.Format(_T("MidPoint[%s,%s,%s];"),strName,strObj1,strObj2);
+		else if (nFormat==EXPORT_MAPLE)
+		    mstr.Format(_T("MidPoint(%s,%s,%s);"),strName,strObj1,strObj2);
+
     }
-    else if (bValidate && S)
+    else if (/*bValidate && */S)
     {
-        CString mstr2,strName,strObj1,strObj2;
-        mstr2.LoadString(GetNameID());
-        strName.Format("%s%d",mstr2,nObjectId);
-        mstr2.LoadString(S->P1->GetNameID());
-        strObj1.Format("%s%d",mstr2,S->P1->nObjectId);
-        mstr2.LoadString(S->P2->GetNameID());
-        strObj2.Format("%s%d",mstr2,S->P2->nObjectId);
+        CString strName,strObj1,strObj2;
+		strName = GetObjectNameRedux();
+		strObj1 = S->P1->GetObjectNameRedux();
+		strObj2 = S->P2->GetObjectNameRedux();
 
-        mstr.Format(_T("MidPoint[%s,%s,%s];"),strName,strObj1,strObj2);
+		if (nFormat==EXPORT_MATHEMATICA)
+	        mstr.Format(_T("MidPoint[%s,%s,%s];"),strName,strObj1,strObj2);
+		else if (nFormat==EXPORT_MAPLE)
+		    mstr.Format(_T("MidPoint(%s,%s,%s);"),strName,strObj1,strObj2);
     }
     return mstr;
 }
@@ -984,17 +988,16 @@ CString CPointCenter3D::ExportSymbolic(int nFormat)
     CString mstr;
     mstr.Empty();
 
-    CString mstr2,strName,strObj1;
-    mstr2.LoadString(GetNameID());
-    strName.Format("%s%d",mstr2,nObjectId);
-
-    if (bValidate && C)
+    if (/*bValidate && */C)
     {
-        mstr2.LoadString(C->GetNameID());
-        strObj1.Format("%s%d",mstr2,C->nObjectId);
+        CString strName,strObj1;
+		strName = GetObjectNameRedux();
+		strObj1 = C->GetObjectNameRedux();
 
-        mstr.Format(_T("CircleCenter[%s,%s];"),strName,strObj1);
-
+		if (nFormat==EXPORT_MATHEMATICA)
+		    mstr.Format(_T("CircleCenter[%s,%s];"),strName,strObj1);
+		else if (nFormat==EXPORT_MAPLE)
+	        mstr.Format(_T("CircleCenter(%s,%s);"),strName,strObj1);
     }
     return mstr;
 }
@@ -1209,37 +1212,41 @@ CString CPointSymetric3D::ExportSymbolic(int nFormat)
     CString mstr;
     mstr.Empty();
 
-    CString mstr2,strName,strObj1,strObj2;
-    mstr2.LoadString(GetNameID());
-    strName.Format("%s%d",mstr2,nObjectId);
-
-    if (bValidate && Src && Pt)
+    if (/*bValidate && */Src && Pt)
     {
-        mstr2.LoadString(Src->GetNameID());
-        strObj1.Format("%s%d",mstr2,Src->nObjectId);
-        mstr2.LoadString(Pt->GetNameID());
-        strObj2.Format("%s%d",mstr2,Pt->nObjectId);
+        CString strName,strObj1,strObj2;
+		strName = GetObjectNameRedux();
+		strObj1 = Src->GetObjectNameRedux();
+		strObj2 = Pt->GetObjectNameRedux();
 
-        mstr.Format(_T("SymmetricalPoint[%s,%s,%s];"),strName,strObj1,strObj2);
-
+		if (nFormat==EXPORT_MATHEMATICA)
+	        mstr.Format(_T("SymmetricalPoint[%s,%s,%s];"),strName,strObj1,strObj2);
+		else if (nFormat==EXPORT_MAPLE)
+		    mstr.Format(_T("SymmetricalPoint(%s,%s,%s);"),strName,strObj1,strObj2);
     }
-    else if (bValidate && Src && Dr)
+    else if (/*bValidate && */Src && Dr)
     {
-        mstr2.LoadString(Src->GetNameID());
-        strObj1.Format("%s%d",mstr2,Src->nObjectId);
-        mstr2.LoadString(Dr->GetNameID());
-        strObj2.Format("%s%d",mstr2,Dr->nObjectId);
+        CString strName,strObj1,strObj2;
+		strName = GetObjectNameRedux();
+		strObj1 = Src->GetObjectNameRedux();
+		strObj2 = Dr->GetObjectNameRedux();
 
-        mstr.Format(_T("SymmetricalLine[%s,%s,%s];"),strName,strObj1,strObj2);
+		if (nFormat==EXPORT_MATHEMATICA)
+	        mstr.Format(_T("SymmetricalLine[%s,%s,%s];"),strName,strObj1,strObj2);
+		else if (nFormat==EXPORT_MAPLE)
+		    mstr.Format(_T("SymmetricalLine(%s,%s,%s);"),strName,strObj1,strObj2);
     }
-    else if (bValidate && Src && Pl)
+    else if (/*bValidate && */Src && Pl)
     {
-        mstr2.LoadString(Src->GetNameID());
-        strObj1.Format("%s%d",mstr2,Src->nObjectId);
-        mstr2.LoadString(Pl->GetNameID());
-        strObj2.Format("%s%d",mstr2,Pl->nObjectId);
+        CString strName,strObj1,strObj2;
+		strName = GetObjectNameRedux();
+		strObj1 = Src->GetObjectNameRedux();
+		strObj2 = Pl->GetObjectNameRedux();
 
-        mstr.Format(_T("SymmetricalPlane[%s,%s,%s];"),strName,strObj1,strObj2);
+		if (nFormat==EXPORT_MATHEMATICA)
+	        mstr.Format(_T("SymmetricalPlane[%s,%s,%s];"),strName,strObj1,strObj2);
+		else if (nFormat==EXPORT_MAPLE)
+		    mstr.Format(_T("SymmetricalPlane(%s,%s,%s);"),strName,strObj1,strObj2);
     }
     return mstr;
 }
@@ -1387,20 +1394,19 @@ CString CPointTranslat3D::ExportSymbolic(int nFormat)
     CString mstr;
     mstr.Empty();
 
-    CString mstr2,strName,strObj1,strObj2,strObj3;
-    mstr2.LoadString(GetNameID());
-    strName.Format("%s%d",mstr2,nObjectId);
-
-    if (bValidate && Src && Org && Dir)
+    if (/*bValidate && */Src && Org && Dir)
     {
-        mstr2.LoadString(Src->GetNameID());
-        strObj1.Format("%s%d",mstr2,Src->nObjectId);
-        mstr2.LoadString(Org->GetNameID());
-        strObj2.Format("%s%d",mstr2,Org->nObjectId);
-        mstr2.LoadString(Dir->GetNameID());
-        strObj3.Format("%s%d",mstr2,Dir->nObjectId);
+        CString strName,strObj1,strObj2,strObj3;
+		strName = GetObjectNameRedux();
+		strObj1 = Src->GetObjectNameRedux();
+		strObj2 = Org->GetObjectNameRedux();
+		strObj3 = Dir->GetObjectNameRedux();
 
-        mstr.Format(_T("TranslatedPoint[%s,%s,%s,%s];"),strName,strObj1,strObj2,strObj3);
+		if (nFormat==EXPORT_MATHEMATICA)
+			mstr.Format(_T("TranslatedPoint[%s,%s,%s,%s];"),strName,strObj1,strObj2,strObj3);
+		else if (nFormat==EXPORT_MAPLE)
+			mstr.Format(_T("TranslatedPoint(%s,%s,%s,%s);"),strName,strObj1,strObj2,strObj3);
+
 
     }
     return mstr;

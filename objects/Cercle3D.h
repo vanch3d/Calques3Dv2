@@ -129,6 +129,7 @@ public:
 
 	virtual UINT  CalculConceptuel();
 	virtual void		Draw3DRendering();
+	virtual CString ExportSymbolic(int nFormat); 
 };
 
 
@@ -158,8 +159,9 @@ public:
 	virtual BOOL IsEqual(CObject3D &other);
 	virtual UINT  CalculConceptuel();
 
-	virtual CString ExportSymbolic(int nFormat); 
+	//virtual CString ExportSymbolic(int nFormat); 
 	virtual void Serialize( CArchive& ar );
+	virtual CString ExportSymbolic(int nFormat); 
 };
 
 

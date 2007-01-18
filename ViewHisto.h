@@ -69,7 +69,7 @@ protected:
 	virtual void Dump(CDumpContext& dc) const;
 #endif
 
-	CString OnExportSymbolic();
+	CString OnExportSymbolic(UINT nFormat);
 	CString OnExportDot();
 
 	// Generated message map functions

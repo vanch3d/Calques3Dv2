@@ -494,17 +494,17 @@ CString CLocus3D::ExportSymbolic(int nFormat)
     CString mstr;
     mstr.Empty();
 
-    if (bValidate && m_pSource && m_pLocus)
+    if (/*bValidate &&*/ m_pSource && m_pLocus)
     {
-        CString mstr2,strName,strObj1,strObj2;
-        mstr2.LoadString(GetNameID());
-        strName.Format("%s%d",mstr2,nObjectId);
-        mstr2.LoadString(m_pSource->GetNameID());
-        strObj1.Format("%s%d",mstr2,m_pSource->nObjectId);
-        mstr2.LoadString(m_pLocus->GetNameID());
-        strObj2.Format("%s%d",mstr2,m_pLocus->nObjectId);
+        CString strName,strObj1,strObj2;
+		strName = GetObjectNameRedux();
+		strObj1 = m_pSource->GetObjectNameRedux();
+		strObj2 = m_pLocus->GetObjectNameRedux();
 
-        mstr.Format(_T("Locus[%s,%s,%s];"),strName,strObj2,strObj1);
+		if (nFormat==EXPORT_MATHEMATICA)
+	        mstr.Format(_T("Locus[%s,%s,%s];"),strName,strObj2,strObj1);
+		else if (nFormat==EXPORT_MAPLE)
+		    mstr.Format(_T("Locus(%s,%s,%s);"),strName,strObj2,strObj1);
     }
     return mstr;
 }

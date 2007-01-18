@@ -122,21 +122,24 @@ CString CPointSurD3D::ExportSymbolic(int nFormat)
 	CString mstr;
 	mstr.Empty();
 
-	if (bValidate && S)
+	if (/*bValidate && */S)
 	{
-		CString mstr2,strName,strObj1;
-		mstr2.LoadString(GetNameID());
-		strName.Format("%s%d",mstr2,nObjectId);
-		mstr2.LoadString(S->GetNameID());
-		strObj1.Format("%s%d",mstr2,S->nObjectId);
+        CString strFunc,strName,strObj1;
+		strName = GetObjectNameRedux();
+		strObj1 = S->GetObjectNameRedux();
 
 		UINT nType = S->isA();
 		if (nType == TSegment3DClass)
-			mstr.Format(_T("PointOnSegment[%s,%s];"),strName,strObj1);
+			strFunc = _T("PointOnSegment");
 		else if (nType == TDemiDroite3DClass)
-			mstr.Format(_T("PointOnRay[%s,%s];"),strName,strObj1);
+			strFunc = _T("PointOnRay");
 		else //if (nType == TDroite3DClass)
-			mstr.Format(_T("PointOnLine[%s,%s];"),strName,strObj1);
+			strFunc = _T("PointOnLine");
+
+		if (nFormat==EXPORT_MATHEMATICA)
+			mstr.Format(_T("%s[%s,%s];"),strFunc,strName,strObj1);
+		else if (nFormat==EXPORT_MAPLE)
+			mstr.Format(_T("%s(%s,%s);"),strFunc,strName,strObj1);
 	}
 	return mstr;
 }
@@ -674,20 +677,25 @@ CString CPointSurC3D::ExportSymbolic(int nFormat)
 	CString mstr;
 	mstr.Empty();
 
-	if (bValidate && S)
+	if (/*bValidate && */S)
 	{
-		CString mstr2,strName,strObj1;
-		mstr2.LoadString(GetNameID());
-		strName.Format("%s%d",mstr2,nObjectId);
-		mstr2.LoadString(S->GetNameID());
-		strObj1.Format("%s%d",mstr2,S->nObjectId);
+        CString strFunc,strName,strObj1;
+		strName = GetObjectNameRedux();
+		strObj1 = S->GetObjectNameRedux();
 
 		UINT nType = S->isA();
 		if (nType == TCercle3DClass)
-			mstr.Format(_T("PointOnCircle[%s,%s];"),strName,strObj1);
+			strFunc = _T("PointOnCircle");
 		else if (nType == TArcCercle3DClass)
-			mstr.Format(_T("PointOnCircleArc[%s,%s];"),strName,strObj1);
-		else mstr.Empty();
+			strFunc = _T("PointOnCircleArc");
+		else //if (nType == TDroite3DClass)
+			return CObject3D::ExportSymbolic(nFormat);
+
+		if (nFormat==EXPORT_MATHEMATICA)
+			mstr.Format(_T("%s[%s,%s];"),strFunc,strName,strObj1);
+		else if (nFormat==EXPORT_MAPLE)
+			mstr.Format(_T("%s(%s,%s);"),strFunc,strName,strObj1);
+
 	}
 	return mstr;
 }
@@ -1134,16 +1142,18 @@ CString CPointSurP3D::ExportSymbolic(int nFormat)
 	CString mstr;
 	mstr.Empty();
 
-	if (bValidate && P)
+	if (/*bValidate && */P)
 	{
-		CString mstr2,strName,strObj1;
-		mstr2.LoadString(GetNameID());
-		strName.Format("%s%d",mstr2,nObjectId);
-		mstr2.LoadString(P->GetNameID());
-		strObj1.Format("%s%d",mstr2,P->nObjectId);
+        CString strName,strObj1;
+		strName = GetObjectNameRedux();
+		strObj1 = P->GetObjectNameRedux();
 
 		UINT nType = P->isA();
-		mstr.Format(_T("PointOnPlane[%s,%s];"),strName,strObj1);
+		if (nFormat==EXPORT_MATHEMATICA)
+			mstr.Format(_T("PointOnPlane[%s,%s];"),strName,strObj1);
+		else if (nFormat==EXPORT_MAPLE)
+			mstr.Format(_T("PointOnPlane(%s,%s);"),strName,strObj1);
+
 	}
 	return mstr;
 }
@@ -1561,16 +1571,17 @@ CString CPointSurS3D::ExportSymbolic(int nFormat)
 	CString mstr;
 	mstr.Empty();
 
-	if (bValidate && S)
+	if (/*bValidate && */S)
 	{
-		CString mstr2,strName,strObj1;
-		mstr2.LoadString(GetNameID());
-		strName.Format("%s%d",mstr2,nObjectId);
-		mstr2.LoadString(S->GetNameID());
-		strObj1.Format("%s%d",mstr2,S->nObjectId);
+        CString strName,strObj1;
+		strName = GetObjectNameRedux();
+		strObj1 = S->GetObjectNameRedux();
 
 		UINT nType = S->isA();
-		mstr.Format(_T("PointOnSphere[%s,%s];"),strName,strObj1);
+		if (nFormat==EXPORT_MATHEMATICA)
+			mstr.Format(_T("PointOnSphere[%s,%s];"),strName,strObj1);
+		else if (nFormat==EXPORT_MAPLE)
+			mstr.Format(_T("PointOnSphere(%s,%s);"),strName,strObj1);
 	}
 	return mstr;
 }
@@ -1807,14 +1818,16 @@ CString CPointSurCyl3D::ExportSymbolic(int nFormat)
 	CString mstr;
 	mstr.Empty();
 
-	if (bValidate && Cyl)
+	if (/*bValidate && */Cyl)
 	{
-		CString mstr2,strName,strObj1;
-		mstr2.LoadString(GetNameID());
-		strName.Format("%s%d",mstr2,nObjectId);
-		mstr2.LoadString(Cyl->GetNameID());
-		strObj1.Format("%s%d",mstr2,Cyl->nObjectId);
-		mstr.Format(_T("PointOnCylinder[%s,%s];"),strName,strObj1);
+        CString strName,strObj1;
+		strName = GetObjectNameRedux();
+		strObj1 = Cyl->GetObjectNameRedux();
+
+		if (nFormat==EXPORT_MATHEMATICA)
+			mstr.Format(_T("PointOnCylinder[%s,%s];"),strName,strObj1);
+		else if (nFormat==EXPORT_MAPLE)
+			mstr.Format(_T("PointOnCylinder(%s,%s);"),strName,strObj1);
 	}
 	return mstr;
 }

@@ -521,17 +521,17 @@ CString CDroite3D::ExportSymbolic(int nFormat)
     CString mstr;
     mstr.Empty();
 
-    if (bValidate && P1 && P2)
+    if (/*bValidate && */P1 && P2)
     {
-        CString mstr2,strName,strObj1,strObj2;
-        mstr2.LoadString(GetNameID());
-        strName.Format("%s%d",mstr2,nObjectId);
-        mstr2.LoadString(P1->GetNameID());
-        strObj1.Format("%s%d",mstr2,P1->nObjectId);
-        mstr2.LoadString(P2->GetNameID());
-        strObj2.Format("%s%d",mstr2,P2->nObjectId);
+        CString strName,strObj1,strObj2;
+		strName = GetObjectNameRedux();
+		strObj1 = P1->GetObjectNameRedux();
+		strObj2 = P2->GetObjectNameRedux();
 
-        mstr.Format(_T("LineD[%s,%s,%s];"),strName,strObj1,strObj2);
+		if (nFormat==EXPORT_MATHEMATICA)
+	        mstr.Format(_T("LineD[%s,%s,%s];"),strName,strObj1,strObj2);
+		else if (nFormat==EXPORT_MAPLE)
+	        mstr.Format(_T("LineD(%s,%s,%s);"),strName,strObj1,strObj2);
     }
     return mstr;
 }
@@ -1011,17 +1011,17 @@ CString CSegment3D::ExportSymbolic(int nFormat)
     CString mstr;
     mstr.Empty();
 
-    if (bValidate && P1 && P2)
+    if (/*bValidate && */P1 && P2)
     {
-        CString mstr2,strName,strObj1,strObj2;
-        mstr2.LoadString(GetNameID());
-        strName.Format("%s%d",mstr2,nObjectId);
-        mstr2.LoadString(P1->GetNameID());
-        strObj1.Format("%s%d",mstr2,P1->nObjectId);
-        mstr2.LoadString(P2->GetNameID());
-        strObj2.Format("%s%d",mstr2,P2->nObjectId);
+        CString strName,strObj1,strObj2;
+		strName = GetObjectNameRedux();
+		strObj1 = P1->GetObjectNameRedux();
+		strObj2 = P2->GetObjectNameRedux();
 
-        mstr.Format(_T("SegmentD[%s,%s,%s];"),strName,strObj1,strObj2);
+		if (nFormat==EXPORT_MATHEMATICA)
+		    mstr.Format(_T("SegmentD[%s,%s,%s];"),strName,strObj1,strObj2);
+		else if (nFormat==EXPORT_MAPLE)
+	        mstr.Format(_T("SegmentD(%s,%s,%s);"),strName,strObj1,strObj2);
     }
     return mstr;
 }
@@ -1076,17 +1076,18 @@ CString CDemiDroite3D::ExportSymbolic(int nFormat)
     CString mstr;
     mstr.Empty();
 
-    if (bValidate && P1 && P2)
+    if (/*bValidate && */P1 && P2)
     {
-        CString mstr2,strName,strObj1,strObj2;
-        mstr2.LoadString(GetNameID());
-        strName.Format("%s%d",mstr2,nObjectId);
-        mstr2.LoadString(P1->GetNameID());
-        strObj1.Format("%s%d",mstr2,P1->nObjectId);
-        mstr2.LoadString(P2->GetNameID());
-        strObj2.Format("%s%d",mstr2,P2->nObjectId);
+        CString strName,strObj1,strObj2;
+		strName = GetObjectNameRedux();
+		strObj1 = P1->GetObjectNameRedux();
+		strObj2 = P2->GetObjectNameRedux();
 
-        mstr.Format(_T("RayD[%s,%s,%s];"),strName,strObj1,strObj2);
+		if (nFormat==EXPORT_MATHEMATICA)
+		    mstr.Format(_T("RayD[%s,%s,%s];"),strName,strObj1,strObj2);
+		else if (nFormat==EXPORT_MAPLE)
+	        mstr.Format(_T("RayD(%s,%s,%s);"),strName,strObj1,strObj2);
+
     }
     return mstr;
 }
@@ -1118,17 +1119,18 @@ CString CDroitePar3D::ExportSymbolic(int nFormat)
     CString mstr;
     mstr.Empty();
 
-    if (bValidate && P1 && D2)
+    if (/*bValidate && */P1 && D2)
     {
-        CString mstr2,strName,strObj1,strObj2;
-        mstr2.LoadString(GetNameID());
-        strName.Format("%s%d",mstr2,nObjectId);
-        mstr2.LoadString(P1->GetNameID());
-        strObj1.Format("%s%d",mstr2,P1->nObjectId);
-        mstr2.LoadString(D2->GetNameID());
-        strObj2.Format("%s%d",mstr2,D2->nObjectId);
+        CString strName,strObj1,strObj2;
+		strName = GetObjectNameRedux();
+		strObj1 = P1->GetObjectNameRedux();
+		strObj2 = D2->GetObjectNameRedux();
 
-        mstr.Format(_T("ParallelLine[%s,%s,%s];"),strName,strObj1,strObj2);
+		if (nFormat==EXPORT_MATHEMATICA)
+	        mstr.Format(_T("ParallelLine[%s,%s,%s];"),strName,strObj1,strObj2);
+		else if (nFormat==EXPORT_MAPLE)
+		    mstr.Format(_T("ParallelLine(%s,%s,%s);"),strName,strObj1,strObj2);
+
     }
     return mstr;
 }
@@ -1525,20 +1527,21 @@ CString CDroiteInterPP3D::ExportSymbolic(int nFormat)
     CString mstr;
     mstr.Empty();
 
-    if (bValidate && Pl1 && Pl2)
+    if (/*bValidate && */Pl1 && Pl2)
     {
-        CString mstr2,strName,strObj1,strObj2;
-        mstr2.LoadString(GetNameID());
-        strName.Format("%s%d",mstr2,nObjectId);
-        mstr2.LoadString(Pl1->GetNameID());
-        strObj1.Format("%s%d",mstr2,Pl1->nObjectId);
-        mstr2.LoadString(Pl2->GetNameID());
-        strObj2.Format("%s%d",mstr2,Pl2->nObjectId);
+        CString strName,strObj1,strObj2;
+		strName = GetObjectNameRedux();
+		strObj1 = Pl1->GetObjectNameRedux();
+		strObj2 = Pl2->GetObjectNameRedux();
 
-        UINT nType1 = Pl1->isA();
+		UINT nType1 = Pl1->isA();
         UINT nType2 = Pl2->isA();
 
-        mstr.Format(_T("IntersectionPlanes[%s,%s,%s];"),strName,strObj1,strObj2);
+		if (nFormat==EXPORT_MATHEMATICA)
+	        mstr.Format(_T("IntersectionPlanes[%s,%s,%s];"),strName,strObj1,strObj2);
+		else if (nFormat==EXPORT_MAPLE)
+		    mstr.Format(_T("IntersectionPlanes(%s,%s,%s);"),strName,strObj1,strObj2);
+
     }
     return mstr;
 }
@@ -1773,29 +1776,30 @@ CString CDroitePerp3D::ExportSymbolic(int nFormat)
     CString mstr;
     mstr.Empty();
 
-    if (bValidate && P1 && D2)
+    if (/*bValidate && */P1 && D2)
     {
-        CString mstr2,strName,strObj1,strObj2;
-        mstr2.LoadString(GetNameID());
-        strName.Format("%s%d",mstr2,nObjectId);
-        mstr2.LoadString(P1->GetNameID());
-        strObj1.Format("%s%d",mstr2,P1->nObjectId);
-        mstr2.LoadString(D2->GetNameID());
-        strObj2.Format("%s%d",mstr2,D2->nObjectId);
+        CString strName,strObj1,strObj2;
+		strName = GetObjectNameRedux();
+		strObj1 = P1->GetObjectNameRedux();
+		strObj2 = D2->GetObjectNameRedux();
 
-        mstr.Format(_T("PerpendicularLine[%s,%s,%s];"),strName,strObj1,strObj2);
+		if (nFormat==EXPORT_MATHEMATICA)
+	        mstr.Format(_T("PerpendicularLine[%s,%s,%s];"),strName,strObj1,strObj2);
+		else if (nFormat==EXPORT_MAPLE)
+		   mstr.Format(_T("PerpendicularLine(%s,%s,%s);"),strName,strObj1,strObj2);
+
     }
-    else if (bValidate && P1 && Pl1)
+    else if (/*bValidate && */P1 && Pl1)
     {
-        CString mstr2,strName,strObj1,strObj2;
-        mstr2.LoadString(GetNameID());
-        strName.Format("%s%d",mstr2,nObjectId);
-        mstr2.LoadString(P1->GetNameID());
-        strObj1.Format("%s%d",mstr2,P1->nObjectId);
-        mstr2.LoadString(Pl1->GetNameID());
-        strObj2.Format("%s%d",mstr2,Pl1->nObjectId);
+        CString strName,strObj1,strObj2;
+		strName = GetObjectNameRedux();
+		strObj1 = P1->GetObjectNameRedux();
+		strObj2 = Pl1->GetObjectNameRedux();
 
-        mstr.Format(_T("NormalLine[%s,%s,%s];"),strName,strObj1,strObj2);
+		if (nFormat==EXPORT_MATHEMATICA)
+	        mstr.Format(_T("NormalLine[%s,%s,%s];"),strName,strObj1,strObj2);
+		else if (nFormat==EXPORT_MAPLE)
+		   mstr.Format(_T("NormalLine(%s,%s,%s);"),strName,strObj1,strObj2);
     }
     return mstr;
 }
@@ -1985,9 +1989,5 @@ UINT  CDroitePerpDD3D::CalculConceptuel()
 
 CString CDroitePerpDD3D::ExportSymbolic(int nFormat)
 {
-    CString mstr;
-    mstr.Empty();
-
-
-    return mstr;
+	return CObject3D::ExportSymbolic(nFormat);
 }

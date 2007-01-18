@@ -388,19 +388,19 @@ CString CCercle3D::ExportSymbolic(int nFormat)
     CString mstr;
     mstr.Empty();
 
-    if (bValidate && P1 && P2 && P3)
+    if (/*bValidate && */P1 && P2 && P3)
     {
-        CString mstr2,strName,strObj1,strObj2,strObj3;
-        mstr2.LoadString(GetNameID());
-        strName.Format("%s%d",mstr2,nObjectId);
-        mstr2.LoadString(P1->GetNameID());
-        strObj1.Format("%s%d",mstr2,P1->nObjectId);
-        mstr2.LoadString(P2->GetNameID());
-        strObj2.Format("%s%d",mstr2,P2->nObjectId);
-        mstr2.LoadString(P3->GetNameID());
-        strObj3.Format("%s%d",mstr2,P3->nObjectId);
+        CString strName,strObj1,strObj2,strObj3;
+		strName = GetObjectNameRedux();
+		strObj1 = P1->GetObjectNameRedux();
+		strObj2 = P2->GetObjectNameRedux();
+		strObj3 = P3->GetObjectNameRedux();
 
-        mstr.Format(_T("CircleD[%s,%s,%s,%s];"),strName,strObj1,strObj2,strObj3);
+		if (nFormat==EXPORT_MATHEMATICA)
+	        mstr.Format(_T("CircleD[%s,%s,%s,%s];"),strName,strObj1,strObj2,strObj3);
+		else if (nFormat==EXPORT_MAPLE)
+	        mstr.Format(_T("CircleD(%s,%s,%s,%s);"),strName,strObj1,strObj2,strObj3);
+
     }
     return mstr;
 }
@@ -636,19 +636,18 @@ CString CArcCercle3D::ExportSymbolic(int nFormat)
     CString mstr;
     mstr.Empty();
 
-    if (bValidate && P1 && P2 && P3)
+    if (/*bValidate && */P1 && P2 && P3)
     {
-        CString mstr2,strName,strObj1,strObj2,strObj3;
-        mstr2.LoadString(GetNameID());
-        strName.Format("%s%d",mstr2,nObjectId);
-        mstr2.LoadString(P1->GetNameID());
-        strObj1.Format("%s%d",mstr2,P1->nObjectId);
-        mstr2.LoadString(P2->GetNameID());
-        strObj2.Format("%s%d",mstr2,P2->nObjectId);
-        mstr2.LoadString(P3->GetNameID());
-        strObj3.Format("%s%d",mstr2,P3->nObjectId);
-
-        mstr.Format(_T("CircleArcD[%s,%s,%s,%s];"),strName,strObj1,strObj2,strObj3);
+        CString strName,strObj1,strObj2,strObj3;
+		strName = GetObjectNameRedux();
+		strObj1 = P1->GetObjectNameRedux();
+		strObj2 = P2->GetObjectNameRedux();
+		strObj3 = P3->GetObjectNameRedux();
+  
+		if (nFormat==EXPORT_MATHEMATICA)
+	        mstr.Format(_T("CircleArcD[%s,%s,%s,%s];"),strName,strObj1,strObj2,strObj3);
+		else if (nFormat==EXPORT_MAPLE)
+	        mstr.Format(_T("CircleArcD(%s,%s,%s,%s);"),strName,strObj1,strObj2,strObj3);
     }
     return mstr;
 }
@@ -797,6 +796,12 @@ void CEllipse3D::Draw3DRendering()
 {
     if ((!bVisible) || (!bValidate)) return;
 }
+
+CString CEllipse3D::ExportSymbolic(int nFormat)
+{
+	return CObject3D::ExportSymbolic(nFormat);
+}
+
 
 void CEllipse3D::Serialize( CArchive& ar )
 {
@@ -961,6 +966,11 @@ UINT  CCercleInterSS3D::CalculConceptuel()
     return 0;
 }
 
+CString CCercleInterSS3D::ExportSymbolic(int nFormat)
+{
+	return CObject3D::ExportSymbolic(nFormat);
+}
+
 CString CCercleInterSS3D::GetObjectDef()
 {
     CString mstr(_T("???")),sFormat(_T("???")),sName(_T("???"));
@@ -975,24 +985,22 @@ CString CCercleInterSS3D::GetObjectDef()
     return mstr;
 }
 
-CString CCercleInterSS3D::ExportSymbolic(int nFormat)
+/*CString CCercleInterSS3D::ExportSymbolic(int nFormat)
 {
     CString mstr;
     mstr.Empty();
 
     if (bValidate && P1 && P2 && P3)
     {
-        CString mstr2,strName,strObj1,strObj2,strObj3;
-        mstr2.LoadString(GetNameID());
-        strName.Format("%s%d",mstr2,nObjectId);
-        mstr2.LoadString(P1->GetNameID());
-        strObj1.Format("%s%d",mstr2,P1->nObjectId);
-        mstr2.LoadString(P2->GetNameID());
-        strObj2.Format("%s%d",mstr2,P2->nObjectId);
-        mstr2.LoadString(P3->GetNameID());
-        strObj3.Format("%s%d",mstr2,P3->nObjectId);
-
-        mstr.Format(_T("CircleArcD[%s,%s,%s,%s];"),strName,strObj1,strObj2,strObj3);
+        CString strName,strObj1,strObj2,strObj3;
+		strName = GetObjectNameRedux();
+		strObj1 = P1->GetObjectNameRedux();
+		strObj2 = P2->GetObjectNameRedux();
+		strObj3 = P3->GetObjectNameRedux();
+		if (nFormat==EXPORT_MATHEMATICA)
+			mstr.Format(_T("CircleD[%s,%s,%s,%s];"),strName,strObj1,strObj2,strObj3);
+		else if (nFormat==EXPORT_MAPLE)
+			mstr.Format(_T("CircleD(%s,%s,%s,%s);"),strName,strObj1,strObj2,strObj3);
     }
     return mstr;
-}
+}*/
