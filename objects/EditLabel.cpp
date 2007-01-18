@@ -15,13 +15,15 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CEditLabel
 
-CEditLabel::CEditLabel(CWnd* pParent,CObject3D* pObj,CxObject3DSet* pSet)
+CEditLabel::CEditLabel(CWnd* pParent,CPoint topleft,CObject3D* pObj,CxObject3DSet* pSet)
 {
 	CString sInitText(_T(""));
 	CRect rect(0,0,0,0);
 	UINT nID = 15000;
 	m_pObj = pObj;
 	m_pSet = pSet;
+	m_ptAnchor = topleft;
+	pOwn = pParent;
 
 	CText3D *pt = DYNAMIC_DOWNCAST(CText3D,pObj);
     
@@ -34,10 +36,17 @@ CEditLabel::CEditLabel(CWnd* pParent,CObject3D* pObj,CxObject3DSet* pSet)
 	if (pt->IsMultiLine())
 		dwEditStyle |= ES_MULTILINE;
 
-    if (!Create(dwEditStyle, rect, pParent, nID)) return;
+    if (!Create(dwEditStyle, rect, pParent->GetParentFrame(), nID)) return;
 	SetFont(&(pt->mTextFont));
 	SetWindowText(pt->GetText());
 
+// 	m_btnMenu.Create("dffdfd",BS_DEFPUSHBUTTON|WS_CHILD |WS_VISIBLE       ,CRect(0,50,50,50),pParent,150);
+// 	m_menu.LoadMenu (IDR_CONTEXT_MENU);
+// 	m_btnMenu.m_hMenu = m_menu.GetSubMenu (0)->GetSafeHmenu ();
+// 	m_btnMenu.SizeToContent ();
+// 	m_btnMenu.m_bOSMenu = FALSE;
+// 	pParent->SubclassDlgItem(150,this);
+// 	SubclassDlgItem(150,this);
 		//SetFocus();
 	SetSel(0,-1);
     SendMessage(WM_CHAR, VK_LBUTTON);
@@ -53,8 +62,6 @@ BEGIN_MESSAGE_MAP(CEditLabel, CEdit)
 	ON_WM_GETDLGCODE()
 	ON_WM_CHAR()
 	ON_WM_CONTEXTMENU()
-	ON_COMMAND(ID_EDIT_CUT, OnEditCut)
-	ON_UPDATE_COMMAND_UI(ID_EDIT_CUT, OnUpdateEditCut)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -84,6 +91,7 @@ void CEditLabel::EndEdit()
 	if (pt)
 	{
 		pt->SetText(str);
+		pOwn->SendMessage(WM_MATHPAD_ENDEDIT,0);
 		if (pMath)
 			pMath->OnUpdateVariables(m_pSet);
 		if (pOwner)
@@ -101,14 +109,19 @@ void CEditLabel::EndEdit()
 // As soon as this edit loses focus, kill it.
 void CEditLabel::OnKillFocus(CWnd* pNewWnd) 
 {
-	CEdit::OnKillFocus(pNewWnd);
-    EndEdit();	
+// 	CWnd* pParent = GetParent();
+// 	if (pParent && pNewWnd && pNewWnd->GetParent()==pParent)
+// 	{
+		CEdit::OnKillFocus(pNewWnd);
+		EndEdit();	
+// 	}
 }
 
 BOOL CEditLabel::PreTranslateMessage(MSG* pMsg) 
 {
 	// TODO: Add your specialized code here and/or call the base class
-	
+    if (pMsg->message == WM_SYSCHAR)
+        return TRUE;
 	return CEdit::PreTranslateMessage(pMsg);
 }
 
@@ -162,7 +175,9 @@ void CEditLabel::OnChar(UINT nChar, UINT nRepCnt, UINT nFlags)
 		ms.cx = __max(rName.Size().cx,m_InitRect.Size().cx);
 		ms.cy = __max(rName.Size().cy,m_InitRect.Size().cy);
 		m_Rect = CRect(m_Rect.TopLeft(),ms+CSize(size.cy+5,size.cy+5));
-        MoveWindow( &m_Rect );
+		CRect loc = m_Rect;
+		loc.OffsetRect(-m_ptAnchor);
+        MoveWindow( &loc );
     }
 }
 
@@ -202,13 +217,37 @@ void CEditLabel::OnContextMenu(CWnd* pWnd, CPoint point)
     flags = (!len || (LOWORD(sel) == 0 && HIWORD(sel) == len)) ? MF_GRAYED : MF_ENABLED;
 	menu->EnableMenuItem(ID_EDIT_SELECT_ALL,flags);
 
-	menu->EnableMenuItem(nCount-1,MF_GRAYED|MF_BYPOSITION);
+	//menu->EnableMenuItem(nCount-1,MF_GRAYED|MF_BYPOSITION);
 	/*CMenu *pVars = menu->GetSubMenu(nCount-1);
 	if (pVars)
 	{
 		UINT varID = pVars->GetMenuItemID(0);
-		pVars->AppendMenu(MF_STRING,varID,"ddfssdfsfd");
 	}*/
+	CMenu *pVars = menu->GetSubMenu(nCount-1);
+	BOOL isVar = FALSE;
+	if (pVars)
+	{
+		UINT varID = pVars->GetMenuItemID(0);
+		pVars->RemoveMenu(0,MF_BYPOSITION);
+
+		for (int i=0;i<m_pSet->GetSize();i++)
+		{
+			CObject3D*pObj = m_pSet->GetAt(i);
+			if (!pObj) continue;
+
+			if (pObj->strObjectName.IsEmpty()) continue;
+		
+			if (pObj->isA() == TEquation3DClass) continue;
+
+			CString mstr,mstr2;
+			mstr.LoadString(pObj->GetNameID());
+			mstr2.Format("%s%d",mstr,pObj->nObjectId);
+			mstr2 = pObj->GetObjectHelp();
+			pVars->AppendMenu(MF_STRING,varID+i,mstr2);
+			isVar = TRUE;
+		}
+	}
+	if (!isVar) menu->EnableMenuItem(nCount-1,MF_GRAYED|MF_BYPOSITION);
 
 	if (point.x == -1 || point.y == -1)
 	{
@@ -228,24 +267,24 @@ void CEditLabel::OnContextMenu(CWnd* pWnd, CPoint point)
 //		SendMessage(WM_COMMAND,msg);
 }
 
-void CEditLabel::OnEditCut() 
-{
-	// TODO: Add your command handler code here
-	
-}
 
-void CEditLabel::OnUpdateEditCut(CCmdUI* pCmdUI) 
-{
-	// TODO: Add your command update UI handler code here
-	pCmdUI->Enable(FALSE);
-	
-}
 
 BOOL CEditLabel::OnCommand(WPARAM wParam, LPARAM lParam) 
 {
 	BOOL bRet = FALSE;
 	// TODO: Add your specialized code here and/or call the base class
-	switch (LOWORD(wParam))
+	if (LOWORD(wParam)>=ID_MATHPAD_LISTVARS && LOWORD(wParam)<ID_EDIT_CLEAR)
+	{
+		CObject3D*pObj = m_pSet->GetAt(LOWORD(wParam)-ID_MATHPAD_LISTVARS);
+		if (pObj)
+		{
+			CString mstr2;
+			mstr2.Format("%s",pObj->strObjectName);
+			ReplaceSel(mstr2, TRUE);
+		}
+
+	}
+	else switch (LOWORD(wParam))
     {
 		case ID_EDIT_UNDO:
 			bRet = SendMessage(WM_UNDO);
@@ -268,6 +307,7 @@ BOOL CEditLabel::OnCommand(WPARAM wParam, LPARAM lParam)
 		default:
 			return CEdit::OnCommand(wParam, lParam);
     }
-    SendMessage(WM_CHAR, VK_LBUTTON);
+    //SendMessage(WM_CHAR, VK_LBUTTON);
 	return bRet;
 }
+
