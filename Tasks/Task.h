@@ -71,6 +71,7 @@ public:
     virtual BOOL OnUpdateTasksOption(CCmdUI* pCmdUI);
     virtual BOOL OnDoTasksOption(UINT nID);
     virtual void DoContextMenu(UINT, CPoint&);
+	virtual void DoLaunchView(UINT nID);
 
     virtual void OnMouseL(UINT, CPoint);
     virtual void OnMouseR(UINT, CPoint);
@@ -295,6 +296,7 @@ public :
     CSphere3D   *sp;
     CSphere3D   *sp2;
     CCylinder3D *cyl;
+	CCercle3D	*circle;
 
     CInter3DTask(CView *AParent,UINT taskID);
     ~CInter3DTask();
