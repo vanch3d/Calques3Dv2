@@ -84,6 +84,7 @@ IDB_LIST_DELITEM        BITMAP     DISCARDABLE        "res\\list_delete.bmp"
 IDB_PROJECTION          BITMAP     DISCARDABLE        "res\\project.bmp"
 IDR_FORMAT_TB           BITMAP     DISCARDABLE        "res\\text_tb.bmp"
 IDR_FORMAT_TB24         BITMAP     DISCARDABLE        "res\\text_tb24.bmp"
+IDB_MATHPAD             BITMAP     DISCARDABLE        "res\\notebook.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -437,20 +438,20 @@ BEGIN
     CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME,7,44,200,95
     LTEXT           "Copyright",IDC_COPYRIGHT,12,50,190,12,SS_CENTERIMAGE
     LTEXT           "",IDC_INFO,12,68,190,67
-    CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME,7,141,200,42
-    LTEXT           "Author : ",IDC_STATIC,12,146,38,12,SS_CENTERIMAGE
+    CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME,7,141,200,43
+    LTEXT           "Contact the author : ",IDC_STATIC,12,146,64,12,
+                    SS_CENTERIMAGE
     CONTROL         "Nicolas VAN LABEKE",IDC_MAIL,"Button",BS_OWNERDRAW | 
-                    BS_LEFT | WS_TABSTOP,50,146,152,12
-    LTEXT           "URL : ",IDC_STATIC,12,166,38,12,SS_CENTERIMAGE
-    CONTROL         "http://www.psyc.nott.ac.uk/staff/nvl/",IDC_URL,"Button",
-                    BS_OWNERDRAW | WS_TABSTOP,50,166,152,12
+                    BS_LEFT | BS_FLAT,76,144,128,16
+    CONTROL         "Visit Calques 3D online",IDC_URL,"Button",BS_OWNERDRAW | 
+                    BS_FLAT,12,164,192,18
 END
 
 IDD_MACROINFO_DLG DIALOGEX 0, 0, 212, 153
 STYLE DS_MODALFRAME | DS_CONTEXTHELP | WS_POPUP | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_CONTEXTHELP
 CAPTION "Construção de macros"
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     LTEXT           "Introduz a informação que se segue para a macro atual",
                     IDC_STATIC,4,4,200,12,SS_CENTERIMAGE
@@ -477,7 +478,7 @@ END
 IDD_PREF_MACROS_PAGE DIALOGEX 0, 0, 212, 196
 STYLE WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Macros"
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     GROUPBOX        "User-Defined Macros",IDC_STATIC,4,4,204,148,BS_FLAT
     LTEXT           "&Conteúdo do menu:",IDC_PMAC_LIST,8,16,196,72,WS_TABSTOP,0,
@@ -501,7 +502,7 @@ END
 IDD_PREF_SESSION_PAGE DIALOGEX 0, 0, 212, 196
 STYLE DS_CONTEXTHELP | WS_CHILD | WS_CAPTION
 CAPTION "Sessão"
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     PUSHBUTTON      "&Gravar a configuração atual como um novo perfil ...",
                     IDC_PSESS_SAVEAS,79,124,189,16,0,0,HIDC_PSESS_SAVEAS
@@ -547,7 +548,7 @@ FONT 8, "MS Sans Serif"
 BEGIN
     CONTROL         "",IDC_BIGICON,"Button",BS_OWNERDRAW | WS_DISABLED,4,4,
                     34,30
-    LTEXT           "Calques 3D version 2.3.2",IDC_STATIC,52,4,140,8,NOT 
+    LTEXT           "Calques 3D version 2.3.3",IDC_STATIC,52,4,140,8,NOT 
                     WS_GROUP
     LTEXT           "Microsoft Foundation Classes version 4.2",IDC_STATIC,52,
                     13,140,8,NOT WS_GROUP
@@ -667,7 +668,7 @@ IDD_OBJECTTEXT_PAGE DIALOGEX 0, 0, 212, 73
 STYLE DS_MODALFRAME | DS_CONTEXTHELP | WS_POPUP | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_CONTEXTHELP
 CAPTION "Text"
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     LTEXT           "&Definition:",IDC_STATIC,4,24,52,8
     EDITTEXT        IDC_TXT_EQUATION,4,36,140,12,ES_AUTOHSCROLL,0,
@@ -779,6 +780,67 @@ CAPTION "Font"
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     CONTROL         "",IDC_TXT_PALETTE,"Static",SS_BLACKFRAME,4,4,110,66
+END
+
+IDD_RENDERER_PROP DIALOGEX 0, 0, 188, 204
+STYLE WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "View Properties"
+FONT 8, "MS Sans Serif"
+BEGIN
+    GROUPBOX        "Lighting",IDC_STATIC,8,4,84,74
+    CONTROL         "Slider1",IDC_RENDERER_AMBIENT,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,12,24,56,12,
+                    WS_EX_TRANSPARENT
+    CONTROL         "Slider1",IDC_RENDERER_DIFFUSE,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,12,44,56,12
+    CONTROL         "Slider1",IDC_RENDERER_SPECULAR,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,12,64,56,12
+    CONTROL         "Slider1",IDC_RENDERER_LGTX,"msctls_trackbar32",TBS_BOTH | 
+                    TBS_NOTICKS | WS_TABSTOP,100,24,56,12
+    CONTROL         "Slider1",IDC_RENDERER_LGTY,"msctls_trackbar32",TBS_BOTH | 
+                    TBS_NOTICKS | WS_TABSTOP,100,44,56,11
+    CONTROL         "Slider1",IDC_RENDERER_LGTZ,"msctls_trackbar32",TBS_BOTH | 
+                    TBS_NOTICKS | WS_TABSTOP,100,64,56,12
+    CONTROL         "Slider1",IDC_RENDERER_AMBMAT,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,12,100,56,12
+    CONTROL         "Slider1",IDC_RENDERER_DIFFMAT,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,12,121,56,12
+    CONTROL         "Slider1",IDC_RENDERER_SPECMAT,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,12,140,56,12
+    CONTROL         "Slider1",IDC_RENDERER_SHINE,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,100,100,56,12
+    CONTROL         "Slider1",IDC_RENDERER_EMISSION,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,100,121,56,12
+    CTEXT           "Ambient",IDC_STATIC,12,16,56,8
+    CTEXT           "0",IDC_RENDERER_AMBTXT,68,24,20,8,SS_CENTERIMAGE
+    CTEXT           "Diffuse",IDC_STATIC,12,36,56,8
+    CTEXT           "0",IDC_RENDERER_DIFFUSETXT,68,44,20,8,SS_CENTERIMAGE
+    CTEXT           "0",IDC_RENDERER_SPECULARTXT,68,64,20,8,SS_CENTERIMAGE
+    GROUPBOX        "Light Coordinates",IDC_STATIC,96,4,84,74
+    CTEXT           "X",IDC_STATIC,100,16,56,8
+    CTEXT           "0",IDC_RENDERER_LGTXTXT,156,24,20,8,SS_CENTERIMAGE
+    CTEXT           "Y",IDC_STATIC,100,36,56,8
+    CTEXT           "0",IDC_RENDERER_LGTYTXT,156,44,20,8,SS_CENTERIMAGE
+    CTEXT           "Z",IDC_STATIC,100,56,56,8
+    CTEXT           "0",IDC_RENDERER_LGTZTXT,156,64,20,8,SS_CENTERIMAGE
+    GROUPBOX        "Material",IDC_STATIC,8,80,172,76
+    CTEXT           "Ambient",IDC_STATIC,12,92,56,8
+    CTEXT           "0",IDC_RENDERER_AMBMATTXT,68,100,20,8,SS_CENTERIMAGE
+    CTEXT           "Diffuse",IDC_STATIC,12,113,56,8
+    CTEXT           "0",IDC_RENDERER_DIFFMATTXT,68,121,20,8,SS_CENTERIMAGE
+    CTEXT           "0",IDC_RENDERER_SPECMATTXT,68,140,20,8,SS_CENTERIMAGE
+    CTEXT           "Shininess",IDC_STATIC,100,92,56,8
+    CTEXT           "0",IDC_RENDERER_SHINETXT,156,100,20,8,SS_CENTERIMAGE
+    CTEXT           "Emission",IDC_STATIC,100,113,56,8
+    CTEXT           "Specular",IDC_STATIC,12,56,56,8
+    CTEXT           "Specular",IDC_STATIC,12,132,56,8
+    CTEXT           "0",IDC_RENDERER_EMISSIONTXT,156,121,20,8,SS_CENTERIMAGE
+    GROUPBOX        "Perspective",IDC_STATIC,8,160,172,36
+    CONTROL         "Slider1",IDC_RENDERER_FIELDVIEW,"msctls_trackbar32",
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,12,180,144,12
+    CTEXT           "Field of View",IDC_STATIC,12,172,144,8
+    CTEXT           "0",IDC_RENDERER_FIELDVIEWTXT,156,180,20,8,
+                    SS_CENTERIMAGE
 END
 
 
@@ -995,6 +1057,14 @@ BEGIN
         TOPMARGIN, 7
         BOTTOMMARGIN, 66
     END
+
+    IDD_RENDERER_PROP, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 181
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 197
+    END
 END
 #endif    // APSTUDIO_INVOKED
 
@@ -1192,6 +1262,8 @@ BEGIN
         END
         POPUP "&Zoom"
         BEGIN
+            MENUITEM "15&0%",                       ID_VISUALISATION_ZOOM_150
+
             MENUITEM "&100%",                       ID_VISUALISATION_ZOOM_100
 
             MENUITEM "&75%",                        ID_VISUALISATION_ZOOM_75
@@ -1270,10 +1342,14 @@ BEGIN
 
             MENUITEM "Ret&a-plano",                 ID_CONSTRUCTION_INTERSECTION_LINEPLANE
 
+            MENUITEM "Li&ne-circle",                ID_CONSTRUCTION_INTERSECTION_LINECIRCLE
+
             MENUITEM "Reta-&Esfera",                ID_CONSTRUCTION_INTERSECTION_LINESPHERE
 
             MENUITEM SEPARATOR
             MENUITEM "&Plano-plano",                ID_CONSTRUCTION_INTERSECTION_PLANEPLANE
+
+            MENUITEM "&Plane-circle",               ID_CONSTRUCTION_INTERSECTION_PLANECIRCLE
 
             MENUITEM SEPARATOR
             MENUITEM "Es&fera-Esfera",               ID_CONSTRUCTION_INTERSECTION_SPHERESPHERE
@@ -1437,6 +1513,8 @@ BEGIN
         END
         POPUP "&Zoom"
         BEGIN
+            MENUITEM "15&0%",                       ID_VISUALISATION_ZOOM_150
+
             MENUITEM "&100%",                       ID_VISUALISATION_ZOOM_100
 
             MENUITEM "&75%",                        ID_VISUALISATION_ZOOM_75
@@ -1864,6 +1942,8 @@ BEGIN
         END
         POPUP "&Zoom"
         BEGIN
+            MENUITEM "15&0%",                       ID_VISUALISATION_ZOOM_150
+
             MENUITEM "&100%",                       ID_VISUALISATION_ZOOM_100
 
             MENUITEM "&75%",                        ID_VISUALISATION_ZOOM_75
@@ -1968,6 +2048,8 @@ BEGIN
         MENUITEM "Cort&ar\tCtrl+X",                ID_EDIT_CUT
         MENUITEM "&Copiar\tCtrl+C",               ID_EDIT_COPY
         MENUITEM "C&olar\tCtrl+V",              ID_EDIT_PASTE
+        MENUITEM SEPARATOR
+        MENUITEM "Select &All\tCtrl+A",         ID_EDIT_SELECT_ALL
     END
     POPUP "Ve&r"
     BEGIN
@@ -2271,6 +2353,7 @@ IDR_ZOOM MENU DISCARDABLE
 BEGIN
     POPUP "< ZOOM >"
     BEGIN
+        MENUITEM "15&0%",                       ID_VISUALISATION_ZOOM_150
         MENUITEM "&100%",                       ID_VISUALISATION_ZOOM_100
         MENUITEM "&75%",                        ID_VISUALISATION_ZOOM_75
         MENUITEM "&50%",                        ID_VISUALISATION_ZOOM_50
@@ -2431,8 +2514,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,3,2,0
- PRODUCTVERSION 2,3,2,0
+ FILEVERSION 2,3,3,0
+ PRODUCTVERSION 2,3,3,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x29L
@@ -2450,14 +2533,14 @@ BEGIN
             VALUE "Comments", "Micromundo da Geometria Dinâmica no Espaço\0"
             VALUE "CompanyName", "SCRE - University of Glasgow\0"
             VALUE "FileDescription", "Calques 3D\0"
-            VALUE "FileVersion", "2.3.2\0"
+            VALUE "FileVersion", "2.3.3\0"
             VALUE "InternalName", "Calques3D\0"
             VALUE "LegalCopyright", "Copyright © 2001-2006\0"
             VALUE "LegalTrademarks", "N. Van Labeke / P. Bernat / J. Morinet-Lambert\0"
             VALUE "OriginalFilename", "Calques3D.exe\0"
             VALUE "PrivateBuild", "Beta Version\0"
             VALUE "ProductName", "Calques 3D\0"
-            VALUE "ProductVersion", "2.3.2\0"
+            VALUE "ProductVersion", "2.3.3\0"
             VALUE "SpecialBuild", "Build with BCGControlBar Library version 7.31\0"
         END
     END
@@ -3303,6 +3386,8 @@ BEGIN
     ERR_NOPOLYGON           "Algumas propriedades resultam em especificações erradas de um dos objetos.\nPor isto, o polígono não pode ser definido."
     ERR_POLYGON_NOCONVEX    "Este polígono não é convexo.\nPor isto, ele não pode ser definido."
     ERR_AMBIGUITY           "More than one object are detected. Clear the ambiguity by using the contextual menu."
+    ERR_CIRCLELINE_NOTPLANE "The circle and the line are not in the same plane.\nTheir intersection cannot be defined."
+    ERR_CIRCLEPLANE_PLANE   "The circle is in the plane.\nTheir intersection cannot be defined."
 END
 
 STRINGTABLE DISCARDABLE 
@@ -3315,6 +3400,7 @@ BEGIN
     IDS_DEF_CROSSPRODUCT    "%s é o produto vetorial de %s e %s"
     IDS_DEF_CIRCLEISS       "%s is the circle at the intersection of %s and %s"
     IDS_DEF_SECTIONSEG      "%s is the trisection of %s"
+    IDS_DEF_INTCIRCDR       "%s is the intersection of %s and %s"
 END
 
 STRINGTABLE DISCARDABLE 
@@ -3364,11 +3450,11 @@ BEGIN
     PREF_DEF_PT             "Set the properties for the points"
     PREF_DEF_SPH            "Set the properties for the spheres"
     PREF_DEF_COLOR          "Set the default colour"
-    PREF_DEF_CLROTHER       "Set the properties for the spheres"
-    PREF_DEF_CLRAUTO        "Set the properties for the spheres"
+    PREF_DEF_CLROTHER       "Other..."
+    PREF_DEF_CLRAUTO        "Automatic"
     PREF_DEF_SPHEQ          "Display the equator of the spheres"
     PREF_DEF_SPHGCR         "Display the two great circles of the spheres"
-    PREF_DEF_LOCUS          "Display the two great circles of the spheres"
+    PREF_DEF_LOCUS          "Set the default shape for the loci"
     PREF_DEF_LOCSIZE        "Set the size of the loci's mesh"
 END
 
@@ -3395,6 +3481,9 @@ BEGIN
     CTX_MACRO_UNLOAD        "click anywhere to load the macro-construction."
     CTX_MACRO_POINT         "select a point to graft this base-point on or double-click to end up the graft."
     CTX_MOVE_TRACE          "select a point to trace"
+    CTX_SELECT_CLOSE_POLYGON 
+                            "select a point (or select the first point to close and construct the polygon)"
+    CTX_SELECT_TASKOPTION   "Choose an option with the contextual menu."
 END
 
 STRINGTABLE DISCARDABLE 
