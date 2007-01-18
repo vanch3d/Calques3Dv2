@@ -36,6 +36,8 @@ public:
 	BOOL			m_bSelection;
 	CRect			m_rSelect;
 	CRect			m_rViewSize;
+	CRect			m_rMargin;
+		
 	CToolTipCtrl	myToolTip;
 
 	CEdit *			m_pEdit;
