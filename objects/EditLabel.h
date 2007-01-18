@@ -9,21 +9,26 @@
 
 class CObject3D;
 class CxObject3DSet;
-/////////////////////////////////////////////////////////////////////////////
-// CEditLabel window
 
+/////////////////////////////////////////////////////////////////////////////
+/// In-place editor for the labels and text objects.
+///
+/////////////////////////////////////////////////////////////////////////////
 class CEditLabel : public CEdit
 {
 // Construction
 public:
-	CEditLabel(CWnd* pParent,CObject3D* pObj,CxObject3DSet* pSet);
+	CEditLabel(CWnd* pParent,CPoint topleft,CObject3D* pObj,CxObject3DSet* pSet);
 
 // Attributes
 public:
+	CPoint	m_ptAnchor;
     CRect   m_Rect;
     CRect   m_InitRect;
 	CObject3D*		m_pObj;
 	CxObject3DSet*	m_pSet;
+	CWnd*	pOwn;
+
 // Operations
 public:
      void EndEdit();
@@ -50,8 +55,6 @@ protected:
 	afx_msg UINT OnGetDlgCode();
 	afx_msg void OnChar(UINT nChar, UINT nRepCnt, UINT nFlags);
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
-	afx_msg void OnEditCut();
-	afx_msg void OnUpdateEditCut(CCmdUI* pCmdUI);
 	//}}AFX_MSG
 
 	DECLARE_MESSAGE_MAP()
