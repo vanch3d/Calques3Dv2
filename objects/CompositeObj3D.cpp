@@ -1322,7 +1322,7 @@ CString CInterSphDr3D::ExportSymbolic(int nFormat)
 
     if (nb !=2) return mstr;
 
-    if (bValidate && Dr && Sph)
+    if (/*bValidate && */Dr && Sph)
     {
         int nObj1=-1,nObj2=-1;
 
@@ -1332,21 +1332,19 @@ CString CInterSphDr3D::ExportSymbolic(int nFormat)
         if (!p1 || !p2) return mstr;
 
 
-        CString mstr2,strName,strObj1,strObj2,strObj3,strObj4;
-        mstr2.LoadString(GetNameID());
-        strName.Format("%s%d",mstr2,nObjectId);
-        mstr2.LoadString(p1->GetNameID());
-        strObj1.Format("%s%d",mstr2,p1->nObjectId);
-        mstr2.LoadString(p2->GetNameID());
-        strObj2.Format("%s%d",mstr2,p2->nObjectId);
+        CString strName,strObj1,strObj2,strObj3,strObj4;
+ 		strName = GetObjectNameRedux();
+		strObj1 = p1->GetObjectNameRedux();
+		strObj2 = p2->GetObjectNameRedux();
+		strObj3 = Dr->GetObjectNameRedux();
+		strObj4 = Sph->GetObjectNameRedux();
 
-        mstr2.LoadString(Dr->GetNameID());
-        strObj3.Format("%s%d",mstr2,Dr->nObjectId);
-        mstr2.LoadString(Sph->GetNameID());
-        strObj4.Format("%s%d",mstr2,Sph->nObjectId);
-
-        mstr.Format(_T("Intersection1LineSphere[%s,%s,%s];\nIntersection2LineSphere[%s,%s,%s];"),
-            strObj1,strObj4,strObj3,strObj2,strObj4,strObj3);
+		if (nFormat==EXPORT_MATHEMATICA)
+	        mstr.Format(_T("Intersection1LineSphere[%s,%s,%s];\nIntersection2LineSphere[%s,%s,%s];"),
+		        strObj1,strObj4,strObj3,strObj2,strObj4,strObj3);
+		else if (nFormat==EXPORT_MAPLE)
+	        mstr.Format(_T("Intersection1LineSphere(%s,%s,%s);\nIntersection2LineSphere(%s,%s,%s);"),
+		        strObj1,strObj4,strObj3,strObj2,strObj4,strObj3);
     }
     return mstr;
 }
@@ -1529,17 +1527,18 @@ void CDivSegment3D::GetRange(CVector4 &min,CVector4 &max)
 
 CString CDivSegment3D::ExportSymbolic(int nFormat)
 {
-    CString mstr;
-    mstr.Empty();
-
-    int nb = m_cSubObjects.GetSize();
-
-    if (nb !=2) return mstr;
-
-    if (bValidate && Seg)
-    {
-    }
-    return mstr;
+	return CObject3D::ExportSymbolic(nFormat);
+//     CString mstr;
+//     mstr.Empty();
+// 
+//     int nb = m_cSubObjects.GetSize();
+// 
+//     if (nb !=2) return mstr;
+// 
+//     if (bValidate && Seg)
+//     {
+//     }
+//     return mstr;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -1747,17 +1746,165 @@ UINT  CInterCircDr3D::CalculConceptuel()
 		return res;
 	}
 	else
-	{
-		CVector4 dis = inter.Concept_pt - Circ->Center;
-		FCoord dist = dis.Norme();
-		FCoord dcirc = Circ->Radius;
-		if (dcirc<=dist)
-		{
-			return ValideCompositeObject(ERR_NOINTER);
-		}
-		ptA->Concept_pt = inter.Concept_pt;
-		ptA->bValidate = TRUE;
-		ptB->bValidate = FALSE;
-	}
-	return 0;
+		return ValideCompositeObject(ERR_CIRCLELINE_NOTPLANE);
+// 	{
+// 		CVector4 dis = inter.Concept_pt - Circ->Center;
+// 		FCoord dist = dis.Norme();
+// 		FCoord dcirc = Circ->Radius;
+// 		if (dcirc<=dist)
+// 		{
+// 			return ValideCompositeObject(ERR_DRPLANPAR);
+// 		}
+// 		ptA->Concept_pt = inter.Concept_pt;
+// 		ptA->bValidate = TRUE;
+// 		ptB->bValidate = FALSE;
+// 	}
+}
+
+
+//////////////////////////////////////////////////////////////////////
+// Construction/Destruction
+//////////////////////////////////////////////////////////////////////
+IMPLEMENT_SERIAL(CInterCircPlane3D, CCompositeObj3D, VERSIONABLE_SCHEMA | 1)
+
+CInterCircPlane3D::CInterCircPlane3D() : CCompositeObj3D()
+{
+    Circ = NULL;
+    Pl = NULL;
+    ptA = ptB = NULL;
+}
+
+CInterCircPlane3D::CInterCircPlane3D(CCercle3D* sp1,CPlan3D* dr2) :
+    CCompositeObj3D()
+{
+    Circ = sp1;
+    Pl = dr2;
+    ptA = ptB = NULL;
+    ptA = new CPointCalc3D(this);
+    ptB = new CPointCalc3D(this);
+
+    SetDepth();//nDepth = max(Sph->nDepth,Dr->nDepth)+1;
+    //ptA->nDepth = nDepth+1;
+    //ptB->nDepth = nDepth+1;
+    ptA->SetInGraph();
+    ptB->SetInGraph();
+
+    m_cSubObjects.Add(ptA);
+    m_cSubObjects.Add(ptB);
+    InitIntersection();
+}
+
+CInterCircPlane3D::CInterCircPlane3D(const CObject3D & obj) :
+    CCompositeObj3D(obj)
+{
+    Circ = ((CInterCircPlane3D &)obj).Circ;
+    Pl = ((CInterCircPlane3D &)obj).Pl;
+    ptA = ptB = NULL;
+    ptA = new CPointCalc3D(this);
+    ptB = new CPointCalc3D(this);
+    SetDepth();
+    ptA->SetInGraph();
+    ptB->SetInGraph();
+
+    m_cSubObjects.Add(ptA);
+    m_cSubObjects.Add(ptB);
+    InitIntersection();
+}
+int CInterCircPlane3D::SetDepth()
+{
+    if (Pl && Circ)
+    {
+        nDepth = max(Pl->nDepth,Circ->nDepth)+1;
+        if (ptA) ptA->nDepth = nDepth+1;
+        if (ptB) ptB->nDepth = nDepth+1;
+    }
+    return nDepth;
+}
+
+CObject3D* CInterCircPlane3D::CopyObject()
+{
+    CObject3D *temp = new CInterCircPlane3D((CObject3D&)*this);
+    return temp;
+}
+
+CxObject3DSet* CInterCircPlane3D::GetParents()
+{
+    CxObject3DSet* list = new CxObject3DSet();
+    list->Add(Pl);
+    list->Add(Circ);
+    return list;
+}
+
+void CInterCircPlane3D::Serialize( CArchive& ar )
+{
+    CCompositeObj3D::Serialize(ar);
+
+    if (ar.IsStoring())
+    {
+        ar << ((Circ) ? Circ->nObjectId : -1);
+        ar << ((Pl) ? Pl->nObjectId : -1);
+    }
+    else
+    {
+        Circ = (CCercle3D*)SerializeObj(ar);
+        Pl = (CPlan3D*)SerializeObj(ar);
+        int nb = m_cSubObjects.GetSize();
+        for (int i=0;i<nb;i++)
+        {
+            CObject3D* ppp = m_cSubObjects.GetAt(i);
+            if (i==0)
+                ptA = (CPoint3D*)ppp;
+            else if (i==1)
+                ptB = (CPoint3D*)ppp;
+            if (ptA) ptA->SetInGraph();
+            if (ptB) ptB->SetInGraph();
+        }
+        InitIntersection();
+    }
+}
+
+CString CInterCircPlane3D::GetObjectDef()
+{
+    CString mstr(_T("???")),sFormat(_T("???")),sName(_T("???"));
+    sName = GetObjectName();
+    sFormat.LoadString(GetDefID());
+
+    CString sn1(_T("???")),sn2(_T("???"));
+    if (Pl) sn1 = Pl->GetObjectHelp();
+    if (Circ) sn2 = Circ->GetObjectHelp();
+    mstr.Format(sFormat,sName,sn1,sn2);
+    return mstr;
+}
+
+UINT  CInterCircPlane3D::CalculConceptuel()
+{
+    bValidate = ((Circ->bValidate) && (Pl->bValidate));
+    if (!bValidate)
+        return ValideCompositeObject(ERR_NOINTER);
+
+	CPoint3D ptcenter(Circ->Center);
+	ptcenter.CalculConceptuel();
+	CPlan3D plcirc(&ptcenter,Circ->VecNorm);
+	plcirc.CalculConceptuel();
+
+	CDroiteInterPP3D dr1(Pl,&plcirc);
+	UINT res = dr1.CalculConceptuel();
+	if (res!=0)
+        return ValideCompositeObject(ERR_CIRCLEPLANE_PLANE);
+	
+	CInterCircDr3D inter(Circ,&dr1);
+	res = inter.CalculConceptuel();
+
+	ValideCompositeObject(res);
+	ptA->bValidate = inter.ptA->bValidate;
+	ptB->bValidate = inter.ptB->bValidate;
+	ptA->Concept_pt = inter.ptA->Concept_pt;
+	ptB->Concept_pt = inter.ptB->Concept_pt;
+	bValidate=(res==0);
+	return res;
+}
+
+void CInterCircPlane3D::InitIntersection()
+{
+    nStartShow = 0;
 }
