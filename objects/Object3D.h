@@ -75,6 +75,8 @@ const DWORD TCube3DClass			=	MAKELONG(64,4);		///< Cube defined by 3 points
 const DWORD TInterSphDr3DClass		=	MAKELONG(64,8);		///< Bi-point defined by intersection of a sphere and a line
 const DWORD TMacro3DClass			=	MAKELONG(64,16);	///< Macro-construction
 const DWORD TDivSegment3DClass		=	MAKELONG(64,32);	///< Points equally spread on a segment
+const DWORD TInterCircDr3DClass		=	MAKELONG(64,64);	///< Bi-point defined by intersection of a circle and a line
+const DWORD TInterCircPl3DClass		=	MAKELONG(64,128);	///< Bi-point defined by intersection of a circle and a plane
 
 const DWORD TSphere3DClass			=	MAKELONG(128,1);	///< ALL spheres
 
@@ -251,8 +253,9 @@ public:
 	//////////////////////////////////////////////////////////////////////
 	enum TExportType
 	{
-		EXPORT_COCOA = 0,	///< CoCoA export - used for property discovery
-		EXPORT_DOT			///< DOT export - used for graph visualization 
+		EXPORT_MATHEMATICA = 0,	///< Mathematica export - used for property discovery
+		EXPORT_MAPLE,			///< Maple export - used for property discovery
+		EXPORT_DOT				///< DOT export - used for graph visualization 
 	};
 
 	BOOL		bValidate;			///< TRUE if the object is analytically valid, FALSE otherwise
@@ -309,6 +312,7 @@ public:
 	virtual CString	GetObjectDef();
 	virtual CString	GetObjectHelp();
 	virtual CString	GetObjectName();
+	virtual CString	GetObjectNameRedux();
 	virtual BOOL	MaskObject(DWORD mask);
 	virtual DWORD	isA() const;
     //@}
@@ -363,6 +367,7 @@ public:
 	//@{
 	virtual BOOL		IsVisible();
 	virtual void		SetVisible(BOOL bVis);
+	virtual void		SetValidate(UINT nCode);
 	virtual BOOL		IsSelected();
 	virtual void		SetSelected(BOOL bSel=TRUE);
 	virtual BOOL		IsInCalque(int CalcNum);
