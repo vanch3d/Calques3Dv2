@@ -91,6 +91,7 @@ BOOL CAboutInfoPage::OnInitDialog()
 
  	m_cURL.SetURLPrefix (_T("http://"));
 	m_cURL.SetURL (_T("uk.geocities.com/nicolas.vanlabeke@btinternet.com/"));
+	m_cURL.SetTooltip (_T("http://uk.geocities.com/nicolas.vanlabeke@btinternet.com/"));
 	m_cURL.SizeToContent ();
 
 	return TRUE;  // return TRUE unless you set the focus to a control
