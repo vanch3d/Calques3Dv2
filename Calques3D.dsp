@@ -43,7 +43,8 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_AFXDLL" /Yu"stdafx.h" /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR /Yu"stdafx.h" /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /Yu"stdafx.h" /FD /c
+# SUBTRACT CPP /Fr
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x809 /d "NDEBUG" /d "_AFXDLL"
@@ -53,7 +54,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 /nologo /subsystem:windows /machine:I386
-# ADD LINK32 version.lib ../MTParser/MTParserLib/lib/MTParser.lib /nologo /subsystem:windows /machine:I386 /libpath:"OGLTools/"
+# ADD LINK32 version.lib /nologo /subsystem:windows /machine:I386 /libpath:"OGLTools/"
 
 !ELSEIF  "$(CFG)" == "Calques3D - Win32 Debug"
 
@@ -92,6 +93,10 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
+SOURCE=.\OGLTools\3dmath.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\AboutInfoDlg.cpp
 # End Source File
 # Begin Source File
@@ -102,6 +107,10 @@ SOURCE=.\Tasks\AmbiguityList.cpp
 # Begin Source File
 
 SOURCE=.\Collection\ArrayEx.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\OGLTools\BallController.cpp
 # End Source File
 # Begin Source File
 
@@ -260,6 +269,14 @@ SOURCE=.\FormatToolBar.cpp
 # Begin Source File
 
 SOURCE=.\Fraction.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\OGLTools\GLEnabledView.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\OGLTools\glut.cpp
 # End Source File
 # Begin Source File
 
@@ -466,6 +483,10 @@ SOURCE=.\Tasks\Task.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\OGLTools\TestGLView.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\objects\Text3D.cpp
 # End Source File
 # Begin Source File
@@ -530,6 +551,10 @@ SOURCE=.\ZoomDlg.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
+SOURCE=.\OGLTools\3dmath.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\AboutInfoDlg.h
 # End Source File
 # Begin Source File
@@ -539,6 +564,10 @@ SOURCE=.\Tasks\AmbiguityList.h
 # Begin Source File
 
 SOURCE=.\Collection\ArrayEx.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\OGLTools\BallController.h
 # End Source File
 # Begin Source File
 
@@ -626,6 +655,14 @@ SOURCE=.\Fraction.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\OGLTools\GLEnabledView.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\OGLTools\glut.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\GridCtrl\GridCell.h
 # End Source File
 # Begin Source File
@@ -695,6 +732,10 @@ SOURCE=.\objects\ObjectPropPage.h
 # Begin Source File
 
 SOURCE=.\ObjectVisual.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\OGLTools\OGLT.h
 # End Source File
 # Begin Source File
 
@@ -842,6 +883,10 @@ SOURCE=.\MathParser\SymTable.h
 # Begin Source File
 
 SOURCE=.\Tasks\Task.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\OGLTools\TestGLView.h
 # End Source File
 # Begin Source File
 
@@ -1010,6 +1055,10 @@ SOURCE=.\res\Movehor.cur
 # Begin Source File
 
 SOURCE=.\res\Movever.cur
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\notebook.bmp
 # End Source File
 # Begin Source File
 
