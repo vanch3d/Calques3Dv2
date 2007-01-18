@@ -1505,6 +1505,12 @@ BOOL CCalques3DDoc::IsTaskAvailable(UINT m_nID)
 	case ID_CONSTRUCTION_INTERSECTION_LINESPHERE:
 		bEnab = nbLn && nbSp;
 		break;
+	case ID_CONSTRUCTION_INTERSECTION_LINECIRCLE:
+		bEnab = nbLn && nbCr;
+		break;
+	case ID_CONSTRUCTION_INTERSECTION_PLANECIRCLE:
+		bEnab = nbPl && nbCr;
+		break;
 	case ID_CONSTRUCTION_INTERSECTION_SPHERESPHERE:
 		bEnab = (nbSp>=2);
 		break;
