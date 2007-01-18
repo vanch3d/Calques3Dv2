@@ -41,6 +41,7 @@ CInter3DTask::CInter3DTask(CView *AParent,UINT taskID) : CTask(AParent,taskID)
 	p1 = p2 = p3 = NULL;
 	sp = NULL;
 	sp2 = NULL;
+	circle = NULL;
 	cyl = NULL;
 	m_nStep = 0;
 	GetContextualHelp();
@@ -55,7 +56,8 @@ CInter3DTask::~CInter3DTask()
 	if (sp)	sp->SetSelected(FALSE);
 	if (sp2)	sp2->SetSelected(FALSE);
 	if (cyl)	cyl->SetSelected(FALSE);
-	if (dr1 || dr2 || pl2 || p || sp || cyl || sp2)
+	if (circle)	circle->SetSelected(FALSE);
+	if (dr1 || dr2 || pl2 || p || sp || cyl || sp2 || circle)
 		m_pParent->Invalidate(0);
 }
 
@@ -74,6 +76,12 @@ unsigned CInter3DTask::GetHelpResID()
 	{	case ID_CONSTRUCTION_INTERSECTION_LINELINE:
   		case ID_CONSTRUCTION_CROSSPRODUCT:
 				mask = (m_nStep) ? CTX_SELECT_DROITE2 : CTX_SELECT_DROITE;
+				break;
+		case ID_CONSTRUCTION_INTERSECTION_LINECIRCLE:
+				mask = (m_nStep) ? CTX_SELECT_CIRCLE : CTX_SELECT_DROITE;
+				break;
+		case ID_CONSTRUCTION_INTERSECTION_PLANECIRCLE:
+				mask = (m_nStep) ? CTX_SELECT_CIRCLE : CTX_SELECT_PLAN1;
 				break;
 		case ID_CONSTRUCTION_INTERSECTION_LINEPLANE:
 				//mask = (dr1) ? TAllPlanClass : TAllDroiteClass;
@@ -110,6 +118,12 @@ DWORD CInter3DTask::GetMask()
 				break;
 		case ID_CONSTRUCTION_INTERSECTION_LINESPHERE:
 				mask = (dr1) ? TSphere3DClass : TAllDroiteClass;
+				break;
+		case ID_CONSTRUCTION_INTERSECTION_LINECIRCLE:
+				mask = (dr1) ? TAllCercleClass : TAllDroiteClass;
+				break;
+		case ID_CONSTRUCTION_INTERSECTION_PLANECIRCLE:
+				mask = (p) ? TAllCercleClass : TAllPlanClass;
 				break;
 		case ID_CONSTRUCTION_INTERSECTION_PLANEPLANE:
 				mask = TAllPlanClass;
@@ -160,6 +174,20 @@ void CInter3DTask::OnMouseL(UINT, CPoint thepos)
 				sp = (CSphere3D *) temp;
 
 				break;
+		case ID_CONSTRUCTION_INTERSECTION_LINECIRCLE:
+			if (GetMask() == TAllDroiteClass)
+				dr1 = (CDroite3D*) temp;
+			else
+				circle = (CCercle3D *) temp;
+
+				break;
+		case ID_CONSTRUCTION_INTERSECTION_PLANECIRCLE:
+			if (GetMask() == TAllPlanClass)
+				p = (CPlan3D*) temp;
+			else
+				circle = (CCercle3D *) temp;
+
+				break;
 		case ID_CONSTRUCTION_INTERSECTION_PLANECYLINDER:
 			if (GetMask() == TAllPlanClass)
 				p = (CPlan3D*) temp;
@@ -203,8 +231,8 @@ void CInter3DTask::OnMouseL(UINT, CPoint thepos)
 	m_nStep++;
 	GetContextualHelp();
 
-	if (((dr1) && (dr2 || p || sp)) ||
-		 (p && pl2) || (p && cyl) || (sp && sp2))
+	if (((dr1) && (dr2 || p || sp || circle)) ||
+		 (p && (pl2|| circle)) || (p && cyl) || (sp && sp2))
 	{
 		CreateObject3D();
 		return;
@@ -242,6 +270,16 @@ void CInter3DTask::CreateObject3D()
 	 {
 		temp = new CInterSphDr3D(sp,dr1);
 		res = ((CInterSphDr3D*)temp)->CalculConceptuel();
+	 }
+	else if ((dr1) && (circle))
+	 {
+		temp = new CInterCircDr3D(circle,dr1);
+		res = ((CInterCircDr3D*)temp)->CalculConceptuel();
+	 }
+	else if ((p) && (circle))
+	 {
+		temp = new CInterCircPlane3D(circle,p);
+		res = ((CInterCircDr3D*)temp)->CalculConceptuel();
 	 }
 	else if ((p) && (pl2))
 	 {
@@ -288,6 +326,7 @@ void CInter3DTask::CreateObject3D()
 	if (sp)	sp->SetSelected(FALSE);
 	if (sp2)	sp2->SetSelected(FALSE);
 	if (cyl)	cyl->SetSelected(FALSE);
+	if (circle)	circle->SetSelected(FALSE);
 	InvalidateParent();
 	//m_pParent->Invalidate();
 	dr1 = dr2 = NULL;
@@ -296,6 +335,7 @@ void CInter3DTask::CreateObject3D()
 	sp = NULL;
 	sp2 = NULL;
 	cyl = NULL;
+	circle = NULL;
 	m_nStep = 0;
 	GetContextualHelp();
 }
