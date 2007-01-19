@@ -7,6 +7,7 @@
 #define MAX_STACK_SIZE 64
 
 extern const double DblErR;
+extern const double DblUdF;
 extern const double DblNiN;
 
 

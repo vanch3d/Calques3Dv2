@@ -18,6 +18,7 @@
 
 const double DblErR = -1.68736462823243E308;
 const double DblNiN = -1.68376462823243E308;
+const double DblUdF = -1.68673462823243E308;
 
 //Error messages
 
@@ -36,6 +37,7 @@ static char eExpVarRet[] = "#Variable name or return expected!";
 static char eExpAssign[] = "#Assignment expected!";
 static char eValSizErr[] = "#Value too big for operation!";
 static char eInvPrmCnt[] = "#Invalid parameters count for function call!";
+static char eVarUndef [] = "# %s - value undefined!";
 
 static char MathSymbols[] =
     "\033\002" "<<" ">>" "**" "<>" ">=" "<=" "&&" "||" "/*" ":="
@@ -289,7 +291,14 @@ formulaend:	if ( (ErrorMsg = CalcToObr()) != NULL )
 			  ) {
 		    if (*value==DblErR) {
 			return eInternal;
-		    } else
+		    } else if (*value==DblUdF)
+			{
+			    char buf[256];
+			    strncpy( buf, Lexer.Name, Lexer.NameLen );
+			    buf[ Lexer.NameLen ] = '\0';
+				sprintf( errbuf, eVarUndef, buf );
+				return errbuf;
+			}else
 			ValStack[++ValTop] = *value;
 		} else if (ExtFunctions
 			   &&
