@@ -93,6 +93,10 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
+SOURCE=.\OGLTools\3dmath.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\AboutInfoDlg.cpp
 # End Source File
 # Begin Source File
@@ -102,6 +106,10 @@ SOURCE=.\Tasks\AmbiguityList.cpp
 # Begin Source File
 
 SOURCE=.\Collection\ArrayEx.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\OGLTools\BallController.cpp
 # End Source File
 # Begin Source File
 
@@ -259,6 +267,14 @@ SOURCE=.\FormatToolBar.cpp
 # Begin Source File
 
 SOURCE=.\Fraction.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\OGLTools\GLEnabledView.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\OGLTools\glut.cpp
 # End Source File
 # Begin Source File
 
@@ -463,6 +479,10 @@ SOURCE=.\Tasks\Task.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\OGLTools\TestGLView.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\objects\Text3D.cpp
 # End Source File
 # Begin Source File
@@ -523,6 +543,10 @@ SOURCE=.\ZoomDlg.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
+SOURCE=.\OGLTools\3dmath.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\AboutInfoDlg.h
 # End Source File
 # Begin Source File
@@ -532,6 +556,10 @@ SOURCE=.\Tasks\AmbiguityList.h
 # Begin Source File
 
 SOURCE=.\Collection\ArrayEx.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\OGLTools\BallController.h
 # End Source File
 # Begin Source File
 
@@ -603,6 +631,14 @@ SOURCE=.\Fraction.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\OGLTools\GLEnabledView.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\OGLTools\glut.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\GridCtrl\GridCell.h
 # End Source File
 # Begin Source File
@@ -660,6 +696,10 @@ SOURCE=.\objects\ObjectPropPage.h
 # Begin Source File
 
 SOURCE=.\ObjectVisual.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\OGLTools\OGLT.h
 # End Source File
 # Begin Source File
 
@@ -783,6 +823,10 @@ SOURCE=.\Tasks\SuppressDlg.h
 # Begin Source File
 
 SOURCE=.\Tasks\Task.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\OGLTools\TestGLView.h
 # End Source File
 # Begin Source File
 
