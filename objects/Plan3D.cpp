@@ -1065,6 +1065,7 @@ void CPlan3D::Draw3DRendering()
 	};
 	glPushMatrix();
 		glBegin(GL_QUADS);
+			glColor3f(.0f,1.00f,.0f);
 // 			glMaterialfv(GL_FRONT, GL_AMBIENT, mat_diffuse);
 // 			glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
 // 			glMaterialf(GL_FRONT, GL_SHININESS, no_shininess);

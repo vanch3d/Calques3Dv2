@@ -463,7 +463,7 @@ void CPoint3D::Draw3DRendering()
 // 
 	glPushMatrix();
 	glTranslated(x, y, z);
-	glColor3f(.2f,.5f,.8f);
+	glColor3f(1.f,.0f,.0f);
     glMaterialfv(GL_FRONT, GL_AMBIENT, mat_diffuse);
     glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
     glMaterialf(GL_FRONT, GL_SHININESS, no_shininess);

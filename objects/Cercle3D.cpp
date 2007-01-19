@@ -525,7 +525,8 @@ void CCercle3D::Draw3DRendering()
 	glPushMatrix();
 	glTranslated(bx, by, bz);
 	glRotated(dd,drot.x,drot.y,drot.z);
-	glColor3f(.8f,.5f,.8f);
+	//glColor3f(.8f,.5f,.8f);
+	glColor3f(.0f,.0f,1.0f);
     glMaterialfv(GL_FRONT, GL_AMBIENT, mat_diffuse);
     glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
     glMaterialf(GL_FRONT, GL_SHININESS, no_shininess);
