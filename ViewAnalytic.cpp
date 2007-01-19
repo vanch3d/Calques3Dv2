@@ -341,8 +341,14 @@ void CViewAnalytic::OnLButtonDown(UINT nFlags, CPoint point)
 		if (!poo) continue;
 		if (!DYNAMIC_DOWNCAST(CEquation3D,poo)) continue;
 		m_pSelObject = (CEquation3D*)poo->HitTest(point,TText3DClass);
-		if (m_pSelObject)
+// 		if (m_pSelObject)
+// 		{
+// 			m_cSelObjectSet.Add(m_pSelObject);
+// 			break;
+// 		}
+		if (poo->IsInActiveArea(point))
 		{
+			m_pSelObject = (CEquation3D*)poo;
 			m_cSelObjectSet.Add(m_pSelObject);
 			break;
 		}
