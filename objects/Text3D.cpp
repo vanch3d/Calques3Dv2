@@ -2488,7 +2488,10 @@ void CMathOp3D::DrawMathPad(CDC* pDC)
         str.MakeUpper();
         char tt[255];
         strcpy(tt,str.GetBuffer(str.GetLength()));
-        m_pMathValue[i]=pVal->m_nValue;
+		if (pObj->bValidate)
+			m_pMathValue[i]=pVal->m_nValue;
+		else
+			m_pMathValue[i]=DblUdF;
 
         m_pMathVar->Replace(tt,m_pMathValue+i);
     }
@@ -2500,9 +2503,13 @@ void CMathOp3D::DrawMathPad(CDC* pDC)
     char *ErrMsg = m_pMathParser->Parse( GetText(), &result );
 
     if (ErrMsg)
+	{
+		bValidate = FALSE;
         nstr = ErrMsg;
+	}
     else
     {
+		bValidate = TRUE;
         nstr.Format(_T("%.4f"),result);
         m_nValue = result;
     }
