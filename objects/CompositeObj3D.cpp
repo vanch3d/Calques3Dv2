@@ -1692,7 +1692,8 @@ UINT  CInterCircDr3D::CalculConceptuel()
 	UINT res = inter.CalculConceptuel();
 	if (res ==ERR_DRPLANPAR)
 	{
-		CSphere3D sp(&ptcenter,Circ->P1);
+		CPoint3D rad(Circ->Center + CVector4(Circ->Radius,0,0));
+		CSphere3D sp(&ptcenter,&rad);
 		sp.CalculConceptuel();
 		CInterSphDr3D intsd(&sp,Dr);
 		res = intsd.CalculConceptuel();
@@ -1741,7 +1742,7 @@ UINT  CInterCircDr3D::CalculConceptuel()
 				ptB->bValidate = FALSE;
 		}
 		if (!ptA->bValidate && !ptB->bValidate)
-			res = ERR_NOINTER;
+			res = ERR_INTER_LINECIRCLE;
 
 		return res;
 	}
@@ -1894,6 +1895,8 @@ UINT  CInterCircPlane3D::CalculConceptuel()
 	
 	CInterCircDr3D inter(Circ,&dr1);
 	res = inter.CalculConceptuel();
+	if (res!=0)
+        return ValideCompositeObject(ERR_INTER_PLANECIRCLE);
 
 	ValideCompositeObject(res);
 	ptA->bValidate = inter.ptA->bValidate;
