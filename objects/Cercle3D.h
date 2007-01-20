@@ -16,9 +16,10 @@ class CCylinder3D;
 class CPlan3D;
 class CSphere3D;
 
-///
-/// This is the main class
-///
+/////////////////////////////////////////////////////////////////////////////
+/// CCercle3D - A circle defined by three non-aligned points.
+/// Note that this class also serves as a basis for all derived circle constructions.
+/////////////////////////////////////////////////////////////////////////////
 class CCercle3D : public CObject3D  
 {
 public:
@@ -138,11 +139,12 @@ public:
 ///
 class CCercleInterSS3D : public CCercle3D
 {
+	DECLARE_SERIAL(CCercleInterSS3D);
 public:
 	CSphere3D *SP1;
 	CSphere3D *SP2;
 
-	DECLARE_SERIAL(CCercleInterSS3D);
+public:
 	CCercleInterSS3D();
 	CCercleInterSS3D(CSphere3D *p1,CSphere3D *p2);
 	CCercleInterSS3D(const CObject3D & );
@@ -154,6 +156,38 @@ public:
 
 	virtual UINT GetDefID() const { return IDS_DEF_CIRCLEISS;};
 	virtual DWORD isA() const { return TCercleInterSS3D; }
+	virtual CString GetObjectDef();
+
+	virtual BOOL IsEqual(CObject3D &other);
+	virtual UINT  CalculConceptuel();
+
+	//virtual CString ExportSymbolic(int nFormat); 
+	virtual void Serialize( CArchive& ar );
+	virtual CString ExportSymbolic(int nFormat); 
+};
+
+///
+/// This is the main class
+///
+class CCercleInterPS3D : public CCercle3D
+{
+	DECLARE_SERIAL(CCercleInterPS3D);
+public:
+	CSphere3D	*SP;
+	CPlan3D		*PL;
+
+public:
+	CCercleInterPS3D();
+	CCercleInterPS3D(CPlan3D *pl,CSphere3D *sp);
+	CCercleInterPS3D(const CObject3D & );
+
+	virtual int SetDepth();
+	virtual CxObject3DSet* GetParents();
+
+	virtual CObject3D* CopyObject();
+
+	virtual UINT GetDefID() const { return IDS_DEF_CIRCLEISS;};
+	virtual DWORD isA() const { return TCercleInterPS3D; }
 	virtual CString GetObjectDef();
 
 	virtual BOOL IsEqual(CObject3D &other);
