@@ -1,6 +1,6 @@
 //{{NO_DEPENDENCIES}}
 // Microsoft Developer Studio generated include file.
-// Used by Calques3D.rc
+// Used by c3dLangES.rc
 //
 #define IDP_OLE_INIT_FAILED             100
 #define IDS_MAIN_TOOLBAR                101
@@ -290,6 +290,10 @@
 #define ERR_AMBIGUITY                   4039
 #define ERR_CIRCLELINE_NOTPLANE         4040
 #define ERR_CIRCLEPLANE_PLANE           4041
+#define ERR_INTER_SPHERESPHERE          4042
+#define ERR_INTER_PLANESPHERE           4043
+#define ERR_INTER_LINECIRCLE            4044
+#define ERR_INTER_PLANECIRCLE           4045
 #define IDS_UNDO_NONE                   4100
 #define IDS_UNDO_DELETE                 4101
 #define IDS_UNDO_APPEND                 4102
@@ -628,6 +632,7 @@
 #define ID_CONSTRUCTION_DIVSEGMENT      30322
 #define ID_CONSTRUCTION_INTERSECTION_LINECIRCLE 30323
 #define ID_CONSTRUCTION_INTERSECTION_PLANECIRCLE 30324
+#define ID_CONSTRUCTION_INTERSECTION_SPHEREPLANE 30325
 #define ID_EXPLORATION_MOVE             30400
 #define ID_EXPLORATION_EXTRACTION       30401
 #define ID_EXPLORATION_LOCUS            30402
@@ -742,7 +747,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        199
-#define _APS_NEXT_COMMAND_VALUE         32997
+#define _APS_NEXT_COMMAND_VALUE         32998
 #define _APS_NEXT_CONTROL_VALUE         1181
 #define _APS_NEXT_SYMED_VALUE           124
 #endif
