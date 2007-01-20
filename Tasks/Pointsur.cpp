@@ -121,7 +121,7 @@ DWORD CPointSur3DTask::GetMask()
 			mask = TCylindre3DClass;
 			break;
 		case ID_CONSTRUCTION_POINTON_CIRCLE		:
-			mask = TCercle3DClass | TArcCercle3DClass | TCercleInterSS3D;//| TEllipse3DClass;
+			mask = TCercle3DClass | TArcCercle3DClass | TCercleInterSS3D | TCercleInterPS3D;//| TEllipse3DClass;
 			////mask = TCylindre3DClass;
 			break;
 		case ID_CONSTRUCTION_POINTON_PLANE		:
