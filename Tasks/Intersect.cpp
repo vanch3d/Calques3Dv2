@@ -100,6 +100,9 @@ unsigned CInter3DTask::GetHelpResID()
 		case ID_CONSTRUCTION_INTERSECTION_SPHERESPHERE:
 				mask = (m_nStep) ? CTX_SELECT_SPHERE : CTX_SELECT_SPHERE;
 				break;
+		case ID_CONSTRUCTION_INTERSECTION_SPHEREPLANE:
+				mask = (m_nStep) ? CTX_SELECT_SPHERE : CTX_SELECT_PLAN1;
+				break;
 	}
 	return mask;
 }
@@ -133,6 +136,9 @@ DWORD CInter3DTask::GetMask()
 				break;
 		case ID_CONSTRUCTION_INTERSECTION_SPHERESPHERE:
 				mask = (p) ? TSphere3DClass : TSphere3DClass;
+				break;
+		case ID_CONSTRUCTION_INTERSECTION_SPHEREPLANE:
+				mask = (sp) ? TAllPlanClass : TSphere3DClass;
 				break;
 	}
 	return mask;
@@ -221,6 +227,13 @@ void CInter3DTask::OnMouseL(UINT, CPoint thepos)
 			 }
 			break;
 				break;
+		case ID_CONSTRUCTION_INTERSECTION_SPHEREPLANE:
+			if (GetMask() == TAllPlanClass)
+				p = (CPlan3D*) temp;
+			else
+				sp = (CSphere3D *) temp;
+
+				break;
 		default:
 			return;
 	}
@@ -232,7 +245,7 @@ void CInter3DTask::OnMouseL(UINT, CPoint thepos)
 	GetContextualHelp();
 
 	if (((dr1) && (dr2 || p || sp || circle)) ||
-		 (p && (pl2|| circle)) || (p && cyl) || (sp && sp2))
+		 (p && (pl2|| circle)) || (p && cyl) || (sp && (sp2||p)))
 	{
 		CreateObject3D();
 		return;
@@ -295,6 +308,11 @@ void CInter3DTask::CreateObject3D()
 	 {
 		temp = new CCercleInterSS3D(sp,sp2);
 		res = ((CCercleInterSS3D*)temp)->CalculConceptuel();
+	 }
+	else if ((sp) && (p))
+	 {
+		temp = new CCercleInterPS3D(p,sp);
+		res = ((CCercleInterPS3D*)temp)->CalculConceptuel();
 	 }
 	else return;
 

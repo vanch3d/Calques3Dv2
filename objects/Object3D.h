@@ -68,6 +68,7 @@ const DWORD TCercle3DClass			=	MAKELONG(32,2);		///< Circle defined by 3 points
 const DWORD TArcCercle3DClass		=	MAKELONG(32,4);		///< Arc of circle defined by 3 points
 const DWORD TEllipse3DClass			=	MAKELONG(32,8);		///< Ellipse defined by the intersection of a plane and a cylinder
 const DWORD TCercleInterSS3D		=	MAKELONG(32,16);	///< Circle defined by the intersection of 2 spheres
+const DWORD TCercleInterPS3D		=	MAKELONG(32,32);	///< Circle defined by the intersection of a plane and a sphere
 
 
 const DWORD TCompositeObject3DClass	=	MAKELONG(64,1);		///< ALL composites objects
