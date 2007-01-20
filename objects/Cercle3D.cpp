@@ -904,7 +904,7 @@ UINT  CCercleInterSS3D::CalculConceptuel()
     {
         // sphere centers are too far apart for intersection
         bValidate = 0;
-        return ERR_NOCERCLE;
+        return ERR_INTER_SPHERESPHERE;
     }
 
     FCoord fR0Sqr = SP1->Rayon*SP1->Rayon;
@@ -1005,3 +1005,148 @@ CString CCercleInterSS3D::GetObjectDef()
     }
     return mstr;
 }*/
+
+
+//////////////////////////////////////////////////////////////////////
+// Construction/Destruction
+//////////////////////////////////////////////////////////////////////
+IMPLEMENT_SERIAL(CCercleInterPS3D, CCercle3D, VERSIONABLE_SCHEMA | 1)
+
+CCercleInterPS3D::CCercleInterPS3D() : CCercle3D()
+{
+}
+
+CCercleInterPS3D::CCercleInterPS3D(CPlan3D *pl,CSphere3D *sp) : CCercle3D()
+{
+    SP = sp;
+    PL = pl;
+}
+
+CCercleInterPS3D::CCercleInterPS3D(const CObject3D &src) : CCercle3D(src)
+{
+    SP = ((CCercleInterPS3D&)src).SP;
+    PL = ((CCercleInterPS3D&)src).PL;
+}
+
+CObject3D* CCercleInterPS3D::CopyObject()
+{
+    CCercleInterPS3D *temp = new CCercleInterPS3D((CObject3D&)*this);
+    return temp;
+}
+
+int CCercleInterPS3D::SetDepth()
+{
+    if (SP && PL)
+        nDepth = max(SP->nDepth,PL->nDepth)+1;
+    return nDepth;
+}
+
+CxObject3DSet* CCercleInterPS3D::GetParents()
+{
+    CxObject3DSet* list = new CxObject3DSet();
+    if (SP) list->Add(SP);
+    if (PL) list->Add(PL);
+    return list;
+}
+
+void CCercleInterPS3D::Serialize( CArchive& ar )
+{
+    CCercle3D::Serialize(ar);
+
+    //Concept_pt.Serialize(ar);
+    if (ar.IsStoring())
+    {
+        ar << ((SP) ? SP->nObjectId : -1);
+        ar << ((PL) ? PL->nObjectId : -1);
+    }
+    else
+    {
+        SP = (CSphere3D*)SerializeObj(ar);
+        PL = (CPlan3D*)SerializeObj(ar);
+    }
+}
+
+
+
+BOOL CCercleInterPS3D::IsEqual(CObject3D &other)
+{
+    return CCercle3D::IsEqual(other);
+}
+
+UINT  CCercleInterPS3D::CalculConceptuel()
+{
+    bValidate = ((SP->bValidate) && (PL->bValidate));
+    if (!bValidate)
+        return ERR_NOCERCLE;
+
+	CDroitePerp3D perp(SP->P1,PL);
+	UINT res = perp.CalculConceptuel();
+	CPointInterDP3D inter(&perp,PL);
+	inter.CalculConceptuel();
+	
+	Center = inter.Concept_pt;
+	CVector4 d = Center - SP->P1->Concept_pt;
+	FCoord dist = d.Norme();
+	FCoord ray = SP->Rayon;
+	if (ray<dist)
+	{
+		bValidate = FALSE;
+		return ERR_INTER_PLANESPHERE;
+	}
+
+	Radius = sqrtl(ray*ray-dist*dist);
+
+    VecNorm = PL->VecNorm;
+	VecNorm.Normalized();
+    CVector4 I,J,K;
+    FCoord normK = 1 / VecNorm.Norme();
+    K = VecNorm * normK;
+
+    J = CVector4(-K.y,K.x,0,1);
+    normK = J.Norme();
+    if (FCZero(normK))
+        { J.x = J.z =0; J.y = 1;    }
+    else
+        J = J * (1/normK);
+    I = (J % K);
+
+    LocRep = CLocalRep(Center,I,J,K);
+
+    m_cConcept_pts.RemoveAll();
+    m_cConcept_pts.SetSize(nDeltaT);
+    for (int t=0;t<nDeltaT;t++)
+    {
+        CVector4 U,V;
+        U.x=    Radius*cos(nArcAngle*t/nDeltaT);
+        U.y=    Radius*sin(nArcAngle*t/nDeltaT);
+        U.z=    0;
+        U.w=    1;
+
+        V.x=    I.x*U.x + J.x*U.y + K.x*U.z + Center.x,
+        V.y=    I.y*U.x + J.y*U.y + K.y*U.z + Center.y,
+        V.z=    I.z*U.x + J.z*U.y + K.z*U.z + Center.z,
+        V.w=    1;
+        m_cConcept_pts.SetAt(t,V);
+    }
+    bValidate=TRUE;
+	return 0;
+}
+
+CString CCercleInterPS3D::ExportSymbolic(int nFormat)
+{
+	return CObject3D::ExportSymbolic(nFormat);
+}
+
+CString CCercleInterPS3D::GetObjectDef()
+{
+    CString mstr(_T("???")),sFormat(_T("???")),sName(_T("???"));
+    sName = GetObjectName();
+    sFormat.LoadString(GetDefID());
+
+    CString sn1(_T("???")),sn2(_T("???")),sn3(_T("???"));
+    if (SP) sn1 = SP->GetObjectHelp();
+    if (PL) sn2 = PL->GetObjectHelp();
+
+    mstr.Format(sFormat,sName,sn1,sn2);
+    return mstr;
+}
