@@ -174,6 +174,7 @@ BEGIN
     BUTTON      ID_VIEW_CALQUE3
     BUTTON      ID_VIEW_CALQUE4
     BUTTON      ID_VIEW_ANALYTIC
+    BUTTON      ID_VIEW_RENDERING
     BUTTON      ID_MACROS_USER1
     BUTTON      ID_MACROS_USER2
     BUTTON      ID_MACROS_USER3
@@ -544,7 +545,7 @@ END
 
 IDD_SPLASH DIALOGEX 0, 0, 204, 233
 STYLE DS_MODALFRAME | WS_POPUP
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     CONTROL         "",IDC_BIGICON,"Button",BS_OWNERDRAW | WS_DISABLED,4,4,
                     34,30
@@ -785,7 +786,7 @@ END
 IDD_RENDERER_PROP DIALOGEX 0, 0, 188, 204
 STYLE WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 CAPTION "View Properties"
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     GROUPBOX        "Lighting",IDC_STATIC,8,4,84,74
     CONTROL         "Slider1",IDC_RENDERER_AMBIENT,"msctls_trackbar32",
@@ -1354,6 +1355,8 @@ BEGIN
             MENUITEM SEPARATOR
             MENUITEM "Sp&hère-sphère",               ID_CONSTRUCTION_INTERSECTION_SPHERESPHERE
 
+            MENUITEM "Sphere-Plane",                ID_CONSTRUCTION_INTERSECTION_SPHEREPLANE
+
             MENUITEM "Plan-cylindre",              ID_CONSTRUCTION_INTERSECTION_PLANECYLINDER
 
         END
@@ -1593,13 +1596,19 @@ BEGIN
 
             MENUITEM "Dr&oite-plan",                 ID_CONSTRUCTION_INTERSECTION_LINEPLANE
 
+            MENUITEM "Li&ne-circle",                ID_CONSTRUCTION_INTERSECTION_LINECIRCLE
+
             MENUITEM "Droite-&sphère",                ID_CONSTRUCTION_INTERSECTION_LINESPHERE
 
             MENUITEM SEPARATOR
             MENUITEM "&Plan-plan",                ID_CONSTRUCTION_INTERSECTION_PLANEPLANE
 
+            MENUITEM "&Plane-circle",               ID_CONSTRUCTION_INTERSECTION_PLANECIRCLE
+
             MENUITEM SEPARATOR
             MENUITEM "Sp&hère-sphère",               ID_CONSTRUCTION_INTERSECTION_SPHERESPHERE
+
+            MENUITEM "Sphere-Plane",                ID_CONSTRUCTION_INTERSECTION_SPHEREPLANE
 
             MENUITEM "Plan-cylindre",              ID_CONSTRUCTION_INTERSECTION_PLANECYLINDER
 
@@ -2915,6 +2924,7 @@ BEGIN
                             "Construit la droite perpendiculaire à deux droites sécantes\nProduit vectoriel"
     ID_CONSTRUCTION_DIVSEGMENT 
                             "Divise un segment en trois parties égales\nTrisection"
+    ID_CONSTRUCTION_INTERSECTION_SPHEREPLANE "sss"
 END
 
 STRINGTABLE DISCARDABLE 
@@ -3388,6 +3398,10 @@ BEGIN
     ERR_AMBIGUITY           "Plusieurs objets existent à cette position. Lever l'ambiguïté en utilisant le menu contextuel."
     ERR_CIRCLELINE_NOTPLANE "Le cercle et la droite ne sont pas dans le même plan.\nLeur intersection n'est pas définie."
     ERR_CIRCLEPLANE_PLANE   "Le cercle appartient au plan.\nLeur intersection n'est pas définie."
+    ERR_INTER_SPHERESPHERE  "The two spheres do not intersect. \n Their intersection is not defined."
+    ERR_INTER_PLANESPHERE   "The plane and the sphere do not intersect. \n Their intersection is not defined."
+    ERR_INTER_LINECIRCLE    "The line and the circle do not intersect. \n Their intersection is not defined."
+    ERR_INTER_PLANECIRCLE   "The plane and the circle do not intersect. \n Their intersection is not defined."
 END
 
 STRINGTABLE DISCARDABLE 
