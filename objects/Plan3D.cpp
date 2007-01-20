@@ -12,6 +12,9 @@
 #include "Point3D.h"
 #include "Plan3D.h"
 #include "Droite3D.h"
+#include "Cercle3D.h"
+#include "Sphere3D.h"
+#include "CompositeObj3D.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -388,7 +391,18 @@ void CPlan3D::GetProjectedMinMax(CObject3D* pObj,CVector4 P1,CVector4 I,CVector4
     if (!pObj) return;
 
     //////////////
+    if (pObj->MaskObject(TCercleInterPS3D))
+    {
+		FCoord dd = ((CCercleInterPS3D*)pObj)->SP->Rayon;
+	    minmax.x = min(minmax.x,-dd);
+		minmax.y = min(minmax.y,-dd);
+		minmax.z = max(minmax.z,dd);
+		minmax.w = max(minmax.w,dd);
+        return;
+    }
+
     CVector4 thept;
+
     if (pObj->MaskObject(TAllPointClass))
     {
         CPoint3D* i = (CPoint3D *)(pObj);
@@ -464,13 +478,19 @@ void CPlan3D::CalculVisuel(CVisualParam *pVisParam)
             CObject3D *pObj = cDependList.GetAt(i);
             if (!pObj) continue;
 
-            if (    pObj->MaskObject(TAllPointClass) ||
-                    pObj->MaskObject(TDroitePerp3DClass))
-                    //pObj->MaskObject(TDroiteInterPP3DClass))
+            /*if (    pObj->MaskObject(TAllPointClass) ||
+                    pObj->MaskObject(TDroitePerp3DClass) || //)
+                    pObj->MaskObject(TCercleInterPS3D) )*/
 
                 if (pObj->bVisible && (pObj->bValidate))
                 {
-                    GetProjectedMinMax(pObj,P1->Concept_pt,I,J,K,re);
+					if (pObj->MaskObject(TInterCircPl3DClass))
+					{
+						GetProjectedMinMax(((CInterCircPlane3D*)pObj)->ptA,P1->Concept_pt,I,J,K,re);
+						GetProjectedMinMax(((CInterCircPlane3D*)pObj)->ptB,P1->Concept_pt,I,J,K,re);
+					}
+					else
+						GetProjectedMinMax(pObj,P1->Concept_pt,I,J,K,re);
                 }
         }
         bUpdateMe = 0;
