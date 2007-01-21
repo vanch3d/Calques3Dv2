@@ -91,6 +91,7 @@ public:
 	virtual CObject3D* CopyObject();
 
 	virtual UINT GetDefID() const { return IDS_DEF_ARCCIRCLE;};
+	virtual UINT GetHelpID() const { return IDS_HELP_ARCCIRCLE;};
 	virtual DWORD isA() const { return TArcCercle3DClass; }
 	virtual CString GetObjectDef();
 
@@ -124,6 +125,7 @@ public:
 
 	virtual DWORD isA() const { return TEllipse3DClass; }
 	virtual UINT GetDefID() const { return IDS_DEF_ELLIPSE;};
+	virtual UINT GetHelpID() const { return IDS_HELP_ELLIPSE;};
 
 	virtual BOOL IsEqual(CObject3D &other);
 	virtual void Serialize( CArchive& ar );
