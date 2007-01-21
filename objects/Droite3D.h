@@ -158,6 +158,7 @@ public:
 
 public:
 	virtual UINT GetDefID() const { return IDS_DEF_DEMIDR;};
+	virtual UINT GetHelpID() const { return IDS_HELP_RAY;};
 	virtual DWORD isA() const { return TDemiDroite3DClass; }
 
 	virtual CObject3D* CopyObject();
