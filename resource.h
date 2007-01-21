@@ -1,6 +1,6 @@
 //{{NO_DEPENDENCIES}}
 // Microsoft Developer Studio generated include file.
-// Used by c3dLangES.rc
+// Used by Calques3D.rc
 //
 #define IDP_OLE_INIT_FAILED             100
 #define IDS_MAIN_TOOLBAR                101
@@ -357,6 +357,14 @@
 #define IDS_HELP_VECTOR                 5113
 #define IDS_HELP_POLYGON                5114
 #define IDS_HELP_VALUE                  5115
+#define IDS_HELP_ARCCIRCLE              5116
+#define IDS_HELP_ELLIPSE	            5117
+#define IDS_HELP_RAY		            5118
+#define IDS_HELP_EQUATION	            5119
+#define IDS_HELP_ANGLE		            5120
+#define IDS_HELP_AREA		            5121
+#define IDS_HELP_DISTANCE	            5122
+#define IDS_HELP_VOLUME					5123
 #define IDS_DEF_OBJECT                  5200
 #define IDS_DEF_POINT                   5201
 #define IDS_DEF_POINTCALC               5202

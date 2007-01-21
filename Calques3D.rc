@@ -3045,6 +3045,10 @@ BEGIN
     IDS_HELP_VECTOR         "the vector %s"
     IDS_HELP_POLYGON        "the polygon %s"
     IDS_HELP_VALUE          "the value %s"
+    IDS_HELP_ARCCIRCLE      "the arc of circle %s"
+    IDS_HELP_ELLIPSE        "the ellipse %s"
+    IDS_HELP_RAY            "the ray %s"
+    IDS_HELP_EQUATION       "the equation %s"
 END
 
 STRINGTABLE DISCARDABLE 
@@ -3123,7 +3127,7 @@ BEGIN
     IDS_DEF_CYLIN           "%s is a cylinder defined by the axe %s %s and going through %s"
     IDS_DEF_INTSPDR         "%s is the intersection of %s and %s"
     IDS_DEF_TEXT            "%s is a label"
-    IDS_DEF_SPHERE          "%s is a sphere defined by %s as its center and %s as a ray"
+    IDS_DEF_SPHERE          "%s is a sphere defined by %s as its center and %s as a radius"
     IDS_DEF_ELLIPSE         "%s is an ellipse defined by the intersection of %s and %s"
     IDS_DEF_LOCUS           "%s is the locus of %s when %s is moved"
     IDS_DEF_VECTOR          "%s is a vector"
@@ -3558,6 +3562,14 @@ END
 STRINGTABLE DISCARDABLE 
 BEGIN
     IDB_PREFC3D_ICONS       "Preferences"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_HELP_ANGLE          "the angle %s"
+    IDS_HELP_AREA           "the area %s"
+    IDS_HELP_DISTANCE       "the distance %s"
+    IDS_HELP_VOLUME         "the volume %s"
 END
 
 #endif    // English (U.K.) resources
