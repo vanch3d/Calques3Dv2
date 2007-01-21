@@ -103,6 +103,7 @@ public:
     virtual ~CEquation3D();
 
     virtual DWORD isA() const { return TEquation3DClass; }
+    virtual UINT GetHelpID() const { return IDS_HELP_EQUATION;};
     virtual CString GetText();
 
     virtual BOOL ChangeParent(CObject3D *pOld,CObject3D *pNew,BOOL bUpGraph=FALSE);
@@ -166,6 +167,7 @@ public:
     virtual ~CDistance3D();
 
     virtual UINT GetDefID() const { return IDS_DEF_DISTANCE;};
+	virtual UINT GetHelpID() const { return IDS_HELP_DISTANCE;};
     virtual DWORD isA() const { return TDistance3DClass; }
     virtual CString GetText();
 
@@ -204,8 +206,10 @@ public:
     virtual ~CAngle3D();
 
     virtual UINT GetDefID() const { return IDS_DEF_ANGLE;};
-    virtual DWORD isA() const { return TAngle3DClass; }
-    virtual CString GetText();
+	virtual UINT GetHelpID() const { return IDS_HELP_ANGLE;};
+	virtual DWORD isA() const { return TAngle3DClass; }
+    
+	virtual CString GetText();
 
     virtual BOOL ChangeParent(CObject3D *pOld,CObject3D *pNew,BOOL bUpGraph=FALSE);
     virtual void    SetSelected(BOOL bSel=TRUE);
@@ -232,6 +236,7 @@ public:
     CVolume3D(const CObject3D & );
 
     virtual UINT GetDefID() const { return IDS_DEF_VOLUME;};
+	virtual UINT GetHelpID() const { return IDS_HELP_VOLUME;};
     virtual DWORD isA() const { return TVolume3DClass; }
     virtual CString GetText();
     virtual void Draw(CDC*,CVisualParam *vp,BOOL bSm=FALSE);
@@ -251,6 +256,7 @@ public:
     CArea3D(const CObject3D & );
 
     virtual UINT GetDefID() const { return IDS_DEF_AREA;};
+	virtual UINT GetHelpID() const { return IDS_HELP_AREA;};
     virtual DWORD isA() const { return TArea3DClass; }
     virtual CString GetText();
     virtual void Draw(CDC*,CVisualParam *vp,BOOL bSm=FALSE);
@@ -272,7 +278,8 @@ public:
     virtual ~CComment3D();
 
     virtual DWORD isA() const { return TCComment3DClass; }
-    virtual CString GetText();
+    virtual UINT GetHelpID() const { return IDS_HELP_TEXT;};
+	virtual CString GetText();
 	virtual BOOL IsMultiLine() { return TRUE;};
 	virtual BOOL IsEditable() { return TRUE;};
 
