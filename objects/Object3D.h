@@ -249,6 +249,18 @@ public:
 	};
 
 	//////////////////////////////////////////////////////////////////////
+	/// Used to identify the modified attribute of the object
+	//////////////////////////////////////////////////////////////////////
+	enum TAttributeType 
+	{ 
+		ATTRIB_NONE = 0,	///< No attribute modified
+		ATTRIB_COLOR,		///< The color of the object is modified
+		ATTRIB_SHAPE,		///< The shape of the object is modified
+		ATTRIB_MARK,		///< The visual mark(s) of the object is modified
+		ATTRIB_VISIBLE		///< The visibility state of the object is modified
+	};
+
+	//////////////////////////////////////////////////////////////////////
 	/// Used to identify the format for the symbolic export of construction
 	/// @see CObject3D::ExportSymbolic()
 	//////////////////////////////////////////////////////////////////////
