@@ -28,12 +28,16 @@ BEGIN_MESSAGE_MAP(CView3DRender, CGLEnabledView)
 	ON_WM_MOUSEMOVE()
 	ON_WM_KEYDOWN()
 	ON_WM_RBUTTONDOWN()
+	ON_WM_CONTEXTMENU()
+	ON_COMMAND(ID_RENDERER_PROPERTY, OnShowProperty)
+	ON_UPDATE_COMMAND_UI(ID_RENDERER_PROPERTY, OnUpdateProperty)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 
 CView3DRender::CView3DRender():
-	trackball(.8,unitquaternion(DegToRad(45),Y_AXIS)*unitquaternion(DegToRad(-30),X_AXIS))
+	//trackball(.8,unitquaternion(DegToRad(45),Y_AXIS)*unitquaternion(DegToRad(-30),X_AXIS))
+	trackball(.8,unitquaternion(DegToRad(135),Z_AXIS)*unitquaternion(DegToRad(45),X_AXIS))
 {
 	trackball.SetColor(RGB(130,80,30));
 	trackball.SetDrawConstraints();
@@ -209,6 +213,14 @@ void CView3DRender::OnCreateGL()
 	glEnable(GL_COLOR_MATERIAL);
 
 	//SetLight();
+		//glEnable(GL_POINT_SMOOTH);
+		//glEnable(GL_LINE_SMOOTH);
+		//glEnable(GL_POLYGON_SMOOTH);
+		//glEnable(GL_BLEND);
+		//glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+		//glHint(GL_LINE_SMOOTH_HINT,GL_NICEST);
+		//glShadeModel(GL_SMOOTH);
+		//glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
 
 // prepare a bunch of line segments (carthesian axes arrows)
 	StartStockDListDef();
@@ -366,9 +378,32 @@ void CView3DRender::OnMouseMove(UINT nFlags, CPoint point)
 void CView3DRender::OnRButtonDown(UINT nFlags, CPoint point) 
 {
 	CGLEnabledView::OnRButtonDown(nFlags, point);
-	OnEditProp();
+	OnShowProperty();
 }
 
+void CView3DRender::OnShowProperty() 
+{
+	// TODO: Add your command handler code here
+	if (!m_pDlg)
+	{
+		m_pDlg = new CRenderPropDlg(this);
+		m_pDlg->Create(CRenderPropDlg::IDD);
+		m_pDlg->CenterWindow();
+		m_pDlg->ShowWindow(SW_SHOW);
+		m_pDlg->SetActiveWindow();
+	}
+	else
+	{
+		delete m_pDlg;
+		m_pDlg = NULL;
+	}
+}
+
+void CView3DRender::OnUpdateProperty(CCmdUI* pCmdUI) 
+{
+	// TODO: Add your command update UI handler code here
+	pCmdUI->SetCheck(m_pDlg!=NULL);
+}
 
 void CView3DRender::OnSizeGL(int cx, int cy) 
 {
@@ -397,20 +432,6 @@ void CView3DRender::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	CGLEnabledView::OnKeyDown(nChar, nRepCnt, nFlags);
 	Invalidate(TRUE);
 }
-
-void CView3DRender::OnEditProp() 
-{
-	if (!m_pDlg)
-	{
-		m_pDlg = new CRenderPropDlg(this);
-		m_pDlg->Create(CRenderPropDlg::IDD);
-	}
-	else
-		m_pDlg->SetActiveWindow();
-}
-
-
-
 
 
 CRenderPropDlg::CRenderPropDlg(CView3DRender* p) : CDialog(CRenderPropDlg::IDD, p)
@@ -546,4 +567,9 @@ void CRenderPropDlg::OnClose()
 	m_pView->m_pDlg = 0;
 	CDialog::OnClose();
 	delete this;
+}
+
+void CView3DRender::OnContextMenu(CWnd* pWnd, CPoint point) 
+{
+	// TODO: Add your message handler code here
 }

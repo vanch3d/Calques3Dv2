@@ -63,8 +63,10 @@ protected:
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
 	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
+	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
+	afx_msg void OnShowProperty();
+	afx_msg void OnUpdateProperty(CCmdUI* pCmdUI);
 	//}}AFX_MSG
-	afx_msg void OnEditProp();
 	DECLARE_MESSAGE_MAP()
 };
 
