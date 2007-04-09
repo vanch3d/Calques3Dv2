@@ -156,12 +156,15 @@ CBCGPProp* CPropertyBar::GetObjectAppearance(CObject3D* pObj)
 	strDefRes.LoadString(PROP_OBJVISIBLE_DESC);
 	pProp = new CBCGPCheckBoxProp (strRes, pObj->bVisible,strDefRes);
 	pProp->SetData((DWORD)&pObj->bVisible);
+
+	pProp->SetData(CObject3D::ATTRIB_VISIBLE);
 	pGroup->AddSubItem (pProp);
 
 	strRes.LoadString(PROP_OBJMARKED);
 	strDefRes.LoadString(PROP_OBJMARKED_DESC);
 	pProp = new CBCGPCheckBoxProp (strRes, pObj->bMarked,strDefRes);
 	pProp->SetData((DWORD)&pObj->bMarked);
+	pProp->SetData(CObject3D::ATTRIB_MARK);
 	pGroup->AddSubItem (pProp);
 
 	return pGroup;
@@ -351,6 +354,7 @@ void CPropertyBar::OnSetFocus(CWnd* pOldWnd)
 LRESULT CPropertyBar::OnPropertyChanged (WPARAM wParam,LPARAM lParam)
 {
 	if (!lParam) return 0;
+	if (!m_pSelObj) return 0;
 
 	CBCGPProp* pProp = (CBCGPProp*) lParam;
 
@@ -373,9 +377,16 @@ LRESULT CPropertyBar::OnPropertyChanged (WPARAM wParam,LPARAM lParam)
 	else if (tvar.vt==VT_BOOL)	// boolean property
 	{
 		bool bb = (bool)tvar;
-		BOOL *ff = (BOOL*)pProp->GetData();
-		if (ff) 
-			*ff = bb;
+// 		BOOL *ff = (BOOL*)pProp->GetData();
+// 		if (ff) 
+// 			*ff = bb;
+		DWORD type = pProp->GetData();
+		if (type==CObject3D::ATTRIB_VISIBLE)
+			m_pSelObj->SetVisible(bb);
+		else if (type==CObject3D::ATTRIB_MARK)
+			m_pSelObj->bMarked = bb;
+
+
 	}
 	else if (tvar.vt==VT_BSTR)
 	{
