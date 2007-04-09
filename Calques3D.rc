@@ -784,34 +784,45 @@ BEGIN
 END
 
 IDD_RENDERER_PROP DIALOGEX 0, 0, 188, 204
-STYLE WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+STYLE DS_CONTEXTHELP | WS_POPUP | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_TOOLWINDOW
 CAPTION "View Properties"
-FONT 8, "MS Sans Serif", 0, 0, 0x1
+FONT 8, "MS Sans Serif"
 BEGIN
     GROUPBOX        "Lighting",IDC_STATIC,8,4,84,74
     CONTROL         "Slider1",IDC_RENDERER_AMBIENT,"msctls_trackbar32",
                     TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,12,24,56,12,
-                    WS_EX_TRANSPARENT
+                    WS_EX_TRANSPARENT,HIDC_RENDERER_AMBIENT
     CONTROL         "Slider1",IDC_RENDERER_DIFFUSE,"msctls_trackbar32",
-                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,12,44,56,12
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,12,44,56,12,0,
+                    HIDC_RENDERER_DIFFUSE
     CONTROL         "Slider1",IDC_RENDERER_SPECULAR,"msctls_trackbar32",
-                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,12,64,56,12
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,12,64,56,12,0,
+                    HIDC_RENDERER_SPECULAR
     CONTROL         "Slider1",IDC_RENDERER_LGTX,"msctls_trackbar32",TBS_BOTH | 
-                    TBS_NOTICKS | WS_TABSTOP,100,24,56,12
+                    TBS_NOTICKS | WS_TABSTOP,100,24,56,12,0,
+                    HIDC_RENDERER_LGTX
     CONTROL         "Slider1",IDC_RENDERER_LGTY,"msctls_trackbar32",TBS_BOTH | 
-                    TBS_NOTICKS | WS_TABSTOP,100,44,56,11
+                    TBS_NOTICKS | WS_TABSTOP,100,44,56,11,0,
+                    HIDC_RENDERER_LGTY
     CONTROL         "Slider1",IDC_RENDERER_LGTZ,"msctls_trackbar32",TBS_BOTH | 
-                    TBS_NOTICKS | WS_TABSTOP,100,64,56,12
+                    TBS_NOTICKS | WS_TABSTOP,100,64,56,12,0,
+                    HIDC_RENDERER_LGTZ
     CONTROL         "Slider1",IDC_RENDERER_AMBMAT,"msctls_trackbar32",
-                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,12,100,56,12
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,12,100,56,12,0,
+                    HIDC_RENDERER_AMBMAT
     CONTROL         "Slider1",IDC_RENDERER_DIFFMAT,"msctls_trackbar32",
-                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,12,121,56,12
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,12,121,56,12,0,
+                    HIDC_RENDERER_DIFFMAT
     CONTROL         "Slider1",IDC_RENDERER_SPECMAT,"msctls_trackbar32",
-                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,12,140,56,12
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,12,140,56,12,0,
+                    HIDC_RENDERER_SPECMAT
     CONTROL         "Slider1",IDC_RENDERER_SHINE,"msctls_trackbar32",
-                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,100,100,56,12
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,100,100,56,12,0,
+                    HIDC_RENDERER_SHINE
     CONTROL         "Slider1",IDC_RENDERER_EMISSION,"msctls_trackbar32",
-                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,100,121,56,12
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,100,121,56,12,0,
+                    HIDC_RENDERER_EMISSION
     CTEXT           "Ambient",IDC_STATIC,12,16,56,8
     CTEXT           "0",IDC_RENDERER_AMBTXT,68,24,20,8,SS_CENTERIMAGE
     CTEXT           "Diffuse",IDC_STATIC,12,36,56,8
@@ -838,7 +849,8 @@ BEGIN
     CTEXT           "0",IDC_RENDERER_EMISSIONTXT,156,121,20,8,SS_CENTERIMAGE
     GROUPBOX        "Perspective",IDC_STATIC,8,160,172,36
     CONTROL         "Slider1",IDC_RENDERER_FIELDVIEW,"msctls_trackbar32",
-                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,12,180,144,12
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,12,180,144,12,0,
+                    HIDC_RENDERER_FIELDVIEW
     CTEXT           "Field of View",IDC_STATIC,12,172,144,8
     CTEXT           "0",IDC_RENDERER_FIELDVIEWTXT,156,180,20,8,
                     SS_CENTERIMAGE
