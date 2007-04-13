@@ -1,5 +1,26 @@
-// View3DRender.cpp : implementation file
+//////////////////////////////////////////////////////////////////////
+// Calques 3D - a 3D Dynamic Geometry Learning Environment
+// Copyright (c) 1997-2007 Nicolas Van Labeke
+//////////////////////////////////////////////////////////////////////
+// This file is part of Calques 3D.
+// 
+// Calques 3D is free software; you can redistribute it and/or modify it 
+// under the terms of the GNU General Public License as published by 
+// the Free Software Foundation; either version 2 of the License, or 
+// (at your option) any later version.
+// 
+// Calques 3D is distributed in the hope that it will be useful, 
+// but WITHOUT ANY WARRANTY; without even the implied warranty of 
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License 
+// along with Calques 3D; if not, write to The Free Software Foundation, Inc., 
+// 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA 
+//////////////////////////////////////////////////////////////////////
+// View3DRender.cpp: implementation of the CView3DRender class.
 //
+//////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
 
@@ -169,6 +190,7 @@ void CView3DRender::OnCreateGL()
 	glEnable(GL_DEPTH_TEST);
 // set background color to black
 	glClearColor(0.f,0.f,0.f,1.0f );
+//	glClearColor(0.5f,0.5f,0.5f,1.f );
 // set clear Z-Buffer value
 	glClearDepth(1.0f);
 // create and enable a white directional light
@@ -213,13 +235,14 @@ void CView3DRender::OnCreateGL()
 	glEnable(GL_COLOR_MATERIAL);
 
 	//SetLight();
-		//glEnable(GL_POINT_SMOOTH);
-		//glEnable(GL_LINE_SMOOTH);
-		//glEnable(GL_POLYGON_SMOOTH);
-		//glEnable(GL_BLEND);
-		//glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
-		//glHint(GL_LINE_SMOOTH_HINT,GL_NICEST);
-		//glShadeModel(GL_SMOOTH);
+// 		glEnable(GL_POINT_SMOOTH);
+// 		glEnable(GL_LINE_SMOOTH);
+// 		glEnable(GL_POLYGON_SMOOTH);
+// 		glEnable(GL_BLEND);
+// 		glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+// 		glHint(GL_LINE_SMOOTH_HINT,GL_NICEST);
+// 		glHint(GL_POLYGON_SMOOTH_HINT,GL_FASTEST);
+// 		glShadeModel(GL_SMOOTH);
 		//glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
 
 // prepare a bunch of line segments (carthesian axes arrows)
