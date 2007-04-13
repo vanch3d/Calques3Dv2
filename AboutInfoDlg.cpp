@@ -1,5 +1,26 @@
-// AboutInfoDlg.cpp : implementation file
+//////////////////////////////////////////////////////////////////////
+// Calques 3D - a 3D Dynamic Geometry Learning Environment
+// Copyright (c) 1997-2007 Nicolas Van Labeke
+//////////////////////////////////////////////////////////////////////
+// This file is part of Calques 3D.
+// 
+// Calques 3D is free software; you can redistribute it and/or modify it 
+// under the terms of the GNU General Public License as published by 
+// the Free Software Foundation; either version 2 of the License, or 
+// (at your option) any later version.
+// 
+// Calques 3D is distributed in the hope that it will be useful, 
+// but WITHOUT ANY WARRANTY; without even the implied warranty of 
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License 
+// along with Calques 3D; if not, write to The Free Software Foundation, Inc., 
+// 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA 
+//////////////////////////////////////////////////////////////////////
+// AboutInfoDlg.cpp: implementation of the CAboutInfoPage class.
 //
+//////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
 #include "calques3d.h"
@@ -84,14 +105,30 @@ BOOL CAboutInfoPage::OnInitDialog()
 	 if (applVersion.GetDebug(debug))
 		  m_cDebug.SetWindowText(debug);
 
+	m_cInfo.SetWindowText(_T(
+		"This program is free software; you can redistribute it and/or "
+		"modify it under the terms of the GNU General Public License "
+		"as published by the Free Software Foundation; either version 2 "
+		"of the License, or (at your option) any later version."
+		"\r\n\r\n"
+		"This program is distributed in the hope that it will be useful, "
+		"but WITHOUT ANY WARRANTY; without even the implied warranty of "
+		"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the "
+		"GNU General Public License for more details."
+// 		"\r\n\r\n"
+// 		"You should have received a copy of the GNU General Public License "
+// 		"along with this program; if not, write to the Free Software "
+// 		"Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA"
+		));
+
  	m_cMail.SetURLPrefix (_T("mailto:"));
 	m_cMail.SetURL (_T("n.vanlabeke@scre.ac.uk"));
 	m_cMail.SizeToContent ();
 	m_cMail.SetTooltip (_T("Send mail to author"));
 
  	m_cURL.SetURLPrefix (_T("http://"));
-	m_cURL.SetURL (_T("uk.geocities.com/nicolas.vanlabeke@btinternet.com/"));
-	m_cURL.SetTooltip (_T("http://uk.geocities.com/nicolas.vanlabeke@btinternet.com/"));
+	m_cURL.SetURL (_T("www.calques3d.org"));
+	m_cURL.SetTooltip (_T("http://www.calques3d.org"));
 	m_cURL.SizeToContent ();
 
 	return TRUE;  // return TRUE unless you set the focus to a control
