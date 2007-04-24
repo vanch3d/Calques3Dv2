@@ -93,7 +93,7 @@ public:
 	virtual void DrawSelected(CDC* pDC,CVisualParam *vp);
 	virtual CString ExportSymbolic(int nFormat); 
 	virtual void	GetRange(CVector4 &min,CVector4 &max);
-	virtual void	Draw3DRendering();
+	virtual void	Draw3DRendering(int nVolMode);
 
 	virtual BOOL GetDistanceFrom(CObject3D *pObj,FCoord& dis);
 

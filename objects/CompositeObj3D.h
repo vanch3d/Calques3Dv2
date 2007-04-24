@@ -92,7 +92,7 @@ public:
 
 	virtual void DrawDepGraph(CDC* pDC,CImageList *pImgList=NULL,int nTrace=GRAPH_NONE,BOOL bDrawNode=TRUE,BOOL bDrawLink=TRUE);
 	virtual HTREEITEM DrawHistory(CTreeCtrl& mListCtrl,HTREEITEM pParent=TVI_ROOT);
-	virtual void		Draw3DRendering();
+	virtual void		Draw3DRendering(int nVolMode);
 	virtual void ClearHistory();
 
 	virtual int SetProperties(CxObject3DSet *pSet=NULL);

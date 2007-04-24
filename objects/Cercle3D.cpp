@@ -500,7 +500,7 @@ void CCercle3D::Draw(CDC* pDC,CVisualParam *mV,BOOL bSM)
 
 }
 
-void CCercle3D::Draw3DRendering()
+void CCercle3D::Draw3DRendering(int nVolMode)
 {
     if ((!bVisible) || (!bValidate)) return;
 
@@ -814,7 +814,7 @@ UINT  CEllipse3D::CalculConceptuel()
     return 0;
 }
 
-void CEllipse3D::Draw3DRendering()
+void CEllipse3D::Draw3DRendering(int nVolMode)
 {
     if ((!bVisible) || (!bValidate)) return;
 }

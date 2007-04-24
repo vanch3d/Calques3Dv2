@@ -268,6 +268,17 @@ public:
 	};
 
 	//////////////////////////////////////////////////////////////////////
+	/// Used to identify the rendering mode for volumes in the OpenGL view
+	/// @see CObject3D::Draw3DRendering()
+	//////////////////////////////////////////////////////////////////////
+	enum TRenderType 
+	{ 
+		RENDER_SILHOUETTE = 0,	///< Volumes are rendered as wireframe
+		RENDER_FILL,			///< Volumes are rendered as plain solids
+		RENDER_STIPPLE			///< Volumes are rendered as translucent shapes
+	};
+
+	//////////////////////////////////////////////////////////////////////
 	/// Used to identify the modified attribute of the object
 	//////////////////////////////////////////////////////////////////////
 	enum TAttributeType 
@@ -427,7 +438,7 @@ public:
 	virtual void		ClearHistory() { pHistItem = NULL;};
 	virtual CString		ExportSymbolic(int nFormat); 
 	virtual void		DrawMathPad(CDC*);
-	virtual void		Draw3DRendering();
+	virtual void		Draw3DRendering(int nVolMode);
 
 	virtual void		DrawDepGraph(CDC* pDC,CImageList *pImgList=NULL,int nTrace=GRAPH_NONE,BOOL bDrawNode=TRUE,BOOL bDrawLink=TRUE);
 	virtual void		DrawDepGraphLink(CDC* pDC,CObject3D *pSrc=NULL,CObject3D *pDest=NULL,int nTrace=GRAPH_NONE);

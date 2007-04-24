@@ -458,7 +458,7 @@ CString CPoint3D::ExportSymbolic(int nFormat)
 }
 
 
-void CPoint3D::Draw3DRendering()
+void CPoint3D::Draw3DRendering(int nVolMode)
 {
     if ((!bVisible) || (!bValidate)) return;
 

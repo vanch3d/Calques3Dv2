@@ -396,14 +396,14 @@ void CCompositeObj3D::Draw(CDC* pDC,CVisualParam *vp,BOOL bSM)
 
 }
 
-void CCompositeObj3D::Draw3DRendering()
+void CCompositeObj3D::Draw3DRendering(int nVolMode)
 {
     if ((!bVisible) || (!bValidate)) return;
     int nb = m_cSubObjects.GetSize();
     for (int i=nStartShow;i<nb;i++)
      {
         CObject3D * obj = m_cSubObjects.GetAt(i);
-        obj->Draw3DRendering();
+        obj->Draw3DRendering(nVolMode);
      }
 
 }

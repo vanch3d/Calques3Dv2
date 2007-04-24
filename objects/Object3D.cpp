@@ -1183,7 +1183,7 @@ void CObject3D::DrawMathPad(CDC*) {}
 ///
 /// @todo	Add the OpenGL representation for all objects
 //////////////////////////////////////////////////////////////////////
-void CObject3D::Draw3DRendering() {}
+void CObject3D::Draw3DRendering(int nVolMode) {}
 
 //////////////////////////////////////////////////////////////////////
 /// Method CObject3D::DrawDepGraph
