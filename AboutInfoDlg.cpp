@@ -53,6 +53,7 @@ void CAboutInfoPage::DoDataExchange(CDataExchange* pDX)
 {
 	CPropertyPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CAboutInfoPage)
+	DDX_Control(pDX, IDC_SUPPORT, m_cSupport);
 	DDX_Control(pDX, IDC_URL, m_cURL);
 	DDX_Control(pDX, IDC_MAIL, m_cMail);
 	DDX_Control(pDX, IDC_VERSION, m_cVersion);
@@ -110,7 +111,7 @@ BOOL CAboutInfoPage::OnInitDialog()
 		"modify it under the terms of the GNU General Public License "
 		"as published by the Free Software Foundation; either version 2 "
 		"of the License, or (at your option) any later version."
-		"\r\n\r\n"
+		"\r\n"
 		"This program is distributed in the hope that it will be useful, "
 		"but WITHOUT ANY WARRANTY; without even the implied warranty of "
 		"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the "
@@ -125,11 +126,19 @@ BOOL CAboutInfoPage::OnInitDialog()
 	m_cMail.SetURL (_T("n.vanlabeke@scre.ac.uk"));
 	m_cMail.SizeToContent ();
 	m_cMail.SetTooltip (_T("Send mail to author"));
+	m_cMail.m_bDrawFocus = FALSE;
 
  	m_cURL.SetURLPrefix (_T("http://"));
 	m_cURL.SetURL (_T("www.calques3d.org"));
 	m_cURL.SetTooltip (_T("http://www.calques3d.org"));
 	m_cURL.SizeToContent ();
+	m_cURL.m_bDrawFocus = FALSE;
+
+	m_cSupport.SetURLPrefix (_T("http://"));
+	m_cSupport.SetURL (_T("www.calques3d.org/donation.html"));
+	m_cSupport.SetTooltip (_T("Donate online"));
+	m_cSupport.SizeToContent (TRUE,TRUE);
+	m_cSupport.m_bDrawFocus = FALSE;
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
