@@ -143,12 +143,17 @@ public:
 class CBCGPSliderProp : public CBCGPProp
 {
 // Construction
+private:
+	int m_nMin;
+	int m_nMax;
 public:
 	CBCGPSliderProp(
 		const CString& strName,
 		long nValue,
 		LPCTSTR lpszDescr = NULL,
-		DWORD dwData = 0);
+		DWORD dwData = 0,
+		int min=0,
+		int max=100);
 
 // Overrides
 public:
