@@ -13,6 +13,7 @@
 #define HIDC_DMACRO_NAME                0x80b10463    // IDD_MACROINFO_DLG
 #define HIDC_DMACRO_PATH                0x80b10414    // IDD_MACROINFO_DLG
 #define HIDC_DMACRO_SAVEAS              0x80b10466    // IDD_MACROINFO_DLG
+#define HIDC_MAIL                       0x814e03e8    // IDD_ABOUTPROP
 #define HIDC_MATHPAD_ANGLE              0xc9f70479    // IDD_PREF_MATHPAD_PAGE
 #define HIDC_MATHPAD_DIST               0xc9f7047a    // IDD_PREF_MATHPAD_PAGE
 #define HIDC_MATHPAD_FRACTION           0xc9f70477    // IDD_PREF_MATHPAD_PAGE
@@ -59,6 +60,7 @@
 #define HIDC_SHAPE_APP                  0x806f0486    // IDD_PREF_SHAPE_PAGE
 #define HIDC_SHAPE_DEFCOLOR             0xc9fc042b    // IDD_PREF_COLORS_PAGE
 #define HIDC_SHAPE_HIDDEN               0xc9fc043c    // IDD_PREF_COLORS_PAGE
+#define HIDC_SUPPORT                    0x814e03ea    // IDD_ABOUTPROP
 #define HIDC_SUPP_DELETELIST            0x806b0412    // IDD_SUPPRESS_DLG
 #define HIDC_SUPP_SHOWLIST              0x806b0411    // IDD_SUPPRESS_DLG
 #define HIDC_TXT_EDIT                   0xc9f8047f    // IDD_OBJECTTEXT_PAGE
@@ -66,6 +68,7 @@
 #define HIDC_TXT_FONT                   0xc9f80480    // IDD_OBJECTTEXT_PAGE
 #define HIDC_TXT_VAR                    0xc9f80482    // IDD_OBJECTTEXT_PAGE
 #define HIDC_TXT_VARNAME                0xc9f80483    // IDD_OBJECTTEXT_PAGE
+#define HIDC_URL                        0x814e03e9    // IDD_ABOUTPROP
 #define HIDC_VERIFY_COUNTER             0x80760475    // IDD_VERIFY_DLG
 #define HIDC_VERIFY_PROP                0x80760470    // IDD_VERIFY_DLG
 #define HIDC_VERIFY_PROP_ICON           0x8076046f    // IDD_VERIFY_DLG
