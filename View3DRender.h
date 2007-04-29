@@ -53,6 +53,7 @@ public:
 	CBallController trackball;
 	CRenderPropDlg* m_pDlg;
     int   m_LightParam[NBVIEWPARAMS];  // Graphics dimension (along X-axis)
+	int		m_nVolMode;
 // Operations
 public:
 	CCalques3DDoc* GetDocument();
@@ -80,6 +81,9 @@ protected:
 
 	// Generated message map functions
 protected:
+	void ProcessSelection(int xPos, int yPos);
+	void ProcessObject(GLuint *pSelectBuff);
+
 	void OnSizeGL(int cx, int cy);
 	//{{AFX_MSG(CView3DRender)
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
@@ -90,6 +94,8 @@ protected:
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
 	afx_msg void OnShowProperty();
 	afx_msg void OnUpdateProperty(CCmdUI* pCmdUI);
+	afx_msg void OnChangeVolumeMode(UINT);
+	afx_msg void OnUpdateVolumeMode(CCmdUI* pCmdUI);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

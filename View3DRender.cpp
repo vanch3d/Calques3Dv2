@@ -52,6 +52,9 @@ BEGIN_MESSAGE_MAP(CView3DRender, CGLEnabledView)
 	ON_WM_CONTEXTMENU()
 	ON_COMMAND(ID_RENDERER_PROPERTY, OnShowProperty)
 	ON_UPDATE_COMMAND_UI(ID_RENDERER_PROPERTY, OnUpdateProperty)
+	ON_COMMAND_RANGE(ID_RENDERER_SILHOUETTE,ID_RENDERER_STIPPLE, OnChangeVolumeMode)
+    ON_UPDATE_COMMAND_UI_RANGE(ID_RENDERER_SILHOUETTE, ID_RENDERER_STIPPLE, OnUpdateVolumeMode)
+
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -63,6 +66,7 @@ CView3DRender::CView3DRender():
 	trackball.SetColor(RGB(130,80,30));
 	trackball.SetDrawConstraints();
 	m_pDlg = NULL;
+	m_nVolMode = CObject3D::RENDER_SILHOUETTE;
 }
 
 CView3DRender::~CView3DRender()
@@ -233,6 +237,7 @@ void CView3DRender::OnCreateGL()
 	glEnable(GL_DEPTH_TEST);
 	//====== Material colors will be taken into account
 	glEnable(GL_COLOR_MATERIAL);
+	glEnable(GL_POLYGON_STIPPLE);
 
 	//SetLight();
 // 		glEnable(GL_POINT_SMOOTH);
@@ -344,7 +349,7 @@ void CView3DRender::OnDrawGL()
     {
         CObject3D* pObj = GetDocument()->m_cObjectSet.GetAt(i);
         if (!pObj) continue;
-		pObj->Draw3DRendering();
+		pObj->Draw3DRendering(m_nVolMode);
 	}
 
 
@@ -367,18 +372,96 @@ void CView3DRender::OnInitialUpdate()
 	CGLEnabledView::OnInitialUpdate();
 }
 
+#define BUFFER_LENGTH 64
+void CView3DRender::ProcessSelection(int xPos, int yPos)
+{
+	// Space for selection buffer
+	GLuint selectBuff[BUFFER_LENGTH];
+
+	// Hit counter and viewport storage
+	GLint hits, viewport[4];
+
+	// Setup selection buffer
+	glSelectBuffer(BUFFER_LENGTH, selectBuff);
+	
+	// Get the viewport
+	glGetIntegerv(GL_VIEWPORT, viewport);
+	viewport[0] = 0;
+	viewport[1] = 0;
+	viewport[2] = m_ClientRect.right;
+	viewport[3] = m_ClientRect.bottom;
+
+	// Change render mode
+	glRenderMode(GL_SELECT);
+	// Switch to projection and save the matrix
+	glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+
+
+	// Establish new clipping volume to be unit cube around
+	// mouse cursor point (xPos, yPos) and extending two pixels
+	// in the vertical and horizontal direction
+	glLoadIdentity();
+
+	// Since OpenGL measures
+	// window coordinates starting at the bottom of the window, and Windows
+	// measures starting at the top, we need to account for this by
+	// subtracting the y coordinate from the height of the window. This has
+	// the effect of reversing the coordinate system (y starts at top)
+	
+	gluPickMatrix(xPos, viewport[3] - yPos, 50.0,50.0, viewport);
+
+//	// Apply perspective matrix 
+//	gluPerspective(45.0f, m_dAspectRatio, 1.0, 425.0);
+	gluPerspective(m_LightParam[11]+20,m_dAspectRatio,1.0f, 100.0f);
+
+      glMatrixMode(GL_MODELVIEW);
+	// Draw the scene
+	OnDrawGL();
+ 	// Restore the projection matrix
+     glMatrixMode(GL_PROJECTION);
+	glPopMatrix();
+	// Go back to modelview for normal rendering
+      glMatrixMode(GL_MODELVIEW);
+
+	// Collect the hits
+	hits = glRenderMode(GL_RENDER);
+
+	// If a single hit occured, display the info.
+	if(hits == 1)
+		ProcessObject(selectBuff);
+
+}
+
+void CView3DRender::ProcessObject(GLuint *pSelectBuff)
+{
+	int id,count;
+	char cMessage[64];
+
+	// How many names on the name stack
+	count = pSelectBuff[0];
+
+	// Bottom of the name stack
+	id = pSelectBuff[3];
+
+}
+
 void CView3DRender::OnLButtonDown(UINT nFlags, CPoint point) 
 {
-	if(nFlags & MK_CONTROL) trackball.UseConstraints(CAMERA_AXES);
-	else if(nFlags & MK_SHIFT) trackball.UseConstraints(BODY_AXES);
-		 else trackball.UseConstraints(NO_AXES);
-// remember where we clicked
+//	ProcessSelection(point.x,point.y);
+
+	if (nFlags & MK_CONTROL) 
+		trackball.UseConstraints(CAMERA_AXES);
+	else if(nFlags & MK_SHIFT) 
+		trackball.UseConstraints(BODY_AXES);
+	else trackball.UseConstraints(NO_AXES);
+	// remember where we clicked
 	MouseDownPoint=point;
 	trackball.MouseDown(point);
-// capture mouse movements even outside window borders
+	// capture mouse movements even outside window borders
 	SetCapture();
-// redraw the view
-		Invalidate(TRUE);
+	// redraw the view
+	Invalidate(TRUE);
 }
 
 void CView3DRender::OnLButtonUp(UINT nFlags, CPoint point) 
@@ -421,6 +504,28 @@ void CView3DRender::OnShowProperty()
 		m_pDlg = NULL;
 	}
 }
+
+void CView3DRender::OnChangeVolumeMode(UINT cmd)
+{
+	if (cmd==ID_RENDERER_FILL)
+		m_nVolMode = CObject3D::RENDER_FILL;
+	else if (cmd==ID_RENDERER_STIPPLE)
+		m_nVolMode = CObject3D::RENDER_STIPPLE;
+	else //if (cmd==ID_RENDERER_SILHOUETTE)
+		m_nVolMode = CObject3D::RENDER_SILHOUETTE;
+	Invalidate(TRUE);
+}
+
+void CView3DRender::OnUpdateVolumeMode(CCmdUI* pCmdUI)
+{
+	if (pCmdUI->m_nID==ID_RENDERER_FILL)
+		pCmdUI->SetCheck(m_nVolMode == CObject3D::RENDER_FILL);
+	else if (pCmdUI->m_nID==ID_RENDERER_STIPPLE)
+		pCmdUI->SetCheck(m_nVolMode == CObject3D::RENDER_STIPPLE);
+	else if (pCmdUI->m_nID==ID_RENDERER_SILHOUETTE)
+		pCmdUI->SetCheck(m_nVolMode == CObject3D::RENDER_SILHOUETTE);
+}
+
 
 void CView3DRender::OnUpdateProperty(CCmdUI* pCmdUI) 
 {
