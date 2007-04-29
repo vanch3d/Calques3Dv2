@@ -87,6 +87,7 @@ public:
 	virtual void CalculVisuel(CVisualParam *);
 	virtual void Draw(CDC* pDC,CVisualParam *vp,BOOL bSm=0);
 	virtual void DrawRetro(CDC*,CVisualParam *vp);
+	virtual void		Draw3DRendering(int nVolMode);
 
 	BOOL	IntersectLine(CDroite3D *dr,CVector4 *in,CVector4 *out);
 
