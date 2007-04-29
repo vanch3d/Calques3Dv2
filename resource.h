@@ -93,6 +93,7 @@
 #define IDR_PROPERTY_TB24               620
 #define IDC_MAIL                        1000
 #define IDC_URL                         1001
+#define IDC_SUPPORT                     1002
 #define IDC_BIGICON                     1023
 #define IDC_FONT_COLOR                  1025
 #define IDC_FONT_BOLD                   1038
@@ -250,6 +251,7 @@
 #define IDS_REDEFINE                    3034
 #define IDS_NEWCOMMENT                  3050
 #define IDS_MACROS                      3051
+#define IDS_ABOUT_DONATE                3060
 #define ERR_SUPPORTOBJECT               4000
 #define ERR_NOMIDDLE1                   4001
 #define ERR_NOMIDDLE2                   4002
@@ -358,13 +360,13 @@
 #define IDS_HELP_POLYGON                5114
 #define IDS_HELP_VALUE                  5115
 #define IDS_HELP_ARCCIRCLE              5116
-#define IDS_HELP_ELLIPSE	            5117
-#define IDS_HELP_RAY		            5118
-#define IDS_HELP_EQUATION	            5119
-#define IDS_HELP_ANGLE		            5120
-#define IDS_HELP_AREA		            5121
-#define IDS_HELP_DISTANCE	            5122
-#define IDS_HELP_VOLUME					5123
+#define IDS_HELP_ELLIPSE                5117
+#define IDS_HELP_RAY                    5118
+#define IDS_HELP_EQUATION               5119
+#define IDS_HELP_ANGLE                  5120
+#define IDS_HELP_AREA                   5121
+#define IDS_HELP_DISTANCE               5122
+#define IDS_HELP_VOLUME                 5123
 #define IDS_DEF_OBJECT                  5200
 #define IDS_DEF_POINT                   5201
 #define IDS_DEF_POINTCALC               5202
@@ -518,6 +520,7 @@
 #define PROP_DEPENDENT                  8007
 #define PROP_COMPOSITE                  8008
 #define PROP_PARENTS                    8009
+#define PROP_LOCUSSIZE                  8010
 #define PROP_DEFINITION_DESC            8100
 #define PROP_APPEARANCE_DESC            8101
 #define PROP_OBJNAME_DESC               8102
@@ -528,6 +531,7 @@
 #define PROP_DEPENDENT_DESC             8107
 #define PROP_COMPOSITE_DESC             8108
 #define PROP_PARENTS_DESC               8109
+#define PROP_LOCUSSIZE_DESC             8110
 #define IDC_PSESS_SAVEAS                18920
 #define IDC_PMAC_LIST                   18921
 #define IDC_PMAC_PATH                   18922
@@ -704,6 +708,9 @@
 #define ID_MATHPAD_ADDEQUATION          30801
 #define ID_MATHPAD_LISTVARS             30802
 #define ID_RENDERER_PROPERTY            30900
+#define ID_RENDERER_SILHOUETTE          30901
+#define ID_RENDERER_FILL                30902
+#define ID_RENDERER_STIPPLE             30903
 #define ID_VIEW_TOOLBARS                32771
 #define ID_FORMAT_OBJCOLOR              32800
 #define ID_FORMAT_OBJSHAPE              32801
