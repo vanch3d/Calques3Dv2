@@ -279,15 +279,17 @@ public:
 	};
 
 	//////////////////////////////////////////////////////////////////////
-	/// Used to identify the modified attribute of the object
+	/// Used to identify modification of the object's attribute(s)
 	//////////////////////////////////////////////////////////////////////
 	enum TAttributeType 
 	{ 
 		ATTRIB_NONE = 0,	///< No attribute modified
+		ATTRIB_NAME,		///< The name of the object is modified
 		ATTRIB_COLOR,		///< The color of the object is modified
 		ATTRIB_SHAPE,		///< The shape of the object is modified
 		ATTRIB_MARK,		///< The visual mark(s) of the object is modified
-		ATTRIB_VISIBLE		///< The visibility state of the object is modified
+		ATTRIB_VISIBLE,		///< The visibility state of the object is modified
+		ATTRIB_LOCUS		///< The size of the locus is modified
 	};
 
 	//////////////////////////////////////////////////////////////////////
