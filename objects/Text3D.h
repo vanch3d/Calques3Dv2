@@ -66,6 +66,7 @@ public:
     virtual int SetProperties(CxObject3DSet *pSet=NULL);
     virtual CString GetText();
     virtual void SetText(CString txt);
+	virtual void SetColor(COLORREF rColor);
 
     virtual void SetFont(LOGFONT *pLogFont);
 

@@ -152,6 +152,13 @@ void CText3D::SetText(CString txt)
 	mStrText = txt;
 }
 
+void CText3D::SetColor(COLORREF rColor)
+{
+	CObject3D::SetColor(rColor);
+    mColorText = rColor;
+}
+
+
 
 int CText3D::SetProperties(CxObject3DSet *pSet)
 {
