@@ -25,6 +25,7 @@
 #include "stdafx.h"
 #include "..\calques3d.h"
 #include "..\Prefs\Prefs.h"
+#include "..\OGLTools\glut.h"
 
 #include "Locus3D.h"
 
@@ -558,19 +559,21 @@ void CLocus3D::Draw(CDC *pDC,CVisualParam *mV,BOOL bSM)
     CBrush curBrush(pObjectShape.clrObject);
     CBrush *pOldB = pDC->SelectObject(&curBrush);
 
-    BYTE  *bpt1 = new BYTE[10000];
-    BYTE  *bpt2= new BYTE[10000];
-    BYTE  *bpt3= new BYTE[10000];
-    BYTE  *bpt4= new BYTE[10000];
-    POINT *pt1= new POINT[10000];
-    POINT *pt2= new POINT[10000];
-    POINT *pt3= new POINT[10000];
-    POINT *pt4= new POINT[10000];
+//     BYTE  *bpt1 = new BYTE[10000];
+//     BYTE  *bpt2= new BYTE[10000];
+//     BYTE  *bpt3= new BYTE[10000];
+//     BYTE  *bpt4= new BYTE[10000];
+//     POINT *pt1= new POINT[10000];
+//     POINT *pt2= new POINT[10000];
+//     POINT *pt3= new POINT[10000];
+//     POINT *pt4= new POINT[10000];
 
-    int npt1=0;
-    int npt2=0;
-    int npt3=0;
-    int npt4=0;
+	CArray<CPoint,CPoint> draw1,draw2,draw3,draw4;
+
+//     int npt1=0;
+//     int npt2=0;
+//     int npt3=0;
+//     int npt4=0;
 
     CPointSurS3D *pPtSurS = DYNAMIC_DOWNCAST(CPointSurS3D,m_pSource);
     CPointSurP3D *pPtSurP = DYNAMIC_DOWNCAST(CPointSurP3D,m_pSource);
@@ -657,31 +660,40 @@ void CLocus3D::Draw(CDC *pDC,CVisualParam *mV,BOOL bSM)
 
             if (x==0)
             {
-                bpt1[npt1] = PT_MOVETO;
-                pt1[npt1++] = start;
-                bpt1[npt1] = PT_LINETO;
-                pt1[npt1++] = endpt;
+//                 bpt1[npt1] = PT_MOVETO;
+//                 pt1[npt1++] = start;
+//                 bpt1[npt1] = PT_LINETO;
+//                 pt1[npt1++] = endpt;
+				draw1.Add(start);
+				draw1.Add(endpt);
             }
             if (x==1)
             {
-                bpt2[npt2] = PT_MOVETO;
-                pt2[npt2++] = start;
-                bpt2[npt2] = PT_LINETO;
-                pt2[npt2++] = endpt;
+//                 bpt2[npt2] = PT_MOVETO;
+//                 pt2[npt2++] = start;
+//                 bpt2[npt2] = PT_LINETO;
+//                 pt2[npt2++] = endpt;
+				draw2.Add(start);
+				draw2.Add(endpt);
+
             }
             if (x==2)
             {
-                bpt3[npt3] = PT_MOVETO;
-                pt3[npt3++] = start;
-                bpt3[npt3] = PT_LINETO;
-                pt3[npt3++] = endpt;
+//                 bpt3[npt3] = PT_MOVETO;
+//                 pt3[npt3++] = start;
+//                 bpt3[npt3] = PT_LINETO;
+//                 pt3[npt3++] = endpt;
+				draw3.Add(start);
+				draw3.Add(endpt);
             }
             if (x==3)
             {
-                bpt4[npt4] = PT_MOVETO;
-                pt4[npt4++] = start;
-                bpt4[npt4] = PT_LINETO;
-                pt4[npt4++] = endpt;
+//                 bpt4[npt4] = PT_MOVETO;
+//                 pt4[npt4++] = start;
+//                 bpt4[npt4] = PT_LINETO;
+//                 pt4[npt4++] = endpt;
+				draw4.Add(start);
+				draw4.Add(endpt);
             }
         }
     }
@@ -776,31 +788,39 @@ void CLocus3D::Draw(CDC *pDC,CVisualParam *mV,BOOL bSM)
                 CPoint endpt = a2D[i+1][j];
             if (x==0)
             {
-                bpt1[npt1] = PT_MOVETO;
-                pt1[npt1++] = start;
-                bpt1[npt1] = PT_LINETO;
-                pt1[npt1++] = endpt;
+//                 bpt1[npt1] = PT_MOVETO;
+//                 pt1[npt1++] = start;
+//                 bpt1[npt1] = PT_LINETO;
+//                 pt1[npt1++] = endpt;
+				draw1.Add(start);
+				draw1.Add(endpt);
             }
             if (x==1)
             {
-                bpt2[npt2] = PT_MOVETO;
-                pt2[npt2++] = start;
-                bpt2[npt2] = PT_LINETO;
-                pt2[npt2++] = endpt;
+//                 bpt2[npt2] = PT_MOVETO;
+//                 pt2[npt2++] = start;
+//                 bpt2[npt2] = PT_LINETO;
+//                 pt2[npt2++] = endpt;
+				draw2.Add(start);
+				draw2.Add(endpt);
             }
             if (x==2)
             {
-                bpt3[npt3] = PT_MOVETO;
-                pt3[npt3++] = start;
-                bpt3[npt3] = PT_LINETO;
-                pt3[npt3++] = endpt;
+//                 bpt3[npt3] = PT_MOVETO;
+//                 pt3[npt3++] = start;
+//                 bpt3[npt3] = PT_LINETO;
+//                 pt3[npt3++] = endpt;
+				draw3.Add(start);
+				draw3.Add(endpt);
             }
             if (x==3)
             {
-                bpt4[npt4] = PT_MOVETO;
-                pt4[npt4++] = start;
-                bpt4[npt4] = PT_LINETO;
-                pt4[npt4++] = endpt;
+//                 bpt4[npt4] = PT_MOVETO;
+//                 pt4[npt4++] = start;
+//                 bpt4[npt4] = PT_LINETO;
+//                 pt4[npt4++] = endpt;
+				draw4.Add(start);
+				draw4.Add(endpt);
             }
 //**                pDC->MoveTo(start);
 //**                pDC->LineTo(endpt);
@@ -825,52 +845,76 @@ void CLocus3D::Draw(CDC *pDC,CVisualParam *mV,BOOL bSM)
 //  }
 
     CPen *pOldP = pDC->SelectObject(&curPen2);
-    for (i=0;i<npt3;i++)
-    {
-        if (bpt3[i]==PT_MOVETO)
-            pDC->MoveTo(pt3[i]);
-        else
-            pDC->LineTo(pt3[i]);
-    }
+	int nn = draw3.GetSize();
+	for (i=0;i<nn;i=i+2)
+	{
+		pDC->MoveTo(draw3[i]);
+		pDC->LineTo(draw3[i+1]);
+	}
+//     for (i=0;i<npt3;i++)
+//     {
+//         if (bpt3[i]==PT_MOVETO)
+//             pDC->MoveTo(pt3[i]);
+//         else
+//             pDC->LineTo(pt3[i]);
+//     }
     //pDC->PolyDraw(pt3,bpt3,npt3);
     pDC->SelectObject(&disPen2);
-    for (i=0;i<npt4;i++)
-    {
-        if (bpt4[i]==PT_MOVETO)
-            pDC->MoveTo(pt4[i]);
-        else
-            pDC->LineTo(pt4[i]);
-    }
+	nn = draw4.GetSize();
+	for (i=0;i<nn;i=i+2)
+	{
+		pDC->MoveTo(draw4[i]);
+		pDC->LineTo(draw4[i+1]);
+	}
+//     for (i=0;i<npt4;i++)
+//     {
+//         if (bpt4[i]==PT_MOVETO)
+//             pDC->MoveTo(pt4[i]);
+//         else
+//             pDC->LineTo(pt4[i]);
+//     }
 //  pDC->PolyDraw(pt4,bpt4,npt4);
     pDC->SelectObject(&curPen);
-    for (i=0;i<npt1;i++)
-    {
-        if (bpt1[i]==PT_MOVETO)
-            pDC->MoveTo(pt1[i]);
-        else
-            pDC->LineTo(pt1[i]);
-    }
+	nn = draw1.GetSize();
+	for (i=0;i<nn;i=i+2)
+	{
+		pDC->MoveTo(draw1[i]);
+		pDC->LineTo(draw1[i+1]);
+	}
+//     for (i=0;i<npt1;i++)
+//     {
+//         if (bpt1[i]==PT_MOVETO)
+//             pDC->MoveTo(pt1[i]);
+//         else
+//             pDC->LineTo(pt1[i]);
+//     }
 //  pDC->PolyDraw(pt1,bpt1,npt1);
     pDC->SelectObject(&disPen);
-    for (i=0;i<npt2;i++)
-    {
-        if (bpt2[i]==PT_MOVETO)
-            pDC->MoveTo(pt2[i]);
-        else
-            pDC->LineTo(pt2[i]);
-    }
+	nn = draw2.GetSize();
+	for (i=0;i<nn;i=i+2)
+	{
+		pDC->MoveTo(draw2[i]);
+		pDC->LineTo(draw2[i+1]);
+	}
+//     for (i=0;i<npt2;i++)
+//     {
+//         if (bpt2[i]==PT_MOVETO)
+//             pDC->MoveTo(pt2[i]);
+//         else
+//             pDC->LineTo(pt2[i]);
+//     }
     //pDC->PolyDraw(pt2,bpt2,npt2);
     pDC->SelectObject(pOldP);
 
 
-    delete []bpt1;
-    delete []bpt2;
-    delete []bpt3;
-    delete []bpt4;
-    delete []pt1;
-    delete []pt2;
-    delete []pt3;
-    delete []pt4;
+//     delete []bpt1;
+//     delete []bpt2;
+//     delete []bpt3;
+//     delete []bpt4;
+//     delete []pt1;
+//     delete []pt2;
+//     delete []pt3;
+//     delete []pt4;
 
 
     //  else
@@ -920,7 +964,7 @@ void CLocus3D::Draw(CDC *pDC,CVisualParam *mV,BOOL bSM)
      }
 }
 
-void CLocus3D::Draw3DRendering()
+void CLocus3D::Draw3DRendering(int nVolMode)
 {
     float mat_diffuse[] = {0.9f, 0.1f, 0.1f, 1.0f};
     float no_shininess = 0.0f;
@@ -931,6 +975,8 @@ void CLocus3D::Draw3DRendering()
 	}
 	else
 	{
+		glPushMatrix();
+		if (nVolMode==RENDER_STIPPLE) glEnable(GL_POLYGON_STIPPLE);
 		for (int i=0;i<nb1-1;i+=1)
 		{
 			int nb2 = a3D[i].GetSize();
@@ -951,31 +997,45 @@ void CLocus3D::Draw3DRendering()
 				pt2=pt2*scale;
 				pt3=pt3*scale;
 				pt4=pt4*scale;
-				glBegin (GL_TRIANGLES);
-//				glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, mat_diffuse);
-//				glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, mat_diffuse);
-// 				glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, no_shininess);
-				glNormal3d (k.x, k.y, k.z);
-				glColor3f (1.0f, 0.0f, 0.f);
-				glVertex3d (pt1.x, pt1.y, pt1.z);
-				glColor3f (0.0f, 1.0f, 0.f);
-				glVertex3d (pt2.x, pt2.y, pt2.z);
-				glColor3f (1.0f, 0.0f, 1.0f);
-				glVertex3d (pt4.x, pt4.y, pt4.z);
-				glEnd();
-
-				/*GLUquadricObj*m_quadrObj=gluNewQuadric();
-				glPushMatrix();
-				glTranslated(pt1.x, pt1.y, pt1.z);
-				glColor3f(.2f,.5f,.8f);
-				glMaterialfv(GL_FRONT, GL_AMBIENT, mat_diffuse);
-				glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
-				glMaterialf(GL_FRONT, GL_SHININESS, no_shininess);
-				gluSphere(m_quadrObj,0.04,16,16);
-				glPopMatrix();*/
-
+				if (nVolMode==RENDER_STIPPLE) glPolygonStipple(stippleMask[4]);
+				//glBegin (GL_TRIANGLES);
+				//glBegin (GL_QUADS);
+				if (nVolMode==RENDER_SILHOUETTE)
+				{
+					glBegin (GL_LINES);
+					glNormal3d (k.x, k.y, k.z);
+					glColor3f (1.0f, 0.0f, 0.f);
+					glVertex3d (pt1.x, pt1.y, pt1.z);
+					glVertex3d (pt2.x, pt2.y, pt2.z);
+					glVertex3d (pt2.x, pt2.y, pt2.z);
+					glVertex3d (pt3.x, pt3.y, pt3.z);
+					glVertex3d (pt3.x, pt3.y, pt3.z);
+					glVertex3d (pt4.x, pt4.y, pt4.z);
+					glVertex3d (pt4.x, pt4.y, pt4.z);
+					glVertex3d (pt1.x, pt1.y, pt1.z);
+					glEnd();
+				}
+				else
+				{
+					glBegin (GL_QUADS);
+	//				glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, mat_diffuse);
+	//				glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, mat_diffuse);
+	// 				glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, no_shininess);
+					glNormal3d (k.x, k.y, k.z);
+					glColor3f (1.0f, 0.0f, 0.f);
+					glVertex3d (pt1.x, pt1.y, pt1.z);
+					glColor3f (0.0f, 1.0f, 0.f);
+					glVertex3d (pt2.x, pt2.y, pt2.z);
+					glColor3f (1.0f, 0.0f, 1.0f);
+					glVertex3d (pt3.x, pt3.y, pt3.z);
+					glColor3f (1.0f, 1.0f, 1.0f);
+					glVertex3d (pt4.x, pt4.y, pt4.z);
+					glEnd();
+				}
 			}
 		}
+		if (nVolMode==RENDER_STIPPLE) glDisable(GL_POLYGON_STIPPLE);
+		glPopMatrix();
 
 	}
 }
