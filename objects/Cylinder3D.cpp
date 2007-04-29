@@ -33,6 +33,7 @@
 #include "Plan3D.h"
 
 #include "Cylinder3D.h"
+#include "..\OGLTools\glut.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -598,7 +599,30 @@ void CCylinder3D::Draw(CDC* pDC,CVisualParam *mV,BOOL bSm)
     /// les génératrices
     for (int t=0;t<nDeltaT;t++)
     {
-        CObject3D *seg = cGenerList[t];
+        CSegment3D *seg = (CSegment3D*)cGenerList[t];
+		
+                CVector4 U = seg->P1->Concept_pt;
+                CVector4 V =  seg->P2->Concept_pt;
+                CVector4 Up = U - hidCr->Center;
+                Up = Up * (1/Up.Norme());
+                CVector4 Vp = V - hidCr->Center;
+                Vp = Vp * (1/Vp.Norme());
+
+                FCoord sa = IntH.J * Up;
+                FCoord ca = IntH.J * Up;
+                //if (fabsl(sa) > 1.)
+                //  sa = (sa < 0.00) ? -1.00 : 1.00;
+                //sa = acosl(sa);
+                if (sa >0 && ca > 0)
+				{ 
+					double h,s,l;
+					CBCGPDrawManager::RGBtoHSL(pObjectShape.clrObject,&h,&s,&l);
+					l = l+3*l/4;
+					COLORREF ff = CBCGPDrawManager::HLStoRGB_ONE(h,220./255.,s);
+			        seg->pObjectShape.clrObject = ff;
+
+				}
+					else
         seg->pObjectShape.clrObject = pObjectShape.clrObject;
         seg->pObjectShape.nShapeId = pObjectShape.nShapeId;
         seg->Draw(pDC,mV,bSm);
@@ -643,6 +667,62 @@ void CCylinder3D::DrawRetro(CDC*,CVisualParam *vp)
         ell.Draw(HandleDC,mV,1);
      }
 */
+}
+
+void CCylinder3D::Draw3DRendering(int nVolMode)
+{
+    if ((!bVisible) || (!bValidate)) return;
+
+	float no_mat[] = {0.0f, 0.0f, 0.0f, 1.0f};
+    float mat_ambient[] = {0.7f, 0.7f, 0.7f, 1.0f};
+    float mat_ambient_color[] = {255/255., 255/255.,100/255. , 1.0f};
+    float mat_diffuse[] = {0.9f, 0.1f, 0.1f, 1.0f};
+    float mat_specular[] = {1.0f, 1.0f, 1.0f, 1.0f};
+    float no_shininess = 0.0f;
+    float low_shininess = 5.0f;
+    float high_shininess = 100.0f;
+    float mat_emission[] = {0.3f, 0.2f, 0.2f, 0.0f};
+
+	GLdouble x = (Base1->Concept_pt.x/TPref::TUniv.nUnitRep/3);
+	GLdouble y = (Base1->Concept_pt.y/TPref::TUniv.nUnitRep/3);
+	GLdouble z = (Base1->Concept_pt.z/TPref::TUniv.nUnitRep/3);
+	GLdouble ray = (nRayon/TPref::TUniv.nUnitRep/3);
+
+	FCoord dst = (Base2->Concept_pt - Base1->Concept_pt).Norme();
+	GLdouble dist = (dst/TPref::TUniv.nUnitRep/3);
+	CVector4 dl = LocRep.K;
+	CVector4 dz(0,0,1);
+	CVector4 drot = dz % dl;
+	double dd = 0;
+		drot = drot.Normalized();
+		drot.Norme();
+	if (drot.N!=0)
+	{
+		FCoord cosangle = dz * dl;
+		dd = acos(cosangle);
+		dd = RTD(dd);
+	}
+	else
+	{
+		drot = dz;
+	}
+	
+	GLUquadricObj*m_quadrObj=gluNewQuadric();
+ 	gluQuadricDrawStyle(m_quadrObj,GLU_FILL);
+
+	glPushMatrix();
+	glTranslated(x, y, z);
+	glRotated(dd,drot.x,drot.y,drot.z);
+	glColor3f(.2f,.5f,.8f);
+    glMaterialfv(GL_FRONT, GL_AMBIENT, mat_diffuse);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
+    glMaterialf(GL_FRONT, GL_SHININESS, no_shininess);
+	gluCylinder(m_quadrObj,ray,ray,dist,16,16);
+	glPopMatrix();
+	/*glBegin (GL_POINTS);
+	glColor3f(1.0f,0.0f,0.0f);			// Red
+	glVertex3f (x,y,z);
+	glEnd ();*/
 }
 
 BOOL CCylinder3D::IntersectLine(CDroite3D *Dr,CVector4 *pt1,CVector4 *pt2)
