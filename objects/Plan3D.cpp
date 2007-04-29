@@ -472,10 +472,10 @@ void CPlan3D::CalculVisuel(CVisualParam *pVisParam)
         CVector4 ap1(0,0,0);
         CVector4 ap2(I * U, J * U, K * U);
         CVector4 ap3(I * V, J * V, K * V);
-        CVector4 re(min(ap1.x,min(ap2.x,ap3.x)),
-                        min(ap1.y,min(ap2.y,ap3.y)),
-                        max(ap1.x,max(ap2.x,ap3.x)),
-                        max(ap1.y,max(ap2.y,ap3.y)));
+        planeBorder = CVector4(min(ap1.x,min(ap2.x,ap3.x)),
+								min(ap1.y,min(ap2.y,ap3.y)),
+								max(ap1.x,max(ap2.x,ap3.x)),
+								max(ap1.y,max(ap2.y,ap3.y)));
 
         if (isA()==TPlanPerp3DClass)
         {
@@ -485,10 +485,10 @@ void CPlan3D::CalculVisuel(CVisualParam *pVisParam)
                 CVector4 thept = mypl->IntPt;
                 CVector4 rr= thept - P1->Concept_pt;
                 CVector4 ap3(I * rr, J * rr, K * rr);
-                re.x = min(re.x,ap3.x);
-                re.y = min(re.y,ap3.y);
-                re.z = max(re.z,ap3.x);
-                re.w = max(re.w,ap3.y);
+                planeBorder.x = min(planeBorder.x,ap3.x);
+                planeBorder.y = min(planeBorder.y,ap3.y);
+                planeBorder.z = max(planeBorder.z,ap3.x);
+                planeBorder.w = max(planeBorder.w,ap3.y);
             }
         }
         int nbobj = cDependList.GetSize();
@@ -506,23 +506,23 @@ void CPlan3D::CalculVisuel(CVisualParam *pVisParam)
                 {
 					if (pObj->MaskObject(TInterCircPl3DClass))
 					{
-						GetProjectedMinMax(((CInterCircPlane3D*)pObj)->ptA,P1->Concept_pt,I,J,K,re);
-						GetProjectedMinMax(((CInterCircPlane3D*)pObj)->ptB,P1->Concept_pt,I,J,K,re);
+						GetProjectedMinMax(((CInterCircPlane3D*)pObj)->ptA,P1->Concept_pt,I,J,K,planeBorder);
+						GetProjectedMinMax(((CInterCircPlane3D*)pObj)->ptB,P1->Concept_pt,I,J,K,planeBorder);
 					}
 					else
-						GetProjectedMinMax(pObj,P1->Concept_pt,I,J,K,re);
+						GetProjectedMinMax(pObj,P1->Concept_pt,I,J,K,planeBorder);
                 }
         }
         bUpdateMe = 0;
-        re.x-=PLANEMARGE;
-        re.y-=PLANEMARGE;
-        re.z+=PLANEMARGE;
-        re.w+=PLANEMARGE;
+        planeBorder.x-=PLANEMARGE;
+        planeBorder.y-=PLANEMARGE;
+        planeBorder.z+=PLANEMARGE;
+        planeBorder.w+=PLANEMARGE;
         CVector4 lim[4] = {
-                CVector4(re.x,re.y,0),
-                CVector4(re.x,re.w,0),
-                CVector4(re.z,re.w,0),
-                CVector4(re.z,re.y,0)};
+                CVector4(planeBorder.x,planeBorder.y,0),
+                CVector4(planeBorder.x,planeBorder.w,0),
+                CVector4(planeBorder.z,planeBorder.w,0),
+                CVector4(planeBorder.z,planeBorder.y,0)};
         for (int t=0;t<4;t++)
          {
             CVector4 U = lim[t];
@@ -1072,7 +1072,7 @@ void CPlan3D::DrawRetro(CDC* pDC,CVisualParam *mV)
      }
 }
 
-void CPlan3D::Draw3DRendering()
+void CPlan3D::Draw3DRendering(int nVolMode)
 {
     if ((!bVisible) || (!bValidate)) return;
 
@@ -1858,7 +1858,7 @@ CString CPolygon3D::ExportSymbolic(int nFormat)
 }
 
 
-void CPolygon3D::Draw3DRendering()
+void CPolygon3D::Draw3DRendering(int nVolMode)
 {
     if ((!bVisible) || (!bValidate)) return;
 	float no_mat[] = {0.0f, 0.0f, 0.0f, 1.0f};
