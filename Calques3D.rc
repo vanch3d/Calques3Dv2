@@ -429,7 +429,7 @@ END
 IDD_ABOUTPROP DIALOGEX 0, 0, 214, 190
 STYLE WS_CHILD | WS_VISIBLE | WS_CAPTION
 CAPTION "Info"
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,12,12,20,20
     LTEXT           "Calques3D",IDC_STATIC,50,12,40,8,SS_NOPREFIX | 
@@ -792,7 +792,7 @@ IDD_RENDERER_PROP DIALOGEX 0, 0, 188, 204
 STYLE DS_CONTEXTHELP | WS_POPUP | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_TOOLWINDOW
 CAPTION "View Properties"
-FONT 8, "MS Sans Serif", 0, 0, 0x1
+FONT 8, "MS Sans Serif"
 BEGIN
     GROUPBOX        "Lighting",IDC_STATIC,8,4,84,74
     CONTROL         "Slider1",IDC_RENDERER_AMBIENT,"msctls_trackbar32",
@@ -2937,7 +2937,8 @@ BEGIN
                             "Construct a line perpendicular to two lines\nCross Product"
     ID_CONSTRUCTION_DIVSEGMENT 
                             "Divide a segment in three equal parts\nTrisection"
-    ID_CONSTRUCTION_INTERSECTION_SPHEREPLANE "sss"
+    ID_CONSTRUCTION_INTERSECTION_SPHEREPLANE 
+                            "Construct a circle at the intersection of a sphere and a plane\nIntersection Sphere/Plane"
 END
 
 STRINGTABLE DISCARDABLE 
@@ -3540,6 +3541,7 @@ BEGIN
     PROP_DEPENDENT          "Dependents"
     PROP_COMPOSITE          "Composite"
     PROP_PARENTS            "Parents"
+    PROP_LOCUSSIZE          "Locus"
 END
 
 STRINGTABLE DISCARDABLE 
@@ -3554,6 +3556,7 @@ BEGIN
     PROP_DEPENDENT_DESC     "The list of all objects built from this one"
     PROP_COMPOSITE_DESC     "The list of all internal constituents of this object"
     PROP_PARENTS_DESC       "The objects from which this one is built"
+    PROP_LOCUSSIZE_DESC     "The size of the mesh representing the locus"
 END
 
 STRINGTABLE DISCARDABLE 
@@ -3591,6 +3594,11 @@ BEGIN
     IDS_HELP_AREA           "the area %s"
     IDS_HELP_DISTANCE       "the distance %s"
     IDS_HELP_VOLUME         "the volume %s"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_ABOUT_DONATE        "Donate online"
 END
 
 #endif    // English (U.K.) resources
