@@ -36,7 +36,7 @@ doesn't replace MFC; it just makes it easier to write more powerful MFC apps.
 
 
 \section BCGControlBarList BCGControlBar Class List
-Here is a list of the BCGControlBar Library used in this project, with brief descriptions:
+Here is a list of the major classes of the library used in this project, with brief descriptions:
 <table border="0" cellspacing="3" cellpadding="3">
   <tr><td class="indexkey">CBCGPButton</td><td class="indexvalue">The CBCGPButton  class provides the extended 
 		functionality of the standard Windows button controls. It includes the new look & feel styles, the various 
