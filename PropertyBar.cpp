@@ -30,6 +30,7 @@
 #include "objects/Object3D.h"
 #include "objects/Text3D.h"
 #include "objects/CompositeObj3D.h"
+#include "objects/Locus3D.h"
 
 #include "Prefs\Prefs.h"
 
@@ -111,17 +112,21 @@ CBCGPProp* CPropertyBar::GetObjectAppearance(CObject3D* pObj)
 {
 	CString strRes,strDefRes;
 
+	// Description of the object
 	strRes.LoadString(PROP_APPEARANCE);
 	strDefRes.LoadString(PROP_APPEARANCE_DESC);
 	CBCGPProp* pGroup = new CBCGPProp (strRes);
 	pGroup->SetDescription(strDefRes);
 
+	// Name of the object
 	strRes.LoadString(PROP_OBJNAME);
 	strDefRes.LoadString(PROP_OBJNAME_DESC);
 	CBCGPProp* pProp = new CBCGPProp (strRes, (LPCTSTR) pObj->GetObjectName(),strDefRes);
+	//pProp->SetData((DWORD)&pObj->strObjectName);
+	pProp->SetData(CObject3D::ATTRIB_NAME);
 	pGroup->AddSubItem (pProp);
-	pProp->SetData((DWORD)&pObj->strObjectName);
 
+	// Default color palette
 	if (m_palColorPicker.GetSafeHandle () == NULL)
 	{	// Create the palette
 		int m_nNumColours = 8;
@@ -146,22 +151,24 @@ CBCGPProp* CPropertyBar::GetObjectAppearance(CObject3D* pObj)
 		m_palColorPicker.CreatePalette (pLogPalette);
 	}
 
+	// Color of the object
 	strRes.LoadString(PROP_OBJCOLOR);
 	strDefRes.LoadString(PROP_OBJCOLOR_DESC);
 	CBCGPColorProp* pColorProp = new CBCGPColorProp (strRes, 
 						pObj->pObjectShape.GetObjectColor(), &m_palColorPicker, 
 						strDefRes);
 	pColorProp->AllowEdit(FALSE);
-	pColorProp->SetData((DWORD)&pObj->pObjectShape.clrObject);
+	//pColorProp->SetData((DWORD)&pObj->pObjectShape.clrObject);
+	pColorProp->SetData(CObject3D::ATTRIB_COLOR);
 
 	CString strDef,strOther,strDoc;
 	strDef.LoadString(PREF_NAME_CLRAUTO);
 	strOther.LoadString(PREF_NAME_CLROTHER);
 	pColorProp->EnableAutomaticButton (strDef, pObj->GetDefaultColor());
 	pColorProp->EnableOtherButton (strOther);
-
 	pGroup->AddSubItem (pColorProp);
 
+	// Shape of the object
 	strRes.LoadString(PROP_OBJSHAPE);
 	strDefRes.LoadString(PROP_OBJSHAPE_DESC);
 	int index = pObj->pObjectShape.nShapeId;
@@ -169,23 +176,38 @@ CBCGPProp* CPropertyBar::GetObjectAppearance(CObject3D* pObj)
 					pObj->pObjectShape.GetShapeSize(), 
 					pObj->pObjectShape.GetShapeType(),
 					strDefRes);
-	pProp->SetData((DWORD)&pObj->pObjectShape.nShapeId);
+	//pProp->SetData((DWORD)&pObj->pObjectShape.nShapeId);
+	pProp->SetData(CObject3D::ATTRIB_SHAPE);
 	pGroup->AddSubItem (pProp);
 
+	// Visibility of the object
 	strRes.LoadString(PROP_OBJVISIBLE);
 	strDefRes.LoadString(PROP_OBJVISIBLE_DESC);
 	pProp = new CBCGPCheckBoxProp (strRes, pObj->bVisible,strDefRes);
-	pProp->SetData((DWORD)&pObj->bVisible);
-
+	//pProp->SetData((DWORD)&pObj->bVisible);
 	pProp->SetData(CObject3D::ATTRIB_VISIBLE);
 	pGroup->AddSubItem (pProp);
 
+	// Marks
 	strRes.LoadString(PROP_OBJMARKED);
 	strDefRes.LoadString(PROP_OBJMARKED_DESC);
 	pProp = new CBCGPCheckBoxProp (strRes, pObj->bMarked,strDefRes);
-	pProp->SetData((DWORD)&pObj->bMarked);
+	//pProp->SetData((DWORD)&pObj->bMarked);
 	pProp->SetData(CObject3D::ATTRIB_MARK);
 	pGroup->AddSubItem (pProp);
+
+	// Locus
+    CLocus3D *pLoc = DYNAMIC_DOWNCAST(CLocus3D,pObj);
+	if (pLoc)
+	{
+		strRes.LoadString(PROP_LOCUSSIZE);
+		strDefRes.LoadString(PROP_LOCUSSIZE_DESC);
+		//pProp = new CBCGPProp (strRes, (_variant_t)(long)pLoc->nDeltaT,strDefRes,0);
+		pProp = new CBCGPSliderProp (strRes, (_variant_t)(long)pLoc->nDeltaT,strDefRes,0,20,60);
+		//pProp->SetData((DWORD)&pLoc->nDeltaT);
+		pProp->SetData(CObject3D::ATTRIB_LOCUS);
+		pGroup->AddSubItem (pProp);
+	}
 
 	return pGroup;
 }
@@ -204,7 +226,8 @@ CBCGPProp* CPropertyBar::GetTextAppearance(CText3D* pObj)
 	strDefRes.LoadString(PROP_OBJNAME_DESC);
 	CBCGPProp* pProp = new CBCGPProp (strRes, (LPCTSTR) pObj->GetObjectName(),strDefRes);
 	pGroup->AddSubItem (pProp);
-	pProp->SetData((DWORD)&pObj->strObjectName);
+	//pProp->SetData((DWORD)&pObj->strObjectName);
+	pProp->SetData(CObject3D::ATTRIB_NAME);
 
 	if (m_palColorPicker.GetSafeHandle () == NULL)
 	{	// Create the palette
@@ -236,7 +259,8 @@ CBCGPProp* CPropertyBar::GetTextAppearance(CText3D* pObj)
 						pObj->mColorText, &m_palColorPicker, 
 						strDefRes);
 	pColorProp->AllowEdit(FALSE);
-	pColorProp->SetData((DWORD)&pObj->mColorText);
+	//pColorProp->SetData((DWORD)&pObj->mColorText);
+	pColorProp->SetData(CObject3D::ATTRIB_COLOR);
 
 	CString strDef,strOther,strDoc;
 	strDef.LoadString(PREF_NAME_CLRAUTO);
@@ -383,37 +407,53 @@ LRESULT CPropertyBar::OnPropertyChanged (WPARAM wParam,LPARAM lParam)
 
 	if (pColorProp)	// Color Property
 	{
-		COLORREF *ppclr = (COLORREF*)pProp->GetData();
-		if (ppclr)
-			*ppclr = pColorProp->GetColor();
+// 		COLORREF *ppclr = (COLORREF*)pProp->GetData();
+// 		if (ppclr)
+// 			*ppclr = pColorProp->GetColor();
+		COLORREF color = pColorProp->GetColor();
+		DWORD type = pProp->GetData();
+		if (type==CObject3D::ATTRIB_COLOR)
+			m_pSelObj->SetColor(color);
 	}
 	else if (tvar.vt==VT_I2 || tvar.vt==VT_I4) // int property
 	{
-						int bb = (short)tvar;
-						int *ff = (int*)pProp->GetData();
-						if (ff) 
-							*ff = bb;
+		int bb = (short)tvar;
+// 		int *ff = (int*)pProp->GetData();
+// 		if (ff) 
+// 			*ff = bb;
+		DWORD type = pProp->GetData();
+		if (type==CObject3D::ATTRIB_SHAPE)
+			m_pSelObj->pObjectShape.nShapeId = bb;
+		else if (type==CObject3D::ATTRIB_LOCUS)
+		{
+			CLocus3D *pLoc = DYNAMIC_DOWNCAST(CLocus3D,m_pSelObj);
+			if (pLoc)
+			{
+				pLoc->nDeltaT = bb;
+				pLoc->CalculConceptuel();
+			}
+		}
+
+		
 	}
 	else if (tvar.vt==VT_BOOL)	// boolean property
 	{
 		bool bb = (bool)tvar;
-// 		BOOL *ff = (BOOL*)pProp->GetData();
-// 		if (ff) 
-// 			*ff = bb;
 		DWORD type = pProp->GetData();
 		if (type==CObject3D::ATTRIB_VISIBLE)
 			m_pSelObj->SetVisible(bb);
 		else if (type==CObject3D::ATTRIB_MARK)
 			m_pSelObj->bMarked = bb;
-
-
 	}
 	else if (tvar.vt==VT_BSTR)
 	{
 		CString strVal = (LPCTSTR)(_bstr_t)tvar;
-								CString *ff = (CString*)pProp->GetData();
-								//*(ddddd[j])=ki;
-								if (ff) *ff = strVal;
+		DWORD type = pProp->GetData();
+		//CString *ff = (CString*)pProp->GetData();
+		//*(ddddd[j])=ki;
+		//if (ff) *ff = strVal;
+		if (type==CObject3D::ATTRIB_NAME)
+			m_pSelObj->SetName(strVal);		
 	}
 
 	CMainFrame *pWnd = DYNAMIC_DOWNCAST (CMainFrame, AfxGetMainWnd());
@@ -426,7 +466,6 @@ LRESULT CPropertyBar::OnPropertyChanged (WPARAM wParam,LPARAM lParam)
     if (!pDoc) return 0; // only for views with document
 
 	pDoc->UpdateAllViews(NULL,WM_UPDATEOBJ_MOD,m_pSelObj);
-
 	return 0;
 }
 
