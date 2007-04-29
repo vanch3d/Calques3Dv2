@@ -426,26 +426,31 @@ BEGIN
     GROUPBOX        "Sincronização",IDC_STATIC,4,92,204,40,BS_FLAT
 END
 
-IDD_ABOUTPROP DIALOG DISCARDABLE  0, 0, 214, 190
+IDD_ABOUTPROP DIALOGEX 0, 0, 214, 190
 STYLE WS_CHILD | WS_VISIBLE | WS_CAPTION
 CAPTION "Info"
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,12,12,20,20
     LTEXT           "Calques3D",IDC_STATIC,50,12,40,8,SS_NOPREFIX | 
                     SS_CENTERIMAGE
     LTEXT           "version",IDC_VERSION,92,12,64,8,SS_CENTERIMAGE
     LTEXT           "interno",IDC_DEBUG,50,24,152,8,SS_CENTERIMAGE
-    CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME,7,44,200,95
-    LTEXT           "Copyright",IDC_COPYRIGHT,12,50,190,12,SS_CENTERIMAGE
-    LTEXT           "",IDC_INFO,12,68,190,67
-    CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME,7,141,200,43
-    LTEXT           "Autor : ",IDC_STATIC,12,146,64,12,
+    CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME,7,36,201,112
+    LTEXT           "Copyright",IDC_COPYRIGHT,12,40,192,12,SS_CENTERIMAGE
+    LTEXT           "Licence",IDC_INFO,12,52,192,80,SS_NOPREFIX
+    CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME,7,152,201,32
+    LTEXT           "Autor : ",IDC_STATIC,12,156,64,12,
                     SS_CENTERIMAGE
     CONTROL         "Nicolas VAN LABEKE",IDC_MAIL,"Button",BS_OWNERDRAW | 
-                    BS_LEFT | BS_FLAT,76,144,128,16
-    CONTROL         "Visitar Calques 3D online",IDC_URL,"Button",BS_OWNERDRAW | 
-                    BS_FLAT,12,164,192,18
+                    BS_LEFT | BS_FLAT,76,156,128,12,0,HIDC_MAIL
+    CONTROL         "www.calques3d.org",IDC_URL,"Button",BS_OWNERDRAW | 
+                    BS_LEFT | BS_FLAT,76,168,128,12,0,HIDC_URL
+    LTEXT           "Calques 3D online :  ",IDC_STATIC,12,168,64,12,
+                    SS_CENTERIMAGE
+    CONTROL         "Support the development of Calques 3D",IDC_SUPPORT,
+                    "Button",BS_OWNERDRAW | BS_CENTER | BS_FLAT,12,132,192,
+                    12,0,HIDC_SUPPORT
 END
 
 IDD_MACROINFO_DLG DIALOGEX 0, 0, 212, 153
@@ -549,7 +554,7 @@ FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     CONTROL         "",IDC_BIGICON,"Button",BS_OWNERDRAW | WS_DISABLED,4,4,
                     34,30
-    LTEXT           "Calques 3D version 2.3.3",IDC_STATIC,52,4,140,8,NOT 
+    LTEXT           "Calques 3D version 2.3.4",IDC_STATIC,52,4,140,8,NOT 
                     WS_GROUP
     LTEXT           "Microsoft Foundation Classes version 4.2",IDC_STATIC,52,
                     13,140,8,NOT WS_GROUP
@@ -784,9 +789,9 @@ BEGIN
 END
 
 IDD_RENDERER_PROP DIALOGEX 0, 0, 188, 204
-STYLE DS_CONTEXTHELP | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+STYLE DS_CONTEXTHELP | WS_POPUP | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_TOOLWINDOW
-CAPTION "Propriedades do"
+CAPTION "Propriedades de visualização"
 FONT 8, "MS Sans Serif"
 BEGIN
     GROUPBOX        "Iluminação",IDC_STATIC,8,4,84,74
@@ -847,7 +852,7 @@ BEGIN
     CTEXT           "Especular",IDC_STATIC,12,56,56,8
     CTEXT           "Especular",IDC_STATIC,12,132,56,8
     CTEXT           "0",IDC_RENDERER_EMISSIONTXT,156,121,20,8,SS_CENTERIMAGE
-    GROUPBOX        "Perspective",IDC_STATIC,8,160,172,36
+    GROUPBOX        "Perspectiva",IDC_STATIC,8,160,172,36
     CONTROL         "Slider1",IDC_RENDERER_FIELDVIEW,"msctls_trackbar32",
                     TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,12,180,144,12,0,
                     HIDC_RENDERER_FIELDVIEW
@@ -2492,6 +2497,10 @@ BEGIN
     POPUP "&OpenGL 3D"
     BEGIN
         MENUITEM "P&ropriedade...",                ID_RENDERER_PROPERTY
+        MENUITEM SEPARATOR
+        MENUITEM "&Silhouette",                 ID_RENDERER_SILHOUETTE
+        MENUITEM "&Fill",                       ID_RENDERER_FILL
+        MENUITEM "&Translucent",                ID_RENDERER_STIPPLE
     END
     POPUP "&Ferramentas"
     BEGIN
@@ -2535,8 +2544,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,3,3,0
- PRODUCTVERSION 2,3,3,0
+ FILEVERSION 2,3,4,0
+ PRODUCTVERSION 2,3,4,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x29L
@@ -2552,17 +2561,17 @@ BEGIN
         BLOCK "041604B0"
         BEGIN
             VALUE "Comments", "Micromundo da Geometria Dinâmica no Espaço\0"
-            VALUE "CompanyName", "SCRE - University of Glasgow\0"
+            VALUE "CompanyName", "Calques 3D\0"
             VALUE "FileDescription", "Calques 3D\0"
-            VALUE "FileVersion", "2.3.3\0"
+            VALUE "FileVersion", "2.3.4\0"
             VALUE "InternalName", "Calques3D\0"
-            VALUE "LegalCopyright", "Copyright © 2001-2006\0"
+            VALUE "LegalCopyright", "Copyright © 1997-2007 Nicolas Van Labeke\0"
             VALUE "LegalTrademarks", "N. Van Labeke / P. Bernat / J. Morinet-Lambert\0"
             VALUE "OriginalFilename", "Calques3D.exe\0"
             VALUE "PrivateBuild", "Beta Version\0"
             VALUE "ProductName", "Calques 3D\0"
-            VALUE "ProductVersion", "2.3.3\0"
-            VALUE "SpecialBuild", "Build with BCGControlBar Library version 7.31\0"
+            VALUE "ProductVersion", "2.3.4\0"
+            VALUE "SpecialBuild", "Built with BCGControlBar Library version 7.31\0"
         END
     END
     BLOCK "VarFileInfo"
@@ -2936,7 +2945,8 @@ BEGIN
                             "Construir uma reta perpendicular a duas retas\nProduto Vetorial"
     ID_CONSTRUCTION_DIVSEGMENT 
                             "Dividir um segmento em três partes iguais\nTrisseção"
-    ID_CONSTRUCTION_INTERSECTION_SPHEREPLANE "sss"
+    ID_CONSTRUCTION_INTERSECTION_SPHEREPLANE 
+                            "Construir um círculo como interseção de uma esfera e um plano\nInterseção Esfera/Plano"
 END
 
 STRINGTABLE DISCARDABLE 
@@ -3065,9 +3075,9 @@ BEGIN
     IDS_HELP_VECTOR         "o vetor %s"
     IDS_HELP_POLYGON        "o polígono %s"
     IDS_HELP_VALUE          "o valor %s"
-    IDS_HELP_ARCCIRCLE      "the arc of circle %s"
-    IDS_HELP_ELLIPSE        "the ellipse %s"
-    IDS_HELP_RAY            "the ray %s"
+    IDS_HELP_ARCCIRCLE      "o arco de circunferência %s"
+    IDS_HELP_ELLIPSE        "a elipse %s"
+    IDS_HELP_RAY            "a semi-reta %s"
     IDS_HELP_EQUATION       "the equation %s"
 END
 
@@ -3480,8 +3490,8 @@ BEGIN
     PREF_DEF_PT             "Configurar as propriedades dos pontos"
     PREF_DEF_SPH            "Configurar as propriedades das esferas"
     PREF_DEF_COLOR          "Configurar a cor padrão"
-    PREF_DEF_CLROTHER       "Other..."
-    PREF_DEF_CLRAUTO        "Automatic"
+    PREF_DEF_CLROTHER       "Outra..."
+    PREF_DEF_CLRAUTO        "Automático"
     PREF_DEF_SPHEQ          "Exibir o equador das esferas"
     PREF_DEF_SPHGCR         "Exibir os dois grandes círculos das esferas"
     PREF_DEF_LOCUS          "Set the default shape for the loci"
@@ -3539,6 +3549,7 @@ BEGIN
     PROP_DEPENDENT          "Dependentes"
     PROP_COMPOSITE          "Objeto Composto"
     PROP_PARENTS            "Pais"
+    PROP_LOCUSSIZE          "Lugar"
 END
 
 STRINGTABLE DISCARDABLE 
@@ -3553,6 +3564,7 @@ BEGIN
     PROP_DEPENDENT_DESC     "A lista de todos os objetos construídos a partir deste objeto"
     PROP_COMPOSITE_DESC     "A lista de todos objetos que fazem parte deste objeto"
     PROP_PARENTS_DESC       "Os objetos a partir dos quais este objeto é construído"
+    PROP_LOCUSSIZE_DESC     "Tamanho da malha do lugar geométrico"
 END
 
 STRINGTABLE DISCARDABLE 
@@ -3586,10 +3598,15 @@ END
 
 STRINGTABLE DISCARDABLE 
 BEGIN
-    IDS_HELP_ANGLE          "the angle %s"
-    IDS_HELP_AREA           "the area %s"
-    IDS_HELP_DISTANCE       "the distance %s"
-    IDS_HELP_VOLUME         "the volume %s"
+    IDS_HELP_ANGLE          "o ângulo %s"
+    IDS_HELP_AREA           "a área %s"
+    IDS_HELP_DISTANCE       "a distância %s"
+    IDS_HELP_VOLUME         "o volume %s"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_ABOUT_DONATE        "Donate online"
 END
 
 #endif    // English (U.K.) resources

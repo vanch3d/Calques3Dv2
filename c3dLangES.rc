@@ -426,26 +426,31 @@ BEGIN
     GROUPBOX        "Synchronisation",IDC_STATIC,4,92,204,40,BS_FLAT
 END
 
-IDD_ABOUTPROP DIALOG DISCARDABLE  0, 0, 214, 190
+IDD_ABOUTPROP DIALOGEX 0, 0, 214, 190
 STYLE WS_CHILD | WS_VISIBLE | WS_CAPTION
 CAPTION "Información"
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,12,12,20,20
     LTEXT           "Calques3D",IDC_STATIC,50,12,40,8,SS_NOPREFIX | 
                     SS_CENTERIMAGE
     LTEXT           "Versión",IDC_VERSION,92,12,64,8,SS_CENTERIMAGE
     LTEXT           "Versión",IDC_DEBUG,50,24,152,8,SS_CENTERIMAGE
-    CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME,7,44,200,95
-    LTEXT           "Copyright",IDC_COPYRIGHT,12,50,190,12,SS_CENTERIMAGE
-    LTEXT           "",IDC_INFO,12,68,190,67
-    CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME,7,141,200,43
-    LTEXT           "Contact the author : ",IDC_STATIC,12,146,64,12,
+    CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME,7,36,201,112
+    LTEXT           "Copyright",IDC_COPYRIGHT,12,40,192,12,SS_CENTERIMAGE
+    LTEXT           "Licence",IDC_INFO,12,52,192,80,SS_NOPREFIX
+    CONTROL         "",IDC_STATIC,"Static",SS_BLACKFRAME,7,152,201,32
+    LTEXT           "Contact the author : ",IDC_STATIC,12,156,64,12,
                     SS_CENTERIMAGE
     CONTROL         "Nicolas VAN LABEKE",IDC_MAIL,"Button",BS_OWNERDRAW | 
-                    BS_LEFT | BS_FLAT,76,144,128,16
-    CONTROL         "Visit Calques 3D online",IDC_URL,"Button",BS_OWNERDRAW | 
-                    BS_FLAT,12,164,192,18
+                    BS_LEFT | BS_FLAT,76,156,128,12,0,HIDC_MAIL
+    CONTROL         "www.calques3d.org",IDC_URL,"Button",BS_OWNERDRAW | 
+                    BS_LEFT | BS_FLAT,76,168,128,12,0,HIDC_URL
+    LTEXT           "Calques 3D online :  ",IDC_STATIC,12,168,64,12,
+                    SS_CENTERIMAGE
+    CONTROL         "Support the development of Calques 3D",IDC_SUPPORT,
+                    "Button",BS_OWNERDRAW | BS_CENTER | BS_FLAT,12,132,192,
+                    12,0,HIDC_SUPPORT
 END
 
 IDD_MACROINFO_DLG DIALOGEX 0, 0, 212, 153
@@ -784,34 +789,45 @@ BEGIN
 END
 
 IDD_RENDERER_PROP DIALOGEX 0, 0, 188, 204
-STYLE WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+STYLE DS_CONTEXTHELP | WS_POPUP | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_TOOLWINDOW
 CAPTION "View Properties"
-FONT 8, "MS Sans Serif", 0, 0, 0x1
+FONT 8, "MS Sans Serif"
 BEGIN
     GROUPBOX        "Lighting",IDC_STATIC,8,4,84,74
     CONTROL         "Slider1",IDC_RENDERER_AMBIENT,"msctls_trackbar32",
                     TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,12,24,56,12,
-                    WS_EX_TRANSPARENT
+                    WS_EX_TRANSPARENT,HIDC_RENDERER_AMBIENT
     CONTROL         "Slider1",IDC_RENDERER_DIFFUSE,"msctls_trackbar32",
-                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,12,44,56,12
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,12,44,56,12,0,
+                    HIDC_RENDERER_DIFFUSE
     CONTROL         "Slider1",IDC_RENDERER_SPECULAR,"msctls_trackbar32",
-                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,12,64,56,12
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,12,64,56,12,0,
+                    HIDC_RENDERER_SPECULAR
     CONTROL         "Slider1",IDC_RENDERER_LGTX,"msctls_trackbar32",TBS_BOTH | 
-                    TBS_NOTICKS | WS_TABSTOP,100,24,56,12
+                    TBS_NOTICKS | WS_TABSTOP,100,24,56,12,0,
+                    HIDC_RENDERER_LGTX
     CONTROL         "Slider1",IDC_RENDERER_LGTY,"msctls_trackbar32",TBS_BOTH | 
-                    TBS_NOTICKS | WS_TABSTOP,100,44,56,11
+                    TBS_NOTICKS | WS_TABSTOP,100,44,56,11,0,
+                    HIDC_RENDERER_LGTY
     CONTROL         "Slider1",IDC_RENDERER_LGTZ,"msctls_trackbar32",TBS_BOTH | 
-                    TBS_NOTICKS | WS_TABSTOP,100,64,56,12
+                    TBS_NOTICKS | WS_TABSTOP,100,64,56,12,0,
+                    HIDC_RENDERER_LGTZ
     CONTROL         "Slider1",IDC_RENDERER_AMBMAT,"msctls_trackbar32",
-                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,12,100,56,12
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,12,100,56,12,0,
+                    HIDC_RENDERER_AMBMAT
     CONTROL         "Slider1",IDC_RENDERER_DIFFMAT,"msctls_trackbar32",
-                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,12,121,56,12
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,12,121,56,12,0,
+                    HIDC_RENDERER_DIFFMAT
     CONTROL         "Slider1",IDC_RENDERER_SPECMAT,"msctls_trackbar32",
-                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,12,140,56,12
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,12,140,56,12,0,
+                    HIDC_RENDERER_SPECMAT
     CONTROL         "Slider1",IDC_RENDERER_SHINE,"msctls_trackbar32",
-                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,100,100,56,12
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,100,100,56,12,0,
+                    HIDC_RENDERER_SHINE
     CONTROL         "Slider1",IDC_RENDERER_EMISSION,"msctls_trackbar32",
-                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,100,121,56,12
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,100,121,56,12,0,
+                    HIDC_RENDERER_EMISSION
     CTEXT           "Ambient",IDC_STATIC,12,16,56,8
     CTEXT           "0",IDC_RENDERER_AMBTXT,68,24,20,8,SS_CENTERIMAGE
     CTEXT           "Diffuse",IDC_STATIC,12,36,56,8
@@ -838,7 +854,8 @@ BEGIN
     CTEXT           "0",IDC_RENDERER_EMISSIONTXT,156,121,20,8,SS_CENTERIMAGE
     GROUPBOX        "Perspective",IDC_STATIC,8,160,172,36
     CONTROL         "Slider1",IDC_RENDERER_FIELDVIEW,"msctls_trackbar32",
-                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,12,180,144,12
+                    TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,12,180,144,12,0,
+                    HIDC_RENDERER_FIELDVIEW
     CTEXT           "Field of View",IDC_STATIC,12,172,144,8
     CTEXT           "0",IDC_RENDERER_FIELDVIEWTXT,156,180,20,8,
                     SS_CENTERIMAGE
@@ -2480,6 +2497,10 @@ BEGIN
     POPUP "3D &Rendering"
     BEGIN
         MENUITEM "&Property...",                ID_RENDERER_PROPERTY
+        MENUITEM SEPARATOR
+        MENUITEM "&Silhouette",                 ID_RENDERER_SILHOUETTE
+        MENUITEM "&Fill",                       ID_RENDERER_FILL
+        MENUITEM "&Translucent",                ID_RENDERER_STIPPLE
     END
     POPUP "He&rramientas"
     BEGIN
@@ -2523,8 +2544,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,3,3,0
- PRODUCTVERSION 2,3,3,0
+ FILEVERSION 2,3,4,0
+ PRODUCTVERSION 2,3,4,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x29L
@@ -2540,17 +2561,17 @@ BEGIN
         BLOCK "0c0a04B0"
         BEGIN
             VALUE "Comments", "3D Dynamic Geometry Microworld\0"
-            VALUE "CompanyName", "SCRE - University of Glasgow\0"
-            VALUE "FileDescription", "Aplicación Calques3D\0"
-            VALUE "FileVersion", "2.3.3\0"
+            VALUE "CompanyName", "Calques 3D\0"
+            VALUE "FileDescription", "Calques 3D\0"
+            VALUE "FileVersion", "2.3.4\0"
             VALUE "InternalName", "Calques3D\0"
-            VALUE "LegalCopyright", "Copyright © 2001-2006\0"
+            VALUE "LegalCopyright", "Copyright © 1997-2007 Nicolas Van Labeke\0"
             VALUE "LegalTrademarks", "N. Van Labeke / P. Bernat / J. Morinet-Lambert\0"
             VALUE "OriginalFilename", "Calques3D.exe\0"
-            VALUE "PrivateBuild", "Beta Versión\0"
-            VALUE "ProductName", "Aplicación Calques3D\0"
-            VALUE "ProductVersion", "2.3.3\0"
-            VALUE "SpecialBuild", "Build with BCGControlBar Library version 7.31\0"
+            VALUE "PrivateBuild", "Beta Version\0"
+            VALUE "ProductName", "Calques 3D\0"
+            VALUE "ProductVersion", "2.3.4\0"
+            VALUE "SpecialBuild", "Built with BCGControlBar Library version 7.31\0"
         END
     END
     BLOCK "VarFileInfo"
@@ -2924,7 +2945,8 @@ BEGIN
                             "Construct a line perpendicular to two lines\nCross Product"
     ID_CONSTRUCTION_DIVSEGMENT 
                             "Divide a segment in three equal parts\nTrisection"
-    ID_CONSTRUCTION_INTERSECTION_SPHEREPLANE "sss"
+    ID_CONSTRUCTION_INTERSECTION_SPHEREPLANE 
+                            "Construct a circle at the intersection of a sphere and a plane\nIntersection Sphere/Plane"
 END
 
 STRINGTABLE DISCARDABLE 
@@ -3053,6 +3075,10 @@ BEGIN
     IDS_HELP_VECTOR         "the vector %s"
     IDS_HELP_POLYGON        "the polygon %s"
     IDS_HELP_VALUE          "the value %s"
+    IDS_HELP_ARCCIRCLE      "the arc of circle %s"
+    IDS_HELP_ELLIPSE        "the ellipse %s"
+    IDS_HELP_RAY            "the ray %s"
+    IDS_HELP_EQUATION       "the equation %s"
 END
 
 STRINGTABLE DISCARDABLE 
@@ -3523,6 +3549,7 @@ BEGIN
     PROP_DEPENDENT          "Dependientes "
     PROP_COMPOSITE          "Constituyentes"
     PROP_PARENTS            "Padres"
+    PROP_LOCUSSIZE          "Locus"
 END
 
 STRINGTABLE DISCARDABLE 
@@ -3537,6 +3564,7 @@ BEGIN
     PROP_DEPENDENT_DESC     "The list of all objects built from this one"
     PROP_COMPOSITE_DESC     "The list of all internal constituents of this object"
     PROP_PARENTS_DESC       "The objects from which this one is built"
+    PROP_LOCUSSIZE_DESC     "The size of the mesh representing the locus"
 END
 
 STRINGTABLE DISCARDABLE 
@@ -3566,6 +3594,19 @@ END
 STRINGTABLE DISCARDABLE 
 BEGIN
     IDB_PREFC3D_ICONS       "Preferences"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_HELP_ANGLE          "the angle %s"
+    IDS_HELP_AREA           "the area %s"
+    IDS_HELP_DISTANCE       "the distance %s"
+    IDS_HELP_VOLUME         "the volume %s"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_ABOUT_DONATE        "Donate online"
 END
 
 #endif    // English (U.K.) resources
