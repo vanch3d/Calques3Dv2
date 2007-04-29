@@ -31,6 +31,7 @@
 #include "Sphere3D.h"
 #include "Point3D.h"
 #include "Droite3D.h"
+#include "..\OGLTools\glut.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -256,7 +257,7 @@ void CSphere3D::CalculVisuel(CVisualParam *pVisParam)
 	locVisParam = pVisParam;
 }
 
-void CSphere3D::Draw3DRendering()
+void CSphere3D::Draw3DRendering(int nVolMode)
 {
     if ((!bVisible) || (!bValidate)) return;
 
@@ -276,22 +277,30 @@ void CSphere3D::Draw3DRendering()
 	GLdouble ray = (Rayon/TPref::TUniv.nUnitRep/3);
 	GLUquadricObj*m_quadrObj=gluNewQuadric();
 // 	gluQuadricNormals(m_quadrObj,GLU_SMOOTH);
-// 	gluQuadricTexture(m_quadrObj,GL_TRUE);
- 	gluQuadricDrawStyle(m_quadrObj,GLU_SILHOUETTE);
+//	gluQuadricTexture(m_quadrObj,GL_TRUE);
 // 	gluQuadricOrientation(m_quadrObj,GLU_OUTSIDE);
-// 
+	
+	if (nVolMode==RENDER_SILHOUETTE)
+ 		gluQuadricDrawStyle(m_quadrObj,GLU_SILHOUETTE);
+	else if (nVolMode==RENDER_FILL || nVolMode==RENDER_STIPPLE)
+ 		gluQuadricDrawStyle(m_quadrObj,GLU_FILL);
+
+
 	glPushMatrix();
 	glTranslated(x, y, z);
 	glColor3f(.2f,.5f,.8f);
     glMaterialfv(GL_FRONT, GL_AMBIENT, mat_diffuse);
     glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
     glMaterialf(GL_FRONT, GL_SHININESS, no_shininess);
-	gluSphere(m_quadrObj,ray,16,16);
+	if (nVolMode==RENDER_STIPPLE)
+	{
+		glEnable(GL_POLYGON_STIPPLE);
+		glPolygonStipple(stippleMask[8]);
+	}
+	gluSphere(m_quadrObj,ray,32,32);
+	if (nVolMode==RENDER_STIPPLE)
+		glDisable(GL_POLYGON_STIPPLE);
 	glPopMatrix();
-	/*glBegin (GL_POINTS);
-	glColor3f(1.0f,0.0f,0.0f);			// Red
-	glVertex3f (x,y,z);
-	glEnd ();*/
 }
 
 void CSphere3D::Draw(CDC* pDC,CVisualParam *mV,BOOL bSm)

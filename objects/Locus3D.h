@@ -92,7 +92,7 @@ public:
 	virtual UINT  CalculConceptuel();
 	virtual void CalculVisuel(CVisualParam *);
 	virtual void Draw(CDC*,CVisualParam *,BOOL bSM=FALSE);
-	virtual void		Draw3DRendering();
+	virtual void		Draw3DRendering(int nVolMode);
 
 	virtual CString ExportSymbolic(int nFormat); 
 };
