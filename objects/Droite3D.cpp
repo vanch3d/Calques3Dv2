@@ -711,7 +711,7 @@ void CDroite3D::Draw(CDC* pDC,CVisualParam *mV,BOOL bSm)
 
 }
 
-void CDroite3D::Draw3DRendering()
+void CDroite3D::Draw3DRendering(int nVolMode)
 {
     if ((!bVisible) || (!bValidate)) return;
 	CVector4 base = GetBasePoint();
@@ -1163,6 +1163,7 @@ IMPLEMENT_SERIAL(CDroiteInterPP3D, CDroite3D, VERSIONABLE_SCHEMA | 1)
 
 CDroiteInterPP3D::CDroiteInterPP3D(CPlan3D *s1,CPlan3D *s2) : CDroite3D()
 {
+	bUpdateMe = TRUE;
     bIsSegment = FALSE;
     Pl1 = s1;
     Pl2 = s2;
@@ -1172,6 +1173,7 @@ CDroiteInterPP3D::CDroiteInterPP3D(CPlan3D *s1,CPlan3D *s2) : CDroite3D()
 
 CDroiteInterPP3D::CDroiteInterPP3D(const CObject3D & src) : CDroite3D(src)
 {
+	bUpdateMe = TRUE;
     bIsSegment = FALSE;
     Pl1 = ((CDroiteInterPP3D&)src).Pl1;
     Pl2 = ((CDroiteInterPP3D&)src).Pl2;
@@ -1335,212 +1337,90 @@ UINT  CDroiteInterPP3D::CalculConceptuel()
     DrDir=  N1p % N2p;
 #endif
 
-/*  MYm_cConcept_pts.RemoveAll();
-    // ********************************
-    if (Pl1)
-    {
-        CPoint3D    p1(Pl1->p1);
-        CPoint3D    p2(Pl1->p2);
-        CPoint3D    p3(Pl1->p3);
-        CPoint3D    p4(Pl1->p4);
-        CDroite3D s1(&p1,&p2);
-        CDroite3D s2(&p2,&p3);
-        CDroite3D s3(&p3,&p4);
-        CDroite3D s4(&p4,&p1);
-
-        CVector4 ppt;
-        FCoord u = 1e56;
-        CVector4 MYPPT(0,0,0);
-        BOOL bTest=FALSE;
-
-        UINT r= s1.CalculConceptuel();
-        if (!r)
-        {
-            CPointInterDD3D ps1(this,&s1);
-            UINT d= ps1.CalculConceptuel();
-            if (!d)
-            {   //ps1.lambda;
-                if (ps1.mu <= 1.0001 && ps1.mu >= -1E-12)
-                {
-                    MYm_cConcept_pts.Add(ps1.Concept_pt);
-                    bTest=TRUE;
-                }
-                else if (fabs(ps1.mu) < u)
-                {
-                    u = fabs(ps1.mu);
-                    MYPPT = ps1.Concept_pt;
-                }
-            }
-        }
-        r= s2.CalculConceptuel();
-        if (!r)
-        {
-            CPointInterDD3D ps1(this,&s2);
-            UINT d= ps1.CalculConceptuel();
-            if (!d)
-            {   //ps1.lambda;
-                if (ps1.mu <= 1.0001 && ps1.mu >= -1E-12)
-                {
-                    MYm_cConcept_pts.Add(ps1.Concept_pt);
-                    bTest=TRUE;
-                }
-                else if (fabs(ps1.mu) < u)
-                {
-                    u = fabs(ps1.mu);
-                    MYPPT = ps1.Concept_pt;
-                }
-            }
-        }
-        r= s3.CalculConceptuel();
-        if (!r)
-        {
-            CPointInterDD3D ps1(this,&s3);
-            UINT d= ps1.CalculConceptuel();
-            if (!d)
-            {   //ps1.lambda;
-                if (ps1.mu <= 1.0001 && ps1.mu >= -1E-12)
-                {
-                    MYm_cConcept_pts.Add(ps1.Concept_pt);
-                    bTest=TRUE;
-                }
-                else if (fabs(ps1.mu) < u)
-                {
-                    u = fabs(ps1.mu);
-                    MYPPT = ps1.Concept_pt;
-                }
-            }
-        }
-        r= s4.CalculConceptuel();
-        if (!r)
-        {
-            CPointInterDD3D ps1(this,&s4);
-            UINT d= ps1.CalculConceptuel();
-            if (!d)
-            {   //ps1.lambda;
-                if (ps1.mu <= 1.0001 && ps1.mu >= -1E-12)
-                {
-                    MYm_cConcept_pts.Add(ps1.Concept_pt);
-                    bTest=TRUE;
-                }
-                else if (fabs(ps1.mu) < u)
-                {
-                    u = fabs(ps1.mu);
-                    MYPPT = ps1.Concept_pt;
-                }
-            }
-        }
-        if (!bTest && !FCZero(MYPPT.Norme()))
-            MYm_cConcept_pts.Add(MYPPT);
-    }
-
-    // ********************************
-    if (Pl2)
-    {
-        CPoint3D    p1(Pl2->p1);
-        CPoint3D    p2(Pl2->p2);
-        CPoint3D    p3(Pl2->p3);
-        CPoint3D    p4(Pl2->p4);
-        CDroite3D s1(&p1,&p2);
-        CDroite3D s2(&p2,&p3);
-        CDroite3D s3(&p3,&p4);
-        CDroite3D s4(&p4,&p1);
-
-        CVector4 ppt;
-        FCoord u = 1e56;
-        CVector4 MYPPT(0,0,0);
-        BOOL bTest=FALSE;
-
-        UINT r= s1.CalculConceptuel();
-        if (!r)
-        {
-            CPointInterDD3D ps1(this,&s1);
-            UINT d= ps1.CalculConceptuel();
-            if (!d)
-            {   //ps1.lambda;
-                if (ps1.mu <= 1.0001 && ps1.mu >= -1E-12)
-                {
-                    MYm_cConcept_pts.Add(ps1.Concept_pt);
-                    bTest=TRUE;
-                }
-                else if (fabs(ps1.mu) < u)
-                {
-                    u = fabs(ps1.mu);
-                    MYPPT = ps1.Concept_pt;
-                }
-            }
-        }
-        r= s2.CalculConceptuel();
-        if (!r)
-        {
-            CPointInterDD3D ps1(this,&s2);
-            UINT d= ps1.CalculConceptuel();
-            if (!d)
-            {   //ps1.lambda;
-                if (ps1.mu <= 1.0001 && ps1.mu >= -1E-12)
-                {
-                    MYm_cConcept_pts.Add(ps1.Concept_pt);
-                    bTest=TRUE;
-                }
-                else if (fabs(ps1.mu) < u)
-                {
-                    u = fabs(ps1.mu);
-                    MYPPT = ps1.Concept_pt;
-                }
-            }
-        }
-        r= s3.CalculConceptuel();
-        if (!r)
-        {
-            CPointInterDD3D ps1(this,&s3);
-            UINT d= ps1.CalculConceptuel();
-            if (!d)
-            {   //ps1.lambda;
-                if (ps1.mu <= 1.0001 && ps1.mu >= -1E-12)
-                {
-                    MYm_cConcept_pts.Add(ps1.Concept_pt);
-                    bTest=TRUE;
-                }
-                else if (fabs(ps1.mu) < u)
-                {
-                    u = fabs(ps1.mu);
-                    MYPPT = ps1.Concept_pt;
-                }
-            }
-        }
-        r= s4.CalculConceptuel();
-        if (!r)
-        {
-            CPointInterDD3D ps1(this,&s4);
-            UINT d= ps1.CalculConceptuel();
-            if (!d)
-            {   //ps1.lambda;
-                if (ps1.mu <= 1.0001 && ps1.mu >= -1E-12)
-                {
-                    MYm_cConcept_pts.Add(ps1.Concept_pt);
-                    bTest=TRUE;
-                }
-                else if (fabs(ps1.mu) < u)
-                {
-                    u = fabs(ps1.mu);
-                    MYPPT = ps1.Concept_pt;
-                }
-            }
-        }
-        if (!bTest && !FCZero(MYPPT.Norme()))
-            MYm_cConcept_pts.Add(MYPPT);
-    }
-
-
-    if (MYm_cConcept_pts.GetSize())
-        PtonDr = MYm_cConcept_pts.GetAt(0);
-
-    if (Pl2)
-    {
-    }*/
     /*int nb2 = */ClippingDroite();
+	bUpdateMe = TRUE;
     return 0;
 }
 
+void ComputePlaneLimits(CDroite3D* ,CPlan3D *myplan,CPoint3D* mypt)
+{
+	CVector4    U = myplan->plRep.I,
+	V = myplan->plRep.J;
+	FCoord normK = 1 / myplan->VecNorm.Norme();
+	CVector4    K = myplan->VecNorm * normK;
+	CVector4    J(-K.y,K.x,0,1);
+	normK = J.Norme();
+	if (FCZero(normK))
+		{ J.x = J.z =0; J.y = 1;    }
+	else
+		J = J * (1/normK);
+	CVector4    I = J % K;
+	CVector4 re = myplan->planeBorder;
+	int PLANEMARGE = 20;
+	re.x+=PLANEMARGE;
+	re.y+=PLANEMARGE;
+	re.z-=PLANEMARGE;
+	re.w-=PLANEMARGE;
+
+	myplan->GetProjectedMinMax(mypt,myplan->P1->Concept_pt,I,J,K,re);
+
+	re.x-=PLANEMARGE;
+	re.y-=PLANEMARGE;
+	re.z+=PLANEMARGE;
+	re.w+=PLANEMARGE;
+
+
+        CVector4 lim[4] = {
+                CVector4(re.x,re.y,0),
+                CVector4(re.x,re.w,0),
+                CVector4(re.z,re.w,0),
+                CVector4(re.z,re.y,0)};
+        for (int t=0;t<4;t++)
+         {
+            CVector4 U = lim[t];
+            lim[t].x =  I.x*U.x + J.x*U.y + K.x*U.z + myplan->P1->Concept_pt.x,
+            lim[t].y =  I.y*U.x + J.y*U.y + K.y*U.z + myplan->P1->Concept_pt.y,
+            lim[t].z =  I.z*U.x + J.z*U.y + K.z*U.z + myplan->P1->Concept_pt.z,
+            lim[t].w =  1;
+        }
+        myplan->p1 = lim[0];
+        myplan->p2 = lim[1];
+        myplan->p3 = lim[2];
+       myplan-> p4 = lim[3];
+}
+
+void ComputeIntersections(CDroiteInterPP3D* mydroite,CPlan3D *myplan,CVector4 ppp1)
+{
+	CPoint3D pt1(ppp1);
+	CDroitePerp3D dr1(&pt1,mydroite);
+	if (dr1.CalculConceptuel()!=0) return;
+	
+	CPointInterDD3D pti(mydroite,&dr1);
+	if (pti.CalculConceptuel()!=0) return;
+
+	ComputePlaneLimits(mydroite,mydroite->Pl1,&pti);
+	ComputePlaneLimits(mydroite,mydroite->Pl2,&pti);
+}
+
+
+
+void CDroiteInterPP3D::CalculVisuel(CVisualParam *pVisParam)
+{
+	CDroite3D::CalculVisuel(pVisParam);
+	if  (!bUpdateMe) return;
+
+// 	CVector4 pterr1 = Pl1->p1;
+// 	CVector4 pterr2 = Pl1->p2;
+// 	CVector4 pterr3 = Pl1->p3;
+// 	CVector4 pterr4 = Pl1->p4;
+// 	CVector4 pters1 = Pl2->p1;
+// 	CVector4 pters2 = Pl2->p2;
+// 	CVector4 pters3 = Pl2->p3;
+// 	CVector4 pters4 = Pl2->p4;
+// 	ComputeIntersections(this,Pl1,pterr1);
+	bUpdateMe = FALSE;
+
+}
 
 CString CDroiteInterPP3D::ExportSymbolic(int nFormat)
 {
