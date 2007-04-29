@@ -259,9 +259,12 @@ void CPropSliderCtrl::HScroll (UINT nSBCode, UINT nPos)
 ///	@param dwData		The user defined data to be associated with the property. 
 /////////////////////////////////////////////////////////////////////////////
 CBCGPSliderProp::CBCGPSliderProp(const CString& strName, long nValue, 
-							 LPCTSTR lpszDescr, DWORD dwData)
+							 LPCTSTR lpszDescr, DWORD dwData,int min,int max)
 	:	CBCGPProp (strName, nValue, lpszDescr, dwData)
 {
+	m_nMin =min;
+	m_nMax =max;
+
 }
 
 CWnd* CBCGPSliderProp::CreateInPlaceEdit (CRect rectEdit, BOOL& bDefaultFormat)
@@ -269,9 +272,11 @@ CWnd* CBCGPSliderProp::CreateInPlaceEdit (CRect rectEdit, BOOL& bDefaultFormat)
 	CPropSliderCtrl* pWndSlider = new CPropSliderCtrl (this, globalData.clrWindow);
 
 	rectEdit.left += rectEdit.Height () + 5;
+	rectEdit.bottom +=2;
 
-	pWndSlider->Create (WS_VISIBLE | WS_CHILD, rectEdit, m_pWndList, BCGPROPLIST_ID_INPLACE);
+	pWndSlider->Create (WS_VISIBLE | WS_CHILD| TBS_NOTICKS|TBS_BOTH, rectEdit, m_pWndList, BCGPROPLIST_ID_INPLACE);
 	pWndSlider->SetPos ((long) m_varValue);
+	pWndSlider->SetRange(m_nMin,m_nMax);
 
 	bDefaultFormat = TRUE;
 	return pWndSlider;
