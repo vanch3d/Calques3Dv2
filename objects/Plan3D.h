@@ -81,6 +81,7 @@ public:
 	CPoint3D 	*P1,*P2,*P3;
 	CVector4	VecNorm;
 	CVector4	p1,p2,p3,p4;
+	CVector4	planeBorder;
 	CPoint		tp1,tp2,tp3,tp4;
 
 	void		*VecList;			// Liste des successeurs
@@ -117,7 +118,7 @@ public:
 	virtual void CalculVisuel(CVisualParam *);
 	virtual void Draw(CDC*,CVisualParam *vp,BOOL bSm=FALSE);
 	virtual void DrawRetro(CDC*,CVisualParam *vp);
-	virtual void	Draw3DRendering();
+	virtual void	Draw3DRendering(int nVolMode);
 
 	virtual CString ExportSymbolic(int nFormat); 
 
@@ -210,7 +211,7 @@ public:
 	virtual void CalculVisuel(CVisualParam *);
 	virtual void Draw(CDC*,CVisualParam *vp,BOOL bSm=FALSE);
 	virtual void DrawRetro(CDC*,CVisualParam *vp);
-	virtual void	Draw3DRendering();
+	virtual void	Draw3DRendering(int nVolMode);
 	virtual CString ExportSymbolic(int nFormat); 
 
 	virtual BOOL IsInActiveArea(CPoint);

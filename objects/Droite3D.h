@@ -127,7 +127,7 @@ public:
 	virtual UINT  CalculConceptuel();
 	virtual void Draw(CDC*,CVisualParam *vp,BOOL bSm=0);
 	virtual CString ExportSymbolic(int nFormat); 
-	virtual void	Draw3DRendering();
+	virtual void	Draw3DRendering(int nVolMode);
 
 public:
 	virtual CVector4	GetDirVector();
@@ -217,6 +217,7 @@ public:
 	CPlan3D 	*Pl1;	///< First plane for the intersection
 	CPlan3D 	*Pl2;	///< Second plane for the intersection
 private:
+	BOOL		bUpdateMe;
 	CVector4	DrDir;	///< Direction vector for the resulting line.
 	CVector4	DrPt;	///< Base point for the resulting line.
 	CVector4	PtonDr;	///< Reference point for all points on this line.
@@ -241,9 +242,9 @@ public:
 	virtual CVector4  GetDirVector();
 	virtual CVector4  GetBasePoint();
 	virtual UINT  CalculConceptuel();
+	virtual void CalculVisuel(CVisualParam *);
 
 	virtual CString ExportSymbolic(int nFormat); 
-
 } ;
 
 //////////////////////////////////////////////////////////////////////
