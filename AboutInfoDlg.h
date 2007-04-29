@@ -82,12 +82,13 @@ public:
 // Dialog Data
 	//{{AFX_DATA(CAboutInfoPage)
 	enum { IDD = IDD_ABOUTPROP };
+	CBCGPURLLinkButton	m_cSupport;
 	CBCGPURLLinkButton	m_cURL;
 	CBCGPURLLinkButton	m_cMail;
-	CStatic	m_cVersion;
-	CStatic	m_cInfo;
-	CStatic	m_cDebug;
-	CStatic	m_cCopyright;
+	CStatic				m_cVersion;
+	CStatic				m_cInfo;
+	CStatic				m_cDebug;
+	CStatic				m_cCopyright;
 	//}}AFX_DATA
 
 
