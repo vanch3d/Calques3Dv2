@@ -123,9 +123,9 @@ BOOL CAboutInfoPage::OnInitDialog()
 		));
 
  	m_cMail.SetURLPrefix (_T("mailto:"));
-	m_cMail.SetURL (_T("n.vanlabeke@scre.ac.uk"));
+	m_cMail.SetURL (_T("info@calques3d.org"));
+	m_cMail.SetTooltip (_T("info@calques3d.org"));
 	m_cMail.SizeToContent ();
-	m_cMail.SetTooltip (_T("Send mail to author"));
 	m_cMail.m_bDrawFocus = FALSE;
 
  	m_cURL.SetURLPrefix (_T("http://"));
@@ -134,9 +134,11 @@ BOOL CAboutInfoPage::OnInitDialog()
 	m_cURL.SizeToContent ();
 	m_cURL.m_bDrawFocus = FALSE;
 
+	CString strDonate;
+	strDonate.LoadString(IDS_ABOUT_DONATE);
 	m_cSupport.SetURLPrefix (_T("http://"));
 	m_cSupport.SetURL (_T("www.calques3d.org/donation.html"));
-	m_cSupport.SetTooltip (_T("Donate online"));
+	m_cSupport.SetTooltip (strDonate);
 	m_cSupport.SizeToContent (TRUE,TRUE);
 	m_cSupport.m_bDrawFocus = FALSE;
 
