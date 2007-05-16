@@ -63,7 +63,6 @@ CViewAnalytic::CViewAnalytic()
 	m_bIsEditMode = FALSE;
 	//multiTrack.SetTrackerView(this);
 
-
 	//m_pParser = new MTParser ();
 	//m_pParser->enableAutoVarDefinition(true);
 }
@@ -151,6 +150,7 @@ void CViewAnalytic::OnInitialUpdate()
 	SetScrollSizes(MM_TEXT, sizeTotal);
 
 	m_oldP = CPoint(0,0);
+	GetDocument()->CleanMathPadUsed();
 }
 
 
