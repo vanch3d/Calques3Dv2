@@ -193,8 +193,8 @@ void CView3DRender::OnCreateGL()
 // perform hidden line/surface removal (enable Z-Buffering)
 	glEnable(GL_DEPTH_TEST);
 // set background color to black
-	glClearColor(0.f,0.f,0.f,1.0f );
-//	glClearColor(0.5f,0.5f,0.5f,1.f );
+	//glClearColor(0.f,0.f,0.f,1.0f );
+	glClearColor(0.95f,0.95f,0.95f,1.f );
 // set clear Z-Buffer value
 	glClearDepth(1.0f);
 // create and enable a white directional light
@@ -221,13 +221,13 @@ void CView3DRender::OnCreateGL()
    m_LightParam[2] = 100;  // Z position
    m_LightParam[3] = 15;   // Ambient light
    m_LightParam[4] = 70;   // Diffuse light
-   m_LightParam[5] = 100;  // Specular light
+   m_LightParam[5] = 60;  // Specular light
    m_LightParam[6] = 100;  // Ambient material
    m_LightParam[7] = 100;  // Diffuse material
    m_LightParam[8] = 40;   // Specular material
    m_LightParam[9] = 70;   // Shininess material
    m_LightParam[10] = 0;   // Emission material
-   m_LightParam[11] = 50;   // Perspective Field of View
+   m_LightParam[11] = 35;   // Perspective Field of View
  
 	//====== Now you can issue OpenGL commands (i.e. call gl*** functions)
 	glEnable(GL_LIGHTING);		// Lighting will be used
