@@ -113,7 +113,7 @@ void CIconCtrl::OnDraw(CDC* pDC)
         return;
 
 	//CBrush mBR(RGB(0,0,0));
-	//GetClientRect(clipRect);
+	GetClientRect(clipRect);
 	//pDC->FillRect(clipRect,&globalData.brBtnFace);
 	//pDC->DrawEdge(clipRect,EDGE_SUNKEN,BF_RECT);
 		globalData.DrawParentBackground (this, pDC);
