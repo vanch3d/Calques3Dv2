@@ -300,5 +300,6 @@ HIDD_ABOUTCREDIT                        0x2014C
 HIDD_ABOUTCALQUE                        0x2014D
 HIDD_ABOUTPROP                          0x2014E
 HIDD_RENDERER_PROP                      0x2014F
+HIDD_MESSAGE                            0x20154
  
 // Frame Controls (IDW_*) 
