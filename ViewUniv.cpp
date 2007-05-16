@@ -218,7 +218,12 @@ void CViewUniv::OnDraw(CDC* rDC)
 
 		// Treats polygons only if adequate referential 
 		int nRep = GetVisualParam()->nVisuKind;
-		if (nRep==CVisualParam::VisuNone || nRep==CVisualParam::VisuRep)
+		BOOL postTreat = /*TPref::TUniv.bShowPolygon || */(nRep==CVisualParam::VisuNone || nRep==CVisualParam::VisuRep);
+	
+		if (TPref::TUniv.bShowPolygon)
+	        GetVisualParam()->Draw(pDC);
+
+		if (TPref::TUniv.bShowPolygon || (!TPref::TUniv.bShowPolygon && postTreat))
 		{
 			// Calculate Position of the Polygons
 			int nbPol = GetDocument()->m_cPolygonSet.GetSize();
@@ -250,12 +255,13 @@ void CViewUniv::OnDraw(CDC* rDC)
 			{
 				CObject3D* pObj = mset.GetAt(i);
 				if (!pObj) continue;
-				pObj->Draw(pDC,GetVisualParam());
+				pObj->Draw(pDC,GetVisualParam(),FALSE);
 			}
 		}
 
         // Draw System of Reference
-        GetVisualParam()->Draw(pDC);
+		if (!TPref::TUniv.bShowPolygon)
+	        GetVisualParam()->Draw(pDC);
 
         // Draw the Objects
         for (i=0;i<nb;i++)
@@ -264,7 +270,10 @@ void CViewUniv::OnDraw(CDC* rDC)
             if (!pObj) continue;
             //if (DYNAMIC_DOWNCAST(CEquation3D,pObj)) continue;
             if (DYNAMIC_DOWNCAST(CPolygon3D,pObj))
-                pObj->Draw(pDC,GetVisualParam(),1);
+			{
+    			if (!TPref::TUniv.bShowPolygon && !postTreat)
+					pObj->Draw(pDC,GetVisualParam(),TRUE);
+			}
             else
                 pObj->Draw(pDC,GetVisualParam());
         }
@@ -958,7 +967,6 @@ void CViewUniv::OnLButtonDblClk(UINT nFlags, CPoint point)
     {
         m_pCurrentTask->OnMouseLDC(nFlags,point);
     }
-    GetDocument()->SaveWindowPos();
     CView::OnLButtonDblClk(nFlags, point);
 }
 
