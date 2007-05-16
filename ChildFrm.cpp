@@ -182,7 +182,8 @@ void CChildFrame::OnMDIActivate(BOOL bActivate, CWnd* pActivateWnd, CWnd* pDeact
     CView *pView = GetActiveView( ) ;
     if (!pView) return;
 
-    CViewUniv *pMDoc = DYNAMIC_DOWNCAST( CViewUniv, pView);
+	
+    CCalques3DDoc *pMDoc = DYNAMIC_DOWNCAST( CCalques3DDoc, pView->GetDocument());
     CMainFrame *pWnd = DYNAMIC_DOWNCAST (CMainFrame, AfxGetMainWnd());
 	
     if (!pWnd) return;
@@ -192,17 +193,21 @@ void CChildFrame::OnMDIActivate(BOOL bActivate, CWnd* pActivateWnd, CWnd* pDeact
         pWnd->GetPropertyBar()->EnableBar(FALSE);
         pWnd->GetDependentBar()->EnableBar(FALSE);
         //pWnd->m_wndWorkSpace.UpdateDocument();
+		pWnd->SetWarningMsg(FALSE);
     }
     else if (bActivate)// && pMDoc)
     {
         pWnd->GetPropertyBar()->EnableBar(TRUE);
         pWnd->GetDependentBar()->EnableBar(TRUE);
         //pWnd->m_wndWorkSpace.UpdateFromDoc(pMDoc);
-    }
+ 		BOOL warning = (pMDoc) ? pMDoc->IsMathPadUsed() : FALSE;
+		pWnd->SetWarningMsg(warning);
+   }
 	else
     {
         pWnd->GetPropertyBar()->EnableBar(FALSE);
         pWnd->GetDependentBar()->EnableBar(FALSE);
         //pWnd->m_wndWorkSpace.UpdateDocument();
+		pWnd->SetWarningMsg(FALSE);
     }	
 }
