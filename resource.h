@@ -71,6 +71,7 @@
 #define IDD_ABOUTCALQUE                 333
 #define IDD_ABOUTPROP                   334
 #define IDD_RENDERER_PROP               335
+#define IDD_MESSAGE                     340
 #define IDB_SPLASH                      500
 #define IDB_WORKSPACE                   501
 #define IDB_SLIDERS                     502
@@ -87,6 +88,9 @@
 #define IDB_BTNICON                     515
 #define IDB_PREFBCG_ICONS               516
 #define IDB_PREFC3D_ICONS               517
+#define IDB_MSG_WARNING                 518
+#define IDB_MSG_INFO                    519
+#define IDB_MSG_TIPS                    520
 #define IDR_MAINFRAME24                 600
 #define IDR_COMMANDS_TB24               610
 #define IDR_FORMAT_TB24                 615
@@ -190,11 +194,17 @@
 #define IDC_EDIT1                       1178
 #define IDC_SPIN1                       1179
 #define IDC_EDIT2                       1180
+#define IDC_MESSAGE_CHECK               1181
 #define IDC_SPIN2                       1183
+#define IDC_MATHPAD_OPEN                1183
 #define IDC_EDIT3                       1184
+#define IDC_PUNIV_POLYGONS              1184
 #define IDC_SPIN3                       1185
 #define IDC_EDIT4                       1186
 #define IDC_SPIN4                       1187
+#define IDC_MESSAGE_STRING              1188
+#define IDC_MESSAGE_IMG                 1189
+#define IDC_MESSAGE_TITLE               1190
 #define IDC_ABOUTCALQUE                 1201
 #define IDC_RENDERER_AMBTXT             1300
 #define IDC_RENDERER_DIFFUSETXT         1301
@@ -252,6 +262,7 @@
 #define IDS_NEWCOMMENT                  3050
 #define IDS_MACROS                      3051
 #define IDS_ABOUT_DONATE                3060
+#define IDS_WARNING_TITLE               3500
 #define ERR_SUPPORTOBJECT               4000
 #define ERR_NOMIDDLE1                   4001
 #define ERR_NOMIDDLE2                   4002
@@ -761,9 +772,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        199
+#define _APS_NEXT_RESOURCE_VALUE        200
 #define _APS_NEXT_COMMAND_VALUE         32998
-#define _APS_NEXT_CONTROL_VALUE         1181
+#define _APS_NEXT_CONTROL_VALUE         1189
 #define _APS_NEXT_SYMED_VALUE           124
 #endif
 #endif
