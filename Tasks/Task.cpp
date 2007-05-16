@@ -177,7 +177,7 @@ void CTask::DoLaunchView(UINT nID)
 	if (!pMFrame) return;
 
 	::LockWindowUpdate(pMFrame->m_hWndMDIClient);
-	CFrameWnd* tt = pMFrame->LaunchView(nID);
+	CFrameWnd* tt = pMFrame->LaunchView(NULL,nID);
 	HWND hwndT = ::GetWindow(pMFrame->m_hWndMDIClient, GW_CHILD);
 	CArray<CFrameWnd*,CFrameWnd*> dd;
 	while (hwndT != NULL)
