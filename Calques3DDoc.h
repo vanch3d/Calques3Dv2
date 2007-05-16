@@ -138,9 +138,13 @@ public:
 
 	CxWindowLoc		m_cWinPos;		///< The location of every view used with this document
 
+protected:
+	BOOL	m_bMathPadUsed;			///< The document contains MathPad objects
 // Operations
 public:
 	BOOL IsTaskAvailable(UINT m_nID);
+	BOOL IsMathPadUsed() { return m_bMathPadUsed;};
+	void CleanMathPadUsed() {m_bMathPadUsed = FALSE;};
 
 	int GetObjectSize(UINT nID);
 
@@ -186,11 +190,12 @@ protected:
 // Generated message map functions
 protected:
 	//{{AFX_MSG(CCalques3DDoc)
-		// NOTE - the ClassWizard will add and remove member functions here.
-		//    DO NOT EDIT what you see in these blocks of generated code !
 	afx_msg void OnFileSave();
 	afx_msg void OnFileSaveAs();
 	afx_msg void OnDiscovery();
+	afx_msg void OnViewPlacementSave();
+	afx_msg void OnViewPlacementRestore();
+	afx_msg void OnUpdatePlacementRestore(CCmdUI* pCmdUI);
 	//}}AFX_MSG
 
 	afx_msg void OnUpdateEditUndo(CCmdUI* pCmdUI);

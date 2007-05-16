@@ -45,6 +45,7 @@
 
 #include "MainFrm.h"
 #include "FormatToolBar.h"
+#include "WarningDialog.h"
 
 
 #ifdef _DEBUG
@@ -182,11 +183,12 @@ IMPLEMENT_SERIAL(CCalques3DDoc, CDocument, VERSIONABLE_SCHEMA | 1)
 
 BEGIN_MESSAGE_MAP(CCalques3DDoc, CDocument)
 	//{{AFX_MSG_MAP(CCalques3DDoc)
-		// NOTE - the ClassWizard will add and remove mapping macros here.
-		//    DO NOT EDIT what you see in these blocks of generated code!
 	ON_COMMAND(ID_FILE_SAVE, OnFileSave)
 	ON_COMMAND(ID_FILE_SAVE_AS, OnFileSaveAs)
 	ON_COMMAND(ID_EXPLORATION_DISCOVERY, OnDiscovery)
+	//ON_COMMAND(ID_VIEW_PLACEMENT_SAVE, OnViewPlacementSave)
+	//ON_COMMAND(ID_VIEW_PLACEMENT_RESTORE, OnViewPlacementRestore)
+	//ON_UPDATE_COMMAND_UI(ID_VIEW_PLACEMENT_RESTORE, OnUpdatePlacementRestore)
 	//}}AFX_MSG_MAP
 	ON_UPDATE_COMMAND_UI(ID_EDIT_UNDO, OnUpdateEditUndo)
 	ON_UPDATE_COMMAND_UI(ID_EDIT_REDO, OnUpdateEditRedo)
@@ -199,6 +201,7 @@ CCalques3DDoc::CCalques3DDoc()
 {
 	// TODO: add one-time construction code here
 	m_nDocUndoState = UndoNone;
+	m_bMathPadUsed = false;
 
 	m_cObjectSet.RemoveAll();
 	m_cPolygonSet.RemoveAll();
@@ -244,7 +247,21 @@ BOOL CCalques3DDoc::OnOpenDocument(LPCTSTR lpszPathName)
 		return FALSE;
 	
 	// TODO: Add your specialized creation code here
-	
+	if (m_bMathPadUsed)
+	{
+// 		if (TPref::TMathPad.nShowView==0)
+// 		{
+// 			CWarningDialog* dlg = new CWarningDialog(AfxGetMainWnd());
+// 			dlg->DoModeless(CWarningDialog::WARNING_MATHPAD);
+// 		}
+//		else 
+			if (TPref::TMathPad.nShowView==1)
+		{
+			CMainFrame *pMFrame = DYNAMIC_DOWNCAST(CMainFrame,AfxGetMainWnd());
+			if (pMFrame) pMFrame->LaunchView(this,ID_VIEW_ANALYTIC);
+			m_bMathPadUsed = FALSE;
+		}
+	}
 	return TRUE;
 }
 
@@ -296,20 +313,24 @@ void CCalques3DDoc::Serialize(CArchive& ar)
 		{
 			CObject3D *pObj = pObjectSet.GetAt(i);
 			if (!pObj) continue;
+			if (DYNAMIC_DOWNCAST(CEquation3D,pObj))
+			{
+				m_bMathPadUsed = TRUE;
+			}
 			AddObject(pObj,FALSE);
 		}
 		CCalques3DDoc::GLOBALObjectSet = NULL;
 	}
-/*	try
-	{	
-		m_cWinPos.Serialize(ar);
-	}
-	catch (CException* pEx)
-	{
-		pEx->Delete ();
-		m_strPathName.Empty();      // no path name yet
-		SetModifiedFlag(TRUE);     // make clean
-	}*/
+// 	try
+// 	{	
+// 		m_cWinPos.Serialize(ar);
+// 	}
+// 	catch (CException* pEx)
+// 	{
+// 		pEx->Delete ();
+// 		m_strPathName.Empty();      // no path name yet
+// 		SetModifiedFlag(TRUE);     // make clean
+// 	}
 	
 }
 
@@ -1318,6 +1339,7 @@ BOOL CCalques3DDoc::OnDoUndo(CView *pView)
 
 void CCalques3DDoc::SaveWindowPos()
 {
+	m_cWinPos.RemoveAll();
 	POSITION pos = GetFirstViewPosition();
 	while (pos)
 	{
@@ -1354,7 +1376,6 @@ void CCalques3DDoc::SaveWindowPos()
 
 
 	}
-
 	pos = m_cWinPos.GetStartPosition();
 	while (pos)
 	{
@@ -1770,4 +1791,22 @@ void CCalques3DMacroDoc::Serialize(CArchive& ar)
 		ar >> strObjectDef;
 		ar >> nSortKind;
 	}
+}
+
+void CCalques3DDoc::OnViewPlacementSave() 
+{
+	// TODO: Add your command handler code here
+	SaveWindowPos();
+}
+
+void CCalques3DDoc::OnViewPlacementRestore() 
+{
+	// TODO: Add your command handler code here
+	RestoreWindowPos();
+}
+
+void CCalques3DDoc::OnUpdatePlacementRestore(CCmdUI* pCmdUI) 
+{
+	// TODO: Add your command update UI handler code here
+	pCmdUI->Enable(m_cWinPos.GetCount()!=0);
 }
