@@ -58,6 +58,7 @@
 //#include "Splash.h"
 
 #include "CustomizeCalques3D.h"
+#include "WarningDialog.h"
 
 
 #ifdef _DEBUG
@@ -265,6 +266,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndStatusBar.SetPaneStyle (1, SBPS_STRETCH | SBPS_NOBORDERS); // status line
 	m_wndStatusBar.SetPaneStyle (2, SBPS_NOBORDERS);				// progress pane
 	m_wndStatusBar.SetPaneWidth (2, 80);
+
 	m_wndStatusBar.EnablePaneDoubleClick ();
 
 	//----------------------
@@ -1056,6 +1058,24 @@ void CMainFrame::OnUpdateMode(CCmdUI *pCmdUI)
     pCmdUI->Enable(bEnab); 
 }
 
+void CMainFrame::SetWarningMsg(BOOL act/*=FALSE*/)
+{
+	if (act)
+	{	
+		m_wndStatusBar.SetTipText (2,"Check the MathPad");
+		m_wndStatusBar.SetPaneText(2,"MathPad");
+		m_wndStatusBar.SetPaneStyle(2,SBPS_NOBORDERS);
+	}
+	else
+	{
+		m_wndStatusBar.SetPaneStyle(2,SBPS_DISABLED|SBPS_NOBORDERS);
+		m_wndStatusBar.SetTipText (2,NULL);
+		m_wndStatusBar.SetPaneText(2,"");
+	}
+
+}
+
+
 //////////////////////////////////////////////////////////////////////
 /// Method CMainFrame::OnSetTaskMessageString
 /// @param wp	
@@ -1090,44 +1110,47 @@ LRESULT CMainFrame::OnSetObjectSelectionString(WPARAM wParam, LPARAM lParam)
 }
 
 
-CFrameWnd* CMainFrame::LaunchView(UINT nID)
+CFrameWnd* CMainFrame::LaunchView(CDocument* pDoc,UINT nID)
 {
 	CFrameWnd* pFrame =NULL;
 	switch (nID)
 	{
 		case ID_VIEW_UNIVERSE:
-			pFrame = LaunchUniverse();
+			pFrame = LaunchUniverse(pDoc);
 			break;
 		case ID_VIEW_HISTORIQUE:
-			pFrame = LaunchViews(RUNTIME_CLASS(CViewHisto),IDR_VIEWHISTORIQUE);
+			pFrame = LaunchViews(pDoc,RUNTIME_CLASS(CViewHisto),IDR_VIEWHISTORIQUE);
 			break;
 		case ID_VIEW_GRAPH:
-			pFrame = LaunchViews(RUNTIME_CLASS(CViewGraph),IDR_VIEWGRAPH);
+			pFrame = LaunchViews(pDoc,RUNTIME_CLASS(CViewGraph),IDR_VIEWGRAPH);
 			break;
 		case ID_VIEW_ANALYTIC:
-			pFrame = LaunchViews(RUNTIME_CLASS(CViewAnalytic),IDR_VIEWANALYTIC);
+			pFrame = LaunchViews(pDoc,RUNTIME_CLASS(CViewAnalytic),IDR_VIEWANALYTIC);
 			break;
 		case ID_VIEW_RENDERING:
-			pFrame = LaunchViews(RUNTIME_CLASS(CView3DRender),IDR_VIEWRENDERING);
+			pFrame = LaunchViews(pDoc,RUNTIME_CLASS(CView3DRender),IDR_VIEWRENDERING);
 			break;
 		case ID_VIEW_CALQUE:
 		case ID_VIEW_CALQUE2:
 		case ID_VIEW_CALQUE3:
 		case ID_VIEW_CALQUE4:
-			pFrame = LaunchCalques(nID);
+			pFrame = LaunchCalques(pDoc,nID);
 			break;
 	}
 	return pFrame;
 }
 
-CFrameWnd* CMainFrame::LaunchViews(const CRuntimeClass* pClass,UINT nID)
+CFrameWnd* CMainFrame::LaunchViews(CDocument* pDoc,const CRuntimeClass* pClass,UINT nID)
 {
-	// TODO: Add your command handler code here
-	CMDIChildWnd*pChild = MDIGetActive();
-	if (!pChild) return NULL;
+	if (pDoc==NULL)
+	{
+		// TODO: Add your command handler code here
+		CMDIChildWnd*pChild = MDIGetActive();
+		if (!pChild) return NULL;
 	
-	CDocument* pDoc = pChild->GetActiveDocument();
-	//CDocument* pDoc = GetDocument();
+		pDoc = pChild->GetActiveDocument();
+		//CDocument* pDoc = GetDocument();
+	}
     if (!pDoc) return NULL; // only for views with document
 
 	CView* pView;
@@ -1168,15 +1191,16 @@ CFrameWnd* CMainFrame::LaunchViews(const CRuntimeClass* pClass,UINT nID)
 	return NULL;
 }
 
-CFrameWnd*  CMainFrame::LaunchUniverse()
+CFrameWnd*  CMainFrame::LaunchUniverse(CDocument* pDoc)
 {
-	// TODO: Add your command handler code here
-	CMDIChildWnd*pChild = MDIGetActive();
-	if (!pChild) return NULL;
-	
-
-	CDocument* pDoc = pChild->GetActiveDocument();
-	//CDocument* pDoc = GetDocument();
+	if (pDoc==NULL)
+	{
+		// TODO: Add your command handler code here
+		CMDIChildWnd*pChild = MDIGetActive();
+		if (!pChild) return NULL;
+		pDoc = pChild->GetActiveDocument();
+		//CDocument* pDoc = GetDocument();
+	}
     if (!pDoc) return NULL; // only for views with document
 
 	CView* pView;
@@ -1218,12 +1242,14 @@ CFrameWnd*  CMainFrame::LaunchUniverse()
 	return NULL;
 }
 
-CFrameWnd*	CMainFrame::LaunchCalques(UINT id)
+CFrameWnd*	CMainFrame::LaunchCalques(CDocument* pDoc,UINT id)
 {
-	CMDIChildWnd*pChild = MDIGetActive();
-	if (!pChild) return NULL;
-	
-	CDocument* pDoc = pChild->GetActiveDocument();
+	if (pDoc==NULL)
+	{
+		CMDIChildWnd*pChild = MDIGetActive();
+		if (!pChild) return NULL;
+		pDoc = pChild->GetActiveDocument();
+	}
     if (!pDoc) return NULL; 
 
 	// Get the tracing number from the view command
@@ -1398,37 +1424,37 @@ void CMainFrame::OnViewFullScreen()
 
 void CMainFrame::OnViewUniverse() 
 {
-	LaunchUniverse();
+	LaunchUniverse(NULL);
 }
 
 void CMainFrame::OnViewCalque(UINT id) 
 {
-	LaunchCalques(id);
+	LaunchCalques(NULL,id);
 }
 
 void CMainFrame::OnViewAnalytic() 
 {
-	LaunchViews(RUNTIME_CLASS(CViewAnalytic),IDR_VIEWANALYTIC);
+	LaunchViews(NULL,RUNTIME_CLASS(CViewAnalytic),IDR_VIEWANALYTIC);
 }
 
 void CMainFrame::OnViewDepend() 
 {
-	LaunchViews(RUNTIME_CLASS(CViewDepend),IDR_VIEWDEPEND);
+	LaunchViews(NULL,RUNTIME_CLASS(CViewDepend),IDR_VIEWDEPEND);
 }
 
 void CMainFrame::OnViewGraph() 
 {
-	LaunchViews(RUNTIME_CLASS(CViewGraph),IDR_VIEWGRAPH);
+	LaunchViews(NULL,RUNTIME_CLASS(CViewGraph),IDR_VIEWGRAPH);
 }
 
 void CMainFrame::OnViewHistorique() 
 {
-	LaunchViews(RUNTIME_CLASS(CViewHisto),IDR_VIEWHISTORIQUE);
+	LaunchViews(NULL,RUNTIME_CLASS(CViewHisto),IDR_VIEWHISTORIQUE);
 }
 
 void CMainFrame::OnViewRendering() 
 {
-	LaunchViews(RUNTIME_CLASS(CView3DRender),IDR_VIEWRENDERING);
+	LaunchViews(NULL,RUNTIME_CLASS(CView3DRender),IDR_VIEWRENDERING);
 }
 
 void CMainFrame::OnDrawMenuLogo (CDC* pDC, CBCGPPopupMenu* pMenu, const CRect& rectLogo)
@@ -1585,4 +1611,20 @@ void CMainFrame::OnAppLook(UINT id)
 	RedrawWindow (NULL, NULL, RDW_ALLCHILDREN | RDW_INVALIDATE | RDW_UPDATENOW | RDW_ERASE);
 
 	theApp.WriteInt (_T("ApplicationLook"), m_nAppLook);
+}
+
+BOOL CMainFrame::OnCommand(WPARAM wParam, LPARAM lParam) 
+{
+	// TODO: Add your specialized code here and/or call the base class
+	if (wParam==ID_INDICATOR_PROGRESS)
+	{
+		CString mstr = m_wndStatusBar.GetPaneText(2);
+		if (!mstr.IsEmpty())
+		{
+			//CWarningDialog* dlg = new CWarningDialog(AfxGetMainWnd());
+			CWarningDialog dlg(AfxGetMainWnd());
+ 			dlg.DoModeless(CWarningDialog::WARNING_MATHPAD);
+		}
+	}
+	return CBCGPMDIFrameWnd::OnCommand(wParam, lParam);
 }

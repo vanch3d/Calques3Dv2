@@ -86,6 +86,8 @@ public:
 	public:
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 	virtual BOOL LoadFrame(UINT nIDResource, DWORD dwDefaultStyle = WS_OVERLAPPEDWINDOW | FWS_ADDTOTITLE, CWnd* pParentWnd = NULL, CCreateContext* pContext = NULL);
+	protected:
+	virtual BOOL OnCommand(WPARAM wParam, LPARAM lParam);
 	//}}AFX_VIRTUAL
 
 // Implementation
@@ -102,11 +104,12 @@ protected:
 	virtual void OnDrawMenuLogo (CDC* pDC, CBCGPPopupMenu* pMenu, const CRect& rectLogo);
 
 public:
-	CFrameWnd* LaunchView(UINT nID);
+	CFrameWnd* LaunchView(CDocument* pDoc,UINT nID);
+	void		SetWarningMsg(BOOL act=FALSE);
 private:
-	CFrameWnd*  LaunchViews(const CRuntimeClass* pClass,UINT nID);
-	CFrameWnd*  LaunchUniverse();
-	CFrameWnd*	LaunchCalques(UINT nID);
+	CFrameWnd*  LaunchViews(CDocument* pDoc,const CRuntimeClass* pClass,UINT nID);
+	CFrameWnd*  LaunchUniverse(CDocument* pDoc);
+	CFrameWnd*	LaunchCalques(CDocument* pDoc,UINT nID);
 
 // Generated message map functions
 protected:
