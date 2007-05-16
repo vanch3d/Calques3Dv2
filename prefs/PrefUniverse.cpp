@@ -99,6 +99,7 @@ CPrefUniverse::CPrefUniverse()
 	m_bMagnet = TPref::TUniv.bMagnet;
 	m_bSynchro = TPref::TUniv.bSynchron;
 	m_nRefInit = TPref::TUniv.nDefRep;
+	m_bShowPolygon = !TPref::TUniv.bShowPolygon;
 	//}}AFX_DATA_INIT
 }
 
@@ -107,11 +108,11 @@ void CPrefUniverse::DoDataExchange(CDataExchange* pDX)
 {
 	CBCGPPropertyPage::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CPrefUniverse)
-//	DDX_Control(pDX, IDC_PUNIV_POVLIST, m_cPOVList);
+	DDX_Control(pDX, IDC_PUNIV_TRACE, m_wndTraceColor);
 	DDX_Check(pDX, IDC_PUNIV_MAGNET, m_bMagnet);
 	DDX_Check(pDX, IDC_PUNIV_SYNCHRO, m_bSynchro);
 	DDX_CBIndex(pDX, IDC_PUNIV_REFINIT, m_nRefInit);
-	DDX_Control(pDX, IDC_PUNIV_TRACE, m_wndTraceColor);
+	DDX_Check(pDX, IDC_PUNIV_POLYGONS, m_bShowPolygon);
 	//}}AFX_DATA_MAP
 
 	if (pDX->m_bSaveAndValidate)
@@ -119,6 +120,7 @@ void CPrefUniverse::DoDataExchange(CDataExchange* pDX)
 		TPref::TUniv.bMagnet = m_bMagnet;
 		TPref::TUniv.bSynchron = m_bSynchro;
 		TPref::TUniv.nDefRep = m_nRefInit;
+		TPref::TUniv.bShowPolygon = !m_bShowPolygon;
 
 		TPref::TUniv.clrTrace = m_wndTraceColor.GetColor();
 
