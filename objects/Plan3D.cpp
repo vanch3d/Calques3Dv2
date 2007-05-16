@@ -1881,6 +1881,8 @@ void CPolygon3D::Draw3DRendering(int nVolMode)
 	else 
 		glBegin(GL_QUADS);
 	glNormal3d(vec.x, vec.y, vec.z);   //N1
+	COLORREF clr = pObjectShape.GetObjectColor();
+	glColor3f(GetRValue(clr)/255.,GetGValue(clr)/255.,GetBValue(clr)/255.);
 
 	for (int i=0;i<nb;i++)
     {
@@ -1913,7 +1915,7 @@ void CPolygon3D::Draw(CDC* pDC,CVisualParam *mV,BOOL bSm)
 
 
     int nb = m_pPointSet.GetSize();
-    if (!bSm && pObjectShape.nShapeId!=0)
+    if (/*!bSm && */pObjectShape.nShapeId!=0)
     {
         CPoint pt = (CPoint)mV->ProjectPoint(m_vCentroid);
 
@@ -1953,7 +1955,7 @@ void CPolygon3D::Draw(CDC* pDC,CVisualParam *mV,BOOL bSm)
         CBrush *pOld = pDC->SelectObject(&pBrush);
         CPen *pOldp = NULL;
 
-        if (pObjectShape.nShapeId==1)
+        if (!bSm && pObjectShape.nShapeId==1)
         {
             pOldp = pDC->SelectObject(&mPen);
             pDC->Polygon(mpoly,nb);
@@ -1961,13 +1963,16 @@ void CPolygon3D::Draw(CDC* pDC,CVisualParam *mV,BOOL bSm)
         else
         {
             mpoly[nb] = mpoly[0];
+			int nshape = pObjectShape.nShapeId-2;
+			if (bSm && pObjectShape.nShapeId==1)
+				nshape = 4;
 
             for (int i=0;i<nb;i++)
             {
                 CPoint3D pt1 = *((CPoint3D*)m_pPointSet.GetAt(i));
                 CPoint3D pt2= *((CPoint3D*)m_pPointSet.GetAt((i==nb-1)? 0 : i+1));
                 CSegment3D seg(&pt1,&pt2);
-                seg.pObjectShape.nShapeId = pObjectShape.nShapeId-2;
+                seg.pObjectShape.nShapeId = nshape;
                 seg.pObjectShape.clrObject = pObjectShape.clrObject;
                 seg.nCalque = nCalque;
                 seg.CalculConceptuel();
