@@ -173,6 +173,7 @@ public :
 		int		UnitAngular;		///< Angular Units (0: degrees, 1: radians)
 		int		PrecFraction;		///< 
 		int		PrecReal;			///< 
+		int		nShowView;			///<	(0: ask, 1: show, 2: don't show)
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
@@ -200,6 +201,7 @@ public :
 		BOOL		bMagnet;		///< Magnetism of SoR activated
 		BOOL		bSynchron;		///< Synchronize updates between views
 		BOOL		bShowMarks;		///< Show the marks of objects
+		BOOL		bShowPolygon;	///< TRUE if polygon are drawn plain, FALSE otherwise
 	};
 
 

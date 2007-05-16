@@ -140,7 +140,8 @@ TPref::CTMathPad	TPref::TMathPad =
 			0,
 			0,
 			100,
-			4
+			4,
+			0
 		};
 
 
@@ -156,6 +157,7 @@ TPref::CTUniverse	TPref::TUniv =
 			1.0,
 			FALSE,
 			TRUE,
+			FALSE,
 			FALSE
 		};
 
