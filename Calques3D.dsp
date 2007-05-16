@@ -543,6 +543,10 @@ SOURCE=.\ViewUniv.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\WarningDialog.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\ZoomDlg.cpp
 # End Source File
 # End Group
@@ -942,6 +946,10 @@ SOURCE=.\ViewUniv.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\WarningDialog.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\ZoomDlg.h
 # End Source File
 # End Group
@@ -1035,6 +1043,10 @@ SOURCE=.\res\list_browse.bmp
 # Begin Source File
 
 SOURCE=.\res\list_delete.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\litebulb.bmp
 # End Source File
 # Begin Source File
 
@@ -1185,6 +1197,18 @@ SOURCE=.\res\workspace.bmp
 # PROP Exclude_From_Scan -1
 # PROP BASE Exclude_From_Build 1
 # PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\xBulb.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\xInfo.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\xWarning.bmp
 # End Source File
 # End Group
 # Begin Group "Help Files"
