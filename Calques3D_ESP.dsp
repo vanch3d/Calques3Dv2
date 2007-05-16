@@ -490,6 +490,10 @@ SOURCE=.\ViewUniv.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\WarningDialog.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\ZoomDlg.cpp
 # End Source File
 # End Group
