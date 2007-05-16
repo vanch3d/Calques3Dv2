@@ -54,6 +54,7 @@ public:
 	int		m_nUnitLinear;
 	int		m_nPrecFraction;
 	int		m_nPrecReal;
+	int		m_nOpenMathPad;
 	//}}AFX_DATA
 
 

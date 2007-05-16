@@ -49,6 +49,7 @@ CPrefMathPad::CPrefMathPad()
 	m_nUnitLinear = TPref::TMathPad.UnitLinear;
 	m_nPrecFraction = TPref::TMathPad.PrecFraction;
 	m_nPrecReal = TPref::TMathPad.PrecReal;
+	m_nOpenMathPad = TPref::TMathPad.nShowView;
 	//}}AFX_DATA_INIT
 	m_strScale.Format(_T("%.4g"),TPref::TMathPad.UnitScale);
 }
@@ -66,6 +67,7 @@ void CPrefMathPad::DoDataExchange(CDataExchange* pDX)
 	DDV_MinMaxInt(pDX, m_nPrecFraction, 1, 100);
 	DDX_Text(pDX, IDC_MATHPAD_PRV, m_nPrecReal);
 	DDV_MinMaxInt(pDX, m_nPrecReal, 0, 8);
+	DDX_CBIndex(pDX, IDC_MATHPAD_OPEN, m_nOpenMathPad);
 	//}}AFX_DATA_MAP
 
 	if (pDX->m_bSaveAndValidate)
@@ -76,6 +78,7 @@ void CPrefMathPad::DoDataExchange(CDataExchange* pDX)
 		TPref::TMathPad.UnitLinear = m_nUnitLinear;
 		TPref::TMathPad.PrecFraction = m_nPrecFraction;
 		TPref::TMathPad.PrecReal = m_nPrecReal;
+		TPref::TMathPad.nShowView = m_nOpenMathPad;
 	}
 }
 
