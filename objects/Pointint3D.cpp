@@ -241,7 +241,7 @@ CString CPointInterDD3D::ExportSymbolic(int nFormat)
         CString strFunc,strName,strObj1,strObj2;
 		strName = GetObjectNameRedux();
 		strObj1 = D1->GetObjectNameRedux();
-		strObj2 = D1->GetObjectNameRedux();
+		strObj2 = D2->GetObjectNameRedux();
 
 
 		UINT nType1 = D1->isA();
