@@ -178,8 +178,8 @@ CString CUndoObject::GetUndoText()
 /////////////////////////////////////////////////////////////////////////////
 // CCalques3DDoc
 
-//IMPLEMENT_DYNCREATE(CCalques3DDoc, CDocument)
-IMPLEMENT_SERIAL(CCalques3DDoc, CDocument, VERSIONABLE_SCHEMA | 1)
+IMPLEMENT_DYNCREATE(CCalques3DDoc, CDocument)
+//IMPLEMENT_SERIAL(CCalques3DDoc, CDocument, VERSIONABLE_SCHEMA | 1)
 
 BEGIN_MESSAGE_MAP(CCalques3DDoc, CDocument)
 	//{{AFX_MSG_MAP(CCalques3DDoc)
@@ -295,6 +295,7 @@ void CCalques3DDoc::OnFileSaveAs()
 
 void CCalques3DDoc::Serialize(CArchive& ar)
 {
+	UINT schema = ar.GetObjectSchema();
 	if (ar.IsStoring())
 	{
 		// TODO: add storing code here
@@ -302,7 +303,6 @@ void CCalques3DDoc::Serialize(CArchive& ar)
 	}
 	else
 	{
-		UINT schema = ar.GetObjectSchema();
 		// TODO: add loading code here
 		CxObject3DSet	pObjectSet;
 		CxObject3DSet	pGlobalObjectSet;
@@ -1497,10 +1497,12 @@ BOOL CCalques3DDoc::IsTaskAvailable(UINT m_nID)
 	case ID_OBJECT_LINE:
 	case ID_CONSTRUCTION_MIDPOINT:
 	case ID_OBJECT_CUBE:
-	case ID_OBJECT_SPHERE:
 	case ID_EXPLORATION_LOCUS:
 	case ID_EXPLORATION_MEASURE:
 		bEnab = (nbPt>=2);
+		break;
+	case ID_OBJECT_SPHERE:
+		bEnab = (nbPt>=2) || (nbPt==1 && nbSg);
 		break;
 	case ID_OBJECT_DELETE:
 	case ID_EXPLORATION_EXTRACTION:
@@ -1519,8 +1521,16 @@ BOOL CCalques3DDoc::IsTaskAvailable(UINT m_nID)
 	case ID_OBJECT_CYLINDRE:
 	case ID_CONSTRUCTION_TRANSLATION:
 	case ID_EXPLORATION_ANIMATION:
+	case ID_EXPLORATION_VERIFY_PTALIGN:
 		bEnab = (nbPt>=3);
 		break;
+	case ID_EXPLORATION_VERIFY_PAR:
+	case ID_EXPLORATION_VERIFY_PERP:
+		bEnab = (nbLn>=2) || (nbPl>=2);
+		break;		
+	case ID_EXPLORATION_VERIFY_PTON:
+		bEnab = (nbPt>=1) && (nbPl || nbLn || nbCr || nbSp);
+		break;		
 	case ID_CONSTRUCTION_POINTON_CYLINDER:
 		bEnab = nbCy;
 		break;
