@@ -303,14 +303,14 @@ BOOL CVerify3DTask::OnUpdateTasksOption(CCmdUI* pCmdUI)
     BOOL bDone = TRUE;
     BOOL bCheck = FALSE;
     BOOL bEnab = FALSE;
-
-    BOOL bRes = m_pParent->GetDocument()->IsTaskAvailable(pCmdUI->m_nID);
+	BOOL bRes = FALSE;
 
     switch (pCmdUI->m_nID){
     case ID_EXPLORATION_VERIFY_PAR :
     case ID_EXPLORATION_VERIFY_PERP:
     case ID_EXPLORATION_VERIFY_PTON:
     case ID_EXPLORATION_VERIFY_PTALIGN:
+	    bRes = m_pParent->GetDocument()->IsTaskAvailable(pCmdUI->m_nID);
         bEnab = TRUE;
         bCheck = (m_nCurrTask == pCmdUI->m_nID);
         break;
@@ -318,7 +318,7 @@ BOOL CVerify3DTask::OnUpdateTasksOption(CCmdUI* pCmdUI)
         bDone = FALSE;
         break;
     }
-    pCmdUI->Enable(bEnab);
+    pCmdUI->Enable(bRes);
     pCmdUI->SetCheck(bCheck);
     return bDone;
 }
