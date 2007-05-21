@@ -49,7 +49,7 @@ CVerifyDlg::CVerifyDlg(CWnd* pParent /*=NULL*/)
     m_pObjFree = NULL;
     m_bIsCE=FALSE;
     m_pView = NULL;
-
+	m_bShowCE = FALSE;
 
     m_pPropImageList.Create(IDR_VERIFY_TB,16,0,RGB(192,192,192));
     m_pObjImageList.Create(IDB_OBJECTS_ICONS,16,0,RGB(192,192,192));
