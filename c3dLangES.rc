@@ -84,6 +84,8 @@ IDB_LIST_DELITEM        BITMAP     DISCARDABLE        "res\\list_delete.bmp"
 IDB_PROJECTION          BITMAP     DISCARDABLE        "res\\project.bmp"
 IDR_FORMAT_TB           BITMAP     DISCARDABLE        "res\\text_tb.bmp"
 IDR_FORMAT_TB24         BITMAP     DISCARDABLE        "res\\text_tb24.bmp"
+IDR_ALERT_TB            BITMAP     DISCARDABLE        "res\\alert_tb.bmp"
+IDR_ALERT_TB24          BITMAP     DISCARDABLE        "res\\alert_tb24.bmp"
 IDB_MATHPAD             BITMAP     DISCARDABLE        "res\\notebook.bmp"
 IDB_MSG_WARNING         BITMAP     DISCARDABLE        "res\\xWarning.bmp"
 IDB_MSG_INFO            BITMAP     DISCARDABLE        "res\\xInfo.bmp"
@@ -288,6 +290,14 @@ BEGIN
     BUTTON      ID_FORMAT_ITALIC
     BUTTON      ID_FORMAT_UNDERLINE
     BUTTON      ID_FORMAT_BOLD
+END
+
+IDR_ALERT_TB TOOLBAR DISCARDABLE  16, 16
+BEGIN
+    BUTTON      ID_ALERT_INFO
+    BUTTON      ID_ALERT_WARNING
+    BUTTON      ID_ALERT_HELP
+    BUTTON      ID_ALERT_TIP
 END
 
 
@@ -561,7 +571,7 @@ FONT 8, "MS Sans Serif"
 BEGIN
     CONTROL         "",IDC_BIGICON,"Button",BS_OWNERDRAW | WS_DISABLED,4,4,
                     34,30
-    LTEXT           "Calques 3D versión 2.3.5",IDC_STATIC,52,4,140,8,NOT 
+    LTEXT           "Calques 3D version 2.3.6",IDC_STATIC,52,4,140,8,NOT 
                     WS_GROUP
     LTEXT           "Microsoft Foundation Classes versión 4.2",IDC_STATIC,52,
                     13,140,8,NOT WS_GROUP
@@ -623,9 +633,9 @@ IDD_VERIFY_DLG DIALOGEX 0, 0, 200, 82
 STYLE DS_CONTEXTHELP | WS_POPUP | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_TOOLWINDOW | WS_EX_CONTEXTHELP
 CAPTION "Comprobar..."
-FONT 8, "MS Sans Serif", 0, 0, 0x1
+FONT 8, "MS Sans Serif"
 BEGIN
-    ICON            "",IDC_VERIFY_PROP_ICON,8,9,21,20,0,0,
+    ICON            "",IDC_VERIFY_PROP_ICON,8,9,20,20,0,0,
                     HIDC_VERIFY_PROP_ICON
     CONTROL         "El componente cb#233",IDC_VERIFY_PROP,"Static",
                     SS_LEFTNOWORDWRAP | SS_CENTERIMAGE | WS_GROUP,31,8,160,12,
@@ -634,9 +644,9 @@ BEGIN
                     NOT WS_VISIBLE | WS_DISABLED
     GROUPBOX        "Relación",IDC_STATIC,4,0,192,24,BS_CENTER | BS_FLAT
     EDITTEXT        IDC_VERIFY_RESULT,8,32,184,24,ES_MULTILINE | ES_READONLY | 
-                    NOT WS_BORDER,0,HIDC_VERIFY_RESULT
+                    NOT WS_BORDER | NOT WS_TABSTOP,0,HIDC_VERIFY_RESULT
     PUSHBUTTON      "&Show counter-example",IDC_VERIFY_COUNTER,92,60,100,16,
-                    BS_FLAT,0,HIDC_VERIFY_COUNTER
+                    BS_FLAT | WS_DISABLED,0,HIDC_VERIFY_COUNTER
     GROUPBOX        "",IDC_STATIC,4,24,192,56,BS_FLAT
     CONTROL         "TargetList",IDC_VERIFY_TARGET,"MFCGridCtrl",NOT 
                     WS_VISIBLE | WS_DISABLED | WS_TABSTOP,56,24,100,30,0,
@@ -878,7 +888,7 @@ IDD_MESSAGE DIALOGEX 0, 0, 204, 78
 STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_TOOLWINDOW
 CAPTION "Please note ..."
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     CONTROL         "Custom",IDC_MESSAGE_IMG,"MFCIconCtrl",0x0,4,4,28,56,0,
                     HIDC_MESSAGE_IMG
@@ -2595,8 +2605,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,3,5,0
- PRODUCTVERSION 2,3,5,0
+ FILEVERSION 2,3,6,0
+ PRODUCTVERSION 2,3,6,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x29L
@@ -2614,14 +2624,14 @@ BEGIN
             VALUE "Comments", "3D Dynamic Geometry Microworld\0"
             VALUE "CompanyName", "Calques 3D\0"
             VALUE "FileDescription", "Calques 3D\0"
-            VALUE "FileVersion", "2.3.5\0"
+            VALUE "FileVersion", "2.3.6\0"
             VALUE "InternalName", "Calques3D\0"
             VALUE "LegalCopyright", "Copyright © 1997-2007 Nicolas Van Labeke\0"
             VALUE "LegalTrademarks", "N. Van Labeke / P. Bernat / J. Morinet-Lambert\0"
             VALUE "OriginalFilename", "Calques3D.exe\0"
             VALUE "PrivateBuild", "Beta Version\0"
             VALUE "ProductName", "Calques 3D\0"
-            VALUE "ProductVersion", "2.3.5\0"
+            VALUE "ProductVersion", "2.3.6\0"
             VALUE "SpecialBuild", "Built with BCGControlBar Library version 7.31\0"
         END
     END
