@@ -106,8 +106,8 @@ class CCalques3DDoc : public CDocument
 {
 protected: // create from serialization only
 	CCalques3DDoc();
-	//DECLARE_DYNCREATE(CCalques3DDoc)
-	DECLARE_SERIAL(CCalques3DDoc);
+	DECLARE_DYNCREATE(CCalques3DDoc)
+	//DECLARE_SERIAL(CCalques3DDoc);
 
 // Attributes
 public:

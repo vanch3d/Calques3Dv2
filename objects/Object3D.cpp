@@ -194,6 +194,7 @@ BOOL CObject3D::operator < ( const CObject3D &other ) const
 //////////////////////////////////////////////////////////////////////
 void CObject3D::Serialize( CArchive& ar )
 {
+	UINT schema = ar.GetObjectSchema();
     CObject::Serialize(ar);
     if (ar.IsStoring())
     {
@@ -214,7 +215,6 @@ void CObject3D::Serialize( CArchive& ar )
     }
     else
     {
-		UINT schema = ar.GetObjectSchema();
 
         ar >> bValidate;
         ar >> bVisible;
