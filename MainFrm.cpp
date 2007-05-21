@@ -453,6 +453,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	CBCGPToolBar::AddToolBarForImageCollection(IDR_POINTDIV_TB,0);
 	CBCGPToolBar::AddToolBarForImageCollection(IDR_GRAPH_TB,0);
 	CBCGPToolBar::AddToolBarForImageCollection(IDR_VERIFY_TB,0);
+	CBCGPToolBar::AddToolBarForImageCollection(IDR_ALERT_TB,theApp.m_bHiColorIcons ? IDR_ALERT_TB24 : 0);
 
 	// Allow user-defined toolbars operations:
 	InitUserToobars (NULL,uiFirstUserToolBarId,uiLastUserToolBarId);
@@ -1065,12 +1066,16 @@ void CMainFrame::SetWarningMsg(BOOL act/*=FALSE*/)
 		m_wndStatusBar.SetTipText (2,"Check the MathPad");
 		m_wndStatusBar.SetPaneText(2,"MathPad");
 		m_wndStatusBar.SetPaneStyle(2,SBPS_NOBORDERS);
+		HICON icon = CBCGPToolBar::GetImages()->ExtractIcon(CImageHash::GetImageOfCommand (ID_ALERT_WARNING));
+		m_wndStatusBar.SetPaneIcon(2,icon);
+		if (icon) ::DestroyIcon(icon);
 	}
 	else
 	{
 		m_wndStatusBar.SetPaneStyle(2,SBPS_DISABLED|SBPS_NOBORDERS);
 		m_wndStatusBar.SetTipText (2,NULL);
 		m_wndStatusBar.SetPaneText(2,"");
+		m_wndStatusBar.SetPaneIcon(2,(HICON)NULL);
 	}
 
 }

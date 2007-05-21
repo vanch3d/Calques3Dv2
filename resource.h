@@ -95,6 +95,7 @@
 #define IDR_COMMANDS_TB24               610
 #define IDR_FORMAT_TB24                 615
 #define IDR_PROPERTY_TB24               620
+#define IDR_ALERT_TB24                  625
 #define IDC_MAIL                        1000
 #define IDC_URL                         1001
 #define IDC_SUPPORT                     1002
@@ -342,6 +343,7 @@
 #define IDR_PROPERTY_TB                 4566
 #define IDR_DEPENDENT_TB                4567
 #define IDR_FORMAT_TB                   4568
+#define IDR_ALERT_TB                    4569
 #define IDS_NAME_OBJECT                 5000
 #define IDS_NAME_POINT                  5001
 #define IDS_NAME_LINE                   5002
@@ -722,6 +724,10 @@
 #define ID_RENDERER_SILHOUETTE          30901
 #define ID_RENDERER_FILL                30902
 #define ID_RENDERER_STIPPLE             30903
+#define ID_ALERT_WARNING				31100
+#define ID_ALERT_INFO    				31101
+#define ID_ALERT_HELP    				31102
+#define ID_ALERT_TIP    				31103
 #define ID_VIEW_TOOLBARS                32771
 #define ID_FORMAT_OBJCOLOR              32800
 #define ID_FORMAT_OBJSHAPE              32801
@@ -772,7 +778,7 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        200
+#define _APS_NEXT_RESOURCE_VALUE        202
 #define _APS_NEXT_COMMAND_VALUE         32998
 #define _APS_NEXT_CONTROL_VALUE         1189
 #define _APS_NEXT_SYMED_VALUE           124
