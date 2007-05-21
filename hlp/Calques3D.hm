@@ -177,6 +177,10 @@ HID_RENDERER_PROPERTY                   0x178B4
 HID_RENDERER_SILHOUETTE                 0x178B5
 HID_RENDERER_FILL                       0x178B6
 HID_RENDERER_STIPPLE                    0x178B7
+HID_ALERT_WARNING                       0x1797C
+HID_ALERT_INFO                          0x1797D
+HID_ALERT_HELP                          0x1797E
+HID_ALERT_TIP                           0x1797F
 HID_VIEW_TOOLBARS                       0x18003
 HID_FORMAT_OBJCOLOR                     0x18020
 HID_FORMAT_OBJSHAPE                     0x18021
@@ -256,6 +260,7 @@ HIDR_MAINFRAME24                        0x20258
 HIDR_COMMANDS_TB24                      0x20262
 HIDR_FORMAT_TB24                        0x20267
 HIDR_PROPERTY_TB24                      0x2026C
+HIDR_ALERT_TB24                         0x20271
 HIDR_COMMANDS_TB                        0x211C6
 HIDR_OBJECTS_TB                         0x211C7
 HIDR_VISUALISATION_TB                   0x211C8
@@ -271,6 +276,7 @@ HIDR_VERIFY_TB                          0x211D2
 HIDR_PROPERTY_TB                        0x211D6
 HIDR_DEPENDENT_TB                       0x211D7
 HIDR_FORMAT_TB                          0x211D8
+HIDR_ALERT_TB                           0x211D9
  
 // Dialogs (IDD_*) 
 HIDD_SUPPRESS_DLG                       0x2012C
