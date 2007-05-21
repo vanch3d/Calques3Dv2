@@ -230,7 +230,12 @@ CSphere3DTask::CSphere3DTask(CView *AParent,UINT taskID): CDroite3DTask(AParent,
 
 void CSphere3DTask::CreateObject3D()
 {
-	CSphere3D* temp = new CSphere3D(ptA,ptB);
+	CSphere3D* temp = NULL;
+	if (ptB->isA() == TSegment3DClass)
+		temp = new CSphere3D(ptA,(CSegment3D*)ptB);
+	else 
+		temp = new CSphere3D(ptA,ptB);
+
 	temp->CalculConceptuel();
 	PrepareAddedObject(temp);
 
@@ -241,6 +246,18 @@ void CSphere3DTask::CreateObject3D()
 	ptA=ptB=NULL;
 	m_nStep = 0;
 }
+
+DWORD CSphere3DTask::GetMask()
+{
+	return (m_nStep) ? TAllPointClass|TSegment3DClass : TAllPointClass;
+}
+
+unsigned CSphere3DTask::GetHelpResID()
+{
+	return ((m_nStep) ? CTX_SELECT_POINTSEG : CTX_SELECT_POINT1);
+}
+
+
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction

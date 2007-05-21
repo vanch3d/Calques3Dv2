@@ -33,6 +33,7 @@
 #include "Object3D.h"
 
 class CDroite3D;
+class CSegment3D;
 
 //////////////////////////////////////////////////////////////////////
 /// Construction/Destruction
@@ -41,15 +42,17 @@ class CSphere3D : public CObject3D
 {
 public:
 	DECLARE_SERIAL(CSphere3D);
-	CPoint3D	*P1,			// centre de la sphere
-				*P2;			// passant par ce point
-	CVector4	Rayon;			// rayon de la sphère
+	CPoint3D	*P1,		///< Center of the sphere
+				*P2;		///< Point on the envelope of the sphere
+	CSegment3D	*Seg;		///< Segment defining the radius of a sphere centered on P1
+	CVector4	Rayon;		///< Radius of the sphere
 private:
 	CVisualParam*	locVisParam;
 
 public:
 	CSphere3D();
 	CSphere3D(CPoint3D *p1,CPoint3D *p2);
+	CSphere3D(CPoint3D *p1,CSegment3D *seg);
 	CSphere3D(const CObject3D & );
 	~CSphere3D();
 

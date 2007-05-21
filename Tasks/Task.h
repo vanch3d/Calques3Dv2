@@ -480,7 +480,9 @@ public :
     CSphere3DTask(CView *AParent,UINT taskID);
     virtual unsigned GetTaskResID() const { return CTX_SPHERE; }
 
+    virtual DWORD GetMask();
     virtual void CreateObject3D();
+    virtual unsigned GetHelpResID();
 };
 
 /////////////////////////////////////////////////////////////////////////////

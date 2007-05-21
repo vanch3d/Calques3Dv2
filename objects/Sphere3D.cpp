@@ -92,11 +92,14 @@ void CSphere3D::DrawUnit(CVector4& deb,CVector4& fin,CVector4& P1,
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
-IMPLEMENT_SERIAL(CSphere3D, CObject3D, VERSIONABLE_SCHEMA | 1)
+IMPLEMENT_SERIAL(CSphere3D, CObject3D, VERSIONABLE_SCHEMA | 2)
 
 CSphere3D::CSphere3D() : CObject3D() 
 {
 	locVisParam = NULL;
+	P1 = NULL;
+	P2 = NULL;
+	Seg = NULL;
 }
 
 CSphere3D::CSphere3D(CPoint3D *p1,CPoint3D *p2) : CObject3D()
@@ -104,21 +107,37 @@ CSphere3D::CSphere3D(CPoint3D *p1,CPoint3D *p2) : CObject3D()
 	locVisParam = NULL;
 	P1 = p1;
 	P2 = p2;
+	Seg = NULL;
 	nDepth = max(p1->nDepth,p2->nDepth)+1;
 	pObjectShape.clrObject = RGB(0,0,255);
 }
+
+CSphere3D::CSphere3D(CPoint3D *p1,CSegment3D *seg) : CObject3D()
+{
+	locVisParam = NULL;
+	P1 = p1;
+	P2 = NULL;
+	Seg = seg;
+	nDepth = max(p1->nDepth,seg->nDepth)+1;
+	pObjectShape.clrObject = RGB(0,0,255);
+}
+
 
 CSphere3D::CSphere3D(const CObject3D & src): CObject3D(src)
 {
 	locVisParam = NULL;
 	P1 =  ((CSphere3D&)src).P1;
 	P2 =   ((CSphere3D&)src).P2;
+	Seg =   ((CSphere3D&)src).Seg;
 }
 
 int CSphere3D::SetDepth()
 {
 	if (P1 && P2)
 		nDepth = max(P1->nDepth,P2->nDepth)+1;
+	else if (P1 && Seg)
+		nDepth = max(P1->nDepth,Seg->nDepth)+1;
+
 	return nDepth;
 }
 
@@ -135,6 +154,12 @@ BOOL CSphere3D::ChangeParent(CObject3D *pOld,CObject3D *pNew,BOOL bUpGraph)
 	{
 		SetInGraph(FALSE);
 		P2 = (CPoint3D*)pNew;
+		if (bUpGraph) SetInGraph(TRUE);
+	}
+	else if (Seg == pOld)
+	{
+		SetInGraph(FALSE);
+		Seg = (CSegment3D*)pNew;
 		if (bUpGraph) SetInGraph(TRUE);
 	}
 	else return FALSE;
@@ -170,13 +195,22 @@ void CSphere3D::GetRange(CVector4 &min,CVector4 &max)
 CxObject3DSet* CSphere3D::GetParents()
 {
 	CxObject3DSet* list = new CxObject3DSet();
-	list->Add(P1);
-	list->Add(P2);
+	if (P1 && P2)
+	{
+		list->Add(P1);
+		list->Add(P2);
+	}
+	else if (P1 && Seg)
+	{
+		list->Add(P1);
+		list->Add(Seg);
+	}
 	return list;
 }
 
 void CSphere3D::Serialize( CArchive& ar )
 {
+	int ver = ar.GetObjectSchema();
 	CObject3D::Serialize(ar);
 
 	if (ar.IsStoring())
@@ -184,12 +218,17 @@ void CSphere3D::Serialize( CArchive& ar )
 		ar << Rayon;
 		ar << ((P1) ? P1->nObjectId : -1);
 		ar << ((P2) ? P2->nObjectId : -1);
+		ar << ((Seg) ? Seg->nObjectId : -1);
 	}
 	else
 	{
+
 		ar >> Rayon;
 		P1 = (CPoint3D*)SerializeObj(ar);
 		P2 = (CPoint3D*)SerializeObj(ar);
+		if (ver==2)
+			Seg = (CSegment3D*)SerializeObj(ar);
+	
 	}
 }
 
@@ -198,7 +237,7 @@ BOOL CSphere3D::IsEqual(CObject3D &o)
 {
 	if (!(o.MaskObject(TSphere3DClass))) return false;
 	if (!bValidate || !(o.bValidate)) return false;
-	CVector4 ray= ((CSphere3D&)o).P1->Concept_pt - P1->Concept_pt;
+	CVector4 ray = ((CSphere3D&)o).P1->Concept_pt - P1->Concept_pt;
 	BOOL SameCenter	= ray.NullVector();
 	
 	FCoord 	rad1 = Rayon.Norme(),
@@ -237,12 +276,19 @@ CRgn* CSphere3D::InvalideRect()
 
 UINT  CSphere3D::CalculConceptuel()
 {
-	bValidate = ((P1->bValidate) && (P2->bValidate));
+	bValidate = FALSE;
+	if (P1 && P2)
+		bValidate = ((P1->bValidate) && (P2->bValidate));
+	else if (P1 && Seg)
+		bValidate = ((P1->bValidate) && (Seg->bValidate));
 	if (!bValidate)
 		return ERR_NOSPHERE;
 
-	Rayon = P2->Concept_pt - P1->Concept_pt;
- //	FCoord r = Norme(Rayon);
+	if (P1 && P2)
+		Rayon = P2->Concept_pt - P1->Concept_pt;
+ 	else if (P1 && Seg)
+		Rayon = (Seg->P2->Concept_pt - Seg->P1->Concept_pt);
+//	FCoord r = Norme(Rayon);
 
 	if (Rayon.NullVector())
 	 {	bValidate = FALSE;
@@ -355,8 +401,18 @@ void CSphere3D::Draw(CDC* pDC,CVisualParam *mV,BOOL bSm)
 	 }
 
 	// Grand cercle passant par P2
-	CVector4 P3(P2->Concept_pt);
-	P3.z = P1->Concept_pt.z;
+	CVector4 P3(0,0,0);
+	if (P2) 
+	{
+		P3 = P2->Concept_pt;
+		P3.z = P1->Concept_pt.z;
+	}
+	else
+	{
+		P3 = P1->Concept_pt + Rayon;
+		//P3.x = P3.x + Rayon.Norme();
+		P3.z = P1->Concept_pt.z;
+	}
 	CVector4 R = P3 - P1->Concept_pt;
 	FCoord ptn= R.Norme();
 	if (!FCZero(ptn))
@@ -480,6 +536,7 @@ CString CSphere3D::GetObjectDef()
 	CString sn1(_T("???")),sn2(_T("???"));
 	if (P1) sn1 = P1->GetObjectHelp();
 	if (P2) sn2 = P2->GetObjectHelp();
+	else sn2 = Seg->GetObjectHelp();
 	mstr.Format(sFormat,sName,sn1,sn2);
 	return mstr;
 }
