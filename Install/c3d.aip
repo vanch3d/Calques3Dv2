@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<DOCUMENT type="Advanced Installer" CreateVersion="4.5" version="4.5" modules="enterprise" RootPath="." Language="en">
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiPropsComponent">
+    <ROW Property="ALLUSERS" Value="2"/>
+    <ROW Property="ARPCOMMENTS" Value="This installer database contains the logic and data required to install [|ProductName]." ValueLocId="*"/>
+    <ROW Property="ARPPRODUCTICON" Value="controlPanelIcon.exe"/>
+    <ROW Property="BannerBitmap" Value="default_banner.bmp" Type="1"/>
+    <ROW Property="C3D_LANGUAGE" Value="C3D_LANG_ENG"/>
+    <ROW Property="DialogBitmap" Value="default_dialog.bmp" Type="1"/>
+    <ROW Property="Manufacturer" Value="Nicolas Van Labeke" ValueLocId="*"/>
+    <ROW Property="ProductCode" Value="1033:{3997FBC6-06C2-4EEF-AB18-0DCD53CE202A} "/>
+    <ROW Property="ProductLanguage" Value="1033"/>
+    <ROW Property="ProductName" Value="Calques 3D" ValueLocId="*"/>
+    <ROW Property="ProductVersion" Value="2.3.6"/>
+    <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
+    <ROW Property="UpgradeCode" Value="{29525319-700E-4735-B89E-34609D00975A}"/>
+    <ROW Property="WIMinVersion" Value="2.0"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiDirsComponent">
+    <ROW Directory="APPDIR" Directory_Parent="TARGETDIR" DefaultDir="APPDIR:." IsPseudoRoot="1"/>
+    <ROW Directory="C3D_ENG_DIR" Directory_Parent="APPDIR" DefaultDir="C3D_ENG"/>
+    <ROW Directory="C3D_ESP_DIR" Directory_Parent="APPDIR" DefaultDir="C3D_ESP"/>
+    <ROW Directory="C3D_FRA_DIR" Directory_Parent="APPDIR" DefaultDir="C3D_FRA"/>
+    <ROW Directory="C3D_PTG_DIR" Directory_Parent="APPDIR" DefaultDir="C3D_PTG"/>
+    <ROW Directory="Macros_DIR" Directory_Parent="APPDIR" DefaultDir="Macros"/>
+    <ROW Directory="New_Folder_DIR" Directory_Parent="APPDIR" DefaultDir="Examples"/>
+    <ROW Directory="SHORTCUTDIR" Directory_Parent="TARGETDIR" DefaultDir="SHORTC~1|SHORTCUTDIR" IsPseudoRoot="1"/>
+    <ROW Directory="STC_ENG_DIR" Directory_Parent="SHORTCUTDIR" DefaultDir="STC_ENG"/>
+    <ROW Directory="STC_ESP_DIR" Directory_Parent="SHORTCUTDIR" DefaultDir="STC_ESP"/>
+    <ROW Directory="STC_FRA_DIR" Directory_Parent="SHORTCUTDIR" DefaultDir="STC_FRA"/>
+    <ROW Directory="STC_PTG_DIR" Directory_Parent="SHORTCUTDIR" DefaultDir="STC_PTG"/>
+    <ROW Directory="SystemFolder" Directory_Parent="TARGETDIR" DefaultDir="System~1|SystemFolder" IsPseudoRoot="1"/>
+    <ROW Directory="TARGETDIR" DefaultDir="SourceDir"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiCompsComponent">
+    <ROW Component="BCGCBPRO731.dll" ComponentId="{F1A884A0-69FE-46C9-A575-D18A04C264D3}" Directory_="APPDIR" Attributes="0" KeyPath="BCGCBPRO731.dll" FullKeyPath="APPDIR\BCGCBPRO731.dll"/>
+    <ROW Component="BCGCBProResESP.dll" ComponentId="{EE543BA8-120D-4199-B209-98096ED3C4F9}" Directory_="C3D_ESP_DIR" Attributes="0" KeyPath="BCGCBProResESP.dll" FullKeyPath="APPDIR\C3D_ESP\BCGCBProResESP.dll"/>
+    <ROW Component="BCGCBProResFRA.dll" ComponentId="{7336A00B-AACE-4594-81E3-3F81430BBEC9}" Directory_="C3D_FRA_DIR" Attributes="0" KeyPath="BCGCBProResFRA.dll" FullKeyPath="APPDIR\C3D_FRA\BCGCBProResFRA.dll"/>
+    <ROW Component="BCGCBProResPTG.dll" ComponentId="{EED9D77C-7B40-4602-BE79-CB276009228D}" Directory_="C3D_PTG_DIR" Attributes="0" KeyPath="BCGCBProResPTG.dll" FullKeyPath="APPDIR\C3D_PTG\BCGCBProResPTG.dll"/>
+    <ROW Component="CALQUES3D.HLP" ComponentId="{54123743-17FD-4903-899B-E24E1F7B5DD5}" Directory_="APPDIR" Attributes="0" KeyPath="Calques3D.hlp" FullKeyPath="APPDIR\Calques3D.hlp"/>
+    <ROW Component="Calques3D.exe" ComponentId="{122E1513-F242-4598-A591-B0B4A2C97404}" Directory_="C3D_ENG_DIR" Attributes="0" KeyPath="Calques3D.exe" FullKeyPath="APPDIR\C3D_ENG\Calques3D.exe"/>
+    <ROW Component="Calques3D.exe_1" ComponentId="{7AE939DC-01E7-47AC-9556-CD7B008F8A64}" Directory_="C3D_ESP_DIR" Attributes="0" KeyPath="Calques3D.exe_1" FullKeyPath="APPDIR\C3D_ESP\Calques3D.exe"/>
+    <ROW Component="Calques3D.exe_2" ComponentId="{51B28989-EA3F-484F-A99A-7DFF732C501A}" Directory_="C3D_FRA_DIR" Attributes="0" KeyPath="Calques3D.exe_2" FullKeyPath="APPDIR\C3D_FRA\Calques3D.exe"/>
+    <ROW Component="Calques3D.exe_3" ComponentId="{E5803D6D-9403-4FFD-AF8C-A95138863660}" Directory_="C3D_PTG_DIR" Attributes="0" KeyPath="Calques3D.exe_3" FullKeyPath="APPDIR\C3D_PTG\Calques3D.exe"/>
+    <ROW Component="Language" ComponentId="{83589438-5A8A-4632-A692-C9BF3657B42B}" Directory_="APPDIR" Attributes="4" KeyPath="Language" FullKeyPath="HK_LM\Software\[ProductName]\Language"/>
+    <ROW Component="brete.c3d" ComponentId="{EB352D96-30B9-48DD-99AF-86605BA1510B}" Directory_="New_Folder_DIR" Attributes="0" KeyPath="brete.c3d" FullKeyPath="APPDIR\Examples"/>
+    <ROW Component="hexagon_B_.m3d" ComponentId="{18E00398-D68D-4578-8CF5-242D7FFDFFA7}" Directory_="Macros_DIR" Attributes="0" KeyPath="house.m3d" FullKeyPath="APPDIR\Macros"/>
+    <ROW Component="licence.txt" ComponentId="{035B1A03-16F5-4003-98A4-64F65F6B0DF8}" Directory_="APPDIR" Attributes="0" KeyPath="licence.txt" FullKeyPath="APPDIR"/>
+    <ROW Component="mfc42.dll" ComponentId="{670E4B55-643E-4C7F-853F-AF5919632FC5}" Directory_="SystemFolder" Attributes="144" KeyPath="mfc42.dll" FullKeyPath="SystemFolder\mfc42.dll"/>
+    <ROW Component="msvcrt.dll" ComponentId="{ED4B8ED6-F49E-4638-81F8-819D37E81FB6}" Directory_="SystemFolder" Attributes="144" KeyPath="msvcrt.dll" FullKeyPath="SystemFolder\msvcrt.dll"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
+    <ROW Feature="FEATURE_C3D_ENG" Title="Calques 3D - English" Description="Contains the English version of Calques 3D" Display="9" Level="1" Directory_="APPDIR" Attributes="8" Components="Calques3D.exe"/>
+    <ROW Feature="FEATURE_C3D_ESP" Title="Calques 3D - Spanish" Description="Contains the Spanish version of Calques 3D" Display="15" Level="1" Directory_="APPDIR" Attributes="8" Components="Calques3D.exe_1 BCGCBProResESP.dll"/>
+    <ROW Feature="FEATURE_C3D_FRA" Title="Calques 3D - French" Description="Contains the French version of Calques 3D" Display="11" Level="1" Directory_="APPDIR" Attributes="8" Components="Calques3D.exe_2 BCGCBProResFRA.dll"/>
+    <ROW Feature="FEATURE_C3D_PTG" Title="Calques 3D - Portuguese" Description="Contains the Portuguese version of Calques 3D" Display="13" Level="1" Directory_="APPDIR" Attributes="8" Components="Calques3D.exe_3 BCGCBProResPTG.dll"/>
+    <ROW Feature="FEATURE_EXAMPLES" Title="Examples" Description="Contains some examples of constructions" Display="7" Level="1" Directory_="APPDIR" Attributes="8" Components="brete.c3d"/>
+    <ROW Feature="FEATURE_MACROS" Title="Macros" Description="Contains some examples of macro-constructions" Display="5" Level="1" Directory_="APPDIR" Attributes="8" Components="hexagon_B_.m3d"/>
+    <ROW Feature="Feature_3" Title="Common Files" Description="Contains the help file and other mandatory files" Display="3" Level="1" Directory_="APPDIR" Attributes="26" Components="Language CALQUES3D.HLP BCGCBPRO731.dll mfc42.dll msvcrt.dll licence.txt"/>
+    <ATTRIBUTE name="CurrentFeature" value="Feature_3"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
+    <ROW File="BCGCBPRO731.dll" Component_="BCGCBPRO731.dll" FileName="BCGCBP~1.dll|BCGCBPRO731.dll" Attributes="0" SourcePath="..\Release\BCGCBPRO731.dll" SelfReg="false" Sequence="2"/>
+    <ROW File="BCGCBProResESP.dll" Component_="BCGCBProResESP.dll" FileName="BCGCBP~1.dll|BCGCBProResESP.dll" Attributes="0" SourcePath="..\Release_ESP\BCGCBProResESP.dll" SelfReg="false" Sequence="39"/>
+    <ROW File="BCGCBProResFRA.dll" Component_="BCGCBProResFRA.dll" FileName="BCGCBP~1.dll|BCGCBProResFRA.dll" Attributes="0" SourcePath="..\Release_FRA\BCGCBProResFRA.dll" SelfReg="false" Sequence="41"/>
+    <ROW File="BCGCBProResPTG.dll" Component_="BCGCBProResPTG.dll" FileName="BCGCBP~1.dll|BCGCBProResPTG.dll" Attributes="0" SourcePath="..\Release_PTG\BCGCBProResPTG.dll" SelfReg="false" Sequence="43"/>
+    <ROW File="Calques3D.cnt" Component_="CALQUES3D.HLP" FileName="Calque~1.cnt|Calques3D.cnt" Attributes="0" SourcePath="..\Release\Calques3D.cnt" SelfReg="false" Sequence="1"/>
+    <ROW File="Calques3D.exe" Component_="Calques3D.exe" FileName="Calque~1.exe|Calques3D.exe" Attributes="0" SourcePath="..\Release\Calques3D.exe" SelfReg="false" Sequence="37"/>
+    <ROW File="Calques3D.exe_1" Component_="Calques3D.exe_1" FileName="Calque~1.exe|Calques3D.exe" Attributes="0" SourcePath="..\Release_ESP\Calques3D.exe" SelfReg="false" Sequence="38"/>
+    <ROW File="Calques3D.exe_2" Component_="Calques3D.exe_2" FileName="Calque~1.exe|Calques3D.exe" Attributes="0" SourcePath="..\Release_FRA\Calques3D.exe" SelfReg="false" Sequence="40"/>
+    <ROW File="Calques3D.exe_3" Component_="Calques3D.exe_3" FileName="Calque~1.exe|Calques3D.exe" Attributes="0" SourcePath="..\Release_PTG\Calques3D.exe" SelfReg="false" Sequence="42"/>
+    <ROW File="Calques3D.hlp" Component_="CALQUES3D.HLP" FileName="Calque~1.hlp|Calques3D.hlp" Attributes="0" SourcePath="..\Release\Calques3D.hlp" SelfReg="false" Sequence="47"/>
+    <ROW File="Garage_Door.c3d" Component_="brete.c3d" FileName="Garage~1.c3d|Garage Door.c3d" Attributes="0" SourcePath="..\..\..\calques3d\Garage Door.c3d" SelfReg="false" Sequence="11"/>
+    <ROW File="NicomedesConchoid.c3d" Component_="brete.c3d" FileName="Nicome~1.c3d|NicomedesConchoid.c3d" Attributes="0" SourcePath="..\..\..\calques3d\NicomedesConchoid.c3d" SelfReg="false" Sequence="18"/>
+    <ROW File="NicomedesConchoidSphere.c3d" Component_="brete.c3d" FileName="Nicome~2.c3d|NicomedesConchoidSphere.c3d" Attributes="0" SourcePath="..\..\..\calques3d\NicomedesConchoidSphere.c3d" SelfReg="false" Sequence="19"/>
+    <ROW File="UserImages.bmp" Component_="licence.txt" FileName="UserIm~1.bmp|UserImages.bmp" Attributes="0" SourcePath="..\UserImages.bmp" SelfReg="false" Sequence="49"/>
+    <ROW File="angle_plan_plan.c3d" Component_="brete.c3d" FileName="anglep~1.c3d|angle plan-plan.c3d" Attributes="0" SourcePath="..\..\..\calques3d\angle plan-plan.c3d" SelfReg="false" Sequence="32"/>
+    <ROW File="brete.c3d" Component_="brete.c3d" FileName="brete.c3d" Attributes="0" SourcePath="..\..\..\calques3d\brete.c3d" SelfReg="false" Sequence="3"/>
+    <ROW File="brick.m3d" Component_="hexagon_B_.m3d" FileName="brick.m3d" Attributes="0" SourcePath="..\..\..\calques3d\brick.m3d" SelfReg="false" Sequence="44"/>
+    <ROW File="cube_exp.c3d" Component_="brete.c3d" FileName="cube_exp.c3d" Attributes="0" SourcePath="..\..\..\calques3d\cube_exp.c3d" SelfReg="false" Sequence="4"/>
+    <ROW File="cube_plane.c3d" Component_="brete.c3d" FileName="cube-p~1.c3d|cube-plane.c3d" Attributes="0" SourcePath="..\..\..\calques3d\cube-plane.c3d" SelfReg="false" Sequence="5"/>
+    <ROW File="cylinder_dev.c3d" Component_="brete.c3d" FileName="cylind~1.c3d|cylinder dev.c3d" Attributes="0" SourcePath="..\..\..\calques3d\cylinder dev.c3d" SelfReg="false" Sequence="6"/>
+    <ROW File="cylnder_to_cone.c3d" Component_="brete.c3d" FileName="cylnde~1.c3d|cylnder to cone.c3d" Attributes="0" SourcePath="..\..\..\calques3d\cylnder to cone.c3d" SelfReg="false" Sequence="7"/>
+    <ROW File="decompose.c3d" Component_="brete.c3d" FileName="decomp~3.c3d|decompose.c3d" Attributes="0" SourcePath="..\..\..\calques3d\decompose.c3d" SelfReg="false" Sequence="9"/>
+    <ROW File="decompose_2.c3d" Component_="brete.c3d" FileName="decomp~1.c3d|decompose 2.c3d" Attributes="0" SourcePath="..\..\..\calques3d\decompose 2.c3d" SelfReg="false" Sequence="8"/>
+    <ROW File="elipsoide.c3d" Component_="brete.c3d" FileName="elipso~1.c3d|elipsoide.c3d" Attributes="0" SourcePath="..\..\..\calques3d\elipsoide.c3d" SelfReg="false" Sequence="10"/>
+    <ROW File="halfbrick.m3d" Component_="hexagon_B_.m3d" FileName="halfbr~1.m3d|halfbrick.m3d" Attributes="0" SourcePath="..\..\..\calques3d\halfbrick.m3d" SelfReg="false" Sequence="36"/>
+    <ROW File="hiperboloide.c3d" Component_="brete.c3d" FileName="hiperb~1.c3d|hiperboloide.c3d" Attributes="0" SourcePath="..\..\..\calques3d\hiperboloide.c3d" SelfReg="false" Sequence="12"/>
+    <ROW File="house.m3d" Component_="hexagon_B_.m3d" FileName="house.m3d" Attributes="0" SourcePath="..\..\..\calques3d\house.m3d" SelfReg="false" Sequence="33"/>
+    <ROW File="house_roof.c3d" Component_="brete.c3d" FileName="houser~2.c3d|house roof.c3d" Attributes="0" SourcePath="..\..\..\calques3d\house roof.c3d" SelfReg="false" Sequence="14"/>
+    <ROW File="house_roof_sol_.c3d" Component_="brete.c3d" FileName="houser~1.c3d|house roof (sol).c3d" Attributes="0" SourcePath="..\..\..\calques3d\house roof (sol).c3d" SelfReg="false" Sequence="13"/>
+    <ROW File="licence.txt" Component_="licence.txt" FileName="licence.txt" Attributes="0" SourcePath="licence.txt" SelfReg="false" Sequence="48"/>
+    <ROW File="locus_plan.c3d" Component_="brete.c3d" FileName="locusp~1.c3d|locus plan.c3d" Attributes="0" SourcePath="..\..\..\calques3d\locus plan.c3d" SelfReg="false" Sequence="15"/>
+    <ROW File="locus_pt_tgt.c3d" Component_="brete.c3d" FileName="locusp~2.c3d|locus pt-tgt.c3d" Attributes="0" SourcePath="..\..\..\calques3d\locus pt-tgt.c3d" SelfReg="false" Sequence="16"/>
+    <ROW File="locus_segment.c3d" Component_="brete.c3d" FileName="locuss~1.c3d|locus segment.c3d" Attributes="0" SourcePath="..\..\..\calques3d\locus segment.c3d" SelfReg="false" Sequence="17"/>
+    <ROW File="mfc42.dll" Component_="mfc42.dll" FileName="mfc42.dll" Attributes="0" SourcePath="C:\WINDOWS\system32\mfc42.dll" SelfReg="false" Sequence="45"/>
+    <ROW File="msvcrt.dll" Component_="msvcrt.dll" FileName="msvcrt.dll" Attributes="0" SourcePath="C:\WINDOWS\system32\msvcrt.dll" SelfReg="false" Sequence="46"/>
+    <ROW File="octaedron.c3d" Component_="brete.c3d" FileName="octaed~1.c3d|octaedron.c3d" Attributes="0" SourcePath="..\..\..\calques3d\octaedron.c3d" SelfReg="false" Sequence="20"/>
+    <ROW File="paraboloide.c3d" Component_="brete.c3d" FileName="parabo~1.c3d|paraboloide.c3d" Attributes="0" SourcePath="..\..\..\calques3d\paraboloide.c3d" SelfReg="false" Sequence="21"/>
+    <ROW File="parahyper.c3d" Component_="brete.c3d" FileName="parahy~2.c3d|parahyper.c3d" Attributes="0" SourcePath="..\..\..\calques3d\parahyper.c3d" SelfReg="false" Sequence="22"/>
+    <ROW File="pyr_dev.c3d" Component_="brete.c3d" FileName="pyr_dev.c3d" Attributes="0" SourcePath="..\..\..\calques3d\pyr_dev.c3d" SelfReg="false" Sequence="23"/>
+    <ROW File="pyramid.m3d" Component_="hexagon_B_.m3d" FileName="pyramid.m3d" Attributes="0" SourcePath="..\..\..\calques3d\pyramid.m3d" SelfReg="false" Sequence="34"/>
+    <ROW File="pyramid_plane.c3d" Component_="brete.c3d" FileName="pyrami~1.c3d|pyramid plane.c3d" Attributes="0" SourcePath="..\..\..\calques3d\pyramid plane.c3d" SelfReg="false" Sequence="24"/>
+    <ROW File="quartercone.m3d" Component_="hexagon_B_.m3d" FileName="quarte~1.m3d|quartercone.m3d" Attributes="0" SourcePath="..\..\..\calques3d\quartercone.m3d" SelfReg="false" Sequence="35"/>
+    <ROW File="section_cube.c3d" Component_="brete.c3d" FileName="sectio~1.c3d|section cube.c3d" Attributes="0" SourcePath="..\..\..\calques3d\section cube.c3d" SelfReg="false" Sequence="25"/>
+    <ROW File="section_cube_diag.c3d" Component_="brete.c3d" FileName="sectio~2.c3d|section cube-diag.c3d" Attributes="0" SourcePath="..\..\..\calques3d\section cube-diag.c3d" SelfReg="false" Sequence="26"/>
+    <ROW File="simpson.c3d" Component_="brete.c3d" FileName="simpson.c3d" Attributes="0" SourcePath="..\..\..\calques3d\simpson.c3d" SelfReg="false" Sequence="27"/>
+    <ROW File="simson_dynamic.c3d" Component_="brete.c3d" FileName="simson~1.c3d|simson-dynamic.c3d" Attributes="0" SourcePath="..\..\..\calques3d\simson-dynamic.c3d" SelfReg="false" Sequence="28"/>
+    <ROW File="simson_symbolic.c3d" Component_="brete.c3d" FileName="simson~2.c3d|simson-symbolic.c3d" Attributes="0" SourcePath="..\..\..\calques3d\simson-symbolic.c3d" SelfReg="false" Sequence="29"/>
+    <ROW File="stick_sleeve.c3d" Component_="brete.c3d" FileName="stick&amp;~1.c3d|stick &amp; sleeve.c3d" Attributes="0" SourcePath="..\..\..\calques3d\stick &amp; sleeve.c3d" SelfReg="false" Sequence="30"/>
+    <ROW File="strophoid.c3d" Component_="brete.c3d" FileName="stroph~1.c3d|strophoid.c3d" Attributes="0" SourcePath="..\..\..\calques3d\strophoid.c3d" SelfReg="false" Sequence="31"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.DictionaryComponent">
+    <ROW Path="&lt;ui.ail&gt;"/>
+    <ROW Path="&lt;ui_en.ail&gt;"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.FragmentComponent">
+    <ROW Fragment="FolderDlg.aip" Path="&lt;FolderDlg.aip&gt;"/>
+    <ROW Fragment="StaticUIStrings.aip" Path="&lt;StaticUIStrings.aip&gt;"/>
+    <ROW Fragment="UI.aip" Path="&lt;UI.aip&gt;"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiAppSearchComponent">
+    <ROW Property="SEARCH_LANGUAGE" Signature_="AppSearchSign"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiBinaryComponent">
+    <ROW Name="default_banner.bmp" SourcePath="&lt;default-banner.bmp&gt;"/>
+    <ROW Name="default_dialog.bmp" SourcePath="&lt;default-dialog.bmp&gt;"/>
+    <ROW Name="language.vbs" SourcePath="language.vbs"/>
+    <ROW Name="launcher.dll" SourcePath="&lt;launcher.dll&gt;"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiControlComponent">
+    <ROW Dialog_="MaintenanceTypeDlg" Control="ChangeButton" Type="PushButton" X="50" Y="65" Width="38" Height="38" Attributes="5767171" Text="[CustomSetupIcon]" Control_Next="RepairLabel" Help="Modify Installation|" HelpLocId="Control.Help.MaintenanceTypeDlg#ChangeButton" MsiKey="MaintenanceTypeDlg#ChangeButton"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control="ChangeLabel" Type="Text" X="105" Y="65" Width="100" Height="10" Attributes="3" Text="&amp;Modify" TextStyle="[DlgTitleFont]" Control_Next="ChangeButton" TextLocId="Control.Text.MaintenanceTypeDlg#ChangeLabel" MsiKey="MaintenanceTypeDlg#ChangeLabel"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control="ChangeText" Type="Text" X="105" Y="78" Width="230" Height="20" Attributes="3" Text="Allows users to change the way features are installed." Control_Next="BannerLine" TextLocId="Control.Text.MaintenanceTypeDlg#ChangeText" MsiKey="MaintenanceTypeDlg#ChangeText"/>
+    <ROW Dialog_="SetLanguageDlg" Control="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Back]" Control_Next="BannerBitmap" TextLocId="-"/>
+    <ROW Dialog_="SetLanguageDlg" Control="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" Attributes="1048577" Text="[BannerBitmap]" Control_Next="BannerLine"/>
+    <ROW Dialog_="SetLanguageDlg" Control="BannerLine" Type="Line" X="0" Y="44" Width="372" Height="0" Attributes="1" Control_Next="BottomLine"/>
+    <ROW Dialog_="SetLanguageDlg" Control="BottomLine" Type="Line" X="5" Y="234" Width="368" Height="0" Attributes="1" Control_Next="Description"/>
+    <ROW Dialog_="SetLanguageDlg" Control="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Cancel]" Control_Next="Back" TextLocId="-"/>
+    <ROW Dialog_="SetLanguageDlg" Control="Description" Type="Text" X="25" Y="23" Width="280" Height="15" Attributes="196611" Text="This is the language that will be used by [ProductName]." Control_Next="Logo" TextLocId="Control.Text.TemplateDlg#Description"/>
+    <ROW Dialog_="SetLanguageDlg" Control="Logo" Type="Text" X="4" Y="228" Width="76" Height="12" Attributes="1" Text="[ProductName] v[ProductVersion]" Control_Next="Title" TextLocId="Control.Text.TemplateDlg#Logo"/>
+    <ROW Dialog_="SetLanguageDlg" Control="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Attributes="3" Text="[ButtonText_Next]" Control_Next="Cancel" TextLocId="-"/>
+    <ROW Dialog_="SetLanguageDlg" Control="Title" Type="Text" X="15" Y="6" Width="200" Height="15" Attributes="196611" Text="Select Installation Language" TextStyle="[DlgTitleFont]" Control_Next="LanguageGroup" TextLocId="Control.Text.TemplateDlg#Title"/>
+    <ROW Dialog_="SetLanguageDlg" Control="LanguageGroup" Type="RadioButtonGroup" X="15" Y="68" Width="344" Height="120" Attributes="3" Property="C3D_LANGUAGE" Text="Languages available" Control_Next="Next"/>
+    <ROW Dialog_="FolderDlg" Control="Logo" Type="Text" X="4" Y="228" Width="76" Height="12" Attributes="1" Text="[ProductName] v[ProductVersion]" Control_Next="Cancel" TextLocId="Control.Text.FolderDlg#Logo" MsiKey="FolderDlg#Logo"/>
+    <ROW Dialog_="AdminBrowseDlg" Control="Logo" Type="Text" X="4" Y="228" Width="76" Height="12" Attributes="1" Text="Advanced Installer" Control_Next="OK" TextLocId="Control.Text.AdminBrowseDlg#Logo" MsiKey="AdminBrowseDlg#Logo"/>
+    <ROW Dialog_="AdminInstallPointDlg" Control="Logo" Type="Text" X="4" Y="228" Width="76" Height="12" Attributes="1" Text="Advanced Installer" Control_Next="Back" TextLocId="Control.Text.AdminInstallPointDlg#Logo" MsiKey="AdminInstallPointDlg#Logo"/>
+    <ROW Dialog_="AdminRegistrationDlg" Control="Logo" Type="Text" X="4" Y="228" Width="76" Height="12" Attributes="1" Text="Advanced Installer" Control_Next="Back" TextLocId="Control.Text.AdminRegistrationDlg#Logo" MsiKey="AdminRegistrationDlg#Logo"/>
+    <ROW Dialog_="BrowseDlg" Control="Logo" Type="Text" X="4" Y="228" Width="76" Height="12" Attributes="1" Text="[ProductName] v[ProductVersion]" Control_Next="OK" TextLocId="Control.Text.BrowseDlg#Logo" MsiKey="BrowseDlg#Logo"/>
+    <ROW Dialog_="CustomizeDlg" Control="Logo" Type="Text" X="4" Y="228" Width="76" Height="12" Attributes="1" Text="[ProductName] v[ProductVersion]" Control_Next="Back" TextLocId="Control.Text.CustomizeDlg#Logo" MsiKey="CustomizeDlg#Logo"/>
+    <ROW Dialog_="DiskCostDlg" Control="Logo" Type="Text" X="4" Y="228" Width="76" Height="12" Attributes="1" Text="[ProductName] v[ProductVersion]" Control_Next="VolumeList" TextLocId="Control.Text.DiskCostDlg#Logo" MsiKey="DiskCostDlg#Logo"/>
+    <ROW Dialog_="FilesInUse" Control="Logo" Type="Text" X="4" Y="228" Width="76" Height="12" Attributes="1" Text="[ProductName] v[ProductVersion]" Control_Next="Title" TextLocId="Control.Text.FilesInUse#Logo" MsiKey="FilesInUse#Logo"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control="Logo" Type="Text" X="4" Y="228" Width="76" Height="12" Attributes="1" Text="[ProductName] v[ProductVersion]" Control_Next="Description" TextLocId="Control.Text.MaintenanceTypeDlg#Logo" MsiKey="MaintenanceTypeDlg#Logo"/>
+    <ROW Dialog_="OutOfDiskDlg" Control="Logo" Type="Text" X="4" Y="228" Width="76" Height="12" Attributes="1" Text="[ProductName] v[ProductVersion]" Control_Next="VolumeList" TextLocId="Control.Text.OutOfDiskDlg#Logo" MsiKey="OutOfDiskDlg#Logo"/>
+    <ROW Dialog_="OutOfRbDiskDlg" Control="Logo" Type="Text" X="4" Y="228" Width="76" Height="12" Attributes="1" Text="[ProductName] v[ProductVersion]" Control_Next="Text2" TextLocId="Control.Text.OutOfRbDiskDlg#Logo" MsiKey="OutOfRbDiskDlg#Logo"/>
+    <ROW Dialog_="ProgressDlg" Control="Logo" Type="Text" X="4" Y="228" Width="76" Height="12" Attributes="1" Text="[ProductName] v[ProductVersion]" Control_Next="Back" TextLocId="Control.Text.ProgressDlg#Logo" MsiKey="ProgressDlg#Logo"/>
+    <ROW Dialog_="VerifyReadyDlg" Control="Logo" Type="Text" X="4" Y="228" Width="76" Height="12" Attributes="1" Text="[ProductName] v[ProductVersion]" Control_Next="Back" TextLocId="Control.Text.VerifyReadyDlg#Logo" MsiKey="VerifyReadyDlg#Logo"/>
+    <ROW Dialog_="VerifyRemoveDlg" Control="Logo" Type="Text" X="4" Y="228" Width="76" Height="12" Attributes="1" Text="[ProductName] v[ProductVersion]" Control_Next="Title" TextLocId="Control.Text.VerifyRemoveDlg#Logo" MsiKey="VerifyRemoveDlg#Logo"/>
+    <ROW Dialog_="VerifyRepairDlg" Control="Logo" Type="Text" X="4" Y="228" Width="76" Height="12" Attributes="1" Text="[ProductName] v[ProductVersion]" Control_Next="Back" TextLocId="Control.Text.VerifyRepairDlg#Logo" MsiKey="VerifyRepairDlg#Logo"/>
+    <ATTRIBUTE name="FixedSizeBitmaps" value="2"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiControlEventComponent">
+    <ROW Dialog_="MaintenanceTypeDlg" Control_="ChangeButton" Event="[InstallMode]" Argument="Change" Condition="1" Ordering="1" MsiKey="MaintenanceTypeDlg#ChangeButton#[InstallMode]#Change#1"/>
+    <ROW Dialog_="FolderDlg" Control_="Back" Event="NewDialog" Argument="SetLanguageDlg" Condition="AI_INSTALL" Ordering="1"/>
+    <ROW Dialog_="WelcomeDlg" Control_="Next" Event="NewDialog" Argument="SetLanguageDlg" Condition="AI_INSTALL" Ordering="1"/>
+    <ROW Dialog_="FolderDlg" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_INSTALL" Ordering="3"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="FolderDlg" Condition="AI_INSTALL" Ordering="2"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control_="Back" Event="NewDialog" Argument="MaintenanceWelcomeDlg" Condition="AI_MAINT" Ordering="1"/>
+    <ROW Dialog_="MaintenanceWelcomeDlg" Control_="Next" Event="NewDialog" Argument="MaintenanceTypeDlg" Condition="AI_MAINT" Ordering="2"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="PatchWelcomeDlg" Condition="AI_PATCH" Ordering="1"/>
+    <ROW Dialog_="PatchWelcomeDlg" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_PATCH" Ordering="3"/>
+    <ROW Dialog_="SetLanguageDlg" Control_="Cancel" Event="SpawnDialog" Argument="CancelDlg" Condition="1" Ordering="1"/>
+    <ROW Dialog_="SetLanguageDlg" Control_="Back" Event="NewDialog" Argument="WelcomeDlg" Condition="AI_INSTALL" Ordering="1"/>
+    <ROW Dialog_="SetLanguageDlg" Control_="Next" Event="NewDialog" Argument="FolderDlg" Condition="AI_INSTALL" Ordering="2"/>
+    <ROW Dialog_="SetLanguageDlg" Control_="Next" Event="DoAction" Argument="language.vbs" Condition="AI_INSTALL" Ordering="1"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiCustActComponent">
+    <ROW Action="AI_DOWNGRADE" Type="19" Target="4010"/>
+    <ROW Action="AI_PREPARE_UPGRADE" Type="1" Source="launcher.dll" Target="PrepareUpgrade"/>
+    <ROW Action="AI_RESTORE_LOCATION" Type="1" Source="launcher.dll" Target="RestoreLocation"/>
+    <ROW Action="AI_STORE_LOCATION" Type="51" Source="ARPINSTALLLOCATION" Target="[APPDIR]"/>
+    <ROW Action="C3D_ENG_DIR" Type="35" Source="C3D_ENG_DIR" Target="[APPDIR]"/>
+    <ROW Action="C3D_ESP_DIR" Type="35" Source="C3D_ESP_DIR" Target="[APPDIR]"/>
+    <ROW Action="C3D_FRA_DIR" Type="35" Source="C3D_FRA_DIR" Target="[APPDIR]"/>
+    <ROW Action="C3D_PTG_DIR" Type="35" Source="C3D_PTG_DIR" Target="[APPDIR]"/>
+    <ROW Action="SET_APPDIR" Type="307" Source="APPDIR" Target="[ProgramFilesFolder][ProductName]"/>
+    <ROW Action="SET_SHORTCUTDIR" Type="307" Source="SHORTCUTDIR" Target="[ProgramMenuFolder][ProductName]"/>
+    <ROW Action="SET_TARGETDIR_TO_APPDIR" Type="51" Source="TARGETDIR" Target="[APPDIR]"/>
+    <ROW Action="STC_ENG_DIR" Type="35" Source="STC_ENG_DIR" Target="[SHORTCUTDIR]"/>
+    <ROW Action="STC_ESP_DIR" Type="35" Source="STC_ESP_DIR" Target="[SHORTCUTDIR]"/>
+    <ROW Action="STC_FRA_DIR" Type="35" Source="STC_FRA_DIR" Target="[SHORTCUTDIR]"/>
+    <ROW Action="STC_PTG_DIR" Type="35" Source="STC_PTG_DIR" Target="[SHORTCUTDIR]"/>
+    <ROW Action="language.vbs" Type="6" Source="language.vbs" WithoutSeq="true"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiDialogComponent">
+    <ROW Dialog="SetLanguageDlg" HCentering="50" VCentering="50" Width="370" Height="270" Attributes="3" Title="[ProductName] [Setup]" Control_First="Next" Control_Default="Next" Control_Cancel="Cancel"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiIconsComponent">
+    <ROW Name="SystemFolder_msiexec.exe" SourcePath="&lt;uninstall.ico&gt;" Index="0"/>
+    <ROW Name="controlPanelIcon.exe" SourcePath="..\..\..\html\calques3D\favicon.ico" Index="0"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiInstExSeqComponent">
+    <ROW Action="AI_DOWNGRADE" Condition="AI_NEWERPRODUCTFOUND AND (UILevel &lt;&gt; 5)" Sequence="210"/>
+    <ROW Action="AI_RESTORE_LOCATION" Condition="APPDIR=&quot;&quot;" Sequence="740"/>
+    <ROW Action="AI_STORE_LOCATION" Condition="Not Installed" Sequence="1550"/>
+    <ROW Action="AI_PREPARE_UPGRADE" Condition="AI_UPGRADE=&quot;No&quot; AND (Not Installed)" Sequence="1300"/>
+    <ROW Action="C3D_ENG_DIR" Sequence="1508"/>
+    <ROW Action="C3D_ESP_DIR" Sequence="1507"/>
+    <ROW Action="C3D_FRA_DIR" Sequence="1506"/>
+    <ROW Action="C3D_PTG_DIR" Sequence="1505"/>
+    <ROW Action="STC_ENG_DIR" Sequence="1504"/>
+    <ROW Action="STC_ESP_DIR" Sequence="1503"/>
+    <ROW Action="STC_FRA_DIR" Sequence="1502"/>
+    <ROW Action="STC_PTG_DIR" Sequence="1501"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiInstallUISequenceComponent">
+    <ROW Action="AI_RESTORE_LOCATION" Condition="APPDIR=&quot;&quot;" Sequence="740"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiLaunchConditionsComponent">
+    <ROW Condition="VersionMsi&gt;=&quot;2.0&quot;" Description="[ProductName] can not be installed on systems with Windows Installer version smaller than [WIMinVersion]"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiMediaComponent">
+    <ATTRIBUTE name="Compress" value="1"/>
+    <ATTRIBUTE name="FirstMediaSize" value="0"/>
+    <ATTRIBUTE name="FirstMediaSizeUnit" value="0"/>
+    <ATTRIBUTE name="InstallationType" value="0"/>
+    <ATTRIBUTE name="MediaSize" value="0"/>
+    <ATTRIBUTE name="MediaSizeUnit" value="0"/>
+    <ATTRIBUTE name="Package" value="1"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiRadioButtonComponent">
+    <ROW Property="C3D_LANGUAGE" Order="1" Value="C3D_LANG_ENG" X="10" Y="23" Width="75" Height="11" Text="&amp;English"/>
+    <ROW Property="C3D_LANGUAGE" Order="2" Value="C3D_LANG_ESP" X="10" Y="47" Width="75" Height="11" Text="&amp;Spanish"/>
+    <ROW Property="C3D_LANGUAGE" Order="3" Value="C3D_LANG_FRA" X="10" Y="72" Width="75" Height="11" Text="&amp;French"/>
+    <ROW Property="C3D_LANGUAGE" Order="4" Value="C3D_LANG_PTG" X="10" Y="98" Width="75" Height="11" Text="&amp;Portuguese"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiRegLocatorComponent">
+    <ROW Signature_="AppSearchSign" Root="2" Key="SOFTWARE\Calques 3D" Name="Language" Type="2"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiRegsComponent">
+    <ROW Registry="Language" Root="2" Key="Software\[ProductName]" Name="Language" Value="[C3D_LANGUAGE]" Component_="Language"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiShortsComponent">
+    <ROW Shortcut="Calques_3D_Help" Directory_="SHORTCUTDIR" Name="Calque~1|Calques 3D Help" Component_="CALQUES3D.HLP" Target="[#Calques3D.hlp]" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
+    <ROW Shortcut="Calques_3D_v2.3.1" Directory_="STC_ENG_DIR" Name="Calque~1.6|Calques 3D v2.3.6" Component_="Calques3D.exe" Target="[#Calques3D.exe]" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="C3D_ENG_DIR"/>
+    <ROW Shortcut="Calques_3D_v2.3.1_1" Directory_="STC_ESP_DIR" Name="Calque~1.6|Calques 3D v2.3.6" Component_="Calques3D.exe_1" Target="[#Calques3D.exe_1]" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="C3D_ESP_DIR"/>
+    <ROW Shortcut="Calques_3D_v2.3.1_2" Directory_="STC_FRA_DIR" Name="Calque~1.6|Calques 3D v2.3.6" Component_="Calques3D.exe_2" Target="[#Calques3D.exe_2]" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="C3D_FRA_DIR"/>
+    <ROW Shortcut="Calques_3D_v2.3.1_3" Directory_="STC_PTG_DIR" Name="Calque~1.6|Calques 3D v2.3.6" Component_="Calques3D.exe_3" Target="[#Calques3D.exe_3]" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="C3D_PTG_DIR"/>
+    <ROW Shortcut="Uninstall_Calques_3D" Directory_="SHORTCUTDIR" Name="Uninst~1|Uninstall Calques 3D" Component_="Language" Target="[SystemFolder]msiexec.exe" Arguments="/x [ProductCode]" Hotkey="0" Icon_="SystemFolder_msiexec.exe" IconIndex="0" ShowCmd="1"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiUpgradeComponent">
+    <ROW UpgradeCode="UpgradeCode" VersionMax="ProductVersion" Attributes="1025"/>
+    <ROW UpgradeCode="UpgradeCode" VersionMin="ProductVersion" Attributes="2"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.PreReqComponent">
+    <ATTRIBUTE name="MinWIVersion" value="2.0"/>
+  </COMPONENT>
+</DOCUMENT>
