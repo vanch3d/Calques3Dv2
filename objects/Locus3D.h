@@ -39,6 +39,25 @@
 class CPoint3D;
 
 /////////////////////////////////////////////////////////////////////////////
+/// CLocusMesh
+///
+/////////////////////////////////////////////////////////////////////////////
+class CLocusMesh
+{
+public:
+	CVector4 vertex1;
+	CVector4 vertex2;
+	CVector4 vertex3;
+
+	CLocusMesh();
+	CLocusMesh(CVector4 pt1,CVector4 pt2, CVector4 pt3);
+
+	void operator =(const CLocusMesh& other);				// Assignment
+
+	FCoord GetLength();
+};
+
+/////////////////////////////////////////////////////////////////////////////
 /// CLocus3D
 ///
 /////////////////////////////////////////////////////////////////////////////
@@ -56,15 +75,21 @@ private:
 	BOOL		m_bFirstLoaded;
 	
 	typedef CArrayEx<CVector4,CVector4>		CVArray;
-	CArrayEx<CVArray, CVArray &>			a3D;		///< Two-dimensional list of Vector4
+	CArrayEx<CVArray, CVArray &>			mesh3D;		///< Two-dimensional list of Vector4
 
 	typedef CArrayEx<CPoint,CPoint>			CPArray;
-	CArrayEx<CPArray, CPArray &>			a2D;		///< Two-dimensional list of Point
+	CArrayEx<CPArray, CPArray &>			mesh2D;		///< Two-dimensional list of Point
 
 	//CArray<CVector4,CVector4>	m_cCpts;
 	CxVectorSet	m_cCpts;
 	CArray<CPoint,CPoint>		m_cVpts;
 
+	CArray<CLocusMesh,CLocusMesh>		m_cTriangles;
+
+private:
+	void GenerateLinear(CxObject3DSet* pDirectList);
+	void GenerateSurface(CxObject3DSet* pDirectList);
+	void GenerateMesh();
 public:
 	CLocus3D();
 	CLocus3D(CPoint3D *pSource,CPoint3D *pLocus);
