@@ -40,8 +40,36 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
-//extern CRgn* DoSegRgn(CPoint p1,CPoint p2);
+//////////////////////////////////////////////////////////////////////
+// Construction/Destruction
+//////////////////////////////////////////////////////////////////////
+CLocusMesh::CLocusMesh()
+{
+	vertex1 = CVector4();
+	vertex2 = CVector4();
+	vertex3 = CVector4();
+}
 
+CLocusMesh::CLocusMesh(CVector4 pt1,CVector4 pt2, CVector4 pt3)
+{
+	vertex1 = pt1;
+	vertex2 = pt2;
+	vertex3 = pt3;
+}
+
+inline void CLocusMesh::operator =(const CLocusMesh& other)
+{
+	vertex1 = other.vertex1;
+	vertex2 = other.vertex2;
+	vertex3 = other.vertex3;
+}
+
+inline FCoord CLocusMesh::GetLength()
+{
+	return	(vertex3 - vertex2).Norme() + 
+			(vertex2 - vertex1).Norme() + 
+			(vertex1 - vertex3).Norme();
+}
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
@@ -180,17 +208,17 @@ BOOL CLocus3D::IsInActiveArea(CPoint thePt)
 {
     bool bIsInSeg = FALSE;
 
-    int nb1 = a2D.GetSize();
+    int nb1 = mesh2D.GetSize();
 
     for (int i=0;i<nb1 && !bIsInSeg;i++)
     {
-        int nb2 = a2D[i].GetSize();
+        int nb2 = mesh2D[i].GetSize();
         for (int j=0;j<nb2-1 && !bIsInSeg;j++)
         {
             CPoint  p1,p2;
 
-            p1 = a2D[i][j];
-            p2 = a2D[i][j+1];
+            p1 = mesh2D[i][j];
+            p2 = mesh2D[i][j+1];
             CRgn *pRgn = DoSegRgn(p1,p2);
             bIsInSeg = (pRgn && pRgn->PtInRegion(thePt));
             delete  pRgn;
@@ -248,6 +276,176 @@ CRgn* CLocus3D::InvalideRect()
     }
 */
     return NULL;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+/// Create the mesh from the linear or planar distribution
+///
+/////////////////////////////////////////////////////////////////////////////
+void CLocus3D::GenerateMesh()
+{
+	m_cTriangles.RemoveAll();
+    int nb1 = mesh3D.GetSize();
+	TRACE1("dimension of mesh: %d\n",nb1);
+	if (nb1<=1) return;
+
+    for (int i=0;i<nb1-1;i++)
+    {
+        int nb2 = mesh3D[i].GetSize();
+        int nb3 = mesh3D[i+1].GetSize();
+        for (int j=0;j<nb2-1;j++)
+        {
+            CVector4 A = mesh3D[i].GetAt(j);
+            CVector4 B = mesh3D[i].GetAt(j+1);
+			if ((j+1)<nb3)
+			{
+				CVector4 C = mesh3D[i+1].GetAt(j+1);
+				CVector4 D = mesh3D[i+1].GetAt(j);
+
+				m_cTriangles.Add(CLocusMesh(A,B,C));
+				m_cTriangles.Add(CLocusMesh(A,C,D));
+			}
+		}
+	}
+}
+
+/////////////////////////////////////////////////////////////////////////////
+/// Generate the linear distribution of the mesh's points
+///
+/////////////////////////////////////////////////////////////////////////////
+void CLocus3D::GenerateLinear(CxObject3DSet* pDirectList)
+{
+    CPointSurD3D *pPtSurD = DYNAMIC_DOWNCAST(CPointSurD3D,m_pSource);
+    CPointSurC3D *pPtSurC = DYNAMIC_DOWNCAST(CPointSurC3D,m_pSource);
+
+    FCoord initX;
+    if (pPtSurD)
+        initX = pPtSurD->lambda;
+    else if (pPtSurC)
+        initX = pPtSurC->lambda;
+
+    mesh3D.RemoveAll();
+
+    CVArray aInt;
+	mesh3D.Add(aInt);
+
+    for (int i=0;i<nDeltaT;i++)
+    {
+        if (pPtSurD)
+        {
+            if (pPtSurD->S->bIsSegment)
+                pPtSurD->lambda = (FCoord)i/(FCoord)(nDeltaT-1);
+            else
+            {
+                CVector4 pDirV =pPtSurD->S->GetDirVector();
+                FCoord pVecN = pDirV.Norme();
+                pPtSurD->lambda = initX + (FCoord)(i-nDeltaT/2)*(FCoord)(nDeltaT-1);//*pDirV;
+            }
+        }
+        else if (pPtSurC)
+            pPtSurC->lambda = (FCoord)(i * pPtSurC->S->nArcAngle)/(FCoord)(nDeltaT-1);
+
+        BOOL bOK = TRUE;
+        for (int j=0;j<pDirectList->GetSize();j++)
+        {
+            CObject3D *pObj = pDirectList->GetAt(j);
+            if (!pObj) continue;
+            if (DYNAMIC_DOWNCAST(CLocus3D,pObj)) continue;
+            UINT res = pObj->CalculConceptuel();
+            if (res)
+            {
+                bOK = FALSE;
+                continue;
+            }
+            if (pObj == m_pLocus) break;
+        }
+        CVector4 newpt = m_pLocus->Concept_pt;
+        if (bOK) mesh3D[0].Add(newpt);
+    }
+
+    if (pPtSurD)
+        pPtSurD->lambda = initX;
+    else if (pPtSurC)
+        pPtSurC->lambda = initX;
+
+}
+
+/////////////////////////////////////////////////////////////////////////////
+/// Generate the planar distribution of the mesh's points
+///
+/////////////////////////////////////////////////////////////////////////////
+void CLocus3D::GenerateSurface(CxObject3DSet* pDirectList)
+{
+    CPointSurS3D *pPtSurS = DYNAMIC_DOWNCAST(CPointSurS3D,m_pSource);
+    CPointSurP3D *pPtSurP = DYNAMIC_DOWNCAST(CPointSurP3D,m_pSource);
+
+    FCoord oldPt,oldPt2;
+    if (pPtSurS)
+    {
+        oldPt = pPtSurS->latit;
+        oldPt2 = pPtSurS->longi;
+    }
+    else if (pPtSurP)
+    {
+        oldPt = pPtSurP->alpha;
+        oldPt2 = pPtSurP->beta;
+    }
+
+    mesh3D.RemoveAll();
+
+	for (int i=0;i<=nDeltaT;i++)
+	{
+	    CVArray aInt;
+		mesh3D.Add(aInt);
+		for (int j=0;j<=nDeltaT;j++)
+		{
+			if (pPtSurS)
+			{
+				pPtSurS->latit = (FCoord)((i-nDeltaT/2) * M_PI)/(FCoord)(nDeltaT);
+				pPtSurS->longi = (FCoord)(j * 2* M_PI)/(FCoord)(nDeltaT);
+			}
+			else
+			{
+				CVector4 ppa = pPtSurP->P->p1 - pPtSurP->P->ptonRep.O;
+				CVector4 ppb = pPtSurP->P->p2 - pPtSurP->P->ptonRep.O;
+				FCoord aa1 = pPtSurP->P->ptonRep.I * (ppa);
+				FCoord aa2 = pPtSurP->P->ptonRep.J * (ppa);
+				FCoord ee = (pPtSurP->P->p2 - pPtSurP->P->p1).Norme();//+40;
+				FCoord dd = (pPtSurP->P->p4 - pPtSurP->P->p1).Norme();//+40;
+
+				pPtSurP->alpha = (FCoord)(i * dd)/(FCoord)(nDeltaT-1) + aa1;
+				pPtSurP->beta = (FCoord)(j * ee)/(FCoord)(nDeltaT-1) +aa2;
+			}
+			BOOL bOK = TRUE;
+			for (int k=0;k<pDirectList->GetSize();k++)
+			{
+				CObject3D *pObj = pDirectList->GetAt(k);
+				if (!pObj) continue;
+				if (DYNAMIC_DOWNCAST(CLocus3D,pObj)) continue;
+				UINT res = pObj->CalculConceptuel();
+				if (res)
+				{
+					bOK  = FALSE;
+					continue;
+				}
+				if (pObj == m_pLocus) break;
+			}
+			CVector4 newpt = m_pLocus->Concept_pt;
+			if (bOK) mesh3D[i].Add(newpt);
+		}
+	}
+
+    if (pPtSurS)
+    {
+        pPtSurS->latit = oldPt;
+        pPtSurS->longi = oldPt2;
+    }
+    else if (pPtSurP)
+    {
+        pPtSurP->alpha = oldPt;
+        pPtSurP->beta = oldPt2;
+    }
+
 }
 
 UINT  CLocus3D::CalculConceptuel()
@@ -315,148 +513,49 @@ UINT  CLocus3D::CalculConceptuel()
         return ERR_LOCUS_NOREL;
     }
 
-    FCoord oldPt,oldPt2;
-    if (pPtSurD)
-        oldPt = pPtSurD->lambda;
-    else if (pPtSurC)
-        oldPt = pPtSurC->lambda;
-    else if (pPtSurS)
-    {
-        oldPt = pPtSurS->latit;
-        oldPt2 = pPtSurS->longi;
-    }
-    else if (pPtSurP)
-    {
-        oldPt = pPtSurP->alpha;
-        oldPt2 = pPtSurP->beta;
-    }
-
-    //m_cCpts.RemoveAll();
-    //m_cCpts.SetSize(nDeltaT);
-
-    a3D.RemoveAll();
-
-    CVArray aInt;
+//     FCoord oldPt,oldPt2;
+//     if (pPtSurD)
+//         oldPt = pPtSurD->lambda;
+//     else if (pPtSurC)
+//         oldPt = pPtSurC->lambda;
+//     else if (pPtSurS)
+//     {
+//         oldPt = pPtSurS->latit;
+//         oldPt2 = pPtSurS->longi;
+//     }
+//     else if (pPtSurP)
+//     {
+//         oldPt = pPtSurP->alpha;
+//         oldPt2 = pPtSurP->beta;
+//     }
+// 
+//     mesh3D.RemoveAll();
+// 
+//     CVArray aInt;
 
     if (pPtSurS || pPtSurP)
     {
-        for (i=0;i<=nDeltaT;i++)
-        {
-            a3D.Add(aInt);
-            for (int j=0;j<=nDeltaT;j++)
-            {
-                if (pPtSurS)
-                {
-                    pPtSurS->latit = (FCoord)((i-nDeltaT/2) * M_PI)/(FCoord)(nDeltaT);
-                    //if (j%2==0)
-                    //  pPtSurS->longi = (FCoord)(j *2 * M_PI)/(FCoord)(nDeltaT-1);
-                    //else
-                    pPtSurS->longi = (FCoord)(j * 2* M_PI)/(FCoord)(nDeltaT);
-                }
-                else
-                {
-                    CVector4 ppa = pPtSurP->P->p1 - pPtSurP->P->ptonRep.O;
-                    CVector4 ppb = pPtSurP->P->p2 - pPtSurP->P->ptonRep.O;
-                    FCoord aa1 = pPtSurP->P->ptonRep.I * (ppa);
-                    FCoord aa2 = pPtSurP->P->ptonRep.J * (ppa);
-                    //FCoord aa3 = pPtSurP->P->ptonRep.I * (ppb);
-                    //FCoord aa4 = pPtSurP->P->ptonRep.J * (ppb);
-                    FCoord ee = (pPtSurP->P->p2 - pPtSurP->P->p1).Norme();//+40;
-                    FCoord dd = (pPtSurP->P->p4 - pPtSurP->P->p1).Norme();//+40;
-                    //FCoord rr = pPtSurP->P->p1.Norme();
-                    //FCoord rr2 = pPtSurP->P->p2.Norme();
-
-                //  dd = pPtSurP->P->ptonRep.I;
-                //  ee = pPtSurP->P->ptonRep.J;
-
-                    pPtSurP->alpha = (FCoord)(i * dd)/(FCoord)(nDeltaT-1) + aa1;
-                    pPtSurP->beta = (FCoord)(j * ee)/(FCoord)(nDeltaT-1) +aa2;
-                }
-                BOOL bOK = TRUE;
-                for (int k=0;k<pDirectList.GetSize();k++)
-//              for (int k=0;k<nb;k++)
-                {
-//                  CObject3D *pObj = pList.GetAt(k);
-                    CObject3D *pObj = pDirectList.GetAt(k);
-                    if (!pObj) continue;
-                    if (DYNAMIC_DOWNCAST(CLocus3D,pObj)) continue;
-                    UINT res = pObj->CalculConceptuel();
-                    if (res)
-                    {
-                        //bValidate = FALSE;
-                        //return ERR_LOCUS_INTERNAL;
-                        bOK  = FALSE;
-                        continue;
-                    }
-                    if (pObj == m_pLocus) break;
-                }
-                CVector4 newpt = m_pLocus->Concept_pt;
-                //m_cCpts.SetAt(i,newpt);
-                if (bOK)
-                    a3D[i].Add(newpt);
-            }
-        }
+		GenerateSurface(&pDirectList);
     }
     else
     {
-        a3D.Add(aInt);
-
-        for (i=0;i<nDeltaT;i++)
-        {
-            if (pPtSurD)
-            {
-                if (pPtSurD->S->bIsSegment)
-                    pPtSurD->lambda = (FCoord)i/(FCoord)(nDeltaT-1);
-                else
-                {
-                    CVector4 pDirV =pPtSurD->S->GetDirVector();
-                    FCoord pVecN = pDirV.Norme();
-                    pPtSurD->lambda = oldPt + (FCoord)(i-nDeltaT/2)*(FCoord)(nDeltaT-1);//*pDirV;
-                }
-            }
-            else if (pPtSurC)
-                //pPtSurC->lambda = (FCoord)(i * 2*M_PI)/(FCoord)(nDeltaT-1);
-                pPtSurC->lambda = (FCoord)(i * pPtSurC->S->nArcAngle)/(FCoord)(nDeltaT-1);
-
-            BOOL bOK = TRUE;
-//          for (int j=0;j<nb;j++)
-            for (int j=0;j<pDirectList.GetSize();j++)
-            {
-                ///CObject3D *pObj = pList.GetAt(j);
-                CObject3D *pObj = pDirectList.GetAt(j);
-                if (!pObj) continue;
-                if (DYNAMIC_DOWNCAST(CLocus3D,pObj)) continue;
-                UINT res = pObj->CalculConceptuel();
-                if (res)
-                {
-                    //bValidate = FALSE;
-                    //return ERR_LOCUS_INTERNAL;
-                    bOK = FALSE;
-                    continue;
-                }
-                if (pObj == m_pLocus) break;
-            }
-            CVector4 newpt = m_pLocus->Concept_pt;
-            //m_cCpts.SetAt(i,newpt);
-            if (bOK)
-                a3D[0].Add(newpt);
-        }
+		GenerateLinear(&pDirectList);
     }
 
-    if (pPtSurD)
-        pPtSurD->lambda = oldPt;
-    else if (pPtSurC)
-        pPtSurC->lambda = oldPt;
-    else if (pPtSurS)
-    {
-        pPtSurS->latit = oldPt;
-        pPtSurS->longi = oldPt2;
-    }
-    else if (pPtSurP)
-    {
-        pPtSurP->alpha = oldPt;
-        pPtSurP->beta = oldPt2;
-    }
+//     if (pPtSurD)
+//         pPtSurD->lambda = oldPt;
+//     else if (pPtSurC)
+//         pPtSurC->lambda = oldPt;
+//     else if (pPtSurS)
+//     {
+//         pPtSurS->latit = oldPt;
+//         pPtSurS->longi = oldPt2;
+//     }
+//     else if (pPtSurP)
+//     {
+//         pPtSurP->alpha = oldPt;
+//         pPtSurP->beta = oldPt2;
+//     }
     for (int j=0;j<nb;j++)
     {
         CObject3D *pObj = pList.GetAt(j);
@@ -487,18 +586,18 @@ void CLocus3D::CalculVisuel(CVisualParam *pVisParam)
 
     CVector4 mvvv;
     CPArray aPt;
-    a2D.RemoveAll();
+    mesh2D.RemoveAll();
 
-    int nbbb = a3D.GetSize();
+    int nbbb = mesh3D.GetSize();
     for (int ii=0;ii<nbbb;ii++)
     {
-        a2D.Add(aPt);
-        int nbb3 = a3D[ii].GetSize();
+        mesh2D.Add(aPt);
+        int nbb3 = mesh3D[ii].GetSize();
         for (int jj=0;jj<nbb3;jj++)
         {
-            mvvv = a3D[ii].GetAt(jj);
+            mvvv = mesh3D[ii].GetAt(jj);
             CPoint pt  = (CPoint)pVisParam->ProjectPoint(mvvv);
-            a2D[ii].Add(pt);
+            mesh2D[ii].Add(pt);
         }
     }
 
@@ -555,40 +654,49 @@ void CLocus3D::Draw(CDC *pDC,CVisualParam *mV,BOOL bSM)
     curPen2.CreatePenIndirect(&lPen1);
     disPen2.CreatePenIndirect(&lPen2);
 
+	GenerateMesh();
+    CPen *pOldPn = pDC->SelectObject(&curPen2);
+	for (int k=0;k<m_cTriangles.GetSize();k++)
+	{
+		CLocusMesh trg = m_cTriangles.GetAt(k);
+		FCoord dis = trg.GetLength();
+		if (dis>350) continue;
 
+		CPoint pt1 = mV->ProjectPoint(trg.vertex1);
+		CPoint pt2 = mV->ProjectPoint(trg.vertex2);
+		CPoint pt3 = mV->ProjectPoint(trg.vertex3);
+
+		pDC->MoveTo(pt1);
+		pDC->LineTo(pt2);
+		pDC->LineTo(pt3);
+		pDC->LineTo(pt1);
+
+	}
+
+    pDC->SelectObject(pOldPn);
+
+	return;
+
+	
     CBrush curBrush(pObjectShape.clrObject);
     CBrush *pOldB = pDC->SelectObject(&curBrush);
 
-//     BYTE  *bpt1 = new BYTE[10000];
-//     BYTE  *bpt2= new BYTE[10000];
-//     BYTE  *bpt3= new BYTE[10000];
-//     BYTE  *bpt4= new BYTE[10000];
-//     POINT *pt1= new POINT[10000];
-//     POINT *pt2= new POINT[10000];
-//     POINT *pt3= new POINT[10000];
-//     POINT *pt4= new POINT[10000];
-
 	CArray<CPoint,CPoint> draw1,draw2,draw3,draw4;
-
-//     int npt1=0;
-//     int npt2=0;
-//     int npt3=0;
-//     int npt4=0;
 
     CPointSurS3D *pPtSurS = DYNAMIC_DOWNCAST(CPointSurS3D,m_pSource);
     CPointSurP3D *pPtSurP = DYNAMIC_DOWNCAST(CPointSurP3D,m_pSource);
 
-    int nb1 = a2D.GetSize();
+    int nb1 = mesh2D.GetSize();
     for (int i=0;i<nb1;i+=1)
     {
-        int nb2 = a2D[i].GetSize();
+        int nb2 = mesh2D[i].GetSize();
         for (int j=0;j<nb2-1;j++)
         {
             CVector4    U,V;
             bool        bVis1=FALSE;
 
-            U = a3D[i].GetAt(j),
-            V = a3D[i].GetAt(j+1);
+            U = mesh3D[i].GetAt(j),
+            V = mesh3D[i].GetAt(j+1);
 
 
             FCoord dis = (V-U).Norme();
@@ -601,25 +709,25 @@ void CLocus3D::Draw(CDC *pDC,CVisualParam *mV,BOOL bSM)
             int x=-1;
             if (nb1>1 && (pPtSurS||pPtSurP))
             {
-                CVector4 p1 = a3D[i][j];
-                CVector4 p2 = a3D[i][j+1];
+                CVector4 p1 = mesh3D[i][j];
+                CVector4 p2 = mesh3D[i][j+1];
                 CVector4 /*p3,*/p4;
                 if (i!=nb1-1)
                 {
-                    //p3 = a3D[i+1][j];
-					int sarr = a3D[i+1].GetSize();
+                    //p3 = mesh3D[i+1][j];
+					int sarr = mesh3D[i+1].GetSize();
 					if (j+1>=sarr)
 						 x = bVis1 ? 0 : 1;
 					else
-						p4 = a3D[i+1][j+1];
+						p4 = mesh3D[i+1][j+1];
                 }
                 else
                 {
-					int sarr = a3D[0].GetSize();
+					int sarr = mesh3D[0].GetSize();
 					if (j+1>=sarr)
 						 x = bVis1 ? 0 : 1;
 					else
-						p4 = a3D[0][j+1];
+						p4 = mesh3D[0][j+1];
                 }
 
 				if (x==-1)
@@ -655,43 +763,27 @@ void CLocus3D::Draw(CDC *pDC,CVisualParam *mV,BOOL bSM)
                 x = bVis1 ? 0 : 1;
             }
 
-            CPoint start = a2D[i][j];
-            CPoint endpt = a2D[i][j+1];
+            CPoint start = mesh2D[i][j];
+            CPoint endpt = mesh2D[i][j+1];
 
             if (x==0)
             {
-//                 bpt1[npt1] = PT_MOVETO;
-//                 pt1[npt1++] = start;
-//                 bpt1[npt1] = PT_LINETO;
-//                 pt1[npt1++] = endpt;
 				draw1.Add(start);
 				draw1.Add(endpt);
             }
             if (x==1)
             {
-//                 bpt2[npt2] = PT_MOVETO;
-//                 pt2[npt2++] = start;
-//                 bpt2[npt2] = PT_LINETO;
-//                 pt2[npt2++] = endpt;
 				draw2.Add(start);
 				draw2.Add(endpt);
 
             }
             if (x==2)
             {
-//                 bpt3[npt3] = PT_MOVETO;
-//                 pt3[npt3++] = start;
-//                 bpt3[npt3] = PT_LINETO;
-//                 pt3[npt3++] = endpt;
 				draw3.Add(start);
 				draw3.Add(endpt);
             }
             if (x==3)
             {
-//                 bpt4[npt4] = PT_MOVETO;
-//                 pt4[npt4++] = start;
-//                 bpt4[npt4] = PT_LINETO;
-//                 pt4[npt4++] = endpt;
 				draw4.Add(start);
 				draw4.Add(endpt);
             }
@@ -701,20 +793,20 @@ void CLocus3D::Draw(CDC *pDC,CVisualParam *mV,BOOL bSM)
     {
         for (int i=0;i<nb1-1;i++)
         {
-            int nb2 = a2D[i].GetSize();
+            int nb2 = mesh2D[i].GetSize();
             for (int j=0;j<nb2;j++)
             {
                 CVector4    U,V;
                 bool        bVis1=FALSE;
 
-                int nbb1 = a3D[i].GetSize();
-                int nbb2 = a3D[i+1].GetSize();
+                int nbb1 = mesh3D[i].GetSize();
+                int nbb2 = mesh3D[i+1].GetSize();
 
                 if (!nbb1 || !nbb2) continue;
 				if (j>=nbb1 || (j+1)>=nbb2) continue;
 
-                U = a3D[i].GetAt(j),
-                V = a3D[i+1].GetAt(j);
+                U = mesh3D[i].GetAt(j),
+                V = mesh3D[i+1].GetAt(j);
 
                 bVis1 = (mV->IsPointVisible(U) && mV->IsPointVisible(V));
 
@@ -727,25 +819,25 @@ void CLocus3D::Draw(CDC *pDC,CVisualParam *mV,BOOL bSM)
                 if (pPtSurS || pPtSurP)
                 {
                     CVector4 p1,p2,p3/*,p4*/;
-                    p1 = a3D[i][j];
-                    p3 = a3D[i+1][j];
+                    p1 = mesh3D[i][j];
+                    p3 = mesh3D[i+1][j];
                     if (j!=nb2-1)
                     {	
-						int sarr = a3D[i].GetSize();
+						int sarr = mesh3D[i].GetSize();
 						if (j+1>=sarr)
 		                    x = bVis1 ? 0 : 1;
 						else
-							p2 = a3D[i][j+1];
-							//p4 = a3D[i+1][j+1];
+							p2 = mesh3D[i][j+1];
+							//p4 = mesh3D[i+1][j+1];
                     }
                     else
                     {
-						int sarr = a3D[i].GetSize();
+						int sarr = mesh3D[i].GetSize();
 						if (0>=sarr)
 		                    x = bVis1 ? 0 : 1;
 						else
-							p2 = a3D[i][0];
-							//p4 = a3D[i+1][0];
+							p2 = mesh3D[i][0];
+							//p4 = mesh3D[i+1][0];
                     }
 
 					if (x==-1)
@@ -784,8 +876,8 @@ void CLocus3D::Draw(CDC *pDC,CVisualParam *mV,BOOL bSM)
                     x = bVis1 ? 0 : 1;
                 }
 
-                CPoint start = a2D[i][j];
-                CPoint endpt = a2D[i+1][j];
+                CPoint start = mesh2D[i][j];
+                CPoint endpt = mesh2D[i+1][j];
             if (x==0)
             {
 //                 bpt1[npt1] = PT_MOVETO;
@@ -969,7 +1061,7 @@ void CLocus3D::Draw3DRendering(int nVolMode)
     float mat_diffuse[] = {0.9f, 0.1f, 0.1f, 1.0f};
     float no_shininess = 0.0f;
     if ((!bVisible) || (!bValidate)) return;
-    int nb1 = a3D.GetSize();
+    int nb1 = mesh3D.GetSize();
 	if (nb1==1)
 	{
 	}
@@ -979,14 +1071,14 @@ void CLocus3D::Draw3DRendering(int nVolMode)
 		if (nVolMode==RENDER_STIPPLE) glEnable(GL_POLYGON_STIPPLE);
 		for (int i=0;i<nb1-1;i+=1)
 		{
-			int nb2 = a3D[i].GetSize();
-			int nb3 = a3D[i+1].GetSize();
+			int nb2 = mesh3D[i].GetSize();
+			int nb3 = mesh3D[i+1].GetSize();
 			for (int j=0;j<__min(nb2,nb3)-1;j++)
 			{
-				CVector4 pt1 = a3D[i].GetAt(j);
-				CVector4 pt2 = a3D[i].GetAt(j+1);
-				CVector4 pt3 = a3D[i+1].GetAt(j+1);
-				CVector4 pt4 = a3D[i+1].GetAt(j);
+				CVector4 pt1 = mesh3D[i].GetAt(j);
+				CVector4 pt2 = mesh3D[i].GetAt(j+1);
+				CVector4 pt3 = mesh3D[i+1].GetAt(j+1);
+				CVector4 pt4 = mesh3D[i+1].GetAt(j);
 				CVector4 n = pt2-pt1;
 				CVector4 m = pt4-pt1;
 				CVector4 k = n % m;
