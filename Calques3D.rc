@@ -1384,6 +1384,7 @@ BEGIN
             MENUITEM "&Cube",                       ID_OBJECT_CUBE
             MENUITEM "&Sphere",                     ID_OBJECT_SPHERE
             MENUITEM "C&ylinder",                   ID_OBJECT_CYLINDRE
+            MENUITEM "C&one",						ID_OBJECT_CONE
         END
         MENUITEM SEPARATOR
         MENUITEM "S&uppress",                   ID_OBJECT_DELETE
@@ -1637,6 +1638,7 @@ BEGIN
             MENUITEM "&Cube",                       ID_OBJECT_CUBE
             MENUITEM "&Sphere",                     ID_OBJECT_SPHERE
             MENUITEM "C&ylinder",                   ID_OBJECT_CYLINDRE
+            MENUITEM "C&one",						ID_OBJECT_CONE
         END
         MENUITEM SEPARATOR
         MENUITEM "S&uppress",                   ID_OBJECT_DELETE
@@ -2925,6 +2927,7 @@ BEGIN
     ID_OBJECT_CUBE          "Construct a cube given the 2 points of its initial edge\nCube"
     ID_OBJECT_SPHERE        "Construct a sphere\nSphere"
     ID_OBJECT_CYLINDRE      "Construct a cylinder\nCylinder"
+    ID_OBJECT_CONE			"Construct a cone\nCone"
     ID_OBJECT_DELETE        "Delete an object of the construction\nDelete Object"
     ID_OBJECT_REDEFINE      "Redefine the dependency characteristics of a previously defined object\nRedefine Object"
     ID_OBJECT_POLYGON       "Construct a convex polygon\nPolygon"
