@@ -249,7 +249,7 @@ void CSphere3DTask::CreateObject3D()
 
 DWORD CSphere3DTask::GetMask()
 {
-	return (m_nStep) ? TAllPointClass|TSegment3DClass : TAllPointClass;
+	return (m_nStep) ? TAllPointClass|TAllSegmentClass : TAllPointClass;
 }
 
 unsigned CSphere3DTask::GetHelpResID()
