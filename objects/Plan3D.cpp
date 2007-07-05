@@ -36,6 +36,9 @@
 #include "Sphere3D.h"
 #include "CompositeObj3D.h"
 
+#include "Geom.h"
+
+
 #ifdef _DEBUG
 #undef THIS_FILE
 static char THIS_FILE[]=__FILE__;
@@ -741,6 +744,14 @@ void CPlan3D::Draw(CDC* pDC,CVisualParam *mV,BOOL bSm)
     curPen.CreatePenIndirect(&(pObjectShape.GetPenStyle()));
     disPen.CreatePenIndirect(&(pObjectShape.GetHiddenPenStyle(
                                     pObjectShape.GetObjectHiddenColor())));
+// 	COLORREF	curC = RGB(0,0,0),
+// 				curC2 = RGB(192,192,192);
+// 	CPen	curP(PS_DOT,1,pObjectShape.GetObjectColor()); 
+// 	CPen	curP2(PS_DOT,1,curC2); 
+// 	CPen	curPa(PS_SOLID,1,RGB(255,0,0)); 
+// 	CPen	curPb(PS_SOLID,1,RGB(0,255,0)); 
+// 	CPen	curPc(PS_SOLID,1,RGB(0,0,255)); 
+// 	CPen	curPd(PS_SOLID,1,RGB(255,255,0)); 
 
     CVector4 nf = GetNormalForm();
     if (bSm)
@@ -755,6 +766,99 @@ void CPlan3D::Draw(CDC* pDC,CVisualParam *mV,BOOL bSm)
         pDC->SelectObject(oldP);
         return;
      }
+
+// 	int nb = 0;
+// 	CVector4 vec1,vec2;
+//     CPen *oldP = pDC->SelectObject(&curP);
+// 	if (mV->nVisuKind == CVisualParam::VisuClois) 
+// 	{
+// 		int res = CGeom::TTintersect_with_isectline(p1,p2,p4,CVector4(0,0,0),CVector4(1000,0,0),CVector4(0,0,1000),nb,vec1,vec2);
+// 		if (res==1)
+// 		{
+// 					CPoint aa1 = (CPoint)mV->ProjectPoint(vec1);
+// 					CPoint aa2 = (CPoint)mV->ProjectPoint(vec2);
+// 					pDC->MoveTo(aa1);
+// 					pDC->LineTo(aa2);
+// 		}
+// 		res = CGeom::TTintersect_with_isectline(p2,p3,p4,CVector4(0,0,0),CVector4(1000,0,0),CVector4(0,0,1000),nb,vec1,vec2);
+// 		if (res==1)
+// 		{
+// 					CPoint aa1 = (CPoint)mV->ProjectPoint(vec1);
+// 					CPoint aa2 = (CPoint)mV->ProjectPoint(vec2);
+// 					pDC->MoveTo(aa1);
+// 					pDC->LineTo(aa2);
+// 		}
+// 
+// 		res = CGeom::TTintersect_with_isectline(p2,p3,p4,CVector4(0,0,0),CVector4(0,1000,0),CVector4(0,0,1000),nb,vec1,vec2);
+// 		if (res==1)
+// 		{
+// 					CPoint aa1 = (CPoint)mV->ProjectPoint(vec1);
+// 					CPoint aa2 = (CPoint)mV->ProjectPoint(vec2);
+// 					pDC->MoveTo(aa1);
+// 					pDC->LineTo(aa2);
+// 		}
+// 		res = CGeom::TTintersect_with_isectline(p1,p2,p4,CVector4(0,0,0),CVector4(0,1000,0),CVector4(0,0,1000),nb,vec1,vec2);
+// 		if (res==1)
+// 		{
+// 					CPoint aa1 = (CPoint)mV->ProjectPoint(vec1);
+// 					CPoint aa2 = (CPoint)mV->ProjectPoint(vec2);
+// 					pDC->MoveTo(aa1);
+// 					pDC->LineTo(aa2);
+// 		}
+// 		res = CGeom::TTintersect_with_isectline(p2,p3,p4,CVector4(0,0,0),CVector4(1000,0,0),CVector4(0,1000,0),nb,vec1,vec2);
+// 		if (res==1)
+// 		{
+// 					CPoint aa1 = (CPoint)mV->ProjectPoint(vec1);
+// 					CPoint aa2 = (CPoint)mV->ProjectPoint(vec2);
+// 					pDC->MoveTo(aa1);
+// 					pDC->LineTo(aa2);
+// 		}
+// 		res = CGeom::TTintersect_with_isectline(p1,p2,p4,CVector4(0,0,0),CVector4(1000,0,0),CVector4(0,1000,0),nb,vec1,vec2);
+// 		if (res==1)
+// 		{
+// 					CPoint aa1 = (CPoint)mV->ProjectPoint(vec1);
+// 					CPoint aa2 = (CPoint)mV->ProjectPoint(vec2);
+// 					pDC->MoveTo(aa1);
+// 					pDC->LineTo(aa2);
+// 		}
+// 	}
+//     if (mV->nVisuKind == CVisualParam::VisuPlane )
+// 	{
+// 		int x = TPref::TUniv.nRepPas*TPref::TUniv.nUnitRep*10;
+// 		int res = CGeom::TTintersect_with_isectline(p1,p2,p4,CVector4(-x,-x,0),CVector4(x,-x,0),CVector4(-x,x,0),nb,vec1,vec2);
+// 		if (res==1)
+// 		{ pDC->SelectObject(&curPa);
+// 					CPoint aa1 = (CPoint)mV->ProjectPoint(vec1);
+// 					CPoint aa2 = (CPoint)mV->ProjectPoint(vec2);
+// 					pDC->MoveTo(aa1);
+// 					pDC->LineTo(aa2);
+// 		}
+// 		res = CGeom::TTintersect_with_isectline(p2,p3,p4,CVector4(-x,-x,0),CVector4(x,-x,0),CVector4(-x,x,0),nb,vec1,vec2);
+// 		if (res==1)
+// 		{ pDC->SelectObject(&curPb);
+// 					CPoint aa1 = (CPoint)mV->ProjectPoint(vec1);
+// 					CPoint aa2 = (CPoint)mV->ProjectPoint(vec2);
+// 					pDC->MoveTo(aa1);
+// 					pDC->LineTo(aa2);
+// 		}
+// 		res = CGeom::TTintersect_with_isectline(p2,p3,p4,CVector4(x,x,0),CVector4(x,-x,0),CVector4(-x,x,0),nb,vec1,vec2);
+// 		if (res==1)
+// 		{ pDC->SelectObject(&curPc);
+// 					CPoint aa1 = (CPoint)mV->ProjectPoint(vec1);
+// 					CPoint aa2 = (CPoint)mV->ProjectPoint(vec2);
+// 					pDC->MoveTo(aa1);
+// 					pDC->LineTo(aa2);
+// 		}
+// 		res = CGeom::TTintersect_with_isectline(p1,p2,p4,CVector4(x,x,0),CVector4(x,-x,0),CVector4(-x,x,0),nb,vec1,vec2);
+// 		if (res==1)
+// 		{ pDC->SelectObject(&curPd);
+// 					CPoint aa1 = (CPoint)mV->ProjectPoint(vec1);
+// 					CPoint aa2 = (CPoint)mV->ProjectPoint(vec2);
+// 					pDC->MoveTo(aa1);
+// 					pDC->LineTo(aa2);
+// 		}
+// 	}
+//         pDC->SelectObject(oldP);
 
     // Calculate adaptative shape
     FCoord  dp1 = 0,
