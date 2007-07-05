@@ -272,6 +272,10 @@ SOURCE=.\Fraction.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\objects\Geom.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\OGLTools\GLEnabledView.cpp
 # End Source File
 # Begin Source File
@@ -656,6 +660,10 @@ SOURCE=.\FormatToolBar.h
 # Begin Source File
 
 SOURCE=.\Fraction.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\objects\Geom.h
 # End Source File
 # Begin Source File
 
