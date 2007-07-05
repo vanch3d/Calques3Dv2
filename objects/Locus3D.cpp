@@ -45,31 +45,119 @@ static char THIS_FILE[]=__FILE__;
 //////////////////////////////////////////////////////////////////////
 CLocusMesh::CLocusMesh()
 {
-	vertex1 = CVector4();
-	vertex2 = CVector4();
-	vertex3 = CVector4();
+	bIsLinear = false;
 }
 
 CLocusMesh::CLocusMesh(CVector4 pt1,CVector4 pt2, CVector4 pt3)
 {
-	vertex1 = pt1;
-	vertex2 = pt2;
-	vertex3 = pt3;
+	bIsLinear = false;
+	vertex3D[0] = pt1;
+	vertex3D[1] = pt2;
+	vertex3D[2] = pt3;
+}
+
+CLocusMesh::CLocusMesh(CVector4 pt1,CVector4 pt2)
+{
+	bIsLinear = true;
+	vertex3D[0] = pt1;
+	vertex3D[1] = pt2;
 }
 
 inline void CLocusMesh::operator =(const CLocusMesh& other)
 {
-	vertex1 = other.vertex1;
-	vertex2 = other.vertex2;
-	vertex3 = other.vertex3;
+	bIsLinear = other.bIsLinear;
+	int limit = (bIsLinear)? 2:3;
+	for (int i=0;i<limit;i++)
+		vertex3D[i] = other.vertex3D[i];
+	for (i=0;i<limit;i++)
+		vertex2D[i] = other.vertex2D[i];
 }
 
 inline FCoord CLocusMesh::GetLength()
 {
-	return	(vertex3 - vertex2).Norme() + 
-			(vertex2 - vertex1).Norme() + 
-			(vertex1 - vertex3).Norme();
+	if (bIsLinear)
+		return	(vertex3D[1] - vertex3D[0]).Norme();
+	else
+		return	(vertex3D[2] - vertex3D[1]).Norme() + 
+				(vertex3D[1] - vertex3D[0]).Norme() + 
+				(vertex3D[0] - vertex3D[2]).Norme();
 }
+
+void CLocusMesh::CalculVisuel(CVisualParam *mV)
+{
+	if (mV==NULL) return;
+	int limit = (bIsLinear)? 2:3;
+	for (int i=0;i<limit;i++)
+		vertex2D[i] = mV->ProjectPoint(vertex3D[i]);
+}
+
+void CLocusMesh::Draw(CDC* pDC,CVisualParam *mV,CLocus3D *pSrc)
+{
+	if (!mV || !pSrc) return;
+
+    CPointSurS3D *pPtSurS = DYNAMIC_DOWNCAST(CPointSurS3D,pSrc->m_pSource);
+
+    CPen curPen,disPen;
+    curPen.CreatePenIndirect(&(pSrc->pObjectShape.GetPenStyle()));
+
+    disPen.CreatePenIndirect(&(pSrc->pObjectShape.GetHiddenPenStyle(
+                pSrc->pObjectShape.GetObjectHiddenColor())));
+
+    CPen curPen2,disPen2;
+    LOGPEN lPen1,lPen2;
+
+    curPen.GetLogPen(&lPen1);
+    lPen1.lopnStyle = PS_DOT;
+    lPen1.lopnColor = RGB(0,192,0);//pObjectShape.GetObjectHiddenColor();
+    disPen.GetLogPen(&lPen2);
+    lPen2.lopnStyle = PS_DOT;
+    lPen2.lopnColor = RGB(0,255,0);//pObjectShape.GetObjectHiddenColor();
+
+    curPen2.CreatePenIndirect(&lPen1);
+    disPen2.CreatePenIndirect(&lPen2);
+
+    CPen *pOldP = pDC->SelectObject(&curPen);
+
+	if (bIsLinear)
+	{
+		BOOL isVisible = (mV->IsPointVisible(vertex3D[0]) && mV->IsPointVisible(vertex3D[1]));
+		pDC->SelectObject((isVisible)?&curPen:&disPen);
+		pDC->MoveTo(vertex2D[0]);
+		pDC->LineTo(vertex2D[1]);
+	}
+	else
+	{
+		CVector4    FaceNorm = ((vertex3D[1] - vertex3D[0]) % (vertex3D[2] - vertex3D[0]));
+		FCoord n1 = FaceNorm.Norme();
+		FaceNorm = FaceNorm * (1/n1);
+		CVector4 oeil= mV->GetEyePos();
+		CVector4 origin(0,0,0,1);
+		CVector4 VisuNorm= oeil -
+			((mV->bParProj) ? origin : vertex3D[0]);
+		FCoord n2 = VisuNorm.Norme();
+		VisuNorm = VisuNorm*(1/n2);
+		FCoord dot = VisuNorm * FaceNorm;
+		BOOL isFront = (pPtSurS) ? (dot > 0) : (dot < 0);
+
+		BOOL isVisible = (mV->IsPointVisible(vertex3D[0]) && mV->IsPointVisible(vertex3D[1]));
+		pDC->SelectObject((isVisible)?(isFront? &curPen:&disPen):(isFront? &curPen2:&disPen2));
+		pDC->MoveTo(vertex2D[0]);
+		pDC->LineTo(vertex2D[1]);
+
+		isVisible = (mV->IsPointVisible(vertex3D[1]) && mV->IsPointVisible(vertex3D[2]));
+		pDC->SelectObject((isVisible)?(isFront? &curPen:&disPen):(isFront? &curPen2:&disPen2));
+		pDC->MoveTo(vertex2D[1]);
+		pDC->LineTo(vertex2D[2]);
+
+// 		isVisible = (mV->IsPointVisible(vertex3D[2]) && mV->IsPointVisible(vertex3D[0]));
+// 		pDC->SelectObject((isVisible)?((dot<0)? &curPen:&disPen):((dot<0)? &curPen2:&disPen2));
+// 		pDC->MoveTo(vertex2D[2]);
+// 		pDC->LineTo(vertex2D[0]);
+	}
+
+    pDC->SelectObject(pOldP);
+}
+
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
@@ -77,6 +165,7 @@ IMPLEMENT_SERIAL(CLocus3D, CObject3D, VERSIONABLE_SCHEMA | 1)
 
 CLocus3D::CLocus3D() : CObject3D()
 {
+	m_nMaxLenght = 350;
     m_pSource = m_pLocus = NULL;
     nDeltaT = 20;
     m_cCpts.RemoveAll();
@@ -88,6 +177,7 @@ CLocus3D::CLocus3D() : CObject3D()
 
 CLocus3D::CLocus3D(CPoint3D *pSource,CPoint3D *pLocus) : CObject3D()
 {
+	m_nMaxLenght = 350;
     m_pSource = pSource;
     m_pLocus = pLocus;
     nDeltaT = 20;
@@ -101,6 +191,7 @@ CLocus3D::CLocus3D(CPoint3D *pSource,CPoint3D *pLocus) : CObject3D()
 
 CLocus3D::CLocus3D(const CObject3D &src ) : CObject3D(src)
 {
+	m_nMaxLenght = ((CLocus3D&)src).m_nMaxLenght;
     m_pSource = ((CLocus3D&)src).m_pSource;
     m_pLocus = ((CLocus3D&)src).m_pLocus;
     nDeltaT = ((CLocus3D&)src).nDeltaT;
@@ -287,23 +378,43 @@ void CLocus3D::GenerateMesh()
 	m_cTriangles.RemoveAll();
     int nb1 = mesh3D.GetSize();
 	TRACE1("dimension of mesh: %d\n",nb1);
-	if (nb1<=1) return;
+	if (nb1<=0) return;
+	if (nb1==1)
+	{
+		int nb2 = mesh3D[0].GetSize();
+		for (int j=0;j<nb2-1;j++)
+		{
+			CVector4 A = mesh3D[0].GetAt(j);
+			CVector4 B = mesh3D[0].GetAt(j+1);
 
-    for (int i=0;i<nb1-1;i++)
-    {
-        int nb2 = mesh3D[i].GetSize();
-        int nb3 = mesh3D[i+1].GetSize();
-        for (int j=0;j<nb2-1;j++)
-        {
-            CVector4 A = mesh3D[i].GetAt(j);
-            CVector4 B = mesh3D[i].GetAt(j+1);
-			if ((j+1)<nb3)
+			CLocusMesh elt = CLocusMesh(A,B);
+			if (elt.GetLength() <= m_nMaxLenght)
+				m_cTriangles.Add(elt);
+
+		}
+	}
+	else
+	{
+		for (int i=0;i<nb1-1;i++)
+		{
+			int nb2 = mesh3D[i].GetSize();
+			int nb3 = mesh3D[i+1].GetSize();
+			for (int j=0;j<nb2-1;j++)
 			{
-				CVector4 C = mesh3D[i+1].GetAt(j+1);
-				CVector4 D = mesh3D[i+1].GetAt(j);
+				CVector4 A = mesh3D[i].GetAt(j);
+				CVector4 B = mesh3D[i].GetAt(j+1);
+				if ((j+1)<nb3)
+				{
+					CVector4 C = mesh3D[i+1].GetAt(j+1);
+					CVector4 D = mesh3D[i+1].GetAt(j);
 
-				m_cTriangles.Add(CLocusMesh(A,B,C));
-				m_cTriangles.Add(CLocusMesh(A,C,D));
+					CLocusMesh elt = CLocusMesh(A,B,C);
+					if (elt.GetLength() <= m_nMaxLenght)
+						m_cTriangles.Add(elt);
+					elt = CLocusMesh(C,D,A);
+					if (elt.GetLength() <= m_nMaxLenght)
+						m_cTriangles.Add(elt);
+				}
 			}
 		}
 	}
@@ -541,6 +652,7 @@ UINT  CLocus3D::CalculConceptuel()
     {
 		GenerateLinear(&pDirectList);
     }
+	GenerateMesh();
 
 //     if (pPtSurD)
 //         pPtSurD->lambda = oldPt;
@@ -607,6 +719,15 @@ void CLocus3D::CalculVisuel(CVisualParam *pVisParam)
         CPoint pt = (CPoint)myVisuParam->ProjectPoint(V);
         m_cVpts.SetAt(t,pt);
     }*/
+
+	// Compute the visual location of the mash
+	for (int k=0;k<m_cTriangles.GetSize();k++)
+	{
+		CLocusMesh trg = m_cTriangles.GetAt(k);
+		trg.CalculVisuel(pVisParam);
+		m_cTriangles.SetAt(k,trg);
+	}
+
 }
 
 CString CLocus3D::ExportSymbolic(int nFormat)
@@ -654,28 +775,16 @@ void CLocus3D::Draw(CDC *pDC,CVisualParam *mV,BOOL bSM)
     curPen2.CreatePenIndirect(&lPen1);
     disPen2.CreatePenIndirect(&lPen2);
 
-	GenerateMesh();
-    CPen *pOldPn = pDC->SelectObject(&curPen2);
-	for (int k=0;k<m_cTriangles.GetSize();k++)
-	{
-		CLocusMesh trg = m_cTriangles.GetAt(k);
-		FCoord dis = trg.GetLength();
-		if (dis>350) continue;
-
-		CPoint pt1 = mV->ProjectPoint(trg.vertex1);
-		CPoint pt2 = mV->ProjectPoint(trg.vertex2);
-		CPoint pt3 = mV->ProjectPoint(trg.vertex3);
-
-		pDC->MoveTo(pt1);
-		pDC->LineTo(pt2);
-		pDC->LineTo(pt3);
-		pDC->LineTo(pt1);
-
-	}
-
-    pDC->SelectObject(pOldPn);
-
-	return;
+// 	// Draw the alternative mesh
+//     CPen *pOldPn = pDC->SelectObject(&curPen2);
+// 	for (int k=0;k<m_cTriangles.GetSize();k++)
+// 	{
+// 		CLocusMesh trg = m_cTriangles.GetAt(k);
+// 		trg.Draw(pDC,mV,this);
+// 	}
+//     pDC->SelectObject(pOldPn);
+// 
+// 	return;
 
 	
     CBrush curBrush(pObjectShape.clrObject);
