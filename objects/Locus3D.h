@@ -37,6 +37,7 @@
 #endif
 
 class CPoint3D;
+class CLocus3D;
 
 /////////////////////////////////////////////////////////////////////////////
 /// CLocusMesh
@@ -45,16 +46,21 @@ class CPoint3D;
 class CLocusMesh
 {
 public:
-	CVector4 vertex1;
-	CVector4 vertex2;
-	CVector4 vertex3;
+	bool		bIsLinear;
+	CVector4	vertex3D[3];
+	CPoint		vertex2D[3];
 
+public: 
 	CLocusMesh();
 	CLocusMesh(CVector4 pt1,CVector4 pt2, CVector4 pt3);
+	CLocusMesh(CVector4 pt1,CVector4 pt2);
 
 	void operator =(const CLocusMesh& other);				// Assignment
 
-	FCoord GetLength();
+public:
+	FCoord	GetLength();
+	void	CalculVisuel(CVisualParam *);
+	void	Draw(CDC*,CVisualParam *,CLocus3D *);
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -70,6 +76,7 @@ public:
 				*m_pLocus;		///< Reference point of the locus
 
 	int			nDeltaT;		///< Size of the locus (ie nb of points used in calculation)
+	int			m_nMaxLenght;	///< Maximum length authorized for the mesh elements
 
 private:
 	BOOL		m_bFirstLoaded;
