@@ -94,7 +94,7 @@ private :
 public :
 
 	/////////////////////////////////////////////////////////////////////////////
-	/// ColourTableEntry
+	/// Directions of the construction deformation
 	/////////////////////////////////////////////////////////////////////////////
 	enum TMoveType {
 		MV_HORIZ,					///< Move from the horizontal plane
@@ -103,7 +103,7 @@ public :
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
-	/// ColourTableEntry
+	/// Predefined colors
 	/////////////////////////////////////////////////////////////////////////////
 	typedef struct  {
 		COLORREF crColour;			///< RGB Color
@@ -111,7 +111,7 @@ public :
 	} ColourTableEntry;
 
 	/////////////////////////////////////////////////////////////////////////////
-	/// ColourTableEntry
+	/// Default shape for the cubes
 	/////////////////////////////////////////////////////////////////////////////
 	struct CTCube3D {
 		COLORREF	clrDefault;		///< Default color for the cubes
@@ -119,7 +119,7 @@ public :
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
-	/// ColourTableEntry
+	/// Default shape for the spheres
 	/////////////////////////////////////////////////////////////////////////////
 	struct CTSphere3D {
 		COLORREF	clrDefault;		///< Default color for the spheres	
@@ -129,7 +129,7 @@ public :
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
-	/// ColourTableEntry
+	/// Default shape for the points
 	/////////////////////////////////////////////////////////////////////////////
 	struct CTPoint3D {
 		COLORREF	clrDefault;		///< Default color for the points
@@ -140,7 +140,7 @@ public :
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
-	/// ColourTableEntry
+	/// Default shape for the circles
 	/////////////////////////////////////////////////////////////////////////////
 	struct CTCercle3D {
 		COLORREF	clrDefault;		///< Default color for the circles
@@ -149,7 +149,7 @@ public :
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
-	/// ColourTableEntry
+	/// Default shape for the loci
 	/////////////////////////////////////////////////////////////////////////////
 	struct CTLocus3D {
 		COLORREF	clrDefault;		///< Default color for the loci
@@ -157,14 +157,14 @@ public :
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
-	/// ColourTableEntry
+	/// Default shape for the lines
 	/////////////////////////////////////////////////////////////////////////////
 	struct CTLine3D {
 		COLORREF	clrDefault;		///< Default color for the lines
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
-	/// ColourTableEntry
+	/// Default behavior for the MathPad view
 	/////////////////////////////////////////////////////////////////////////////
 	struct CTMathPad {
 		FCoord	UnitScale;			///< Scale for numerical values
@@ -177,7 +177,15 @@ public :
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
-	/// ColourTableEntry
+	/// Default behavior for the History view
+	/////////////////////////////////////////////////////////////////////////////
+	struct CTHistory {
+		BOOL	bShowSelectHidden;	///< TRUE if hidden selected object are shown
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
+	/// Default configuration for the Property Verification
+	/// @deprecated
 	/////////////////////////////////////////////////////////////////////////////
 	struct CTVerif {
 		CString	strCommand;			///< Command
@@ -187,7 +195,7 @@ public :
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
-	/// ColourTableEntry
+	/// Default behavior for the Universe view
 	/////////////////////////////////////////////////////////////////////////////
 	struct CTUniverse {
 		COLORREF	clrTrace;		///< Color used for drawing the traces of an object
@@ -212,19 +220,7 @@ public :
 	static CList<COLORREF,COLORREF> docColors;	///< List of other colors used in the documents
 	static ColourTableEntry crColours[40];		///< List of predefined colors and (English) names 
 
-
-	//static int			MoveType; 		///< Axis of deformation (O horizontal, 1 left, 2 right)
-	//static BOOL			Magnet;			///< Magnetism of SoR activated
-	//static int 			DefRep; 		///< Type of SoR (0 none, 1 axes, 2 floor, 3 walls)
-//	static int 			NbRepPas;       ///< Number of units displayed in the SoR
-//	static int 			UnitRep;		///< Size of each unit of the SoR (in pixel)
-//	static int			DefPres;		///< Precision for designation area
-//	static float		Zoom;			///< Zoom factor for the universe. 
-//	static SProjection	DefParam;		///< Parameters for the projection on the universe view
-//	static BOOL			ShowMarks;		///< Show the marks of objects
-//	static BOOL			Synchron;		///< Synchronize updates between views
 	static BOOL			GrayedHidden;	///< hidden part of objects in gray
-
 
 	static CTCube3D		TCube;			///< Default preferences for cubes
 	static CTSphere3D	TSphere;		///< Default preferences for spheres
@@ -235,6 +231,7 @@ public :
 
 	static CTUniverse	TUniv;			///< Default preferences for the universe view	
 	static CTMathPad	TMathPad;		///< Default preferences for the MathPad view	
+	static CTHistory	THistory;		///< Default preferences for the History view	
 
 	static CObList		TMacroList;		///< List of user-defined macros available
 	static BOOL			bMacroLoading;	///< Allow user to load any macros
@@ -247,13 +244,9 @@ public :
 	static BOOL			VerifyObject;	///< Verify if objects are duplicated before creation (NOT YET USED)
 	static CObList		TPOVList;		///< List of user-defined PoV (NOT YET USED)
 
-	static CTVerif		Verif;
+	static CTVerif		Verif;			///< Configuration of the Verification procedure (\deprecated)
 
-//	static CString		PrefDescr;		///< Description of the Profile \deprecated
 	static COLORREF		Color;			///< Default color for objects \deprecated
-//	static BOOL			SignalCreation;	///< Indicate the creation of objects \deprecated
-//	static int 			WndHeight,		///< Maximum size of screen \deprecated
-//						WndWidth;		///< Maximum size of screen \deprecated
 
 public :
 	static void DefaultInit();
