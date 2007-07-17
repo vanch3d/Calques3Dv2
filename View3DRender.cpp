@@ -123,9 +123,9 @@ void CView3DRender::SetLight ()
    //       object sizes scaled to (0,100)
 	float fPos[] =
 	{
-		(m_LightParam[0]-50),///100,
-		(m_LightParam[1]-50),///100,
-		(m_LightParam[2]-50),///100,
+		(m_LightParam[0]-50.f),///100,
+		(m_LightParam[1]-50.f),///100,
+		(m_LightParam[2]-50.f),///100,
 		1.f
 	};
 	glLightfv(GL_LIGHT0, GL_POSITION, fPos);
