@@ -1182,7 +1182,7 @@ void CPlan3D::Draw3DRendering(int nVolMode)
 
 	float no_mat[] = {0.0f, 0.0f, 0.0f, 1.0f};
     float mat_ambient[] = {0.7f, 0.7f, 0.7f, 1.0f};
-    float mat_ambient_color[] = {255/255., 255/255.,100/255. , 1.0f};
+    float mat_ambient_color[] = {255/255.f, 255/255.f,100/255.f , 1.0f};
     float mat_diffuse[] = {0.9f, 0.1f, 0.1f, 1.0f};
     float mat_specular[] = {1.0f, 1.0f, 1.0f, 1.0f};
     float no_shininess = 0.0f;
@@ -1967,7 +1967,7 @@ void CPolygon3D::Draw3DRendering(int nVolMode)
     if ((!bVisible) || (!bValidate)) return;
 	float no_mat[] = {0.0f, 0.0f, 0.0f, 1.0f};
     float mat_ambient[] = {0.7f, 0.7f, 0.7f, 1.0f};
-    float mat_ambient_color[] = {255/255., 255/255.,100/255. , 1.0f};
+    float mat_ambient_color[] = {255/255.f, 255/255.f,100/255.f , 1.0f};
     float mat_diffuse[] = {0.9f, 0.1f, 0.1f, 1.0f};
     float mat_specular[] = {1.0f, 1.0f, 1.0f, 1.0f};
     float no_shininess = 0.0f;
@@ -1986,7 +1986,7 @@ void CPolygon3D::Draw3DRendering(int nVolMode)
 		glBegin(GL_QUADS);
 	glNormal3d(vec.x, vec.y, vec.z);   //N1
 	COLORREF clr = pObjectShape.GetObjectColor();
-	glColor3f(GetRValue(clr)/255.,GetGValue(clr)/255.,GetBValue(clr)/255.);
+	glColor3f(GetRValue(clr)/255.f,GetGValue(clr)/255.f,GetBValue(clr)/255.f);
 
 	for (int i=0;i<nb;i++)
     {

@@ -675,7 +675,7 @@ void CCylinder3D::Draw3DRendering(int nVolMode)
 
 	float no_mat[] = {0.0f, 0.0f, 0.0f, 1.0f};
     float mat_ambient[] = {0.7f, 0.7f, 0.7f, 1.0f};
-    float mat_ambient_color[] = {255/255., 255/255.,100/255. , 1.0f};
+    float mat_ambient_color[] = {255/255.f, 255/255.f,100/255.f , 1.0f};
     float mat_diffuse[] = {0.9f, 0.1f, 0.1f, 1.0f};
     float mat_specular[] = {1.0f, 1.0f, 1.0f, 1.0f};
     float no_shininess = 0.0f;

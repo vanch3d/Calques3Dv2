@@ -418,7 +418,7 @@ void CPrefObjShape::FillSphere()
 		CString strName,strDef;
 		strName.LoadString(PREF_NAME_SPHEQ+i);
 		strDef.LoadString(PREF_DEF_SPHEQ+i);
-		pGroup1->AddSubItem (pProp = new CBCGPProp (strName, (_variant_t)(bool)(*optS[i]), strDef));
+		pGroup1->AddSubItem (pProp = new CBCGPProp (strName, (_variant_t)(bool)(*optS[i]==TRUE), strDef));
 		pProp->SetData((DWORD)optS[i]);
 	}
 
