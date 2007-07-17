@@ -35,6 +35,7 @@
 #define HIDC_OBJ_MARK                   0x806c0418    // IDD_OBJECTPROP_PAGE
 #define HIDC_OBJ_NAME                   0x806c0413    // IDD_OBJECTPROP_PAGE
 #define HIDC_OBJ_SHAPE                  0x806c0416    // IDD_OBJECTPROP_PAGE
+#define HIDC_PHISTO_SHOWSEL             0x814804a5    // IDD_PREF_HISTORY_PAGE
 #define HIDC_PMAC_DEF                   0xc9f00457    // IDD_PREF_MACROS_PAGE
 #define HIDC_PMAC_LIST                  0xc9f049e9    // IDD_PREF_MACROS_PAGE
 #define HIDC_PMAC_LOADMACRO             0xc9f00458    // IDD_PREF_MACROS_PAGE
