@@ -133,6 +133,11 @@ TPref::CTCube3D		TPref::TCube =	{RGB(0,0,255),1};
 TPref::CTSphere3D	TPref::TSphere ={RGB(0,0,255),0,TRUE,TRUE};
 TPref::CTLocus3D	TPref::TLocus = {RGB(255,0,0),20};
 
+TPref::CTHistory	TPref::THistory	 = 
+		{
+			TRUE
+		};
+
 TPref::CTMathPad	TPref::TMathPad = 
 		{
 			1.0,
