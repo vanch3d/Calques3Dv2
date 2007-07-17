@@ -65,6 +65,7 @@
 #define IDD_PREF_MATHPAD_PAGE           325
 #define IDD_PREF_POV_PAGE               326
 #define IDD_PREF_DISCOVERY_PAGE         327
+#define IDD_PREF_HISTORY_PAGE           328
 #define IDD_INPLACEEDIT                 330
 #define IDD_ABOUTBOX                    331
 #define IDD_ABOUTCREDIT                 332
@@ -205,6 +206,7 @@
 #define IDC_SPIN4                       1187
 #define IDC_MESSAGE_STRING              1188
 #define IDC_MESSAGE_IMG                 1189
+#define IDC_PHISTO_SHOWSEL              1189
 #define IDC_MESSAGE_TITLE               1190
 #define IDC_ABOUTCALQUE                 1201
 #define IDC_RENDERER_AMBTXT             1300
@@ -632,7 +634,7 @@
 #define ID_OBJECT_DELETE                30211
 #define ID_OBJECT_REDEFINE              30212
 #define ID_OBJECT_POLYGON               30213
-#define ID_OBJECT_CONE		            30214
+#define ID_OBJECT_CONE                  30214
 #define ID_CONSTRUCTION_POINTON         30300
 #define ID_CONSTRUCTION_POINTON_LINE    30301
 #define ID_CONSTRUCTION_POINTON_CIRCLE  30302
@@ -725,10 +727,10 @@
 #define ID_RENDERER_SILHOUETTE          30901
 #define ID_RENDERER_FILL                30902
 #define ID_RENDERER_STIPPLE             30903
-#define ID_ALERT_WARNING				31100
-#define ID_ALERT_INFO    				31101
-#define ID_ALERT_HELP    				31102
-#define ID_ALERT_TIP    				31103
+#define ID_ALERT_WARNING                31100
+#define ID_ALERT_INFO                   31101
+#define ID_ALERT_HELP                   31102
+#define ID_ALERT_TIP                    31103
 #define ID_VIEW_TOOLBARS                32771
 #define ID_FORMAT_OBJCOLOR              32800
 #define ID_FORMAT_OBJSHAPE              32801
@@ -781,7 +783,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        202
 #define _APS_NEXT_COMMAND_VALUE         32998
-#define _APS_NEXT_CONTROL_VALUE         1189
+#define _APS_NEXT_CONTROL_VALUE         1190
 #define _APS_NEXT_SYMED_VALUE           124
 #endif
 #endif

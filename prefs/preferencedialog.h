@@ -36,6 +36,7 @@
 #include "PrefMacros.h"
 #include "PrefUniverse.h"
 #include "PrefMathPad.h"
+#include "PrefHistory.h"
 
 //////////////////////////////////////////////////////////////////////
 /// Main dialog for Calques 3D preferences
@@ -53,13 +54,16 @@ public:
 // Attributes
 public:
 	CPrefSession	m_wndSession;		///< Control for the Session page
+
 	CPrefUniverse	m_wndUniverse;		///< Control for the Universe page
+	CPrefHistory	m_wndHistory;		///< Control for the History page
+	CPrefMathPad	m_wndMathPad;		///< Control for the MathPad page
+
 	CPrefObjShape	m_wndShape;			///< Control for the Object Appearance page
 	CPrefObjColor	m_wndColours;		///< Control for the Object Appearance page
-	CPrefMathPad	m_wndMathPad;		///< Control for the MathPad page
 	CPrefMacros		m_wndMacros;		///< Control for the Macros page
 
-// Operations
+	// Operations
 public:
 
 // Overrides
