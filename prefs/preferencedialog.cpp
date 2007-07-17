@@ -51,39 +51,56 @@ static const DWORD dwBCGResHelpIDs [] =
 IMPLEMENT_DYNAMIC(CPreferenceDialog, CBCGPPropertySheet)
 
 CPreferenceDialog::CPreferenceDialog(CWnd* pParentWnd, UINT iSelectPage)
-	:CBCGPPropertySheet(_T(""), pParentWnd, iSelectPage)
+	:CBCGPPropertySheet(IDB_PREFC3D_ICONS, pParentWnd, iSelectPage)
 {
+
 	m_psh.dwFlags |= PSH_NOAPPLYNOW;
 	m_strCaption.LoadString(IDB_PREFC3D_ICONS);
-	SetLook (CBCGPPropertySheet::PropSheetLook_OutlookBar);
-	SetIconsList (IDB_PREFC3D_ICONS, 16);
-	AddPage(&m_wndSession);
-	AddPage(&m_wndShape);
-	AddPage(&m_wndColours);
-	AddPage(&m_wndUniverse);
-	AddPage(&m_wndMathPad);
-	AddPage(&m_wndMacros);
 
+	struct CPrefInit
+	{ 
+		CBCGPPropertySheet::PropSheetLook nPrefLook;
+		int nSepSize;
+	};
+	
+	CPrefInit myinit[]= {	
+		{CBCGPPropertySheet::PropSheetLook_OutlookBar,80},
+		{CBCGPPropertySheet::PropSheetLook_Tree,150}
+	};
 
-/*	SetLook (CBCGPPropertySheet::PropSheetLook_Tree, 150);
-	SetIconsList (IDB_PREFC3D_ICONS, 16);
+	int nInitMode = 0;
+	SetLook (myinit[nInitMode].nPrefLook,myinit[nInitMode].nSepSize);
 
-	CBCGPPropSheetCategory* pCat1 = AddTreeCategory (_T("Starting Calques 3D"), 0, 0);
+	if (myinit[nInitMode].nPrefLook==CBCGPPropertySheet::PropSheetLook_OutlookBar)
+	{
+		SetIconsList (IDB_PREFC3D_ICONS, 16);
+		AddPage(&m_wndSession);
+		AddPage(&m_wndShape);
+		AddPage(&m_wndColours);
+		AddPage(&m_wndUniverse);
+		AddPage(&m_wndHistory);
+		AddPage(&m_wndMathPad);
+		AddPage(&m_wndMacros);
+	}
+	else if (myinit[nInitMode].nPrefLook==CBCGPPropertySheet::PropSheetLook_Tree)
+	{
+		SetIconsList (IDB_PREFC3D_ICONS, 16);
 
-	AddPageToTree (pCat1, &m_wndSession, -1, 5);
+		CBCGPPropSheetCategory* pCat1 = AddTreeCategory (_T("Starting Calques 3D"), 0, 0);
+		AddPageToTree (pCat1, &m_wndSession, -1, 0);
 
-	CBCGPPropSheetCategory* pCat2 = AddTreeCategory (_T("Appearance"), 0, 0);
+		CBCGPPropSheetCategory* pCat2 = AddTreeCategory (_T("Appearance"), 0, 0);
+		AddPageToTree (pCat2, &m_wndShape, -1, 1);
+		AddPageToTree (pCat2, &m_wndColours, -1, 2);
 
-	AddPageToTree (pCat2, &m_wndShape, -1, 6);
-	AddPageToTree (pCat2, &m_wndColours, -1, 1);
+		CBCGPPropSheetCategory* pCat3 = AddTreeCategory (_T("Views"), 0, 0);
+		AddPageToTree (pCat3, &m_wndUniverse, -1, 3);
+		AddPageToTree (pCat3, &m_wndHistory, -1, 4);
+		AddPageToTree (pCat3, &m_wndMathPad, -1, 5);
 
-	CBCGPPropSheetCategory* pCat3 = AddTreeCategory (_T("Views"), 0, 0);
-
-	AddPageToTree (pCat3, &m_wndUniverse, -1, 7);
-	AddPageToTree (pCat3, &m_wndMathPad, -1, 8);
-
-	CBCGPPropSheetCategory* pCat4 = AddTreeCategory (_T("Utilities"), 0, 0);
-	AddPageToTree (pCat4, &m_wndMacros, -1, 9);*/
+		CBCGPPropSheetCategory* pCat4 = AddTreeCategory (_T("Utilities"), 0, 0);
+		AddPageToTree (pCat4, &m_wndMacros, -1, 6);
+	}
 }
 
 CPreferenceDialog::~CPreferenceDialog()
