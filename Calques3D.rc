@@ -3143,6 +3143,7 @@ BEGIN
     IDS_HELP_CPTOBJECT      "the composite %s"
     IDS_HELP_CUBE           "the cube %s"
     IDS_HELP_CYLIN          "the cylinder %s"
+    IDS_HELP_CONE           "the cone %s"
     IDS_HELP_TEXT           "the text %s"
     IDS_HELP_LOCUS          "the locus %s"
     IDS_HELP_VECTOR         "the vector %s"
@@ -3228,6 +3229,7 @@ BEGIN
     IDS_DEF_CPTOBJECT       "%s is a composite object"
     IDS_DEF_CUBE            "%s is a cube defined by %s and %s"
     IDS_DEF_CYLIN           "%s is a cylinder defined by the axe %s %s and going through %s"
+    IDS_DEF_CONE            "%s is a cone defined by the axe %s %s and going through %s"
     IDS_DEF_INTSPDR         "%s is the intersection of %s and %s"
     IDS_DEF_TEXT            "%s is a label"
     IDS_DEF_SPHERE          "%s is a sphere defined by %s as its center and %s as a radius"
@@ -3241,6 +3243,7 @@ END
 STRINGTABLE DISCARDABLE 
 BEGIN
     IDS_NAME_CYLIN          "Cyl#"
+    IDS_NAME_CONE           "Cn#"
     IDS_NAME_CPTOBJECT      "Cpt#"
     IDS_NAME_TEXT           "Txt#"
     IDS_NAME_LOCUS          "Obj#"
@@ -3270,6 +3273,7 @@ END
 STRINGTABLE DISCARDABLE 
 BEGIN
     CTX_CYLINDER            "Construct a cylinder"
+	CTX_CONE				"Construct a cone"
     CTX_EXTRACT_TASK        "Extract in a tracing"
     CTX_SYMMETRIC           "Construct a symmetrical point"
     CTX_SELECT_SYM          "select a symmetry source (a point, a line or a plane)."
