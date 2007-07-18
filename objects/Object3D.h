@@ -403,7 +403,7 @@ public:
 	virtual CObject3D*	HitTest(CPoint pt,UINT mask=0,int nCalcNum = 0,BOOL bSub = TRUE,CxObject3DSet* pSet = NULL);
 	virtual BOOL		IsInActiveArea(CPoint pt);
 	virtual CRgn*		InvalideRect();
-	virtual	CRgn*		DoSegRgn(CPoint p1,CPoint p2);
+	static  CRgn*		DoSegRgn(CPoint p1,CPoint p2);
     //@}
 
 	/// @name Attribute/Information Functions
