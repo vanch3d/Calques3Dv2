@@ -1078,6 +1078,11 @@ DWORD CAnimation3DTask::GetMask()
     return mask;
 }
 
+unsigned CAnimation3DTask::GetHelpResID()
+{
+	return CTX_SELECT_POINTANIM;
+}
+
 void CAnimation3DTask::OnMouseMove(UINT, CPoint thepos)
 {
     if (m_nTimer) return;

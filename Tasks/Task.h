@@ -867,6 +867,7 @@ public :
 
 
     virtual unsigned GetTaskResID() const { return CTX_ANIMATION; }
+    virtual unsigned GetHelpResID();
 
     CAnimation3DTask(CView *AParent,UINT nID);
     virtual ~CAnimation3DTask();
