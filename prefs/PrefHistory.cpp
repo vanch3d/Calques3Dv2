@@ -64,9 +64,18 @@ void CPrefHistory::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CPrefHistory, CBCGPPropertyPage)
 	//{{AFX_MSG_MAP(CPrefHistory)
-		// NOTE: the ClassWizard will add message map macros here
+	ON_WM_DESTROY()
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CPrefHistory message handlers
+
+void CPrefHistory::OnDestroy() 
+{
+	UpdateData();
+	CBCGPPropertyPage::OnDestroy();
+	
+	// TODO: Add your message handler code here
+	
+}
