@@ -61,7 +61,7 @@ public:
 protected:
 	// Generated message map functions
 	//{{AFX_MSG(CPrefHistory)
-		// NOTE: the ClassWizard will add member functions here
+	afx_msg void OnDestroy();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 
