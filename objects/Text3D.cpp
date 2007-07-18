@@ -1821,6 +1821,10 @@ CString CVolume3D::GetText()
         m_fAngle = m_fAngle*m_fAngle*M_PI;
         m_fAngle = m_fAngle * RoundNorm((FCoord)pVec);
     }
+    else if (pObj1->MaskObject(TCone3DClass))
+    {
+       mStrText = _T("this is a cone");
+    }
     else return mStrText;
 
     BOOL bApp = TPref::TMathPad.ShowFraction;
