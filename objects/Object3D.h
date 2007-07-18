@@ -101,7 +101,7 @@ const DWORD TInterCircPl3DClass		=	MAKELONG(64,128);	///< Bi-point defined by in
 const DWORD TSphere3DClass			=	MAKELONG(128,1);	///< ALL spheres
 
 const DWORD TCylindre3DClass		= 	MAKELONG(256,1);	///< ALL cylinder
-const DWORD TCone3DClass			= 	MAKELONG(256,1);	///< ALL cones
+const DWORD TCone3DClass			= 	MAKELONG(256,2);	///< ALL cones
 
 const DWORD TValue3DClass			=   MAKELONG(1024,120);	///< ALL values (used in the MathPad)
 
