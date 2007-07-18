@@ -255,6 +255,44 @@ void CCylindreTask::DrawFeedBack(CDC *pDC)
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
+CConeTask::CConeTask(CView *AParent,UINT taskID): CPlan3DTask(AParent,taskID)
+{
+}
+
+void CConeTask::CreateObject3D()
+{
+	CCone3D* temp= new CCone3D(ptA,ptB,ptC);
+	if (!temp) return;
+	UINT a = temp->CalculConceptuel();
+	if (a)
+	{
+		temp->HandleObjectError(a,TRUE);
+		delete temp;
+	}
+	else
+	{
+		BOOL test = PrepareAddedObject(temp);
+		if (test && temp)
+			temp->CalculVisuel(m_pParent->GetVisualParam());
+	}
+	ptA->SetSelected(FALSE);
+	ptB->SetSelected(FALSE);
+	ptC->SetSelected(FALSE);
+	m_pParent->Invalidate();
+	m_nStep = 0;
+	ptA=ptB=ptC=NULL;
+	GetContextualHelp();
+}
+
+void CConeTask::DrawFeedBack(CDC *pDC)
+{
+	CPlan3DTask::DrawFeedBack(pDC);
+}
+
+
+//////////////////////////////////////////////////////////////////////
+// Construction/Destruction
+//////////////////////////////////////////////////////////////////////
 CTranslatTask::CTranslatTask(CView *AParent,UINT taskID) : CPlan3DTask(AParent,taskID)
 {
 }
