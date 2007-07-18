@@ -61,6 +61,7 @@ public:
 	FCoord	GetLength();
 	void	CalculVisuel(CVisualParam *);
 	void	Draw(CDC*,CVisualParam *,CLocus3D *);
+	BOOL	IsInActiveArea(CPoint);
 };
 
 /////////////////////////////////////////////////////////////////////////////
@@ -84,14 +85,7 @@ private:
 	typedef CArrayEx<CVector4,CVector4>		CVArray;
 	CArrayEx<CVArray, CVArray &>			mesh3D;		///< Two-dimensional list of Vector4
 
-	typedef CArrayEx<CPoint,CPoint>			CPArray;
-	CArrayEx<CPArray, CPArray &>			mesh2D;		///< Two-dimensional list of Point
-
-	//CArray<CVector4,CVector4>	m_cCpts;
-	CxVectorSet	m_cCpts;
-	CArray<CPoint,CPoint>		m_cVpts;
-
-	CArray<CLocusMesh,CLocusMesh>		m_cTriangles;
+	CArray<CLocusMesh,CLocusMesh>		m_cTriangles;	///< List of mesh elements
 
 private:
 	void GenerateLinear(CxObject3DSet* pDirectList);
