@@ -258,7 +258,7 @@ DWORD CMeasureTask::GetMask()
 
         break;
     case ID_EXPLORATION_MEASURE_VOLUME :
-        mask = TCube3DClass|TSphere3DClass|TCylindre3DClass;
+        mask = TCube3DClass|TSphere3DClass|TCylindre3DClass|TCone3DClass;
             m_nTargets = 1;
         break;
     case ID_EXPLORATION_MEASURE_AREA:
