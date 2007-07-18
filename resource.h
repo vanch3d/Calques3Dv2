@@ -359,6 +359,7 @@
 #define IDS_NAME_TEXT                   5010
 #define IDS_NAME_LOCUS                  5011
 #define IDS_NAME_VECTOR                 5012
+#define IDS_NAME_CONE                   5013
 #define IDS_HELP_OBJECT                 5100
 #define IDS_HELP_POINT                  5101
 #define IDS_HELP_LINE                   5102
@@ -382,6 +383,7 @@
 #define IDS_HELP_AREA                   5121
 #define IDS_HELP_DISTANCE               5122
 #define IDS_HELP_VOLUME                 5123
+#define IDS_HELP_CONE                   5124
 #define IDS_DEF_OBJECT                  5200
 #define IDS_DEF_POINT                   5201
 #define IDS_DEF_POINTCALC               5202
@@ -424,6 +426,7 @@
 #define IDS_DEF_SECTIONSEG              5239
 #define IDS_DEF_INTCIRCDR               5240
 #define IDS_DEF_INTCIRCPL               5241
+#define IDS_DEF_CONE                    5242
 #define CTX_DEFAULT                     6000
 #define CTX_POINT                       6001
 #define CTX_DROITE                      6003
@@ -480,6 +483,7 @@
 #define CTX_INTERSECTION_LL             6062
 #define CTX_INTERSECTION_LP             6063
 #define CTX_SELECT_DROITEPLAN           6064
+#define CTX_CONE						6065
 #define CTX_LOCUS                       6070
 #define CTX_LOCUS_BASE                  6071
 #define CTX_LOCUS_LOCUS                 6072
