@@ -129,6 +129,14 @@ public :
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
+	/// Default shape for the cones
+	/////////////////////////////////////////////////////////////////////////////
+	struct CTCone3D {
+		COLORREF	clrDefault;		///< Default color for the spheres	
+		BOOL		bDoubleCone;	///< Draw or not the double cone
+	};
+
+	/////////////////////////////////////////////////////////////////////////////
 	/// Default shape for the points
 	/////////////////////////////////////////////////////////////////////////////
 	struct CTPoint3D {
@@ -228,6 +236,7 @@ public :
 	static CTCercle3D	TCercle;		///< Default preferences for circles
 	static CTLocus3D	TLocus;			///< Default preferences for loci
 	static CTLine3D		TLine;			///< Default preferences for lines
+	static CTCone3D		TCone;			///< Default preferences for cones
 
 	static CTUniverse	TUniv;			///< Default preferences for the universe view	
 	static CTMathPad	TMathPad;		///< Default preferences for the MathPad view	

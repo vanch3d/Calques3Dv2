@@ -126,12 +126,13 @@ CString 	TPref::custColorsString[8] =
 
 COLORREF TPref::Color = RGB(0,0,0);
 
-TPref::CTPoint3D	TPref::TPoint = {RGB(0,0,0),3,2,0,3};
-TPref::CTLine3D		TPref::TLine =	{RGB(0,0,255)};
-TPref::CTCercle3D	TPref::TCercle ={RGB(0,0,255),0,40};
-TPref::CTCube3D		TPref::TCube =	{RGB(0,0,255),1};
-TPref::CTSphere3D	TPref::TSphere ={RGB(0,0,255),0,TRUE,TRUE};
-TPref::CTLocus3D	TPref::TLocus = {RGB(255,0,0),20};
+TPref::CTPoint3D	TPref::TPoint =		{RGB(0,0,0),3,2,0,3};
+TPref::CTLine3D		TPref::TLine =		{RGB(0,0,255)};
+TPref::CTCercle3D	TPref::TCercle =	{RGB(0,0,255),0,40};
+TPref::CTCube3D		TPref::TCube =		{RGB(0,0,255),1};
+TPref::CTSphere3D	TPref::TSphere =	{RGB(0,0,255),0,TRUE,TRUE};
+TPref::CTLocus3D	TPref::TLocus =		{RGB(255,0,0),20};
+TPref::CTCone3D		TPref::TCone =		{RGB(0,0,255),TRUE};
 
 TPref::CTHistory	TPref::THistory	 = 
 		{
