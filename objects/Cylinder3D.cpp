@@ -613,7 +613,7 @@ void CCylinder3D::Draw(CDC* pDC,CVisualParam *mV,BOOL bSm)
                 //if (fabsl(sa) > 1.)
                 //  sa = (sa < 0.00) ? -1.00 : 1.00;
                 //sa = acosl(sa);
-                if (sa >0 && ca > 0)
+                if (sa >0 && ca > 0 && t!=0 && t!=(nDeltaT/2))
 				{ 
 					double h,s,l;
 					CBCGPDrawManager::RGBtoHSL(pObjectShape.clrObject,&h,&s,&l);
@@ -814,52 +814,4 @@ BOOL CCylinder3D::InterCylLine(CVector4 raybase,CVector4 raycos,CVector4 base,CV
 }
 
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
-IMPLEMENT_SERIAL(CCone3D, CCylinder3D, VERSIONABLE_SCHEMA | 1)
 
-
-CCone3D::CCone3D() : CCylinder3D()
-{
-}
-
-CCone3D::CCone3D(CPoint3D *p1,CPoint3D *p2,CPoint3D *rad) : CCylinder3D(p1,p2,rad)
-{
-    if (C1) delete C1;
-    if (C2) delete C2;
-    C1 = new CCercle3D(P1,CVector4(1,0,0),1.);
-    C2 = NULL;//new TCercle3D(0,P2,Vector4(1,0,0),1.);
-    pObjectShape.clrObject = RGB(0,0,255);
-    C1->pObjectShape.clrObject = pObjectShape.clrObject;
-}
-
-CCone3D::CCone3D(const CObject3D & src) : CCylinder3D()
-{
-}
-
-CCone3D::~CCone3D()
-{
-}
-
-CObject3D* CCone3D::CopyObject()
-{
-    return NULL;
-}
-
-UINT  CCone3D::CalculConceptuel()
-{
-    return 0;
-}
-
-void CCone3D::CalculVisuel(CVisualParam *pVisParam)
-{
-}
-
-void CCone3D::Draw(CDC* pDC,CVisualParam *vp,BOOL bSm)
-{
-}
-
-void CCone3D::DrawRetro(CDC*,CVisualParam *vp)
-{
-}
