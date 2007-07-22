@@ -33,6 +33,7 @@
 #include "..\Objects\Plan3D.h"
 #include "..\Objects\Cercle3D.h"
 #include "..\Objects\Cylinder3D.h"
+#include "..\Objects\Cone3D.h"
 
 #include "..\Calques3DDoc.h"
 #include "..\ViewUniv.h"
