@@ -553,7 +553,7 @@ BOOL CCalques3DApp::PreTranslateMessage(MSG* pMsg)
 
 
 /////////////////////////////////////////////////////////////////////////////
-/// Calles to initialised and launch the "About" dialogue.
+/// Called to initialize and launch the "About" dialog.
 /// See CAboutInfoPage, CAboutCreditPage and CAboutCalquePage
 /////////////////////////////////////////////////////////////////////////////
 void CCalques3DApp::OnAppAbout()
