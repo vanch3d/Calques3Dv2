@@ -13,6 +13,18 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
+FCoord CGeom::GetDistanceToLine(CVector4 pt,CVector4 src,CVector4 dir)
+{
+    FCoord a1 = (pt.y-src.y)*dir.z - (pt.z-src.z)*dir.y;
+    FCoord a2 = (pt.z-src.z)*dir.x - (pt.x-src.x)*dir.z;
+    FCoord a3 = (pt.x-src.x)*dir.y - (pt.y-src.y)*dir.x;
+    FCoord nom = a1*a1+a2*a2+a3*a3;
+    FCoord denom = dir.x*dir.x+dir.y*dir.y+dir.z*dir.z;
+    FCoord dis = sqrtl(nom/denom);
+    return dis;
+}
+
+
 /* Triangle/triangle intersection test routine,
  * by Tomas Moller, 1997.
  * See article "A Fast Triangle-Triangle Intersection Test",

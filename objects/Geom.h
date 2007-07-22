@@ -17,6 +17,8 @@ public:
 	CGeom();
 	virtual ~CGeom();
 
+	static FCoord CGeom::GetDistanceToLine(CVector4 pt,CVector4 src,CVector4 dir);
+
 	static int TTintersect_with_isectline(CVector4 V0,CVector4 V1,CVector4 V2,
 				     CVector4 U0,CVector4 U1,CVector4 U2,int& coplanar,
 				     CVector4& isectpt1,CVector4& isectpt2);
