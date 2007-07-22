@@ -30,6 +30,8 @@ void glutWireTetrahedron( void );
 void glutSolidTetrahedron( void );
 void glutWireTorus( GLdouble dInnerRadius, GLdouble dOuterRadius, GLint nSides, GLint nRings );
 void glutSolidTorus( GLdouble dInnerRadius, GLdouble dOuterRadius, GLint nSides, GLint nRings );
+void glutSolidCone( GLdouble base, GLdouble height, GLint slices, GLint stacks );
+void glutWireCone( GLdouble base, GLdouble height, GLint slices, GLint stacks);
 
 
 const GLubyte stippleMask[17][128] =

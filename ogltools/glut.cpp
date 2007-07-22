@@ -228,3 +228,206 @@ void glutSolidTetrahedron( void )
   glEnd() ;
 }
 
+
+/*
+ * Compute lookup table of cos and sin values forming a cirle
+ *
+ * Notes:
+ *    It is the responsibility of the caller to free these tables
+ *    The size of the table is (n+1) to form a connected loop
+ *    The last entry is exactly the same as the first
+ *    The sign of n can be flipped to get the reverse loop
+ */
+
+static void fghCircleTable(double **sint,double **cost,const int n)
+{
+    int i;
+
+    /* Table size, the sign of n flips the circle direction */
+
+    const int size = abs(n);
+
+    /* Determine the angle between samples */
+
+    const double angle = 2*M_PI/(double)( ( n == 0 ) ? 1 : n );
+
+    /* Allocate memory for n samples, plus duplicate of first entry at the end */
+
+    *sint = (double *) calloc(sizeof(double), size+1);
+    *cost = (double *) calloc(sizeof(double), size+1);
+
+    /* Bail out if memory allocation fails, fgError never returns */
+
+    if (!(*sint) || !(*cost))
+    {
+        free(*sint);
+        free(*cost);
+        //fgError("Failed to allocate memory in fghCircleTable");
+    }
+
+    /* Compute cos and sin around the circle */
+
+    (*sint)[0] = 0.0;
+    (*cost)[0] = 1.0;
+
+    for (i=1; i<size; i++)
+    {
+        (*sint)[i] = sin(angle*i);
+        (*cost)[i] = cos(angle*i);
+    }
+
+    /* Last sample is duplicate of the first */
+
+    (*sint)[size] = (*sint)[0];
+    (*cost)[size] = (*cost)[0];
+}
+
+/*
+ * Draws a solid cone
+ */
+void glutSolidCone( GLdouble base, GLdouble height, GLint slices, GLint stacks )
+{
+    int i,j;
+
+    /* Step in z and radius as stacks are drawn. */
+
+    double z0,z1;
+    double r0,r1;
+
+    const double zStep = height / ( ( stacks > 0 ) ? stacks : 1 );
+    const double rStep = base / ( ( stacks > 0 ) ? stacks : 1 );
+
+    /* Scaling factors for vertex normals */
+
+    const double cosn = ( height / sqrt ( height * height + base * base ));
+    const double sinn = ( base   / sqrt ( height * height + base * base ));
+
+    /* Pre-computed circle */
+
+    double *sint,*cost;
+
+    fghCircleTable(&sint,&cost,-slices);
+
+    /* Cover the circular base with a triangle fan... */
+
+    z0 = 0.0;
+    z1 = zStep;
+
+    r0 = base;
+    r1 = r0 - rStep;
+
+    glBegin(GL_TRIANGLE_FAN);
+
+        glNormal3d(0.0,0.0,-1.0);
+        glVertex3d(0.0,0.0, z0 );
+
+        for (j=0; j<=slices; j++)
+            glVertex3d(cost[j]*r0, sint[j]*r0, z0);
+
+    glEnd();
+
+    /* Cover each stack with a quad strip, except the top stack */
+
+    for( i=0; i<stacks-1; i++ )
+    {
+        glBegin(GL_QUAD_STRIP);
+
+            for(j=0; j<=slices; j++)
+            {
+                glNormal3d(cost[j]*sinn, sint[j]*sinn, cosn);
+                glVertex3d(cost[j]*r0,   sint[j]*r0,   z0  );
+                glVertex3d(cost[j]*r1,   sint[j]*r1,   z1  );
+            }
+
+            z0 = z1; z1 += zStep;
+            r0 = r1; r1 -= rStep;
+
+        glEnd();
+    }
+
+    /* The top stack is covered with individual triangles */
+
+    glBegin(GL_TRIANGLES);
+
+        glNormal3d(cost[0]*sinn, sint[0]*sinn, cosn);
+
+        for (j=0; j<slices; j++)
+        {
+            glVertex3d(cost[j+0]*r0,   sint[j+0]*r0,   z0    );
+            glVertex3d(0,              0,              height);
+            glNormal3d(cost[j+1]*sinn, sint[j+1]*sinn, cosn  );
+            glVertex3d(cost[j+1]*r0,   sint[j+1]*r0,   z0    );
+        }
+
+    glEnd();
+
+    /* Release sin and cos tables */
+
+    free(sint);
+    free(cost);
+}
+
+/*
+ * Draws a wire cone
+ */
+void glutWireCone( GLdouble base, GLdouble height, GLint slices, GLint stacks)
+{
+    int i,j;
+
+    /* Step in z and radius as stacks are drawn. */
+
+    double z = 0.0;
+    double r = base;
+
+    const double zStep = height / ( ( stacks > 0 ) ? stacks : 1 );
+    const double rStep = base / ( ( stacks > 0 ) ? stacks : 1 );
+
+    /* Scaling factors for vertex normals */
+
+    const double cosn = ( height / sqrt ( height * height + base * base ));
+    const double sinn = ( base   / sqrt ( height * height + base * base ));
+
+    /* Pre-computed circle */
+
+    double *sint,*cost;
+
+    fghCircleTable(&sint,&cost,-slices);
+
+    /* Draw the stacks... */
+
+    for (i=0; i<stacks; i++)
+    {
+        glBegin(GL_LINE_LOOP);
+
+            for( j=0; j<slices; j++ )
+            {
+                glNormal3d(cost[j]*sinn, sint[j]*sinn, cosn);
+                glVertex3d(cost[j]*r,    sint[j]*r,    z   );
+            }
+
+        glEnd();
+
+        z += zStep;
+        r -= rStep;
+    }
+
+    /* Draw the slices */
+
+    r = base;
+
+    glBegin(GL_LINES);
+
+        for (j=0; j<slices; j++)
+        {
+            glNormal3d(cost[j]*sinn, sint[j]*sinn, cosn  );
+            glVertex3d(cost[j]*r,    sint[j]*r,    0.0   );
+            glVertex3d(0.0,          0.0,          height);
+        }
+
+    glEnd();
+
+    /* Release sin and cos tables */
+
+    free(sint);
+    free(cost);
+}
