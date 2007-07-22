@@ -310,6 +310,10 @@
 #define ERR_INTER_PLANESPHERE           4043
 #define ERR_INTER_LINECIRCLE            4044
 #define ERR_INTER_PLANECIRCLE           4045
+#define ERR_CONE_UNDEFINED				4046
+#define ERR_CONE_NORADIUS				4047
+#define ERR_CONE_NOAXIS					4048
+#define ERR_CONE_NOPROJAXIS				4049
 #define IDS_UNDO_NONE                   4100
 #define IDS_UNDO_DELETE                 4101
 #define IDS_UNDO_APPEND                 4102
@@ -358,8 +362,8 @@
 #define IDS_NAME_CPTOBJECT              5009
 #define IDS_NAME_TEXT                   5010
 #define IDS_NAME_LOCUS                  5011
-#define IDS_NAME_VECTOR                 5012
-#define IDS_NAME_CONE                   5013
+#define IDS_NAME_CONE                   5012
+#define IDS_NAME_VECTOR                 5099
 #define IDS_HELP_OBJECT                 5100
 #define IDS_HELP_POINT                  5101
 #define IDS_HELP_LINE                   5102
@@ -484,6 +488,7 @@
 #define CTX_INTERSECTION_LP             6063
 #define CTX_SELECT_DROITEPLAN           6064
 #define CTX_CONE						6065
+#define CTX_SELECT_POINTANIM			6066
 #define CTX_LOCUS                       6070
 #define CTX_LOCUS_BASE                  6071
 #define CTX_LOCUS_LOCUS                 6072
@@ -515,6 +520,8 @@
 #define PREF_NAME_LOCSIZE               7013
 #define PREF_NAME_LINE                  7014
 #define PREF_NAME_CLRDOC                7015
+#define PREF_NAME_CONE	                7016
+#define PREF_NAME_CONEDBL               7017
 #define PREF_DEF_PTFREE                 7100
 #define PREF_DEF_PTCSTR                 7101
 #define PREF_DEF_PTDEP                  7102
@@ -529,6 +536,10 @@
 #define PREF_DEF_SPHGCR                 7111
 #define PREF_DEF_LOCUS                  7112
 #define PREF_DEF_LOCSIZE                7113
+#define PREF_DEF_LINE                   7114
+#define PREF_DEF_CLRDOC                 7115
+#define PREF_DEF_CONE	                7116
+#define PREF_DEF_CONEDBL                7117
 #define PROP_DEFINITION                 8000
 #define PROP_APPEARANCE                 8001
 #define PROP_OBJNAME                    8002
