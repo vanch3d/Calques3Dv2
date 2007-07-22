@@ -3084,10 +3084,10 @@ END
 
 STRINGTABLE DISCARDABLE 
 BEGIN
-    ERR_SUPPORTOBJECT       "Some properties result in mis-specification of the support object.\nThus, a point on this object cannot be defined."
-    ERR_NOMIDDLE1           "Some properties result in segment's mis-specification.\nThus, its midpoint cannot be defined."
-    ERR_NOMIDDLE2           "Some properties result in mis-specification of one of the points.\nThus, their midpoint cannot be defined."
-    ERR_NOINTER             "Some properties result in mis-specification of one of the objects.\nThus, their intersection cannot be defined."
+    ERR_SUPPORTOBJECT       "Some properties of the support object are not verified.\nThus, a point on this object cannot be defined."
+    ERR_NOMIDDLE1           "Some properties of the segment are not verified.\nThus, its midpoint cannot be defined."
+    ERR_NOMIDDLE2           "Some properties of one of the points are not verified.\nThus, their midpoint cannot be defined."
+    ERR_NOINTER             "Some properties of one of the objects are not verified.\nThus, their intersection cannot be defined."
     ERR_DROITEPAR           "The lines are parallel."
     ERR_DROITNOCOPLAN       "The lines are not in the same plane."
     ERR_INTERINSEG          "The intersection point does not belong to the segment line(s)."
@@ -3116,6 +3116,7 @@ END
 
 STRINGTABLE DISCARDABLE 
 BEGIN
+    IDS_NAME_VECTOR         "Vec#"
     IDS_HELP_OBJECT         "the object %s"
     IDS_HELP_POINT          "the point %s"
     IDS_HELP_LINE           "the line %s"
@@ -3193,7 +3194,7 @@ BEGIN
     ERR_NOCERCLE            "Some properties result in mis-specification of one of the points..\nThus, the circle cannot be defined."
     ERR_INDEPEND            "Some parent objects are not defined.\nThus, this object cannot be defined."
     ERR_CBPTSID             "Both points of the initial edge are identical. \n The cube cannot be defined."
-    ERR_NOCYLIND            "Some properties result in mis-specification of one of the points.\nThus, the .cylinder cannot be defined."
+    ERR_NOCYLIND            "Some properties of one of the points are not verified.\nThus, the cylinder cannot be defined."
     ERR_INTCALC             "The internal calculus of the point is not determined by external conditions. \nThe point is not defined."
     ERR_INTERSPHDR          "The line and the sphere do not intersect. \n Their intersection is not defined."
     ERR_LOCUS_NOREL         "There is no relation between the two points. \n The locus cannot be defined."
@@ -3274,7 +3275,6 @@ BEGIN
     IDS_NAME_CPTOBJECT      "Cpt#"
     IDS_NAME_TEXT           "Txt#"
     IDS_NAME_LOCUS          "Obj#"
-    IDS_NAME_VECTOR         "Vec#"
     IDS_NAME_CONE           "Cn#"
 END
 
@@ -3534,6 +3534,8 @@ BEGIN
     ERR_INTER_PLANESPHERE   "The plane and the sphere do not intersect. \n Their intersection is not defined."
     ERR_INTER_LINECIRCLE    "The line and the circle do not intersect. \n Their intersection is not defined."
     ERR_INTER_PLANECIRCLE   "The plane and the circle do not intersect. \n Their intersection is not defined."
+    ERR_CONE_UNDEFINED      "Some properties of one of the points are not verified.\nThus, the cone cannot be defined."
+    ERR_CONE_NORADIUS       "The radius is null.\n The cone cannot be defined."
 END
 
 STRINGTABLE DISCARDABLE 
@@ -3582,13 +3584,16 @@ BEGIN
     PREF_DEF_PTSIZE         "Set the default size of the points (in pixel)"
     PREF_DEF_PT             "Set the properties for the points"
     PREF_DEF_SPH            "Set the properties for the spheres"
-    PREF_DEF_COLOR          "Set the default colour"
+    PREF_DEF_COLOR          "Set the default colour for the object"
     PREF_DEF_CLROTHER       "Other..."
     PREF_DEF_CLRAUTO        "Automatic"
     PREF_DEF_SPHEQ          "Display the equator of the spheres"
     PREF_DEF_SPHGCR         "Display the two great circles of the spheres"
-    PREF_DEF_LOCUS          "Set the default shape for the loci"
-    PREF_DEF_LOCSIZE        "Set the size of the loci's mesh"
+    PREF_DEF_LOCUS          "Set the properties for the loci"
+    PREF_DEF_LOCSIZE        "Set the size of a locus' mesh"
+    PREF_DEF_LINE           "Set the properties for the lines, segments and rays"
+    PREF_DEF_CONE           "Set the properties for the cones"
+    PREF_DEF_CONEDBL        "Specify if cones are represented as double or single nappe."
 END
 
 STRINGTABLE DISCARDABLE 
@@ -3601,6 +3606,8 @@ BEGIN
     PREF_NAME_LOCSIZE       "Size"
     PREF_NAME_LINE          "Lines"
     PREF_NAME_CLRDOC        "Document Colours"
+    PREF_NAME_CONE          "Cones"
+    PREF_NAME_CONEDBL       "Double cone"
 END
 
 STRINGTABLE DISCARDABLE 
@@ -3697,6 +3704,12 @@ END
 STRINGTABLE DISCARDABLE 
 BEGIN
     IDS_WARNING_TITLE       "MathPad View\nObjects have been extracted in the MathPad view.\nDo you want to open the view?"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ERR_CONE_NOAXIS         "The two points of the axis are identical.\n The cone cannot be defined."
+    ERR_CONE_NOPROJAXIS     "The envelope of the cone cannot be determined.\nThe cone is not defined"
 END
 
 #endif    // English (U.K.) resources
