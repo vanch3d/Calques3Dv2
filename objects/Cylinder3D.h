@@ -95,26 +95,4 @@ public:
 							 FCoord radius,FCoord* in,FCoord* out);
 };
 
-//////////////////////////////////////////////////////////////////////
-/// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
-class CCone3D : public CCylinder3D
-{
-public:
-	DECLARE_SERIAL(CCone3D);
-	CCone3D();
-	CCone3D(CPoint3D *p1,CPoint3D *p2,CPoint3D *rad);
-	CCone3D(const CObject3D & src);
-	virtual ~CCone3D();
-
-	virtual CObject3D* CopyObject();
-	virtual DWORD isA() const { return TCone3DClass; }
-
-	virtual UINT  CalculConceptuel();
-	virtual void CalculVisuel(CVisualParam *);
-
-	virtual void Draw(CDC* pDC,CVisualParam *vp,BOOL bSm=0);
-	virtual void DrawRetro(CDC*,CVisualParam *vp);
-};
-
 #endif // !defined(AFX_CYLINDER3D_H__CB060980_E54D_11D4_A2FA_00D0B71C8709__INCLUDED_)
