@@ -39,7 +39,6 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
-
 //////////////////////////////////////////////////////////////////////
 // Static Functions
 //////////////////////////////////////////////////////////////////////
@@ -92,9 +91,9 @@ void CSphere3D::DrawUnit(CVector4& deb,CVector4& fin,CVector4& P1,
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
-IMPLEMENT_SERIAL(CSphere3D, CObject3D, VERSIONABLE_SCHEMA | 2)
+IMPLEMENT_SERIAL(CSphere3D, CVolumeObject3D, VERSIONABLE_SCHEMA | 2)
 
-CSphere3D::CSphere3D() : CObject3D() 
+CSphere3D::CSphere3D() : CVolumeObject3D() 
 {
 	locVisParam = NULL;
 	P1 = NULL;
@@ -102,7 +101,7 @@ CSphere3D::CSphere3D() : CObject3D()
 	Seg = NULL;
 }
 
-CSphere3D::CSphere3D(CPoint3D *p1,CPoint3D *p2) : CObject3D()
+CSphere3D::CSphere3D(CPoint3D *p1,CPoint3D *p2) : CVolumeObject3D()
 {
 	locVisParam = NULL;
 	P1 = p1;
@@ -112,7 +111,7 @@ CSphere3D::CSphere3D(CPoint3D *p1,CPoint3D *p2) : CObject3D()
 	pObjectShape.clrObject = RGB(0,0,255);
 }
 
-CSphere3D::CSphere3D(CPoint3D *p1,CSegment3D *seg) : CObject3D()
+CSphere3D::CSphere3D(CPoint3D *p1,CSegment3D *seg) : CVolumeObject3D()
 {
 	locVisParam = NULL;
 	P1 = p1;
@@ -123,7 +122,7 @@ CSphere3D::CSphere3D(CPoint3D *p1,CSegment3D *seg) : CObject3D()
 }
 
 
-CSphere3D::CSphere3D(const CObject3D & src): CObject3D(src)
+CSphere3D::CSphere3D(const CObject3D & src): CVolumeObject3D(src)
 {
 	locVisParam = NULL;
 	P1 =  ((CSphere3D&)src).P1;
@@ -179,7 +178,7 @@ CObject3D* CSphere3D::CopyObject()
 
 void CSphere3D::GetRange(CVector4 &min,CVector4 &max)
 {
-	CObject3D::GetRange(min,max);
+	CVolumeObject3D::GetRange(min,max);
 	if (bValidate && IsVisible() && P1)
 	{
 		FCoord radius = Rayon.Norme();
@@ -208,10 +207,21 @@ CxObject3DSet* CSphere3D::GetParents()
 	return list;
 }
 
+FCoord CSphere3D::GetVolume()
+{
+	return 0.;
+}
+
+FCoord CSphere3D::GetSurface()
+{
+	return 0.;
+}
+
+
 void CSphere3D::Serialize( CArchive& ar )
 {
 	int ver = ar.GetObjectSchema();
-	CObject3D::Serialize(ar);
+	CVolumeObject3D::Serialize(ar);
 
 	if (ar.IsStoring())
 	{

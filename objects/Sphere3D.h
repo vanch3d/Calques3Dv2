@@ -30,7 +30,7 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-#include "Object3D.h"
+#include "VolumeObject3D.h"
 
 class CDroite3D;
 class CSegment3D;
@@ -38,7 +38,7 @@ class CSegment3D;
 //////////////////////////////////////////////////////////////////////
 /// Construction/Destruction
 //////////////////////////////////////////////////////////////////////
-class CSphere3D : public CObject3D  
+class CSphere3D : public CVolumeObject3D  
 {
 public:
 	DECLARE_SERIAL(CSphere3D);
@@ -95,6 +95,10 @@ public:
 
 	static void CalcUnit(CVector4 I,CVector4 J,CVector4 K,
 					CVector4 P1,int t,FCoord r,CVector4 & V);
+
+	virtual FCoord GetVolume();
+	virtual FCoord GetSurface();
+
 };
 
 #endif // !defined(AFX_SPHERE3D_H__16C5C800_D1EA_11D4_A2FA_00D0B71C8709__INCLUDED_)
