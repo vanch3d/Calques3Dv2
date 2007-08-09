@@ -1,5 +1,26 @@
-// WarningDialog.cpp : implementation file
+//////////////////////////////////////////////////////////////////////
+// Calques 3D - a 3D Dynamic Geometry Learning Environment
+// Copyright (c) 1997-2007 Nicolas Van Labeke
+//////////////////////////////////////////////////////////////////////
+// This file is part of Calques 3D.
+// 
+// Calques 3D is free software; you can redistribute it and/or modify it 
+// under the terms of the GNU General Public License as published by 
+// the Free Software Foundation; either version 2 of the License, or 
+// (at your option) any later version.
+// 
+// Calques 3D is distributed in the hope that it will be useful, 
+// but WITHOUT ANY WARRANTY; without even the implied warranty of 
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License 
+// along with Calques 3D; if not, write to The Free Software Foundation, Inc., 
+// 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA 
+//////////////////////////////////////////////////////////////////////
+// WarningDialog.cpp: implementation of the CWarningDialog class.
 //
+//////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
 #include "calques3d.h"
@@ -16,7 +37,18 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CWarningDialog dialog
 
+BEGIN_MESSAGE_MAP(CWarningDialog, CDialog)
+	//{{AFX_MSG_MAP(CWarningDialog)
+	ON_WM_CLOSE()
+	//ON_WM_CTLCOLOR()
+	//ON_WM_PAINT()
+	//}}AFX_MSG_MAP
+END_MESSAGE_MAP()
 
+/////////////////////////////////////////////////////////////////////////////
+/// Default constructor
+/// @param pParent	A pointer to the parent window
+/////////////////////////////////////////////////////////////////////////////
 CWarningDialog::CWarningDialog(CWnd* pParent /*=NULL*/)
 	: CDialog(CWarningDialog::IDD, pParent)
 {
@@ -28,7 +60,34 @@ CWarningDialog::CWarningDialog(CWnd* pParent /*=NULL*/)
 	m_nMessage = WARNING_MATHPAD;
 }
 
+/////////////////////////////////////////////////////////////////////////////
+/// Initialisation of the dialog
+/////////////////////////////////////////////////////////////////////////////
+BOOL CWarningDialog::OnInitDialog() 
+{
+	CDialog::OnInitDialog();
+	
+	m_wndIcon.m_cImage.SetImageSize(CSize(32,32));
+	m_wndIcon.m_cImage.SetTransparentColor(RGB(99,140,231));
+	m_wndIcon.m_cImage.Load(IDB_MSG_WARNING);
+	m_wndIcon.SetImage(0);
+	
+	CFont* fnt = m_wndTitle.GetFont();
+	LOGFONT fft;
+	fnt->GetLogFont(&fft);
+	fft.lfWeight = FW_BOLD;
+	CFont fnt2;
+	fnt2.CreateFontIndirect(&fft);
+	m_wndTitle.SetFont(&fnt2);
 
+	return TRUE;  // return TRUE unless you set the focus to a control
+	              // EXCEPTION: OCX Property Pages should return FALSE
+}
+
+/////////////////////////////////////////////////////////////////////////////
+/// Data validation and exchange
+/// @param pDX	A pointer to the data exchange object.
+/////////////////////////////////////////////////////////////////////////////
 void CWarningDialog::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
@@ -41,6 +100,11 @@ void CWarningDialog::DoDataExchange(CDataExchange* pDX)
 	//}}AFX_DATA_MAP
 }
 
+/////////////////////////////////////////////////////////////////////////////
+/// Launch the dialog in modeless/modal fashion
+/// @param msg	The unique identifier of the warning message to be handled
+/// @see CWarningDialog::TWarning
+/////////////////////////////////////////////////////////////////////////////
 void CWarningDialog::DoModeless(TWarning msg)
 {
 	m_nMessage = msg;
@@ -58,6 +122,10 @@ void CWarningDialog::DoModeless(TWarning msg)
 	DoModal();
 }
 
+/////////////////////////////////////////////////////////////////////////////
+/// Interpret the user's action on the dialog
+/// @param action	The identifier of the action (IDOK or IDCANCEL)
+/////////////////////////////////////////////////////////////////////////////
 void CWarningDialog::PerformMessage(UINT action)
 {
 	if (m_nMessage==WARNING_MATHPAD)
@@ -80,17 +148,12 @@ void CWarningDialog::PerformMessage(UINT action)
 	}
 }
 
-BEGIN_MESSAGE_MAP(CWarningDialog, CDialog)
-	//{{AFX_MSG_MAP(CWarningDialog)
-	ON_WM_CLOSE()
-	ON_WM_CTLCOLOR()
-	//ON_WM_PAINT()
-	//}}AFX_MSG_MAP
-END_MESSAGE_MAP()
-
 /////////////////////////////////////////////////////////////////////////////
 // CWarningDialog message handlers
 
+/////////////////////////////////////////////////////////////////////////////
+/// Called when the dialog is about to be closed
+/////////////////////////////////////////////////////////////////////////////
 void CWarningDialog::OnClose() 
 {
 	CDialog::OnClose();
@@ -98,24 +161,30 @@ void CWarningDialog::OnClose()
 // 	delete this;
 }
 
+/////////////////////////////////////////////////////////////////////////////
+/// Called when the user is canceling the dialog
+/////////////////////////////////////////////////////////////////////////////
 void CWarningDialog::OnCancel() 
 {
-	// TODO: Add extra cleanup here
-	
 	CDialog::OnCancel();
 	PerformMessage(IDCANCEL);
 // 	delete this;
 }
 
+/////////////////////////////////////////////////////////////////////////////
+/// Called when the user is validating the dialog
+/////////////////////////////////////////////////////////////////////////////
 void CWarningDialog::OnOK() 
 {
-	// TODO: Add extra validation here
-	
 	CDialog::OnOK();
 	PerformMessage(IDOK);
 // 	delete this;
 }
 
+/////////////////////////////////////////////////////////////////////////////
+/// Customized drawing of the controls
+/// @deprecated The warning is now displayed as a standard dialog box.
+/////////////////////////////////////////////////////////////////////////////
 HBRUSH CWarningDialog::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor) 
 {
 	HBRUSH hbr = CDialog::OnCtlColor(pDC, pWnd, nCtlColor);
@@ -124,6 +193,10 @@ HBRUSH CWarningDialog::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 	return hbr;
 }
 
+/////////////////////////////////////////////////////////////////////////////
+/// Customized drawing of the controls
+/// @deprecated The warning is now displayed as a standard dialog box.
+/////////////////////////////////////////////////////////////////////////////
 void CWarningDialog::OnPaint() 
 {
 	CPaintDC dc(this); // device context for painting
@@ -162,24 +235,3 @@ void CWarningDialog::OnPaint()
 	// Do not call CDialog::OnPaint() for painting messages
 }
 
-BOOL CWarningDialog::OnInitDialog() 
-{
-	CDialog::OnInitDialog();
-	
-	m_wndIcon.m_cImage.SetImageSize(CSize(32,32));
-	m_wndIcon.m_cImage.SetTransparentColor(RGB(99,140,231));
-	m_wndIcon.m_cImage.Load(IDB_MSG_WARNING);
-	m_wndIcon.SetImage(0);
-	
-	CFont* fnt = m_wndTitle.GetFont();
-	LOGFONT fft;
-	fnt->GetLogFont(&fft);
-	fft.lfWeight = FW_BOLD;
-	CFont fnt2;
-	fnt2.CreateFontIndirect(&fft);
-	m_wndTitle.SetFont(&fnt2);
-
-
-	return TRUE;  // return TRUE unless you set the focus to a control
-	              // EXCEPTION: OCX Property Pages should return FALSE
-}
