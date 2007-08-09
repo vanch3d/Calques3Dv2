@@ -556,12 +556,15 @@ CString CSphere3D::ExportSymbolic(int nFormat)
 	CString mstr;
 	mstr.Empty();
 
-	if (/*bValidate && */P1 && P2)
+	if (/*bValidate && */P1 && (P2||Seg))
 	{
         CString strName,strObj1,strObj2;
 		strName = GetObjectNameRedux();
 		strObj1 = P1->GetObjectNameRedux();
-		strObj2 = P2->GetObjectNameRedux();
+		if (P2)
+			strObj2 = P2->GetObjectNameRedux();
+		else
+			strObj2 = Seg->GetObjectNameRedux();
 
 		if (nFormat==EXPORT_MATHEMATICA)
 			mstr.Format(_T("SphereD[%s,%s,%s];"),strName,strObj1,strObj2);
