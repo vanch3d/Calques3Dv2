@@ -43,17 +43,19 @@ class CRenderPropDlg;
 /////////////////////////////////////////////////////////////////////////////
 class CView3DRender : public CGLEnabledView
 {
-protected:
-	CView3DRender();           // protected constructor used by dynamic creation
 	DECLARE_DYNCREATE(CView3DRender)
+protected:
+	CView3DRender();							// protected constructor used by dynamic creation
 
 // Attributes
 public:
-	CPoint MouseDownPoint;
-	CBallController trackball;
-	CRenderPropDlg* m_pDlg;
-    int   m_LightParam[NBVIEWPARAMS];  // Graphics dimension (along X-axis)
-	int		m_nVolMode;
+	CRenderPropDlg* m_pDlg;						///< The dialog for modifying the view's attributes
+	CBallController m_wndTrackball;				///< The trackball widget associated with the view
+private:
+	CPoint			m_ptOldLoc;					///< Store the position of any mouse click
+    int				m_LightParam[NBVIEWPARAMS]; ///< The properties of the rendering view
+	int				m_nVolMode;					///< Mode for rendering volumes
+
 // Operations
 public:
 	CCalques3DDoc* GetDocument();
@@ -72,6 +74,7 @@ public:
 	void GetLightParams(int *pPos);			// Get lighting parameters
 	void SetLightParam (short lp, int nPos);	// Set lighting parameters
 	void SetLight();
+
 protected:
 	virtual ~CView3DRender();
 #ifdef _DEBUG
@@ -83,7 +86,6 @@ protected:
 protected:
 	void ProcessSelection(int xPos, int yPos);
 	void ProcessObject(GLuint *pSelectBuff);
-
 	void OnSizeGL(int cx, int cy);
 	//{{AFX_MSG(CView3DRender)
 	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);

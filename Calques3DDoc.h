@@ -50,13 +50,12 @@ public:
 };
 
 /////////////////////////////////////////////////////////////////////////////
-// List of undoed objects
+// List of positions of every open views in Calques 3D
 /////////////////////////////////////////////////////////////////////////////
 typedef CMap<UINT ,UINT,CWinPlacement,CWinPlacement> CxWindowLoc;
 
 /////////////////////////////////////////////////////////////////////////////
-/// CUndoObject:
-///
+/// Wrapper for handling undo/redo operations
 /////////////////////////////////////////////////////////////////////////////
 class CUndoObject: public CObject
 {
@@ -70,27 +69,25 @@ public:
 	CString GetUndoText();
 public:
 	CxObject3DSet	m_cUndoSet;		///< List of objects to undo
-	BOOL			m_bCanDelete;	///< Can delete the objects when clearing the UndoObject
+	BOOL			m_bCanDelete;	///< TRUE if the objects need to be deleted when cleaning the UndoObject
 	int				m_nUndoState;	///< Type of action to undo
 
 	CVector4		m_ptOldPos;		///< Old position of the object (for dragging)
-	CObject3DAttr	m_pAttr;		///< Old attributes (name, color, shape) of the object
+	CObject3DAttr	m_pAttr;		///< Old attributes of the object (name, color, shape) 
 };
 
 /////////////////////////////////////////////////////////////////////////////
 /// List of undoable/redoable objects
 /////////////////////////////////////////////////////////////////////////////
-//typedef CList<CUndoObject*,CUndoObject*>	CxUndoObjectSet;
 class CxUndoObjectSet : public CList<CUndoObject*,CUndoObject*>
 {};
 
 /////////////////////////////////////////////////////////////////////////////
-/// Map storing the number of objects in the document, categorised by their type.
+/// Map storing the number of objects in the document, categorized by their type.
 /// The key of the map is the object type identifier
 /// The value of the map is the number of object of this type
-/// \todo add setters/getters for accessing more easily each object counts
+/// @todo add setters/getters for accessing more easily each object counts
 /////////////////////////////////////////////////////////////////////////////
-//typedef CMap<UINT,UINT,int,int>	CxObjectCount;
 class CxObjectCount : public CMap<UINT,UINT,int,int>
 {};
 
@@ -205,7 +202,7 @@ protected:
 };
 
 /////////////////////////////////////////////////////////////////////////////
-/// Specialisation of the Calques 3D document to deal with macro-constructions
+/// Specialization of the Calques 3D document to deal with macro-constructions
 ///
 ///
 ///

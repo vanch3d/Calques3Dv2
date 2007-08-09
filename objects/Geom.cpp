@@ -1,3 +1,23 @@
+//////////////////////////////////////////////////////////////////////
+// Calques 3D - a 3D Dynamic Geometry Learning Environment
+// Copyright (c) 1997-2007 Nicolas Van Labeke
+//////////////////////////////////////////////////////////////////////
+// This file is part of Calques 3D.
+// 
+// Calques 3D is free software; you can redistribute it and/or modify it 
+// under the terms of the GNU General Public License as published by 
+// the Free Software Foundation; either version 2 of the License, or 
+// (at your option) any later version.
+// 
+// Calques 3D is distributed in the hope that it will be useful, 
+// but WITHOUT ANY WARRANTY; without even the implied warranty of 
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License 
+// along with Calques 3D; if not, write to The Free Software Foundation, Inc., 
+// 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA 
+//////////////////////////////////////////////////////////////////////
 // Geom.cpp: implementation of the CGeom class.
 //
 //////////////////////////////////////////////////////////////////////
@@ -13,6 +33,13 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
+//////////////////////////////////////////////////////////////////////
+/// Compute the distance between a line and a point
+/// @param	pt	The coordinates of the point
+/// @param	src	The origin of the line
+/// @param	dir	The director vector of the line
+/// @return The distance of the point to the line
+//////////////////////////////////////////////////////////////////////
 FCoord CGeom::GetDistanceToLine(CVector4 pt,CVector4 src,CVector4 dir)
 {
     FCoord a1 = (pt.y-src.y)*dir.z - (pt.z-src.z)*dir.y;
@@ -23,6 +50,32 @@ FCoord CGeom::GetDistanceToLine(CVector4 pt,CVector4 src,CVector4 dir)
     FCoord dis = sqrtl(nom/denom);
     return dis;
 }
+
+//////////////////////////////////////////////////////////////////////
+/// Determine the intersection of two triangles and compute the resulting line (if any)
+/// @param	V	The three vertices of the first triangle
+/// @param	V	The three vertices of the second triangle
+/// @param	coplanar	returns 1 if the triangle are coplanar, 0 otherwise
+/// @param	isectpt1	returns the first endpoint of the intersection line
+/// @param	isectpt2	returns the second endpoint of the intersection line
+/// @return	1 if the intersection exists, 0 otherwise
+//////////////////////////////////////////////////////////////////////
+int CGeom::GetTrianglesIntersection(CVector4 V[3],CVector4 U[3],int& coplanar,
+				     CVector4& isectpt1,CVector4& isectpt2)
+  {
+	float V0a[3] = {V[0].x,V[0].y,V[0].z};
+	float V1a[3] = {V[1].x,V[1].y,V[1].z};
+	float V2a[3] = {V[2].x,V[2].y,V[2].z};
+	float U0a[3] = {U[0].x,U[0].y,U[0].z};
+	float U1a[3] = {U[1].x,U[1].y,U[1].z};
+	float U2a[3] = {U[2].x,U[2].y,U[2].z};
+	float a1[3] = {0,0,0};
+	float a2[3] = {0,0,0};
+	int res = tri_tri_intersect_with_isectline(V0a,V1a,V2a,U0a,U1a,U2a,&coplanar,a1,a2);
+	isectpt1 = CVector4(a1[0],a1[1],a1[2]);
+	isectpt2 = CVector4(a2[0],a2[1],a2[2]);
+	return res;
+  }
 
 
 /* Triangle/triangle intersection test routine,
@@ -52,16 +105,6 @@ FCoord CGeom::GetDistanceToLine(CVector4 pt,CVector4 src,CVector4 dir)
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
-
-CGeom::CGeom()
-{
-
-}
-
-CGeom::~CGeom()
-{
-
-}
 
 #define FABS(x) ((float)fabs(x))        /* implement as is fastest on your machine */
 
@@ -603,24 +646,6 @@ inline int compute_intervals_isectline(float VERT0[3],float VERT1[3],float VERT2
     return coplanar_tri_tri(N1,V0,V1,V2,U0,U1,U2);      \
   }
 #endif
-
-  int CGeom::TTintersect_with_isectline(CVector4 V0,CVector4 V1,CVector4 V2,
-				     CVector4 U0,CVector4 U1,CVector4 U2,int& coplanar,
-				     CVector4& isectpt1,CVector4& isectpt2)
-  {
-	float V0a[3] = {V0.x,V0.y,V0.z};
-	float V1a[3] = {V1.x,V1.y,V1.z};
-	float V2a[3] = {V2.x,V2.y,V2.z};
-	float U0a[3] = {U0.x,U0.y,U0.z};
-	float U1a[3] = {U1.x,U1.y,U1.z};
-	float U2a[3] = {U2.x,U2.y,U2.z};
-	float a1[3] = {0,0,0};
-	float a2[3] = {0,0,0};
-	int res = tri_tri_intersect_with_isectline(V0a,V1a,V2a,U0a,U1a,U2a,&coplanar,a1,a2);
-	isectpt1 = CVector4(a1[0],a1[1],a1[2]);
-	isectpt2 = CVector4(a2[0],a2[1],a2[2]);
-	return res;
-  }
 
   int CGeom::tri_tri_intersect_with_isectline(float V0[3],float V1[3],float V2[3],
 				     float U0[3],float U1[3],float U2[3],int *coplanar,

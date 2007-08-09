@@ -33,8 +33,8 @@
 #include "Shape.h"
 
 /////////////////////////////////////////////////////////////////////////////
-/// CPropShapeCombo
-///
+/// A combobox used to select the various shapes for the geometrical object.
+/// To be used with CBCGPShapeProp
 /////////////////////////////////////////////////////////////////////////////
 class CPropShapeCombo : public CComboBox
 {
@@ -52,7 +52,8 @@ public:
 	
 	//////////////////////////////////////////////////////////////////////
 	/// Set the type of shapes associated with the combobox.
-	/// \param type	The type of the shape (see CShape::TShapeType)
+	/// @param	type	The type of the shape
+	/// @see	CShape::TShapeType
 	//////////////////////////////////////////////////////////////////////
 	void SetType(int type) {m_type = type;};
 
@@ -115,19 +116,27 @@ protected:
 
 // Construction
 public:
-	CBCGPObjectProp(const CString& strName, const CString& strHelp,int ndx,BOOL bHasList,DWORD dwData = 0);
-	//CBCGObjectProp();
-
+	CBCGPObjectProp(const CString& strName, const CString& strHelp,
+					int ndx,BOOL bHasList,DWORD dwData = 0);
 // Overrides
 public:
-	virtual BOOL HasValueField () const
-	{
-		return FALSE;
-	}
+	//////////////////////////////////////////////////////////////////////
+	/// Overridden to prevent the display of the value field
+	//////////////////////////////////////////////////////////////////////
+	virtual BOOL HasValueField () const { return FALSE; };
+
+	//////////////////////////////////////////////////////////////////////
+	/// Overridden to prevent the manipulation of the value field
+	//////////////////////////////////////////////////////////////////////
+	virtual BOOL OnSetCursor () const { return FALSE;};
+
+	//////////////////////////////////////////////////////////////////////
+	/// Overridden to prevent the manipulation of the value field
+	//////////////////////////////////////////////////////////////////////
+	virtual BOOL OnEdit (LPPOINT lptClick) { return FALSE;};
+
 //	virtual void OnDrawExpandBox (CDC* pDC, CRect rectExpand);
 	virtual void OnDrawName (CDC* pDC, CRect rect);
-	virtual BOOL OnEdit (LPPOINT lptClick) { return FALSE;};
-	virtual BOOL OnSetCursor () const { return FALSE;};
 	virtual BOOL OnDblClick (CPoint point);
 
 // Operations
@@ -144,8 +153,8 @@ class CBCGPSliderProp : public CBCGPProp
 {
 // Construction
 private:
-	int m_nMin;
-	int m_nMax;
+	int m_nMin;			///< The minimum value accepted by the widget
+	int m_nMax;			///< The maximum value accepted by the widget
 public:
 	CBCGPSliderProp(
 		const CString& strName,
@@ -201,8 +210,8 @@ protected:
 
 
 /////////////////////////////////////////////////////////////////////////////
-/// CPropSliderCtrl
-///
+/// A Slider control adapted for the Property widgets
+/// To be used with CBCGPSliderProp
 /////////////////////////////////////////////////////////////////////////////
 class CPropSliderCtrl : public CSliderCtrl
 {

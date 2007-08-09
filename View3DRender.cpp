@@ -60,11 +60,11 @@ END_MESSAGE_MAP()
 
 
 CView3DRender::CView3DRender():
-	//trackball(.8,unitquaternion(DegToRad(45),Y_AXIS)*unitquaternion(DegToRad(-30),X_AXIS))
-	trackball(.8,unitquaternion(DegToRad(135),Z_AXIS)*unitquaternion(DegToRad(45),X_AXIS))
+	//m_wndTrackball(.8,unitquaternion(DegToRad(45),Y_AXIS)*unitquaternion(DegToRad(-30),X_AXIS))
+	m_wndTrackball(.8,unitquaternion(DegToRad(135),Z_AXIS)*unitquaternion(DegToRad(45),X_AXIS))
 {
-	trackball.SetColor(RGB(130,80,30));
-	trackball.SetDrawConstraints();
+	m_wndTrackball.SetColor(RGB(130,80,30));
+	m_wndTrackball.SetDrawConstraints();
 	m_pDlg = NULL;
 	m_nVolMode = CObject3D::RENDER_SILHOUETTE;
 }
@@ -314,7 +314,7 @@ void CView3DRender::OnDrawGL()
 // scene is rotated of the given angle (which is absolute) at every redraw
 	glPushMatrix();
 // apply trackball rotation
-	trackball.IssueGLrotation();
+	m_wndTrackball.IssueGLrotation();
 // "save" the current transformation matrix for subsequent superimpose of axes
 	glPushMatrix();
 // this should be self explanatory
@@ -353,7 +353,7 @@ void CView3DRender::OnDrawGL()
 	}
 
 
-	trackball.DrawBall();
+	m_wndTrackball.DrawBall();
 //"superimpose" the RGB-carthesian-axes in a small area near the bottom-left corner of the view
 	glViewport(0,0,m_ClientRect.right/6,m_ClientRect.bottom/6);
 	glPopMatrix();
@@ -451,13 +451,13 @@ void CView3DRender::OnLButtonDown(UINT nFlags, CPoint point)
 //	ProcessSelection(point.x,point.y);
 
 	if (nFlags & MK_CONTROL) 
-		trackball.UseConstraints(CAMERA_AXES);
+		m_wndTrackball.UseConstraints(CAMERA_AXES);
 	else if(nFlags & MK_SHIFT) 
-		trackball.UseConstraints(BODY_AXES);
-	else trackball.UseConstraints(NO_AXES);
+		m_wndTrackball.UseConstraints(BODY_AXES);
+	else m_wndTrackball.UseConstraints(NO_AXES);
 	// remember where we clicked
-	MouseDownPoint=point;
-	trackball.MouseDown(point);
+	m_ptOldLoc=point;
+	m_wndTrackball.MouseDown(point);
 	// capture mouse movements even outside window borders
 	SetCapture();
 	// redraw the view
@@ -467,8 +467,8 @@ void CView3DRender::OnLButtonDown(UINT nFlags, CPoint point)
 void CView3DRender::OnLButtonUp(UINT nFlags, CPoint point) 
 {
 // forget where we clicked
-	MouseDownPoint=CPoint(0,0);
-	trackball.MouseUp(point);
+	m_ptOldLoc=CPoint(0,0);
+	m_wndTrackball.MouseUp(point);
 // release mouse capture
 	ReleaseCapture();
 // redraw the view
@@ -477,7 +477,7 @@ void CView3DRender::OnLButtonUp(UINT nFlags, CPoint point)
 
 void CView3DRender::OnMouseMove(UINT nFlags, CPoint point) 
 {
-	trackball.MouseMove(point);
+	m_wndTrackball.MouseMove(point);
 	Invalidate(TRUE);
 }
 
@@ -536,7 +536,7 @@ void CView3DRender::OnUpdateProperty(CCmdUI* pCmdUI)
 void CView3DRender::OnSizeGL(int cx, int cy) 
 {
 //	afxDump<<"client area: "<<cx<<" x "<<cy<<"\n";
-	trackball.ClientAreaResize(CRect(0,0,cx,cy));
+	m_wndTrackball.ClientAreaResize(CRect(0,0,cx,cy));
 	//CGLEnabledView::OnSizeGL(cx,cy);
 	// set correspondence between window and OGL viewport
 		glViewport(0,0,cx,cy);
@@ -555,8 +555,8 @@ void CView3DRender::OnSizeGL(int cx, int cy)
 
 void CView3DRender::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) 
 {
-	if(nChar==VK_SPACE) trackball.ToggleMethod();
-	trackball.Key(nChar);
+	if(nChar==VK_SPACE) m_wndTrackball.ToggleMethod();
+	m_wndTrackball.Key(nChar);
 	CGLEnabledView::OnKeyDown(nChar, nRepCnt, nFlags);
 	Invalidate(TRUE);
 }
