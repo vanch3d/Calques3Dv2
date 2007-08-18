@@ -33,6 +33,7 @@
 #include "VolumeObject3D.h"
 class CPoint3D;
 class CCercle3D;
+class CDroite3D;
 
 //////////////////////////////////////////////////////////////////////
 /// The cone
@@ -47,13 +48,15 @@ protected:
 	CCercle3D		*C1,*C2,*C3;
 	CPoint3D		*Base1,*Base2,*Base3;
 
-	CxObject3DSet	cGenerList;		///< List of the generatrice
+	CxObject3DSet	cGenerList;		///< List of the outer edge vectors
 	CxObject3DSet	cPointsList;	///< List of the points on the base's circle
 
 public:
 	FCoord			nRadius;		///< Radius of the cone at its base
 	FCoord			nHeight;		///< Height of the cone
+	FCoord			nOpenAngle;		///< Opening angle of the cube (ie between axis and outer edge)
 	CLocalRep 		LocRep;			///< Local referential
+	int				nDelta;
 
 public:
 	DECLARE_SERIAL(CCone3D);
@@ -81,6 +84,10 @@ public:
 	virtual void Draw(CDC* pDC,CVisualParam *vp,BOOL bSm=0);
 	virtual void DrawRetro(CDC*,CVisualParam *vp);
 	virtual void Draw3DRendering(int nVolMode);
+
+public:
+	UINT IntersectPlan();
+	UINT IntersectLine(CDroite3D *dr,CVector4 &in,CVector4 &out);
 };
 
 #endif // !defined(AFX_CONE3D_H__A3934306_BBF1_4C76_B690_4826B9B8A7F0__INCLUDED_)
