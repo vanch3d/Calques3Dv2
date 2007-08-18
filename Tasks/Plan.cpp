@@ -287,7 +287,58 @@ void CConeTask::CreateObject3D()
 
 void CConeTask::DrawFeedBack(CDC *pDC)
 {
-	CPlan3DTask::DrawFeedBack(pDC);
+	if (ptA && m_nStep==1)
+	{	
+		// Draw feedback for the axis
+		CPoint thePt = ptA->Visual_pt;
+		CPoint endPt(m_ptOld.x,m_ptOld.y);
+		CSize dl = endPt - thePt;
+		dl.cx =dl.cx/2;
+		dl.cy =dl.cy/2;
+		endPt+=dl;
+
+		pDC->MoveTo(thePt);
+		pDC->LineTo(endPt);
+	}
+	if (ptA && ptB && m_nStep==2)
+	{
+		CVector4 pta;
+		CVector4 ptb;
+		{
+			// Draw feedback for the axis
+			CPoint thePt = ptA->Visual_pt;
+			CPoint endPt = ptB->Visual_pt;
+			pta = CVector4(thePt.x,thePt.y,0);
+			ptb = CVector4(endPt.x,endPt.y,0);
+			CSize dl = endPt - thePt;
+			dl.cx =dl.cx/4;
+			dl.cy =dl.cy/4;
+			endPt+=dl;
+			pDC->MoveTo(thePt);
+			pDC->LineTo(endPt);
+		}
+		{
+			// Draw feedback for first ray
+			CPoint thePt = ptA->Visual_pt;
+			CPoint endPt(m_ptOld.x,m_ptOld.y);
+			CSize dl = endPt - thePt;
+			dl.cx =dl.cx/4;
+			dl.cy =dl.cy/4;
+			endPt+=dl;
+			CVector4 ptc(endPt.x,endPt.y,0);
+			pDC->MoveTo(thePt);
+			pDC->LineTo(endPt);
+
+			// Draw feedback for first ray
+			CVector4 norm = ptb-pta;
+			norm = norm.Normalized();
+			FCoord proj = norm * (ptc - pta);
+			norm = pta + norm*proj;
+			CVector4 sim = norm*2. - ptc;
+			pDC->MoveTo(pta);
+			pDC->LineTo(sim);
+		}
+	}
 }
 
 
