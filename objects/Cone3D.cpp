@@ -33,6 +33,9 @@
 #include "Cercle3D.h"
 #include "Droite3D.h"
 #include "Plan3D.h"
+#include "Sphere3D.h"
+#include "CompositeObj3D.h"
+
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -52,6 +55,7 @@ CCone3D::CCone3D() : CVolumeObject3D()
 	pApex = pAxis = pRadius = NULL;
 	C1 = C2 = C3 = NULL;
 	Base1 = Base2 = Base3 = NULL;
+	nDelta = 13;
 }
 
 CCone3D::CCone3D(CPoint3D *p1,CPoint3D *p2,CPoint3D *rad) : CVolumeObject3D()
@@ -63,6 +67,7 @@ CCone3D::CCone3D(CPoint3D *p1,CPoint3D *p2,CPoint3D *rad) : CVolumeObject3D()
 	SetDepth();
 	C1 = C2 = C3 = NULL;
 	Base1 = Base2 = Base3 = NULL;
+	nDelta = 13;
 }
 
 CCone3D::CCone3D(const CObject3D & src) : CVolumeObject3D(src)
@@ -73,6 +78,7 @@ CCone3D::CCone3D(const CObject3D & src) : CVolumeObject3D(src)
  	SetDepth();
 	C1 = C2 = C3 = NULL;
 	Base1 = Base2 = Base3 = NULL;
+	nDelta = 13;
 }
 
 CCone3D::~CCone3D()
@@ -120,6 +126,7 @@ void CCone3D::Serialize( CArchive& ar )
         pRadius = (CPoint3D*)SerializeObj(ar);
 		C1 = C2 = C3 = NULL;
 		Base1 = Base2 = Base3 = NULL;
+		nDelta = 13;
     }
 }
 
@@ -236,8 +243,12 @@ UINT  CCone3D::CalculConceptuel()
 		
     FCoord dr1 = CGeom::GetDistanceToLine(ptRad1.Concept_pt,pApex->Concept_pt,p1p2);
     FCoord dr2 = CGeom::GetDistanceToLine(ptRad2.Concept_pt,pApex->Concept_pt,p1p2);
+	
 	nRadius = max(dr1,dr2);
 	nHeight = secdis;
+	nOpenAngle = atan(nRadius/nHeight);
+
+	FCoord ss = RTD(nOpenAngle);
 
 	if (C1!=NULL) delete C1;
 	if (C2!=NULL) delete C2;
@@ -275,12 +286,11 @@ UINT  CCone3D::CalculConceptuel()
     LocRep.K = LocRep.K.Normalized();
     LocRep.J = pRadius->Concept_pt - ptProj;
     LocRep.J = LocRep.J.Normalized();
-    LocRep.I = LocRep.K % LocRep.J;
+    LocRep.I = LocRep.J % LocRep.K;
 
 	if (C1) C1->CalculConceptuel();
 	if (C2) C2->CalculConceptuel();
 	if (C3) C3->CalculConceptuel();
-
 	return 0;
 }
 
@@ -301,13 +311,26 @@ CVector4 calculGeneratrice(FCoord theta,CVector4 Center,
     return V;
 }
 
-void CCone3D::CalculVisuel(CVisualParam *pVisParam)
+void CCone3D::CalculVisuel(CVisualParam *vp)
 {
-	if (C1) C1->CalculVisuel(pVisParam);
-	if (C2) C2->CalculVisuel(pVisParam);
-	if (C3) C3->CalculVisuel(pVisParam);
+    if (cGenerList.GetSize())
+    {
+        for (int i=0;i<cGenerList.GetSize();i++)
+            delete cGenerList.GetAt(i);
+        cGenerList.RemoveAll();
+    }
+    if (cPointsList.GetSize())
+    {
+        for (int i=0;i<cPointsList.GetSize();i++)
+            delete cPointsList.GetAt(i);
+        cPointsList.RemoveAll();
+    }
+
+	if (C1) C1->CalculVisuel(vp);
+	if (C2) C2->CalculVisuel(vp);
+	if (C3) C3->CalculVisuel(vp);
     CVector4 p1p2 = C1->VecNorm;
-    CVector4 oeil= pVisParam->GetEyePos();
+    CVector4 oeil= vp->GetEyePos();
     CVector4 beep = oeil;// * ((FCoord)1/Norme(oeil));
     CVector4 beep2 = p1p2;// * ((FCoord)1/Norme(p1p2));
     CVector4 aa = beep % beep2;
@@ -317,8 +340,11 @@ void CCone3D::CalculVisuel(CVisualParam *pVisParam)
              I,J;
     if (aa.NullVector())
      {
-        I = CVector4(-K.y,K.x,0,1);
-        normK = J.Norme();
+        I = oeil;//CVector4(-K.y,K.x,0,1);
+	    if (I.NullVector())
+			I = CVector4(1,0,0,1);
+		K = p1p2;
+        normK = K.Norme();
         if (FCZero(normK))
             { I.x = I.z =0; I.y = 1;    }
         else
@@ -326,69 +352,81 @@ void CCone3D::CalculVisuel(CVisualParam *pVisParam)
      }
     else
         I = aa * (1 /aa.Norme());
+	//I =oeil.Normalized();
+	//I.Norme();
     J = (I % K);
-    CLocalRep IntH = CLocalRep(pApex->Concept_pt,I,J,K);
+    //CLocalRep IntH = CLocalRep(pApex->Concept_pt,I,J,K);
 
-    int nbPts = cPointsList.GetSize();
-    int nbSeg = cGenerList.GetSize();
-    CVector4 U,Center;
-	int nDeltaT = 32;
-    for (int t=0;t<nDeltaT;t++)
+// 	CVector4 VisuNorm= vp->GetEyePos() - CVector4(0,0,0,1);
+// 	CPoint3D pta(pApex->Concept_pt + VisuNorm);
+// 	CDroite3D dr(pApex,&pta);
+// 	dr.CalculConceptuel();
+// 	CPoint3D ff(C1->Center);
+// 	CPlan3D pl(&ff,(pApex->Concept_pt-pAxis->Concept_pt).Normalized());
+// 	pl.CalculConceptuel();
+// 	CPointInterDP3D fff(&dr,&pl);
+// 	fff.CalculConceptuel();
+// 	CPoint3D rr(C1->Center+CVector4(0,0,1)*C1->Radius);
+// 	CPoint3D rd(C1->Center);
+// 	CSphere3D sp1(&rd,&rr);
+// 	sp1.CalculConceptuel();
+// 	CPointMilieu3D mil(&fff,&ff);
+// 	mil.CalculConceptuel();
+// 	CSphere3D sp2(&mil,&ff);
+// 	sp2.CalculConceptuel();
+// 	CCercleInterSS3D ci(&sp1,&sp2);
+// 	ci.CalculConceptuel();
+// 	CInterCircPlane3D ptint(&ci,&pl);
+// 	UINT res = ptint.CalculConceptuel();
+
+    for (int t=0;t<nDelta;t++)
     {
-        CVector4 V1 = calculGeneratrice(2*M_PI*t/nDeltaT,C1->Center,nRadius,I,J,K);
+		FCoord theta = /*start+*/2*M_PI*t/nDelta;
+        CVector4 V1 = calculGeneratrice(theta,C1->Center,nRadius,LocRep.I,LocRep.J,LocRep.K);
         CVector4 V2;
 		if (TPref::TCone.bDoubleCone)
-			V2 = calculGeneratrice(M_PI+2*M_PI*t/nDeltaT,C3->Center,nRadius,I,J,K);
+			V2 = calculGeneratrice(M_PI+theta,C3->Center,nRadius,LocRep.I,LocRep.J,LocRep.K);
 		else
 			V2 = pApex->Concept_pt;
 
+		if (theta>2*M_PI) theta = theta - 2*M_PI;
+
         CPoint3D    *spt1 = NULL ,
                     *spt2 = NULL;
-        if (!nbPts)
-         {
-            spt1 = new CPoint3D(V1);
-            spt2 = new CPoint3D(V2);
-            cPointsList.Add(spt1);
-            cPointsList.Add(spt2);
-         }
-        else
-         {
-            spt1 = (CPoint3D*)cPointsList.GetAt(2*t);
-            spt2 = (CPoint3D*)cPointsList.GetAt(2*t+1);
-            spt1->Concept_pt = V1;
-            spt2->Concept_pt = V2;
-         }
+
+		spt1 = new CPoint3D(V1);
+        spt2 = new CPoint3D(V2);
+        cPointsList.Add(spt1);
+		cPointsList.Add(spt2);
+
         spt1->CalculConceptuel();
-        spt1->CalculVisuel(pVisParam);
+        spt1->CalculVisuel(vp);
         spt2->CalculConceptuel();
-        spt2->CalculVisuel(pVisParam);
-        CSegment3D *seg = 0;
-        if (!nbSeg)
-        {
-            seg = new CSegment3D(spt1,spt2);
-            cGenerList.Add(seg);
-            seg->pObjectShape.clrObject = pObjectShape.clrObject;
-        }
-        else
-        {
-            seg = (CSegment3D*)cGenerList.GetAt(t);
-        }
+        spt2->CalculVisuel(vp);
+        
+		CSegment3D *seg = 0;
+
+		seg = new CSegment3D(spt1,spt2);
+		cGenerList.Add(seg);
+        seg->pObjectShape.clrObject = pObjectShape.clrObject;
+
         seg->CalculConceptuel();
-        seg->CalculVisuel(pVisParam);
+        seg->CalculVisuel(vp);
         seg->nCalque = nCalque;
-		FCoord sa = IntH.I * (seg->P1->Concept_pt - C1->Center);
-        FCoord ca = IntH.J * (seg->P1->Concept_pt - C1->Center);
-		if (sa<0 && sa<0)
+
 		{ 
+            seg->pObjectShape.clrObject = pObjectShape.clrObject;
+			seg->pObjectShape.nShapeId = pObjectShape.nShapeId;
+
+		}
+/*		{
 			double h,s,l;
 			CBCGPDrawManager::RGBtoHSL(pObjectShape.clrObject,&h,&s,&l);
 			l = l+3*l/4;
 			COLORREF ff = CBCGPDrawManager::HLStoRGB_ONE(h,220./255.,s);
 			seg->pObjectShape.clrObject = ff;
-
-		}
-		else
-            seg->pObjectShape.clrObject = pObjectShape.clrObject;
+			seg->pObjectShape.nShapeId = pObjectShape.nShapeId;
+		}*/
 
      }
 }
@@ -400,20 +438,190 @@ void CCone3D::Draw(CDC* pDC,CVisualParam *vp,BOOL bSm)
 	if (C2) C2->Draw(pDC,vp,bSm);
 	if (C3 && TPref::TCone.bDoubleCone) C3->Draw(pDC,vp,bSm);
 
-	pDC->MoveTo(vp->ProjectPoint(C1->Center));
-	pDC->LineTo(vp->ProjectPoint(C1->Center+LocRep.I*50.));
-	pDC->MoveTo(vp->ProjectPoint(C1->Center));
-	pDC->LineTo(vp->ProjectPoint(C1->Center+LocRep.J*100.));
-	pDC->MoveTo(vp->ProjectPoint(C1->Center));
-	pDC->LineTo(vp->ProjectPoint(C1->Center+LocRep.K*150.));
+//  	pDC->MoveTo(vp->ProjectPoint(C1->Center));
+//  	pDC->LineTo(vp->ProjectPoint(C1->Center+LocRep.I*50.));
+//  	pDC->MoveTo(vp->ProjectPoint(C1->Center));
+//  	pDC->LineTo(vp->ProjectPoint(C1->Center+LocRep.J*100.));
+// 	pDC->MoveTo(vp->ProjectPoint(C1->Center));
+// 	pDC->LineTo(vp->ProjectPoint(C1->Center+LocRep.K*50.));
 
-	    for (int t=0;t<cGenerList.GetSize();t++)
+
+	CVector4 oeil= vp->GetEyePos();
+	CVector4 origin(0,0,0,1);
+	CVector4 VisuNorm= oeil - origin;
+	CPoint3D pta(pApex->Concept_pt + VisuNorm);
+	CDroite3D dr(pApex,&pta);
+	dr.CalculConceptuel();
+	//dr.CalculVisuel(vp);
+	//dr.Draw(pDC,vp,bSm);
+	CPoint3D ff(C1->Center);
+	CPlan3D pl(&ff,(pApex->Concept_pt-pAxis->Concept_pt).Normalized());
+	pl.CalculConceptuel();
+	//pl.CalculVisuel(vp);
+	//pl.Draw(pDC,vp,bSm);
+	CPointInterDP3D fff(&dr,&pl);
+	fff.CalculConceptuel();
+	//fff.CalculVisuel(vp);
+	//fff.Draw(pDC,vp,bSm);
+	CPoint3D rr(C1->Center+CVector4(0,0,1)*C1->Radius);
+	CPoint3D rd(C1->Center);
+	CSphere3D sp1(&rd,&rr);
+	sp1.CalculConceptuel();
+	//sp1.CalculVisuel(vp);
+	//sp1.Draw(pDC,vp,bSm);
+	CPointMilieu3D mil(&fff,&ff);
+	mil.CalculConceptuel();
+//	//mil.CalculVisuel(vp);
+///	mil.Draw(pDC,vp,bSm);
+	CSphere3D sp2(&mil,&ff);
+	sp2.CalculConceptuel();
+	//sp2.CalculVisuel(vp);
+	//sp2.Draw(pDC,vp,bSm);
+	CCercleInterSS3D ci(&sp1,&sp2);
+	ci.CalculConceptuel();
+	//ci.CalculVisuel(vp);
+	//ci.Draw(pDC,vp,bSm);
+	CInterCircPlane3D ptint(&ci,&pl);
+	UINT res = ptint.CalculConceptuel();
+	//ptint.CalculVisuel(vp);
+	//ptint.Draw(pDC,vp,bSm);
+	if (res==0)
+	{
+		CSegment3D seg1(pApex,ptint.ptA);
+		CSegment3D seg2(pApex,ptint.ptB);
+		seg1.pObjectShape.clrObject = RGB(255,0,0);
+		seg1.pObjectShape.nShapeId = 6;
+		seg2.pObjectShape.clrObject = RGB(0,255,0);
+		seg2.pObjectShape.nShapeId = 6;
+		seg1.CalculConceptuel();
+		seg2.CalculConceptuel();
+
+		seg1.CalculVisuel(vp);
+		seg1.Draw(pDC,vp,bSm);
+		seg2.CalculVisuel(vp);
+		seg2.Draw(pDC,vp,bSm);
+	}
+
+	CVector4 ptLimA =  ptint.ptA->Concept_pt;
+	CVector4 ptLimB =  ptint.ptB->Concept_pt;
+		CVector4 I = (ptLimA - C1->Center).Normalized();
+		I.Norme();
+		CVector4 J = (ptLimB - C1->Center).Normalized();
+		J.Norme();
+		CVector4 K = I  % J;
+		FCoord dd = K * LocRep.K;
+		FCoord end ;
+		FCoord end2;
+	if (dd<0)
+		{
+		CVector4 f = I;
+			K = I;
+			I = J;
+			J = K;
+			K = I%J;
+			J = K%I;
+			end = I * f;
+			end2 = J * f;
+		}
+	else
+	{
+		CVector4 f = J;
+		J = K%I;
+			end = I * f;
+			end2 = J * f;
+	}
+	pDC->MoveTo(vp->ProjectPoint(C1->Center));
+	pDC->LineTo(vp->ProjectPoint(C1->Center+I*50.));
+	pDC->MoveTo(vp->ProjectPoint(C1->Center));
+	pDC->LineTo(vp->ProjectPoint(C1->Center+J*100.));
+	pDC->MoveTo(vp->ProjectPoint(C1->Center));
+	pDC->LineTo(vp->ProjectPoint(C1->Center+K*150.));
+
+	FCoord start =0 ;
+
+	//start =acos(start);
+	end =acos(end);
+// 	if (LocRep.J*I < 0)
+// 		start = M_PI + start;
+	if (end2 < 0)
+		end = M_PI + end;
+	FCoord dend = RTD(end);
+	FCoord dstart = RTD(start);
+	TRACE2(_T("%f.2 %f.2\n"),dstart,dend);
+	for (int t=0;t<cGenerList.GetSize();t++)
     {
         CSegment3D *seg = (CSegment3D*)cGenerList[t];
 		if (!seg) continue;
 
+					CVector4 pt = seg->P1->Concept_pt - C1->Center;
+			pt = pt.Normalized();
+			pt.Norme();
+
+		//if (res!=0) continue;
+		FCoord ca = I * pt;
+		FCoord sa = J * pt;
+		ca =acos(ca);
+		if (sa < 0)
+			ca = M_PI+ca;
+		
+		TRACE1(_T("XXX = %f.2\n"),RTD(ca));
+
+		//if (t==0)
+		{
+			CPen *oldP = NULL;
+			CPen curPen(PS_SOLID,1,RGB(255,0,0)),
+				 disPen(PS_SOLID,1,RGB(0,255,0));
+			BOOL isInside = ca <end;
+			//if (dd<0) isInside = (ca<start || ca >end);
+			if (isInside)
+			{
+				oldP = pDC->SelectObject(&curPen);
+				double h,s,l;
+				CBCGPDrawManager::RGBtoHSL(pObjectShape.clrObject,&h,&s,&l);
+				l = l+3*l/4;
+				COLORREF ff = CBCGPDrawManager::HLStoRGB_ONE(h,220./255.,s);
+				seg->pObjectShape.clrObject = ff;
+				seg->pObjectShape.nShapeId = 6;
+			}
+			else
+			{
+				oldP = pDC->SelectObject(&disPen);
+				seg->pObjectShape.clrObject = pObjectShape.clrObject;
+				seg->pObjectShape.nShapeId = pObjectShape.nShapeId;
+			}
+
+			//pDC->MoveTo(vp->ProjectPoint(C1->Center));
+		//	pDC->LineTo(vp->ProjectPoint(C1->Center+pt*350.));
+			pDC->SelectObject(oldP);
+
+			int nb = 0;
+		}
+
 		seg->Draw(pDC,vp,bSm);
 	}
+
+
+	{CPoint3D a(CVector4(0,0,0));
+	CPoint3D b(CVector4(100,0,0));
+	CDroite3D dr(&a,&b);
+	CVector4 in,out;
+	dr.CalculConceptuel();
+	dr.CalculVisuel(vp);
+	dr.Draw(pDC,vp,bSm);
+	UINT d = IntersectLine(&dr,in,out);
+	if (d==0) return;
+	if (d==1)
+	{
+		CPoint pt1 = vp->ProjectPoint(in);
+		pDC->Ellipse(pt1.x-2,pt1.y-2,pt1.x+2,pt1.y+2);
+	}
+	else if (d==2)
+	{
+		CPoint pt1 = vp->ProjectPoint(in);
+		pDC->Ellipse(pt1.x-2,pt1.y-2,pt1.x+2,pt1.y+2);
+		pt1 = vp->ProjectPoint(out);
+		pDC->Ellipse(pt1.x-3,pt1.y-3,pt1.x+3,pt1.y+3);
+	}}
 }
 
 
@@ -431,18 +639,51 @@ void CCone3D::Draw3DRendering(int nVolMode)
     float high_shininess = 100.0f;
     float mat_emission[] = {0.3f, 0.2f, 0.2f, 0.0f};
 
-		GLdouble base = (nRadius/TPref::TUniv.nUnitRep/3);
-		GLdouble height = (nHeight/TPref::TUniv.nUnitRep/3);
+	GLdouble base = (nRadius/TPref::TUniv.nUnitRep/3);
+	GLdouble height = (nHeight/TPref::TUniv.nUnitRep/3);
+
+	GLdouble tx = (C1->Center.x/TPref::TUniv.nUnitRep/3);
+	GLdouble ty = (C1->Center.y/TPref::TUniv.nUnitRep/3);
+	GLdouble tz = (C1->Center.z/TPref::TUniv.nUnitRep/3);
+
+	GLdouble px = -((pApex->Concept_pt.x-C1->Center.x)/TPref::TUniv.nUnitRep/3);
+	GLdouble py = -((pApex->Concept_pt.y-C1->Center.y)/TPref::TUniv.nUnitRep/3);
+	GLdouble pz = -((pApex->Concept_pt.z-C1->Center.z)/TPref::TUniv.nUnitRep/3);
+
+	CVector4 dl = LocRep.K;
+	CVector4 dz(0,0,1);
+	CVector4 drot = dz % dl;
+	double dd = 0;
+	drot = drot.Normalized();
+	drot.Norme();
+	if (drot.N!=0)
+	{
+		FCoord cosangle = dz * dl;
+		dd = acos(cosangle);
+		dd = -(180-RTD(dd));
+	}
+	else
+	{
+		drot = CVector4(1,0,0);
+	}
 
 	glPushMatrix();
-	//glTranslated(bx, by, bz);
-	//glRotated(dd,drot.x,drot.y,drot.z);
-	glColor3f(.0f,.0f,1.0f);
-    glMaterialfv(GL_FRONT, GL_AMBIENT, mat_diffuse);
-    glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
-    glMaterialf(GL_FRONT, GL_SHININESS, no_shininess);
+	glTranslated(tx, ty, tz);
+	glRotated(dd,drot.x,drot.y,drot.z);
+	glColor3f(.0f,.0f,.50f);
 	glutSolidCone(base,height,16,64);
+	//glutWireCone(base,height,16,16);
 	glPopMatrix();
+	if (TPref::TCone.bDoubleCone)
+	{
+		glPushMatrix();
+		glTranslated(tx, ty, tz);
+		glRotated(180+dd,drot.x,drot.y,drot.z);
+		glTranslated(0, 0,- 2*nHeight/TPref::TUniv.nUnitRep/3);
+		glColor3f(.0f,.50f,.50f);
+		glutSolidCone(base,height,16,16);
+		glPopMatrix();
+	}
 
 }
 
@@ -457,4 +698,186 @@ BOOL CCone3D::IsInActiveArea(CPoint thePt)
 	if (TPref::TCone.bDoubleCone && C3 && C3->IsInActiveArea(thePt)) return TRUE;
 
     return bRet;
+}
+
+
+UINT CCone3D::IntersectPlan()
+{
+	return 0;
+}
+
+UINT CCone3D::IntersectLine(CDroite3D *dr,CVector4 &in,CVector4 &out)
+{
+	if (!dr) return 0;
+	UINT m_iIntersectionType =0;
+	int m_iQuantity = 0;
+
+	CVector4 m_akPoint[2];
+
+    // information about the intersection set
+    enum
+    {
+        IT_EMPTY =0,
+        IT_POINT ,
+        IT_SEGMENT,
+        IT_RAY ,
+        IT_LINE ,
+        IT_POLYGON,
+        IT_PLANE,
+        IT_POLYHEDRON,
+        IT_OTHER
+    };
+    CVector4 coneAxis = pAxis->Concept_pt - pApex->Concept_pt;
+	coneAxis = coneAxis.Normalized();
+	coneAxis.Norme();
+	CVector4 dir = dr->GetDirVector();
+	dir = dir.Normalized();
+	dir.Norme();
+
+    // Set up the quadratic Q(t) = c2*t^2 + 2*c1*t + c0 that corresponds to
+    // the cone.  Let the vertex be V, the unit-length direction vector be A,
+    // and the angle measured from the cone axis to the cone wall be Theta,
+    // and define g = cos(Theta).  A point X is on the cone wall whenever
+    // Dot(A,(X-V)/|X-V|) = g.  Square this equation and factor to obtain
+    //   (X-V)^T * (A*A^T - g^2*I) * (X-V) = 0
+    // where the superscript T denotes the transpose operator.  This defines
+    // a double-sided cone.  The line is L(t) = P + t*D, where P is the line
+    // origin and D is a unit-length direction vector.  Substituting
+    // X = L(t) into the cone equation above leads to Q(t) = 0.  Since we
+    // want only intersection points on the single-sided cone that lives in
+    // the half-space pointed to by A, any point L(t) generated by a root of
+    // Q(t) = 0 must be tested for Dot(A,L(t)-V) >= 0.
+	// Check the axis
+    FCoord fAdD = coneAxis * dir;
+    FCoord fCosSqr = cos(nOpenAngle)*cos(nOpenAngle);
+    CVector4 kE = dr->GetBasePoint() - pApex->Concept_pt;
+	//kE = kE.Normalized();
+	//kE.Norme();
+	FCoord fAdE = coneAxis * kE;
+    FCoord fDdE = dir * kE;
+    FCoord fEdE = kE * kE;
+    FCoord fC2 = fAdD*fAdD - fCosSqr;
+    FCoord fC1 = fAdD*fAdE - fCosSqr*fDdE;
+    FCoord fC0 = fAdE*fAdE - fCosSqr*fEdE;
+    FCoord fDot;
+
+    // Solve the quadratic.  Keep only those X for which Dot(A,X-V) >= 0.
+	if (!FCZero(fC2))
+    //if (Math<Real>::FAbs(fC2) >= Math<Real>::ZERO_TOLERANCE)
+    {
+        // c2 != 0
+        FCoord fDiscr = fC1*fC1 - fC0*fC2;
+        if (fDiscr < (FCoord)0.0)
+        {
+            // Q(t) = 0 has no real-valued roots.  The line does not
+            // intersect the double-sided cone.
+            m_iIntersectionType = IT_EMPTY;
+            m_iQuantity = 0;
+        }
+		//else if (fDiscr > Math<Real>::ZERO_TOLERANCE)
+		else if (fDiscr > M_ZERO)
+        {
+            // Q(t) = 0 has two distinct real-valued roots.  However, one or
+            // both of them might intersect the portion of the double-sided
+            // cone "behind" the vertex.  We are interested only in those
+            // intersections "in front" of the vertex.
+            FCoord fRoot = sqrt(fDiscr);
+            FCoord fInvC2 = ((FCoord)1.0)/fC2;
+            m_iQuantity = 0;
+
+            FCoord fT = (-fC1 - fRoot)*fInvC2;
+            m_akPoint[m_iQuantity] = CVector4(dr->GetBasePoint() + dir*fT);
+            kE = m_akPoint[m_iQuantity] - pApex->Concept_pt;
+            fDot = kE * coneAxis;
+            if (fDot > (FCoord)0.0)
+            {
+                m_iQuantity++;
+            }
+
+            fT = (-fC1 + fRoot)*fInvC2;
+            m_akPoint[m_iQuantity] = dr->GetBasePoint() + dir*fT;
+            kE = m_akPoint[m_iQuantity] - pApex->Concept_pt;
+            fDot = kE*coneAxis;
+            if (fDot > (FCoord)0.0)
+            {
+                m_iQuantity++;
+            }
+
+            if (m_iQuantity == 2)
+            {
+                // The line intersects the single-sided cone in front of the
+                // vertex twice.
+                m_iIntersectionType = IT_SEGMENT;
+            }
+            else if (m_iQuantity == 1)
+            {
+                // The line intersects the single-sided cone in front of the
+                // vertex once.  The other intersection is with the
+                // single-sided cone behind the vertex.
+                m_iIntersectionType = IT_RAY;
+                m_akPoint[m_iQuantity++] = dir;
+            }
+            else
+            {
+                // The line intersects the single-sided cone behind the vertex
+                // twice.
+                m_iIntersectionType = IT_EMPTY;
+            }
+        }
+        else
+        {
+            // one repeated real root (line is tangent to the cone)
+            m_akPoint[0] = dr->GetBasePoint() - dir*(fC1/fC2);
+            kE = m_akPoint[0] - pApex->Concept_pt;
+            if (kE * coneAxis > (FCoord)0.0)
+            {
+                m_iIntersectionType = IT_POINT;
+                m_iQuantity = 1;
+            }
+            else
+            {
+                m_iIntersectionType = IT_EMPTY;
+                m_iQuantity = 0;
+            }
+        }
+    }
+    //else if (Math<Real>::FAbs(fC1) >= Math<Real>::ZERO_TOLERANCE)
+	else if (!FCZero(fC1))
+    {
+        // c2 = 0, c1 != 0 (D is a direction vector on the cone boundary)
+        m_akPoint[0] = dr->GetBasePoint() - dir*(((FCoord)0.5)*fC0/fC1);
+        kE = m_akPoint[0] - pApex->Concept_pt;
+        fDot = kE * coneAxis;
+        if (fDot > (FCoord)0.0)
+        {
+            m_iIntersectionType = IT_RAY;
+            m_iQuantity = 2;
+            m_akPoint[1] = dir;
+        }
+        else
+        {
+            m_iIntersectionType = IT_EMPTY;
+            m_iQuantity = 0;
+        }
+    }
+    //else if (Math<Real>::FAbs(fC0) >= Math<Real>::ZERO_TOLERANCE)
+	else if (!FCZero(fC0))
+    {
+        // c2 = c1 = 0, c0 != 0
+        m_iIntersectionType = IT_EMPTY;
+        m_iQuantity = 0;
+    }
+    else
+    {
+        // c2 = c1 = c0 = 0, cone contains ray V+t*D where V is cone vertex
+        // and D is the line direction.
+        m_iIntersectionType = IT_RAY;
+        m_iQuantity = 2;
+        m_akPoint[0] = pApex->Concept_pt;
+        m_akPoint[1] = dir;
+    }
+
+	in =  m_akPoint[0];
+	out =  m_akPoint[1];
+    return m_iIntersectionType;
 }
