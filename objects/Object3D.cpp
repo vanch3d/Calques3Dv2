@@ -62,7 +62,7 @@ CRedefineScheme::CRedefineScheme()
     bRelax = FALSE;
     for (int i=0;i<10;i++)
     {
-        nStepID[i] = -1;
+        nStepID[i] = CObjectId(0,0);
         nTaskResID[i] = -1;
     }
     nRedefStep = -1;
@@ -362,7 +362,7 @@ CString CObject3D::GetObjectNameRedux()
 /// Get the identifier representing the type of the object.
 /// See TObject3DClass and others identifiers
 //////////////////////////////////////////////////////////////////////
-DWORD CObject3D::isA() const
+CObjectId CObject3D::isA() const
 {
     return TObject3DClass;
 }
@@ -388,16 +388,16 @@ DWORD CObject3D::isA() const
 /// \param mask A bitwise combination of object identifiers
 /// \return     TRUE if this object fits the mask, FALSE otherwise.
 //////////////////////////////////////////////////////////////////////
-BOOL CObject3D::MaskObject(DWORD mask)
+BOOL CObject3D::MaskObject(CObjectId mask)
 {
-    DWORD objID = isA();
-    unsigned int hiMask = HIWORD(mask);
-    unsigned int loMask = LOWORD(mask);
-    unsigned int hiID = HIWORD(objID);
-    unsigned int loID = LOWORD(objID);
+    CObjectId objID = isA();
+    unsigned int hiMask = mask.m_nMinorId;
+    unsigned int loMask = mask.m_nMajorId;
+    unsigned int hiID = objID.m_nMinorId;
+    unsigned int loID = objID.m_nMajorId;
 
-    if (loMask==1) return TRUE;
-    if (hiMask==1) return (loMask & loID);
+    if (mask.m_nMajorId==1) return TRUE;
+    if (mask.m_nMinorId==1) return (mask.m_nMajorId & objID.m_nMajorId);
     BOOL ret =  (loMask & loID) &&  (hiMask & hiID);
     return ret;
 }
@@ -985,7 +985,7 @@ void CObject3D::CopyPointPosition(CVector4 ptLoc)
 /// @param pSet		A pointer to the list to be populated with all successfully tested objects.
 /// @return			A pointer to the first object verifying the hit test.
 //////////////////////////////////////////////////////////////////////
-CObject3D* CObject3D::HitTest(CPoint pt,UINT mask,int nCalcNum,BOOL bSub,CxObject3DSet* pSet)
+CObject3D* CObject3D::HitTest(CPoint pt,CObjectId mask,int nCalcNum,BOOL bSub,CxObject3DSet* pSet)
 {
     CObject3D *pObj=NULL;
     if (bValidate && bVisible && IsInCalque(nCalcNum) &&
