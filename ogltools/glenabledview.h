@@ -18,7 +18,7 @@
 // along with Calques 3D; if not, write to The Free Software Foundation, Inc., 
 // 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA 
 //////////////////////////////////////////////////////////////////////
-/// @file CGLEnabledView.h
+/// @file GLEnabledView.h
 /// @brief interface of the CGLEnabledView class.
 ///
 ///
@@ -36,40 +36,44 @@
 // Global type definitions
 	enum ColorsNumber{INDEXED,THOUSANDS,MILLIONS,MILLIONS_WITH_TRANSPARENCY};
 	enum ZAccuracy{NORMAL,ACCURATE};
-	struct GLInfoStruct
-	{
-		CString vendor;
-		CString renderer;
-		CString acceleration;
-		CString glextensions;
-		CString glversion;
-		CString gluextensions;
-		CString gluversion;
-		int max_lights;
-		int max_clip_planes;
-		int max_model_stack_depth;
-		int max_proj_stack_depth;
-		int max_txtr_stack_depth;
-		int max_name_stack_depth;
-		int max_attrib_stack_depth;
-		int max_texture_size;
-		int max_list_nesting;
-		int max_eval_order;
-		CSize max_viewport_dims;
-		int auxiliary_buffers;
-		int max_smooth_point_size;
-		int min_smooth_point_size;
-		float smooth_point_granularity;
-		int max_smooth_line_size;
-		int min_smooth_line_size;
-		float smooth_line_granularity;
-		int red_bits;
-		int blue_bits;
-		int green_bits;
-		int alpha_bits;
-		int depth_bits;
-		int stencil_bits;
-	};
+
+/////////////////////////////////////////////////////////////////////////////
+/// Store information about an OpenGL view
+/////////////////////////////////////////////////////////////////////////////
+struct GLInfoStruct
+{
+	CString vendor;
+	CString renderer;
+	CString acceleration;
+	CString glextensions;
+	CString glversion;
+	CString gluextensions;
+	CString gluversion;
+	int max_lights;
+	int max_clip_planes;
+	int max_model_stack_depth;
+	int max_proj_stack_depth;
+	int max_txtr_stack_depth;
+	int max_name_stack_depth;
+	int max_attrib_stack_depth;
+	int max_texture_size;
+	int max_list_nesting;
+	int max_eval_order;
+	CSize max_viewport_dims;
+	int auxiliary_buffers;
+	int max_smooth_point_size;
+	int min_smooth_point_size;
+	float smooth_point_granularity;
+	int max_smooth_line_size;
+	int min_smooth_line_size;
+	float smooth_line_granularity;
+	int red_bits;
+	int blue_bits;
+	int green_bits;
+	int alpha_bits;
+	int depth_bits;
+	int stencil_bits;
+};
 
 /////////////////////////////////////////////////////////////////////////////
 /// CGLEnabledView - An MDI view class supporting OpenGL.

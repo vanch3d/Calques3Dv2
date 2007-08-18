@@ -494,7 +494,7 @@ public:
 	virtual HTREEITEM	DrawHistory(CTreeCtrl& mListCtrl,HTREEITEM pParent=TVI_ROOT);
 	virtual void		ClearHistory() { pHistItem = NULL;};
 	virtual CString		ExportSymbolic(int nFormat); 
-	virtual void		DrawMathPad(CDC*);
+	virtual void		DrawMathPad(CDC* pDC);
 	virtual void		Draw3DRendering(int nVolMode);
 
 	virtual void		DrawDepGraph(CDC* pDC,CImageList *pImgList=NULL,int nTrace=GRAPH_NONE,BOOL bDrawNode=TRUE,BOOL bDrawLink=TRUE);

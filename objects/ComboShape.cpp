@@ -252,15 +252,16 @@ void CPropSliderCtrl::HScroll (UINT nSBCode, UINT nPos)
 
 /////////////////////////////////////////////////////////////////////////////
 /// Constructor for the slider property widget
-///	@param strName		The name of the geometrical object
-///	@param strHelp		The description of the geometrical object
-///	@param ndx			The zero-based index of the object's icon
-///	@param bHasList		TRUE if the object has parents, FALSE otherwise
+///	@param strName		The name of the property associated with the slider
+///	@param nValue		The current value of the slider
+///	@param lpszDescr	The string containing the description of the property
 ///	@param dwData		The user defined data to be associated with the property. 
+///	@param min			The minimum value of the slider
+///	@param min			The maximum value of the slider
 /////////////////////////////////////////////////////////////////////////////
-CBCGPSliderProp::CBCGPSliderProp(const CString& strName, long nValue, 
-							 LPCTSTR lpszDescr, DWORD dwData,int min,int max)
-	:	CBCGPProp (strName, nValue, lpszDescr, dwData)
+CBCGPSliderProp::CBCGPSliderProp(const CString& strName, long nValue, LPCTSTR lpszDescr, 
+								 DWORD dwData,int min,int max):
+CBCGPProp (strName, nValue, lpszDescr, dwData)
 {
 	m_nMin =min;
 	m_nMax =max;

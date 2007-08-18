@@ -99,6 +99,9 @@ void CAmbiguityList::AddHelper(int n,CString mstr)
 
 /////////////////////////////////////////////////////////////////////////////
 /// CAmbiguityList
+/// @param sid		The unique identifier of the menu item
+/// @param dis		TRUE if the item is disabled
+/// @param checked	TRUE if the item is checked
 /////////////////////////////////////////////////////////////////////////////
 int CAmbiguityList::AddString(UINT sid,BOOL dis,BOOL checked)
 {
@@ -115,6 +118,9 @@ int CAmbiguityList::AddString(UINT sid,BOOL dis,BOOL checked)
 
 /////////////////////////////////////////////////////////////////////////////
 /// CAmbiguityList
+/// @param str		The string containing the title of the menu item
+/// @param dis		TRUE if the item is disabled
+/// @param checked	TRUE if the item is checked
 /////////////////////////////////////////////////////////////////////////////
 int CAmbiguityList::AddString(CString str,BOOL dis,BOOL checked)
 {
@@ -127,13 +133,13 @@ int CAmbiguityList::AddString(CString str,BOOL dis,BOOL checked)
 /////////////////////////////////////////////////////////////////////////////
 /// Execute the popup menu and get the index of the selected object (if any)
 ///
-/// \warning The popup menu containing the ambiguous objects starts with a title AND a
+/// @warning The popup menu containing the ambiguous objects starts with a title AND a
 /// separator, so the first object in the list starts at index 2. 
 ///
-/// \todo There is a problem with the TrackPopupMenu's handling of status bar message: it assumes the index
+/// @todo There is a problem with the TrackPopupMenu's handling of status bar message: it assumes the index
 /// to be the command ID, so look for such a resource ID. I don't think there is any way out of this issue.
 ///
-/// \return		The zero-based index of the selected object, -1 if none
+/// @return		The zero-based index of the selected object, -1 if none
 /////////////////////////////////////////////////////////////////////////////
 int CAmbiguityList::Execute()
 {
@@ -150,6 +156,12 @@ int CAmbiguityList::Execute()
 	return (m_nIndex>=2) ? m_nIndex-2 : -1;
 }
 
+/////////////////////////////////////////////////////////////////////////////
+/// CAmbiguityList
+/// @param nItemID		The identifier of the selected menu item
+/// @param nFlags		A combination of the menu flags
+/// @param hSysMenu		A handler of the main menu containing the selected item.
+/////////////////////////////////////////////////////////////////////////////
 void CAmbiguityList::OnMenuSelect(UINT nItemID, UINT nFlags, HMENU hSysMenu) 
 {
 	CString mstr;
