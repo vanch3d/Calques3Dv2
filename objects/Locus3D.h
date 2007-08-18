@@ -109,7 +109,7 @@ public:
 
 	virtual BOOL ChangeParent(CObject3D *pOld,CObject3D *pNew,BOOL bUpGraph=FALSE);
 
-	virtual DWORD isA() const { return TLocus3DClass; }
+	virtual CObjectId isA() const { return TLocus3DClass; }
 	virtual BOOL IsEqual(CObject3D &other);
 
 	virtual BOOL IsInActiveArea(CPoint);

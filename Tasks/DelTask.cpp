@@ -50,7 +50,7 @@ CDeleteObjectTask::CDeleteObjectTask(CView *AParent,UINT taskID):
 {
 }
 
-DWORD CDeleteObjectTask::GetMask()
+CObjectId CDeleteObjectTask::GetMask()
 {
     return CTask::GetMask();
 }
@@ -122,7 +122,7 @@ void CDeleteObjectTask::OnMouseMove(UINT, CPoint thepos)
 CCopyShapeTask::CCopyShapeTask(CView *AParent,UINT taskID): CTask(AParent,taskID)
 {
     pShape = NULL;
-    nMaskTarget = 0;
+    nMaskTarget = CObjectId(0,0);
     m_nStep = 0;
     nSubTaskID = TSHAPE_DUP;
 }
@@ -132,9 +132,9 @@ CCopyShapeTask::~CCopyShapeTask()
 }
 
 
-DWORD CCopyShapeTask::GetMask()
+CObjectId CCopyShapeTask::GetMask()
 {
-	DWORD nMask = TObject3DClass;
+	CObjectId nMask = TObject3DClass;
     //if (nMaskTarget)
 //      nMask = nMaskTarget;
     return nMask;
@@ -169,7 +169,7 @@ void CCopyShapeTask::OnMouseL(UINT modkey, CPoint pt)
     if (!pObj)
     {
         pShape = NULL;
-        nMaskTarget = 0;
+        nMaskTarget = CObjectId(0,0);
         m_nStep = 0;
         GetContextualHelp();
         return;
@@ -197,12 +197,12 @@ void CCopyShapeTask::OnMouseL(UINT modkey, CPoint pt)
     }
     else
     {
-        nMaskTarget = MAKELONG(LOWORD(pObj->isA()),1);
+        nMaskTarget = CObjectId(pObj->isA().m_nMajorId,1);
 
-        DWORD ppp = pObj->isA();
-        DWORD ttt= TAllPointClass;
-        WORD rrr = LOWORD(ppp);
-        DWORD sss= MAKELONG(rrr,1);
+        CObjectId ppp = pObj->isA();
+        CObjectId ttt= TAllPointClass;
+        UINT rrr = ppp.m_nMajorId;
+        CObjectId sss= CObjectId(ppp.m_nMajorId,1);
         pShape  = &(pObj->pObjectShape);
         m_nStep++;
         return;
@@ -289,7 +289,7 @@ BOOL CCopyShapeTask::OnDoTasksOption(UINT nID)
             nSubTaskID = TSHAPE_DUP;
             m_nStep = 0;
             pShape = NULL;
-            nMaskTarget = 0;
+            nMaskTarget = CObjectId(0,0);
         }
 
         break;

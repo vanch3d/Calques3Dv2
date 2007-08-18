@@ -244,8 +244,8 @@ CString CPointInterDD3D::ExportSymbolic(int nFormat)
 		strObj2 = D2->GetObjectNameRedux();
 
 
-		UINT nType1 = D1->isA();
-		UINT nType2 = D2->isA();
+		CObjectId nType1 = D1->isA();
+		CObjectId nType2 = D2->isA();
 		if (nType1==nType2)
 		{
 			if (nType1==TSegment3DClass)
@@ -525,8 +525,8 @@ CString CPointInterDP3D::ExportSymbolic(int nFormat)
 		strObj1 = D1->GetObjectNameRedux();
 		strObj2 = P->GetObjectNameRedux();
 
-		UINT nType1 = D1->isA();
-		UINT nType2 = P->isA();
+		CObjectId nType1 = D1->isA();
+		CObjectId nType2 = P->isA();
 
 		if (nFormat==EXPORT_MATHEMATICA)
 			mstr.Format(_T("IntersectionLinePlane[%s,%s,%s];"),strName,strObj1,strObj2);

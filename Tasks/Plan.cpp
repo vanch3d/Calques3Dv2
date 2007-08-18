@@ -78,7 +78,7 @@ unsigned CPlan3DTask::GetHelpResID()
 }
 
 
-DWORD CPlan3DTask::GetMask()
+CObjectId CPlan3DTask::GetMask()
 {
 	return TAllPointClass;
 }

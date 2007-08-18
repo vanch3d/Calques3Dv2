@@ -75,7 +75,7 @@ public:
 	virtual UINT GetHelpID() const { return IDS_HELP_CYLIN;};
 	virtual UINT GetDefID() const { return IDS_DEF_CYLIN;};
 
-	virtual DWORD isA() const { return TCylindre3DClass; }
+	virtual CObjectId isA() const { return TCylindre3DClass; }
 
 	virtual CString GetObjectDef();
 	virtual int SetProperties(CxObject3DSet *pSet=NULL);

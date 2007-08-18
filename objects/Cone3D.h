@@ -66,7 +66,7 @@ public:
 	virtual ~CCone3D();
 
 	virtual CObject3D* CopyObject();
-	virtual DWORD isA() const { return TCone3DClass; }
+	virtual CObjectId isA() const { return TCone3DClass; }
 	virtual int SetDepth();
 	virtual void Serialize( CArchive& ar );
 

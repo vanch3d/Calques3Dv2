@@ -73,7 +73,7 @@ public:
 
 	virtual COLORREF	GetDefaultColor();
 
-	virtual DWORD isA() const { return TPoint3DClass; }
+	virtual CObjectId isA() const { return TPoint3DClass; }
 
 	virtual BOOL IsInActiveArea(CPoint pt);
 	virtual CRgn* InvalideRect();
@@ -126,7 +126,7 @@ public:
 
 	virtual int SetDepth();
 
-	virtual DWORD isA() const { return TPointCalc3DClass; };
+	virtual CObjectId isA() const { return TPointCalc3DClass; };
 
 	virtual void HandleObjectError(int,BOOL bShow=FALSE);
 	virtual UINT  CalculConceptuel() {return 0;};
@@ -163,7 +163,7 @@ public:
 	virtual BOOL SetParents(CxObject3DSet* pSet);
 	virtual CString GetObjectDef();
 
-	virtual DWORD isA() const { return TPointMilieu3DClass; }
+	virtual CObjectId isA() const { return TPointMilieu3DClass; }
 
 	virtual CString ExportSymbolic(int nFormat); 
 
@@ -224,7 +224,7 @@ public:
 	virtual UINT GetDefID() const { return IDS_DEF_POINTSUR;};
 	virtual CString GetObjectDef();
 
-	virtual DWORD isA() const { return TPointSurD3DClass; }
+	virtual CObjectId isA() const { return TPointSurD3DClass; }
 
 	virtual void CopyPointPosition(CObject3D* );
 	virtual void CopyPointPosition(CVector4 );
@@ -258,7 +258,7 @@ public:
 	virtual UINT GetDefID() const { return IDS_DEF_POINTSUR;};
 	virtual CString GetObjectDef();
 
-	virtual DWORD isA() const { return TPointSurC3DClass; }
+	virtual CObjectId isA() const { return TPointSurC3DClass; }
 
 	virtual void CopyPointPosition(CObject3D* );
 	virtual void CopyPointPosition(CVector4 );
@@ -295,7 +295,7 @@ public:
 	virtual UINT GetDefID() const { return IDS_DEF_POINTSUR;};
 	virtual CString GetObjectDef();
 
-	virtual DWORD isA() const { return TPointSurP3DClass; }
+	virtual CObjectId isA() const { return TPointSurP3DClass; }
 
 	virtual void CopyPointPosition(CObject3D* );
 	virtual void CopyPointPosition(CVector4 );
@@ -332,7 +332,7 @@ public:
 	virtual UINT GetDefID() const { return IDS_DEF_POINTSUR;};
 	virtual CString GetObjectDef();
 
-	virtual DWORD isA() const { return TPointSurS3DClass; }
+	virtual CObjectId isA() const { return TPointSurS3DClass; }
 
 	virtual void CopyPointPosition(CObject3D* );
 	virtual void CopyPointPosition(CVector4 );
@@ -372,7 +372,7 @@ public:
 	virtual UINT GetDefID() const { return IDS_DEF_POINTSUR;};
 	virtual CString GetObjectDef();
 
-	virtual DWORD isA() const { return TPointSurCyl3DClass; }
+	virtual CObjectId isA() const { return TPointSurCyl3DClass; }
 
 	virtual void CopyPointPosition(CObject3D* );
 	virtual void CopyPointPosition(CVector4 );
@@ -426,7 +426,7 @@ public:
 	virtual CString GetObjectDef();
 	virtual void Serialize( CArchive& ar );
 
-	virtual DWORD isA() const { return TPointInterDD3DClass; }
+	virtual CObjectId isA() const { return TPointInterDD3DClass; }
 
 	virtual CString ExportSymbolic(int nFormat); 
 
@@ -462,7 +462,7 @@ public:
 	virtual void Serialize( CArchive& ar );
 	virtual BOOL ChangeParent(CObject3D *pOld,CObject3D *pNew,BOOL bUpGraph=FALSE);
 
-	virtual DWORD isA() const { return TPointInterDP3DClass; }
+	virtual CObjectId isA() const { return TPointInterDP3DClass; }
 	virtual UINT  CalculConceptuel();
 
 	virtual CString ExportSymbolic(int nFormat); 
@@ -494,7 +494,7 @@ public:
 	virtual int SetDepth();
 
 
-	virtual DWORD isA() const { return TPointCenter3DClass; }
+	virtual CObjectId isA() const { return TPointCenter3DClass; }
 
 	virtual CString ExportSymbolic(int nFormat); 
 
@@ -531,7 +531,7 @@ public:
 	virtual BOOL SetParents(CxObject3DSet* pSet);
 	virtual CxSchemeSet* GetRedefineSchemes(CxSchemeSet* pSet) { return pSet;};
 
-	virtual DWORD isA() const { return TPointSymetric3DClass; }
+	virtual CObjectId isA() const { return TPointSymetric3DClass; }
 
 	virtual CString ExportSymbolic(int nFormat); 
 
@@ -565,7 +565,7 @@ public:
 	virtual BOOL SetParents(CxObject3DSet* pSet);
 	virtual CxSchemeSet* GetRedefineSchemes(CxSchemeSet* pSet) { return pSet;};
 
-	virtual DWORD isA() const { return TPointTranslat3DClass; }
+	virtual CObjectId isA() const { return TPointTranslat3DClass; }
 
 	virtual CString ExportSymbolic(int nFormat); 
 

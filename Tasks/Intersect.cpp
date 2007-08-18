@@ -128,9 +128,9 @@ unsigned CInter3DTask::GetHelpResID()
 }
 
 
-DWORD CInter3DTask::GetMask()
+CObjectId CInter3DTask::GetMask()
 {
-  DWORD mask;
+  CObjectId mask;
   switch (m_nTaskID)
 	{	case ID_CONSTRUCTION_INTERSECTION_LINELINE:
   		case ID_CONSTRUCTION_CROSSPRODUCT:

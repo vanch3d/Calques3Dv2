@@ -70,7 +70,7 @@ unsigned CCenterTask::GetHelpResID()
 
 
 
-DWORD CCenterTask::GetMask()
+CObjectId CCenterTask::GetMask()
 {
 	return TAllCercleClass;
 }

@@ -47,7 +47,7 @@ public:
 	virtual UINT GetNameID() const { return IDS_NAME_VECTOR;};
 	virtual UINT GetHelpID() const { return IDS_HELP_VECTOR;};
 	virtual UINT GetDefID() const { return IDS_DEF_VECTOR;};
-	virtual DWORD isA() const { return TVector3DClass; }
+	virtual CObjectId isA() const { return TVector3DClass; }
 
 public:
 	virtual CObject3D* CopyObject();

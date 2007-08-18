@@ -137,7 +137,7 @@ unsigned CTask::GetTaskResID() const
 /// The filter is a bitwise combination of objects identifiers (see #TObject3DClass and others).
 /// See CObject3D#MaskObject and CObject3D#isA for description of the filter mechanism.
 //////////////////////////////////////////////////////////////////////
-DWORD CTask::GetMask()
+CObjectId CTask::GetMask()
 {
     return TObject3DClass;
 }
@@ -249,7 +249,7 @@ UINT CTask::GetTaskCursor()
 }
 
 
-int  CTask::FindObject(CPoint theLoc,DWORD mask,BOOL bShowLabel,BOOL bSub)
+int  CTask::FindObject(CPoint theLoc,CObjectId mask,BOOL bShowLabel,BOOL bSub)
 {
     int trouve=0;
     CString strObj(_T(""));

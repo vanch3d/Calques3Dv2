@@ -52,7 +52,7 @@ public:
     virtual CObject3D* CopyObject();
     virtual void Serialize( CArchive& ar );
 
-    virtual DWORD isA() const { return TLabel3DClass; }
+    virtual CObjectId isA() const { return TLabel3DClass; }
 
     virtual UINT GetNameID() const { return IDS_NAME_TEXT;};
     virtual UINT GetHelpID() const { return IDS_HELP_TEXT;};
@@ -92,7 +92,7 @@ public:
     CLabel3D(const CObject3D & );
     virtual ~CLabel3D();
 
-    virtual DWORD isA() const { return TLabel3DClass; }
+    virtual CObjectId isA() const { return TLabel3DClass; }
 	virtual BOOL IsEditable() { return TRUE;};
 
     virtual CObject3D* CopyObject();
@@ -124,7 +124,7 @@ public:
     CEquation3D(const CObject3D & );
     virtual ~CEquation3D();
 
-    virtual DWORD isA() const { return TEquation3DClass; }
+    virtual CObjectId isA() const { return TEquation3DClass; }
     virtual UINT GetHelpID() const { return IDS_HELP_EQUATION;};
     virtual CString GetText();
 
@@ -169,7 +169,7 @@ public:
     virtual UINT GetHelpID() const { return IDS_HELP_VALUE;};
     virtual UINT GetDefID() const { return IDS_DEF_VALUE;};
 
-    virtual DWORD isA() const { return TValue3DClass; }
+    virtual CObjectId isA() const { return TValue3DClass; }
     virtual void Serialize( CArchive& ar );
 };
 
@@ -190,7 +190,7 @@ public:
 
     virtual UINT GetDefID() const { return IDS_DEF_DISTANCE;};
 	virtual UINT GetHelpID() const { return IDS_HELP_DISTANCE;};
-    virtual DWORD isA() const { return TDistance3DClass; }
+    virtual CObjectId isA() const { return TDistance3DClass; }
     virtual CString GetText();
 
     virtual BOOL ChangeParent(CObject3D *pOld,CObject3D *pNew,BOOL bUpGraph=FALSE);
@@ -229,7 +229,7 @@ public:
 
     virtual UINT GetDefID() const { return IDS_DEF_ANGLE;};
 	virtual UINT GetHelpID() const { return IDS_HELP_ANGLE;};
-	virtual DWORD isA() const { return TAngle3DClass; }
+	virtual CObjectId isA() const { return TAngle3DClass; }
     
 	virtual CString GetText();
 
@@ -259,7 +259,7 @@ public:
 
     virtual UINT GetDefID() const { return IDS_DEF_VOLUME;};
 	virtual UINT GetHelpID() const { return IDS_HELP_VOLUME;};
-    virtual DWORD isA() const { return TVolume3DClass; }
+    virtual CObjectId isA() const { return TVolume3DClass; }
     virtual CString GetText();
     virtual void Draw(CDC*,CVisualParam *vp,BOOL bSm=FALSE);
     virtual void DrawMathPad(CDC* pDC);
@@ -279,7 +279,7 @@ public:
 
     virtual UINT GetDefID() const { return IDS_DEF_AREA;};
 	virtual UINT GetHelpID() const { return IDS_HELP_AREA;};
-    virtual DWORD isA() const { return TArea3DClass; }
+    virtual CObjectId isA() const { return TArea3DClass; }
     virtual CString GetText();
     virtual void Draw(CDC*,CVisualParam *vp,BOOL bSm=FALSE);
     virtual void DrawMathPad(CDC* pDC);
@@ -299,7 +299,7 @@ public:
     CComment3D(const CObject3D & );
     virtual ~CComment3D();
 
-    virtual DWORD isA() const { return TCComment3DClass; }
+    virtual CObjectId isA() const { return TCComment3DClass; }
     virtual UINT GetHelpID() const { return IDS_HELP_TEXT;};
 	virtual CString GetText();
 	virtual BOOL IsMultiLine() { return TRUE;};
@@ -346,7 +346,7 @@ public:
     void    OnUpdateVariables(CxObject3DSet *pSet=NULL);
 
 
-    virtual DWORD isA() const { return TMathOp3DClass; }
+    virtual CObjectId isA() const { return TMathOp3DClass; }
     virtual CString GetText();
     virtual void SetText(CString txt);
     virtual void Draw(CDC*,CVisualParam *vp,BOOL bSm=FALSE);

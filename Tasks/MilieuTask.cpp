@@ -133,7 +133,7 @@ unsigned CMilieu3DTask::GetHelpResID()
 		return ((m_nStep) ? CTX_SELECT_POINT2 : CTX_SELECT_POINTSEG);
 }
 
-DWORD CMilieu3DTask::GetMask()
+CObjectId CMilieu3DTask::GetMask()
 {
 	if (m_nTaskID==ID_CONSTRUCTION_DIVSEGMENT)
 		return TAllSegmentClass;

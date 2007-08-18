@@ -130,9 +130,9 @@ unsigned CPointSur3DTask::GetHelpResID()
 }
 
 
-DWORD CPointSur3DTask::GetMask()
+CObjectId CPointSur3DTask::GetMask()
 {
-	DWORD mask;
+	CObjectId mask;
 	switch (m_nTaskID)
 	{	case ID_CONSTRUCTION_POINTON_LINE		:
 			mask = TAllDroiteClass;

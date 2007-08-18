@@ -98,9 +98,9 @@ unsigned CMoveObjectTask::GetHelpResID()
 }
 
 
-DWORD CMoveObjectTask::GetMask()
+CObjectId CMoveObjectTask::GetMask()
 {
-	DWORD mask = (
+	CObjectId mask = (
 		TPoint3DClass | TPointSurD3DClass | TPointSurC3DClass | 
 		TPointSurP3DClass | TPointSurS3DClass | TPointSurCyl3DClass);
 
@@ -391,7 +391,7 @@ UINT CMoveObjectTask::GetTaskCursor()
 	return curID;
 }
 
-int	 CMoveObjectTask::FindObject(CPoint theLoc,DWORD mask,BOOL bShowLabel,BOOL bSub)
+int	 CMoveObjectTask::FindObject(CPoint theLoc,CObjectId mask,BOOL bShowLabel,BOOL bSub)
 {
 	return CTask::FindObject(theLoc,mask,bShowLabel,bSub);
 }

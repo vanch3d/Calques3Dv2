@@ -57,7 +57,7 @@ public:
 
 	virtual CObject3D* CopyObject();
 
-	virtual DWORD isA() const { return TCompositeObject3DClass; }
+	virtual CObjectId isA() const { return TCompositeObject3DClass; }
 	virtual int UpdateID(int nIdx);
 
 	virtual void Serialize( CArchive& ar );
@@ -82,7 +82,7 @@ public:
 	virtual void	GetPolygons(CxObject3DSet*);
 	virtual void	TranslateBy(CVector4 ptVec);
 
-	virtual CObject3D* HitTest(CPoint pt,UINT mask=0,int nCalcNum = 0,BOOL bSub = TRUE,CxObject3DSet* pSet = NULL);
+	virtual CObject3D* HitTest(CPoint pt,CObjectId mask,int nCalcNum = 0,BOOL bSub = TRUE,CxObject3DSet* pSet = NULL);
 
 	virtual UINT  CalculConceptuel();
 	virtual void CalculVisuel(CVisualParam *);
@@ -154,7 +154,7 @@ public:
 	virtual UINT GetHelpID() const { return IDS_HELP_CUBE;};
 	virtual UINT GetDefID() const { return IDS_DEF_CUBE;};
 
-	virtual DWORD isA() const { return TCube3DClass; }
+	virtual CObjectId isA() const { return TCube3DClass; }
 
 	virtual void Draw(CDC*,CVisualParam *vp,BOOL bSM=FALSE);
 	virtual void PrepareMoveObject(BOOL bMove = TRUE);
@@ -191,7 +191,7 @@ public:
 	virtual CxObject3DSet* GetParents();
 	virtual BOOL IsEqual(CObject3D &other);
 
-	virtual DWORD isA() const { return TInterSphDr3DClass; }
+	virtual CObjectId isA() const { return TInterSphDr3DClass; }
 
 	virtual UINT GetDefID() const { return IDS_DEF_INTSPDR;};
 
@@ -228,7 +228,7 @@ public:
 	virtual CxObject3DSet* GetParents();
 	virtual BOOL IsEqual(CObject3D &other);
 
-	virtual DWORD isA() const { return TDivSegment3DClass; }
+	virtual CObjectId isA() const { return TDivSegment3DClass; }
 
 	virtual UINT GetDefID() const { return IDS_DEF_SECTIONSEG;};
 
@@ -267,7 +267,7 @@ public:
 	virtual CxObject3DSet* GetParents();
 	virtual BOOL IsEqual(CObject3D &other);
 
-	virtual DWORD isA() const { return TInterCircDr3DClass; }
+	virtual CObjectId isA() const { return TInterCircDr3DClass; }
 
 	virtual UINT GetDefID() const { return IDS_DEF_INTCIRCDR;};
 
@@ -305,7 +305,7 @@ public:
 	virtual CObject3D* CopyObject();
 	virtual CxObject3DSet* GetParents();
 
-	virtual DWORD isA() const { return TInterCircPl3DClass; }
+	virtual CObjectId isA() const { return TInterCircPl3DClass; }
 
 	virtual UINT GetDefID() const { return IDS_DEF_INTCIRCDR;};
 

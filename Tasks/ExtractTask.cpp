@@ -74,10 +74,10 @@ CExtractCalcTask::~CExtractCalcTask()
 	m_cObjExtracted.RemoveAll();
 }
 
-DWORD CExtractCalcTask::GetMask()
+CObjectId CExtractCalcTask::GetMask()
 {
 	if (nCalcNum==-1)
-		return 0;
+		return CObjectId(0,0);
 	else 
 		return CTask::GetMask();
 }

@@ -223,9 +223,9 @@ void CRedefine3DTask::OnMouseMove(UINT, CPoint thepoint)
     FindObject(thepoint,GetMask(),TRUE,FALSE);
 }
 
-DWORD CRedefine3DTask::GetMask()
+CObjectId CRedefine3DTask::GetMask()
 {
-    DWORD mask;
+    CObjectId mask;
 
     if (m_pOption)
         mask = m_pOption->nStepID[m_nStep-1];

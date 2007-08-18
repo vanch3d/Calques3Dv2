@@ -73,9 +73,9 @@ unsigned CSymetricTask::GetHelpResID()
     return ((m_nStep) ? CTX_SELECT_SYM : CTX_SELECT_POINT1);
 }
 
-DWORD CSymetricTask::GetMask()
+CObjectId CSymetricTask::GetMask()
 {
-    DWORD mask;
+    CObjectId mask;
 //  mask = TAllPointClass;
 
     if (!pSrc)
@@ -256,9 +256,9 @@ unsigned CVerify3DTask::GetHelpResID()
     return mask;
 }
 
-DWORD CVerify3DTask::GetMask()
+CObjectId CVerify3DTask::GetMask()
 {
-    DWORD mask;
+    CObjectId mask;
 
     int nb = m_cObjectTarget.GetSize();
 
@@ -286,7 +286,7 @@ DWORD CVerify3DTask::GetMask()
         mask = TAllPointClass;
         break;
     default:
-        mask = 0L;
+        mask = CObjectId(0,0);
         break;
     }
     return mask;
@@ -1030,7 +1030,7 @@ void CVerify3DTask::OnMouseL(UINT, CPoint thepos)
 void CVerify3DTask::OnMouseMove(UINT, CPoint thepoint)
 {
     if (!m_nStep)
-        FindObject(thepoint,0,FALSE);
+        FindObject(thepoint,CObjectId(0,0),FALSE);
     else
         FindObject(thepoint,GetMask(),TRUE);
 }
@@ -1069,9 +1069,9 @@ void CAnimation3DTask::CancelTache()
     m_nTimer=0;
 }
 
-DWORD CAnimation3DTask::GetMask()
+CObjectId CAnimation3DTask::GetMask()
 {
-    DWORD mask = TPointSurD3DClass | TPointSurC3DClass;
+    CObjectId mask = TPointSurD3DClass | TPointSurC3DClass;
         //  | TPoint3DClass |
         //  TPointSurP3DClass | TPointSurS3DClass
         //      );
@@ -1371,7 +1371,7 @@ unsigned CPolygonTask::GetHelpResID()
 		return CTX_SELECT_CLOSE_POLYGON;
 }
 
-DWORD CPolygonTask::GetMask()
+CObjectId CPolygonTask::GetMask()
 {
     return TAllPointClass;
 }
@@ -1539,9 +1539,9 @@ unsigned CCenterOn3DTask::GetHelpResID()
     return CTX_SELECT_POINT1;
 }
 
-DWORD CCenterOn3DTask::GetMask()
+CObjectId CCenterOn3DTask::GetMask()
 {
-    DWORD mask = TAllPointClass;
+    CObjectId mask = TAllPointClass;
     return mask;
 }
 

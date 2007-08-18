@@ -188,7 +188,7 @@ void CPoint3DTask::OnMouseR(UINT modkey, CPoint thepos)
 
 void CPoint3DTask::OnMouseMove(UINT modkey, CPoint thepos)
 {
-	FindObject(thepos,0,TRUE);
+	FindObject(thepos,CObjectId(0,0),TRUE);
 	if (m_pObj)		// there is a selected point
 	{
 		CVisualParam *myVisuParam = m_pParent->GetVisualParam();

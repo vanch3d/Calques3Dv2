@@ -107,7 +107,7 @@ public:
 	CString		m_strVarName;
 	BOOL		m_bMarked;
 	//}}AFX_DATA
-	DWORD 	m_bMod;
+	CObjectId 	m_bMod;
 	LOGFONT		m_lFont;
 	COLORREF	m_clrFont;
 	CMenu		m_menu;

@@ -125,7 +125,7 @@ void CDroite3DTask::OnMouseMove(UINT, CPoint thepoint)
 		m_pParent->Invalidate(FALSE);
 }
 
-DWORD CDroite3DTask::GetMask()
+CObjectId CDroite3DTask::GetMask()
 {
 	return TAllPointClass;
 }
@@ -247,7 +247,7 @@ void CSphere3DTask::CreateObject3D()
 	m_nStep = 0;
 }
 
-DWORD CSphere3DTask::GetMask()
+CObjectId CSphere3DTask::GetMask()
 {
 	return (m_nStep) ? TAllPointClass|TAllSegmentClass : TAllPointClass;
 }
@@ -268,7 +268,7 @@ CLocus3DTask::CLocus3DTask(CView *AParent,UINT nID) : CDroite3DTask(AParent,nID)
 {
 }
 
-DWORD CLocus3DTask::GetMask()
+CObjectId CLocus3DTask::GetMask()
 {
 	if (!ptA) 
 		return TPointSurD3DClass | TPointSurC3DClass | TPointSurP3DClass | 

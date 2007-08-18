@@ -67,7 +67,7 @@ CCube3DTask::~CCube3DTask()
 
 }
 
-DWORD CCube3DTask::GetMask()
+CObjectId CCube3DTask::GetMask()
 {
 	return TAllPointClass;
 }

@@ -106,7 +106,7 @@ public:
 	virtual UINT GetDefID() const { return IDS_DEF_PLAN;};
 	virtual CString GetObjectDef();
 
-	virtual DWORD isA() const { return TPlan3DClass; }
+	virtual CObjectId isA() const { return TPlan3DClass; }
 	virtual BOOL IsEqual(CObject3D &other);
 
 	virtual BOOL IsInActiveArea(CPoint);
@@ -160,7 +160,7 @@ public:
 
 	virtual UINT GetDefID() const { return IDS_DEF_PLANPERP;};
 
-	virtual DWORD isA() const { return TPlanPerp3DClass; }
+	virtual CObjectId isA() const { return TPlanPerp3DClass; }
 
 	virtual void Draw(CDC*,CVisualParam *vp,BOOL bSm=FALSE);
 	virtual CString ExportSymbolic(int nFormat); 
@@ -218,7 +218,7 @@ public:
 
 	virtual BOOL IsPointInside(CVector4& pt,BOOL bLim=TRUE);
 
-	virtual DWORD isA() const { return TPolygon3DClass; }
+	virtual CObjectId isA() const { return TPolygon3DClass; }
 };
 
 

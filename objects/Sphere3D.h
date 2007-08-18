@@ -67,7 +67,7 @@ public:
 	virtual int SetDepth();
 	virtual void	GetRange(CVector4 &min,CVector4 &max);
 
-	virtual DWORD isA() const { return TSphere3DClass; }
+	virtual CObjectId isA() const { return TSphere3DClass; }
 	virtual BOOL IsEqual(CObject3D &other);
 
 	virtual BOOL IsInActiveArea(CPoint pt);

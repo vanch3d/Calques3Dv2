@@ -148,7 +148,7 @@ CString CPointSurD3D::ExportSymbolic(int nFormat)
 		strName = GetObjectNameRedux();
 		strObj1 = S->GetObjectNameRedux();
 
-		UINT nType = S->isA();
+		CObjectId nType = S->isA();
 		if (nType == TSegment3DClass)
 			strFunc = _T("PointOnSegment");
 		else if (nType == TDemiDroite3DClass)
@@ -221,7 +221,7 @@ void CPointSurD3D::CopyPointPosition(CObject3D* src)
 {
 	CPointSur3D::CopyPointPosition(src);
 	if (!src) return;
-	DWORD ff = src->isA();
+	CObjectId ff = src->isA();
 	if (ff == TPointSurD3DClass)
 	{
 		//Concept_pt =  ((CPointSurD3D*)src)->Concept_pt;
@@ -703,7 +703,7 @@ CString CPointSurC3D::ExportSymbolic(int nFormat)
 		strName = GetObjectNameRedux();
 		strObj1 = S->GetObjectNameRedux();
 
-		UINT nType = S->isA();
+		CObjectId nType = S->isA();
 		if (nType == TCercle3DClass)
 			strFunc = _T("PointOnCircle");
 		else if (nType == TArcCercle3DClass)
@@ -1168,7 +1168,7 @@ CString CPointSurP3D::ExportSymbolic(int nFormat)
 		strName = GetObjectNameRedux();
 		strObj1 = P->GetObjectNameRedux();
 
-		UINT nType = P->isA();
+		CObjectId nType = P->isA();
 		if (nFormat==EXPORT_MATHEMATICA)
 			mstr.Format(_T("PointOnPlane[%s,%s];"),strName,strObj1);
 		else if (nFormat==EXPORT_MAPLE)
@@ -1597,7 +1597,7 @@ CString CPointSurS3D::ExportSymbolic(int nFormat)
 		strName = GetObjectNameRedux();
 		strObj1 = S->GetObjectNameRedux();
 
-		UINT nType = S->isA();
+		CObjectId nType = S->isA();
 		if (nFormat==EXPORT_MATHEMATICA)
 			mstr.Format(_T("PointOnSphere[%s,%s];"),strName,strObj1);
 		else if (nFormat==EXPORT_MAPLE)

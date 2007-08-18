@@ -83,7 +83,7 @@ public:
 	virtual CString GetObjectDef();
 	virtual int SetDepth();
 	
-	virtual DWORD isA() const { return TCercle3DClass; }
+	virtual CObjectId isA() const { return TCercle3DClass; }
 	virtual BOOL IsEqual(CObject3D &other);
 
 	virtual BOOL IsInActiveArea(CPoint);
@@ -113,7 +113,7 @@ public:
 
 	virtual UINT GetDefID() const { return IDS_DEF_ARCCIRCLE;};
 	virtual UINT GetHelpID() const { return IDS_HELP_ARCCIRCLE;};
-	virtual DWORD isA() const { return TArcCercle3DClass; }
+	virtual CObjectId isA() const { return TArcCercle3DClass; }
 	virtual CString GetObjectDef();
 
 	virtual BOOL IsEqual(CObject3D &other);
@@ -144,7 +144,7 @@ public:
 	virtual CxObject3DSet* GetParents();
 	virtual CString GetObjectDef();
 
-	virtual DWORD isA() const { return TEllipse3DClass; }
+	virtual CObjectId isA() const { return TEllipse3DClass; }
 	virtual UINT GetDefID() const { return IDS_DEF_ELLIPSE;};
 	virtual UINT GetHelpID() const { return IDS_HELP_ELLIPSE;};
 
@@ -178,7 +178,7 @@ public:
 	virtual CObject3D* CopyObject();
 
 	virtual UINT GetDefID() const { return IDS_DEF_CIRCLEISS;};
-	virtual DWORD isA() const { return TCercleInterSS3D; }
+	virtual CObjectId isA() const { return TCercleInterSS3D; }
 	virtual CString GetObjectDef();
 
 	virtual BOOL IsEqual(CObject3D &other);
@@ -210,7 +210,7 @@ public:
 	virtual CObject3D* CopyObject();
 
 	virtual UINT GetDefID() const { return IDS_DEF_CIRCLEISS;};
-	virtual DWORD isA() const { return TCercleInterPS3D; }
+	virtual CObjectId isA() const { return TCercleInterPS3D; }
 	virtual CString GetObjectDef();
 
 	virtual BOOL IsEqual(CObject3D &other);

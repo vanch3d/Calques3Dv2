@@ -75,9 +75,9 @@ unsigned CParallele3DTask::GetHelpResID()
 }
 
 
-DWORD CParallele3DTask::GetMask()
+CObjectId CParallele3DTask::GetMask()
 {
-	DWORD mask;
+	CObjectId mask;
 	if (!dr)	mask=	TAllDroiteClass;
 	else		mask = TAllPointClass;
 	return mask;
@@ -217,9 +217,9 @@ unsigned CPerpendic3DTask::GetHelpResID()
 
 
 		
-DWORD CPerpendic3DTask::GetMask()
+CObjectId CPerpendic3DTask::GetMask()
 {
-	DWORD mask;
+	CObjectId mask;
 	if ((!dr) && (!pl))
 		mask=	(m_nTaskID== ID_CONSTRUCTION_NORMALLINE) ? TAllPlanClass : TAllDroiteClass;
 	else

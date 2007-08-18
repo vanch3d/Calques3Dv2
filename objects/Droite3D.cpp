@@ -1435,8 +1435,8 @@ CString CDroiteInterPP3D::ExportSymbolic(int nFormat)
 		strObj1 = Pl1->GetObjectNameRedux();
 		strObj2 = Pl2->GetObjectNameRedux();
 
-		UINT nType1 = Pl1->isA();
-        UINT nType2 = Pl2->isA();
+		CObjectId nType1 = Pl1->isA();
+        CObjectId nType2 = Pl2->isA();
 
 		if (nFormat==EXPORT_MATHEMATICA)
 	        mstr.Format(_T("IntersectionPlanes[%s,%s,%s];"),strName,strObj1,strObj2);

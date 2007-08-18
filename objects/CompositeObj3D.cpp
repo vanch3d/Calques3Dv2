@@ -313,7 +313,7 @@ void CCompositeObj3D::TranslateBy(CVector4 ptVec)
 }
 
 
-CObject3D* CCompositeObj3D::HitTest(CPoint pt,UINT mask,int nCalcNum,BOOL bSub,CxObject3DSet* pSet)
+CObject3D* CCompositeObj3D::HitTest(CPoint pt,CObjectId mask,int nCalcNum,BOOL bSub,CxObject3DSet* pSet)
 {
 //  if (!bSub) return CObject3D::HitTest(pt,mask,nCalcNum,bSub,pSet);
 

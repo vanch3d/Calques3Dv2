@@ -102,7 +102,7 @@ public:
 	virtual UINT GetNameID() const	{ return IDS_NAME_LINE;};
 	virtual UINT GetHelpID() const	{ return IDS_HELP_LINE;};
 	virtual UINT GetDefID() const	{ return IDS_DEF_LINE;};
-	virtual DWORD isA() const		{ return TDroite3DClass; };
+	virtual CObjectId isA() const		{ return TDroite3DClass; };
 
 	virtual CObject3D* CopyObject();
 
@@ -156,7 +156,7 @@ public:
 	virtual UINT GetNameID() const { return IDS_NAME_SEG;};
 	virtual UINT GetHelpID() const { return IDS_HELP_SEG;};
 	virtual UINT GetDefID() const { return IDS_DEF_SEG;};
-	virtual DWORD isA() const { return TSegment3DClass; }
+	virtual CObjectId isA() const { return TSegment3DClass; }
 
 	virtual CObject3D* CopyObject();
 	virtual BOOL IsInLimit(FCoord x);
@@ -178,7 +178,7 @@ public:
 public:
 	virtual UINT GetDefID() const { return IDS_DEF_DEMIDR;};
 	virtual UINT GetHelpID() const { return IDS_HELP_RAY;};
-	virtual DWORD isA() const { return TDemiDroite3DClass; }
+	virtual CObjectId isA() const { return TDemiDroite3DClass; }
 
 	virtual CObject3D* CopyObject();
 	virtual BOOL IsInLimit(FCoord x);
@@ -201,7 +201,7 @@ public:
 
 public:
 	virtual UINT GetDefID() const { return IDS_DEF_DROITEPAR;};
-	virtual DWORD isA() const { return TDroitePar3DClass; }
+	virtual CObjectId isA() const { return TDroitePar3DClass; }
 
 	virtual CObject3D* CopyObject();
 	virtual CString ExportSymbolic(int nFormat); 
@@ -229,7 +229,7 @@ public:
 
 public:
 	virtual UINT GetDefID() const { return IDS_DEF_DROITEIPP;};
-	virtual DWORD isA() const { return TDroiteInterPP3DClass; }
+	virtual CObjectId isA() const { return TDroiteInterPP3DClass; }
 
 	virtual int SetDepth();
 	virtual void Serialize( CArchive& ar );
@@ -266,7 +266,7 @@ public:
 
 public:
 	virtual UINT GetDefID() const { return IDS_DEF_CROSSPRODUCT;};
-	virtual DWORD isA() const { return TDroitePerpDD3DClass; }
+	virtual CObjectId isA() const { return TDroitePerpDD3DClass; }
 
 	virtual int SetDepth();
 
@@ -307,7 +307,7 @@ public:
 
 public:
 	virtual UINT GetDefID() const { return IDS_DEF_DROITEPERP;};
-	virtual DWORD isA() const { return TDroitePerp3DClass; }
+	virtual CObjectId isA() const { return TDroitePerp3DClass; }
 
 	virtual int SetDepth();
 

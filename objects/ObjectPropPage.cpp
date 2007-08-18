@@ -547,7 +547,7 @@ IMPLEMENT_DYNCREATE(CObjectTextPage, CPropertyPage)
 CObjectTextPage::CObjectTextPage()
 	: CPropertyPage(CObjectTextPage::IDD)
 {
-	m_bMod = FALSE;
+	m_bMod = CObjectId(0,0);
 	m_nSelD = m_nSelF = 0;
 	//m_pValue = 1.0;
 	//{{AFX_DATA_INIT(CObjectTextPage)
