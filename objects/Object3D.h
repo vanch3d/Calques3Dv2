@@ -41,8 +41,12 @@ public:
 public:
 	CObjectId(): m_nMinorId(1),m_nMajorId(1) {};
 	CObjectId(UINT maj,UINT min): m_nMinorId(min),m_nMajorId(maj) {};
+public:
 	void operator =(const CObjectId& other) 
 			{m_nMajorId = other.m_nMajorId; m_nMinorId = other.m_nMinorId;};
+
+	bool operator ==(const CObjectId& other) const
+			{ return (m_nMajorId == other.m_nMajorId && m_nMinorId == other.m_nMinorId); };
 
 	CObjectId operator |(const CObjectId& other) const
 			{
@@ -72,85 +76,85 @@ public:
 /// @todo Will reach the limit of 16bits data pretty soon; need an alternative for identifiers 
 ///		  and masks.
 //@{
-const DWORD TObject3DClass			=	MAKELONG(1,1);		///< ALL geometrical objects
+const CObjectId TObject3DClass			=	CObjectId(1,1);		///< ALL geometrical objects
 
-	const DWORD TAllPointClass		= 	MAKELONG(2,1);		///< ALL points
-	const DWORD TAllBasePointClass	= 	MAKELONG(2,8674);	///< ALL base-points (ie with at least of degree of freedom)
+	const CObjectId TAllPointClass		= 	CObjectId(2,1);		///< ALL points
+	const CObjectId TAllBasePointClass	= 	CObjectId(2,8674);	///< ALL base-points (ie with at least of degree of freedom)
 
-const DWORD TPoint3DClass			= 	MAKELONG(2,2);		///< Free point
-const DWORD TPointMilieu3DClass		=	MAKELONG(2,4);		///< Point middle of a bi-point or a segment
-const DWORD TPointInterDD3DClass	=	MAKELONG(2,8);		///< Point intersection of 2 lines
-const DWORD TPointInterDP3DClass	=	MAKELONG(2,16);		///< Point intersection of a line and a plane
-const DWORD TPointSurD3DClass 		=	MAKELONG(2,32);		///< Point on a line
-const DWORD TPointSurC3DClass 		=	MAKELONG(2,64);		///< Point on a circle
-const DWORD TPointSurP3DClass 		=	MAKELONG(2,128);	///< Point on a plane
-const DWORD TPointSurS3DClass 		=	MAKELONG(2,256);	///< Point on a sphere
-const DWORD TPointCalc3DClass 		=	MAKELONG(2,512);	///< Point internally calculated
-const DWORD TPointCenter3DClass		=	MAKELONG(2,1024);	///< Point center of a circle
-const DWORD TPointSymetric3DClass	=	MAKELONG(2,2048);	///< Point symmetrical of a point/line/plane
-const DWORD TPointTranslat3DClass	=	MAKELONG(2,4096);	///< Point translated according to a vector
-const DWORD TPointSurCyl3DClass 	=	MAKELONG(2,8192);	///< Point on a cylinder
-
-
-	const DWORD TAllDroiteClass		= 	MAKELONG(12,1);		///< ALL lines (includes segments)
-
-const DWORD TDroite3DClass			= 	MAKELONG(4,2);		///< Line defined by 2 points
-const DWORD TDroitePar3DClass		=	MAKELONG(4,8);		///< Line parallel to another line
-const DWORD TDroiteInterPP3DClass	=	MAKELONG(4,16);		///< Line intersection of 2 planes
-const DWORD TDroitePerp3DClass		=	MAKELONG(4,32);		///< Line perpendicular to a line or a plane
-const DWORD TDemiDroite3DClass		=	MAKELONG(4,64);		///< Half-line defined by 2 points
-const DWORD TDroitePerpDD3DClass	=	MAKELONG(4,128);	///< Lines perpendicular to 2 lines
-
-	const DWORD TAllSegmentClass	= 	MAKELONG(8,1);		///< ALL segments
-	const DWORD TSegment3DClass		=	MAKELONG(8,2);		///< Segment defined by 2 points
-
-	const DWORD TAllPlanClass		= 	MAKELONG(16,1);		///< ALL planes
-const DWORD TPlan3DClass			=	MAKELONG(16,2);		///< Plane defined by 3 points
-const DWORD TPlanPerp3DClass		=	MAKELONG(16,4);		///< Plane perpendicular to a line
-const DWORD TPolygon3DClass			=	MAKELONG(16,8);		///< Polygon defined by at least 3 points 
-
-	const DWORD TAllCercleClass		=	MAKELONG(32,1);		///< ALL circles
-const DWORD TCercle3DClass			=	MAKELONG(32,2);		///< Circle defined by 3 points
-const DWORD TArcCercle3DClass		=	MAKELONG(32,4);		///< Arc of circle defined by 3 points
-const DWORD TEllipse3DClass			=	MAKELONG(32,8);		///< Ellipse defined by the intersection of a plane and a cylinder
-const DWORD TCercleInterSS3D		=	MAKELONG(32,16);	///< Circle defined by the intersection of 2 spheres
-const DWORD TCercleInterPS3D		=	MAKELONG(32,32);	///< Circle defined by the intersection of a plane and a sphere
+const CObjectId TPoint3DClass			= 	CObjectId(2,2);		///< Free point
+const CObjectId TPointMilieu3DClass		=	CObjectId(2,4);		///< Point middle of a bi-point or a segment
+const CObjectId TPointInterDD3DClass	=	CObjectId(2,8);		///< Point intersection of 2 lines
+const CObjectId TPointInterDP3DClass	=	CObjectId(2,16);		///< Point intersection of a line and a plane
+const CObjectId TPointSurD3DClass 		=	CObjectId(2,32);		///< Point on a line
+const CObjectId TPointSurC3DClass 		=	CObjectId(2,64);		///< Point on a circle
+const CObjectId TPointSurP3DClass 		=	CObjectId(2,128);	///< Point on a plane
+const CObjectId TPointSurS3DClass 		=	CObjectId(2,256);	///< Point on a sphere
+const CObjectId TPointCalc3DClass 		=	CObjectId(2,512);	///< Point internally calculated
+const CObjectId TPointCenter3DClass		=	CObjectId(2,1024);	///< Point center of a circle
+const CObjectId TPointSymetric3DClass	=	CObjectId(2,2048);	///< Point symmetrical of a point/line/plane
+const CObjectId TPointTranslat3DClass	=	CObjectId(2,4096);	///< Point translated according to a vector
+const CObjectId TPointSurCyl3DClass 	=	CObjectId(2,8192);	///< Point on a cylinder
 
 
-const DWORD TCompositeObject3DClass	=	MAKELONG(64,1);		///< ALL composites objects
-const DWORD TCube3DClass			=	MAKELONG(64,4);		///< Cube defined by 3 points
-const DWORD TInterSphDr3DClass		=	MAKELONG(64,8);		///< Bi-point defined by intersection of a sphere and a line
-const DWORD TMacro3DClass			=	MAKELONG(64,16);	///< Macro-construction
-const DWORD TDivSegment3DClass		=	MAKELONG(64,32);	///< Points equally spread on a segment
-const DWORD TInterCircDr3DClass		=	MAKELONG(64,64);	///< Bi-point defined by intersection of a circle and a line
-const DWORD TInterCircPl3DClass		=	MAKELONG(64,128);	///< Bi-point defined by intersection of a circle and a plane
+	const CObjectId TAllDroiteClass		= 	CObjectId(12,1);		///< ALL lines (includes segments)
 
-const DWORD TSphere3DClass			=	MAKELONG(128,1);	///< ALL spheres
+const CObjectId TDroite3DClass			= 	CObjectId(4,2);		///< Line defined by 2 points
+const CObjectId TDroitePar3DClass		=	CObjectId(4,8);		///< Line parallel to another line
+const CObjectId TDroiteInterPP3DClass	=	CObjectId(4,16);		///< Line intersection of 2 planes
+const CObjectId TDroitePerp3DClass		=	CObjectId(4,32);		///< Line perpendicular to a line or a plane
+const CObjectId TDemiDroite3DClass		=	CObjectId(4,64);		///< Half-line defined by 2 points
+const CObjectId TDroitePerpDD3DClass	=	CObjectId(4,128);	///< Lines perpendicular to 2 lines
 
-const DWORD TCylindre3DClass		= 	MAKELONG(256,1);	///< ALL cylinder
-const DWORD TCone3DClass			= 	MAKELONG(256,2);	///< ALL cones
+	const CObjectId TAllSegmentClass	= 	CObjectId(8,1);		///< ALL segments
+	const CObjectId TSegment3DClass		=	CObjectId(8,2);		///< Segment defined by 2 points
 
-const DWORD TValue3DClass			=   MAKELONG(1024,120);	///< ALL values (used in the MathPad)
+	const CObjectId TAllPlanClass		= 	CObjectId(16,1);		///< ALL planes
+const CObjectId TPlan3DClass			=	CObjectId(16,2);		///< Plane defined by 3 points
+const CObjectId TPlanPerp3DClass		=	CObjectId(16,4);		///< Plane perpendicular to a line
+const CObjectId TPolygon3DClass			=	CObjectId(16,8);		///< Polygon defined by at least 3 points 
 
-const DWORD TText3DClass			= 	MAKELONG(1024,1);	///< ALL text items
-const DWORD TLabel3DClass			= 	MAKELONG(1024,2);	///< Label
-const DWORD TEquation3DClass		= 	MAKELONG(1024,4);	///< Equation
-const DWORD TDistance3DClass		= 	MAKELONG(1024,8);	///< Distance
-const DWORD TAngle3DClass			= 	MAKELONG(1024,16);	///< Angle
-const DWORD TVolume3DClass			= 	MAKELONG(1024,32);	///< Volume
-const DWORD TArea3DClass			= 	MAKELONG(1024,64);	///< Area
-const DWORD TCComment3DClass		= 	MAKELONG(1024,128);	///< Comment
-const DWORD TMathOp3DClass			= 	MAKELONG(1024,256);	///< Mathematical expression
+	const CObjectId TAllCercleClass		=	CObjectId(32,1);		///< ALL circles
+const CObjectId TCercle3DClass			=	CObjectId(32,2);		///< Circle defined by 3 points
+const CObjectId TArcCercle3DClass		=	CObjectId(32,4);		///< Arc of circle defined by 3 points
+const CObjectId TEllipse3DClass			=	CObjectId(32,8);		///< Ellipse defined by the intersection of a plane and a cylinder
+const CObjectId TCercleInterSS3D		=	CObjectId(32,16);	///< Circle defined by the intersection of 2 spheres
+const CObjectId TCercleInterPS3D		=	CObjectId(32,32);	///< Circle defined by the intersection of a plane and a sphere
 
-const DWORD TLocus3DClass			= 	MAKELONG(2048,1);	///< ALL locus
+
+const CObjectId TCompositeObject3DClass	=	CObjectId(64,1);		///< ALL composites objects
+const CObjectId TCube3DClass			=	CObjectId(64,4);		///< Cube defined by 3 points
+const CObjectId TInterSphDr3DClass		=	CObjectId(64,8);		///< Bi-point defined by intersection of a sphere and a line
+const CObjectId TMacro3DClass			=	CObjectId(64,16);	///< Macro-construction
+const CObjectId TDivSegment3DClass		=	CObjectId(64,32);	///< Points equally spread on a segment
+const CObjectId TInterCircDr3DClass		=	CObjectId(64,64);	///< Bi-point defined by intersection of a circle and a line
+const CObjectId TInterCircPl3DClass		=	CObjectId(64,128);	///< Bi-point defined by intersection of a circle and a plane
+
+const CObjectId TSphere3DClass			=	CObjectId(128,1);	///< ALL spheres
+
+const CObjectId TCylindre3DClass		= 	CObjectId(256,1);	///< ALL cylinder
+const CObjectId TCone3DClass			= 	CObjectId(256,2);	///< ALL cones
+
+const CObjectId TValue3DClass			=   CObjectId(1024,120);	///< ALL values (used in the MathPad)
+
+const CObjectId TText3DClass			= 	CObjectId(1024,1);	///< ALL text items
+const CObjectId TLabel3DClass			= 	CObjectId(1024,2);	///< Label
+const CObjectId TEquation3DClass		= 	CObjectId(1024,4);	///< Equation
+const CObjectId TDistance3DClass		= 	CObjectId(1024,8);	///< Distance
+const CObjectId TAngle3DClass			= 	CObjectId(1024,16);	///< Angle
+const CObjectId TVolume3DClass			= 	CObjectId(1024,32);	///< Volume
+const CObjectId TArea3DClass			= 	CObjectId(1024,64);	///< Area
+const CObjectId TCComment3DClass		= 	CObjectId(1024,128);	///< Comment
+const CObjectId TMathOp3DClass			= 	CObjectId(1024,256);	///< Mathematical expression
+
+const CObjectId TLocus3DClass			= 	CObjectId(2048,1);	///< ALL locus
 //@}
 
-	const DWORD TAllVectorClass		=	MAKELONG(4096,1);	// NOT YET USED
-const DWORD TVector3DClass			= 	MAKELONG(4096,2);	// NOT YET USED 
-const DWORD TVectorAdd3DClass		= 	MAKELONG(4096,4);	// NOT YET USED 
-const DWORD TVectorProd3DClass		= 	MAKELONG(4096,8);	// NOT YET USED
+	const CObjectId TAllVectorClass		=	CObjectId(4096,1);	// NOT YET USED
+const CObjectId TVector3DClass			= 	CObjectId(4096,2);	// NOT YET USED 
+const CObjectId TVectorAdd3DClass		= 	CObjectId(4096,4);	// NOT YET USED 
+const CObjectId TVectorProd3DClass		= 	CObjectId(4096,8);	// NOT YET USED
 
-const DWORD TUnivers3DClass			=	MAKELONG(800,2);	// NOT USED
+const CObjectId TUnivers3DClass			=	CObjectId(800,2);	// NOT USED
 
 
 class CObject3D;
@@ -193,7 +197,7 @@ public:
 	CObject3D*	pNewObj;			///< An instance of the new object to create, one the task successful
 	int			nObjResID;			///< The resource ID for the name of the redefinition task 
 	unsigned	nTaskResID[10];		///< A list of resource ID for the names of target objects, step by step
-	unsigned	nStepID[10];		///< A list of filters for the designation of target objects, step by step
+	CObjectId	nStepID[10];		///< A list of filters for the designation of target objects, step by step
 	unsigned	nAvail;				///< The ID of the corresponding construction command (to check availability of target objects)
 	int			nRedefStep;			///< The number of steps in the designation of target objects (assumed to be 1)
 	BOOL		bRelax;				///< TRUE if the task consists in relaxing a constraint, FALSE otherwise
@@ -385,8 +389,8 @@ public:
 	virtual CString	GetObjectHelp();
 	virtual CString	GetObjectName();
 	virtual CString	GetObjectNameRedux();
-	virtual BOOL	MaskObject(DWORD mask);
-	virtual DWORD	isA() const;
+	virtual BOOL	MaskObject(CObjectId mask);
+	virtual CObjectId	isA() const;
     //@}
 
 	/// @name Dependence Graph Functions
@@ -427,7 +431,7 @@ public:
 	/// These functions are used, mostly in the Universe/Tracing views, to handle the detection of objects
 	/// by mouse-clicks.
 	//@{
-	virtual CObject3D*	HitTest(CPoint pt,UINT mask=0,int nCalcNum = 0,BOOL bSub = TRUE,CxObject3DSet* pSet = NULL);
+	virtual CObject3D*	HitTest(CPoint pt,CObjectId mask,int nCalcNum = 0,BOOL bSub = TRUE,CxObject3DSet* pSet = NULL);
 	virtual BOOL		IsInActiveArea(CPoint pt);
 	virtual CRgn*		InvalideRect();
 	static  CRgn*		DoSegRgn(CPoint p1,CPoint p2);
