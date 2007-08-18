@@ -33,6 +33,33 @@
 #include "Vector4.h"
 #include "Shape.h"
 
+class CObjectId
+{
+public:
+	UINT m_nMajorId;
+	UINT m_nMinorId;
+public:
+	CObjectId(): m_nMinorId(1),m_nMajorId(1) {};
+	CObjectId(UINT maj,UINT min): m_nMinorId(min),m_nMajorId(maj) {};
+	void operator =(const CObjectId& other) 
+			{m_nMajorId = other.m_nMajorId; m_nMinorId = other.m_nMinorId;};
+
+	CObjectId operator |(const CObjectId& other) const
+			{
+				CObjectId newid;
+				newid.m_nMajorId = m_nMajorId|other.m_nMajorId;
+				newid.m_nMinorId = m_nMinorId|other.m_nMinorId;
+				return newid;
+			};
+	CObjectId operator |=(const CObjectId& other)
+			{
+				m_nMajorId |= other.m_nMajorId;
+				m_nMinorId |= other.m_nMinorId;
+				return *this;
+			};
+
+};
+
 /// @name Objects Identifiers
 /// These identifiers are used to uniquely identify each geometrical objects of Calques 3D. 
 /// 
