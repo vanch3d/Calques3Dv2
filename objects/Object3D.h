@@ -33,21 +33,43 @@
 #include "Vector4.h"
 #include "Shape.h"
 
+/////////////////////////////////////////////////////////////////////////////
+/// The identifier of a geometrical object in Calques 3D.
+/////////////////////////////////////////////////////////////////////////////
 class CObjectId
 {
 public:
-	UINT m_nMajorId;
-	UINT m_nMinorId;
+	UINT	m_nMajorId;			///< The major component of the identifier
+	UINT	m_nMinorId;			///< The minor component of the identifier
 public:
+
+	/////////////////////////////////////////////////////////////////////////////
+	/// Default constructor (set to the ALL objects identifier)
+	/////////////////////////////////////////////////////////////////////////////
 	CObjectId(): m_nMinorId(1),m_nMajorId(1) {};
+
+	/////////////////////////////////////////////////////////////////////////////
+	/// Identifier constructor
+	/// @param maj	The major component of the identifier
+	/// @param min	The minor component of the identifier
+	/////////////////////////////////////////////////////////////////////////////
 	CObjectId(UINT maj,UINT min): m_nMinorId(min),m_nMajorId(maj) {};
 public:
+	//////////////////////////////////////////////////////////////////////
+	/// Assign the source identifier to this one
+	//////////////////////////////////////////////////////////////////////
 	void operator =(const CObjectId& other) 
 			{m_nMajorId = other.m_nMajorId; m_nMinorId = other.m_nMinorId;};
 
+	//////////////////////////////////////////////////////////////////////
+	/// Return TRUE if both major and minor components of both identifiers are equal
+	//////////////////////////////////////////////////////////////////////
 	bool operator ==(const CObjectId& other) const
 			{ return (m_nMajorId == other.m_nMajorId && m_nMinorId == other.m_nMinorId); };
 
+	//////////////////////////////////////////////////////////////////////
+	/// Bitwise OR operation on the identifier
+	//////////////////////////////////////////////////////////////////////
 	CObjectId operator |(const CObjectId& other) const
 			{
 				CObjectId newid;
@@ -55,58 +77,60 @@ public:
 				newid.m_nMinorId = m_nMinorId|other.m_nMinorId;
 				return newid;
 			};
+
+	//////////////////////////////////////////////////////////////////////
+	/// Bitwise OR assignment operation on the identifier
+	//////////////////////////////////////////////////////////////////////
 	CObjectId operator |=(const CObjectId& other)
 			{
 				m_nMajorId |= other.m_nMajorId;
 				m_nMinorId |= other.m_nMinorId;
 				return *this;
 			};
-
 };
 
 /// @name Objects Identifiers
 /// These identifiers are used to uniquely identify each geometrical objects of Calques 3D. 
 /// 
-/// All identifiers have the following form : MAKELONG(X,Y), where 
-/// - X (low-order) is the category of the object (i.e. point, line, sphere, etc.)
-/// - Y (high-order) is the particular type of the object (i.e. point on a line, etc.)
+/// All identifiers have the following form : CObjectId(X,Y), where 
+/// - X (major) is the category of the object (i.e. point, line, sphere, etc.)
+/// - Y (minor) is the particular type of the object (i.e. point on a line, etc.)
 /// 
-/// See CObject3D::MaskObject for information about how the bitwise combination of identifiers is
+/// @see CObject3D::MaskObject for information about how the bitwise combination of identifiers is
 /// used.
-/// @todo Will reach the limit of 16bits data pretty soon; need an alternative for identifiers 
-///		  and masks.
 //@{
-const CObjectId TObject3DClass			=	CObjectId(1,1);		///< ALL geometrical objects
+const CObjectId TObject3DClass			=	CObjectId(1,1);			///< ALL geometrical objects
 
-	const CObjectId TAllPointClass		= 	CObjectId(2,1);		///< ALL points
-	const CObjectId TAllBasePointClass	= 	CObjectId(2,8674);	///< ALL base-points (ie with at least of degree of freedom)
+	const CObjectId TAllPointClass		= 	CObjectId(2,1);			///< ALL points
+	const CObjectId TAllBasePointClass	= 	CObjectId(2,8674);		///< ALL base-points (ie with at least of degree of freedom)
 
-const CObjectId TPoint3DClass			= 	CObjectId(2,2);		///< Free point
-const CObjectId TPointMilieu3DClass		=	CObjectId(2,4);		///< Point middle of a bi-point or a segment
-const CObjectId TPointInterDD3DClass	=	CObjectId(2,8);		///< Point intersection of 2 lines
+const CObjectId TPoint3DClass			= 	CObjectId(2,2);			///< Free point
+const CObjectId TPointMilieu3DClass		=	CObjectId(2,4);			///< Point middle of a bi-point or a segment
+const CObjectId TPointInterDD3DClass	=	CObjectId(2,8);			///< Point intersection of 2 lines
 const CObjectId TPointInterDP3DClass	=	CObjectId(2,16);		///< Point intersection of a line and a plane
 const CObjectId TPointSurD3DClass 		=	CObjectId(2,32);		///< Point on a line
 const CObjectId TPointSurC3DClass 		=	CObjectId(2,64);		///< Point on a circle
-const CObjectId TPointSurP3DClass 		=	CObjectId(2,128);	///< Point on a plane
-const CObjectId TPointSurS3DClass 		=	CObjectId(2,256);	///< Point on a sphere
-const CObjectId TPointCalc3DClass 		=	CObjectId(2,512);	///< Point internally calculated
-const CObjectId TPointCenter3DClass		=	CObjectId(2,1024);	///< Point center of a circle
-const CObjectId TPointSymetric3DClass	=	CObjectId(2,2048);	///< Point symmetrical of a point/line/plane
-const CObjectId TPointTranslat3DClass	=	CObjectId(2,4096);	///< Point translated according to a vector
-const CObjectId TPointSurCyl3DClass 	=	CObjectId(2,8192);	///< Point on a cylinder
+const CObjectId TPointSurP3DClass 		=	CObjectId(2,128);		///< Point on a plane
+const CObjectId TPointSurS3DClass 		=	CObjectId(2,256);		///< Point on a sphere
+const CObjectId TPointCalc3DClass 		=	CObjectId(2,512);		///< Point internally calculated
+const CObjectId TPointCenter3DClass		=	CObjectId(2,1024);		///< Point center of a circle
+const CObjectId TPointSymetric3DClass	=	CObjectId(2,2048);		///< Point symmetrical of a point/line/plane
+const CObjectId TPointTranslat3DClass	=	CObjectId(2,4096);		///< Point translated according to a vector
+const CObjectId TPointSurCyl3DClass 	=	CObjectId(2,8192);		///< Point on a cylinder
+const CObjectId TPointSurCone3DClass 	=	CObjectId(2,16384);		///< Point on a cone
 
 
-	const CObjectId TAllDroiteClass		= 	CObjectId(12,1);		///< ALL lines (includes segments)
+	const CObjectId TAllDroiteClass		= 	CObjectId(12,1);	///< ALL lines (includes segments)
 
-const CObjectId TDroite3DClass			= 	CObjectId(4,2);		///< Line defined by 2 points
-const CObjectId TDroitePar3DClass		=	CObjectId(4,8);		///< Line parallel to another line
+const CObjectId TDroite3DClass			= 	CObjectId(4,2);			///< Line defined by 2 points
+const CObjectId TDroitePar3DClass		=	CObjectId(4,8);			///< Line parallel to another line
 const CObjectId TDroiteInterPP3DClass	=	CObjectId(4,16);		///< Line intersection of 2 planes
 const CObjectId TDroitePerp3DClass		=	CObjectId(4,32);		///< Line perpendicular to a line or a plane
 const CObjectId TDemiDroite3DClass		=	CObjectId(4,64);		///< Half-line defined by 2 points
-const CObjectId TDroitePerpDD3DClass	=	CObjectId(4,128);	///< Lines perpendicular to 2 lines
+const CObjectId TDroitePerpDD3DClass	=	CObjectId(4,128);		///< Lines perpendicular to 2 lines
 
-	const CObjectId TAllSegmentClass	= 	CObjectId(8,1);		///< ALL segments
-	const CObjectId TSegment3DClass		=	CObjectId(8,2);		///< Segment defined by 2 points
+	const CObjectId TAllSegmentClass	= 	CObjectId(8,1);			///< ALL segments
+	const CObjectId TSegment3DClass		=	CObjectId(8,2);			///< Segment defined by 2 points
 
 	const CObjectId TAllPlanClass		= 	CObjectId(16,1);		///< ALL planes
 const CObjectId TPlan3DClass			=	CObjectId(16,2);		///< Plane defined by 3 points
@@ -117,44 +141,44 @@ const CObjectId TPolygon3DClass			=	CObjectId(16,8);		///< Polygon defined by at
 const CObjectId TCercle3DClass			=	CObjectId(32,2);		///< Circle defined by 3 points
 const CObjectId TArcCercle3DClass		=	CObjectId(32,4);		///< Arc of circle defined by 3 points
 const CObjectId TEllipse3DClass			=	CObjectId(32,8);		///< Ellipse defined by the intersection of a plane and a cylinder
-const CObjectId TCercleInterSS3D		=	CObjectId(32,16);	///< Circle defined by the intersection of 2 spheres
-const CObjectId TCercleInterPS3D		=	CObjectId(32,32);	///< Circle defined by the intersection of a plane and a sphere
+const CObjectId TCercleInterSS3D		=	CObjectId(32,16);		///< Circle defined by the intersection of 2 spheres
+const CObjectId TCercleInterPS3D		=	CObjectId(32,32);		///< Circle defined by the intersection of a plane and a sphere
 
 
 const CObjectId TCompositeObject3DClass	=	CObjectId(64,1);		///< ALL composites objects
 const CObjectId TCube3DClass			=	CObjectId(64,4);		///< Cube defined by 3 points
 const CObjectId TInterSphDr3DClass		=	CObjectId(64,8);		///< Bi-point defined by intersection of a sphere and a line
-const CObjectId TMacro3DClass			=	CObjectId(64,16);	///< Macro-construction
-const CObjectId TDivSegment3DClass		=	CObjectId(64,32);	///< Points equally spread on a segment
-const CObjectId TInterCircDr3DClass		=	CObjectId(64,64);	///< Bi-point defined by intersection of a circle and a line
-const CObjectId TInterCircPl3DClass		=	CObjectId(64,128);	///< Bi-point defined by intersection of a circle and a plane
+const CObjectId TMacro3DClass			=	CObjectId(64,16);		///< Macro-construction
+const CObjectId TDivSegment3DClass		=	CObjectId(64,32);		///< Points equally spread on a segment
+const CObjectId TInterCircDr3DClass		=	CObjectId(64,64);		///< Bi-point defined by intersection of a circle and a line
+const CObjectId TInterCircPl3DClass		=	CObjectId(64,128);		///< Bi-point defined by intersection of a circle and a plane
 
-const CObjectId TSphere3DClass			=	CObjectId(128,1);	///< ALL spheres
+const CObjectId TSphere3DClass			=	CObjectId(128,1);		///< ALL spheres
 
-const CObjectId TCylindre3DClass		= 	CObjectId(256,1);	///< ALL cylinder
-const CObjectId TCone3DClass			= 	CObjectId(256,2);	///< ALL cones
+const CObjectId TCylindre3DClass		= 	CObjectId(256,1);		///< ALL cylinder
+const CObjectId TCone3DClass			= 	CObjectId(256,2);		///< ALL cones
 
 const CObjectId TValue3DClass			=   CObjectId(1024,120);	///< ALL values (used in the MathPad)
 
-const CObjectId TText3DClass			= 	CObjectId(1024,1);	///< ALL text items
-const CObjectId TLabel3DClass			= 	CObjectId(1024,2);	///< Label
-const CObjectId TEquation3DClass		= 	CObjectId(1024,4);	///< Equation
-const CObjectId TDistance3DClass		= 	CObjectId(1024,8);	///< Distance
-const CObjectId TAngle3DClass			= 	CObjectId(1024,16);	///< Angle
-const CObjectId TVolume3DClass			= 	CObjectId(1024,32);	///< Volume
-const CObjectId TArea3DClass			= 	CObjectId(1024,64);	///< Area
+const CObjectId TText3DClass			= 	CObjectId(1024,1);		///< ALL text items
+const CObjectId TLabel3DClass			= 	CObjectId(1024,2);		///< Label
+const CObjectId TEquation3DClass		= 	CObjectId(1024,4);		///< Equation
+const CObjectId TDistance3DClass		= 	CObjectId(1024,8);		///< Distance
+const CObjectId TAngle3DClass			= 	CObjectId(1024,16);		///< Angle
+const CObjectId TVolume3DClass			= 	CObjectId(1024,32);		///< Volume
+const CObjectId TArea3DClass			= 	CObjectId(1024,64);		///< Area
 const CObjectId TCComment3DClass		= 	CObjectId(1024,128);	///< Comment
 const CObjectId TMathOp3DClass			= 	CObjectId(1024,256);	///< Mathematical expression
 
-const CObjectId TLocus3DClass			= 	CObjectId(2048,1);	///< ALL locus
+const CObjectId TLocus3DClass			= 	CObjectId(2048,1);		///< ALL locus
 //@}
 
-	const CObjectId TAllVectorClass		=	CObjectId(4096,1);	// NOT YET USED
-const CObjectId TVector3DClass			= 	CObjectId(4096,2);	// NOT YET USED 
-const CObjectId TVectorAdd3DClass		= 	CObjectId(4096,4);	// NOT YET USED 
-const CObjectId TVectorProd3DClass		= 	CObjectId(4096,8);	// NOT YET USED
+	const CObjectId TAllVectorClass		=	CObjectId(4096,1);		// NOT YET USED
+const CObjectId TVector3DClass			= 	CObjectId(4096,2);		// NOT YET USED 
+const CObjectId TVectorAdd3DClass		= 	CObjectId(4096,4);		// NOT YET USED 
+const CObjectId TVectorProd3DClass		= 	CObjectId(4096,8);		// NOT YET USED
 
-const CObjectId TUnivers3DClass			=	CObjectId(800,2);	// NOT USED
+const CObjectId TUnivers3DClass			=	CObjectId(800,2);		// NOT USED
 
 
 class CObject3D;
