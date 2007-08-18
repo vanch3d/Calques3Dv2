@@ -30,6 +30,7 @@
 #include "ViewHisto.h"
 #include "objects\Text3D.h"
 #include "objects\CompositeObj3D.h"
+#include "prefs\Prefs.h"
 
 #include "Prefs\Prefs.h"
 #include <io.h>
@@ -125,7 +126,8 @@ CCalques3DDoc* CViewHisto::GetDocument() // non-debug version is inline
 void CViewHisto::OnInitialUpdate() 
 {
 	CTreeView::OnInitialUpdate();
-	
+	m_pSelHiddenObject = NULL;
+
 	// TODO: Add your specialized code here and/or call the base class
 	//CListCtrl& mListCtrl = GetListCtrl();
 	CTreeCtrl& mListCtrl = GetTreeCtrl();
@@ -248,6 +250,12 @@ void CViewHisto::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 			{
 				//pObj2 = pEqu->pSource;
 			}
+			if (m_pSelHiddenObject!=NULL)
+			{
+					m_pSelHiddenObject->SetVisible(false);
+					OnUpdate(this,WM_UPDATEOBJ_MOD,m_pSelHiddenObject);
+					m_pSelHiddenObject=NULL;
+			}
 
 			HTREEITEM pItem = NULL;
 			if (pObj2 && pObj2->pHistItem)
@@ -305,12 +313,24 @@ void CViewHisto::OnSelChanged(NMHDR* pNMHDR, LRESULT* pResult)
 	BOOL bRedraw = FALSE;
 	CObject3D* pObj = NULL;
 
+	if (m_pSelHiddenObject!=NULL)
+	{
+			m_pSelHiddenObject->SetVisible(false);
+			OnUpdate(this,WM_UPDATEOBJ_MOD,m_pSelHiddenObject);
+			m_pSelHiddenObject=NULL;
+	}
 	if (pNew.hItem)
 	{
 		pObj = (CObject3D*)pNew.lParam;
 		if (pObj)
 		{
 		//	pObj->bIsSelected = TRUE;
+			if (!pObj->IsVisible() && TPref::THistory.bShowSelectHidden)
+			{
+				m_pSelHiddenObject = pObj;
+				m_pSelHiddenObject->SetVisible(true);
+				OnUpdate(this,WM_UPDATEOBJ_MOD,pObj);
+			}
 			bRedraw = TRUE;
 		}
 	}
@@ -352,6 +372,12 @@ void CViewHisto::OnKillFocus(CWnd* pNewWnd)
 {
 	CTreeView::OnKillFocus(pNewWnd);
 	if (m_bRefit) return;
+	if (m_pSelHiddenObject!=NULL)
+	{
+			m_pSelHiddenObject->SetVisible(false);
+			OnUpdate(this,WM_UPDATEOBJ_MOD,m_pSelHiddenObject);
+			m_pSelHiddenObject=NULL;
+	}
 	
 	// TODO: Add your message handler code here
 /*	CTreeCtrl& mListCtrl = GetTreeCtrl();
@@ -402,7 +428,20 @@ void CViewHisto::OnDblclk(NMHDR* pNMHDR, LRESULT* pResult)
 	if (!pObj) return;
 
 	if (pObj->bValidate)
+	{
+		if (m_pSelHiddenObject == pObj)
+		{
+			pObj->SetVisible(false);
+		}
 		GetDocument()->ModifyPropObject(pObj);
+		if (m_pSelHiddenObject == pObj)
+		{
+			if (pObj->IsVisible())
+			{
+				m_pSelHiddenObject = NULL;
+			}
+		}
+	}
 	else
 	{
 		UINT rr = pObj->CalculConceptuel();

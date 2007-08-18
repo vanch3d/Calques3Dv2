@@ -49,7 +49,7 @@ protected:
 	CImageList		m_ImageList;	///< List of icons for drawing the objects
 	CImageList		m_treeicon;		///< List of icons for the status indicators
 	BOOL			m_bRefit;		///< TRUE for updating the tree control, FALSE for blocking it
-
+	CObject3D*		m_pSelHiddenObject;
 private:
 	CRect rcBounds;
 	int m_nCharWidth;
