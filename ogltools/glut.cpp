@@ -316,7 +316,7 @@ void glutSolidCone( GLdouble base, GLdouble height, GLint slices, GLint stacks )
     r0 = base;
     r1 = r0 - rStep;
 
-    glBegin(GL_TRIANGLE_FAN);
+   /* glBegin(GL_TRIANGLE_FAN);
 
         glNormal3d(0.0,0.0,-1.0);
         glVertex3d(0.0,0.0, z0 );
@@ -324,7 +324,7 @@ void glutSolidCone( GLdouble base, GLdouble height, GLint slices, GLint stacks )
         for (j=0; j<=slices; j++)
             glVertex3d(cost[j]*r0, sint[j]*r0, z0);
 
-    glEnd();
+    glEnd();*/
 
     /* Cover each stack with a quad strip, except the top stack */
 
