@@ -620,14 +620,14 @@ void CDroite3D::Draw(CDC* pDC,CVisualParam *mV,BOOL bSm)
     int gggg = VisualPts.GetSize();
     for (int gg = 1;gg < gggg;gg++)
     {
-        CVector4SDist mm = VisualPts.GetAt(gg);
-        //bool insi = !(testv(start,mV) || testv(mm,mV));
-        bool insi = mV->IsPointVisible(start) && mV->IsPointVisible(mm);
-            oldP = pDC->SelectObject(insi ? &curPen : &disPen);
-            pDC->MoveTo((CPoint)mV->ProjectPoint(start));
-            pDC->LineTo((CPoint)mV->ProjectPoint(mm));
-    pDC->SelectObject(oldP);
-            start= mm;
+		CVector4SDist mm = VisualPts.GetAt(gg);
+		//bool insi = !(testv(start,mV) || testv(mm,mV));
+		bool insi = mV->IsPointVisible(start) && mV->IsPointVisible(mm);
+		oldP = pDC->SelectObject(insi ? &curPen : &disPen);
+		pDC->MoveTo((CPoint)mV->ProjectPoint(start));
+		pDC->LineTo((CPoint)mV->ProjectPoint(mm));
+		pDC->SelectObject(oldP);
+		start= mm;
     }
     /*if (VisualPts)
      {
@@ -733,7 +733,8 @@ void CDroite3D::Draw3DRendering(int nVolMode)
 	}
 	else
 	{
-		drot = dz;
+		dd = (dl.z>0) ? 0 : 180;
+		drot = CVector4(0,1,0);
 	}
 
 	GLdouble	size=20;
