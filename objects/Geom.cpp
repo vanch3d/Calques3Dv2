@@ -109,12 +109,11 @@ int CGeom::GetTrianglesIntersection(CVector4 V[3],CVector4 U[3],int& coplanar,
 #define FABS(x) ((float)fabs(x))        /* implement as is fastest on your machine */
 
 /* if USE_EPSILON_TEST is true then we do a check:
-         if |dv|<EPSILON then dv=0.0;
+   if |dv|<EPSILON then dv=0.0;
    else no check is done (which is less robust)
 */
 #define USE_EPSILON_TEST TRUE
 #define EPSILON 0.000001
-
 
 /* some macros */
 #define CROSS(dest,v1,v2)                      \
@@ -148,72 +147,69 @@ int CGeom::GetTrianglesIntersection(CVector4 V[3],CVector4 U[3],int& coplanar,
 
 
 #define COMPUTE_INTERVALS(VV0,VV1,VV2,D0,D1,D2,D0D1,D0D2,isect0,isect1) \
-  if(D0D1>0.0f)                                         \
-  {                                                     \
-    /* here we know that D0D2<=0.0 */                   \
-    /* that is D0, D1 are on the same side, D2 on the other or on the plane */ \
-    ISECT(VV2,VV0,VV1,D2,D0,D1,isect0,isect1);          \
-  }                                                     \
-  else if(D0D2>0.0f)                                    \
-  {                                                     \
-    /* here we know that d0d1<=0.0 */                   \
-    ISECT(VV1,VV0,VV2,D1,D0,D2,isect0,isect1);          \
-  }                                                     \
-  else if(D1*D2>0.0f || D0!=0.0f)                       \
-  {                                                     \
-    /* here we know that d0d1<=0.0 or that D0!=0.0 */   \
-    ISECT(VV0,VV1,VV2,D0,D1,D2,isect0,isect1);          \
-  }                                                     \
-  else if(D1!=0.0f)                                     \
-  {                                                     \
-    ISECT(VV1,VV0,VV2,D1,D0,D2,isect0,isect1);          \
-  }                                                     \
-  else if(D2!=0.0f)                                     \
-  {                                                     \
-    ISECT(VV2,VV0,VV1,D2,D0,D1,isect0,isect1);          \
-  }                                                     \
-  else                                                  \
-  {                                                     \
-    /* triangles are coplanar */                        \
-    return coplanar_tri_tri(N1,V0,V1,V2,U0,U1,U2);      \
-  }
-
-
+	if(D0D1>0.0f)                                         \
+	{                                                     \
+		/* here we know that D0D2<=0.0 */                 \
+		/* that is D0, D1 are on the same side, D2 on the other or on the plane */ \
+		ISECT(VV2,VV0,VV1,D2,D0,D1,isect0,isect1);        \
+	}                                                     \
+	else if(D0D2>0.0f)                                    \
+	{                                                     \
+		/* here we know that d0d1<=0.0 */                 \
+		ISECT(VV1,VV0,VV2,D1,D0,D2,isect0,isect1);        \
+	}                                                     \
+	else if(D1*D2>0.0f || D0!=0.0f)                       \
+	{                                                     \
+		/* here we know that d0d1<=0.0 or that D0!=0.0 */ \
+		ISECT(VV0,VV1,VV2,D0,D1,D2,isect0,isect1);        \
+	}                                                     \
+	else if(D1!=0.0f)                                     \
+	{                                                     \
+		ISECT(VV1,VV0,VV2,D1,D0,D2,isect0,isect1);        \
+	}                                                     \
+	else if(D2!=0.0f)                                     \
+	{                                                     \
+		ISECT(VV2,VV0,VV1,D2,D0,D1,isect0,isect1);        \
+	}                                                     \
+	else                                                  \
+	{                                                     \
+		/* triangles are coplanar */                      \
+		return coplanar_tri_tri(N1,V0,V1,V2,U0,U1,U2);    \
+	}
 
 /* this edge to edge test is based on Franlin Antonio's gem:
-   "Faster Line Segment Intersection", in Graphics Gems III,
-   pp. 199-202 */
-#define EDGE_EDGE_TEST(V0,U0,U1)                      \
-  Bx=U0[i0]-U1[i0];                                   \
-  By=U0[i1]-U1[i1];                                   \
-  Cx=V0[i0]-U0[i0];                                   \
-  Cy=V0[i1]-U0[i1];                                   \
-  f=Ay*Bx-Ax*By;                                      \
-  d=By*Cx-Bx*Cy;                                      \
-  if((f>0 && d>=0 && d<=f) || (f<0 && d<=0 && d>=f))  \
-  {                                                   \
-    e=Ax*Cy-Ay*Cx;                                    \
-    if(f>0)                                           \
-    {                                                 \
-      if(e>=0 && e<=f) return 1;                      \
-    }                                                 \
-    else                                              \
-    {                                                 \
-      if(e<=0 && e>=f) return 1;                      \
-    }                                                 \
-  }
+   "Faster Line Segment Intersection", in Graphics Gems III, pp. 199-202 */
+#define EDGE_EDGE_TEST(V0,U0,U1)							\
+	Bx=U0[i0]-U1[i0];										\
+	By=U0[i1]-U1[i1];										\
+	Cx=V0[i0]-U0[i0];										\
+	Cy=V0[i1]-U0[i1];										\
+	f=Ay*Bx-Ax*By;											\
+	d=By*Cx-Bx*Cy;											\
+	if((f>0 && d>=0 && d<=f) || (f<0 && d<=0 && d>=f))		\
+	{														\
+		e=Ax*Cy-Ay*Cx;										\
+		if(f>0)												\
+		{													\
+			if(e>=0 && e<=f) return 1;						\
+		}													\
+		else												\
+		{													\
+			if(e<=0 && e>=f) return 1;						\
+		}													\
+	}
 
 #define EDGE_AGAINST_TRI_EDGES(V0,V1,U0,U1,U2) \
 {                                              \
-  float Ax,Ay,Bx,By,Cx,Cy,e,d,f;               \
-  Ax=V1[i0]-V0[i0];                            \
-  Ay=V1[i1]-V0[i1];                            \
-  /* test edge U0,U1 against V0,V1 */          \
-  EDGE_EDGE_TEST(V0,U0,U1);                    \
-  /* test edge U1,U2 against V0,V1 */          \
-  EDGE_EDGE_TEST(V0,U1,U2);                    \
-  /* test edge U2,U1 against V0,V1 */          \
-  EDGE_EDGE_TEST(V0,U2,U0);                    \
+	float Ax,Ay,Bx,By,Cx,Cy,e,d,f;             \
+	Ax=V1[i0]-V0[i0];                          \
+	Ay=V1[i1]-V0[i1];                          \
+	/* test edge U0,U1 against V0,V1 */        \
+	EDGE_EDGE_TEST(V0,U0,U1);                  \
+	/* test edge U1,U2 against V0,V1 */        \
+	EDGE_EDGE_TEST(V0,U1,U2);                  \
+	/* test edge U2,U1 against V0,V1 */        \
+	EDGE_EDGE_TEST(V0,U2,U0);                  \
 }
 
 #define POINT_IN_TRI(V0,U0,U1,U2)           \
@@ -244,50 +240,50 @@ int CGeom::GetTrianglesIntersection(CVector4 V[3],CVector4 U[3],int& coplanar,
 int coplanar_tri_tri(float N[3],float V0[3],float V1[3],float V2[3],
                      float U0[3],float U1[3],float U2[3])
 {
-   float A[3];
-   short i0,i1;
-   /* first project onto an axis-aligned plane, that maximizes the area */
-   /* of the triangles, compute indices: i0,i1. */
-   A[0]=fabs(N[0]);
-   A[1]=fabs(N[1]);
-   A[2]=fabs(N[2]);
-   if(A[0]>A[1])
-   {
-      if(A[0]>A[2])
-      {
-          i0=1;      /* A[0] is greatest */
-          i1=2;
-      }
-      else
-      {
-          i0=0;      /* A[2] is greatest */
-          i1=1;
-      }
-   }
-   else   /* A[0]<=A[1] */
-   {
-      if(A[2]>A[1])
-      {
-          i0=0;      /* A[2] is greatest */
-          i1=1;
-      }
-      else
-      {
-          i0=0;      /* A[1] is greatest */
-          i1=2;
-      }
-    }
+	float A[3];
+	short i0,i1;
+	/* first project onto an axis-aligned plane, that maximizes the area */
+	/* of the triangles, compute indices: i0,i1. */
+	A[0]=fabs(N[0]);
+	A[1]=fabs(N[1]);
+	A[2]=fabs(N[2]);
+	if(A[0]>A[1])
+	{
+		if(A[0]>A[2]) /* A[0] is greatest */
+		{
+			i0=1; 
+			i1=2;
+		}
+		else /* A[2] is greatest */
+		{
+			i0=0;
+			i1=1;
+		}
+	}
+	else   /* A[0]<=A[1] */
+	{
+		if(A[2]>A[1]) /* A[2] is greatest */
+		{
+			i0=0;      
+			i1=1;
+		}
+		else /* A[1] is greatest */
+		{
+			i0=0;      
+			i1=2;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+		}
+	}
 
-    /* test all edges of triangle 1 against the edges of triangle 2 */
-    EDGE_AGAINST_TRI_EDGES(V0,V1,U0,U1,U2);
-    EDGE_AGAINST_TRI_EDGES(V1,V2,U0,U1,U2);
-    EDGE_AGAINST_TRI_EDGES(V2,V0,U0,U1,U2);
+	/* test all edges of triangle 1 against the edges of triangle 2 */
+	EDGE_AGAINST_TRI_EDGES(V0,V1,U0,U1,U2);
+	EDGE_AGAINST_TRI_EDGES(V1,V2,U0,U1,U2);
+	EDGE_AGAINST_TRI_EDGES(V2,V0,U0,U1,U2);
 
-    /* finally, test if tri1 is totally contained in tri2 or vice versa */
-    POINT_IN_TRI(V0,U0,U1,U2);
-    POINT_IN_TRI(U0,V0,V1,V2);
+	/* finally, test if tri1 is totally contained in tri2 or vice versa */
+	POINT_IN_TRI(V0,U0,U1,U2);
+	POINT_IN_TRI(U0,V0,V1,V2);
 
-    return 0;
+	return 0;
 }
 
 
