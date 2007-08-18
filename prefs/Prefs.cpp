@@ -35,12 +35,6 @@ static char THIS_FILE[]=__FILE__;
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-//int 		TPref::DefDeltaT = 40;
-//BOOL	TPref::GiveAName = FALSE;
-//BOOL	TPref::TakeComposite = FALSE;
-//int		TPref::DestructMode = 1;			//mode de destruction de l'objet
-//int		TPref::IntersectMode = 0;			//0 : strict, 1 : large
-
 TPref::ColourTableEntry TPref::crColours[40] = 
 {
     { RGB(0x00, 0x00, 0x00),    _T("Black")             },
@@ -89,22 +83,9 @@ TPref::ColourTableEntry TPref::crColours[40] =
     { RGB(0xFF, 0xFF, 0xFF),    _T("White")             }
 };
 
-//int 	TPref::MoveType=TPref::MV_HORIZ;
-//CString	TPref::PrefDescr("<None>");			// description du fichier prefs
-//BOOL    TPref::Magnet = FALSE;
-//int 	TPref::DefPres = 5;
-//int 	TPref::DefRep = 3;
-//float 	TPref::Zoom = 1.; 			//facteur de zoom
-//int 	TPref::NbRepPas = 6;
-//int 	TPref::UnitRep = 50;
-//int 	TPref::WndHeight=1000;
-//int 	TPref::WndWidth = 1000;
-//BOOL	TPref::SignalCreation = FALSE;		//signal de création
 BOOL	TPref::VerifyObject = 0;		//signal de création
-//BOOL	TPref::ShowMarks=0;				// ffiche les marcques
-//BOOL	TPref::Synchron=0;				// synchronisation de l'affichage
 BOOL	TPref::GrayedHidden=0;
-//SProjection	TPref::DefParam = {25.0,45.0,800.0,400.0};// Paramètres de projection
+
 COLORREF	TPref::custColors[16] =
  {
 	RGB(255,0,0),RGB(0,255,0),RGB(0,0,255),
@@ -154,6 +135,7 @@ TPref::CTMathPad	TPref::TMathPad =
 TPref::CTUniverse	TPref::TUniv = 
 		{
 			RGB(128,0,0),
+			RGB(192,192,192),
 			{25.0,45.0,800.0,400.0},
 			TPref::MV_HORIZ,
 			3,
