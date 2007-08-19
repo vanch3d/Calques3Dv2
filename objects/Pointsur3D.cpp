@@ -33,6 +33,7 @@
 #include "Plan3D.h"
 #include "Sphere3d.h"
 #include "Cylinder3D.h"
+#include "Cone3D.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -2155,4 +2156,166 @@ BOOL CPointSurCyl3D::MoveObject(CVisualParam *myVisuParam,UINT,CPoint MouseClic,
 
 	return 1;
 
+}
+
+
+//////////////////////////////////////////////////////////////////////
+// Construction/Destruction
+//////////////////////////////////////////////////////////////////////
+IMPLEMENT_SERIAL(CPointSurCone3D, CPointSur3D, VERSIONABLE_SCHEMA | 1)
+
+CPointSurCone3D::CPointSurCone3D() : CPointSur3D() 
+{
+	Cone = NULL;
+	alpha= 0.;
+	gamma = 0.;
+	beta = 0.;
+	front = first = 0;
+	pt1 = CVector4(0,0,0,0);
+	pt2 = CVector4(0,0,0,0);
+}
+
+CPointSurCone3D::CPointSurCone3D(CCone3D *s1): CPointSur3D()
+{
+	Cone = s1;
+	nDepth = s1->nDepth+1;
+	pObjectShape.nShapeId = TPref::TPoint.nPtConst;
+	alpha= 0.;
+	gamma = 0.;
+	beta = 0.;
+	front = first = 0;
+	pt1 = CVector4(0,0,0,0);
+	pt2 = CVector4(0,0,0,0);
+}
+
+CPointSurCone3D::CPointSurCone3D(const CObject3D & src): CPointSur3D(src)
+{
+	Cone =   ((CPointSurCone3D&)src).Cone;
+	alpha = ((CPointSurCone3D)src).alpha;
+	gamma = ((CPointSurCone3D&)src).gamma;
+	beta = ((CPointSurCone3D&)src).beta;
+	front = first = 0;
+}
+
+CObject3D* CPointSurCone3D::CopyObject()
+{
+	CObject3D *temp = new CPointSurCone3D((CObject3D&)*this);
+	return temp;
+}
+
+CxObject3DSet* CPointSurCone3D::GetParents()
+{
+	CxObject3DSet* list = new CxObject3DSet();
+	list->Add(Cone);
+	return list;
+}
+
+void CPointSurCone3D::Serialize( CArchive& ar )
+{
+	CPointSur3D::Serialize(ar);
+
+	if (ar.IsStoring())
+	{
+		ar << alpha;
+		ar << beta;
+		ar << gamma;
+		ar << ((Cone) ? Cone->nObjectId : -1);
+	}
+	else
+	{
+		ar >> alpha;
+		ar >> beta;
+		ar >> gamma;
+		Cone = (CCone3D*)SerializeObj(ar);
+		pt1 = CVector4(0,0,0,0);
+		pt2 = CVector4(0,0,0,0);
+	}
+}
+
+BOOL CPointSurCone3D::SetParents(CxObject3DSet* pSet)
+{
+	if (!pSet || Cone) return FALSE;
+	int nb = pSet->GetSize();
+
+	if (nb != 1 ) return FALSE;
+
+	Cone = (CCone3D*)pSet->GetAt(0);
+	
+	return TRUE;
+}
+
+int CPointSurCone3D::SetDepth()
+{
+	if (Cone)
+		nDepth = Cone->nDepth+1;
+	return nDepth;
+}
+
+CString CPointSurCone3D::GetObjectDef()
+{
+	CString mstr(_T("???")),sFormat(_T("???")),sName(_T("???"));
+	sName = GetObjectName();
+	sFormat.LoadString(GetDefID());
+
+	CString sn1(_T("???"));
+	if (Cone) sn1 = Cone->GetObjectHelp();
+	mstr.Format(sFormat,sName,sn1);
+	return mstr;
+}
+
+void CPointSurCone3D::CopyPointPosition(CVector4 pt)
+{
+}
+
+
+void CPointSurCone3D::CopyPointPosition(CObject3D* src)
+{
+	CPointSur3D::CopyPointPosition(src);
+	if (!src) return;
+	if (src->MaskObject(isA()))
+	{
+		//Concept_pt =  ((CPoint3D*)src)->Concept_pt;
+		alpha =  ((CPointSurCone3D*)src)->alpha;
+		beta =  ((CPointSurCone3D*)src)->beta;
+		gamma =  ((CPointSurCone3D*)src)->gamma;
+	}
+}
+
+
+UINT  CPointSurCone3D::CalculConceptuel()
+{
+	bValidate = (Cone->bValidate);
+	if (!bValidate)
+		return ERR_SUPPORTOBJECT;
+
+	return 0;
+}
+
+void CPointSurCone3D::DrawRetro(CDC* pDC,CVisualParam *vp)
+{
+	CPointSur3D::DrawRetro(pDC,vp);
+}
+
+CString CPointSurCone3D::ExportSymbolic(int nFormat)
+{
+	CString mstr;
+	mstr.Empty();
+
+	if (/*bValidate && */Cone)
+	{
+        CString strName,strObj1;
+		strName = GetObjectNameRedux();
+		strObj1 = Cone->GetObjectNameRedux();
+
+		if (nFormat==EXPORT_MATHEMATICA)
+			mstr.Format(_T("PointOnCone[%s,%s];"),strName,strObj1);
+		else if (nFormat==EXPORT_MAPLE)
+			mstr.Format(_T("PointOnCone(%s,%s);"),strName,strObj1);
+	}
+	return mstr;
+}
+
+BOOL CPointSurCone3D::MoveObject(CVisualParam *myVisuParam,UINT,CPoint MouseClic,CVector4& TempCpt)
+{
+	return TRUE;
 }

@@ -38,6 +38,7 @@ class CCercle3D;
 class CPlan3D;
 class CSphere3D;
 class CCylinder3D;
+class CCone3D;
 
 /////////////////////////////////////////////////////////////////////////////
 /// The basic point, defined by its coordinates in space.
@@ -373,6 +374,45 @@ public:
 	virtual CString GetObjectDef();
 
 	virtual CObjectId isA() const { return TPointSurCyl3DClass; }
+
+	virtual void CopyPointPosition(CObject3D* );
+	virtual void CopyPointPosition(CVector4 );
+	virtual UINT  CalculConceptuel();
+	virtual void DrawRetro(CDC*,CVisualParam *vp);
+
+	virtual CString ExportSymbolic(int nFormat); 
+
+	virtual BOOL MoveObject(CVisualParam *,UINT,CPoint ,CVector4&);
+};
+
+//////////////////////////////////////////////////////////////////////
+/// CPointSurCone3D
+//////////////////////////////////////////////////////////////////////
+class CPointSurCone3D : public CPointSur3D
+{
+public:
+	DECLARE_SERIAL(CPointSurCone3D);
+	CCone3D		*Cone;				// Cylinder 
+	FCoord		alpha,				// position on circle
+				beta,
+				gamma;				// position on axis
+	BOOL		front,first;
+	CVector4	pt1,pt2;
+public:
+	CPointSurCone3D();
+	CPointSurCone3D(CCone3D *s1);
+	CPointSurCone3D(const CObject3D & );
+
+	virtual CObject3D* CopyObject();
+	virtual CxObject3DSet* GetParents();
+	virtual void Serialize( CArchive& ar );
+	virtual BOOL SetParents(CxObject3DSet* pSet);
+	virtual int SetDepth();
+
+	virtual UINT GetDefID() const { return IDS_DEF_POINTSUR;};
+	virtual CString GetObjectDef();
+
+	virtual CObjectId isA() const { return TPointSurCone3DClass; }
 
 	virtual void CopyPointPosition(CObject3D* );
 	virtual void CopyPointPosition(CVector4 );
