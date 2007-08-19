@@ -118,7 +118,7 @@ unsigned CInter3DTask::GetHelpResID()
 				mask = (m_nStep) ? CTX_SELECT_PLAN2 : CTX_SELECT_PLAN1;
 				break;
 		case ID_CONSTRUCTION_INTERSECTION_PLANECYLINDER:
-				mask = (m_nStep) ? CTX_SELECT_CIRCLE : CTX_SELECT_PLAN1;
+				mask = (m_nStep) ? CTX_SELECT_CYL : CTX_SELECT_PLAN1;
 				break;
 		case ID_CONSTRUCTION_INTERSECTION_SPHERESPHERE:
 				mask = (m_nStep) ? CTX_SELECT_SPHERE : CTX_SELECT_SPHERE;
