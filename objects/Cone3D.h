@@ -31,6 +31,8 @@
 #endif // _MSC_VER > 1000
 
 #include "VolumeObject3D.h"
+#include "CompositeObj3D.h"
+
 class CPoint3D;
 class CCercle3D;
 class CDroite3D;
@@ -88,6 +90,39 @@ public:
 public:
 	UINT IntersectPlan();
 	UINT IntersectLine(CDroite3D *dr,CVector4 &in,CVector4 &out);
+};
+
+//////////////////////////////////////////////////////////////////////
+/// Intersection between a cone and a line
+//////////////////////////////////////////////////////////////////////
+class CInterConeDr3D : public CCompositeObj3D
+{
+public:
+	DECLARE_SERIAL(CInterConeDr3D);
+	CCone3D		*Cone;		///< Pointer to the cone
+	CDroite3D	*Dr;		///< Pointer to the line
+	CPoint3D	*ptA;		///< The first point of the intersection
+	CPoint3D	*ptB;		///< The second point of the intersection
+
+	CInterConeDr3D();
+	CInterConeDr3D(CCone3D* sp1,CDroite3D* dr2);
+	CInterConeDr3D(const CObject3D & );
+
+	virtual int SetDepth();
+
+	virtual CObject3D* CopyObject();
+	virtual CxObject3DSet* GetParents();
+
+	virtual CObjectId isA() const { return TInterConeDr3DClass; }
+
+	virtual UINT GetDefID() const { return IDS_DEF_INTCONEDR;};
+
+	virtual void Serialize( CArchive& ar );
+
+	virtual CString GetObjectDef();
+	virtual UINT  CalculConceptuel();
+
+	virtual CString ExportSymbolic(int nFormat); 
 };
 
 #endif // !defined(AFX_CONE3D_H__A3934306_BBF1_4C76_B690_4826B9B8A7F0__INCLUDED_)
