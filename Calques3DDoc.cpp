@@ -1537,6 +1537,9 @@ BOOL CCalques3DDoc::IsTaskAvailable(UINT m_nID)
 	case ID_CONSTRUCTION_POINTON_CYLINDER:
 		bEnab = nbCy;
 		break;
+	case ID_CONSTRUCTION_POINTON_CONE:
+		bEnab = nbCn;
+		break;
 	case ID_CONSTRUCTION_POINTON_LINE:
 		bEnab = nbLn;
 		break;

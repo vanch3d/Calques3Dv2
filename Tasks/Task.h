@@ -344,6 +344,7 @@ public :
     CPlan3D     *pl1;
     CSphere3D   *sp1;
     CCylinder3D *cyl;
+    CCone3D		*cone;
     CVector4    ptClic;
 
     CPointSur3DTask(CView *AParent,UINT taskID);
