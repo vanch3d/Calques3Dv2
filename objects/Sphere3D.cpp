@@ -140,6 +140,14 @@ int CSphere3D::SetDepth()
 	return nDepth;
 }
 
+UINT CSphere3D::GetDefID() const
+{ 
+	if (P1 && P2)
+		return IDS_DEF_SPHERE;
+	else //if (P1 && Seg)
+		return IDS_DEF_SPHERERADIUS;
+}
+
 
 BOOL CSphere3D::ChangeParent(CObject3D *pOld,CObject3D *pNew,BOOL bUpGraph)
 {

@@ -62,7 +62,7 @@ public:
 
 	virtual UINT GetNameID() const { return IDS_NAME_SPHERE;};
 	virtual UINT GetHelpID() const { return IDS_HELP_SPHERE;};
-	virtual UINT GetDefID() const { return IDS_DEF_SPHERE;};
+	virtual UINT GetDefID() const;
 	virtual CString GetObjectDef();
 	virtual int SetDepth();
 	virtual void	GetRange(CVector4 &min,CVector4 &max);
