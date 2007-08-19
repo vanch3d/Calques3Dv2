@@ -314,6 +314,7 @@
 #define ERR_CONE_NORADIUS				4047
 #define ERR_CONE_NOAXIS					4048
 #define ERR_CONE_NOPROJAXIS				4049
+#define ERR_INTER_CONEDR                4050
 #define IDS_UNDO_NONE                   4100
 #define IDS_UNDO_DELETE                 4101
 #define IDS_UNDO_APPEND                 4102
@@ -431,6 +432,7 @@
 #define IDS_DEF_INTCIRCDR               5240
 #define IDS_DEF_INTCIRCPL               5241
 #define IDS_DEF_CONE                    5242
+#define IDS_DEF_INTCONEDR               5243
 #define CTX_DEFAULT                     6000
 #define CTX_POINT                       6001
 #define CTX_DROITE                      6003
@@ -504,6 +506,7 @@
 #define CTX_MOVE_TRACE                  6082
 #define CTX_SELECT_CLOSE_POLYGON        6083
 #define CTX_SELECT_TASKOPTION           6084
+#define CTX_SELECT_CONE	                6085
 #define PREF_NAME_PTFREE                7000
 #define PREF_NAME_PTCSTR                7001
 #define PREF_NAME_PTDEP                 7002
@@ -676,6 +679,7 @@
 #define ID_CONSTRUCTION_INTERSECTION_LINECIRCLE 30323
 #define ID_CONSTRUCTION_INTERSECTION_PLANECIRCLE 30324
 #define ID_CONSTRUCTION_INTERSECTION_SPHEREPLANE 30325
+#define ID_CONSTRUCTION_INTERSECTION_LINECONE 30326
 #define ID_EXPLORATION_MOVE             30400
 #define ID_EXPLORATION_EXTRACTION       30401
 #define ID_EXPLORATION_LOCUS            30402
