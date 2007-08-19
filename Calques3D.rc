@@ -574,7 +574,7 @@ FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     CONTROL         "",IDC_BIGICON,"Button",BS_OWNERDRAW | WS_DISABLED,4,4,
                     34,30
-    LTEXT           "Calques 3D version 2.3.7",IDC_STATIC,52,4,140,8,NOT 
+    LTEXT           "Calques 3D version 2.4.0",IDC_STATIC,52,4,140,8,NOT 
                     WS_GROUP
     LTEXT           "Microsoft Foundation Classes version 4.2",IDC_STATIC,52,
                     13,140,8,NOT WS_GROUP
@@ -1426,6 +1426,8 @@ BEGIN
             MENUITEM "&Sphere",                     ID_CONSTRUCTION_POINTON_SPHERE
 
             MENUITEM "C&ylinder",                   ID_CONSTRUCTION_POINTON_CYLINDER
+
+            MENUITEM "C&one",                       ID_CONSTRUCTION_POINTON_CONE
 
         END
         POPUP "&Intersection"
@@ -2621,8 +2623,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,3,7,0
- PRODUCTVERSION 2,3,7,0
+ FILEVERSION 2,4,0,0
+ PRODUCTVERSION 2,4,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x29L
@@ -2640,14 +2642,14 @@ BEGIN
             VALUE "Comments", "3D Dynamic Geometry Microworld\0"
             VALUE "CompanyName", "Calques 3D\0"
             VALUE "FileDescription", "Calques 3D\0"
-            VALUE "FileVersion", "2.3.7\0"
+            VALUE "FileVersion", "2.4.0\0"
             VALUE "InternalName", "Calques3D\0"
             VALUE "LegalCopyright", "Copyright © 1997-2007 Nicolas Van Labeke\0"
             VALUE "LegalTrademarks", "N. Van Labeke / P. Bernat / J. Morinet-Lambert\0"
             VALUE "OriginalFilename", "Calques3D.exe\0"
             VALUE "PrivateBuild", "Beta Version\0"
             VALUE "ProductName", "Calques 3D\0"
-            VALUE "ProductVersion", "2.3.7\0"
+            VALUE "ProductVersion", "2.4.0\0"
             VALUE "SpecialBuild", "Built with BCGControlBar Library version 7.31\0"
         END
     END
@@ -2980,14 +2982,15 @@ BEGIN
                             "Construct a point on a circle \nPoint on Circle"
     ID_CONSTRUCTION_POINTON_PLANE 
                             "Construct a point on a plane \nPoint on Plane"
-END
-
-STRINGTABLE DISCARDABLE 
-BEGIN
     ID_CONSTRUCTION_POINTON_SPHERE 
                             "Construct a point on a sphere \nPoint on sphere"
     ID_CONSTRUCTION_POINTON_CYLINDER 
                             "Construct a point on a cylinder\nPoint on cylinder"
+    ID_CONSTRUCTION_POINTON_CONE "Construct a point on a cone \nPoint on cone"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
     ID_CONSTRUCTION_INTERSECTION_LINELINE 
                             "Construct a point at the intersection of 2 lines \nIntersection Line/Line"
     ID_CONSTRUCTION_INTERSECTION_LINEPLANE 
@@ -3000,6 +3003,18 @@ BEGIN
                             "Construct an ellipse at the intersection of a plane and a cylinder\nIntersection Plane/Cylinder"
     ID_CONSTRUCTION_INTERSECTION_SPHERESPHERE 
                             "Construct a circle at the intersection of two spheres\nIntersection Sphere/Sphere"
+    ID_CONSTRUCTION_INTERSECTION_LINECIRCLE 
+                            "Construct the point(s) at the intersection of a line and a circle\nIntersection Line/Circle"
+    ID_CONSTRUCTION_INTERSECTION_PLANECIRCLE 
+                            "Construct the point(s) at the intersection of a plane and a circle\nIntersection Plane/Circle"
+    ID_CONSTRUCTION_INTERSECTION_SPHEREPLANE 
+                            "Construct a circle at the intersection of a sphere and a plane\nIntersection Sphere/Plane"
+    ID_CONSTRUCTION_INTERSECTION_LINECONE 
+                            "Construct the point(s) at the intersection of a line and a cone \nIntersection Line/Cone"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
     ID_CONSTRUCTION_MIDPOINT 
                             "Construct the midpoint of a segment line or a bipoint\nMidpoint"
     ID_CONSTRUCTION_CENTER  "Construct the center of a circle\nCentre of circle"
@@ -3013,24 +3028,12 @@ BEGIN
                             "Construct a line normale to a plane \nNormale line"
     ID_CONSTRUCTION_SYMMETRICALPOINT 
                             "Construct a symmetrical point with respect to a point, a line or a plane \nSymmetrical point"
-END
-
-STRINGTABLE DISCARDABLE 
-BEGIN
     ID_CONSTRUCTION_TRANSLATION 
                             "Construct a translated point with respect to a bipoint \nTranslation"
     ID_CONSTRUCTION_CROSSPRODUCT 
                             "Construct a line perpendicular to two lines\nCross Product"
     ID_CONSTRUCTION_DIVSEGMENT 
                             "Divide a segment in three equal parts\nTrisection"
-    ID_CONSTRUCTION_INTERSECTION_LINECIRCLE 
-                            "Construct the point(s) at the intersection of a line and a circle\nIntersection Line/Circle"
-    ID_CONSTRUCTION_INTERSECTION_PLANECIRCLE 
-                            "Construct the point(s) at the intersection of a plane and a circle\nIntersection Plane/Circle"
-    ID_CONSTRUCTION_INTERSECTION_SPHEREPLANE 
-                            "Construct a circle at the intersection of a sphere and a plane\nIntersection Sphere/Plane"
-    ID_CONSTRUCTION_INTERSECTION_LINECONE 
-                            "Construct the point(s) at the intersection of a line and a cone \nIntersection Line/Cone"
 END
 
 STRINGTABLE DISCARDABLE 
@@ -3251,7 +3254,7 @@ BEGIN
     IDS_DEF_CYLIN           "%s is a cylinder defined by the axe %s %s and going through %s"
     IDS_DEF_INTSPDR         "%s is the intersection of %s and %s"
     IDS_DEF_TEXT            "%s is a label"
-    IDS_DEF_SPHERE          "%s is a sphere defined by %s as its center and %s as a radius"
+    IDS_DEF_SPHERE          "%s is a sphere defined by %s as its center and going through %s"
     IDS_DEF_ELLIPSE         "%s is an ellipse defined by the intersection of %s and %s"
     IDS_DEF_LOCUS           "%s is the locus of %s when %s is moved"
     IDS_DEF_VECTOR          "%s is a vector"
@@ -3272,6 +3275,7 @@ BEGIN
     IDS_DEF_INTCIRCDR       "%s is the intersection of %s and %s"
     IDS_DEF_CONE            "%s is a cone defined by the axe %s %s and going through %s"
     IDS_DEF_INTCONEDR       "%s is the intersection of %s and %s"
+    IDS_DEF_SPHERERADIUS    "%s is a sphere defined by %s as its center and %s as a radius"
 END
 
 STRINGTABLE DISCARDABLE 
@@ -3630,6 +3634,9 @@ BEGIN
                             "select a point (or select the first point to close and construct the polygon)"
     CTX_SELECT_TASKOPTION   "Choose an option with the contextual menu."
     CTX_SELECT_CONE         "select a cone"
+    CTX_POINTSUR_CONE       "Point on cone"
+    CTX_POINTSUR_CYL        "Point on cylindre"
+    CTX_SELECT_CYL          "select a cylindre"
 END
 
 STRINGTABLE DISCARDABLE 
