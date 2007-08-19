@@ -39,6 +39,7 @@ class CCercle3D;
 class CSegment3D;
 class CMacro3D;
 class CCylinder3D;
+class CCone3D;
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -316,6 +317,7 @@ public :
     CSphere3D   *sp2;
     CCylinder3D *cyl;
 	CCercle3D	*circle;
+	CCone3D		*cone;
 
     CInter3DTask(CView *AParent,UINT taskID);
     ~CInter3DTask();
