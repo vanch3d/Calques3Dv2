@@ -192,6 +192,9 @@ void CMilieu3DTask::DrawFeedBack(CDC *pDC)
 	thePt.x /=2;
 	thePt.y /=2;
 
+	CPen curPen(PS_SOLID,1,TPref::TUniv.clrFeedback);
+    CPen *oldP = pDC->SelectObject(&curPen);
 	pDC->Ellipse(thePt.x-3,thePt.y-3,thePt.x+3,thePt.y+3);
+	pDC->SelectObject(oldP);
 
 }

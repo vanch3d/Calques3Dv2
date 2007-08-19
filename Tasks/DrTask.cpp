@@ -161,9 +161,11 @@ void CDroite3DTask::DrawFeedBack(CDC *pDC)
 	thePt-=dl;
 	endPt+=dl;
 
+	CPen curPen(PS_SOLID,1,TPref::TUniv.clrFeedback);
+    CPen *oldP = pDC->SelectObject(&curPen);
 	pDC->MoveTo(thePt);
 	pDC->LineTo(endPt);
-
+	pDC->SelectObject(oldP);
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -196,8 +198,11 @@ void CSegment3DTask::DrawFeedBack(CDC* pDC)
 	if (m_nTaskID == ID_OBJECT_RAY)
 		endPt+=dl;
 
+	CPen curPen(PS_SOLID,1,TPref::TUniv.clrFeedback);
+    CPen *oldP = pDC->SelectObject(&curPen);
 	pDC->MoveTo(thePt);
 	pDC->LineTo(endPt);
+	pDC->SelectObject(oldP);
 }
 
 void CSegment3DTask::CreateObject3D()

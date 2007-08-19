@@ -287,6 +287,8 @@ void CConeTask::CreateObject3D()
 
 void CConeTask::DrawFeedBack(CDC *pDC)
 {
+	CPen curPen(PS_SOLID,1,TPref::TUniv.clrFeedback);
+    CPen *oldP = pDC->SelectObject(&curPen);
 	if (ptA && m_nStep==1)
 	{	
 		// Draw feedback for the axis
@@ -339,6 +341,7 @@ void CConeTask::DrawFeedBack(CDC *pDC)
 			pDC->LineTo(sim);
 		}
 	}
+	pDC->SelectObject(oldP);
 }
 
 
@@ -379,6 +382,8 @@ void CTranslatTask::DrawFeedBack(CDC* pDC)
 	if (!ptA) return;
 	CPen thePen(PS_DOT,1,RGB(0,0,0));
 	
+	CPen curPen(PS_SOLID,1,TPref::TUniv.clrFeedback);
+    CPen *oldP = pDC->SelectObject(&curPen);
 	if (ptA && !ptB && !ptC)
 	{
 		CPoint thePt = ptA->Visual_pt;
@@ -400,4 +405,5 @@ void CTranslatTask::DrawFeedBack(CDC* pDC)
 		pDC->SelectObject(oldP);
 		pDC->Ellipse(endPt.x-3,endPt.y-3,endPt.x+4,endPt.y+4);
 	 }
+	pDC->SelectObject(oldP);
 }

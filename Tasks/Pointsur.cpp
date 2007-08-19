@@ -272,6 +272,7 @@ void CPointSur3DTask::CreateObject3D()
 		}
 	}
 	pCurr = temp;
+	//pCurr->pObjectShape.clrObject = TPref::TUniv.clrFeedback;
 	m_nStep++;
 	if (!pCurr)
 	{
@@ -343,7 +344,6 @@ void CPointSur3DTask::DrawFeedBack(CDC *pDC)
 	if (!pCurr) return;
 	CVisualParam *myVisuParam = m_pParent->GetVisualParam();
 	pCurr->Draw(pDC,myVisuParam);
-	// draw feedback
 	pCurr->DrawRetro(pDC,myVisuParam);
 }
 

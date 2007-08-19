@@ -152,36 +152,22 @@ void CParallele3DTask::DrawFeedBack(CDC *pDC)
 	if (!dr) return;
 	CVector4 T = dr->GetDirVector();
 	CVector4 T2 = m_pParent->GetVisualParam()->ProjectPoint(T);
-	//Vector4 T4 = {0,0,0,1};
-	//Vector4  T3 = ((PTWindow3D) Parent)->myVisuParam->ProjectPoint(T4);
 
-	//T2.x -= T3.x;
-	//T2.y -= T3.y;
 	T2.x -= m_pParent->GetVisualParam()->ptRepCoord.x;
 	T2.y -= m_pParent->GetVisualParam()->ptRepCoord.y;// - T2.y;
-	long double norm = 50 / sqrt(T2.x*T2.x + T2.y*T2.y);
+	long double norm = 150 / sqrt(T2.x*T2.x + T2.y*T2.y);
 	T2.x = T2.x * norm;
 	T2.y = T2.y * norm;
 
-				//T.x+=(int) Parent->Scroller->XPos;
-			//T.y+=(int) Parent->Scroller->YPos;
 	CPoint t1,t2;
 	t1 = m_ptOld + (CPoint)T2;
 	t2 = m_ptOld - (CPoint)T2;
-//	t1.x = m_ptOld.x + T2.x;
-//	t1.y = m_ptOld.y + T2.y;
-//	t2.x = m_ptOld.x - T2.x;
-//	t2.y = m_ptOld.y - T2.y;
+
+	CPen curPen(PS_SOLID,1,TPref::TUniv.clrFeedback);
+    CPen *oldP = pDC->SelectObject(&curPen);
 	pDC->MoveTo(t1);
 	pDC->LineTo(t2);
-/*	t1.x = thepos.x + T2.x;
-	t1.y = thepos.y + T2.y;
-	t2.x = thepos.x - T2.x;
-	t2.y = thepos.y - T2.y;
-	DragDC.MoveTo(t1.x,t1.y);
-	oldP.x = thepos.x;
-	oldP.y = thepos.y;
-	DragDC.LineTo(t2.x,t2.y);  */
+	pDC->SelectObject(oldP);
 }
 
 
@@ -283,21 +269,19 @@ void CPerpendic3DTask::DrawFeedBack(CDC *pDC)
 {
 	if (!dr && !pl) return;
 
+	CPen curPen(PS_SOLID,1,TPref::TUniv.clrFeedback);
+    CPen *oldP = pDC->SelectObject(&curPen);
 	CPoint t1,t2;
 	if (dr)
-	 {
-		//// plan perpendiculaire
+	{
 		if (m_nTaskID == ID_CONSTRUCTION_PERPENDICULARPLANE)
-		 {
-			//Vector4 newPt = Parent->GetViewParam()->GetProjectedPoint(theP);
+		{
+			//// Perpendicular plane
 			CPoint3D tempoPt(dr->GetBasePoint());
 			tempoPt.CalculConceptuel();
 			CPlanPerp3D tempoPl(&tempoPt,dr);
 			tempoPl.CalculConceptuel();
 			tempoPl.CalculVisuel(m_pParent->GetVisualParam());
-			//tempoPl->ObjectShape->AShape=1;
-			//tempoPl->Draw(DragDC,Parent->GetViewParam(),1);
-			//HandleDC.SelectObject(curPen);
 			CPoint center((tempoPl.tp1.x+tempoPl.tp3.x)/2,
 								(tempoPl.tp1.y+tempoPl.tp3.y)/2);
 			CSize delta = center-m_ptOld;
@@ -306,9 +290,9 @@ void CPerpendic3DTask::DrawFeedBack(CDC *pDC)
 			pDC->LineTo(tempoPl.tp3-delta);
 			pDC->LineTo(tempoPl.tp4-delta);
 			pDC->LineTo(tempoPl.tp1-delta);
-		 }
-		else //// droite normale
-		 {
+		}
+		else 
+		{	//// Normal line
 			CVector4 T = dr->GetDirVector();
 			CVector4 T2 = m_pParent->GetVisualParam()->ProjectPoint(T);
 			CVector4 T3 = T2;
@@ -317,27 +301,19 @@ void CPerpendic3DTask::DrawFeedBack(CDC *pDC)
 			long double norm = 50 / sqrt(T2.x*T2.x + T2.y*T2.y);
 			T2.x = T2.x * norm;
 			T2.y = T2.y * norm;
-
 			T3 = T2;
-
 			T2.x = -T3.y;
 			T2.y = T3.x;
-
-			//T.x+=(int) Parent->Scroller->XPos;
-		//T.y+=(int) Parent->Scroller->YPos;
 			t1 = m_ptOld + (CPoint)T2;
 			t2 = m_ptOld - (CPoint)T2;
-			//t1.x = m_ptOld.x + T2.x;
-			//t1.y = m_ptOld.y + T2.y;
-			//t2.x = m_ptOld.x - T2.x;
-			//t2.y = m_ptOld.y - T2.y;
+
 			pDC->MoveTo(t1);
 			pDC->LineTo(t2);
 		}
-	 }
-	else 			//// droite perpendiculaire
-	if (pl)
-	 {
+	}
+	else if (pl)
+	{	
+		///// Perpendicular line
 		CVector4 T = pl->VecNorm;
 		CVector4 T2 = m_pParent->GetVisualParam()->ProjectPoint(T);
 
@@ -347,17 +323,13 @@ void CPerpendic3DTask::DrawFeedBack(CDC *pDC)
 		T2.x = T2.x * norm;
 		T2.y = T2.y * norm;
 
-			//T.x+=(int) Parent->Scroller->XPos;
-		//T.y+=(int) Parent->Scroller->YPos;
-			t1 = m_ptOld + (CPoint)T2;
-			t2 = m_ptOld - (CPoint)T2;
-		//t1.x = m_ptOld.x + T2.x;
-		//t1.y = m_ptOld.y + T2.y;
-	//	t2.x = m_ptOld.x - T2.x;
-	//	t2.y = m_ptOld.y - T2.y;
+		t1 = m_ptOld + (CPoint)T2;
+		t2 = m_ptOld - (CPoint)T2;
+
 		pDC->MoveTo(t1);
 		pDC->LineTo(t2);
-	 }
+	}
+	pDC->SelectObject(oldP);
 
 }
 

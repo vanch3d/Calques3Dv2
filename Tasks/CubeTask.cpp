@@ -125,7 +125,7 @@ void CCube3DTask::OnMouseL(UINT , CPoint thepos)
 			if (m_nTaskID == ID_OBJECT_CUBE)
 			 {
 				cr = new CCercle3D(ptB,U,r);
-				cr->pObjectShape.clrObject = RGB(0,0,0);
+				cr->pObjectShape.clrObject = TPref::TUniv.clrFeedback;
 				cr->pObjectShape.nShapeId = 0;
 				cr->CalculConceptuel();
 				//mask = TCercle3DClass;
@@ -164,6 +164,7 @@ void CCube3DTask::OnMouseL(UINT , CPoint thepos)
 				 {	
 					ptS->Concept_pt = TempCpt;
 					ptS->CalculVisuel(mv);
+					ptS->pObjectShape.clrObject = TPref::TUniv.clrFeedback;
 					//ptS->Draw(*DragDC);
 					m_nStep++;
 					m_pParent->Invalidate(0);
@@ -296,19 +297,22 @@ void CCube3DTask::drawFirstSide(CDC* pDC,CPoint )
 
 void CCube3DTask::DrawFeedBack(CDC* pDC)
 {
+	CPen curPen(PS_SOLID,1,TPref::TUniv.clrFeedback);
+    CPen *oldP = pDC->SelectObject(&curPen);
 	CPoint thepos = m_ptOld;
 	switch (m_nStep)
-	 {	case 1 :	//premier point désigné
+	 {	case 1 :	// First point selected
 			drawFirstSeg(pDC,thepos);
 			break;
-		case 2 :	//deuxieme point désigné
+		case 2 :	// Second point selected
 			drawCircle(pDC,thepos);
 			break;
-		case 3 : //point sur cercle construit
+		case 3 :	// Point on circle built
 			drawFirstSide(pDC,thepos);
 			break;
 		default:
 			break;
 	 }
+	pDC->SelectObject(oldP);
 
 }
