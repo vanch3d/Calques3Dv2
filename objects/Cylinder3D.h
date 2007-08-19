@@ -30,14 +30,14 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-#include "Object3D.h"
+#include "VolumeObject3D.h"
 
 class CDroite3D;
 
 //////////////////////////////////////////////////////////////////////
 /// Construction/Destruction
 //////////////////////////////////////////////////////////////////////
-class CCylinder3D : public CObject3D  
+class CCylinder3D : public CVolumeObject3D  
 {
 public:
 	DECLARE_SERIAL(CCylinder3D);

@@ -58,9 +58,9 @@ BOOL intcyl(
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
-IMPLEMENT_SERIAL(CCylinder3D, CObject3D, VERSIONABLE_SCHEMA | 1)
+IMPLEMENT_SERIAL(CCylinder3D, CVolumeObject3D, VERSIONABLE_SCHEMA | 1)
 
-CCylinder3D::CCylinder3D() : CObject3D()
+CCylinder3D::CCylinder3D() : CVolumeObject3D()
 {
     P1 = P2 = Rad = NULL;
     C1 = C2 = C3 = NULL;
@@ -69,7 +69,7 @@ CCylinder3D::CCylinder3D() : CObject3D()
 
 }
 
-CCylinder3D::CCylinder3D(const CObject3D &src ) : CObject3D(src)
+CCylinder3D::CCylinder3D(const CObject3D &src ) : CVolumeObject3D(src)
 {
     P1 =  ((CCylinder3D&)src).P1;
     P2 =   ((CCylinder3D&)src).P2;
@@ -98,7 +98,7 @@ CCylinder3D::CCylinder3D(const CObject3D &src ) : CObject3D(src)
     }
 }
 
-CCylinder3D::CCylinder3D(CPoint3D *p1,CPoint3D *p2,CPoint3D *rad): CObject3D()
+CCylinder3D::CCylinder3D(CPoint3D *p1,CPoint3D *p2,CPoint3D *rad): CVolumeObject3D()
 {
     P1 = p1;
     P2 = p2;
@@ -159,7 +159,7 @@ BOOL CCylinder3D::ChangeParent(CObject3D *pOld,CObject3D *pNew,BOOL bUpGraph)
 
 void CCylinder3D::Serialize( CArchive& ar )
 {
-    CObject3D::Serialize(ar);
+    CVolumeObject3D::Serialize(ar);
 
     if (ar.IsStoring())
     {
@@ -231,7 +231,7 @@ CxObject3DSet* CCylinder3D::GetParents()
 
 int CCylinder3D::SetProperties(CxObject3DSet *pSet)
 {
-    int ret = CObject3D::SetProperties(pSet);
+    int ret = CVolumeObject3D::SetProperties(pSet);
     if (ret==IDOK)
      {
         if (C1)
