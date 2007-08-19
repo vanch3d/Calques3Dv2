@@ -1432,23 +1432,25 @@ BEGIN
         BEGIN
             MENUITEM "&Line-line",                  ID_CONSTRUCTION_INTERSECTION_LINELINE
 
-            MENUITEM "Li&ne-plane",                 ID_CONSTRUCTION_INTERSECTION_LINEPLANE
+            MENUITEM "Line-pl&ane",                 ID_CONSTRUCTION_INTERSECTION_LINEPLANE
 
-            MENUITEM "Li&ne-circle",                ID_CONSTRUCTION_INTERSECTION_LINECIRCLE
+            MENUITEM "Line-ci&rcle",                ID_CONSTRUCTION_INTERSECTION_LINECIRCLE
 
-            MENUITEM "Line-&sphere",                ID_CONSTRUCTION_INTERSECTION_LINESPHERE
+            MENUITEM "Line-sp&here",                ID_CONSTRUCTION_INTERSECTION_LINESPHERE
+
+            MENUITEM "Line-c&one",                  ID_CONSTRUCTION_INTERSECTION_LINECONE
 
             MENUITEM SEPARATOR
             MENUITEM "&Plane-plane",                ID_CONSTRUCTION_INTERSECTION_PLANEPLANE
 
-            MENUITEM "&Plane-circle",               ID_CONSTRUCTION_INTERSECTION_PLANECIRCLE
+            MENUITEM "Plane-circl&e",               ID_CONSTRUCTION_INTERSECTION_PLANECIRCLE
 
             MENUITEM SEPARATOR
-            MENUITEM "Sphere-Sphere",               ID_CONSTRUCTION_INTERSECTION_SPHERESPHERE
+            MENUITEM "&Sphere-Sphere",              ID_CONSTRUCTION_INTERSECTION_SPHERESPHERE
 
-            MENUITEM "Sphere-Plane",                ID_CONSTRUCTION_INTERSECTION_SPHEREPLANE
+            MENUITEM "Sphere-pla&ne",               ID_CONSTRUCTION_INTERSECTION_SPHEREPLANE
 
-            MENUITEM "Plane-cylinder",              ID_CONSTRUCTION_INTERSECTION_PLANECYLINDER
+            MENUITEM "Plane-c&ylinder",             ID_CONSTRUCTION_INTERSECTION_PLANECYLINDER
 
         END
         MENUITEM SEPARATOR
@@ -3027,6 +3029,8 @@ BEGIN
                             "Construct the point(s) at the intersection of a plane and a circle\nIntersection Plane/Circle"
     ID_CONSTRUCTION_INTERSECTION_SPHEREPLANE 
                             "Construct a circle at the intersection of a sphere and a plane\nIntersection Sphere/Plane"
+    ID_CONSTRUCTION_INTERSECTION_LINECONE 
+                            "Construct the point(s) at the intersection of a line and a cone \nIntersection Line/Cone"
 END
 
 STRINGTABLE DISCARDABLE 
@@ -3267,6 +3271,7 @@ BEGIN
     IDS_DEF_SECTIONSEG      "%s is the trisection of %s"
     IDS_DEF_INTCIRCDR       "%s is the intersection of %s and %s"
     IDS_DEF_CONE            "%s is a cone defined by the axe %s %s and going through %s"
+    IDS_DEF_INTCONEDR       "%s is the intersection of %s and %s"
 END
 
 STRINGTABLE DISCARDABLE 
@@ -3624,6 +3629,7 @@ BEGIN
     CTX_SELECT_CLOSE_POLYGON 
                             "select a point (or select the first point to close and construct the polygon)"
     CTX_SELECT_TASKOPTION   "Choose an option with the contextual menu."
+    CTX_SELECT_CONE         "select a cone"
 END
 
 STRINGTABLE DISCARDABLE 
@@ -3710,6 +3716,7 @@ STRINGTABLE DISCARDABLE
 BEGIN
     ERR_CONE_NOAXIS         "The two points of the axis are identical.\n The cone cannot be defined."
     ERR_CONE_NOPROJAXIS     "The envelope of the cone cannot be determined.\nThe cone is not defined"
+    ERR_INTER_CONEDR        "The line and the cone do not intersect. \n Their intersection is not defined."
 END
 
 #endif    // English (U.K.) resources
