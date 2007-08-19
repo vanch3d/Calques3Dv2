@@ -35,6 +35,7 @@
 #include "..\Objects\Plan3D.h"
 #include "..\Objects\Sphere3D.h"
 #include "..\Objects\Cylinder3D.h"
+#include "..\Objects\Cone3D.h"
 
 #include "..\Calques3DDoc.h"
 #include "..\ViewUniv.h"
@@ -62,6 +63,7 @@ CPointSur3DTask::CPointSur3DTask(CView *AParent,UINT taskID):CTask(AParent,taskI
 	pl1 = NULL;
 	sp1 = NULL;
 	cyl = NULL;
+	cone = NULL;
 	GetContextualHelp();
 }
 
@@ -73,7 +75,8 @@ CPointSur3DTask::~CPointSur3DTask()
 	if (pl1)	pl1->SetSelected(FALSE);
 	if (sp1)	sp1->SetSelected(FALSE);
 	if (cyl)	cyl->SetSelected(FALSE);
-	if (dr1 || cr1 || pl1 || sp1 || cyl)	
+	if (cone)	cone->SetSelected(FALSE);
+	if (dr1 || cr1 || pl1 || sp1 || cyl || cone)	
 		m_pParent->Invalidate(0);
 	if (pCurr) delete pCurr;
 	pCurr = NULL;
@@ -82,6 +85,7 @@ CPointSur3DTask::~CPointSur3DTask()
 	pl1 = NULL;
 	sp1 = NULL;
 	cyl = NULL;
+	cone = NULL;
 }
 
 unsigned CPointSur3DTask::GetTaskResID() const 
@@ -90,7 +94,9 @@ unsigned CPointSur3DTask::GetTaskResID() const
 	{	case ID_CONSTRUCTION_POINTON_LINE:
 			return CTX_POINTSUR_DROITE;
 		case ID_CONSTRUCTION_POINTON_CYLINDER:
-			return CTX_POINTSUR_CERCLE;
+			return CTX_POINTSUR_CYL;
+		case ID_CONSTRUCTION_POINTON_CONE:
+			return CTX_POINTSUR_CONE;
 		case ID_CONSTRUCTION_POINTON_CIRCLE:
 			return CTX_POINTSUR_CERCLE;
 		case ID_CONSTRUCTION_POINTON_PLANE:
@@ -110,13 +116,16 @@ unsigned CPointSur3DTask::GetHelpResID()
 		{	case ID_CONSTRUCTION_POINTON_LINE:
 				mask = CTX_SELECT_DROITE;
 				break;
-			case ID_CONSTRUCTION_POINTON_CYLINDER:
 			case ID_CONSTRUCTION_POINTON_CIRCLE:
-				//mask = (dr1) ? TAllPlanClass : TAllDroiteClass;
 				mask = CTX_SELECT_CIRCLE;
 				break;
+			case ID_CONSTRUCTION_POINTON_CYLINDER:
+				mask = CTX_SELECT_CYL;
+				break;
+			case ID_CONSTRUCTION_POINTON_CONE:
+				mask = CTX_SELECT_CONE;
+				break;
 			case ID_CONSTRUCTION_POINTON_PLANE:
-				//mask = (dr1) ? TSphere3DClass : TAllDroiteClass;
 				mask = CTX_SELECT_PLAN1;
 				break;
 			case ID_CONSTRUCTION_POINTON_SPHERE:
@@ -140,9 +149,11 @@ CObjectId CPointSur3DTask::GetMask()
 		case ID_CONSTRUCTION_POINTON_CYLINDER:
 			mask = TCylindre3DClass;
 			break;
+		case ID_CONSTRUCTION_POINTON_CONE:
+			mask = TCone3DClass;
+			break;
 		case ID_CONSTRUCTION_POINTON_CIRCLE		:
 			mask = TCercle3DClass | TArcCercle3DClass | TCercleInterSS3D | TCercleInterPS3D;//| TEllipse3DClass;
-			////mask = TCylindre3DClass;
 			break;
 		case ID_CONSTRUCTION_POINTON_PLANE		:
 			mask = TAllPlanClass;
@@ -190,11 +201,13 @@ void CPointSur3DTask::CreateObject3D()
 		if (pl1) pl1->SetSelected(FALSE);
 		if (sp1) sp1->SetSelected(FALSE);
 		if (cyl) cyl->SetSelected(FALSE);
+		if (cone) cone->SetSelected(FALSE);
 
 		dr1 = NULL;
 		cr1 = NULL;
 		pl1 = NULL;
 		sp1 = NULL;
+		cone = NULL;
 		cyl = NULL;
 		pCurr = 0;
 		m_nStep = 0;
@@ -253,7 +266,20 @@ void CPointSur3DTask::CreateObject3D()
 			((CPointSurP3D*)temp)->Concept_pt = TempCpt;
 		else
 		{
-			pl1 = NULL;
+			cyl = NULL;
+			delete temp;
+			temp = NULL;
+		}
+	}
+	else if (cone)
+	{
+		temp = new CPointSurCone3D(cone);
+		CVector4 TempCpt;
+		if (((CPointSurP3D*)temp)->MoveObject(myV,0,(CPoint)ptClic,TempCpt))
+			((CPointSurP3D*)temp)->Concept_pt = TempCpt;
+		else
+		{
+			cone = NULL;
 			delete temp;
 			temp = NULL;
 		}
@@ -305,6 +331,9 @@ void CPointSur3DTask::OnMouseL(UINT, CPoint thepos)
 			break;
 		case ID_CONSTRUCTION_POINTON_CYLINDER:
 			cyl = (CCylinder3D*)temp;
+			break;
+		case ID_CONSTRUCTION_POINTON_CONE:
+			cone = (CCone3D*)temp;
 			break;
 		case ID_CONSTRUCTION_POINTON_CIRCLE:
 			cr1 = (CCercle3D*)temp;
