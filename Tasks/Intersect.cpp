@@ -36,6 +36,7 @@
 #include "..\Objects\CompositeObj3D.h"
 #include "..\Objects\Cylinder3D.h"
 #include "..\Objects\Cercle3D.h"
+#include "..\Objects\Cone3D.h"
 
 #include "..\Calques3DDoc.h"
 #include "..\ViewUniv.h"
@@ -63,6 +64,7 @@ CInter3DTask::CInter3DTask(CView *AParent,UINT taskID) : CTask(AParent,taskID)
 	sp2 = NULL;
 	circle = NULL;
 	cyl = NULL;
+	cone = NULL;
 	m_nStep = 0;
 	GetContextualHelp();
 }
@@ -77,7 +79,8 @@ CInter3DTask::~CInter3DTask()
 	if (sp2)	sp2->SetSelected(FALSE);
 	if (cyl)	cyl->SetSelected(FALSE);
 	if (circle)	circle->SetSelected(FALSE);
-	if (dr1 || dr2 || pl2 || p || sp || cyl || sp2 || circle)
+	if (cone)	cone->SetSelected(FALSE);
+	if (dr1 || dr2 || pl2 || p || sp || cyl || sp2 || circle || cone)
 		m_pParent->Invalidate(0);
 }
 
@@ -120,8 +123,8 @@ unsigned CInter3DTask::GetHelpResID()
 		case ID_CONSTRUCTION_INTERSECTION_SPHERESPHERE:
 				mask = (m_nStep) ? CTX_SELECT_SPHERE : CTX_SELECT_SPHERE;
 				break;
-		case ID_CONSTRUCTION_INTERSECTION_SPHEREPLANE:
-				mask = (m_nStep) ? CTX_SELECT_SPHERE : CTX_SELECT_PLAN1;
+		case ID_CONSTRUCTION_INTERSECTION_LINECONE:
+				mask = (m_nStep) ? CTX_SELECT_CONE : CTX_SELECT_DROITE;
 				break;
 	}
 	return mask;
@@ -159,6 +162,9 @@ CObjectId CInter3DTask::GetMask()
 				break;
 		case ID_CONSTRUCTION_INTERSECTION_SPHEREPLANE:
 				mask = (sp) ? TAllPlanClass : TSphere3DClass;
+				break;
+		case ID_CONSTRUCTION_INTERSECTION_LINECONE:
+				mask = (dr1) ? TCone3DClass : TAllDroiteClass;
 				break;
 	}
 	return mask;
@@ -198,6 +204,13 @@ void CInter3DTask::OnMouseL(UINT, CPoint thepos)
 				dr1 = (CDroite3D*) temp;
 			else
 				sp = (CSphere3D *) temp;
+
+				break;
+		case ID_CONSTRUCTION_INTERSECTION_LINECONE:
+			if (GetMask() == TAllDroiteClass)
+				dr1 = (CDroite3D*) temp;
+			else
+				cone = (CCone3D *) temp;
 
 				break;
 		case ID_CONSTRUCTION_INTERSECTION_LINECIRCLE:
@@ -264,7 +277,7 @@ void CInter3DTask::OnMouseL(UINT, CPoint thepos)
 	m_nStep++;
 	GetContextualHelp();
 
-	if (((dr1) && (dr2 || p || sp || circle)) ||
+	if (((dr1) && (dr2 || p || sp || circle || cone)) ||
 		 (p && (pl2|| circle)) || (p && cyl) || (sp && (sp2||p)))
 	{
 		CreateObject3D();
@@ -303,6 +316,11 @@ void CInter3DTask::CreateObject3D()
 	 {
 		temp = new CInterSphDr3D(sp,dr1);
 		res = ((CInterSphDr3D*)temp)->CalculConceptuel();
+	 }
+	else if ((dr1) && (cone))
+	 {
+		temp = new CInterConeDr3D(cone,dr1);
+		res = ((CInterConeDr3D*)temp)->CalculConceptuel();
 	 }
 	else if ((dr1) && (circle))
 	 {
@@ -365,6 +383,7 @@ void CInter3DTask::CreateObject3D()
 	if (sp2)	sp2->SetSelected(FALSE);
 	if (cyl)	cyl->SetSelected(FALSE);
 	if (circle)	circle->SetSelected(FALSE);
+	if (cone)	cone->SetSelected(FALSE);
 	InvalidateParent();
 	//m_pParent->Invalidate();
 	dr1 = dr2 = NULL;
@@ -374,6 +393,7 @@ void CInter3DTask::CreateObject3D()
 	sp2 = NULL;
 	cyl = NULL;
 	circle = NULL;
+	cone = NULL;
 	m_nStep = 0;
 	GetContextualHelp();
 }
