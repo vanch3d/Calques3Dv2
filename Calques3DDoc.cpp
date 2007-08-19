@@ -358,14 +358,15 @@ int CCalques3DDoc::GetObjectSize(UINT nID)
 			nb2=0;
 	BOOL	bRet = FALSE;
 	switch (nID){
+	case IDS_NAME_OBJECT:
 	case IDS_NAME_POINT:
 	case IDS_NAME_SEG:
 	case IDS_NAME_CIRCLE:
 	case IDS_NAME_PLANE:
-	case IDS_NAME_SPHERE:
 	case IDS_NAME_CUBE:
+	case IDS_NAME_SPHERE:
 	case IDS_NAME_CYLIN:
-	case IDS_NAME_OBJECT:
+	case IDS_NAME_CONE:
 		bRet= m_cObjectSize.Lookup(nID,nb);
 		break;
 	case IDS_NAME_LINE:
@@ -1460,6 +1461,7 @@ BOOL CCalques3DDoc::IsTaskAvailable(UINT m_nID)
 			nbPl	= GetObjectSize(IDS_NAME_PLANE),
 			nbSp	= GetObjectSize(IDS_NAME_SPHERE),
 			nbCb	= GetObjectSize(IDS_NAME_CUBE),
+			nbCn	= GetObjectSize(IDS_NAME_CONE),
 			nbCy	= GetObjectSize(IDS_NAME_CYLIN);
 	switch (m_nID){
 	case ID_EXPLORATION_MOVE:
@@ -1563,6 +1565,9 @@ BOOL CCalques3DDoc::IsTaskAvailable(UINT m_nID)
 		break;
 	case ID_CONSTRUCTION_INTERSECTION_PLANECIRCLE:
 		bEnab = nbPl && nbCr;
+		break;
+	case ID_CONSTRUCTION_INTERSECTION_LINECONE:
+		bEnab = nbLn && nbCn;
 		break;
 	case ID_CONSTRUCTION_INTERSECTION_SPHEREPLANE:
 		bEnab = nbPl && nbSp;
