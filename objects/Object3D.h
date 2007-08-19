@@ -152,6 +152,7 @@ const CObjectId TMacro3DClass			=	CObjectId(64,16);		///< Macro-construction
 const CObjectId TDivSegment3DClass		=	CObjectId(64,32);		///< Points equally spread on a segment
 const CObjectId TInterCircDr3DClass		=	CObjectId(64,64);		///< Bi-point defined by intersection of a circle and a line
 const CObjectId TInterCircPl3DClass		=	CObjectId(64,128);		///< Bi-point defined by intersection of a circle and a plane
+const CObjectId TInterConeDr3DClass		=	CObjectId(64,256);		///< Bi-point defined by intersection of a cone and a line
 
 const CObjectId TSphere3DClass			=	CObjectId(128,1);		///< ALL spheres
 
