@@ -34,7 +34,6 @@
 #include "Droite3D.h"
 #include "Plan3D.h"
 #include "Sphere3D.h"
-#include "CompositeObj3D.h"
 
 
 #ifdef _DEBUG
@@ -43,9 +42,9 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
+//***************************************************************************
+// CCone3D
+//***************************************************************************
 IMPLEMENT_SERIAL(CCone3D, CVolumeObject3D, VERSIONABLE_SCHEMA | 1)
 
 
@@ -601,7 +600,7 @@ void CCone3D::Draw(CDC* pDC,CVisualParam *vp,BOOL bSm)
 	}
 
 
-	{CPoint3D a(CVector4(0,0,0));
+/*	{CPoint3D a(CVector4(0,0,0));
 	CPoint3D b(CVector4(100,0,0));
 	CDroite3D dr(&a,&b);
 	CVector4 in,out;
@@ -621,7 +620,7 @@ void CCone3D::Draw(CDC* pDC,CVisualParam *vp,BOOL bSm)
 		pDC->Ellipse(pt1.x-2,pt1.y-2,pt1.x+2,pt1.y+2);
 		pt1 = vp->ProjectPoint(out);
 		pDC->Ellipse(pt1.x-3,pt1.y-3,pt1.x+3,pt1.y+3);
-	}}
+	}}*/
 }
 
 
@@ -704,7 +703,7 @@ BOOL CCone3D::IsInActiveArea(CPoint thePt)
 UINT CCone3D::IntersectPlan()
 {
 	return 0;
-}
+}	
 
 UINT CCone3D::IntersectLine(CDroite3D *dr,CVector4 &in,CVector4 &out)
 {
@@ -880,4 +879,151 @@ UINT CCone3D::IntersectLine(CDroite3D *dr,CVector4 &in,CVector4 &out)
 	in =  m_akPoint[0];
 	out =  m_akPoint[1];
     return m_iIntersectionType;
+}
+
+
+//***************************************************************************
+// CCone3D
+//***************************************************************************
+IMPLEMENT_SERIAL(CInterConeDr3D, CCompositeObj3D, VERSIONABLE_SCHEMA | 1)
+
+
+CInterConeDr3D::CInterConeDr3D() : CCompositeObj3D()
+{
+    Cone = NULL;
+    Dr = NULL;
+    ptA = ptB = NULL;
+}
+
+CInterConeDr3D::CInterConeDr3D(CCone3D* sp1,CDroite3D* dr2) : CCompositeObj3D()
+{
+    Cone = sp1;
+    Dr = dr2;
+    ptA = new CPointCalc3D(this);
+    ptB = new CPointCalc3D(this);
+
+    SetDepth();
+    ptA->SetInGraph();
+    ptB->SetInGraph();
+
+    m_cSubObjects.Add(ptA);
+    m_cSubObjects.Add(ptB);
+}
+
+CInterConeDr3D::CInterConeDr3D(const CObject3D & obj) : CCompositeObj3D(obj)
+{
+    Cone = ((CInterConeDr3D &)obj).Cone;
+    Dr = ((CInterConeDr3D &)obj).Dr;
+    ptA = new CPointCalc3D(this);
+    ptB = new CPointCalc3D(this);
+
+    SetDepth();
+    ptA->SetInGraph();
+    ptB->SetInGraph();
+
+    m_cSubObjects.Add(ptA);
+    m_cSubObjects.Add(ptB);
+}
+
+int CInterConeDr3D::SetDepth()
+{
+    if (Cone && Dr)
+    {
+        nDepth = max(Cone->nDepth,Dr->nDepth)+1;
+        if (ptA) ptA->nDepth = nDepth+1;
+        if (ptB) ptB->nDepth = nDepth+1;
+    }
+    return nDepth;
+}
+
+CObject3D* CInterConeDr3D::CopyObject()
+{
+    CObject3D *temp = new CInterConeDr3D((CObject3D&)*this);
+    return temp;
+}
+
+CxObject3DSet* CInterConeDr3D::GetParents()
+{
+    CxObject3DSet* list = new CxObject3DSet();
+    list->Add(Cone);
+    list->Add(Dr);
+    return list;
+}
+
+void CInterConeDr3D::Serialize( CArchive& ar )
+{
+    CCompositeObj3D::Serialize(ar);
+
+    if (ar.IsStoring())
+    {
+        ar << ((Cone) ? Cone->nObjectId : -1);
+        ar << ((Dr) ? Dr->nObjectId : -1);
+    }
+    else
+    {
+        Cone = (CCone3D*)SerializeObj(ar);
+        Dr = (CDroite3D*)SerializeObj(ar);
+        int nb = m_cSubObjects.GetSize();
+        for (int i=0;i<nb;i++)
+        {
+            CObject3D* ppp = m_cSubObjects.GetAt(i);
+            if (i==0)
+                ptA = (CPoint3D*)ppp;
+            else if (i==1)
+                ptB = (CPoint3D*)ppp;
+            if (ptA) ptA->SetInGraph();
+            if (ptB) ptB->SetInGraph();
+        }
+    }
+}
+
+CString CInterConeDr3D::GetObjectDef()
+{
+    CString mstr(_T("???")),sFormat(_T("???")),sName(_T("???"));
+    sName = GetObjectName();
+    sFormat.LoadString(GetDefID());
+
+    CString sn1(_T("???")),sn2(_T("???"));
+    if (Cone) sn1 = Cone->GetObjectHelp();
+    if (Dr) sn2 = Dr->GetObjectHelp();
+    mstr.Format(sFormat,sName,sn1,sn2);
+    return mstr;
+}
+
+UINT  CInterConeDr3D::CalculConceptuel()
+{
+    bValidate = ((Cone->bValidate) && (Dr->bValidate));
+    if (!bValidate)
+        return ValideCompositeObject(ERR_NOINTER);
+	
+	CVector4 in,out;
+	UINT res = Cone->IntersectLine(Dr,in,out);
+	if (res==0)
+	{
+        bValidate=0;
+        return ValideCompositeObject(ERR_INTER_CONEDR);
+	}
+	ptA->bValidate = TRUE;
+	ptA->Concept_pt = in;
+	if (res==1)
+	{
+		ptB->bValidate = FALSE;
+	}
+	else
+	{
+		ptB->Concept_pt = out;
+		ptB->bValidate = TRUE;
+	}
+	CCompositeObj3D::CalculConceptuel();
+	
+	bValidate=TRUE;
+    return 0;
+}
+
+CString CInterConeDr3D::ExportSymbolic(int nFormat)
+{
+    CString mstr;
+    mstr.Empty();
+
+    return mstr;
 }
