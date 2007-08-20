@@ -102,7 +102,7 @@ public:
 const CObjectId TObject3DClass			=	CObjectId(1,1);			///< ALL geometrical objects
 
 	const CObjectId TAllPointClass		= 	CObjectId(2,1);			///< ALL points
-	const CObjectId TAllBasePointClass	= 	CObjectId(2,8674);		///< ALL base-points (ie with at least of degree of freedom)
+	const CObjectId TAllBasePointClass	= 	CObjectId(2,8674+16384);		///< ALL base-points (ie with at least of degree of freedom)
 
 const CObjectId TPoint3DClass			= 	CObjectId(2,2);			///< Free point
 const CObjectId TPointMilieu3DClass		=	CObjectId(2,4);			///< Point middle of a bi-point or a segment
