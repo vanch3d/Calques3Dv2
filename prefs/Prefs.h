@@ -134,6 +134,7 @@ public :
 	struct CTCone3D {
 		COLORREF	clrDefault;		///< Default color for the spheres	
 		BOOL		bDoubleCone;	///< Draw or not the double cone
+		int			nbDelta;		///< Number of slices used for the cone
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
