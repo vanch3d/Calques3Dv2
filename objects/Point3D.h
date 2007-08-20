@@ -41,7 +41,7 @@ class CCylinder3D;
 class CCone3D;
 
 /////////////////////////////////////////////////////////////////////////////
-/// The basic point, defined by its coordinates in space.
+/// The basic free-point, defined by its coordinates in space.
 ///
 /////////////////////////////////////////////////////////////////////////////
 class CPoint3D : public CObject3D  
@@ -103,7 +103,7 @@ public:
 
 //////////////////////////////////////////////////////////////////////
 /// A point whose coordinates are calculated internally by another object.
-/// Usually used in composite objects such a bi-point intersections.
+/// Usually used in composite objects such as bi-point intersections.
 //////////////////////////////////////////////////////////////////////
 class CPointCalc3D : public CPoint3D
 {
@@ -139,11 +139,10 @@ public:
 class CPointMilieu3D : public CPoint3D
 {
 	DECLARE_SERIAL(CPointMilieu3D);
-
 public:
-	CPoint3D	*P1;	///< Pointer to the first point of the middle
-	CPoint3D	*P2;	///< Pointer to the second point of the middle
-	CSegment3D	*S;		///< Pointer to the segment this point is the middle
+	CPoint3D	*P1;	///< Pointer to the first point
+	CPoint3D	*P2;	///< Pointer to the second point
+	CSegment3D	*S;		///< Pointer to the segment
 
 public:
 	CPointMilieu3D();
@@ -272,7 +271,7 @@ public:
 };
 
 //////////////////////////////////////////////////////////////////////
-/// CPointSurP3D
+/// A point built on a plane
 //////////////////////////////////////////////////////////////////////
 class CPointSurP3D : public CPointSur3D
 {
@@ -308,7 +307,7 @@ public:
 };
 
 //////////////////////////////////////////////////////////////////////
-/// CPointSurS3D
+/// A point built on a sphere
 //////////////////////////////////////////////////////////////////////
 class CPointSurS3D : public CPointSur3D
 {
@@ -347,7 +346,7 @@ public:
 
 
 //////////////////////////////////////////////////////////////////////
-/// CPointSurCyl3D
+/// A point built on a cylinder
 //////////////////////////////////////////////////////////////////////
 class CPointSurCyl3D : public CPointSur3D
 {
@@ -386,18 +385,16 @@ public:
 };
 
 //////////////////////////////////////////////////////////////////////
-/// CPointSurCone3D
+/// A point built on a cone
 //////////////////////////////////////////////////////////////////////
 class CPointSurCone3D : public CPointSur3D
 {
-public:
 	DECLARE_SERIAL(CPointSurCone3D);
-	CCone3D		*Cone;				// Cylinder 
-	FCoord		alpha,				// position on circle
-				beta,
-				gamma;				// position on axis
+public:
+	CCone3D		*Cone;			///< A pointer to the cone
+	FCoord		gamma;			///< Distance of the axis-projection of the point to the apex
+	FCoord		alpha;			///< Angle of the point on the circle
 	BOOL		front,first;
-	CVector4	pt1,pt2;
 public:
 	CPointSurCone3D();
 	CPointSurCone3D(CCone3D *s1);
@@ -426,26 +423,26 @@ public:
 
 
 //////////////////////////////////////////////////////////////////////
-/// CPointInter3D
+/// A generic wrapper for the intersection points.
 //////////////////////////////////////////////////////////////////////
 class CPointInter3D : public CPoint3D
 {
-public:
 	DECLARE_SERIAL(CPointInter3D);
+public:
 	CPointInter3D();
 	CPointInter3D(const CObject3D & );
 	//virtual void Serialize( CArchive& ar );
 };
 
 //////////////////////////////////////////////////////////////////////
-/// CPointInterDD3D
+/// A point at the intersection of two lines
 //////////////////////////////////////////////////////////////////////
 class CPointInterDD3D : public CPointInter3D
 {
-public:
 	DECLARE_SERIAL(CPointInterDD3D);
-	CDroite3D	*D1,*D2;		//milieu défini par 2 pts existants
-	//TSegment3D	*S;
+public:
+	CDroite3D	*D1;		///< A pointer to the first line
+	CDroite3D	*D2;		///< A pointer to the second line
 	FCoord		lambda,
 				mu;
 
@@ -475,12 +472,12 @@ public:
 
 
 //////////////////////////////////////////////////////////////////////
-/// CPointInterDP3D
+/// A point a the intersection of a line and a plane.
 //////////////////////////////////////////////////////////////////////
 class CPointInterDP3D : public CPointInter3D
 {
-public:
 	DECLARE_SERIAL(CPointInterDP3D);
+public:
 	CDroite3D	*D1;		//milieu défini par 2 pts existants
 	CPlan3D		*P;
 	CPoint3D	*P1,*P2,*P3;
@@ -511,13 +508,14 @@ public:
 
 
 //////////////////////////////////////////////////////////////////////
-/// CPointCenter3D
+/// The point at the center of a circle.
 //////////////////////////////////////////////////////////////////////
 class CPointCenter3D : public CPoint3D
 {
-public:
 	DECLARE_SERIAL(CPointCenter3D);
-	CCercle3D	*C;
+public:
+	CCercle3D	*C;		///< A pointer to the circle
+
 public:
 	CPointCenter3D();
 	CPointCenter3D(CCercle3D *s1);
@@ -542,7 +540,7 @@ public:
 };
 
 //////////////////////////////////////////////////////////////////////
-/// CPointSymetric3D
+/// A point built as a central, axial or plane symmetry 
 //////////////////////////////////////////////////////////////////////
 class CPointSymetric3D : public CPoint3D
 {
@@ -579,7 +577,7 @@ public:
 };
 
 //////////////////////////////////////////////////////////////////////
-/// CPointTranslat3D
+/// A point built as a translation according to a direction
 //////////////////////////////////////////////////////////////////////
 class CPointTranslat3D : public CPoint3D
 {
