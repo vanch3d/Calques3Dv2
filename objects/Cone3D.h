@@ -90,15 +90,18 @@ public:
 public:
 	UINT IntersectPlan();
 	UINT IntersectLine(CDroite3D *dr,CVector4 &in,CVector4 &out);
+
+	CVector4 GetConeApex();
+	CVector4 GetConeAxis();
 };
 
 //////////////////////////////////////////////////////////////////////
-/// Intersection between a cone and a line
+/// The bi-point at the intersection of a cone and a line
 //////////////////////////////////////////////////////////////////////
 class CInterConeDr3D : public CCompositeObj3D
 {
-public:
 	DECLARE_SERIAL(CInterConeDr3D);
+public:
 	CCone3D		*Cone;		///< Pointer to the cone
 	CDroite3D	*Dr;		///< Pointer to the line
 	CPoint3D	*ptA;		///< The first point of the intersection
