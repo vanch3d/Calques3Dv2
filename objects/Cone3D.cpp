@@ -54,7 +54,7 @@ CCone3D::CCone3D() : CVolumeObject3D()
 	pApex = pAxis = pRadius = NULL;
 	C1 = C2 = C3 = NULL;
 	Base1 = Base2 = Base3 = NULL;
-	nDelta = 13;
+	nDelta = TPref::TCone.nbDelta;
 }
 
 CCone3D::CCone3D(CPoint3D *p1,CPoint3D *p2,CPoint3D *rad) : CVolumeObject3D()
@@ -66,7 +66,7 @@ CCone3D::CCone3D(CPoint3D *p1,CPoint3D *p2,CPoint3D *rad) : CVolumeObject3D()
 	SetDepth();
 	C1 = C2 = C3 = NULL;
 	Base1 = Base2 = Base3 = NULL;
-	nDelta = 13;
+	nDelta = TPref::TCone.nbDelta;
 }
 
 CCone3D::CCone3D(const CObject3D & src) : CVolumeObject3D(src)
@@ -77,7 +77,7 @@ CCone3D::CCone3D(const CObject3D & src) : CVolumeObject3D(src)
  	SetDepth();
 	C1 = C2 = C3 = NULL;
 	Base1 = Base2 = Base3 = NULL;
-	nDelta = 13;
+	nDelta = TPref::TCone.nbDelta;
 }
 
 CCone3D::~CCone3D()
@@ -125,7 +125,7 @@ void CCone3D::Serialize( CArchive& ar )
         pRadius = (CPoint3D*)SerializeObj(ar);
 		C1 = C2 = C3 = NULL;
 		Base1 = Base2 = Base3 = NULL;
-		nDelta = 13;
+		nDelta = TPref::TCone.nbDelta;
     }
 }
 
@@ -378,6 +378,7 @@ void CCone3D::CalculVisuel(CVisualParam *vp)
 // 	CInterCircPlane3D ptint(&ci,&pl);
 // 	UINT res = ptint.CalculConceptuel();
 
+	nDelta =  TPref::TCone.nbDelta;
     for (int t=0;t<nDelta;t++)
     {
 		FCoord theta = /*start+*/2*M_PI*t/nDelta;
@@ -430,6 +431,9 @@ void CCone3D::CalculVisuel(CVisualParam *vp)
      }
 }
 
+// uncomment this line to draw the debug feedbacks
+//#define __DEBUG_CONE 1
+
 void CCone3D::Draw(CDC* pDC,CVisualParam *vp,BOOL bSm)
 {
     if ((!bVisible) || (!bValidate) || (!IsInCalque(vp->nCalqueNum))) return;
@@ -437,83 +441,75 @@ void CCone3D::Draw(CDC* pDC,CVisualParam *vp,BOOL bSm)
 	if (C2) C2->Draw(pDC,vp,bSm);
 	if (C3 && TPref::TCone.bDoubleCone) C3->Draw(pDC,vp,bSm);
 
-//  	pDC->MoveTo(vp->ProjectPoint(C1->Center));
-//  	pDC->LineTo(vp->ProjectPoint(C1->Center+LocRep.I*50.));
-//  	pDC->MoveTo(vp->ProjectPoint(C1->Center));
-//  	pDC->LineTo(vp->ProjectPoint(C1->Center+LocRep.J*100.));
-// 	pDC->MoveTo(vp->ProjectPoint(C1->Center));
-// 	pDC->LineTo(vp->ProjectPoint(C1->Center+LocRep.K*50.));
+#ifdef __DEBUG_CONE
+	{	// Draw the local referential
+ 		pDC->MoveTo(vp->ProjectPoint(C1->Center));
+ 		pDC->LineTo(vp->ProjectPoint(C1->Center+LocRep.I*50.));
+ 		pDC->MoveTo(vp->ProjectPoint(C1->Center));
+ 		pDC->LineTo(vp->ProjectPoint(C1->Center+LocRep.J*100.));
+		pDC->MoveTo(vp->ProjectPoint(C1->Center));
+		pDC->LineTo(vp->ProjectPoint(C1->Center+LocRep.K*50.));
+	}
+#endif
 
-
+	// Compute the visual envelope
 	CVector4 oeil= vp->GetEyePos();
 	CVector4 origin(0,0,0,1);
 	CVector4 VisuNorm= oeil - origin;
 	CPoint3D pta(pApex->Concept_pt + VisuNorm);
 	CDroite3D dr(pApex,&pta);
 	dr.CalculConceptuel();
-	//dr.CalculVisuel(vp);
-	//dr.Draw(pDC,vp,bSm);
 	CPoint3D ff(C1->Center);
 	CPlan3D pl(&ff,(pApex->Concept_pt-pAxis->Concept_pt).Normalized());
 	pl.CalculConceptuel();
-	//pl.CalculVisuel(vp);
-	//pl.Draw(pDC,vp,bSm);
 	CPointInterDP3D fff(&dr,&pl);
 	fff.CalculConceptuel();
-	//fff.CalculVisuel(vp);
-	//fff.Draw(pDC,vp,bSm);
 	CPoint3D rr(C1->Center+CVector4(0,0,1)*C1->Radius);
 	CPoint3D rd(C1->Center);
 	CSphere3D sp1(&rd,&rr);
 	sp1.CalculConceptuel();
-	//sp1.CalculVisuel(vp);
-	//sp1.Draw(pDC,vp,bSm);
 	CPointMilieu3D mil(&fff,&ff);
 	mil.CalculConceptuel();
-//	//mil.CalculVisuel(vp);
-///	mil.Draw(pDC,vp,bSm);
 	CSphere3D sp2(&mil,&ff);
 	sp2.CalculConceptuel();
-	//sp2.CalculVisuel(vp);
-	//sp2.Draw(pDC,vp,bSm);
 	CCercleInterSS3D ci(&sp1,&sp2);
 	ci.CalculConceptuel();
-	//ci.CalculVisuel(vp);
-	//ci.Draw(pDC,vp,bSm);
 	CInterCircPlane3D ptint(&ci,&pl);
 	UINT res = ptint.CalculConceptuel();
-	//ptint.CalculVisuel(vp);
-	//ptint.Draw(pDC,vp,bSm);
+
+	FCoord end=0,end2=0;
+	CVector4 I(0,0,0),J(0,0,0),K(0,0,0);
+
 	if (res==0)
 	{
-		CSegment3D seg1(pApex,ptint.ptA);
-		CSegment3D seg2(pApex,ptint.ptB);
-		seg1.pObjectShape.clrObject = RGB(255,0,0);
-		seg1.pObjectShape.nShapeId = 6;
-		seg2.pObjectShape.clrObject = RGB(0,255,0);
-		seg2.pObjectShape.nShapeId = 6;
-		seg1.CalculConceptuel();
-		seg2.CalculConceptuel();
+#ifdef __DEBUG_CONE
+// 		// Draw the two extreme edges of the envelope
+// 		CSegment3D seg1(pApex,ptint.ptA);
+// 		CSegment3D seg2(pApex,ptint.ptB);
+// 		seg1.pObjectShape.clrObject = RGB(255,0,0);
+// 		seg1.pObjectShape.nShapeId = 6;
+// 		seg2.pObjectShape.clrObject = RGB(0,255,0);
+// 		seg2.pObjectShape.nShapeId = 6;
+// 		seg1.CalculConceptuel();
+// 		seg2.CalculConceptuel();
+// 
+// 		seg1.CalculVisuel(vp);
+// 		seg1.Draw(pDC,vp,bSm);
+// 		seg2.CalculVisuel(vp);
+// 		seg2.Draw(pDC,vp,bSm);
+#endif
 
-		seg1.CalculVisuel(vp);
-		seg1.Draw(pDC,vp,bSm);
-		seg2.CalculVisuel(vp);
-		seg2.Draw(pDC,vp,bSm);
-	}
-
-	CVector4 ptLimA =  ptint.ptA->Concept_pt;
-	CVector4 ptLimB =  ptint.ptB->Concept_pt;
-		CVector4 I = (ptLimA - C1->Center).Normalized();
+		CVector4 ptLimA =  ptint.ptA->Concept_pt;
+		CVector4 ptLimB =  ptint.ptB->Concept_pt;
+		I = (ptLimA - C1->Center).Normalized();
 		I.Norme();
-		CVector4 J = (ptLimB - C1->Center).Normalized();
+		J = (ptLimB - C1->Center).Normalized();
 		J.Norme();
-		CVector4 K = I  % J;
+		K = I  % J;
 		FCoord dd = K * LocRep.K;
-		FCoord end ;
-		FCoord end2;
-	if (dd<0)
+		if (dd<0)
 		{
-		CVector4 f = I;
+			CVector4 f = I;
 			K = I;
 			I = J;
 			J = K;
@@ -522,19 +518,22 @@ void CCone3D::Draw(CDC* pDC,CVisualParam *vp,BOOL bSm)
 			end = I * f;
 			end2 = J * f;
 		}
-	else
-	{
-		CVector4 f = J;
-		J = K%I;
+		else
+		{
+			CVector4 f = J;
+			J = K%I;
 			end = I * f;
 			end2 = J * f;
+		}
+#ifdef __DEBUG_CONE
+		pDC->MoveTo(vp->ProjectPoint(C1->Center));
+		pDC->LineTo(vp->ProjectPoint(C1->Center+I*50.));
+		pDC->MoveTo(vp->ProjectPoint(C1->Center));
+		pDC->LineTo(vp->ProjectPoint(C1->Center+J*100.));
+		pDC->MoveTo(vp->ProjectPoint(C1->Center));
+		pDC->LineTo(vp->ProjectPoint(C1->Center+K*150.));
+#endif
 	}
-	pDC->MoveTo(vp->ProjectPoint(C1->Center));
-	pDC->LineTo(vp->ProjectPoint(C1->Center+I*50.));
-	pDC->MoveTo(vp->ProjectPoint(C1->Center));
-	pDC->LineTo(vp->ProjectPoint(C1->Center+J*100.));
-	pDC->MoveTo(vp->ProjectPoint(C1->Center));
-	pDC->LineTo(vp->ProjectPoint(C1->Center+K*150.));
 
 	FCoord start =0 ;
 
@@ -544,17 +543,17 @@ void CCone3D::Draw(CDC* pDC,CVisualParam *vp,BOOL bSm)
 // 		start = M_PI + start;
 	if (end2 < 0)
 		end = M_PI + end;
-	FCoord dend = RTD(end);
-	FCoord dstart = RTD(start);
-	TRACE2(_T("%f.2 %f.2\n"),dstart,dend);
+	//FCoord dend = RTD(end);
+	//FCoord dstart = RTD(start);
+
 	for (int t=0;t<cGenerList.GetSize();t++)
     {
         CSegment3D *seg = (CSegment3D*)cGenerList[t];
 		if (!seg) continue;
 
-					CVector4 pt = seg->P1->Concept_pt - C1->Center;
-			pt = pt.Normalized();
-			pt.Norme();
+		CVector4 pt = seg->P1->Concept_pt - C1->Center;
+		pt = pt.Normalized();
+		pt.Norme();
 
 		//if (res!=0) continue;
 		FCoord ca = I * pt;
@@ -563,8 +562,6 @@ void CCone3D::Draw(CDC* pDC,CVisualParam *vp,BOOL bSm)
 		if (sa < 0)
 			ca = M_PI+ca;
 		
-		TRACE1(_T("XXX = %f.2\n"),RTD(ca));
-
 		//if (t==0)
 		{
 			CPen *oldP = NULL;
@@ -580,7 +577,7 @@ void CCone3D::Draw(CDC* pDC,CVisualParam *vp,BOOL bSm)
 				l = l+3*l/4;
 				COLORREF ff = CBCGPDrawManager::HLStoRGB_ONE(h,220./255.,s);
 				seg->pObjectShape.clrObject = ff;
-				seg->pObjectShape.nShapeId = 6;
+				//seg->pObjectShape.nShapeId = 6;
 			}
 			else
 			{
@@ -588,39 +585,11 @@ void CCone3D::Draw(CDC* pDC,CVisualParam *vp,BOOL bSm)
 				seg->pObjectShape.clrObject = pObjectShape.clrObject;
 				seg->pObjectShape.nShapeId = pObjectShape.nShapeId;
 			}
-
-			//pDC->MoveTo(vp->ProjectPoint(C1->Center));
-		//	pDC->LineTo(vp->ProjectPoint(C1->Center+pt*350.));
 			pDC->SelectObject(oldP);
-
 			int nb = 0;
 		}
-
 		seg->Draw(pDC,vp,bSm);
 	}
-
-
-/*	{CPoint3D a(CVector4(0,0,0));
-	CPoint3D b(CVector4(100,0,0));
-	CDroite3D dr(&a,&b);
-	CVector4 in,out;
-	dr.CalculConceptuel();
-	dr.CalculVisuel(vp);
-	dr.Draw(pDC,vp,bSm);
-	UINT d = IntersectLine(&dr,in,out);
-	if (d==0) return;
-	if (d==1)
-	{
-		CPoint pt1 = vp->ProjectPoint(in);
-		pDC->Ellipse(pt1.x-2,pt1.y-2,pt1.x+2,pt1.y+2);
-	}
-	else if (d==2)
-	{
-		CPoint pt1 = vp->ProjectPoint(in);
-		pDC->Ellipse(pt1.x-2,pt1.y-2,pt1.x+2,pt1.y+2);
-		pt1 = vp->ProjectPoint(out);
-		pDC->Ellipse(pt1.x-3,pt1.y-3,pt1.x+3,pt1.y+3);
-	}}*/
 }
 
 
@@ -669,9 +638,22 @@ void CCone3D::Draw3DRendering(int nVolMode)
 	glPushMatrix();
 	glTranslated(tx, ty, tz);
 	glRotated(dd,drot.x,drot.y,drot.z);
-	glColor3f(.0f,.0f,.50f);
-	glutSolidCone(base,height,16,64);
-	//glutWireCone(base,height,16,16);
+//	glColor3f(.0f,.0f,.50f);
+	COLORREF clr = pObjectShape.GetObjectColor();
+	glColor3f(GetRValue(clr)/255.f,GetGValue(clr)/255.f,GetBValue(clr)/255.f);
+	if (nVolMode==RENDER_SILHOUETTE)
+		glutWireCone(base,height,32,16);
+	else if (nVolMode==RENDER_FILL || nVolMode==RENDER_STIPPLE)
+	{
+		if (nVolMode==RENDER_STIPPLE)
+		{
+			glEnable(GL_POLYGON_STIPPLE);
+			glPolygonStipple(stippleMask[8]);
+		}
+		glutSolidCone(base,height,32,16);
+		if (nVolMode==RENDER_STIPPLE)
+			glDisable(GL_POLYGON_STIPPLE);
+	}
 	glPopMatrix();
 	if (TPref::TCone.bDoubleCone)
 	{
@@ -679,8 +661,21 @@ void CCone3D::Draw3DRendering(int nVolMode)
 		glTranslated(tx, ty, tz);
 		glRotated(180+dd,drot.x,drot.y,drot.z);
 		glTranslated(0, 0,- 2*nHeight/TPref::TUniv.nUnitRep/3);
-		glColor3f(.0f,.50f,.50f);
-		glutSolidCone(base,height,16,16);
+//		glColor3f(.0f,.50f,.50f);
+		glColor3f(GetRValue(clr)/255.f,GetGValue(clr)/255.f,GetBValue(clr)/255.f);
+		if (nVolMode==RENDER_SILHOUETTE)
+			glutWireCone(base,height,32,16);
+		else if (nVolMode==RENDER_FILL || nVolMode==RENDER_STIPPLE)
+		{
+			if (nVolMode==RENDER_STIPPLE)
+			{
+				glEnable(GL_POLYGON_STIPPLE);
+				glPolygonStipple(stippleMask[8]);
+			}
+			glutSolidCone(base,height,32,16);
+			if (nVolMode==RENDER_STIPPLE)
+				glDisable(GL_POLYGON_STIPPLE);
+		}
 		glPopMatrix();
 	}
 
@@ -704,6 +699,17 @@ UINT CCone3D::IntersectPlan()
 {
 	return 0;
 }	
+
+CVector4 CCone3D::GetConeApex() 
+{ 
+	return pApex->Concept_pt;
+}
+
+CVector4 CCone3D::GetConeAxis() 
+{ 
+	return (pAxis->Concept_pt - pApex->Concept_pt).Normalized();
+}
+
 
 UINT CCone3D::IntersectLine(CDroite3D *dr,CVector4 &in,CVector4 &out)
 {
@@ -883,7 +889,7 @@ UINT CCone3D::IntersectLine(CDroite3D *dr,CVector4 &in,CVector4 &out)
 
 
 //***************************************************************************
-// CCone3D
+// CInterConeDr3D
 //***************************************************************************
 IMPLEMENT_SERIAL(CInterConeDr3D, CCompositeObj3D, VERSIONABLE_SCHEMA | 1)
 
