@@ -88,8 +88,8 @@ BOOL	TPref::GrayedHidden=0;
 
 COLORREF	TPref::custColors[16] =
  {
-	RGB(255,0,0),RGB(0,255,0),RGB(0,0,255),
-	RGB(255,255,0),RGB(0,255,255),RGB(255,0,255),
+	RGB(255,0,0),RGB(0,192,0),RGB(0,0,255),
+	RGB(192,192,0),RGB(0,192,192),RGB(255,0,255),
 	RGB(0,0,0),RGB(64,64,64),
 	RGB(255,128,128),RGB(128,255,128),RGB(128,128,255),
 	RGB(255,255,128),RGB(128,255,255),RGB(255,128,255),
@@ -113,7 +113,7 @@ TPref::CTCercle3D	TPref::TCercle =	{RGB(0,0,255),0,40};
 TPref::CTCube3D		TPref::TCube =		{RGB(0,0,255),1};
 TPref::CTSphere3D	TPref::TSphere =	{RGB(0,0,255),0,TRUE,TRUE};
 TPref::CTLocus3D	TPref::TLocus =		{RGB(255,0,0),20};
-TPref::CTCone3D		TPref::TCone =		{RGB(0,0,255),TRUE};
+TPref::CTCone3D		TPref::TCone =		{RGB(0,0,255),FALSE,24};
 
 TPref::CTHistory	TPref::THistory	 = 
 		{
@@ -135,7 +135,7 @@ TPref::CTMathPad	TPref::TMathPad =
 TPref::CTUniverse	TPref::TUniv = 
 		{
 			RGB(128,0,0),
-			RGB(192,192,192),
+			RGB(0,0,0),
 			{25.0,45.0,800.0,400.0},
 			TPref::MV_HORIZ,
 			3,
