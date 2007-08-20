@@ -547,7 +547,9 @@ void CCercle3D::Draw3DRendering(int nVolMode)
 	glRotated(dd,drot.x,drot.y,drot.z);
 //	glRotated(90.,dl.x,dl.y,dl.z);
 	//glColor3f(.8f,.5f,.8f);
-	glColor3f(.0f,.0f,1.0f);
+//	glColor3f(.0f,.0f,1.0f);
+	COLORREF clr = pObjectShape.GetObjectColor();
+	glColor3f(GetRValue(clr)/255.f,GetGValue(clr)/255.f,GetBValue(clr)/255.f);
     glMaterialfv(GL_FRONT, GL_AMBIENT, mat_diffuse);
     glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
     glMaterialf(GL_FRONT, GL_SHININESS, no_shininess);

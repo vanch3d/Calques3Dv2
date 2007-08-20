@@ -352,7 +352,10 @@ void CSphere3D::Draw3DRendering(int nVolMode)
 
 	glPushMatrix();
 	glTranslated(x, y, z);
-	glColor3f(.2f,.5f,.8f);
+//	glColor3f(.2f,.5f,.8f);
+	COLORREF clr = pObjectShape.GetObjectColor();
+	glColor3f(GetRValue(clr)/255.f,GetGValue(clr)/255.f,GetBValue(clr)/255.f);
+
     glMaterialfv(GL_FRONT, GL_AMBIENT, mat_diffuse);
     glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
     glMaterialf(GL_FRONT, GL_SHININESS, no_shininess);
