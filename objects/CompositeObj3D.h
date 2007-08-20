@@ -169,16 +169,17 @@ public:
 
 };
 
-///
-/// This is the main class
-///
+/////////////////////////////////////////////////////////////////////////////
+/// The bi-point at the intersection of a sphere and a line.
+/////////////////////////////////////////////////////////////////////////////
 class CInterSphDr3D : public CCompositeObj3D
 {
-public:
 	DECLARE_SERIAL(CInterSphDr3D);
-	CSphere3D	*Sph;  		// sphere
-	CDroite3D	*Dr;			// droite
-	CPoint3D	*ptA,*ptB;	// les points intersection
+public:
+	CSphere3D	*Sph;	///< Pointer to the sphere
+	CDroite3D	*Dr;	///< Pointer to the line
+	CPoint3D	*ptA;	///< The first intersection point
+	CPoint3D	*ptB;	///< The second intersection point
 
 	CInterSphDr3D();
 	CInterSphDr3D(CSphere3D* sp1,CDroite3D* dr2);
@@ -245,23 +246,29 @@ public:
 	virtual void	GetRange(CVector4 &min,CVector4 &max);
 };
 
-///
-/// This is the main class
-///
+/////////////////////////////////////////////////////////////////////////////
+/// The bi-point at the intersection of a circle and a line.
+/// Note that both source objects have to be coplanar (ie the intersection does
+/// not consider the case of a line cutting the circle's plane straight on its radius).
+/////////////////////////////////////////////////////////////////////////////
 class CInterCircDr3D : public CCompositeObj3D
 {
-public:
 	DECLARE_SERIAL(CInterCircDr3D);
-	CCercle3D	*Circ;  		// sphere
-	CDroite3D	*Dr;			// droite
-	CPoint3D	*ptA,*ptB;		// les points intersection
+public:
+	CCercle3D	*Circ;  	///< Pointer to the circle
+	CDroite3D	*Dr;		///< Pointer to the line
+	CPoint3D	*ptA;		///< The first intersection point
+	CPoint3D	*ptB;		///< The second intersection point
 
+public:
 	CInterCircDr3D();
 	CInterCircDr3D(CCercle3D* sp1,CDroite3D* dr2);
 	CInterCircDr3D(const CObject3D & );
 
-	virtual int SetDepth();
 	void InitIntersection();
+
+public:
+	virtual int SetDepth();
 
 	virtual CObject3D* CopyObject();
 	virtual CxObject3DSet* GetParents();
@@ -277,23 +284,19 @@ public:
 
 	virtual CString GetObjectDef();
 	virtual UINT  CalculConceptuel();
-	//virtual void CalculVisuel(CVisualParam *);
-	//virtual void Draw(CDC*,CVisualParam *vp,BOOL bSM=FALSE);
-
-	//virtual CString ExportSymbolic(int nFormat); 
-	//virtual void	GetRange(CVector4 &min,CVector4 &max);
 };
 
-///
-/// This is the main class
-///
+/////////////////////////////////////////////////////////////////////////////
+/// The bi-point at the intersection of a circle and a plane.
+/////////////////////////////////////////////////////////////////////////////
 class CInterCircPlane3D : public CCompositeObj3D
 {
-public:
 	DECLARE_SERIAL(CInterCircPlane3D);
-	CCercle3D	*Circ;  		// sphere
-	CPlan3D		*Pl;			// plane
-	CPoint3D	*ptA,*ptB;		// les points intersection
+public:
+	CCercle3D	*Circ;  	///< Pointer to the circle
+	CPlan3D		*Pl;		///< Pointer to the plane
+	CPoint3D	*ptA;		///< The first intersection point
+	CPoint3D	*ptB;		///< The second intersection point
 
 	CInterCircPlane3D();
 	CInterCircPlane3D(CCercle3D* sp1,CPlan3D* dr2);

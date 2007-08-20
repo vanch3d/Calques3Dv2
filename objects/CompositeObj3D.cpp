@@ -42,9 +42,9 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
+//***************************************************************************
+// CCompositeObj3D
+//***************************************************************************
 IMPLEMENT_SERIAL(CCompositeObj3D, CObject3D, VERSIONABLE_SCHEMA | 1)
 
 CCompositeObj3D::CCompositeObj3D() : CObject3D()
@@ -612,9 +612,9 @@ int CCompositeObj3D::SetProperties(CxObject3DSet *pSet)
     return (nRet == IDOK);
 }
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
+//***************************************************************************
+// CCube3D
+//***************************************************************************
 IMPLEMENT_SERIAL(CCube3D, CCompositeObj3D, VERSIONABLE_SCHEMA | 1)
 
 CCube3D::CCube3D() : CCompositeObj3D()
@@ -1075,9 +1075,9 @@ int CCube3D::SetProperties(CxObject3DSet *pSet)
 
 }
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
+//***************************************************************************
+// CInterSphDr3D
+//***************************************************************************
 IMPLEMENT_SERIAL(CInterSphDr3D, CCompositeObj3D, VERSIONABLE_SCHEMA | 1)
 
 CInterSphDr3D::CInterSphDr3D() : CCompositeObj3D()
@@ -1370,9 +1370,9 @@ CString CInterSphDr3D::ExportSymbolic(int nFormat)
 }
 
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
+//***************************************************************************
+// CDivSegment3D
+//***************************************************************************
 IMPLEMENT_SERIAL(CDivSegment3D, CCompositeObj3D, VERSIONABLE_SCHEMA | 1)
 
 CDivSegment3D::CDivSegment3D() : CCompositeObj3D()
@@ -1561,9 +1561,9 @@ CString CDivSegment3D::ExportSymbolic(int nFormat)
 //     return mstr;
 }
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
+//***************************************************************************
+// CInterCircDr3D
+//***************************************************************************
 IMPLEMENT_SERIAL(CInterCircDr3D, CCompositeObj3D, VERSIONABLE_SCHEMA | 1)
 
 CInterCircDr3D::CInterCircDr3D() : CCompositeObj3D()
@@ -1783,9 +1783,9 @@ UINT  CInterCircDr3D::CalculConceptuel()
 }
 
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
+//***************************************************************************
+// CInterCircPlane3D
+//***************************************************************************
 IMPLEMENT_SERIAL(CInterCircPlane3D, CCompositeObj3D, VERSIONABLE_SCHEMA | 1)
 
 CInterCircPlane3D::CInterCircPlane3D() : CCompositeObj3D()
