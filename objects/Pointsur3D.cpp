@@ -48,9 +48,9 @@ static char THIS_FILE[]=__FILE__;
 //					CDC* HandleDC,CVisualParam *mV,
 //					CPen& curPen,CPen& curPenH,CPen& disPen,CPen& disPenH);
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
+//***************************************************************************
+// CPointSur3D
+//***************************************************************************
 IMPLEMENT_SERIAL(CPointSur3D, CPoint3D, VERSIONABLE_SCHEMA | 1)
 
 CPointSur3D::CPointSur3D() : CPoint3D() 
@@ -76,9 +76,9 @@ CxSchemeSet* CPointSur3D::GetRedefineSchemes(CxSchemeSet* pSet)
 	return pSet;
 }
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
+//***************************************************************************
+// CPointSurD3D
+//***************************************************************************
 IMPLEMENT_SERIAL(CPointSurD3D, CPointSur3D, VERSIONABLE_SCHEMA | 1)
 
 CPointSurD3D::CPointSurD3D() : CPointSur3D() 
@@ -492,9 +492,9 @@ BOOL CPointSurD3D::MoveObject(CVisualParam *myVisuParam,UINT,CPoint MouseClic,CV
 //	return 1;
 }
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
+//***************************************************************************
+// CPointSurC3D
+//***************************************************************************
 IMPLEMENT_SERIAL(CPointSurC3D, CPointSur3D, VERSIONABLE_SCHEMA | 1)
 
 CPointSurC3D::CPointSurC3D() : CPointSur3D() 
@@ -877,9 +877,9 @@ BOOL CPointSurC3D::MoveObject(CVisualParam *myVisuParam,UINT,CPoint MouseClic,CV
 	return TRUE;
 }
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
+//***************************************************************************
+// CPointSurP3D
+//***************************************************************************
 IMPLEMENT_SERIAL(CPointSurP3D, CPointSur3D, VERSIONABLE_SCHEMA | 1)
 
 CPointSurP3D::CPointSurP3D() : CPointSur3D() 
@@ -1300,9 +1300,9 @@ BOOL CPointSurP3D::MoveObject(CVisualParam *myVisuParam,UINT,CPoint MouseClic,CV
 	return 1;
 }
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
+//***************************************************************************
+// CPointSurS3D
+//***************************************************************************
 IMPLEMENT_SERIAL(CPointSurS3D, CPointSur3D, VERSIONABLE_SCHEMA | 1)
 
 CPointSurS3D::CPointSurS3D() : CPointSur3D() 
@@ -1647,9 +1647,9 @@ void CPointSurS3D::DrawRetro(CDC* pDC,CVisualParam *mV)
 }
 
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
+//***************************************************************************
+// CPointSurCyl3D
+//***************************************************************************
 IMPLEMENT_SERIAL(CPointSurCyl3D, CPointSur3D, VERSIONABLE_SCHEMA | 1)
 
 CPointSurCyl3D::CPointSurCyl3D() : CPointSur3D() 
@@ -2159,9 +2159,9 @@ BOOL CPointSurCyl3D::MoveObject(CVisualParam *myVisuParam,UINT,CPoint MouseClic,
 }
 
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
+//***************************************************************************
+// CPointSurCone3D
+//***************************************************************************
 IMPLEMENT_SERIAL(CPointSurCone3D, CPointSur3D, VERSIONABLE_SCHEMA | 1)
 
 CPointSurCone3D::CPointSurCone3D() : CPointSur3D() 
@@ -2169,10 +2169,7 @@ CPointSurCone3D::CPointSurCone3D() : CPointSur3D()
 	Cone = NULL;
 	alpha= 0.;
 	gamma = 0.;
-	beta = 0.;
-	front = first = 0;
-	pt1 = CVector4(0,0,0,0);
-	pt2 = CVector4(0,0,0,0);
+	front = first = 1;
 }
 
 CPointSurCone3D::CPointSurCone3D(CCone3D *s1): CPointSur3D()
@@ -2182,10 +2179,7 @@ CPointSurCone3D::CPointSurCone3D(CCone3D *s1): CPointSur3D()
 	pObjectShape.nShapeId = TPref::TPoint.nPtConst;
 	alpha= 0.;
 	gamma = 0.;
-	beta = 0.;
-	front = first = 0;
-	pt1 = CVector4(0,0,0,0);
-	pt2 = CVector4(0,0,0,0);
+	front = first = 1;
 }
 
 CPointSurCone3D::CPointSurCone3D(const CObject3D & src): CPointSur3D(src)
@@ -2193,8 +2187,7 @@ CPointSurCone3D::CPointSurCone3D(const CObject3D & src): CPointSur3D(src)
 	Cone =   ((CPointSurCone3D&)src).Cone;
 	alpha = ((CPointSurCone3D)src).alpha;
 	gamma = ((CPointSurCone3D&)src).gamma;
-	beta = ((CPointSurCone3D&)src).beta;
-	front = first = 0;
+	front = first = 1;
 }
 
 CObject3D* CPointSurCone3D::CopyObject()
@@ -2217,18 +2210,15 @@ void CPointSurCone3D::Serialize( CArchive& ar )
 	if (ar.IsStoring())
 	{
 		ar << alpha;
-		ar << beta;
 		ar << gamma;
 		ar << ((Cone) ? Cone->nObjectId : -1);
 	}
 	else
 	{
 		ar >> alpha;
-		ar >> beta;
 		ar >> gamma;
 		Cone = (CCone3D*)SerializeObj(ar);
-		pt1 = CVector4(0,0,0,0);
-		pt2 = CVector4(0,0,0,0);
+		front = first = 1;
 	}
 }
 
@@ -2276,7 +2266,6 @@ void CPointSurCone3D::CopyPointPosition(CObject3D* src)
 	{
 		//Concept_pt =  ((CPoint3D*)src)->Concept_pt;
 		alpha =  ((CPointSurCone3D*)src)->alpha;
-		beta =  ((CPointSurCone3D*)src)->beta;
 		gamma =  ((CPointSurCone3D*)src)->gamma;
 	}
 }
@@ -2288,12 +2277,52 @@ UINT  CPointSurCone3D::CalculConceptuel()
 	if (!bValidate)
 		return ERR_SUPPORTOBJECT;
 
+	CLocalRep rep = Cone->LocRep;
+	CVector4 center = Cone->GetConeApex();
+	CVector4 dir = Cone->GetConeAxis();
+	dir = dir.Normalized();
+	dir.Norme();
+	center = center + dir*gamma;
+	FCoord hyp = gamma/cosl(Cone->nOpenAngle);
+	FCoord rad = sinl(Cone->nOpenAngle)*hyp;
+	FCoord r = rad;
+	CVector4	U = CVector4(r*cosl(alpha),r*sinl(alpha),0,1);
+	CVector4 V;
+	
+	V.x=	rep.I.x*U.x + rep.J.x*U.y + rep.K.x*U.z + center.x,
+	V.y=	rep.I.y*U.x + rep.J.y*U.y + rep.K.y*U.z + center.y,
+	V.z=	rep.I.z*U.x + rep.J.z*U.y + rep.K.z*U.z + center.z,
+	V.w=	1;
+	Concept_pt = V;
+	bValidate=1;
+
 	return 0;
 }
 
 void CPointSurCone3D::DrawRetro(CDC* pDC,CVisualParam *vp)
 {
 	CPointSur3D::DrawRetro(pDC,vp);
+
+	CLocalRep rep = Cone->LocRep;
+	CVector4 center = Cone->GetConeApex();
+	CVector4 dir = Cone->GetConeAxis();
+	dir = dir.Normalized();
+	dir.Norme();
+	center = center + dir*gamma;
+	FCoord hyp = gamma/cosl(Cone->nOpenAngle);
+	FCoord rad = sinl(Cone->nOpenAngle)*hyp;
+
+	FCoord pas = 15.*rad/70;
+	pas = min(max(20,pas),70);
+
+	CPoint3D pt(center);
+	CCercle3D mCC(&pt,dir,rad);
+	mCC.pObjectShape.nShapeId = 0;
+	mCC.pObjectShape.clrObject = RGB(0,0,0);
+	mCC.nDeltaT = (int)pas;
+	mCC.CalculConceptuel();
+	mCC.CalculVisuel(vp);
+	mCC.Draw(pDC,vp,TRUE);
 }
 
 CString CPointSurCone3D::ExportSymbolic(int nFormat)
@@ -2317,5 +2346,62 @@ CString CPointSurCone3D::ExportSymbolic(int nFormat)
 
 BOOL CPointSurCone3D::MoveObject(CVisualParam *myVisuParam,UINT,CPoint MouseClic,CVector4& TempCpt)
 {
+	CVector4 res(MouseClic.x,MouseClic.y,0,1);
+	CVector4 p1 = myVisuParam->GetScreenProjection(res);
+	CVector4 p2(res.x,res.y,0);
+	p2 = myVisuParam->GetScreenProjectionInf(p2);
+
+	CVector4 t  = p2 - p1;
+	t = t.Normalized();
+	t.Norme();
+	CPoint3D pt1(p1);
+	CPoint3D pt2(p2);
+	CDroite3D dr(&pt1,&pt2);
+	dr.CalculConceptuel();
+
+	CVector4 in,out;
+	UINT myint = Cone->IntersectLine(&dr,in,out);
+	if (myint==0) 
+	{
+		if (!first)
+		 {
+			front = !front;
+			first =1;
+		 }
+			TempCpt = Concept_pt;
+			return TRUE;
+	}
+	first = 0;
+
+    CVector4 coneAxis = Cone->GetConeAxis();
+	coneAxis = coneAxis.Normalized();
+	coneAxis.Norme();
+
+	CVector4 mypt= (front? in : out);
+	CVector4 proj = mypt - Cone->GetConeApex();
+	gamma = coneAxis * proj;
+	CVector4 ptProj = Cone->GetConeApex() + coneAxis*gamma;
+	CVector4 ptrad = mypt - ptProj;
+	FCoord dis = ptrad.Norme();
+
+	CVector4 U  = ptrad.Normalized();
+	U.Norme();
+	FCoord sa = Cone->LocRep.I * U;
+	FCoord ca = Cone->LocRep.J * U;
+	if (fabsl(sa) > 1.)
+		{
+			//::MessageBox(0,"erreur arcos","ici",MB_OK);
+			sa = (sa < 0.00) ? -1.00 : 1.00;
+			//return 0;
+		}
+	//FCoord ltmp = lambda;
+	alpha = dis / U.Norme();
+	CVector4 V = Cone->GetConeApex() + U*dis;
+
+	alpha = acosl(sa);
+
+	if (ca <0) alpha = 2*M_PI - alpha;
+		TempCpt = V;
+
 	return TRUE;
 }
