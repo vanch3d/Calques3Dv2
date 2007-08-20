@@ -25,6 +25,7 @@
 #include "stdafx.h"
 #include "..\calques3d.h"
 #include "PrefObjShape.h"
+#include "..\Objects\ComboShape.h"
 
 #include "Prefs.h"
 #include "..\Objects\Point3D.h"
@@ -84,6 +85,13 @@ void CPrefObjShape::DoDataExchange(CDataExchange* pDX)
 					else if (tvar.vt==VT_I2)
 					{
 						int bb = (short)tvar;
+						int *ff = (int*)pProp2->GetData();
+						if (ff) 
+							*ff = bb;
+					}
+					else if (tvar.vt==VT_I4)
+					{
+						int bb = (long)tvar;
 						int *ff = (int*)pProp2->GetData();
 						if (ff) 
 							*ff = bb;
@@ -173,6 +181,14 @@ void CPrefObjShape::FillCone()
 		strDef.LoadString(PREF_DEF_CONEDBL);
 		pGroup1->AddSubItem (pProp = new CBCGPProp (strName, (_variant_t)(bool)(TPref::TCone.bDoubleCone==TRUE), strDef));
 		pProp->SetData((DWORD)&TPref::TCone.bDoubleCone);
+	}
+	{
+		CBCGPProp* pProp = NULL;
+		CString strName(_T("Edges")),strDef(_T("The number of edges to be drawn on the cone."));
+		//strName.LoadString(PREF_NAME_CONEDBL);
+		//strDef.LoadString(PREF_DEF_CONEDBL);
+		pGroup1->AddSubItem (pProp = new CBCGPSliderProp (strName, (_variant_t)(long)(TPref::TCone.nbDelta), strDef,0,8,64));
+		pProp->SetData((DWORD)&TPref::TCone.nbDelta);
 	}
 
 	m_wndProp.AddProperty (pGroup1);
