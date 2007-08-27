@@ -31,6 +31,7 @@
 #endif // _MSC_VER > 1000
 
 #include "objects\Object3d.h"
+#include "prefs\POVTool.h"
 
 /////////////////////////////////////////////////////////////////////////////
 /// Storage of the windows' positions
@@ -134,6 +135,8 @@ public:
 	CxObjectCount	m_cObjectSize;	///< The number of objects present in the document
 
 	CxWindowLoc		m_cWinPos;		///< The location of every view used with this document
+
+	CxPOVObjectSet	m_cPOVlist;
 
 protected:
 	BOOL	m_bMathPadUsed;			///< The document contains MathPad objects

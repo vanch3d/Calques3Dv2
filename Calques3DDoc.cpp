@@ -205,6 +205,8 @@ CCalques3DDoc::CCalques3DDoc()
 
 	m_cObjectSet.RemoveAll();
 	m_cPolygonSet.RemoveAll();
+	m_cPOVlist.RemoveAll();
+
 	//m_cUndoSet.RemoveAll();
 	m_cNewUndoSet.RemoveAll();
 	//m_pMemObj = NULL;
@@ -222,10 +224,13 @@ CCalques3DDoc::~CCalques3DDoc()
 		delete pObj;
 	}
 	m_cObjectSet.RemoveAll();
-	//if (m_pMemObj)
-	//	delete m_pMemObj;
-	//m_pMemObj = NULL;
-	//OnPrepareUndo();
+
+	for (POSITION pos = m_cPOVlist.GetHeadPosition (); pos != NULL;)
+	{
+		CPOVUserTool *pObj = m_cPOVlist.GetNext (pos);
+		delete pObj;
+	}
+	m_cPOVlist.RemoveAll();
 	CleanUndo();
 }
 
@@ -237,6 +242,11 @@ BOOL CCalques3DDoc::OnNewDocument()
 	// TODO: add reinitialization code here
 	// (SDI documents will reuse this document)
 	int idx = 1;
+	CPOVUserTool *tool = new CPOVUserTool();
+	tool->m_bCanRemove = FALSE;
+	tool->m_strLabel = _T("Default");
+	tool->m_projParam = TPref::TUniv.sDefParam;
+	m_cPOVlist.AddHead(tool);
 
 	return TRUE;
 }
@@ -300,6 +310,7 @@ void CCalques3DDoc::Serialize(CArchive& ar)
 	{
 		// TODO: add storing code here
 		m_cObjectSet.Serialize(ar);
+		m_cPOVlist.Serialize(ar);
 	}
 	else
 	{
@@ -320,7 +331,23 @@ void CCalques3DDoc::Serialize(CArchive& ar)
 			AddObject(pObj,FALSE);
 		}
 		CCalques3DDoc::GLOBALObjectSet = NULL;
+	try
+	{
+		m_cPOVlist.Serialize(ar);
 	}
+	catch (CException* pEx)
+	{
+		pEx->Delete ();
+		AfxGetMainWnd()->MessageBox("The list is empty");
+		CPOVUserTool *tool = new CPOVUserTool();
+		tool->m_bCanRemove = FALSE;
+		tool->m_strLabel = _T("Default");
+		tool->m_projParam = TPref::TUniv.sDefParam;
+		m_cPOVlist.AddHead(tool);
+		SetModifiedFlag(TRUE);
+	}
+	}
+
 // 	try
 // 	{	
 // 		m_cWinPos.Serialize(ar);
