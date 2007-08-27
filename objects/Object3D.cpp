@@ -988,7 +988,7 @@ void CObject3D::CopyPointPosition(CVector4 ptLoc)
 CObject3D* CObject3D::HitTest(CPoint pt,CObjectId mask,int nCalcNum,BOOL bSub,CxObject3DSet* pSet)
 {
     CObject3D *pObj=NULL;
-    if (bValidate && bVisible && IsInCalque(nCalcNum) &&
+    if (bValidate && (bVisible || (!bVisible && TPref::TUniv.bShowHidden)) && IsInCalque(nCalcNum) &&
         IsInActiveArea(pt)  && MaskObject(mask))
     {
         pObj = this;
