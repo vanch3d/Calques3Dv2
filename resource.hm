@@ -41,6 +41,8 @@
 #define HIDC_PMAC_LOADMACRO             0xc9f00458    // IDD_PREF_MACROS_PAGE
 #define HIDC_PMAC_NAME                  0xc9f00456    // IDD_PREF_MACROS_PAGE
 #define HIDC_PMAC_PATH                  0xc9f049ea    // IDD_PREF_MACROS_PAGE
+#define HIDC_POV_INFO                   0x813304a8    // IDD_POV_DLG
+#define HIDC_POV_LIST                   0x813304a6    // IDD_POV_DLG
 #define HIDC_PROFILE_LIST               0x80980411    // IDD_SAVE_PROFILE_DLG
 #define HIDC_PROFILE_NAME               0x80980414    // IDD_SAVE_PROFILE_DLG
 #define HIDC_PSESS_LIST                 0xc9f1045a    // IDD_PREF_SESSION_PAGE
