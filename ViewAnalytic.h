@@ -32,6 +32,7 @@
 // ViewAnalytic.h : header file
 //
 
+#include "thirdparty/MRTracker.h"
 
 class CEquation3D;
 //class MTParser;
@@ -58,6 +59,7 @@ public:
 	CRect			m_rMargin;
 		
 	CToolTipCtrl	myToolTip;
+	CMultiRectTracker	m_wndMultiTrack;
 
 	CEdit *			m_pEdit;
 	CDialog*		m_pDialog;
