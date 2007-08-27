@@ -58,27 +58,6 @@ protected:
 	HICON		m_hIcon;
 };
 
-/////////////////////////////////////////////////////////////////////////////
-/// CPOVUserTool
-///
-/////////////////////////////////////////////////////////////////////////////
-class CPOVUserTool : public CObject  
-{
-	DECLARE_SERIAL(CPOVUserTool)
-public:
-// Construction
-	CPOVUserTool();
-	virtual ~CPOVUserTool();
-
-// Overrides
-	virtual void Serialize (CArchive& ar);
-
-// Attributes:
-public:
-	CString		m_strLabel;
-	CString		m_strDef;
-	CString		m_strFile;
-};
 
 /////////////////////////////////////////////////////////////////////////////
 /// TPref
@@ -220,6 +199,7 @@ public :
 		BOOL		bSynchron;		///< Synchronize updates between views
 		BOOL		bShowMarks;		///< Show the marks of objects
 		BOOL		bShowPolygon;	///< TRUE if polygon are drawn plain, FALSE otherwise
+		BOOL		bShowHidden;	///< TRUE if hidden objects are shown, FALSE otherwise
 	};
 
 

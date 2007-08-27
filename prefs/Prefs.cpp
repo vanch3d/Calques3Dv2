@@ -146,6 +146,7 @@ TPref::CTUniverse	TPref::TUniv =
 			FALSE,
 			TRUE,
 			FALSE,
+			FALSE,
 			FALSE
 		};
 
@@ -211,33 +212,5 @@ void CMacroUserTool::Serialize (CArchive& ar)
 		ar << m_strFile;
 		ar << m_strDef;
 		ar << m_uiCmdId;
-	}
-}
-
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
-IMPLEMENT_SERIAL(CPOVUserTool, CObject, VERSIONABLE_SCHEMA | 1)
-
-CPOVUserTool::CPOVUserTool()
-{
-}
-
-CPOVUserTool::~CPOVUserTool()
-{
-	//DeleteIcon ();
-}
-
-void CPOVUserTool::Serialize (CArchive& ar)
-{
-	CObject::Serialize (ar);
-
-	if (ar.IsLoading ())
-	{
-		//ar >> m_strLabel;
-	}
-	else
-	{
-		//ar << m_strLabel;
 	}
 }
