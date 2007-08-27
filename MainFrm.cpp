@@ -858,7 +858,7 @@ BOOL CMainFrame::OnShowPopupMenu (CBCGPPopupMenu* pMenuPopup)
 		}
     }
     if (pMenuPopup != NULL &&
-		pMenuPopup->GetMenuBar ()->CommandToIndex (ID_VISUALISATION_POV_POV1) >= 0)
+		pMenuPopup->GetMenuBar ()->CommandToIndex (ID_VISUALISATION_POV_DEFINE) >= 0)
 	{
 		if (CBCGPToolBar::IsCustomizeMode ())
 		{
@@ -868,7 +868,31 @@ BOOL CMainFrame::OnShowPopupMenu (CBCGPPopupMenu* pMenuPopup)
 			return FALSE;
 		}
 
-		int nb = pMenuPopup->GetMenuBar ()->CommandToIndex (ID_VISUALISATION_POV_POV1);
+		CMDIChildWnd*pChild = MDIGetActive();
+		if (!pChild) return FALSE;
+	
+		CCalques3DDoc *pDoc = DYNAMIC_DOWNCAST(CCalques3DDoc,pChild->GetActiveDocument());
+		if (!pDoc) return FALSE;
+
+		for (UINT menupos = ID_VISUALISATION_POV_DEFAULT;menupos<=ID_VISUALISATION_POV_POV4;menupos++)
+		{
+			int rrr = pMenuPopup->GetMenuBar ()->CommandToIndex (menupos);
+			pMenuPopup->RemoveItem(rrr);
+		}
+		pMenuPopup->InsertSeparator();
+		int nb=0;
+		for (POSITION pos = pDoc->m_cPOVlist.GetHeadPosition (); pos != NULL;)
+		{
+			CPOVUserTool *pObj = pDoc->m_cPOVlist.GetNext (pos);
+			if (pObj) 
+			{
+					pMenuPopup->InsertItem (CBCGPToolbarMenuButton (
+						ID_VISUALISATION_POV_DEFAULT+nb, NULL, -1,pObj->m_strLabel));
+			}
+			nb++;
+		}
+
+	//	int nb = pMenuPopup->GetMenuBar ()->CommandToIndex (ID_VISUALISATION_POV_POV1);
 		//pMenuPopup->RemoveItem (nb);
 
 	}
