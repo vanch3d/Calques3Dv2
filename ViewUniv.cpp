@@ -32,6 +32,8 @@
 
 #include "ViewUniv.h"
 #include "ZoomDlg.h"
+#include "POVUserDialog.h"
+
 #include "MemDC.h"
 
 #include "objects\Point3D.h"
@@ -100,6 +102,9 @@ BEGIN_MESSAGE_MAP(CViewUniv, CView)
 	ON_CBN_SELENDOK(ID_FORMAT_TXTFONT, OnFormat)
 	ON_CBN_SELENDOK(ID_FORMAT_TXTSIZE, OnFormat)
 
+    ON_COMMAND(ID_VISUALISATION_SHOWHIDDEN, OnShowHidden)
+    ON_UPDATE_COMMAND_UI(ID_VISUALISATION_SHOWHIDDEN, OnUpdateShowHidden)
+
 	ON_COMMAND_RANGE(ID_VISUALISATION_ZOOM,ID_VISUALISATION_ZOOM_ADJUST, OnChangeZoom)
     ON_COMMAND_RANGE(ID_VISUALISATION_ZOOM_150,ID_VISUALISATION_ZOOM_150, OnChangeZoom)
     ON_UPDATE_COMMAND_UI_RANGE(ID_VISUALISATION_ZOOM, ID_VISUALISATION_ZOOM_ADJUST, OnUpdateZoom)
@@ -111,6 +116,9 @@ BEGIN_MESSAGE_MAP(CViewUniv, CView)
 
     ON_COMMAND_RANGE(ID_VISUALISATION_REFERENTIAL,ID_VISUALISATION_REFERENTIAL_WALLS,OnChangeReferential)
     ON_UPDATE_COMMAND_UI_RANGE(ID_VISUALISATION_REFERENTIAL,ID_VISUALISATION_REFERENTIAL_WALLS,OnUpdateReferential)
+
+    ON_COMMAND_RANGE(ID_VISUALISATION_POV_DEFINE,ID_VISUALISATION_POV_POV4,OnChangePOV)
+    ON_UPDATE_COMMAND_UI_RANGE(ID_VISUALISATION_POV_DEFINE,ID_VISUALISATION_POV_POV4,OnUpdatePOV)
 
     ON_COMMAND_RANGE(ID_VISUALISATION_DEFAULTTASK,ID_VISUALISATION_APPLYSTYLE, OnStartTask)
     ON_COMMAND_RANGE(ID_VISUALISATION_PROJECTION_FRONT,ID_VISUALISATION_PROJECTION_KEEPIT, OnStartTask)
@@ -618,6 +626,67 @@ void CViewUniv::OnChangeZoom(UINT nID)
     }
 }
 
+void CViewUniv::OnChangePOV(UINT nID)
+{
+	if (nID==ID_VISUALISATION_POV_DEFINE)
+	{
+		CPOVUserDialog mdlg(this);
+		mdlg.SetPOVList(&(GetDocument()->m_cPOVlist));
+		mdlg.SetProjParam(this->GetVisualParam()->GetProjParam());
+		mdlg.DoModal();
+	}
+	else
+	{
+		int npos = 0;
+		CCalques3DDoc *pDoc = GetDocument();
+		for (POSITION pos = pDoc->m_cPOVlist.GetHeadPosition (); pos != NULL;)
+		{
+			CPOVUserTool *pObj = pDoc->m_cPOVlist.GetNext (pos);
+			if (pObj && (npos+ID_VISUALISATION_POV_DEFAULT)==nID) 
+			{
+			   // TODO: Add your command handler code here
+			   GetVisualParam()->SetProjParam(pObj->m_projParam);
+
+				int r = (int)(GetVisualParam()->ProjParam.phi - 180 -TPref::TUniv.sDefParam.phi);
+				r = (r < 0) ? r + 360 : ((r > 360) ? r-360 : r);
+				r /= 5;
+				//**** wndVSliderBar.SetSliderPos(r);
+				SetSliderPosition(ID_VISUALISATION_POV_VSLIDER,r);
+				r = (int)(180 - GetVisualParam()->ProjParam.theta + TPref::TUniv.sDefParam.theta);
+				r = (r < 0) ?  r+ 360 : ((r > 360) ? r-360 : r);
+				r /= 5;
+				//**** wndHSliderBar.SetSliderPos(r);
+				SetSliderPosition(ID_VISUALISATION_POV_HSLIDER,r);
+				Invalidate();
+				UpdateWindow();
+				break;
+
+			}
+			npos++;
+		}
+
+	}
+}
+
+void CViewUniv::OnUpdatePOV(CCmdUI* pCmdUI)
+{
+    BOOL bFix =     (GetVisualParam() && (GetVisualParam()->bFixed || GetVisualParam()->bKeepProj));
+	pCmdUI->Enable(!bFix);
+}
+
+
+void CViewUniv::OnShowHidden()
+{
+	TPref::TUniv.bShowHidden = !TPref::TUniv.bShowHidden;
+	GetDocument()->UpdateAllViews(NULL,WM_UPDATEOBJ_ALL,NULL);
+	//Invalidate();
+    //UpdateWindow();
+}
+
+void CViewUniv::OnUpdateShowHidden(CCmdUI* pCmdUI)
+{
+	pCmdUI->SetCheck(TPref::TUniv.bShowHidden);
+}
 
 void CViewUniv::OnChangePerspective(UINT nID)
 {
@@ -1132,6 +1201,7 @@ void CViewUniv::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
             }
         }
         break;
+    case WM_UPDATEOBJ_ALL:  // Objects redrawn
     case WM_UPDATEOBJ_ADD:  // Object Added
     case WM_UPDATEOBJ_MOD:  // Object Modified
     case WM_UPDATEOBJ_DEL:  // Object Deleted
