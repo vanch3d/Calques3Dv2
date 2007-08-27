@@ -35,65 +35,12 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-static const int iListId = 1;
-
-BEGIN_MESSAGE_MAP(CPOVList,CBCGPEditListBox)
-	//ON_NOTIFY(LVN_KEYDOWN, iListId, OnKeyDown)
-	ON_NOTIFY(NM_DBLCLK, iListId, OnDblclkList)
-	//ON_NOTIFY(LVN_GETDISPINFO, iListId, OnGetdispinfo)
-	//ON_NOTIFY(LVN_ENDLABELEDIT, iListId, OnEndLabelEdit)
-	//ON_NOTIFY(LVN_ITEMCHANGED, iListId, OnItemChanged)
-END_MESSAGE_MAP()
-
-void CPOVList::OnDblclkList(NMHDR* /*pNMHDR*/, LRESULT* pResult) 
-{
-	*pResult = 0;
-
-	int iSelItem = GetSelItem ();
-
-	if ((m_uiStandardBtns & BGCEDITLISTBOX_BTN_NEW) && iSelItem == -1)
-	{
-		CreateNewItem ();
-		return;
-	}
-
-	if (iSelItem > 0)
-	{
-		EditItem (iSelItem);
-	}
-}
-
-void CPOVList::OnSelectionChanged ()
-{
-	int iSelItem = GetSelItem ();
-
-	int nb = GetButtonsCount();
-	for (int i=1;i<nb;i++)
-	{
-		EnableButton(i,(BOOL)iSelItem);
-	}
-
-
-}
-
-BOOL CPOVList::EditItem (int iIndex)
-{
-	BOOL bRes = FALSE;
-	if (iIndex)
-	{
-		bRes = CBCGPEditListBox::EditItem (iIndex);
-	}
-	return bRes;
-}
-
 /////////////////////////////////////////////////////////////////////////////
 // CPrefUniverse dialog
 IMPLEMENT_DYNCREATE(CPrefUniverse, CBCGPPropertyPage)
 
 
-CPrefUniverse::CPrefUniverse()
-	:	CBCGPPropertyPage(CPrefUniverse::IDD)//,
-		//m_cPOVList(this)
+CPrefUniverse::CPrefUniverse() : CBCGPPropertyPage(CPrefUniverse::IDD)
 {	
 	//{{AFX_DATA_INIT(CPrefUniverse)
 	m_bMagnet = TPref::TUniv.bMagnet;
@@ -150,27 +97,6 @@ BOOL CPrefUniverse::OnInitDialog()
 {
 	CBCGPPropertyPage::OnInitDialog();
 	
-	//-------------
-	// Add buttons:
-	//-------------
-//	m_cPOVList.SetStandardButtons (BGCEDITLISTBOX_BTN_NEW|BGCEDITLISTBOX_BTN_DELETE);
-
-	//------------
-	// Fill tools:
-	//------------
-/*	int nb = TPref::TPOVList.GetCount();
-	if (!nb)
-	{
-		m_cPOVList.AddItem(_T("< Default >"),NULL);
-	}
-
-	for(POSITION pos = TPref::TPOVList.GetHeadPosition(); pos != NULL; )
-	{
-		CMacroUserTool* pTool = (CMacroUserTool*)TPref::TPOVList.GetNext( pos );
-		if (pTool)
-			m_cPOVList.AddItem (pTool->m_strLabel, (DWORD) pTool);
-	}*/
-
 	// Initialize color names:
 	int m_nNumColours2 = sizeof (TPref::crColours)/sizeof(TPref::ColourTableEntry);
 	for (int i = 0; i < m_nNumColours2; i++)

@@ -31,30 +31,6 @@
 #endif // _MSC_VER > 1000
 
 /////////////////////////////////////////////////////////////////////////////
-// CPrefUniverse dialog
-class CPrefUniverse;
-
-/////////////////////////////////////////////////////////////////////////////
-/// CPOVList
-///
-/////////////////////////////////////////////////////////////////////////////
-class CPOVList : public CBCGPEditListBox
-{
-public:
-	CPrefUniverse* m_pParent;
-
-	CPOVList(CPrefUniverse* pParent=NULL) : m_pParent (pParent) {};
-
-	virtual void OnSelectionChanged ();
-	virtual BOOL EditItem (int iIndex);
-
-protected:
-	afx_msg void OnDblclkList (NMHDR* pNMHDR, LRESULT* pResult);
-	DECLARE_MESSAGE_MAP()
-};
-
-
-/////////////////////////////////////////////////////////////////////////////
 /// CPrefUniverse
 ///
 /////////////////////////////////////////////////////////////////////////////
@@ -68,11 +44,11 @@ public:
 // Dialog Data
 	//{{AFX_DATA(CPrefUniverse)
 	enum { IDD = IDD_PREF_UNIVERSE_PAGE };
-	CBCGPColorButton		m_wndTraceColor;
-	BOOL	m_bMagnet;
-	BOOL	m_bSynchro;
-	int		m_nRefInit;
-	BOOL	m_bShowPolygon;
+	CBCGPColorButton	m_wndTraceColor;	///< The color for the trace.
+	BOOL				m_bMagnet;			///< TRUE if the magnet is on, FALSE otherwise.
+	BOOL				m_bSynchro;			///< TRUE if construction modifications are synchronized in all views.
+	int					m_nRefInit;			///< The index of the initial referential.
+	BOOL				m_bShowPolygon;		///< TRUE if polygons are displayed plain.
 	//}}AFX_DATA
 
 // Overrides
