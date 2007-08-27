@@ -255,9 +255,9 @@ void CEditLabel::OnContextMenu(CWnd* pWnd, CPoint point)
 		{
 			CObject3D*pObj = m_pSet->GetAt(i);
 			if (!pObj) continue;
-
+            if (!DYNAMIC_DOWNCAST(CValue3D,pObj)) continue;
+            if (pObj==m_pObj) continue;
 			if (pObj->strObjectName.IsEmpty()) continue;
-		
 			if (pObj->isA() == TEquation3DClass) continue;
 
 			CString mstr,mstr2;
