@@ -124,6 +124,8 @@ protected:
 	//}}AFX_MSG
 	afx_msg void	OnFilePrintPreview();
 	afx_msg void	OnMacrosInfo();
+	afx_msg void	OnShowHidden();
+	afx_msg void	OnChangePOV(UINT);
 	afx_msg void	OnChangeZoom(UINT);
 	afx_msg LRESULT OnChangeZoom(WPARAM,LPARAM);
 	afx_msg void	OnChangePerspective(UINT);
@@ -137,10 +139,12 @@ protected:
 	afx_msg void	OnUpdateTasks(CCmdUI* pCmdUI);
 	afx_msg void	OnUpdateReferential(CCmdUI* pCmdUI);
 	afx_msg void	OnUpdateZoom(CCmdUI* pCmdUI);
+	afx_msg void	OnUpdatePOV(CCmdUI* pCmdUI);
 	afx_msg void	OnUpdateSliders(CCmdUI* pCmdUI);
 	afx_msg void	OnUpdatePerspective(CCmdUI* pCmdUI);
 	LRESULT			OnUpdateObjTooltip(WPARAM wp, LPARAM lp=0);
 	afx_msg void	OnUpdateFormat(CCmdUI* pCmdUI);
+	afx_msg void	OnUpdateShowHidden(CCmdUI* pCmdUI);
 	afx_msg void	OnFormat(UINT);
 	afx_msg void	OnFormat();
 

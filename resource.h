@@ -51,6 +51,7 @@
 #define IDD_MACROINFO_DLG               304
 #define IDD_ZOOM_DLG                    305
 #define IDD_UNDO_DLG                    306
+#define IDD_POV_DLG                     307
 #define IDD_OBJECTPROP_PAGE             311
 #define IDD_OBJECTDEP_PAGE              312
 #define IDD_OBJECTINFO_PAGE             313
@@ -208,6 +209,8 @@
 #define IDC_MESSAGE_IMG                 1189
 #define IDC_PHISTO_SHOWSEL              1189
 #define IDC_MESSAGE_TITLE               1190
+#define IDC_POV_LIST                    1190
+#define IDC_POV_INFO                    1192
 #define IDC_ABOUTCALQUE                 1201
 #define IDC_RENDERER_AMBTXT             1300
 #define IDC_RENDERER_DIFFUSETXT         1301
@@ -310,10 +313,10 @@
 #define ERR_INTER_PLANESPHERE           4043
 #define ERR_INTER_LINECIRCLE            4044
 #define ERR_INTER_PLANECIRCLE           4045
-#define ERR_CONE_UNDEFINED				4046
-#define ERR_CONE_NORADIUS				4047
-#define ERR_CONE_NOAXIS					4048
-#define ERR_CONE_NOPROJAXIS				4049
+#define ERR_CONE_UNDEFINED              4046
+#define ERR_CONE_NORADIUS               4047
+#define ERR_CONE_NOAXIS                 4048
+#define ERR_CONE_NOPROJAXIS             4049
 #define ERR_INTER_CONEDR                4050
 #define IDS_UNDO_NONE                   4100
 #define IDS_UNDO_DELETE                 4101
@@ -490,8 +493,8 @@
 #define CTX_INTERSECTION_LL             6062
 #define CTX_INTERSECTION_LP             6063
 #define CTX_SELECT_DROITEPLAN           6064
-#define CTX_CONE						6065
-#define CTX_SELECT_POINTANIM			6066
+#define CTX_CONE                        6065
+#define CTX_SELECT_POINTANIM            6066
 #define CTX_LOCUS                       6070
 #define CTX_LOCUS_BASE                  6071
 #define CTX_LOCUS_LOCUS                 6072
@@ -507,10 +510,10 @@
 #define CTX_MOVE_TRACE                  6082
 #define CTX_SELECT_CLOSE_POLYGON        6083
 #define CTX_SELECT_TASKOPTION           6084
-#define CTX_SELECT_CONE	                6085
-#define CTX_POINTSUR_CONE				6086
-#define CTX_POINTSUR_CYL				6087
-#define CTX_SELECT_CYL	                6088
+#define CTX_SELECT_CONE                 6085
+#define CTX_POINTSUR_CONE               6086
+#define CTX_POINTSUR_CYL                6087
+#define CTX_SELECT_CYL                  6088
 #define PREF_NAME_PTFREE                7000
 #define PREF_NAME_PTCSTR                7001
 #define PREF_NAME_PTDEP                 7002
@@ -527,7 +530,7 @@
 #define PREF_NAME_LOCSIZE               7013
 #define PREF_NAME_LINE                  7014
 #define PREF_NAME_CLRDOC                7015
-#define PREF_NAME_CONE	                7016
+#define PREF_NAME_CONE                  7016
 #define PREF_NAME_CONEDBL               7017
 #define PREF_DEF_PTFREE                 7100
 #define PREF_DEF_PTCSTR                 7101
@@ -545,7 +548,7 @@
 #define PREF_DEF_LOCSIZE                7113
 #define PREF_DEF_LINE                   7114
 #define PREF_DEF_CLRDOC                 7115
-#define PREF_DEF_CONE	                7116
+#define PREF_DEF_CONE                   7116
 #define PREF_DEF_CONEDBL                7117
 #define PROP_DEFINITION                 8000
 #define PROP_APPEARANCE                 8001
@@ -632,6 +635,7 @@
 #define ID_VISUALISATION_APPLYSTYLE     30125
 #define ID_VISUALISATION_ZOOM_150       30130
 #define ID_VISUALISATION_SHOWMARKS      30150
+#define ID_VISUALISATION_SHOWHIDDEN     30151
 #define ID_VISUALISATION_PROJECTION_FRONT 30160
 #define ID_VISUALISATION_PROJECTION_PROFIL 30161
 #define ID_VISUALISATION_PROJECTION_MIRROR 30162
@@ -663,7 +667,7 @@
 #define ID_CONSTRUCTION_POINTON_PLANE   30313
 #define ID_CONSTRUCTION_POINTON_SPHERE  30314
 #define ID_CONSTRUCTION_POINTON_CYLINDER 30315
-#define ID_CONSTRUCTION_POINTON_CONE	30316
+#define ID_CONSTRUCTION_POINTON_CONE    30316
 #define ID_CONSTRUCTION_INTERSECTION    30320
 #define ID_CONSTRUCTION_INTERSECTION_LINELINE 30321
 #define ID_CONSTRUCTION_INTERSECTION_LINEPLANE 30322
@@ -807,7 +811,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        202
 #define _APS_NEXT_COMMAND_VALUE         32998
-#define _APS_NEXT_CONTROL_VALUE         1190
-#define _APS_NEXT_SYMED_VALUE           124
+#define _APS_NEXT_CONTROL_VALUE         1193
+#define _APS_NEXT_SYMED_VALUE           125
 #endif
 #endif
