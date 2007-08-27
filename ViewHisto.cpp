@@ -192,8 +192,7 @@ void CViewHisto::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 			SetRedraw(FALSE);
 			CObject3D *pObj=NULL;
 			pObj = DYNAMIC_DOWNCAST(CObject3D,pHint);
-			//if (!pObj) break;
-			pObj->DrawHistory(mListCtrl);
+			if (pObj) pObj->DrawHistory(mListCtrl);
 			m_bRefit = FALSE;
 			SetRedraw(TRUE);
 		}
@@ -291,6 +290,7 @@ void CViewHisto::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 			}
 			SetRedraw(TRUE);
 		}
+    case WM_UPDATEOBJ_ALL:  // Objects redrawn
 	default:
 //		bRedraw = FALSE;
 		break;

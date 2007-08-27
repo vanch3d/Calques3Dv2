@@ -564,6 +564,7 @@ void CViewGraph::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 		}
 		break;
 	case WM_UPDATEOBJ_MOV:	// Object Moved
+    case WM_UPDATEOBJ_ALL:  // Objects redrawn
 		break;
 	case WM_UPDATEOBJ_DEL:	// Object Deleted
 		{
