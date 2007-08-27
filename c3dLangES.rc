@@ -132,6 +132,7 @@ BEGIN
     BUTTON      ID_OBJECT_CUBE
     BUTTON      ID_OBJECT_CYLINDRE
     BUTTON      ID_OBJECT_SPHERE
+    BUTTON      ID_OBJECT_CONE
 END
 
 IDR_VISUALISATION_TB TOOLBAR DISCARDABLE  16, 16
@@ -234,8 +235,10 @@ BEGIN
     BUTTON      ID_CONSTRUCTION_INTERSECTION_LINELINE
     BUTTON      ID_CONSTRUCTION_INTERSECTION_LINEPLANE
     BUTTON      ID_CONSTRUCTION_INTERSECTION_LINESPHERE
+    BUTTON      ID_CONSTRUCTION_INTERSECTION_LINECIRCLE
     SEPARATOR
     BUTTON      ID_CONSTRUCTION_INTERSECTION_PLANEPLANE
+    BUTTON      ID_CONSTRUCTION_INTERSECTION_PLANECIRCLE
 END
 
 IDR_POINTDIV_TB TOOLBAR DISCARDABLE  16, 16
@@ -567,11 +570,11 @@ END
 
 IDD_SPLASH DIALOGEX 0, 0, 204, 233
 STYLE DS_MODALFRAME | WS_POPUP
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     CONTROL         "",IDC_BIGICON,"Button",BS_OWNERDRAW | WS_DISABLED,4,4,
                     34,30
-    LTEXT           "Calques 3D version 2.3.7",IDC_STATIC,52,4,140,8,NOT 
+    LTEXT           "Calques 3D version 2.4.0",IDC_STATIC,52,4,140,8,NOT 
                     WS_GROUP
     LTEXT           "Microsoft Foundation Classes versión 4.2",IDC_STATIC,52,
                     13,140,8,NOT WS_GROUP
@@ -905,6 +908,18 @@ BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,164,36,36,14
 END
 
+IDD_PREF_HISTORY_PAGE DIALOGEX 0, 0, 212, 196
+STYLE DS_CONTEXTHELP | WS_CHILD | WS_CAPTION
+CAPTION "History"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
+BEGIN
+    CONTROL         "&Allow hidden objects to be shown in other views when selected in the History View.",
+                    IDC_PHISTO_SHOWSEL,"Button",BS_AUTOCHECKBOX | 
+                    BS_MULTILINE | WS_TABSTOP,12,16,168,20,0,
+                    HIDC_PHISTO_SHOWSEL
+    GROUPBOX        "Selection",IDC_STATIC,4,4,204,44,BS_FLAT
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -1134,6 +1149,14 @@ BEGIN
         RIGHTMARGIN, 197
         TOPMARGIN, 7
         BOTTOMMARGIN, 71
+    END
+
+    IDD_PREF_HISTORY_PAGE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 205
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 189
     END
 END
 #endif    // APSTUDIO_INVOKED
@@ -1415,6 +1438,8 @@ BEGIN
 
             MENUITEM "Cilin&dro",                   ID_CONSTRUCTION_POINTON_CYLINDER
 
+            MENUITEM "C&one",                       ID_CONSTRUCTION_POINTON_CONE
+
         END
         POPUP "&Intersección..."
         BEGIN
@@ -1422,21 +1447,23 @@ BEGIN
 
             MENUITEM "Recta-&plano",                 ID_CONSTRUCTION_INTERSECTION_LINEPLANE
 
-            MENUITEM "Li&ne-circle",                ID_CONSTRUCTION_INTERSECTION_LINECIRCLE
+            MENUITEM "Line-ci&rcle",                ID_CONSTRUCTION_INTERSECTION_LINECIRCLE
 
             MENUITEM "Recta-&esfera",                ID_CONSTRUCTION_INTERSECTION_LINESPHERE
+
+            MENUITEM "Line-c&one",                  ID_CONSTRUCTION_INTERSECTION_LINECONE
 
             MENUITEM SEPARATOR
             MENUITEM "Pl&ano-plano",                ID_CONSTRUCTION_INTERSECTION_PLANEPLANE
 
-            MENUITEM "&Plane-circle",               ID_CONSTRUCTION_INTERSECTION_PLANECIRCLE
+            MENUITEM "Plane-circl&e",               ID_CONSTRUCTION_INTERSECTION_PLANECIRCLE
 
             MENUITEM SEPARATOR
-            MENUITEM "Esfera-esfera",               ID_CONSTRUCTION_INTERSECTION_SPHERESPHERE
+            MENUITEM "Esfera-esfera",              ID_CONSTRUCTION_INTERSECTION_SPHERESPHERE
 
-            MENUITEM "Sphere-Plane",                ID_CONSTRUCTION_INTERSECTION_SPHEREPLANE
+            MENUITEM "Sphere-pla&ne",               ID_CONSTRUCTION_INTERSECTION_SPHEREPLANE
 
-            MENUITEM "Plano-&Cilindro",              ID_CONSTRUCTION_INTERSECTION_PLANECYLINDER
+            MENUITEM "Plano-&Cilindro",             ID_CONSTRUCTION_INTERSECTION_PLANECYLINDER
 
         END
         MENUITEM SEPARATOR
@@ -2607,8 +2634,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,3,7,0
- PRODUCTVERSION 2,3,7,0
+ FILEVERSION 2,4,0,0
+ PRODUCTVERSION 2,4,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x29L
@@ -2626,14 +2653,14 @@ BEGIN
             VALUE "Comments", "3D Dynamic Geometry Microworld\0"
             VALUE "CompanyName", "Calques 3D\0"
             VALUE "FileDescription", "Calques 3D\0"
-            VALUE "FileVersion", "2.3.7\0"
+            VALUE "FileVersion", "2.4.0\0"
             VALUE "InternalName", "Calques3D\0"
             VALUE "LegalCopyright", "Copyright © 1997-2007 Nicolas Van Labeke\0"
             VALUE "LegalTrademarks", "N. Van Labeke / P. Bernat / J. Morinet-Lambert\0"
             VALUE "OriginalFilename", "Calques3D.exe\0"
             VALUE "PrivateBuild", "Beta Version\0"
             VALUE "ProductName", "Calques 3D\0"
-            VALUE "ProductVersion", "2.3.7\0"
+            VALUE "ProductVersion", "2.4.0\0"
             VALUE "SpecialBuild", "Built with BCGControlBar Library version 7.31\0"
         END
     END
@@ -2966,14 +2993,15 @@ BEGIN
                             "Construye un punto en una circunferencia\n Punto en circunferencia"
     ID_CONSTRUCTION_POINTON_PLANE 
                             "Construye un punto en un plano\nPunto en plano"
-END
-
-STRINGTABLE DISCARDABLE 
-BEGIN
     ID_CONSTRUCTION_POINTON_SPHERE 
                             "Construye un punto en una esfera\nPunto en esfera"
     ID_CONSTRUCTION_POINTON_CYLINDER 
                             "Construct a point on a cylinder\nPoint on cylinder"
+    ID_CONSTRUCTION_POINTON_CONE "Construct a point on a cone \nPoint on cone"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
     ID_CONSTRUCTION_INTERSECTION_LINELINE 
                             "Construye el punto de intersección de 2 rectas\nIntersección recta-recta"
     ID_CONSTRUCTION_INTERSECTION_LINEPLANE 
@@ -2986,6 +3014,18 @@ BEGIN
                             "Construye la elipse de intersección de un plano y un cilindro\nIntersección plano-cilindro"
     ID_CONSTRUCTION_INTERSECTION_SPHERESPHERE 
                             "Construct a circle at the intersection of two spheres\nIntersection Sphere/Sphere"
+    ID_CONSTRUCTION_INTERSECTION_LINECIRCLE 
+                            "Construct the point(s) at the intersection of a line and a circle\nIntersection Line/Circle"
+    ID_CONSTRUCTION_INTERSECTION_PLANECIRCLE 
+                            "Construct the point(s) at the intersection of a plane and a circle\nIntersection Plane/Circle"
+    ID_CONSTRUCTION_INTERSECTION_SPHEREPLANE 
+                            "Construct a circle at the intersection of a sphere and a plane\nIntersection Sphere/Plane"
+    ID_CONSTRUCTION_INTERSECTION_LINECONE 
+                            "Construct the point(s) at the intersection of a line and a cone \nIntersection Line/Cone"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
     ID_CONSTRUCTION_MIDPOINT 
                             "Construye el punto medio de un segmento o de 2 puntos\nPunto medio"
     ID_CONSTRUCTION_CENTER  "Construye el centro de una circunferencia\nCentro de circunferencia"
@@ -2999,18 +3039,12 @@ BEGIN
                             "Construye una recta normal a un plano\nRecta normal"
     ID_CONSTRUCTION_SYMMETRICALPOINT 
                             "Construye un punto simétrico respecto a otro punto, recta o plano\nPunto simétrico"
-END
-
-STRINGTABLE DISCARDABLE 
-BEGIN
     ID_CONSTRUCTION_TRANSLATION 
                             "Construye la traslación de un punto respecto a otros dos\nTraslación"
     ID_CONSTRUCTION_CROSSPRODUCT 
                             "Construct a line perpendicular to two lines\nCross Product"
     ID_CONSTRUCTION_DIVSEGMENT 
                             "Divide a segment in three equal parts\nTrisection"
-    ID_CONSTRUCTION_INTERSECTION_SPHEREPLANE 
-                            "Construct a circle at the intersection of a sphere and a plane\nIntersection Sphere/Plane"
 END
 
 STRINGTABLE DISCARDABLE 
@@ -3100,6 +3134,7 @@ END
 
 STRINGTABLE DISCARDABLE 
 BEGIN
+    IDS_NAME_VECTOR         "Vec#"
     IDS_HELP_OBJECT         "el objeto %s"
     IDS_HELP_POINT          "el punto %s"
     IDS_HELP_LINE           "la recta %s"
@@ -3143,6 +3178,15 @@ BEGIN
     IDS_HELP_ELLIPSE        "the ellipse %s"
     IDS_HELP_RAY            "the ray %s"
     IDS_HELP_EQUATION       "the equation %s"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_HELP_ANGLE          "the angle %s"
+    IDS_HELP_AREA           "the area %s"
+    IDS_HELP_DISTANCE       "the distance %s"
+    IDS_HELP_VOLUME         "the volume %s"
+    IDS_HELP_CONE           "the cone %s"
 END
 
 STRINGTABLE DISCARDABLE 
@@ -3231,11 +3275,27 @@ END
 
 STRINGTABLE DISCARDABLE 
 BEGIN
+    IDS_DEF_ANGLE           "%s is an angle"
+    IDS_DEF_DISTANCE        "%s is a distance"
+    IDS_DEF_LENGTH          "%s is a length"
+    IDS_DEF_AREA            "%s is an area"
+    IDS_DEF_VOLUME          "%s is a volume"
+    IDS_DEF_CROSSPRODUCT    "%s is the cross-product of %s and %s"
+    IDS_DEF_CIRCLEISS       "%s is the circle at the intersection of %s and %s"
+    IDS_DEF_SECTIONSEG      "%s is the trisection of %s"
+    IDS_DEF_INTCIRCDR       "%s is the intersection of %s and %s"
+    IDS_DEF_CONE            "%s is a cone defined by the axe %s %s and going through %s"
+    IDS_DEF_INTCONEDR       "%s is the intersection of %s and %s"
+    IDS_DEF_SPHERERADIUS    "%s is a sphere defined by %s as its center and %s as a radius"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
     IDS_NAME_CYLIN          "Cil#"
     IDS_NAME_CPTOBJECT      "Cpt#"
     IDS_NAME_TEXT           "Txt#"
     IDS_NAME_LOCUS          "Obj#"
-    IDS_NAME_VECTOR         "Vec#"
+    IDS_NAME_CONE           "Cn#"
 END
 
 STRINGTABLE DISCARDABLE 
@@ -3281,6 +3341,8 @@ END
 STRINGTABLE DISCARDABLE 
 BEGIN
     CTX_SELECT_DROITEPLAN   "select a line or a plane."
+    CTX_CONE                "Construct a cone"
+    CTX_SELECT_POINTANIM    "select a base-point (on a line or a circle)"
     CTX_LOCUS               "Crear un lugar geométrico"
     CTX_LOCUS_BASE          "Select a base-point"
     CTX_LOCUS_LOCUS         "Select the point that will define the locus"
@@ -3492,19 +3554,8 @@ BEGIN
     ERR_INTER_PLANESPHERE   "The plane and the sphere do not intersect. \n Their intersection is not defined."
     ERR_INTER_LINECIRCLE    "The line and the circle do not intersect. \n Their intersection is not defined."
     ERR_INTER_PLANECIRCLE   "The plane and the circle do not intersect. \n Their intersection is not defined."
-END
-
-STRINGTABLE DISCARDABLE 
-BEGIN
-    IDS_DEF_ANGLE           "%s is an angle"
-    IDS_DEF_DISTANCE        "%s is a distance"
-    IDS_DEF_LENGTH          "%s is a length"
-    IDS_DEF_AREA            "%s is an area"
-    IDS_DEF_VOLUME          "%s is a volume"
-    IDS_DEF_CROSSPRODUCT    "%s is the cross-product of %s and %s"
-    IDS_DEF_CIRCLEISS       "%s is the circle at the intersection of %s and %s"
-    IDS_DEF_SECTIONSEG      "%s is the trisection of %s"
-    IDS_DEF_INTCIRCDR       "%s is the intersection of %s and %s"
+    ERR_CONE_UNDEFINED      "Some properties of one of the points are not verified.\nThus, the cone cannot be defined."
+    ERR_CONE_NORADIUS       "The radius is null.\n The cone cannot be defined."
 END
 
 STRINGTABLE DISCARDABLE 
@@ -3553,13 +3604,16 @@ BEGIN
     PREF_DEF_PTSIZE         "Set the default size of the points (in pixel)"
     PREF_DEF_PT             "Set the properties for the points"
     PREF_DEF_SPH            "Set the properties for the spheres"
-    PREF_DEF_COLOR          "Set the default colour"
+    PREF_DEF_COLOR          "Set the default colour for the object"
     PREF_DEF_CLROTHER       "Other..."
     PREF_DEF_CLRAUTO        "Automatic"
     PREF_DEF_SPHEQ          "Display the equator of the spheres"
     PREF_DEF_SPHGCR         "Display the two great circles of the spheres"
-    PREF_DEF_LOCUS          "Set the default shape for the loci"
-    PREF_DEF_LOCSIZE        "Set the size of the loci's mesh"
+    PREF_DEF_LOCUS          "Set the properties for the loci"
+    PREF_DEF_LOCSIZE        "Set the size of a locus' mesh"
+    PREF_DEF_LINE           "Set the properties for the lines, segments and rays"
+    PREF_DEF_CONE           "Set the properties for the cones"
+    PREF_DEF_CONEDBL        "Specify if cones are represented as double or single nappe."
 END
 
 STRINGTABLE DISCARDABLE 
@@ -3572,6 +3626,8 @@ BEGIN
     PREF_NAME_LOCSIZE       "Tamaño"
     PREF_NAME_LINE          "Líneas"
     PREF_NAME_CLRDOC        "Document Colours"
+    PREF_NAME_CONE          "Cones"
+    PREF_NAME_CONEDBL       "Double cone"
 END
 
 STRINGTABLE DISCARDABLE 
@@ -3588,6 +3644,10 @@ BEGIN
     CTX_SELECT_CLOSE_POLYGON 
                             "select a point (or select the first point to close and construct the polygon)"
     CTX_SELECT_TASKOPTION   "Choose an option with the contextual menu."
+    CTX_SELECT_CONE         "select a cone"
+    CTX_POINTSUR_CONE       "Point on cone"
+    CTX_POINTSUR_CYL        "Point on cylindre"
+    CTX_SELECT_CYL          "select a cylindre"
 END
 
 STRINGTABLE DISCARDABLE 
@@ -3662,20 +3722,19 @@ END
 
 STRINGTABLE DISCARDABLE 
 BEGIN
-    IDS_HELP_ANGLE          "the angle %s"
-    IDS_HELP_AREA           "the area %s"
-    IDS_HELP_DISTANCE       "the distance %s"
-    IDS_HELP_VOLUME         "the volume %s"
-END
-
-STRINGTABLE DISCARDABLE 
-BEGIN
     IDS_ABOUT_DONATE        "Donate online"
 END
 
 STRINGTABLE DISCARDABLE 
 BEGIN
     IDS_WARNING_TITLE       "MathPad View\nObjects have been extracted in the MathPad view.\nDo you want to open the view?"
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    ERR_CONE_NOAXIS         "The two points of the axis are identical.\n The cone cannot be defined."
+    ERR_CONE_NOPROJAXIS     "The envelope of the cone cannot be determined.\nThe cone is not defined"
+    ERR_INTER_CONEDR        "The line and the cone do not intersect. \n Their intersection is not defined."
 END
 
 #endif    // English (U.K.) resources
