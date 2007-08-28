@@ -104,8 +104,8 @@ class CCalques3DDoc : public CDocument
 {
 protected: // create from serialization only
 	CCalques3DDoc();
-	DECLARE_DYNCREATE(CCalques3DDoc)
-	//DECLARE_SERIAL(CCalques3DDoc);
+	//DECLARE_DYNCREATE(CCalques3DDoc)
+	DECLARE_SERIAL(CCalques3DDoc);
 
 // Attributes
 public:
@@ -140,6 +140,7 @@ public:
 
 protected:
 	BOOL	m_bMathPadUsed;			///< The document contains MathPad objects
+	BOOL	m_bLegacyVersion;		///< This document is loaded using the old serialization method
 // Operations
 public:
 	BOOL IsTaskAvailable(UINT m_nID);
@@ -173,6 +174,8 @@ public:
 	virtual BOOL OnSaveDocument(LPCTSTR lpszPathName);
 	virtual BOOL CanCloseFrame(CFrameWnd* pFrame);
 	//}}AFX_VIRTUAL
+	
+	void SerializeLegacy(CArchive& ar);
 
 // Implementation
 public:
