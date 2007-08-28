@@ -118,6 +118,8 @@ void CViewAnalytic::OnInitialUpdate()
 {
 	CScrollView::OnInitialUpdate();
 
+	m_wndMultiTrack.SetTrackerView(this);
+
 	if (m_bmpBack.GetCount () > 0)
 	{
 		m_bmpBack.Clear ();
@@ -151,6 +153,7 @@ void CViewAnalytic::OnInitialUpdate()
 
 	m_oldP = CPoint(0,0);
 	GetDocument()->CleanMathPadUsed();
+
 }
 
 
@@ -262,6 +265,9 @@ void CViewAnalytic::OnDraw(CDC* rDC)
 
 	pDC->SelectObject(pOld);
 	OnDrawAnalytic(pDC);
+
+    m_wndMultiTrack.Draw(pDC);
+
 }
 
 
@@ -348,6 +354,8 @@ void CViewAnalytic::OnLButtonDown(UINT nFlags, CPoint point)
 	OnPrepareDC(&dc);
 	dc.DPtoLP(&point);
 
+	m_wndMultiTrack.RemoveAll();
+
 	CCalques3DDoc* pDoc = GetDocument();
 	int nb = pDoc->m_cObjectSet.GetSize();
 
@@ -372,6 +380,7 @@ void CViewAnalytic::OnLButtonDown(UINT nFlags, CPoint point)
 		{
 			m_pSelObject = (CEquation3D*)poo;
 			m_cSelObjectSet.Add(m_pSelObject);
+			m_wndMultiTrack.Add(m_pSelObject);
 			break;
 		}
 	}
@@ -574,6 +583,7 @@ void CViewAnalytic::OnLButtonDblClk(UINT nFlags, CPoint point)
 
 		if (pObj && pObj==m_pSelObject && pObj->IsEditable())
 		{
+			m_wndMultiTrack.RemoveAll();
 			//OnProperty();
 			//if (m_pEdit) delete m_pEdit;
 			OnUpdateObjTooltip(NULL,FALSE);
@@ -621,6 +631,7 @@ void CViewAnalytic::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
 				pEqu->rActZone.OffsetRect(m_rMargin.left+5,m_rMargin.top+5);
 			}
 		}
+    case WM_UPDATEOBJ_ALL:  // Objects redrawn
 	case WM_UPDATEOBJ_SEL:	// Object Selected
 	case WM_UPDATEOBJ_MOV:	// Object Moved
 	case WM_UPDATEOBJ_DEL:	// Object Deleted
@@ -873,14 +884,15 @@ void CViewAnalytic::OnContextMenu(CWnd* pWnd, CPoint point)
 BOOL CViewAnalytic::OnSetCursor(CWnd* pWnd, UINT nHitTest, UINT message) 
 {
 	// forward to multitracker
-// 	if (pWnd == this && multiTrack.SetCursor(this, nHitTest))
-// 		return TRUE;
+	if (pWnd == this && m_wndMultiTrack.SetCursor(this, nHitTest))
+		return TRUE;
 	return CScrollView::OnSetCursor(pWnd, nHitTest, message);
 }
 
 void CViewAnalytic::OnEditSelectAll() 
 {
 	// TODO: Add your command handler code here
+	m_wndMultiTrack.RemoveAll();
 	
 }
 
