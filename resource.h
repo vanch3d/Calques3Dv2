@@ -803,6 +803,7 @@
 #define ID_INDICATOR_MODE               0xE707
 #define ID_INDICATOR_ICON               59144
 #define ID_INDICATOR_PROGRESS           59145
+#define AFX_IDP_C3D_OLDVERSION          0xF10E
 
 // Next default values for new objects
 // 
