@@ -559,13 +559,28 @@ CString CDroite3D::ExportSymbolic(int nFormat)
 
 void CDroite3D::Draw(CDC* pDC,CVisualParam *mV,BOOL bSm)
 {
-    if ((!bVisible) || (!bValidate) || (!IsInCalque(mV->nCalqueNum))) return;
+    if ((!bVisible && !TPref::TUniv.bShowHidden) || (!bValidate) || (!IsInCalque(mV->nCalqueNum))) return;
 
-    CBrush curBrush(pObjectShape.GetObjectColor());
+    CBrush curBrush;//(pObjectShape.GetObjectColor());
     CPen curPen,disPen;
-    curPen.CreatePenIndirect(&pObjectShape.GetPenStyle()); //(*ObjectColor,0,PS_SOLID);
-    disPen.CreatePenIndirect(&pObjectShape.GetHiddenPenStyle(
+//    curPen.CreatePenIndirect(&pObjectShape.GetPenStyle()); //(*ObjectColor,0,PS_SOLID);
+  //  disPen.CreatePenIndirect(&pObjectShape.GetHiddenPenStyle(
+    //                            pObjectShape.GetObjectHiddenColor()));
+
+	if (!bVisible && TPref::TUniv.bShowHidden)
+	{
+		curBrush.CreateSolidBrush(TPref::TUniv.clrShowHidden);
+	    curPen.CreatePen(PS_DASH,1,TPref::TUniv.clrShowHidden);
+		disPen.CreatePen(PS_DASH,1,TPref::TUniv.clrShowHidden);
+	}
+	else
+	{
+		//curBrush = CBrush(pObjectShape.GetObjectColor());
+		curBrush.CreateSolidBrush(pObjectShape.GetObjectColor());
+	    curPen.CreatePenIndirect(&pObjectShape.GetPenStyle()); //(*ObjectColor,0,PS_SOLID);
+		disPen.CreatePenIndirect(&pObjectShape.GetHiddenPenStyle(
                                 pObjectShape.GetObjectHiddenColor()));
+	}
 /*  if (small)
      {
         if ((CLP1) && (CLP2))
@@ -1655,7 +1670,7 @@ UINT  CDroitePerp3D::CalculConceptuel()
 
 void CDroitePerp3D::Draw(CDC* pDC,CVisualParam *mV,BOOL bSm)
 {
-    if ((!bVisible) || (!bValidate) || (!IsInCalque(mV->nCalqueNum))) return;
+    if ((!bVisible && !TPref::TUniv.bShowHidden) || (!bValidate) || (!IsInCalque(mV->nCalqueNum))) return;
     CDroite3D::Draw(pDC,mV,bSm);
 
     CVector4 dis = IntPt - P1->Concept_pt;

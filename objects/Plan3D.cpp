@@ -737,13 +737,29 @@ void MyDraw22(int code,CPoint3D  *myA[4],int *nbpt,CDC* HandleDC,
 
 void CPlan3D::Draw(CDC* pDC,CVisualParam *mV,BOOL bSm)
 {
-    if ((!bVisible) || (!bValidate) || (!IsInCalque(mV->nCalqueNum))) return;
+    if ((!bVisible && !TPref::TUniv.bShowHidden) || (!bValidate) || (!IsInCalque(mV->nCalqueNum))) return;
 
-    CBrush curBrush(pObjectShape.clrObject);
+    CBrush curBrush;//(pObjectShape.clrObject);
     CPen curPen,disPen;
-    curPen.CreatePenIndirect(&(pObjectShape.GetPenStyle()));
-    disPen.CreatePenIndirect(&(pObjectShape.GetHiddenPenStyle(
+//     curPen.CreatePenIndirect(&(pObjectShape.GetPenStyle()));
+//     disPen.CreatePenIndirect(&(pObjectShape.GetHiddenPenStyle(
+//                                     pObjectShape.GetObjectHiddenColor())));
+
+	if (!bVisible && TPref::TUniv.bShowHidden)
+	{
+		curBrush.CreateSolidBrush(TPref::TUniv.clrShowHidden);
+	    curPen.CreatePen(PS_DOT,1,TPref::TUniv.clrShowHidden);
+		disPen.CreatePen(PS_DOT,1,TPref::TUniv.clrShowHidden);
+	}
+	else
+	{
+		//curBrush = CBrush(pObjectShape.GetObjectColor());
+		curBrush.CreateSolidBrush(pObjectShape.GetObjectColor());
+	  curPen.CreatePenIndirect(&(pObjectShape.GetPenStyle()));
+	   disPen.CreatePenIndirect(&(pObjectShape.GetHiddenPenStyle(
                                     pObjectShape.GetObjectHiddenColor())));
+	}
+
 // 	COLORREF	curC = RGB(0,0,0),
 // 				curC2 = RGB(192,192,192);
 // 	CPen	curP(PS_DOT,1,pObjectShape.GetObjectColor()); 
@@ -1390,11 +1406,11 @@ UINT  CPlanPerp3D::CalculConceptuel()
 
 void CPlanPerp3D::Draw(CDC* pDC,CVisualParam *mV,BOOL bSm)
 {
-    if ((!bVisible) || (!bValidate) || (!IsInCalque(mV->nCalqueNum))) return;
+    if ((!bVisible && !TPref::TUniv.bShowHidden) || (!bValidate) || (!IsInCalque(mV->nCalqueNum))) return;
     CPlan3D::Draw(pDC,mV,bSm);
 
     CVector4 dis = IntPt - P1->Concept_pt;
-    if (!dis.NullVector())
+    if (!dis.NullVector() && bVisible)
      {
         COLORREF curC=RGB(0,0,0);
         CBrush br(curC);

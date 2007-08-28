@@ -428,13 +428,27 @@ CString CCercle3D::ExportSymbolic(int nFormat)
 
 void CCercle3D::Draw(CDC* pDC,CVisualParam *mV,BOOL bSM)
 {
-    if ((!bVisible) || (!bValidate) || (!IsInCalque(mV->nCalqueNum))) return;
+    if ((!bVisible && !TPref::TUniv.bShowHidden) || (!bValidate) || (!IsInCalque(mV->nCalqueNum))) return;
 
     CPen curPen,disPen;
-    curPen.CreatePenIndirect(&(pObjectShape.GetPenStyle()));
+//    curPen.CreatePenIndirect(&(pObjectShape.GetPenStyle()));
 
-    disPen.CreatePenIndirect(&(pObjectShape.GetHiddenPenStyle(
-                pObjectShape.GetObjectHiddenColor())));
+ //   disPen.CreatePenIndirect(&(pObjectShape.GetHiddenPenStyle(
+ //               pObjectShape.GetObjectHiddenColor())));
+
+	if (!bVisible && TPref::TUniv.bShowHidden)
+	{
+	    curPen.CreatePen(PS_DASH,1,TPref::TUniv.clrShowHidden);
+		disPen.CreatePen(PS_DASH,1,TPref::TUniv.clrShowHidden);
+	}
+	else
+	{
+	    curPen.CreatePenIndirect(&(pObjectShape.GetPenStyle()));
+
+	   disPen.CreatePenIndirect(&(pObjectShape.GetHiddenPenStyle(
+		          pObjectShape.GetObjectHiddenColor())));
+
+	}
 
     bool bVis1;
 
