@@ -136,6 +136,7 @@ TPref::CTUniverse	TPref::TUniv =
 		{
 			RGB(128,0,0),
 			RGB(0,0,0),
+			RGB(238,157,245),
 			{25.0,45.0,800.0,400.0},
 			TPref::MV_HORIZ,
 			3,

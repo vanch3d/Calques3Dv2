@@ -188,6 +188,7 @@ public :
 	struct CTUniverse {
 		COLORREF	clrTrace;		///< Color used for drawing the traces of an object
 		COLORREF	clrFeedback;	///< Color used for drawing the feedback of construction
+		COLORREF	clrShowHidden;	///< Color used for drawing hidden objects
 		SProjection	sDefParam;		///< Parameters for the projection on the universe view
 		int			nMoveType; 		///< Axis of deformation (O horizontal, 1 left, 2 right)
 		int 		nDefRep; 		///< Type of SoR (0 none, 1 axes, 2 floor, 3 walls)
