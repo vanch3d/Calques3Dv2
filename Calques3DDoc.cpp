@@ -57,10 +57,10 @@ static char THIS_FILE[] = __FILE__;
 //CxObject3DSet*	GLOBALObjectSet;
 CxObject3DSet* CCalques3DDoc::GLOBALObjectSet = NULL;
 
-/////////////////////////////////////////////////////////////////////////////
+//***************************************************************************
 // CWinPlacement
+//***************************************************************************
 IMPLEMENT_SERIAL(CWinPlacement, CObject, VERSIONABLE_SCHEMA | 1)
-
 
 CWinPlacement::CWinPlacement()
 {
@@ -116,10 +116,10 @@ void CWinPlacement::operator =(const CWinPlacement& other)
 }
 
 
-/////////////////////////////////////////////////////////////////////////////
+//***************************************************************************
 // CUndoObject
+//***************************************************************************
 IMPLEMENT_SERIAL(CUndoObject, CObject, VERSIONABLE_SCHEMA | 1)
-
 
 CUndoObject::CUndoObject()
 {
@@ -175,11 +175,11 @@ CString CUndoObject::GetUndoText()
 }
 
 
-/////////////////////////////////////////////////////////////////////////////
+//***************************************************************************
 // CCalques3DDoc
-
-IMPLEMENT_DYNCREATE(CCalques3DDoc, CDocument)
-//IMPLEMENT_SERIAL(CCalques3DDoc, CDocument, VERSIONABLE_SCHEMA | 1)
+//***************************************************************************
+//IMPLEMENT_DYNCREATE(CCalques3DDoc, CDocument)
+IMPLEMENT_SERIAL(CCalques3DDoc, CDocument, VERSIONABLE_SCHEMA | 1)
 
 BEGIN_MESSAGE_MAP(CCalques3DDoc, CDocument)
 	//{{AFX_MSG_MAP(CCalques3DDoc)
@@ -202,6 +202,7 @@ CCalques3DDoc::CCalques3DDoc()
 	// TODO: add one-time construction code here
 	m_nDocUndoState = UndoNone;
 	m_bMathPadUsed = false;
+	m_bLegacyVersion = FALSE;
 
 	m_cObjectSet.RemoveAll();
 	m_cPolygonSet.RemoveAll();
@@ -234,13 +235,17 @@ CCalques3DDoc::~CCalques3DDoc()
 	CleanUndo();
 }
 
+/////////////////////////////////////////////////////////////////////////////
+// CCalques3DDoc file management
+
+//////////////////////////////////////////////////////////////////////
+/// Called by the framework as part of the File New command.
+//////////////////////////////////////////////////////////////////////
 BOOL CCalques3DDoc::OnNewDocument()
 {
 	if (!CDocument::OnNewDocument())
 		return FALSE;
 
-	// TODO: add reinitialization code here
-	// (SDI documents will reuse this document)
 	int idx = 1;
 	CPOVUserTool *tool = new CPOVUserTool();
 	tool->m_bCanRemove = FALSE;
@@ -251,21 +256,86 @@ BOOL CCalques3DDoc::OnNewDocument()
 	return TRUE;
 }
 
+//////////////////////////////////////////////////////////////////////
+/// Called by the framework as part of the File Open command.
+///
+/// The current implementation checks for the old serialization method (prior to version 2.4.0) 
+/// in case the current method (with version check) is failing.
+///
+/// @param lpszPathName	Points to the path of the document to be opened.
+///
+/// @todo In case of a legacy document, the warning message needs to be modified in order to 
+///		  take macro-constructions into account
+//////////////////////////////////////////////////////////////////////
 BOOL CCalques3DDoc::OnOpenDocument(LPCTSTR lpszPathName) 
 {
-	if (!CDocument::OnOpenDocument(lpszPathName))
+	if (IsModified())
+		TRACE0("Warning: OnOpenDocument replaces an unsaved document.\n");
+
+	CFileException fe;
+	CFile* pFile = GetFile(lpszPathName, CFile::modeRead|CFile::shareDenyWrite, &fe);
+	if (pFile == NULL)
+	{
+		ReportSaveLoadException(lpszPathName, &fe, FALSE, AFX_IDP_FAILED_TO_OPEN_DOC);
 		return FALSE;
-	
-	// TODO: Add your specialized creation code here
+	}
+
+	DeleteContents();
+	SetModifiedFlag();  // dirty during de-serialize
+
+	CArchive loadArchive(pFile, CArchive::load | CArchive::bNoFlushOnDelete);
+	loadArchive.m_pDocument = this;
+	loadArchive.m_bForceFlat = FALSE;
+	TRY
+	{
+		// Try the current serialization method
+		CWaitCursor wait;
+		if (pFile->GetLength() != 0) 
+			Serialize(loadArchive);     // load me
+		loadArchive.Close();
+		ReleaseFile(pFile, FALSE);
+	}
+	CATCH_ALL(e)
+	{
+		// If it failed, close the file and reopen it using the SerializeLegacy method
+		loadArchive.Close();
+		ReleaseFile(pFile, FALSE);
+		pFile = GetFile(lpszPathName, CFile::modeRead|CFile::shareDenyWrite, &fe);
+		CArchive loadArchive2(pFile, CArchive::load | CArchive::bNoFlushOnDelete);
+		loadArchive2.m_pDocument = this;
+		loadArchive2.m_bForceFlat = FALSE;
+		TRY 
+		{
+			// Try the legacy serialization method
+			CWaitCursor wait;
+			SerializeLegacy(loadArchive2);     // load me
+			loadArchive2.Close();
+			ReleaseFile(pFile, FALSE);
+			ReportSaveLoadException(lpszPathName, NULL, FALSE, AFX_IDP_C3D_OLDVERSION);
+			m_bLegacyVersion = TRUE;
+		}
+		CATCH_ALL(e2)
+		{
+			// If it failed, the document cannot be read by Calques 3D
+			ReleaseFile(pFile, TRUE);
+			DeleteContents();   // remove failed contents
+			ReportSaveLoadException(lpszPathName, e, FALSE, AFX_IDP_FAILED_TO_OPEN_DOC);
+			e->Delete();
+			e2->Delete();
+			return FALSE;
+		
+		}
+		END_CATCH_ALL
+		e->Delete();
+	}
+	END_CATCH_ALL
+
+	// start off with unmodified or modified if legacy serialization
+	SetModifiedFlag(m_bLegacyVersion);     
+
 	if (m_bMathPadUsed)
 	{
-// 		if (TPref::TMathPad.nShowView==0)
-// 		{
-// 			CWarningDialog* dlg = new CWarningDialog(AfxGetMainWnd());
-// 			dlg->DoModeless(CWarningDialog::WARNING_MATHPAD);
-// 		}
-//		else 
-			if (TPref::TMathPad.nShowView==1)
+		if (TPref::TMathPad.nShowView==1)
 		{
 			CMainFrame *pMFrame = DYNAMIC_DOWNCAST(CMainFrame,AfxGetMainWnd());
 			if (pMFrame) pMFrame->LaunchView(this,ID_VIEW_ANALYTIC);
@@ -277,14 +347,11 @@ BOOL CCalques3DDoc::OnOpenDocument(LPCTSTR lpszPathName)
 
 BOOL CCalques3DDoc::OnSaveDocument(LPCTSTR lpszPathName) 
 {
-	// TODO: Add your specialized code here and/or call the base class
-	
 	return CDocument::OnSaveDocument(lpszPathName);
 }
 
 BOOL CCalques3DDoc::CanCloseFrame(CFrameWnd* pFrame) 
 {
-	// TODO: Add your specialized code here and/or call the base class
 	return CDocument::CanCloseFrame(pFrame);
 }
 
@@ -303,9 +370,54 @@ void CCalques3DDoc::OnFileSaveAs()
 /////////////////////////////////////////////////////////////////////////////
 // CCalques3DDoc serialization
 
+//////////////////////////////////////////////////////////////////////
+/// Called by the framework to read or write this document from or to an archive. 
+/// This method is a legacy of older Calques 3D versions (prior to version 2.4.0 and
+/// versionable serialization) and is maintained to allow access to old document.
+/// 
+/// @warning This method is assumed to be used only for loading document.
+///
+/// @param ar	A CArchive object to serialize to or from.
+//////////////////////////////////////////////////////////////////////
+void CCalques3DDoc::SerializeLegacy(CArchive& ar)
+{
+	if (ar.IsLoading())
+	{
+		CxObject3DSet	pObjectSet;
+		CxObject3DSet	pGlobalObjectSet;
+		CCalques3DDoc::GLOBALObjectSet = &pGlobalObjectSet;
+		pObjectSet.Serialize(ar);
+		int nb = pObjectSet.GetSize();
+		for (int i=0;i<nb;i++)
+		{
+			CObject3D *pObj = pObjectSet.GetAt(i);
+			if (!pObj) continue;
+			if (DYNAMIC_DOWNCAST(CEquation3D,pObj))
+			{
+				m_bMathPadUsed = TRUE;
+			}
+			AddObject(pObj,FALSE);
+		}
+		CCalques3DDoc::GLOBALObjectSet = NULL;
+
+		CPOVUserTool *tool = new CPOVUserTool();
+		tool->m_bCanRemove = FALSE;
+		tool->m_strLabel = _T("Default");
+		tool->m_projParam = TPref::TUniv.sDefParam;
+		m_cPOVlist.AddHead(tool);
+
+	}
+}
+
+//////////////////////////////////////////////////////////////////////
+/// Called by the framework to read or write this document from or to an archive. 
+/// @param ar	A CArchive object to serialize to or from.
+//////////////////////////////////////////////////////////////////////
 void CCalques3DDoc::Serialize(CArchive& ar)
 {
+	ar.SerializeClass(RUNTIME_CLASS(CCalques3DDoc));
 	UINT schema = ar.GetObjectSchema();
+
 	if (ar.IsStoring())
 	{
 		// TODO: add storing code here
@@ -331,21 +443,7 @@ void CCalques3DDoc::Serialize(CArchive& ar)
 			AddObject(pObj,FALSE);
 		}
 		CCalques3DDoc::GLOBALObjectSet = NULL;
-	try
-	{
 		m_cPOVlist.Serialize(ar);
-	}
-	catch (CException* pEx)
-	{
-		pEx->Delete ();
-		AfxGetMainWnd()->MessageBox("The list is empty");
-		CPOVUserTool *tool = new CPOVUserTool();
-		tool->m_bCanRemove = FALSE;
-		tool->m_strLabel = _T("Default");
-		tool->m_projParam = TPref::TUniv.sDefParam;
-		m_cPOVlist.AddHead(tool);
-		SetModifiedFlag(TRUE);
-	}
 	}
 
 // 	try
@@ -1800,10 +1898,28 @@ void CCalques3DDoc::OnDiscovery()
 	bD = !bD;
 }
 
+void CCalques3DDoc::OnViewPlacementSave() 
+{
+	// TODO: Add your command handler code here
+	SaveWindowPos();
+}
 
-/////////////////////////////////////////////////////////////////////////////
-// CCalques3DDoc
+void CCalques3DDoc::OnViewPlacementRestore() 
+{
+	// TODO: Add your command handler code here
+	RestoreWindowPos();
+}
 
+void CCalques3DDoc::OnUpdatePlacementRestore(CCmdUI* pCmdUI) 
+{
+	// TODO: Add your command update UI handler code here
+	pCmdUI->Enable(m_cWinPos.GetCount()!=0);
+}
+
+
+//***************************************************************************
+// CCalques3DMacroDoc
+//***************************************************************************
 IMPLEMENT_DYNCREATE(CCalques3DMacroDoc, CCalques3DDoc)
 
 BEGIN_MESSAGE_MAP(CCalques3DMacroDoc, CCalques3DDoc)
@@ -1837,22 +1953,4 @@ void CCalques3DMacroDoc::Serialize(CArchive& ar)
 		ar >> strObjectDef;
 		ar >> nSortKind;
 	}
-}
-
-void CCalques3DDoc::OnViewPlacementSave() 
-{
-	// TODO: Add your command handler code here
-	SaveWindowPos();
-}
-
-void CCalques3DDoc::OnViewPlacementRestore() 
-{
-	// TODO: Add your command handler code here
-	RestoreWindowPos();
-}
-
-void CCalques3DDoc::OnUpdatePlacementRestore(CCmdUI* pCmdUI) 
-{
-	// TODO: Add your command update UI handler code here
-	pCmdUI->Enable(m_cWinPos.GetCount()!=0);
 }
