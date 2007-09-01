@@ -209,8 +209,10 @@
 #define IDC_MESSAGE_IMG                 1189
 #define IDC_PHISTO_SHOWSEL              1189
 #define IDC_MESSAGE_TITLE               1190
-#define IDC_POV_LIST                    1190
-#define IDC_POV_INFO                    1192
+#define IDC_POV_LIST                    1191
+#define IDC_POV_THETA                   1192
+#define IDC_POV_PHI                     1193
+#define IDC_POV_INFO                    1194
 #define IDC_ABOUTCALQUE                 1201
 #define IDC_RENDERER_AMBTXT             1300
 #define IDC_RENDERER_DIFFUSETXT         1301
@@ -803,7 +805,7 @@
 #define ID_INDICATOR_MODE               0xE707
 #define ID_INDICATOR_ICON               59144
 #define ID_INDICATOR_PROGRESS           59145
-#define AFX_IDP_C3D_OLDVERSION          0xF10E
+#define AFX_IDP_C3D_OLDVERSION          0xF10F
 
 // Next default values for new objects
 // 
@@ -812,7 +814,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        202
 #define _APS_NEXT_COMMAND_VALUE         32998
-#define _APS_NEXT_CONTROL_VALUE         1193
+#define _APS_NEXT_CONTROL_VALUE         1195
 #define _APS_NEXT_SYMED_VALUE           125
 #endif
 #endif
