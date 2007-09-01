@@ -2034,7 +2034,7 @@ void CPolygon3D::GetRange(CVector4 &min,CVector4 &max)
 
 void CPolygon3D::Draw(CDC* pDC,CVisualParam *mV,BOOL bSm)
 {
-    if ((!bVisible) || (!bValidate) || (!IsInCalque(mV->nCalqueNum))) return;
+    if ((!bVisible && !TPref::TUniv.bShowHidden) || (!bValidate) || (!IsInCalque(mV->nCalqueNum))) return;
 
 
     int nb = m_pPointSet.GetSize();
@@ -2063,22 +2063,28 @@ void CPolygon3D::Draw(CDC* pDC,CVisualParam *mV,BOOL bSm)
         FCoord dot = VisuNorm * FaceNorm;
 
         CBrush pBrush;
-        CPen mPen(PS_SOLID   ,1,(dot > 0) ? pObjectShape.GetObjectColor():
-                                            pObjectShape.GetObjectHiddenColor());
-        //CPen mPen(PS_NULL,0,RGB(192,192,192));
-        //pBrush.CreateHatchBrush(HS_CROSS,RGB(192,192,192));
-        pBrush.CreateSolidBrush((dot > 0) ? pObjectShape.GetObjectColor():
-                                            pObjectShape.GetObjectHiddenColor());
+        CPen mPen,mPenLine;
 
-        CPen mPenLine;
-        mPenLine.CreatePenIndirect(&pObjectShape.GetPenStyle(pObjectShape.nShapeId-2));
-
+		if (!bVisible && TPref::TUniv.bShowHidden)
+		{
+			pBrush.CreateSolidBrush(TPref::TUniv.clrShowHidden);
+		    mPenLine.CreatePen(PS_DOT,1,TPref::TUniv.clrShowHidden);
+			mPen.CreatePen(PS_DOT,1,TPref::TUniv.clrShowHidden);
+		}
+		else
+		{
+			pBrush.CreateSolidBrush((dot > 0) ? pObjectShape.GetObjectColor():
+						pObjectShape.GetObjectHiddenColor());
+			mPenLine.CreatePenIndirect(&pObjectShape.GetPenStyle(pObjectShape.nShapeId-2));
+			mPen.CreatePen(PS_SOLID   ,1,(dot > 0) ? pObjectShape.GetObjectColor():
+                                            pObjectShape.GetObjectHiddenColor());
+		}
         int oldM = pDC->SetBkMode(TRANSPARENT);
 
         CBrush *pOld = pDC->SelectObject(&pBrush);
         CPen *pOldp = NULL;
 
-        if (!bSm && pObjectShape.nShapeId==1)
+        if ((!bSm && pObjectShape.nShapeId==1) && (!(!bVisible && TPref::TUniv.bShowHidden)))
         {
             pOldp = pDC->SelectObject(&mPen);
             pDC->Polygon(mpoly,nb);
@@ -2096,7 +2102,8 @@ void CPolygon3D::Draw(CDC* pDC,CVisualParam *mV,BOOL bSm)
                 CPoint3D pt2= *((CPoint3D*)m_pPointSet.GetAt((i==nb-1)? 0 : i+1));
                 CSegment3D seg(&pt1,&pt2);
                 seg.pObjectShape.nShapeId = nshape;
-                seg.pObjectShape.clrObject = pObjectShape.clrObject;
+				seg.bVisible = bVisible;
+				seg.pObjectShape.clrObject = pObjectShape.clrObject;
                 seg.nCalque = nCalque;
                 seg.CalculConceptuel();
                 seg.CalculVisuel(mV);

@@ -269,10 +269,17 @@ void CPoint3D::CalculVisuel(CVisualParam *pVisParam)
 
 void CPoint3D::Draw(CDC* pDC,CVisualParam *mV,BOOL bSm)
 {
-    if ((!bVisible) || (!bValidate) || (!IsInCalque(mV->nCalqueNum))) return;
+    if ((!bVisible && !TPref::TUniv.bShowHidden) || (!bValidate) || (!IsInCalque(mV->nCalqueNum))) return;
 
     COLORREF    ObjCl= pObjectShape.GetObjectColor(),
                 ObjClH= pObjectShape.GetObjectHiddenColor();
+
+	if (!bVisible && TPref::TUniv.bShowHidden)
+	{
+		ObjCl = TPref::TUniv.clrShowHidden;
+		ObjClH= TPref::TUniv.clrShowHidden;
+	}
+
     CPen disPen(PS_SOLID,1,ObjClH);
     CPen curPen(PS_SOLID,1,ObjCl);
     CBrush disBrush(ObjClH);

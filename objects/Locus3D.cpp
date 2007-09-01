@@ -98,25 +98,54 @@ void CLocusMesh::Draw(CDC* pDC,CVisualParam *mV,CLocus3D *pSrc)
     CPointSurS3D *pPtSurS = DYNAMIC_DOWNCAST(CPointSurS3D,pSrc->m_pSource);
 
     CPen curPen,disPen;
-    curPen.CreatePenIndirect(&(pSrc->pObjectShape.GetPenStyle()));
+    CPen curPen2,disPen2;
 
-    disPen.CreatePenIndirect(&(pSrc->pObjectShape.GetHiddenPenStyle(
+	if (!pSrc->bVisible && TPref::TUniv.bShowHidden)
+	{
+	    curPen.CreatePen(PS_DOT,1,TPref::TUniv.clrShowHidden);
+		disPen.CreatePen(PS_DOT,1,TPref::TUniv.clrShowHidden);
+	    curPen2.CreatePen(PS_DOT,1,TPref::TUniv.clrShowHidden);
+		disPen2.CreatePen(PS_DOT,1,TPref::TUniv.clrShowHidden);
+	}
+	else
+	{
+	    curPen.CreatePenIndirect(&(pSrc->pObjectShape.GetPenStyle()));
+
+		disPen.CreatePenIndirect(&(pSrc->pObjectShape.GetHiddenPenStyle(
                 pSrc->pObjectShape.GetObjectHiddenColor())));
 
-    CPen curPen2,disPen2;
-    LOGPEN lPen1,lPen2;
+		LOGPEN lPen1,lPen2;
+	    curPen.GetLogPen(&lPen1);
+		lPen1.lopnStyle = PS_DOT;
+		lPen1.lopnWidth = CPoint(1,1);
+		disPen.GetLogPen(&lPen2);
+		lPen2.lopnStyle = PS_SOLID;
+		lPen2.lopnWidth = CPoint(1,1);
+	    curPen2.CreatePenIndirect(&lPen1);
+		disPen2.CreatePenIndirect(&lPen2);
+	}
+    
+	
+	//CPen curPen,disPen;
+    //curPen.CreatePenIndirect(&(pSrc->pObjectShape.GetPenStyle()));
 
-    curPen.GetLogPen(&lPen1);
-    lPen1.lopnStyle = PS_DOT;
-    lPen1.lopnWidth = CPoint(1,1);
-    //lPen1.lopnColor = RGB(0,192,0);//pObjectShape.GetObjectHiddenColor();
-    disPen.GetLogPen(&lPen2);
-    lPen2.lopnStyle = PS_DOT;
-    lPen2.lopnWidth = CPoint(1,1);
-    //lPen2.lopnColor = RGB(0,255,0);//pObjectShape.GetObjectHiddenColor();
+    //disPen.CreatePenIndirect(&(pSrc->pObjectShape.GetHiddenPenStyle(
+    //            pSrc->pObjectShape.GetObjectHiddenColor())));
 
-    curPen2.CreatePenIndirect(&lPen1);
-    disPen2.CreatePenIndirect(&lPen2);
+//     CPen curPen2,disPen2;
+//     LOGPEN lPen1,lPen2;
+// 
+//     curPen.GetLogPen(&lPen1);
+//     lPen1.lopnStyle = PS_DOT;
+//     lPen1.lopnWidth = CPoint(1,1);
+//     //lPen1.lopnColor = RGB(0,192,0);//pObjectShape.GetObjectHiddenColor();
+//     disPen.GetLogPen(&lPen2);
+//     lPen2.lopnStyle = PS_DOT;
+//     lPen2.lopnWidth = CPoint(1,1);
+//     //lPen2.lopnColor = RGB(0,255,0);//pObjectShape.GetObjectHiddenColor();
+// 
+//     curPen2.CreatePenIndirect(&lPen1);
+//     disPen2.CreatePenIndirect(&lPen2);
 
     CPen *pOldP = pDC->SelectObject(&curPen);
 
@@ -654,26 +683,35 @@ CString CLocus3D::ExportSymbolic(int nFormat)
 
 void CLocus3D::Draw(CDC *pDC,CVisualParam *mV,BOOL bSM)
 {
-    if ((!bVisible) || (!bValidate) || (!IsInCalque(mV->nCalqueNum))) return;
+    if ((!bVisible && !TPref::TUniv.bShowHidden) || (!bValidate) || (!IsInCalque(mV->nCalqueNum))) return;
 
     CPen curPen,disPen;
-    curPen.CreatePenIndirect(&(pObjectShape.GetPenStyle()));
+    CPen curPen2,disPen2;
 
-    disPen.CreatePenIndirect(&(pObjectShape.GetHiddenPenStyle(
+	if (!bVisible && TPref::TUniv.bShowHidden)
+	{
+	    curPen.CreatePen(PS_DOT,1,TPref::TUniv.clrShowHidden);
+		disPen.CreatePen(PS_DOT,1,TPref::TUniv.clrShowHidden);
+	    curPen2.CreatePen(PS_DOT,1,TPref::TUniv.clrShowHidden);
+		disPen2.CreatePen(PS_DOT,1,TPref::TUniv.clrShowHidden);
+	}
+	else
+	{
+	    curPen.CreatePenIndirect(&(pObjectShape.GetPenStyle()));
+
+		disPen.CreatePenIndirect(&(pObjectShape.GetHiddenPenStyle(
                 pObjectShape.GetObjectHiddenColor())));
 
-    CPen curPen2,disPen2;
-    LOGPEN lPen1,lPen2;
-
-    curPen.GetLogPen(&lPen1);
-    lPen1.lopnStyle = PS_SOLID;
-    lPen1.lopnColor = RGB(192,192,192);//pObjectShape.GetObjectHiddenColor();
-    disPen.GetLogPen(&lPen2);
-    lPen2.lopnStyle = PS_SOLID;
-    lPen2.lopnColor = RGB(192,192,192);//pObjectShape.GetObjectHiddenColor();
-
-    curPen2.CreatePenIndirect(&lPen1);
-    disPen2.CreatePenIndirect(&lPen2);
+		LOGPEN lPen1,lPen2;
+	    curPen.GetLogPen(&lPen1);
+		lPen1.lopnStyle = PS_SOLID;
+		lPen1.lopnColor = RGB(192,192,192);//pObjectShape.GetObjectHiddenColor();
+		disPen.GetLogPen(&lPen2);
+		lPen2.lopnStyle = PS_SOLID;
+		lPen2.lopnColor = RGB(192,192,192);//pObjectShape.GetObjectHiddenColor();
+	    curPen2.CreatePenIndirect(&lPen1);
+		disPen2.CreatePenIndirect(&lPen2);
+	}
 
 	// Draw the alternative mesh
     CPen *pOldPn = pDC->SelectObject(&curPen2);

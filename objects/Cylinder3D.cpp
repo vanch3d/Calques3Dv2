@@ -501,19 +501,14 @@ void CCylinder3D::CalculVisuel(CVisualParam *pVisParam)
 
 void CCylinder3D::Draw(CDC* pDC,CVisualParam *mV,BOOL bSm)
 {
-    if ((!bVisible) || (!bValidate) || (!IsInCalque(mV->nCalqueNum))) return;
+    if ((!bVisible && !TPref::TUniv.bShowHidden) || (!bValidate) || (!IsInCalque(mV->nCalqueNum))) return;
 
     CPen curPen,disPen;
+    CPen curPenH,disPenH;
     LOGPEN logP = pObjectShape.GetPenStyle(); //(*ObjectColor,0,PS_SOLID);
     LOGPEN logPH = pObjectShape.GetHiddenPenStyle(
                             pObjectShape.GetObjectHiddenColor());
-    curPen.CreatePenIndirect(&logP);
-    disPen.CreatePenIndirect(&logPH);
-
-    CPen curPenH(PS_DOT,1,pObjectShape.clrObject);
-    CPen disPenH(PS_DOT,1,pObjectShape.GetObjectHiddenColor());
-
-
+   
     CVector4 Vtt = calculGeneratrice(M_PI/2,P1->Concept_pt,nRayon,IntH.I,IntH.J,IntH.K);
     CVector4 Vtp = calculGeneratrice(M_PI/2,P2->Concept_pt,nRayon,IntH.I,IntH.J,IntH.K);
     CVector4 oeil = mV->GetEyePos();
@@ -534,6 +529,27 @@ void CCylinder3D::Draw(CDC* pDC,CVisualParam *mV,BOOL bSm)
         C2->pObjectShape.clrObject = pObjectShape.clrObject;
         C2->pObjectShape.nShapeId = pObjectShape.nShapeId;
     }
+	if (!bVisible && TPref::TUniv.bShowHidden)
+	{
+		curPen.CreatePen(PS_DOT,1,TPref::TUniv.clrShowHidden);
+		disPen.CreatePen(PS_DOT,1,TPref::TUniv.clrShowHidden);
+		curPenH.CreatePen(PS_DOT,1,TPref::TUniv.clrShowHidden);
+		disPenH.CreatePen(PS_DOT,1,TPref::TUniv.clrShowHidden);
+		if (C1) C1->bVisible = FALSE;
+		if (C2) C2->bVisible = FALSE;
+		if (C3) C3->bVisible = FALSE;
+	}
+	else
+	{
+		curPen.CreatePenIndirect(&logP);
+		disPen.CreatePenIndirect(&logPH);
+		curPenH.CreatePen(PS_DOT,1,pObjectShape.clrObject);
+		disPenH.CreatePen(PS_DOT,1,pObjectShape.GetObjectHiddenColor());
+		if (C1) C1->bVisible = TRUE;
+		if (C2) C2->bVisible = TRUE;
+		if (C3) C3->bVisible = TRUE;
+	}
+
     CCercle3D *hidCr=NULL,*visCr=NULL;
     if (!hh)
     {
@@ -601,29 +617,37 @@ void CCylinder3D::Draw(CDC* pDC,CVisualParam *mV,BOOL bSm)
     {
         CSegment3D *seg = (CSegment3D*)cGenerList[t];
 		
-                CVector4 U = seg->P1->Concept_pt;
-                CVector4 V =  seg->P2->Concept_pt;
-                CVector4 Up = U - hidCr->Center;
-                Up = Up * (1/Up.Norme());
-                CVector4 Vp = V - hidCr->Center;
-                Vp = Vp * (1/Vp.Norme());
+        CVector4 U = seg->P1->Concept_pt;
+        CVector4 V =  seg->P2->Concept_pt;
+        CVector4 Up = U - hidCr->Center;
+        Up = Up * (1/Up.Norme());
+        CVector4 Vp = V - hidCr->Center;
+        Vp = Vp * (1/Vp.Norme());
 
-                FCoord sa = IntH.J * Up;
-                FCoord ca = IntH.J * Up;
-                //if (fabsl(sa) > 1.)
-                //  sa = (sa < 0.00) ? -1.00 : 1.00;
-                //sa = acosl(sa);
-                if (sa >0 && ca > 0 && t!=0 && t!=(nDeltaT/2))
-				{ 
-					double h,s,l;
-					CBCGPDrawManager::RGBtoHSL(pObjectShape.clrObject,&h,&s,&l);
-					l = l+3*l/4;
-					COLORREF ff = CBCGPDrawManager::HLStoRGB_ONE(h,220./255.,s);
-			        seg->pObjectShape.clrObject = ff;
+        FCoord sa = IntH.J * Up;
+        FCoord ca = IntH.J * Up;
+        //if (fabsl(sa) > 1.)
+        //  sa = (sa < 0.00) ? -1.00 : 1.00;
+        //sa = acosl(sa);
+		seg->bVisible = TRUE;
+	 	if (!bVisible && TPref::TUniv.bShowHidden)
+		{
+			seg->pObjectShape.clrObject = TPref::TUniv.clrShowHidden;
+			seg->bVisible = FALSE;
+		}
+		else if (sa >0 && ca > 0 && t!=0 && t!=(nDeltaT/2))
+		{ 
+			double h,s,l;
+			CBCGPDrawManager::RGBtoHSL(pObjectShape.clrObject,&h,&s,&l);
+			l = l+3*l/4;
+			COLORREF ff = CBCGPDrawManager::HLStoRGB_ONE(h,220./255.,s);
+			seg->pObjectShape.clrObject = ff;
 
-				}
-					else
-        seg->pObjectShape.clrObject = pObjectShape.clrObject;
+		}
+		else
+		{
+			seg->pObjectShape.clrObject = pObjectShape.clrObject;
+		}
         seg->pObjectShape.nShapeId = pObjectShape.nShapeId;
         seg->Draw(pDC,mV,bSm);
      }

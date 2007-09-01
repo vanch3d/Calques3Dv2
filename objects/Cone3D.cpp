@@ -436,7 +436,21 @@ void CCone3D::CalculVisuel(CVisualParam *vp)
 
 void CCone3D::Draw(CDC* pDC,CVisualParam *vp,BOOL bSm)
 {
-    if ((!bVisible) || (!bValidate) || (!IsInCalque(vp->nCalqueNum))) return;
+    if ((!bVisible && !TPref::TUniv.bShowHidden) || (!bValidate) || (!IsInCalque(vp->nCalqueNum))) return;
+
+	if (!bVisible && TPref::TUniv.bShowHidden)
+	{
+		if (C1) C1->bVisible = FALSE;
+		if (C2) C2->bVisible = FALSE;
+		if (C3) C3->bVisible = FALSE;
+	}
+	else
+	{
+		if (C1) C1->bVisible = TRUE;
+		if (C2) C2->bVisible = TRUE;
+		if (C3) C3->bVisible = TRUE;
+	}
+
 	if (C1) C1->Draw(pDC,vp,bSm);
 	if (C2) C2->Draw(pDC,vp,bSm);
 	if (C3 && TPref::TCone.bDoubleCone) C3->Draw(pDC,vp,bSm);
@@ -564,14 +578,20 @@ void CCone3D::Draw(CDC* pDC,CVisualParam *vp,BOOL bSm)
 		
 		//if (t==0)
 		{
-			CPen *oldP = NULL;
-			CPen curPen(PS_SOLID,1,RGB(255,0,0)),
-				 disPen(PS_SOLID,1,RGB(0,255,0));
+			//CPen *oldP = NULL;
+
+			//CPen curPen(PS_SOLID,1,RGB(255,0,0)),
+			//	 disPen(PS_SOLID,1,RGB(0,255,0));
 			BOOL isInside = ca <end;
 			//if (dd<0) isInside = (ca<start || ca >end);
-			if (isInside)
+			seg->bVisible = TRUE;
+			if (!bVisible && TPref::TUniv.bShowHidden)
 			{
-				oldP = pDC->SelectObject(&curPen);
+				seg->bVisible = FALSE;
+			}
+			else if (isInside)
+			{
+				//oldP = pDC->SelectObject(&curPen);
 				double h,s,l;
 				CBCGPDrawManager::RGBtoHSL(pObjectShape.clrObject,&h,&s,&l);
 				l = l+3*l/4;
@@ -581,11 +601,11 @@ void CCone3D::Draw(CDC* pDC,CVisualParam *vp,BOOL bSm)
 			}
 			else
 			{
-				oldP = pDC->SelectObject(&disPen);
+				//oldP = pDC->SelectObject(&disPen);
 				seg->pObjectShape.clrObject = pObjectShape.clrObject;
 				seg->pObjectShape.nShapeId = pObjectShape.nShapeId;
 			}
-			pDC->SelectObject(oldP);
+			//pDC->SelectObject(oldP);
 			int nb = 0;
 		}
 		seg->Draw(pDC,vp,bSm);

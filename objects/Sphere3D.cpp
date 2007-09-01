@@ -372,35 +372,38 @@ void CSphere3D::Draw3DRendering(int nVolMode)
 
 void CSphere3D::Draw(CDC* pDC,CVisualParam *mV,BOOL bSm)
 {
-	if ((!bVisible) || (!bValidate) || (!IsInCalque(mV->nCalqueNum))) return;
+	if ((!bVisible && !TPref::TUniv.bShowHidden) || (!bValidate) || (!IsInCalque(mV->nCalqueNum))) return;
 
 	int mode = pDC->SetBkMode(TRANSPARENT);
 
-	CPen curPen;
-	LOGPEN logP = pObjectShape.GetPenStyle(); //(*ObjectColor,0,PS_SOLID);
-	curPen.CreatePenIndirect(&logP);
-/*	int m = -1;
-	for (int g=0;g<8;g++)
-		if (TPref::custColors[g] == (ObjectShape->ObjectColor))
-			m = g+8;   */
-
-	CPen disPen(PS_DOT,1,pObjectShape.clrObject);
-//	TPen disPenH((m==-1) ? TColor(192,192,192) : TPref::custColors[m],1,PS_DOT);
-	CPen disPenH(PS_DOT,1,pObjectShape.GetObjectHiddenColor());
-
-//	TPen curPenH = ObjectShape->GetHiddenPenStyle(
-//			(m==-1) ? TColor(192,192,192) : TPref::custColors[m]);
-	CPen curPenH;
-	logP = pObjectShape.GetHiddenPenStyle(
-								pObjectShape.GetObjectHiddenColor());
-	curPenH.CreatePenIndirect(&logP);
-
-
-//	TBrush curBrush((m==-1) ? *ObjectColor : custColors[m],0);
-	LOGBRUSH toto = {BS_HOLLOW,(COLORREF)pObjectShape.clrObject,HS_CROSS};
+	CPen curPen,curPenH,disPen,disPenH;
 	CBrush curBrush;
-	curBrush.CreateBrushIndirect(&toto);
-//	curBrush.GetObject(toto);
+
+	if (!bVisible && TPref::TUniv.bShowHidden)
+	{
+		disPen.CreatePen(PS_DOT,1,TPref::TUniv.clrShowHidden);
+		disPenH.CreatePen(PS_DOT,1,TPref::TUniv.clrShowHidden);
+		curPen.CreatePen(PS_DOT,1,TPref::TUniv.clrShowHidden);
+		curPenH.CreatePen(PS_DOT,1,TPref::TUniv.clrShowHidden);
+
+		LOGBRUSH toto = {BS_HOLLOW,(COLORREF)TPref::TUniv.clrShowHidden,HS_CROSS};
+		curBrush.CreateBrushIndirect(&toto);
+	}
+	else
+	{
+		disPen.CreatePen(PS_DOT,1,pObjectShape.clrObject);
+		disPenH.CreatePen(PS_DOT,1,pObjectShape.GetObjectHiddenColor());
+
+		LOGPEN logP = pObjectShape.GetPenStyle(); //(*ObjectColor,0,PS_SOLID);
+		curPen.CreatePenIndirect(&logP);
+
+		logP = pObjectShape.GetHiddenPenStyle(pObjectShape.GetObjectHiddenColor());
+		curPenH.CreatePenIndirect(&logP);
+
+		LOGBRUSH toto = {BS_HOLLOW,(COLORREF)pObjectShape.clrObject,HS_CROSS};
+		curBrush.CreateBrushIndirect(&toto);
+	}
+
 	CBrush *oldB = pDC->SelectObject(&curBrush);
 
 	FCoord r = Rayon.Norme();
