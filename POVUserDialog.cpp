@@ -30,8 +30,9 @@ void CPOVList::OnDblclkList(NMHDR* /*pNMHDR*/, LRESULT* pResult)
 	*pResult = 0;
 
 	int iSelItem = GetSelItem ();
+	int nb = GetCount();
 
-	if ((m_uiStandardBtns & BGCEDITLISTBOX_BTN_NEW) && iSelItem == -1)
+	if ((m_uiStandardBtns & BGCEDITLISTBOX_BTN_NEW) && iSelItem == -1 && nb<5)
 	{
 		CreateNewItem ();
 		return;
@@ -87,7 +88,7 @@ void CPOVList::OnSelectionChanged ()
 	EnableButton(0,iSelItem>1);
 	for (int i=1;i<nb-1;i++)
 	{
-		EnableButton(i,(BOOL)iSelItem);
+		EnableButton(i,(BOOL)iSelItem>0);
 	}
 	EnableButton(nb-1,nbitem<5);
 
@@ -99,13 +100,16 @@ void CPOVList::OnSelectionChanged ()
 void CPOVList::OnAfterMoveItemUp (int iItem)
 {
 	OnSelectionChanged ();
-			SetRedraw ();
 }
 
 void CPOVList::OnAfterMoveItemDown (int /*iItem*/)
 {
 	OnSelectionChanged ();
-			SetRedraw ();
+}
+
+void CPOVList::OnAfterRenameItem (int /*iItem*/)
+{
+	OnSelectionChanged ();
 }
 
 BOOL CPOVList::EditItem (int iIndex)
@@ -128,7 +132,8 @@ CPOVUserDialog::CPOVUserDialog(CWnd* pParent /*=NULL*/)
 {
 	m_pObjList = NULL;
 	//{{AFX_DATA_INIT(CPOVUserDialog)
-	m_strProp = _T("");
+	m_strTheta = _T("");
+	m_strPhi = _T("");
 	//}}AFX_DATA_INIT
 }
 
@@ -138,7 +143,8 @@ void CPOVUserDialog::DoDataExchange(CDataExchange* pDX)
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CPOVUserDialog)
 	DDX_Control(pDX, IDC_POV_LIST, m_wndPOVListBox);
-	DDX_Text(pDX, IDC_POV_INFO, m_strProp);
+	DDX_Text(pDX, IDC_POV_THETA, m_strTheta);
+	DDX_Text(pDX, IDC_POV_PHI, m_strPhi);
 	//}}AFX_DATA_MAP
 
 	if (pDX->m_bSaveAndValidate)
@@ -214,11 +220,12 @@ void CPOVUserDialog::OnCancel()
 
 void CPOVUserDialog::ShowProperty(CPOVUserTool* prop)
 {
-	m_strProp = _T("");
+	m_strPhi = m_strTheta = _T("");
 	if (prop!=NULL)
 	{
 		SProjection proj = prop->m_projParam;
-		m_strProp.Format(_T("theta=%f , phi=%f"),proj.theta,proj.phi);
+		m_strTheta.Format(_T("%.2f"),proj.theta);
+		m_strPhi.Format(_T("%.2f"),proj.phi);
 	}
 
 	UpdateData(FALSE);

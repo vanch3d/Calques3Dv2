@@ -31,6 +31,7 @@ public:
 	virtual void OnAfterAddItem (int /*iItem*/);
 	virtual void OnAfterMoveItemUp (int /*iItem*/);
 	virtual void OnAfterMoveItemDown (int /*iItem*/);
+	virtual void OnAfterRenameItem (int /*iItem*/);
 	virtual BOOL EditItem (int iIndex);
 
 	UINT GetStandardBtns() { return m_uiStandardBtns;};
@@ -51,8 +52,9 @@ public:
 // Dialog Data
 	//{{AFX_DATA(CPOVUserDialog)
 	enum { IDD = IDD_POV_DLG };
-	CPOVList		m_wndPOVListBox;		///< The control for the macro item list
-	CString	m_strProp;
+	CPOVList	m_wndPOVListBox;		///< The control for the macro item list
+	CString		m_strTheta;
+	CString		m_strPhi;
 	//}}AFX_DATA
 
 
