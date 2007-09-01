@@ -286,7 +286,8 @@ BOOL CCalques3DDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	CArchive loadArchive(pFile, CArchive::load | CArchive::bNoFlushOnDelete);
 	loadArchive.m_pDocument = this;
 	loadArchive.m_bForceFlat = FALSE;
-	TRY
+
+	try
 	{
 		// Try the current serialization method
 		CWaitCursor wait;
@@ -295,7 +296,7 @@ BOOL CCalques3DDoc::OnOpenDocument(LPCTSTR lpszPathName)
 		loadArchive.Close();
 		ReleaseFile(pFile, FALSE);
 	}
-	CATCH_ALL(e)
+	catch (CException* e)
 	{
 		// If it failed, close the file and reopen it using the SerializeLegacy method
 		loadArchive.Close();
@@ -304,17 +305,17 @@ BOOL CCalques3DDoc::OnOpenDocument(LPCTSTR lpszPathName)
 		CArchive loadArchive2(pFile, CArchive::load | CArchive::bNoFlushOnDelete);
 		loadArchive2.m_pDocument = this;
 		loadArchive2.m_bForceFlat = FALSE;
-		TRY 
+		try
 		{
 			// Try the legacy serialization method
 			CWaitCursor wait;
 			SerializeLegacy(loadArchive2);     // load me
 			loadArchive2.Close();
 			ReleaseFile(pFile, FALSE);
-			ReportSaveLoadException(lpszPathName, NULL, FALSE, AFX_IDP_C3D_OLDVERSION);
+			//ReportSaveLoadException(lpszPathName, NULL, FALSE, AFX_IDP_C3D_OLDVERSION);
 			m_bLegacyVersion = TRUE;
 		}
-		CATCH_ALL(e2)
+		catch (CException* e2)
 		{
 			// If it failed, the document cannot be read by Calques 3D
 			ReleaseFile(pFile, TRUE);
@@ -325,10 +326,8 @@ BOOL CCalques3DDoc::OnOpenDocument(LPCTSTR lpszPathName)
 			return FALSE;
 		
 		}
-		END_CATCH_ALL
 		e->Delete();
 	}
-	END_CATCH_ALL
 
 	// start off with unmodified or modified if legacy serialization
 	SetModifiedFlag(m_bLegacyVersion);     
