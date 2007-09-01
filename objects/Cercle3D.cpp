@@ -438,13 +438,12 @@ void CCercle3D::Draw(CDC* pDC,CVisualParam *mV,BOOL bSM)
 
 	if (!bVisible && TPref::TUniv.bShowHidden)
 	{
-	    curPen.CreatePen(PS_DASH,1,TPref::TUniv.clrShowHidden);
-		disPen.CreatePen(PS_DASH,1,TPref::TUniv.clrShowHidden);
+	    curPen.CreatePen(PS_DOT,1,TPref::TUniv.clrShowHidden);
+		disPen.CreatePen(PS_DOT,1,TPref::TUniv.clrShowHidden);
 	}
 	else
 	{
 	    curPen.CreatePenIndirect(&(pObjectShape.GetPenStyle()));
-
 	   disPen.CreatePenIndirect(&(pObjectShape.GetHiddenPenStyle(
 		          pObjectShape.GetObjectHiddenColor())));
 
