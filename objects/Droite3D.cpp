@@ -570,8 +570,8 @@ void CDroite3D::Draw(CDC* pDC,CVisualParam *mV,BOOL bSm)
 	if (!bVisible && TPref::TUniv.bShowHidden)
 	{
 		curBrush.CreateSolidBrush(TPref::TUniv.clrShowHidden);
-	    curPen.CreatePen(PS_DASH,1,TPref::TUniv.clrShowHidden);
-		disPen.CreatePen(PS_DASH,1,TPref::TUniv.clrShowHidden);
+	    curPen.CreatePen(PS_DOT,1,TPref::TUniv.clrShowHidden);
+		disPen.CreatePen(PS_DOT,1,TPref::TUniv.clrShowHidden);
 	}
 	else
 	{
