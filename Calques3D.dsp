@@ -223,6 +223,10 @@ SOURCE=.\objects\CompositeObj3D.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\objects\Cone3D.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\CreditsCtrl.cpp
 # End Source File
 # Begin Source File
@@ -356,6 +360,10 @@ SOURCE=.\Tasks\MoveTask.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\thirdparty\MRTracker.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\objects\Object3D.cpp
 # End Source File
 # Begin Source File
@@ -392,11 +400,24 @@ SOURCE=.\objects\Pointsur3D.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\prefs\POVTool.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\POVUserDialog.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\prefs\prefdiscovery.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\prefs\preferencedialog.cpp
+# ADD CPP /I ".."
+# End Source File
+# Begin Source File
+
+SOURCE=.\prefs\PrefHistory.cpp
 # ADD CPP /I ".."
 # End Source File
 # Begin Source File
@@ -547,6 +568,10 @@ SOURCE=.\ViewUniv.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\objects\VolumeObject3D.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\WarningDialog.cpp
 # End Source File
 # Begin Source File
@@ -632,6 +657,10 @@ SOURCE=.\objects\ComboShape.h
 # Begin Source File
 
 SOURCE=.\objects\CompositeObj3D.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\objects\Cone3D.h
 # End Source File
 # Begin Source File
 
@@ -735,6 +764,10 @@ SOURCE=.\MemDC.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\thirdparty\MRTracker.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\objects\Object3D.h
 # End Source File
 # Begin Source File
@@ -759,11 +792,23 @@ SOURCE=.\objects\Point3D.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\prefs\POVTool.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\POVUserDialog.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\prefs\prefdiscovery.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\prefs\preferencedialog.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\prefs\PrefHistory.h
 # End Source File
 # Begin Source File
 
@@ -951,6 +996,10 @@ SOURCE=.\ViewHisto.h
 # Begin Source File
 
 SOURCE=.\ViewUniv.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\objects\VolumeObject3D.h
 # End Source File
 # Begin Source File
 

@@ -173,6 +173,10 @@ SOURCE=.\objects\CompositeObj3D.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\objects\Cone3D.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\CreditsCtrl.cpp
 # End Source File
 # Begin Source File
@@ -305,6 +309,10 @@ SOURCE=.\Tasks\MoveTask.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\thirdparty\MRTracker.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\objects\Object3D.cpp
 # End Source File
 # Begin Source File
@@ -341,11 +349,23 @@ SOURCE=.\objects\Pointsur3D.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\prefs\POVTool.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\POVUserDialog.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\prefs\prefdiscovery.cpp
 # End Source File
 # Begin Source File
 
 SOURCE=.\prefs\preferencedialog.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\prefs\PrefHistory.cpp
 # End Source File
 # Begin Source File
 
@@ -491,6 +511,10 @@ SOURCE=.\ViewHisto.cpp
 # Begin Source File
 
 SOURCE=.\ViewUniv.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\objects\VolumeObject3D.cpp
 # End Source File
 # Begin Source File
 
@@ -666,6 +690,10 @@ SOURCE=.\MemDC.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\thirdparty\MRTracker.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\objects\Object3D.h
 # End Source File
 # Begin Source File
@@ -687,6 +715,14 @@ SOURCE=.\objects\Plan3D.h
 # Begin Source File
 
 SOURCE=.\objects\Point3D.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\prefs\POVTool.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\POVUserDialog.h
 # End Source File
 # Begin Source File
 
