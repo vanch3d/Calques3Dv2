@@ -344,6 +344,7 @@ BOOL CLocus3D::IsEqual(CObject3D &other)
 BOOL CLocus3D::IsInActiveArea(CPoint thePt)
 {
     BOOL bIsInSeg = FALSE;
+	if (m_bFirstLoaded) return bIsInSeg; 
 
 	for (int k=0;k<m_cTriangles.GetSize()&& !bIsInSeg;k++)
 	{
@@ -366,8 +367,9 @@ void CLocus3D::GenerateMesh()
 {
 	m_cTriangles.RemoveAll();
     int nb1 = mesh3D.GetSize();
-	TRACE1("dimension of mesh: %d\n",nb1);
+	//TRACE1("dimension of mesh: %d\n",nb1);
 	if (nb1<=0) return;
+
 	if (nb1==1)
 	{
 		int nb2 = mesh3D[0].GetSize();
@@ -381,29 +383,42 @@ void CLocus3D::GenerateMesh()
 				m_cTriangles.Add(elt);
 
 		}
+		return;
 	}
-	else
+	for (int i=0;i<nb1-1;i++)
 	{
-		for (int i=0;i<nb1-1;i++)
-		{
-			int nb2 = mesh3D[i].GetSize();
-			int nb3 = mesh3D[i+1].GetSize();
-			for (int j=0;j<nb2-1;j++)
-			{
-				CVector4 A = mesh3D[i].GetAt(j);
-				CVector4 B = mesh3D[i].GetAt(j+1);
-				if ((j+1)<nb3)
-				{
-					CVector4 C = mesh3D[i+1].GetAt(j+1);
-					CVector4 D = mesh3D[i+1].GetAt(j);
+		CVArray fstLine = mesh3D[i];
+		CVArray secLine = mesh3D[i+1];
 
-					CLocusMesh elt = CLocusMesh(A,B,C);
-					if (elt.GetLength() <= m_nMaxLenght)
-						m_cTriangles.Add(elt);
-					elt = CLocusMesh(C,D,A);
-					if (elt.GetLength() <= m_nMaxLenght)
-						m_cTriangles.Add(elt);
-				}
+		int nb2 = fstLine.GetSize();
+		int nb3 = secLine.GetSize();
+		int nItem = min(nb2,nb3);
+		for (int j=0;j<nItem-1;j++)
+		{
+			CVector4 *pt1=NULL,*pt2=NULL,*pt3=NULL,*pt4=NULL;
+
+			if (j<nb2)
+				pt1 = &fstLine.GetAt(j);
+			if ((j+1)<nb2)
+				pt2 = &fstLine.GetAt(j+1);
+			if ((j+1)<nb3)
+				pt3 = &secLine.GetAt(j+1);
+			if (j<nb3)
+				pt4 = &secLine.GetAt(j);
+
+			if (pt1 && pt2 && pt3)
+			{
+				CLocusMesh elt = CLocusMesh(*pt1,*pt2,*pt3);
+				FCoord l1 = elt.GetLength() ;
+				if (l1 <= m_nMaxLenght)
+					m_cTriangles.Add(elt);
+			}
+			if (pt3 && pt4 && pt1)
+			{
+				CLocusMesh elt2 = CLocusMesh(*pt3,*pt4,*pt1);
+				FCoord l1 = elt2.GetLength() ;
+				if (l1 <= m_nMaxLenght)
+					m_cTriangles.Add(elt2);
 			}
 		}
 	}
@@ -613,7 +628,7 @@ UINT  CLocus3D::CalculConceptuel()
         return ERR_LOCUS_NOREL;
     }
 
-    if (pPtSurS || pPtSurP)
+   if (pPtSurS || pPtSurP)
     {
 		GenerateSurface(&pDirectList);
     }
@@ -646,7 +661,6 @@ void CLocus3D::CalculVisuel(CVisualParam *pVisParam)
         {
             CalculConceptuel();
         }
-        m_bFirstLoaded = FALSE;
     }
 
 	// Compute the visual location of the mesh
@@ -656,7 +670,7 @@ void CLocus3D::CalculVisuel(CVisualParam *pVisParam)
 		trg.CalculVisuel(pVisParam);
 		m_cTriangles.SetAt(k,trg);
 	}
-
+	m_bFirstLoaded = FALSE;
 }
 
 CString CLocus3D::ExportSymbolic(int nFormat)
@@ -684,43 +698,42 @@ CString CLocus3D::ExportSymbolic(int nFormat)
 void CLocus3D::Draw(CDC *pDC,CVisualParam *mV,BOOL bSM)
 {
     if ((!bVisible && !TPref::TUniv.bShowHidden) || (!bValidate) || (!IsInCalque(mV->nCalqueNum))) return;
-
-    CPen curPen,disPen;
-    CPen curPen2,disPen2;
-
-	if (!bVisible && TPref::TUniv.bShowHidden)
-	{
-	    curPen.CreatePen(PS_DOT,1,TPref::TUniv.clrShowHidden);
-		disPen.CreatePen(PS_DOT,1,TPref::TUniv.clrShowHidden);
-	    curPen2.CreatePen(PS_DOT,1,TPref::TUniv.clrShowHidden);
-		disPen2.CreatePen(PS_DOT,1,TPref::TUniv.clrShowHidden);
-	}
-	else
-	{
-	    curPen.CreatePenIndirect(&(pObjectShape.GetPenStyle()));
-
-		disPen.CreatePenIndirect(&(pObjectShape.GetHiddenPenStyle(
-                pObjectShape.GetObjectHiddenColor())));
-
-		LOGPEN lPen1,lPen2;
-	    curPen.GetLogPen(&lPen1);
-		lPen1.lopnStyle = PS_SOLID;
-		lPen1.lopnColor = RGB(192,192,192);//pObjectShape.GetObjectHiddenColor();
-		disPen.GetLogPen(&lPen2);
-		lPen2.lopnStyle = PS_SOLID;
-		lPen2.lopnColor = RGB(192,192,192);//pObjectShape.GetObjectHiddenColor();
-	    curPen2.CreatePenIndirect(&lPen1);
-		disPen2.CreatePenIndirect(&lPen2);
-	}
+//     CPen curPen,disPen;
+//     CPen curPen2,disPen2;
+// 
+// 	if (!bVisible && TPref::TUniv.bShowHidden)
+// 	{
+// 	    curPen.CreatePen(PS_DOT,1,TPref::TUniv.clrShowHidden);
+// 		disPen.CreatePen(PS_DOT,1,TPref::TUniv.clrShowHidden);
+// 	    curPen2.CreatePen(PS_DOT,1,TPref::TUniv.clrShowHidden);
+// 		disPen2.CreatePen(PS_DOT,1,TPref::TUniv.clrShowHidden);
+// 	}
+// 	else
+// 	{
+// 	    curPen.CreatePenIndirect(&(pObjectShape.GetPenStyle()));
+// 
+// 		disPen.CreatePenIndirect(&(pObjectShape.GetHiddenPenStyle(
+//                 pObjectShape.GetObjectHiddenColor())));
+// 
+// 		LOGPEN lPen1,lPen2;
+// 	    curPen.GetLogPen(&lPen1);
+// 		lPen1.lopnStyle = PS_SOLID;
+// 		lPen1.lopnColor = RGB(192,192,192);//pObjectShape.GetObjectHiddenColor();
+// 		disPen.GetLogPen(&lPen2);
+// 		lPen2.lopnStyle = PS_SOLID;
+// 		lPen2.lopnColor = RGB(192,192,192);//pObjectShape.GetObjectHiddenColor();
+// 	    curPen2.CreatePenIndirect(&lPen1);
+// 		disPen2.CreatePenIndirect(&lPen2);
+// 	}
 
 	// Draw the alternative mesh
-    CPen *pOldPn = pDC->SelectObject(&curPen2);
+//    CPen *pOldPn = pDC->SelectObject(&curPen2);
 	for (int k=0;k<m_cTriangles.GetSize();k++)
 	{
 		CLocusMesh trg = m_cTriangles.GetAt(k);
 		trg.Draw(pDC,mV,this);
 	}
-    pDC->SelectObject(pOldPn);
+//    pDC->SelectObject(pOldPn);
 }
 
 void CLocus3D::Draw3DRendering(int nVolMode)
