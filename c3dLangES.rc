@@ -143,6 +143,7 @@ BEGIN
     BUTTON      ID_VISUALISATION_ZOOM
     SEPARATOR
     BUTTON      ID_VISUALISATION_SHOWMARKS
+    BUTTON      ID_VISUALISATION_SHOWHIDDEN
 END
 
 IDR_COMMANDS_TB TOOLBAR DISCARDABLE  16, 16
@@ -920,6 +921,22 @@ BEGIN
     GROUPBOX        "Selection",IDC_STATIC,4,4,204,44,BS_FLAT
 END
 
+IDD_POV_DLG DIALOGEX 0, 0, 116, 129
+STYLE DS_CONTEXTHELP | WS_POPUP | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_TOOLWINDOW | WS_EX_CONTEXTHELP
+CAPTION "Observer's Points of View"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "",IDC_POV_LIST,4,4,108,80,WS_TABSTOP,0,HIDC_POV_LIST
+    EDITTEXT        IDC_POV_THETA,76,92,32,12,ES_MULTILINE | ES_AUTOVSCROLL | 
+                    WS_DISABLED | NOT WS_TABSTOP,0,HIDC_POV_THETA
+    GROUPBOX        "",IDC_POV_INFO,4,84,108,40,BS_FLAT
+    EDITTEXT        IDC_POV_PHI,76,108,32,12,ES_MULTILINE | ES_AUTOVSCROLL | 
+                    WS_DISABLED | NOT WS_TABSTOP,0,HIDC_POV_PHI
+    LTEXT           "theta",IDC_STATIC,56,94,17,8
+    LTEXT           "phi",IDC_STATIC,56,110,17,8
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -1157,6 +1174,14 @@ BEGIN
         RIGHTMARGIN, 205
         TOPMARGIN, 7
         BOTTOMMARGIN, 189
+    END
+
+    IDD_POV_DLG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 109
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 122
     END
 END
 #endif    // APSTUDIO_INVOKED
@@ -1398,6 +1423,7 @@ BEGIN
         MENUITEM "&Cambiar estilos",              ID_VISUALISATION_APPLYSTYLE
         MENUITEM SEPARATOR
         MENUITEM "&Mostrar marcas",                 ID_VISUALISATION_SHOWMARKS
+        MENUITEM "Show &Hidden",                ID_VISUALISATION_SHOWHIDDEN
     END
     POPUP "&Objeto"
     BEGIN
@@ -2947,6 +2973,8 @@ STRINGTABLE DISCARDABLE
 BEGIN
     ID_VISUALISATION_SHOWMARKS 
                             "Activa/Desactiva la visualización de las marcas de los objetos seleccionados\nMuestra Marcas"
+    ID_VISUALISATION_SHOWHIDDEN 
+                            "Switch on/off the display of hidden objects\nShow Hidden"
 END
 
 STRINGTABLE DISCARDABLE 
@@ -3735,6 +3763,11 @@ BEGIN
     ERR_CONE_NOAXIS         "The two points of the axis are identical.\n The cone cannot be defined."
     ERR_CONE_NOPROJAXIS     "The envelope of the cone cannot be determined.\nThe cone is not defined"
     ERR_INTER_CONEDR        "The line and the cone do not intersect. \n Their intersection is not defined."
+END
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    AFX_IDP_C3D_OLDVERSION  "This file was created with an old version of Calques 3D.\nYou should save it with this newer version to be safe."
 END
 
 #endif    // English (U.K.) resources
