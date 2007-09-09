@@ -37,6 +37,7 @@
 #include "..\Objects\Cylinder3D.h"
 #include "..\Objects\Cercle3D.h"
 #include "..\Objects\Cone3D.h"
+#include "..\Objects\ConicSection3D.h"
 
 #include "..\Calques3DDoc.h"
 #include "..\ViewUniv.h"
@@ -126,6 +127,9 @@ unsigned CInter3DTask::GetHelpResID()
 		case ID_CONSTRUCTION_INTERSECTION_LINECONE:
 				mask = (m_nStep) ? CTX_SELECT_CONE : CTX_SELECT_DROITE;
 				break;
+		case ID_CONSTRUCTION_INTERSECTION_PLANECONE:
+				mask = (m_nStep) ? CTX_SELECT_CONE : CTX_SELECT_PLAN1;
+				break;
 	}
 	return mask;
 }
@@ -165,6 +169,9 @@ CObjectId CInter3DTask::GetMask()
 				break;
 		case ID_CONSTRUCTION_INTERSECTION_LINECONE:
 				mask = (dr1) ? TCone3DClass : TAllDroiteClass;
+				break;
+		case ID_CONSTRUCTION_INTERSECTION_PLANECONE:
+				mask = (p) ? TCone3DClass : TAllPlanClass;
 				break;
 	}
 	return mask;
@@ -209,6 +216,13 @@ void CInter3DTask::OnMouseL(UINT, CPoint thepos)
 		case ID_CONSTRUCTION_INTERSECTION_LINECONE:
 			if (GetMask() == TAllDroiteClass)
 				dr1 = (CDroite3D*) temp;
+			else
+				cone = (CCone3D *) temp;
+
+				break;
+		case ID_CONSTRUCTION_INTERSECTION_PLANECONE:
+			if (GetMask() == TAllPlanClass)
+				p = (CPlan3D*) temp;
 			else
 				cone = (CCone3D *) temp;
 
@@ -278,7 +292,7 @@ void CInter3DTask::OnMouseL(UINT, CPoint thepos)
 	GetContextualHelp();
 
 	if (((dr1) && (dr2 || p || sp || circle || cone)) ||
-		 (p && (pl2|| circle)) || (p && cyl) || (sp && (sp2||p)))
+		 (p && (pl2|| circle || cone)) || (p && cyl) || (sp && (sp2||p)))
 	{
 		CreateObject3D();
 		return;
@@ -341,6 +355,11 @@ void CInter3DTask::CreateObject3D()
 	 {
 		temp = new CEllipse3D(cyl,p);
 		res = ((CEllipse3D*)temp)->CalculConceptuel();
+	 }
+	else if ((p) && (cone))
+	 {
+		temp = new CConicSection3D(cone,p);
+		res = ((CConicSection3D*)temp)->CalculConceptuel();
 	 }
 	else if ((sp) && (sp2))
 	 {
