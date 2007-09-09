@@ -159,6 +159,8 @@ const CObjectId TSphere3DClass			=	CObjectId(128,1);		///< ALL spheres
 const CObjectId TCylindre3DClass		= 	CObjectId(256,1);		///< ALL cylinder
 const CObjectId TCone3DClass			= 	CObjectId(256,2);		///< ALL cones
 
+const CObjectId TConicSection3DClass	= 	CObjectId(512,1);		///< Conics
+
 const CObjectId TValue3DClass			=   CObjectId(1024,120);	///< ALL values (used in the MathPad)
 
 const CObjectId TText3DClass			= 	CObjectId(1024,1);		///< ALL text items
