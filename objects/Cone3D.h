@@ -42,7 +42,7 @@ class CDroite3D;
 //////////////////////////////////////////////////////////////////////
 class CCone3D : public CVolumeObject3D
 {
-protected:
+public:
 	CPoint3D 		*pApex;			///< The apex of the cone
 	CPoint3D 		*pAxis;			///< The point defining the axis of the cone
 	CPoint3D		*pRadius;		///< The point defining the envelope of the cone
