@@ -156,8 +156,8 @@ const CObjectId TInterConeDr3DClass		=	CObjectId(64,256);		///< Bi-point defined
 
 const CObjectId TSphere3DClass			=	CObjectId(128,1);		///< ALL spheres
 
-const CObjectId TCylindre3DClass		= 	CObjectId(256,1);		///< ALL cylinder
-const CObjectId TCone3DClass			= 	CObjectId(256,2);		///< ALL cones
+const CObjectId TCylindre3DClass		= 	CObjectId(256,2);		///< ALL cylinder
+const CObjectId TCone3DClass			= 	CObjectId(256,4);		///< ALL cones
 
 const CObjectId TConicSection3DClass	= 	CObjectId(512,1);		///< Conics
 
