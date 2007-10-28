@@ -18,8 +18,10 @@
 // along with Calques 3D; if not, write to The Free Software Foundation, Inc., 
 // 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA 
 //////////////////////////////////////////////////////////////////////
-// Droite3D.cpp: implementation of the CDroite3D class.
-//
+/// @file Droite3D.cpp
+/// @brief implementation of the CDroite3D class.
+/// $Date: 2007-10-25 12:07:28+01 $
+/// $Revision: 1.2 $
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
@@ -1907,5 +1909,21 @@ UINT  CDroitePerpDD3D::CalculConceptuel()
 
 CString CDroitePerpDD3D::ExportSymbolic(int nFormat)
 {
-	return CObject3D::ExportSymbolic(nFormat);
+    CString mstr;
+    mstr.Empty();
+
+    if (/*bValidate && */D3 && D2)
+    {
+        CString strName,strObj1,strObj2;
+		strName = GetObjectNameRedux();
+		strObj1 = D2->GetObjectNameRedux();
+		strObj2 = D3->GetObjectNameRedux();
+
+		if (nFormat==EXPORT_MATHEMATICA)
+	        mstr.Format(_T("CommonPerpendicularLine[%s,%s,%s];"),strName,strObj1,strObj2);
+		else if (nFormat==EXPORT_MAPLE)
+		   mstr.Format(_T("CommonPerpendicularLine(%s,%s,%s);"),strName,strObj1,strObj2);
+
+    }
+    return mstr;
 }
