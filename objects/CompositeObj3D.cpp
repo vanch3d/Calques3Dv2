@@ -18,8 +18,10 @@
 // along with Calques 3D; if not, write to The Free Software Foundation, Inc., 
 // 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA 
 //////////////////////////////////////////////////////////////////////
-// CompositeObj3D.cpp: implementation of the CCompositeObj3D class.
-//
+/// @file CompositeObj3D.cpp
+/// @brief Implementation of the CCompositeObj3D class.
+/// $Date: 2007-10-28 11:07:49+00 $
+/// $Revision: 1.9 $
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
@@ -1675,6 +1677,36 @@ void CInterCircDr3D::Serialize( CArchive& ar )
     }
 }
 
+CString CInterCircDr3D::ExportSymbolic(int nFormat)
+{
+    CString mstr;
+    mstr.Empty();
+
+    if (/*bValidate && */Circ && Dr)
+    {
+        CString strName1,strName2,strObj1,strObj2;
+		strName1 = ptA->GetObjectNameRedux();
+		strName2 = ptB->GetObjectNameRedux();
+		strObj1 = Circ->GetObjectNameRedux();
+		strObj2 = Dr->GetObjectNameRedux();
+
+		if (nFormat==EXPORT_MATHEMATICA)
+		{
+	        mstr.Format(_T("Intersection1LineCircle[%s,%s,%s];\nIntersection2LineCircle[%s,%s,%s];"),
+					strName1,strObj2,strObj1,strName2,strObj2,strObj1);
+		}
+		else if (nFormat==EXPORT_MAPLE)
+		{
+			mstr.Format(_T("Intersection1LineCircle(%s,%s,%s);\nIntersection2LineCircle(%s,%s,%s);"),
+					strName1,strObj2,strObj1,strName2,strObj2,strObj1);
+		}
+
+    }
+    return mstr;
+}
+
+
+
 void CInterCircDr3D::SetColor(COLORREF rColor)
 {
     CCompositeObj3D::SetColor(rColor);
@@ -1930,4 +1962,32 @@ UINT  CInterCircPlane3D::CalculConceptuel()
 void CInterCircPlane3D::InitIntersection()
 {
     nStartShow = 0;
+}
+
+CString CInterCircPlane3D::ExportSymbolic(int nFormat)
+{
+    CString mstr;
+    mstr.Empty();
+
+    if (/*bValidate && */Circ && Pl)
+    {
+        CString strName1,strName2,strObj1,strObj2;
+		strName1 = ptA->GetObjectNameRedux();
+		strName2 = ptB->GetObjectNameRedux();
+		strObj1 = Circ->GetObjectNameRedux();
+		strObj2 = Pl->GetObjectNameRedux();
+
+		if (nFormat==EXPORT_MATHEMATICA)
+		{
+	        mstr.Format(_T("Intersection1PlaneCircle[%s,%s,%s];\nIntersection2PlaneCircle[%s,%s,%s];"),
+					strName1,strObj2,strObj1,strName2,strObj2,strObj1);
+		}
+		else if (nFormat==EXPORT_MAPLE)
+		{
+			mstr.Format(_T("Intersection1PlaneCircle(%s,%s,%s);\nIntersection2PlaneCircle(%s,%s,%s);"),
+					strName1,strObj2,strObj1,strName2,strObj2,strObj1);
+		}
+
+    }
+    return mstr;
 }
