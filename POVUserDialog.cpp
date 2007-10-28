@@ -1,6 +1,29 @@
-// POVUserDialog.cpp : implementation file
+//////////////////////////////////////////////////////////////////////
+// Calques 3D - a 3D Dynamic Geometry Learning Environment
+// Copyright (c) 1997-2007 Nicolas Van Labeke
+//////////////////////////////////////////////////////////////////////
+// This file is part of Calques 3D.
+// 
+// Calques 3D is free software; you can redistribute it and/or modify it 
+// under the terms of the GNU General Public License as published by 
+// the Free Software Foundation; either version 2 of the License, or 
+// (at your option) any later version.
+// 
+// Calques 3D is distributed in the hope that it will be useful, 
+// but WITHOUT ANY WARRANTY; without even the implied warranty of 
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License 
+// along with Calques 3D; if not, write to The Free Software Foundation, Inc., 
+// 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA 
+//////////////////////////////////////////////////////////////////////
+/// @file POVUserDialog.cpp
+/// Implementation of the CPOVList class.
 //
-
+/// $Date: 2007-10-28 11:57:46+00 $
+/// $Revision: 1.22 $
+//////////////////////////////////////////////////////////////////////
 #include "stdafx.h"
 #include "calques3d.h"
 #include "POVUserDialog.h"
@@ -38,7 +61,7 @@ void CPOVList::OnDblclkList(NMHDR* /*pNMHDR*/, LRESULT* pResult)
 		return;
 	}
 
-	if (iSelItem > 0)
+//	if (iSelItem > 0)
 	{
 		EditItem (iSelItem);
 	}
@@ -83,14 +106,14 @@ void CPOVList::OnSelectionChanged ()
 {
 	int iSelItem = GetSelItem ();
 
-	int nb = GetButtonsCount();
+/*	int nb = GetButtonsCount();
 	int nbitem = GetCount();
 	EnableButton(0,iSelItem>1);
 	for (int i=1;i<nb-1;i++)
 	{
-		EnableButton(i,(BOOL)iSelItem>0);
+		EnableButton(i,(BOOL)iSelItem>=0);
 	}
-	EnableButton(nb-1,nbitem<5);
+	EnableButton(nb-1,nbitem<5);*/
 
 	CPOVUserTool* pSelTool = (iSelItem < 0) ? 
 		NULL : (CPOVUserTool*) GetItemData (iSelItem);
@@ -115,7 +138,7 @@ void CPOVList::OnAfterRenameItem (int /*iItem*/)
 BOOL CPOVList::EditItem (int iIndex)
 {
 	BOOL bRes = FALSE;
-	if (iIndex)
+	//if (iIndex)
 	{
 		bRes = CBCGPEditListBox::EditItem (iIndex);
 	}
@@ -158,6 +181,15 @@ void CPOVUserDialog::DoDataExchange(CDataExchange* pDX)
 			if (!pObj) continue;
 			pObj->m_strLabel = str;
 			m_pObjList->AddTail(pObj);
+		}
+		if (!nb)
+		{
+			CPOVUserTool *tool = new CPOVUserTool();
+			tool->m_bCanRemove = TRUE;
+			tool->m_strLabel = _T("Default");
+			tool->m_projParam = TPref::TUniv.sDefParam;
+			m_pObjList->AddTail(tool);
+
 		}
 	}
 }
