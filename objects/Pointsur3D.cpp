@@ -18,8 +18,10 @@
 // along with Calques 3D; if not, write to The Free Software Foundation, Inc., 
 // 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA 
 //////////////////////////////////////////////////////////////////////
-// Pointsur3D.cpp: implementation of the CPointSur3D class.
-//
+/// @file Pointsur3D.cpp
+/// @brief implementation of the CPointSur3D class.
+/// $Date: 2007-10-28 11:01:21+00 $
+/// $Revision: 1.17 $
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
@@ -705,12 +707,10 @@ CString CPointSurC3D::ExportSymbolic(int nFormat)
 		strObj1 = S->GetObjectNameRedux();
 
 		CObjectId nType = S->isA();
-		if (nType == TCercle3DClass)
-			strFunc = _T("PointOnCircle");
-		else if (nType == TArcCercle3DClass)
+		if (nType == TArcCercle3DClass)
 			strFunc = _T("PointOnCircleArc");
-		else //if (nType == TDroite3DClass)
-			return CObject3D::ExportSymbolic(nFormat);
+		else
+			strFunc = _T("PointOnCircle");
 
 		if (nFormat==EXPORT_MATHEMATICA)
 			mstr.Format(_T("%s[%s,%s];"),strFunc,strName,strObj1);
