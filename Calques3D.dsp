@@ -227,6 +227,10 @@ SOURCE=.\objects\Cone3D.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\objects\ConicSection3D.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\CreditsCtrl.cpp
 # End Source File
 # Begin Source File
@@ -661,6 +665,10 @@ SOURCE=.\objects\CompositeObj3D.h
 # Begin Source File
 
 SOURCE=.\objects\Cone3D.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\objects\ConicSection3D.h
 # End Source File
 # Begin Source File
 
