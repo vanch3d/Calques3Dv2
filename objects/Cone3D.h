@@ -19,9 +19,10 @@
 // 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA 
 //////////////////////////////////////////////////////////////////////
 /// @file Cone3D.h
-/// @brief interface of the CCone3D class.
+/// Interface of the CCone3D class.
 ///
-///
+/// $Date: 2007-10-28 11:45:22+00 $
+/// $Revision: 1.12 $
 //////////////////////////////////////////////////////////////////////
 #if !defined(AFX_CONE3D_H__A3934306_BBF1_4C76_B690_4826B9B8A7F0__INCLUDED_)
 #define AFX_CONE3D_H__A3934306_BBF1_4C76_B690_4826B9B8A7F0__INCLUDED_
@@ -86,6 +87,7 @@ public:
 	virtual void Draw(CDC* pDC,CVisualParam *vp,BOOL bSm=0);
 	virtual void DrawRetro(CDC*,CVisualParam *vp);
 	virtual void Draw3DRendering(int nVolMode);
+	virtual CString ExportSymbolic(int nFormat); 
 
 public:
 	UINT IntersectPlan();
