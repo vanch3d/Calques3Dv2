@@ -18,8 +18,11 @@
 // along with Calques 3D; if not, write to The Free Software Foundation, Inc., 
 // 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA 
 //////////////////////////////////////////////////////////////////////
-// Plan3D.cpp: implementation of the CPlan3D class.
-//
+/// @file Plan3D.cpp
+/// Interface of the CPlan3D class.
+///
+/// $Date: 2007-10-28 11:48:27+00 $
+/// $Revision: 1.8 $
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
@@ -1977,7 +1980,21 @@ void CPolygon3D::DrawRetro(CDC* pDC,CVisualParam *mV)
 
 CString CPolygon3D::ExportSymbolic(int nFormat)
 {
-	return CObject3D::ExportSymbolic(nFormat);
+	CString strName,strPoly,strListObj;
+
+	strName = GetObjectNameRedux();
+	for (int i=0;i<m_pPointSet.GetSize();i++)
+    {
+        CPoint3D*   pT = (CPoint3D *)m_pPointSet.GetAt(i);
+        if (i) strListObj += _T(", ");
+        strListObj += pT->GetObjectNameRedux();
+    }
+	if (nFormat==EXPORT_MATHEMATICA)
+		strPoly.Format(_T("PolygonD[%s,{%s}];"),strName,strListObj);
+	else if (nFormat==EXPORT_MAPLE)
+		strPoly.Format(_T("PolygonD(%s,[%s]);"),strName,strListObj);
+
+	return strPoly;
 }
 
 
