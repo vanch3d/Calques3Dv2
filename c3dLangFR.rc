@@ -571,11 +571,11 @@ END
 
 IDD_SPLASH DIALOGEX 0, 0, 204, 233
 STYLE DS_MODALFRAME | WS_POPUP
-FONT 8, "MS Sans Serif", 0, 0, 0x1
+FONT 8, "MS Sans Serif"
 BEGIN
     CONTROL         "",IDC_BIGICON,"Button",BS_OWNERDRAW | WS_DISABLED,4,4,
                     34,30
-    LTEXT           "Calques 3D version 2.4.0",IDC_STATIC,52,4,140,8,NOT 
+    LTEXT           "Calques 3D version 2.4.1",IDC_STATIC,52,4,140,8,NOT 
                     WS_GROUP
     LTEXT           "Microsoft Foundation Classes version 4.2",IDC_STATIC,52,
                     13,140,8,NOT WS_GROUP
@@ -925,7 +925,7 @@ IDD_POV_DLG DIALOGEX 0, 0, 116, 129
 STYLE DS_CONTEXTHELP | WS_POPUP | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_TOOLWINDOW | WS_EX_CONTEXTHELP
 CAPTION "Observer's Points of View"
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     LTEXT           "",IDC_POV_LIST,4,4,108,80,WS_TABSTOP,0,HIDC_POV_LIST
     EDITTEXT        IDC_POV_THETA,76,92,32,12,ES_MULTILINE | ES_AUTOVSCROLL | 
@@ -1490,6 +1490,8 @@ BEGIN
             MENUITEM "Sphère-Plan",               ID_CONSTRUCTION_INTERSECTION_SPHEREPLANE
 
             MENUITEM "Plan-cylindre",             ID_CONSTRUCTION_INTERSECTION_PLANECYLINDER
+
+            MENUITEM "Plane-cone",                  ID_CONSTRUCTION_INTERSECTION_PLANECONE
 
         END
         MENUITEM SEPARATOR
@@ -2660,8 +2662,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,4,0,0
- PRODUCTVERSION 2,4,0,0
+ FILEVERSION 2,4,1,0
+ PRODUCTVERSION 2,4,1,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x29L
@@ -2679,14 +2681,14 @@ BEGIN
             VALUE "Comments", "Micromonde de Géométrie dans l'espace\0"
             VALUE "CompanyName", "Calques 3D\0"
             VALUE "FileDescription", "Calques 3D\0"
-            VALUE "FileVersion", "2.4.0\0"
+            VALUE "FileVersion", "2.4.1\0"
             VALUE "InternalName", "Calques3D\0"
             VALUE "LegalCopyright", "Copyright © 1997-2007 Nicolas Van Labeke\0"
             VALUE "LegalTrademarks", "N. Van Labeke / P. Bernat / J. Morinet-Lambert\0"
             VALUE "OriginalFilename", "Calques3D.exe\0"
             VALUE "PrivateBuild", "Beta Version\0"
             VALUE "ProductName", "Calques 3D\0"
-            VALUE "ProductVersion", "2.4.0\0"
+            VALUE "ProductVersion", "2.4.1\0"
             VALUE "SpecialBuild", "Built with BCGControlBar Library version 7.31\0"
         END
     END
@@ -3050,6 +3052,8 @@ BEGIN
                             "Construit un cercle à l'intersection d'une sphère et d'un plan\nIntersection Sphère/Plan"
     ID_CONSTRUCTION_INTERSECTION_LINECONE 
                             "Construct the point(s) at the intersection of a line and a cone \nIntersection Line/Cone"
+    ID_CONSTRUCTION_INTERSECTION_PLANECONE 
+                            "Construct the conic section at the intersection of a plane and a cone\nIntersection Plane/Cone"
 END
 
 STRINGTABLE DISCARDABLE 
@@ -3215,6 +3219,7 @@ BEGIN
     IDS_HELP_DISTANCE       "la distance %s"
     IDS_HELP_VOLUME         "le volume %s"
     IDS_HELP_CONE           "the cone %s"
+    IDS_HELP_CONIC          "the conic %s"
 END
 
 STRINGTABLE DISCARDABLE 
@@ -3324,6 +3329,7 @@ BEGIN
     IDS_NAME_TEXT           "Txt#"
     IDS_NAME_LOCUS          "Obj#"
     IDS_NAME_CONE           "Cn#"
+    IDS_NAME_CONIC          "Cr#"
 END
 
 STRINGTABLE DISCARDABLE 
