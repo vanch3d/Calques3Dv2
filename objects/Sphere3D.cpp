@@ -18,8 +18,11 @@
 // along with Calques 3D; if not, write to The Free Software Foundation, Inc., 
 // 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA 
 //////////////////////////////////////////////////////////////////////
-// Sphere3D.cpp: implementation of the CSphere3D class.
-//
+/// @file Sphere3D.cpp
+/// Implementation of the CSphere3D class.
+///
+/// $Date: 2007-10-28 11:49:51+00 $
+/// $Revision: 1.18 $
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
@@ -580,10 +583,12 @@ CString CSphere3D::ExportSymbolic(int nFormat)
 		else
 			strObj2 = Seg->GetObjectNameRedux();
 
+		CString strPredicate = (Seg)? _T("SphereRadiusD") : _T("SphereD");
+		
 		if (nFormat==EXPORT_MATHEMATICA)
-			mstr.Format(_T("SphereD[%s,%s,%s];"),strName,strObj1,strObj2);
+			mstr.Format(_T("%s[%s,%s,%s];"),strPredicate,strName,strObj1,strObj2);
 		else if (nFormat==EXPORT_MAPLE)
-			mstr.Format(_T("SphereD(%s,%s,%s);"),strName,strObj1,strObj2);
+			mstr.Format(_T("%s(%s,%s,%s);"),strPredicate,strName,strObj1,strObj2);
 
 	}
 	return mstr;
