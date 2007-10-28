@@ -18,8 +18,11 @@
 // along with Calques 3D; if not, write to The Free Software Foundation, Inc., 
 // 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA 
 //////////////////////////////////////////////////////////////////////
-// ViewUniv.cpp: implementation of the CViewUniv class.
+/// @file ViewUniv.cpp
+/// Implementation of the CViewUniv class.
 //
+/// $Date: 2007-10-28 11:55:15+00 $
+/// $Revision: 1.15 $
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
@@ -375,9 +378,12 @@ void CViewUniv::OnInitialUpdate()
     SetVisualParam(TPref::TUniv.nDefRep);
     m_pCurrentTask = new CDefTask(this,ID_VISUALISATION_DEFAULTTASK);
     pSelectObj = NULL;
+
     if (GetVisualParam())
     {
-        GetVisualParam()->SetProjParam();
+        //GetVisualParam()->SetProjParam();
+			OnChangePointsOfView();
+
         CRect mrect;
         GetClientRect(&mrect);
         GetVisualParam()->ptRepCoord = mrect.CenterPoint();
@@ -911,7 +917,21 @@ void CViewUniv::OnRotateHor()
 void CViewUniv::OnChangePointsOfView()
 {
     // TODO: Add your command handler code here
-    GetVisualParam()->SetProjParam();
+    //GetVisualParam()->SetProjParam();
+
+	CCalques3DDoc *pDoc = GetDocument();
+	POSITION pos = pDoc->m_cPOVlist.GetHeadPosition ();
+	if (pos)
+	{
+		CPOVUserTool *pObj = pDoc->m_cPOVlist.GetNext (pos);
+		if (pObj)
+			GetVisualParam()->SetProjParam(pObj->m_projParam);
+		else
+			GetVisualParam()->SetProjParam();
+	}
+	else
+		GetVisualParam()->SetProjParam();
+
 
     int r = (int)(GetVisualParam()->ProjParam.phi - 180 -TPref::TUniv.sDefParam.phi);
     r = (r < 0) ? r + 360 : ((r > 360) ? r-360 : r);
