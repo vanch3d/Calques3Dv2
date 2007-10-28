@@ -18,8 +18,10 @@
 // along with Calques 3D; if not, write to The Free Software Foundation, Inc., 
 // 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA 
 //////////////////////////////////////////////////////////////////////
-// Cercle3D.cpp: implementation of the CCercle3D class.
-//
+/// @file Cercle3D.cpp
+/// @brief Implementation of the CCercle3D class.
+/// $Date: 2007-10-28 11:01:21+00 $
+/// $Revision: 1.17 $
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
@@ -422,6 +424,9 @@ CString CCercle3D::ExportSymbolic(int nFormat)
 	        mstr.Format(_T("CircleD(%s,%s,%s,%s);"),strName,strObj1,strObj2,strObj3);
 
     }
+	else if (P1 && bCircCen)
+	{
+	}
     return mstr;
 }
 
@@ -1005,7 +1010,27 @@ UINT  CCercleInterSS3D::CalculConceptuel()
 
 CString CCercleInterSS3D::ExportSymbolic(int nFormat)
 {
-	return CObject3D::ExportSymbolic(nFormat);
+    CString mstr;
+    mstr.Empty();
+
+    if (/*bValidate && */SP1 && SP2)
+    {
+        CString strName,strObj1,strObj2;
+		strName = GetObjectNameRedux();
+		strObj1 = SP1->GetObjectNameRedux();
+		strObj2 = SP2->GetObjectNameRedux();
+
+		if (nFormat==EXPORT_MATHEMATICA)
+		{
+	        mstr.Format(_T("IntersectionSphereSphere[%s,%s,%s];"),strName,strObj1,strObj2);
+		}
+		else if (nFormat==EXPORT_MAPLE)
+		{
+			mstr.Format(_T("IntersectionSphereSphere(%s,%s,%s);"),strName,strObj1,strObj2);
+		}
+
+    }
+	return mstr;
 }
 
 CString CCercleInterSS3D::GetObjectDef()
@@ -1170,8 +1195,28 @@ UINT  CCercleInterPS3D::CalculConceptuel()
 
 CString CCercleInterPS3D::ExportSymbolic(int nFormat)
 {
-	return CObject3D::ExportSymbolic(nFormat);
-}
+    CString mstr;
+    mstr.Empty();
+
+    if (/*bValidate && */SP && PL)
+    {
+        CString strName,strObj1,strObj2;
+		strName = GetObjectNameRedux();
+		strObj1 = SP->GetObjectNameRedux();
+		strObj2 = PL->GetObjectNameRedux();
+
+		if (nFormat==EXPORT_MATHEMATICA)
+		{
+	        mstr.Format(_T("IntersectionSpherePlane[%s,%s,%s];"),strName,strObj1,strObj2);
+		}
+		else if (nFormat==EXPORT_MAPLE)
+		{
+			mstr.Format(_T("IntersectionSpherePlane(%s,%s,%s);"),strName,strObj1,strObj2);
+		}
+
+    }
+	return mstr;
+ }
 
 CString CCercleInterPS3D::GetObjectDef()
 {
