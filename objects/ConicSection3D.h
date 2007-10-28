@@ -20,9 +20,9 @@
 //////////////////////////////////////////////////////////////////////
 /// @file ConicSection3D.h
 /// Interface of the CConicSection3D class.
-//
-/// $Date: 2007-10-28 12:03:30+00 $
-/// $Revision: 1.3 $
+///
+/// $Date: 2007-10-28 12:07:55+00 $
+/// $Revision: 1.1 $
 //////////////////////////////////////////////////////////////////////
 #if !defined(AFX_CONICSECTION3D_H__3BBB8B3E_CC71_4107_9553_FB9C1B829F8B__INCLUDED_)
 #define AFX_CONICSECTION3D_H__3BBB8B3E_CC71_4107_9553_FB9C1B829F8B__INCLUDED_

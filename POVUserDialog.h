@@ -20,8 +20,8 @@
 //////////////////////////////////////////////////////////////////////
 /// @file POVUserDialog.h
 /// Interface for the user-defined Points of View associated classes.
-//
-/// $Date: 2007-10-28 12:00:15+00 $
+///
+/// $Date: 2007-10-28 12:03:30+00 $
 /// $Revision: 1.3 $
 //////////////////////////////////////////////////////////////////////
 #if !defined(AFX_POVUSERDIALOG_H__CC17383D_0C9F_40D3_B495_C2018660D375__INCLUDED_)
