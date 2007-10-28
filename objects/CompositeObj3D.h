@@ -19,10 +19,10 @@
 // 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA 
 //////////////////////////////////////////////////////////////////////
 /// @file CompositeObj3D.h
-/// @brief interface of the CCompositeObj3D class.
+/// Interface of the CCompositeObj3D class.
 ///
-/// $Date: 2007-10-28 11:21:38+00 $
-/// $Revision: 1.6 $
+/// $Date: 2007-10-28 11:45:22+00 $
+/// $Revision: 1.12 $
 //////////////////////////////////////////////////////////////////////
 #if !defined(AFX_COMPOSITEOBJ3D_H__D97907A0_D720_11D4_A2FA_00D0B71C8709__INCLUDED_)
 #define AFX_COMPOSITEOBJ3D_H__D97907A0_D720_11D4_A2FA_00D0B71C8709__INCLUDED_
