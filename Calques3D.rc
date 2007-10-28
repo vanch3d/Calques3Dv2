@@ -925,7 +925,7 @@ IDD_POV_DLG DIALOGEX 0, 0, 116, 129
 STYLE DS_CONTEXTHELP | WS_POPUP | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_TOOLWINDOW | WS_EX_CONTEXTHELP
 CAPTION "Observer's Points of View"
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     LTEXT           "",IDC_POV_LIST,4,4,108,80,WS_TABSTOP,0,HIDC_POV_LIST
     EDITTEXT        IDC_POV_THETA,76,92,32,12,ES_MULTILINE | ES_AUTOVSCROLL | 
@@ -1479,6 +1479,8 @@ BEGIN
             MENUITEM "Sphere-pla&ne",               ID_CONSTRUCTION_INTERSECTION_SPHEREPLANE
 
             MENUITEM "Plane-c&ylinder",             ID_CONSTRUCTION_INTERSECTION_PLANECYLINDER
+
+            MENUITEM "Plane-cone",                  ID_CONSTRUCTION_INTERSECTION_PLANECONE
 
         END
         MENUITEM SEPARATOR
@@ -3039,6 +3041,8 @@ BEGIN
                             "Construct a circle at the intersection of a sphere and a plane\nIntersection Sphere/Plane"
     ID_CONSTRUCTION_INTERSECTION_LINECONE 
                             "Construct the point(s) at the intersection of a line and a cone \nIntersection Line/Cone"
+    ID_CONSTRUCTION_INTERSECTION_PLANECONE 
+                            "Construct the conic section at the intersection of a plane and a cone\nIntersection Plane/Cone"
 END
 
 STRINGTABLE DISCARDABLE 
@@ -3204,6 +3208,7 @@ BEGIN
     IDS_HELP_DISTANCE       "the distance %s"
     IDS_HELP_VOLUME         "the volume %s"
     IDS_HELP_CONE           "the cone %s"
+    IDS_HELP_CONIC          "the conic %s"
 END
 
 STRINGTABLE DISCARDABLE 
@@ -3313,6 +3318,7 @@ BEGIN
     IDS_NAME_TEXT           "Txt#"
     IDS_NAME_LOCUS          "Obj#"
     IDS_NAME_CONE           "Cn#"
+    IDS_NAME_CONIC          "Cr#"
 END
 
 STRINGTABLE DISCARDABLE 

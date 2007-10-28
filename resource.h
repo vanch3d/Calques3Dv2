@@ -369,6 +369,7 @@
 #define IDS_NAME_TEXT                   5010
 #define IDS_NAME_LOCUS                  5011
 #define IDS_NAME_CONE                   5012
+#define IDS_NAME_CONIC                  5013
 #define IDS_NAME_VECTOR                 5099
 #define IDS_HELP_OBJECT                 5100
 #define IDS_HELP_POINT                  5101
@@ -394,6 +395,7 @@
 #define IDS_HELP_DISTANCE               5122
 #define IDS_HELP_VOLUME                 5123
 #define IDS_HELP_CONE                   5124
+#define IDS_HELP_CONIC                  5125
 #define IDS_DEF_OBJECT                  5200
 #define IDS_DEF_POINT                   5201
 #define IDS_DEF_POINTCALC               5202
@@ -681,6 +683,7 @@
 #define ID_CONSTRUCTION_INTERSECTION_PLANECIRCLE 30328
 #define ID_CONSTRUCTION_INTERSECTION_SPHEREPLANE 30329
 #define ID_CONSTRUCTION_INTERSECTION_LINECONE 30330
+#define ID_CONSTRUCTION_INTERSECTION_PLANECONE 30331
 #define ID_CONSTRUCTION_MIDPOINT        30340
 #define ID_CONSTRUCTION_CENTER          30341
 #define ID_CONSTRUCTION_PARALLELLINE    30342
