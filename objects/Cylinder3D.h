@@ -19,9 +19,10 @@
 // 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA 
 //////////////////////////////////////////////////////////////////////
 /// @file Cylinder3D.h
-/// @brief interface of the CCylinder3D class.
+/// Interface of the CCylinder3D class.
 ///
-///
+/// $Date: 2007-10-28 11:45:22+00 $
+/// $Revision: 1.12 $
 //////////////////////////////////////////////////////////////////////
 #if !defined(AFX_CYLINDER3D_H__CB060980_E54D_11D4_A2FA_00D0B71C8709__INCLUDED_)
 #define AFX_CYLINDER3D_H__CB060980_E54D_11D4_A2FA_00D0B71C8709__INCLUDED_
@@ -88,6 +89,7 @@ public:
 	virtual void Draw(CDC* pDC,CVisualParam *vp,BOOL bSm=0);
 	virtual void DrawRetro(CDC*,CVisualParam *vp);
 	virtual void		Draw3DRendering(int nVolMode);
+	virtual CString ExportSymbolic(int nFormat); 
 
 	BOOL	IntersectLine(CDroite3D *dr,CVector4 *in,CVector4 *out);
 

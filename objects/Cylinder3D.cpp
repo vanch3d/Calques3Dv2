@@ -18,8 +18,11 @@
 // along with Calques 3D; if not, write to The Free Software Foundation, Inc., 
 // 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA 
 //////////////////////////////////////////////////////////////////////
-// Cylinder3D.cpp: implementation of the CCylinder3D class.
-//
+/// @file Cylinder3D.cpp
+/// Implementation of the CCylinder3D class.
+///
+/// $Date: 2007-10-28 11:21:38+00 $
+/// $Revision: 1.6 $
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
@@ -839,5 +842,24 @@ BOOL CCylinder3D::InterCylLine(CVector4 raybase,CVector4 raycos,CVector4 base,CV
     return (hit);
 }
 
+CString CCylinder3D::ExportSymbolic(int nFormat)
+{
+    CString mstr;
+    mstr.Empty();
 
+    if (/*bValidate && */P1 && P2 && Rad)
+    {
+        CString strName,strObj1,strObj2,strObj3;
+		strName = GetObjectNameRedux();
+		strObj1 = P1->GetObjectNameRedux();
+		strObj2 = P2->GetObjectNameRedux();
+		strObj3 = Rad->GetObjectNameRedux();
 
+		if (nFormat==EXPORT_MATHEMATICA)
+	        mstr.Format(_T("CylinderD[%s,%s,%s,%s];"),strName,strObj1,strObj2,strObj3);
+		else if (nFormat==EXPORT_MAPLE)
+			mstr.Format(_T("CylinderD(%s,%s,%s,%s);"),strName,strObj1,strObj2,strObj3);
+
+    }
+    return mstr;
+}
