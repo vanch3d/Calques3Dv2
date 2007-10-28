@@ -18,8 +18,10 @@
 // along with Calques 3D; if not, write to The Free Software Foundation, Inc., 
 // 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA 
 //////////////////////////////////////////////////////////////////////
-// Cone3D.cpp: implementation of the CCone3D class.
-//
+/// @file Cone3D.cpp
+/// @brief Implementation of the CCone3D class.
+/// $Date: 2007-10-28 11:19:57+00 $
+/// $Revision: 1.12 $
 //////////////////////////////////////////////////////////////////////
 #include "stdafx.h"
 #include "..\calques3d.h"
@@ -181,6 +183,29 @@ int CCone3D::SetProperties(CxObject3DSet *pSet)
 		C1->pObjectShape.nShapeId = pObjectShape.nShapeId;
 	}
     return ret;
+}
+
+
+CString CCone3D::ExportSymbolic(int nFormat)
+{
+    CString mstr;
+    mstr.Empty();
+
+    if (/*bValidate && */pApex && pAxis && pRadius)
+    {
+        CString strName,strObj1,strObj2,strObj3;
+		strName = GetObjectNameRedux();
+		strObj1 = pApex->GetObjectNameRedux();
+		strObj2 = pAxis->GetObjectNameRedux();
+		strObj3 = pRadius->GetObjectNameRedux();
+
+		if (nFormat==EXPORT_MATHEMATICA)
+	        mstr.Format(_T("ConeD[%s,%s,%s,%s];"),strName,strObj1,strObj2,strObj3);
+		else if (nFormat==EXPORT_MAPLE)
+			mstr.Format(_T("ConeD(%s,%s,%s,%s);"),strName,strObj1,strObj2,strObj3);
+
+    }
+    return mstr;
 }
 
 
@@ -1051,5 +1076,25 @@ CString CInterConeDr3D::ExportSymbolic(int nFormat)
     CString mstr;
     mstr.Empty();
 
+    if (/*bValidate && */Cone && Dr)
+    {
+        CString strName1,strName2,strObj1,strObj2;
+		strName1 = ptA->GetObjectNameRedux();
+		strName2 = ptB->GetObjectNameRedux();
+		strObj1 = Cone->GetObjectNameRedux();
+		strObj2 = Dr->GetObjectNameRedux();
+
+		if (nFormat==EXPORT_MATHEMATICA)
+		{
+	        mstr.Format(_T("Intersection1LineCone[%s,%s,%s];\nIntersection2LineCone[%s,%s,%s];"),
+					strName1,strObj2,strObj1,strName2,strObj2,strObj1);
+		}
+		else if (nFormat==EXPORT_MAPLE)
+		{
+			mstr.Format(_T("Intersection1LineCone(%s,%s,%s);\nIntersection2LineCone(%s,%s,%s);"),
+					strName1,strObj2,strObj1,strName2,strObj2,strObj1);
+		}
+
+    }
     return mstr;
 }
