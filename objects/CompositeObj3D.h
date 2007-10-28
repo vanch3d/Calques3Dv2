@@ -21,7 +21,8 @@
 /// @file CompositeObj3D.h
 /// @brief interface of the CCompositeObj3D class.
 ///
-///
+/// $Date: 2007-10-28 11:21:38+00 $
+/// $Revision: 1.6 $
 //////////////////////////////////////////////////////////////////////
 #if !defined(AFX_COMPOSITEOBJ3D_H__D97907A0_D720_11D4_A2FA_00D0B71C8709__INCLUDED_)
 #define AFX_COMPOSITEOBJ3D_H__D97907A0_D720_11D4_A2FA_00D0B71C8709__INCLUDED_
@@ -282,6 +283,7 @@ public:
 	virtual void SetColor(COLORREF rColor);
 	virtual void SetStyle(int nStyle);
 
+	virtual CString ExportSymbolic(int nFormat); 
 	virtual CString GetObjectDef();
 	virtual UINT  CalculConceptuel();
 };
@@ -316,6 +318,7 @@ public:
 
 	virtual CString GetObjectDef();
 	virtual UINT  CalculConceptuel();
+	virtual CString ExportSymbolic(int nFormat); 
 };
 
 #endif // !defined(AFX_COMPOSITEOBJ3D_H__D97907A0_D720_11D4_A2FA_00D0B71C8709__INCLUDED_)
