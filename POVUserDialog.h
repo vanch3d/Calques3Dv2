@@ -1,20 +1,42 @@
+//////////////////////////////////////////////////////////////////////
+// Calques 3D - a 3D Dynamic Geometry Learning Environment
+// Copyright (c) 1997-2007 Nicolas Van Labeke
+//////////////////////////////////////////////////////////////////////
+// This file is part of Calques 3D.
+// 
+// Calques 3D is free software; you can redistribute it and/or modify it 
+// under the terms of the GNU General Public License as published by 
+// the Free Software Foundation; either version 2 of the License, or 
+// (at your option) any later version.
+// 
+// Calques 3D is distributed in the hope that it will be useful, 
+// but WITHOUT ANY WARRANTY; without even the implied warranty of 
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License 
+// along with Calques 3D; if not, write to The Free Software Foundation, Inc., 
+// 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA 
+//////////////////////////////////////////////////////////////////////
+/// @file POVUserDialog.h
+/// Interface for the user-defined Points of View associated classes.
+//
+/// $Date: 2007-10-28 12:00:15+00 $
+/// $Revision: 1.3 $
+//////////////////////////////////////////////////////////////////////
 #if !defined(AFX_POVUSERDIALOG_H__CC17383D_0C9F_40D3_B495_C2018660D375__INCLUDED_)
 #define AFX_POVUSERDIALOG_H__CC17383D_0C9F_40D3_B495_C2018660D375__INCLUDED_
 
 #if _MSC_VER > 1000
 #pragma once
 #endif // _MSC_VER > 1000
-// POVUserDialog.h : header file
-//
 
 #include "objects/Vector4.h"
-
-/////////////////////////////////////////////////////////////////////////////
-// CPOVUserDialog dialog
 
 class CPOVUserDialog;
 class CxPOVObjectSet;
 class CPOVUserTool;
+
 /////////////////////////////////////////////////////////////////////////////
 /// CPOVList
 ///
@@ -42,6 +64,10 @@ protected:
 	DECLARE_MESSAGE_MAP()
 };
 
+/////////////////////////////////////////////////////////////////////////////
+/// CPOVList
+///
+/////////////////////////////////////////////////////////////////////////////
 class CPOVUserDialog : public CDialog
 {
 // Construction
