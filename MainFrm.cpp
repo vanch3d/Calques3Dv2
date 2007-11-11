@@ -18,8 +18,11 @@
 // along with Calques 3D; if not, write to The Free Software Foundation, Inc., 
 // 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA 
 //////////////////////////////////////////////////////////////////////
-// MainFrm.cpp: implementation of the CMainFrame class.
-//
+/// @file: MainFrm.cpp
+/// Implementation of the CMainFrame class.
+///
+/// $Date: 2007-11-11 11:05:49+00 $
+/// $Revision: 1.8 $
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
@@ -87,6 +90,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CBCGPMDIFrameWnd)
 	ON_COMMAND(ID_HELP_KEYBOARDMAP, OnHelpKeyboardmap)
 	ON_COMMAND(ID_VIEW_FULLSCREEN, OnViewFullScreen)
 	ON_WM_CLOSE()
+	ON_WM_TIMER()
 	//}}AFX_MSG_MAP
 	// Global help commands
 	//ON_COMMAND(ID_VIEW_DEPENDLSIT, OnViewDepend)
@@ -152,10 +156,29 @@ CMainFrame::CMainFrame()
 {
 	// TODO: add member initialization code here
 	m_nAppLook = theApp.GetInt (_T("ApplicationLook"), ID_VIEW_APPLOOK_2003);
+	m_g3DSensor = NULL;
+	m_g3DKeyboard = NULL;
 }
 
 CMainFrame::~CMainFrame()
 {
+	// Disconnect the COM device
+    CComPtr<ISimpleDevice> _3DxDevice;
+	if (m_g3DSensor)
+	{
+		m_g3DSensor->get_Device((IDispatch**)&_3DxDevice);
+		m_g3DSensor.Release();
+	}
+
+	if (m_g3DKeyboard) m_g3DKeyboard.Release();
+	if (_3DxDevice)
+	{
+		_3DxDevice->Disconnect();
+		_3DxDevice.Release();
+	}
+
+    // Kill the timer used to poll the sensor and keyboard
+	//KillTimer(TIMER_TDXINPUT);
 }
 
 int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
@@ -500,7 +523,43 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	CUndoButton::m_lstActions.AddTail (_T("Item 6"));
 	CUndoButton::m_lstActions.AddTail (_T("Item 7"));
 	CUndoButton::m_lstActions.AddTail (_T("Item 8"));*/
+    // Create the device object
+    CComPtr<IUnknown> _3DxDevice;
+    HRESULT hr = _3DxDevice.CoCreateInstance(__uuidof(Device));
+	if (SUCCEEDED(hr))
+    {
+		CComPtr<ISimpleDevice> _3DxSimpleDevice;
+		hr = _3DxDevice.QueryInterface(&_3DxSimpleDevice);
+		if (SUCCEEDED(hr))
+		{
+			// Get the interfaces to the sensor and the keyboard;
+			m_g3DSensor = _3DxSimpleDevice->Sensor;
+			m_g3DKeyboard = _3DxSimpleDevice->Keyboard;
+			
+			// Associate a configuration with this device
+			_3DxSimpleDevice->LoadPreferences(_T("Calques3D"));
+			// Connect to the driver
+			_3DxSimpleDevice->Connect();
+			
+			// Create timer used to poll the 3dconnexion device
+			SetTimer(TIMER_TDXINPUT,25,NULL);
+			//m_gTimerId = ::SetTimer(NULL, 0, 25, _3DxTimerProc);
 
+			//MessageBox(_T("3DConnexion loaded"));
+		}
+		else 
+		{
+			CString strError;
+			strError.FormatMessage (_T("Error 0x%x"), hr);
+			::MessageBox (NULL, strError, _T("QueryInterface failed"), MB_ICONERROR|MB_OK);
+		}
+	}
+		else 
+		{
+			CString strError;
+			strError.FormatMessage (_T("Error 0x%x"), hr);
+			::MessageBox (NULL, strError, _T("CoCreateInstance failed"), MB_ICONERROR|MB_OK);
+		}
 	return 0;
 }
 
@@ -1656,4 +1715,37 @@ BOOL CMainFrame::OnCommand(WPARAM wParam, LPARAM lParam)
 		}
 	}
 	return CBCGPMDIFrameWnd::OnCommand(wParam, lParam);
+}
+
+void CMainFrame::OnTimer(UINT nIDEvent) 
+{
+	// TODO: Add your message handler code here and/or call default
+	if (nIDEvent==TIMER_TDXINPUT)
+	{
+	   if (m_g3DKeyboard)
+		{
+			// Check if any change to the keyboard state
+				ISimpleDevicePtr _p3DxDevice;
+				HRESULT   hr = m_g3DKeyboard->get_Device((IDispatch**)&_p3DxDevice);
+				if (SUCCEEDED(hr))
+				{
+					BOOL b = _p3DxDevice->GetIsConnected();
+					      _p3DxDevice.Release();
+					TRACE1("is connected: %d\n",b);
+				}
+	   }
+
+
+		CMDIChildWnd* pChild = MDIGetActive();
+		if (pChild && pChild->GetSafeHwnd())
+		{
+			CView *pView = pChild->GetActiveView();
+
+			if (pView && pView->GetSafeHwnd())
+				pView->SendMessage(WM_TIMER,nIDEvent);
+		}
+		
+	}
+	
+	CBCGPMDIFrameWnd::OnTimer(nIDEvent);
 }
