@@ -19,9 +19,10 @@
 // 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA 
 //////////////////////////////////////////////////////////////////////
 /// @file MainFrm.h
-/// @brief interface of the CMainFrame class
+/// Interface of the CMainFrame class.
 ///
-/// 
+/// $Date: 2007-11-11 11:08:42+00 $
+/// $Revision: 1.17 $
 //////////////////////////////////////////////////////////////////////
 #if !defined(AFX_MAINFRM_H__1B2AE4A8_D0DE_11D4_A2FA_00D0B71C8709__INCLUDED_)
 #define AFX_MAINFRM_H__1B2AE4A8_D0DE_11D4_A2FA_00D0B71C8709__INCLUDED_
@@ -68,6 +69,10 @@ protected:
 	CBitmap					m_bmpVertCaption;	///< Logo for the vertical caption in the File menu
 
 	UINT					m_nAppLook;			///< Current look-and-feel of the application
+
+public:
+	CComPtr<ISensor>		m_g3DSensor;
+	CComPtr<IKeyboard>		m_g3DKeyboard;
 
 // Operations
 public:
@@ -122,6 +127,7 @@ protected:
 	afx_msg void OnViewRendering();
 	afx_msg void OnHelpKeyboardmap();
 	afx_msg void OnViewFullScreen();
+	afx_msg void OnTimer(UINT nIDEvent);
 	//}}AFX_MSG
 	afx_msg void OnViewDepend();
 	afx_msg void OnViewCustomize();
