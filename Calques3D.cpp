@@ -147,6 +147,19 @@ BOOL CCalques3DApp::InitInstance()
 #endif
 
 	//------------------------------------------------------------
+	// Initialise the COM manager (for the 2SXonnexion)
+	//------------------------------------------------------------
+   HRESULT hr=CoInitialize(NULL);
+   if (!SUCCEEDED(hr))
+   {
+      CString strError;
+      strError.FormatMessage (_T("Error 0x%x"), hr);
+      ::MessageBox (NULL, strError, _T("CoInitializeEx failed"), MB_ICONERROR|MB_OK);
+     // return FALSE;
+   }
+
+
+	//------------------------------------------------------------
 	// Load the registry information
 	//------------------------------------------------------------
 	SetRegistryKey(REG_KEY);
@@ -319,6 +332,10 @@ BOOL CCalques3DApp::InitInstance()
 int CCalques3DApp::ExitInstance() 
 {
 	BCGCBProCleanUp();
+	//------------------------------------------------------------
+	// Unload COM manager
+	//------------------------------------------------------------
+	CoUninitialize( );
 	//------------------------------------------------------------
 	// Localization: comment/uncomment for the relevant version
 	//------------------------------------------------------------
