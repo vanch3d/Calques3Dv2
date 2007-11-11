@@ -90,6 +90,8 @@ IDB_MATHPAD             BITMAP  DISCARDABLE     "res\\notebook.bmp"
 IDB_MSG_WARNING         BITMAP  DISCARDABLE     "res\\xWarning.bmp"
 IDB_MSG_INFO            BITMAP  DISCARDABLE     "res\\xInfo.bmp"
 IDB_MSG_TIPS            BITMAP  DISCARDABLE     "res\\xBulb.bmp"
+IDR_PARAMGEO_TB         BITMAP  DISCARDABLE     "res\\paramgeo.bmp"
+IDR_PARAMGEOTOOL_TB     BITMAP  DISCARDABLE     "res\\paramtools.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -302,6 +304,20 @@ BEGIN
     BUTTON      ID_ALERT_WARNING
     BUTTON      ID_ALERT_HELP
     BUTTON      ID_ALERT_TIP
+END
+
+IDR_PARAMGEO_TB TOOLBAR DISCARDABLE  16, 16
+BEGIN
+    BUTTON      ID_PARAMGEO_START
+    BUTTON      ID_PARAMGEO_DOC
+END
+
+IDR_PARAMGEOTOOL_TB TOOLBAR DISCARDABLE  16, 15
+BEGIN
+    BUTTON      ID_PARAMGEO_EXEC
+    BUTTON      ID_PARAMGEO_RESTART
+    SEPARATOR
+    BUTTON      ID_PARAMGEO_CLEAR
 END
 
 
@@ -571,7 +587,7 @@ END
 
 IDD_SPLASH DIALOGEX 0, 0, 204, 233
 STYLE DS_MODALFRAME | WS_POPUP
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     CONTROL         "",IDC_BIGICON,"Button",BS_OWNERDRAW | WS_DISABLED,4,4,
                     34,30
@@ -724,26 +740,29 @@ STYLE DS_CONTEXTHELP | WS_CHILD | WS_CAPTION
 CAPTION "Discovery"
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    GROUPBOX        "Discovery System",IDC_STATIC,4,4,204,48,BS_FLAT
-    RTEXT           "CAS Engine:",IDC_STATIC,8,16,56,12,SS_CENTERIMAGE
-    COMBOBOX        IDC_DISCOV_CAS,68,16,132,48,CBS_DROPDOWNLIST | 
+    GROUPBOX        "Discovery System",IDC_STATIC,4,20,204,48,BS_FLAT
+    RTEXT           "CAS Engine:",IDC_STATIC,8,32,56,12,SS_CENTERIMAGE
+    COMBOBOX        IDC_DISCOV_CAS,68,33,132,48,CBS_DROPDOWNLIST | 
                     WS_VSCROLL | WS_TABSTOP,0,HIDC_DISCOV_CAS
-    RTEXT           "Command Line:",IDC_STATIC_CMD,8,68,56,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_DISCOV_RUNTIME,68,68,120,12,ES_AUTOHSCROLL,0,
+    RTEXT           "Command Line:",IDC_STATIC_CMD,8,84,56,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_DISCOV_RUNTIME,68,84,120,12,ES_AUTOHSCROLL,0,
                     HIDC_DISCOV_RUNTIME
-    PUSHBUTTON      "...",IDC_DISCOV_BROWSECMD,188,68,13,12,0,0,
+    PUSHBUTTON      "...",IDC_DISCOV_BROWSECMD,188,84,13,12,0,0,
                     HIDC_DISCOV_BROWSECMD
-    RTEXT           "Script:",IDC_STATIC_SCRIPT,8,84,56,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_DISCOV_SCRIPT,68,84,120,12,ES_AUTOHSCROLL,0,
+    RTEXT           "Script:",IDC_STATIC_SCRIPT,8,100,56,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_DISCOV_SCRIPT,68,100,120,12,ES_AUTOHSCROLL,0,
                     HIDC_DISCOV_SCRIPT
-    PUSHBUTTON      "...",IDC_DISCOV_BROWSE,188,84,13,12,0,0,
+    PUSHBUTTON      "...",IDC_DISCOV_BROWSE,188,100,13,12,0,0,
                     HIDC_DISCOV_BROWSE
-    RTEXT           "version:",IDC_STATIC,8,32,56,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_DISCOV_VERSION,68,32,28,12,ES_CENTER | 
+    RTEXT           "version:",IDC_STATIC,8,48,56,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_DISCOV_VERSION,68,48,28,12,ES_CENTER | 
                     ES_AUTOHSCROLL | ES_READONLY,0,HIDC_DISCOV_VERSION
     LTEXT           "Neither Mathematica nor CocoA are installed in your computer. Please install one of these systems in order to use this feature.",
-                    IDC_STATIC_NONE,12,108,188,28
-    GROUPBOX        "Discovery Script",IDC_STATIC,4,56,204,48,BS_FLAT
+                    IDC_STATIC_NONE,12,124,188,28
+    GROUPBOX        "Discovery Script",IDC_STATIC,4,72,204,48,BS_FLAT
+    CONTROL         "&Activate ParamGeo3D",IDC_DISCOV_ACTIVATE,"Button",
+                    BS_AUTOCHECKBOX | WS_TABSTOP,4,8,90,10,0,
+                    HIDC_DISCOV_ACTIVATE
 END
 
 IDD_UNDO_DLG DIALOGEX 0, 0, 144, 20
@@ -3511,6 +3530,7 @@ BEGIN
     IDR_PROPERTY_TB         "Attributes"
     IDR_DEPENDENT_TB        "Structure"
     IDR_FORMAT_TB           "Format"
+    IDR_PARAMGEO_TB         "ParamGeo3D ®"
 END
 
 STRINGTABLE DISCARDABLE 
@@ -3559,6 +3579,11 @@ BEGIN
     ID_SESSION_DESCR        "This is the default configuration of Calques 3D"
     ID_FREE_TEAROFF1        "ID_FREE_TEAROFF1"
     ID_FREE_TEAROFF2        "ID_FREE_TEAROFF2"
+    ID_PARAMGEO_START       "Start ParamGeo3D with the current document\nLoad Current Document"
+    ID_PARAMGEO_DOC         "Current document loaded in ParamGeo3D\nCurrent Document"
+    ID_PARAMGEO_EXEC        "ddfddf"
+    ID_PARAMGEO_CLEAR       "dddd"
+    ID_PARAMGEO_RESTART     "ddffddf"
 END
 
 STRINGTABLE DISCARDABLE 

@@ -213,6 +213,7 @@
 #define IDC_POV_THETA                   1192
 #define IDC_POV_PHI                     1193
 #define IDC_POV_INFO                    1194
+#define IDC_DISCOV_ACTIVATE             1195
 #define IDC_ABOUTCALQUE                 1201
 #define IDC_RENDERER_AMBTXT             1300
 #define IDC_RENDERER_DIFFUSETXT         1301
@@ -356,6 +357,8 @@
 #define IDR_DEPENDENT_TB                4567
 #define IDR_FORMAT_TB                   4568
 #define IDR_ALERT_TB                    4569
+#define IDR_PARAMGEO_TB                 4570
+#define IDR_PARAMGEOTOOL_TB             4571
 #define IDS_NAME_OBJECT                 5000
 #define IDS_NAME_POINT                  5001
 #define IDS_NAME_LINE                   5002
@@ -797,6 +800,7 @@
 #define ID_VIEW_PROPERTYBAR             32933
 #define ID_VIEW_DEPENDENTBAR            32934
 #define ID_VIEW_FORMAT                  32935
+#define ID_VIEW_PARAMGEOBAR             32936
 #define ID_DUMMY_POINTON                32960
 #define ID_DUMMY_INTERS                 32961
 #define ID_DUMMY_POINTDIV               32962
@@ -804,6 +808,11 @@
 #define ID_SESSION_DESCR                32992
 #define ID_FREE_TEAROFF1                32993
 #define ID_FREE_TEAROFF2                32994
+#define ID_PARAMGEO_START               32999
+#define ID_PARAMGEO_DOC                 33000
+#define ID_PARAMGEO_EXEC                33001
+#define ID_PARAMGEO_CLEAR               33002
+#define ID_PARAMGEO_RESTART             33003
 #define AFX_IDS_OBJPROP                 57347
 #define ID_INDICATOR_MODE               0xE707
 #define ID_INDICATOR_ICON               59144
@@ -815,9 +824,9 @@
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
-#define _APS_NEXT_RESOURCE_VALUE        202
-#define _APS_NEXT_COMMAND_VALUE         32998
-#define _APS_NEXT_CONTROL_VALUE         1195
+#define _APS_NEXT_RESOURCE_VALUE        210
+#define _APS_NEXT_COMMAND_VALUE         33004
+#define _APS_NEXT_CONTROL_VALUE         1196
 #define _APS_NEXT_SYMED_VALUE           125
 #endif
 #endif
