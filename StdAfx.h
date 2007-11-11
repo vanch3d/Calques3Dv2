@@ -27,6 +27,17 @@
 
 #include <afxcview.h>		// RichEdit classes
 
+#ifdef _C3D_PARAMGEO
+	#include "C:\Program Files\Maple 10\extern\include\maplec.h"
+	#pragma comment(lib,"C:\\Program Files\\Maple 10\\bin.win\\maplec.lib" ) 
+	#pragma message("Automatically linking with MAPLEC.lib")
+#else
+	//#pragma comment(lib,"BCGCBPRO731d.lib") 
+	#pragma message("Warning: MAPLEC.lib is not linked; check if this is right")
+#endif
+
+#include <atlbase.h>
+#import "C:\Program Files\3Dconnexion\3Dconnexion 3DxSoftware\3DxWare\win32\TDxInput.dll" no_namespace
 
 //{{AFX_INSERT_LOCATION}}
 // Microsoft Visual C++ will insert additional declarations immediately before the previous line.
