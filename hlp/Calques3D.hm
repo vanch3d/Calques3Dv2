@@ -219,6 +219,7 @@ HID_VIEW_EXPLORATION                    0x180A4
 HID_VIEW_PROPERTYBAR                    0x180A5
 HID_VIEW_DEPENDENTBAR                   0x180A6
 HID_VIEW_FORMAT                         0x180A7
+HID_VIEW_PARAMGEOBAR                    0x180A8
 HID_DUMMY_POINTON                       0x180C0
 HID_DUMMY_INTERS                        0x180C1
 HID_DUMMY_POINTDIV                      0x180C2
@@ -226,6 +227,11 @@ HID_SESSION_DEF                         0x180DF
 HID_SESSION_DESCR                       0x180E0
 HID_FREE_TEAROFF1                       0x180E1
 HID_FREE_TEAROFF2                       0x180E2
+HID_PARAMGEO_START                      0x180E7
+HID_PARAMGEO_DOC                        0x180E8
+HID_PARAMGEO_EXEC                       0x180E9
+HID_PARAMGEO_CLEAR                      0x180EA
+HID_PARAMGEO_RESTART                    0x180EB
 HID_INDICATOR_MODE                      0x1E707
 HID_INDICATOR_ICON                      0x1E708
 HID_INDICATOR_PROGRESS                  0x1E709
@@ -282,6 +288,8 @@ HIDR_PROPERTY_TB                        0x211D6
 HIDR_DEPENDENT_TB                       0x211D7
 HIDR_FORMAT_TB                          0x211D8
 HIDR_ALERT_TB                           0x211D9
+HIDR_PARAMGEO_TB                        0x211DA
+HIDR_PARAMGEOTOOL_TB                    0x211DB
  
 // Dialogs (IDD_*) 
 HIDD_SUPPRESS_DLG                       0x2012C
