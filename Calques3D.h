@@ -19,9 +19,10 @@
 // 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA 
 //////////////////////////////////////////////////////////////////////
 /// @file Calques3D.h
-/// @brief main header file for the CALQUES 3D application.
+/// main header file for the CALQUES 3D application.
 ///
-/// 
+/// $Date: 2007-10-28 11:49:51+00 $
+/// $Revision: 1.18 $
 //////////////////////////////////////////////////////////////////////
 #if !defined(AFX_CALQUES3D_H__1B2AE4A4_D0DE_11D4_A2FA_00D0B71C8709__INCLUDED_)
 #define AFX_CALQUES3D_H__1B2AE4A4_D0DE_11D4_A2FA_00D0B71C8709__INCLUDED_
@@ -88,6 +89,8 @@
 
 #define WM_UPDATEOBJ_DEP		(WM_APP + 30)		///< The dependence list of an object is recomputed
 //@}
+
+#define TIMER_TDXINPUT			1201                ///< Timer for the TdXInput device
 
 
 /////////////////////////////////////////////////////////////////////////////
