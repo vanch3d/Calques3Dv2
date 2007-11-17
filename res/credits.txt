@@ -1,6 +1,6 @@
 <font color='255,255,255' face='MS Sans Serif' size='11' align='center'>
 <font size='32' style='b' color='51,51,153'>Calques 3D</font><br>
-<font color='51,51,153'>version 2.4.1</font><p><p>
+<font color='51,51,153'>version 2.4.2</font><p><p>
 <font style='b' color='1,1,1' align='right' >Dedicated to Philippe BERNAT</font><p><p>
   <font style='bu' color='51,51,153' align='left'>The authors:<br></font><vspace size='5'>
   <font style='b' color='1,1,1' align='left'>Nicolas VAN LABEKE<br></font>
