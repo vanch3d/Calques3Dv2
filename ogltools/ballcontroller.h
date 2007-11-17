@@ -19,8 +19,10 @@
 // 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA 
 //////////////////////////////////////////////////////////////////////
 /// @file BallController.h
-/// @brief interface of the CBallController class.
+/// Interface of the CBallController class.
 ///
+/// $Date: 2007-11-11 11:10:32+00 $
+/// $Revision: 1.12 $
 //////////////////////////////////////////////////////////////////////
 #if !defined(AFX_BALLCONTROLLER_H__196CBD82_3858_11D2_80B1_A7800FACFE7F__INCLUDED_)
 #define AFX_BALLCONTROLLER_H__196CBD82_3858_11D2_80B1_A7800FACFE7F__INCLUDED_
@@ -80,6 +82,7 @@ private:
 	vector ConstrainToAxis(const vector& loose,const vector& axis);
 	int NearestConstraintAxis(const vector& loose);
 public:
+	void AddQuaternion(unitquaternion quat);
 	bool GetDrawConstraints();
 	void SetDrawConstraints(bool flag=true);
 	void DrawBall();

@@ -18,8 +18,11 @@
 // along with Calques 3D; if not, write to The Free Software Foundation, Inc., 
 // 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA 
 //////////////////////////////////////////////////////////////////////
-// BallController.cpp: implementation of the CBallController class.
-//
+/// @file BallController.cpp
+/// Implementation of the CBallController class.
+///
+/// $Date: 2007-11-11 11:10:32+00 $
+/// $Revision: 1.12 $
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
@@ -192,6 +195,12 @@ unitquaternion CBallController::RotationFromMove(const vector& vfrom,const vecto
 		real phi=2.0*asin(t);
 		return unitquaternion(phi,rotaxis);
 	}
+}
+
+void CBallController::AddQuaternion(unitquaternion quat)
+{
+	currentQuat*=quat;
+	//currentQuat*=unitquaternion(DegToRad(angleKeyIncrement),X_AXIS);
 }
 
 void CBallController::Key(UINT nChar)
