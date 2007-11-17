@@ -1737,8 +1737,11 @@ BOOL CCalques3DDoc::IsTaskAvailable(UINT m_nID)
 
 void CCalques3DDoc::OnDiscovery()
 {
-	return;
-	static BOOL bD = TRUE;
+}
+
+CString CCalques3DDoc::OnExportSymbolic(UINT nFormat) 
+{
+	// TODO: Add your command handler code here
 	CString strSymb;
 
 	//strSymb = _T("Range[-8.0,8.0,-8.0,8.0,-6.0,8.0];\n");
@@ -1760,7 +1763,7 @@ void CCalques3DDoc::OnDiscovery()
 		maxa.y = max(omax.y,maxa.y);
 		maxa.z = max(omax.z,maxa.z);
 
-		CString mstr = pObj->ExportSymbolic(0);
+		CString mstr = pObj->ExportSymbolic(nFormat);
 		//if (!mstr.IsEmpty())
 		{
 			strSymb += mstr + _T("\n");
@@ -1778,127 +1781,20 @@ void CCalques3DDoc::OnDiscovery()
 	mina = mina - delta;
 	maxa = maxa + delta;
 
-/*	mina.x --;
-	mina.y --;
-	mina.z --;
-	maxa.x ++;
-	maxa.y ++;
-	maxa.z ++;
-*/
 	CString strRange;
-	strRange.Format(_T("Range[%.1f,%.1f,%.1f,%.1f,%.1f,%.1f];\n"),
-						mina.x,maxa.x,mina.y,maxa.y,mina.z,maxa.z);
-
+	if (nFormat==CObject3D::EXPORT_MATHEMATICA)
+		strRange.Format(_T("Range[%.1f,%.1f,%.1f,%.1f,%.1f,%.1f];\n"),
+							mina.x,maxa.x,mina.y,maxa.y,mina.z,maxa.z);
+	else 
+	if (nFormat==CObject3D::EXPORT_MAPLE)
+		strRange.Format(_T("Range(%.1f,%.1f,%.1f,%.1f,%.1f,%.1f);\n"),
+							mina.x,maxa.x,mina.y,maxa.y,mina.z,maxa.z);
+	
 	strSymb = strRange + strSymb;
 
-//	CFileFind mfile;
-//	mfile.FindFile(TPref::Verif.strConvert);
-//	BOOL bRes = mfile.FindNextFile();
-//	CString strff = mfile.GetFilePath();
-
-
-
-	int nErrNo = _access(TPref::Verif.strConvert,00);
-	if (nErrNo!=0)
-	{
-	}
-	nErrNo = _access(TPref::Verif.strRunTime,00);
-	if (nErrNo!=0)
-	{
-	}
-
-	CString lpszCommandLine;
-
-	//lpszCommandLine = _T("command.com /E:2048 /C c:\progra~1\cocoa-4.1\cocoa.bat -q c:\\progra~1\\cocoa-4.1\\test.coc");
-	lpszCommandLine.Format(_T("%s %s %s"),
-		TPref::Verif.strCommand,
-		TPref::Verif.strRunTime,
-		TPref::Verif.strConvert);
-
-	STARTUPINFO siStartInfo;
-	PROCESS_INFORMATION piProcInfo;
-	memset(&siStartInfo, 0, sizeof(siStartInfo));
-	memset(&piProcInfo, 0, sizeof(piProcInfo));
-	siStartInfo.cb = sizeof(STARTUPINFO);
-	siStartInfo.wShowWindow = (WORD)SW_SHOW;//((bD)?SW_SHOW:SW_HIDE);
-	siStartInfo.dwFlags = STARTF_USESHOWWINDOW;
-
-
-	
-	// Load the predefined Windows "up arrow" cursor.
-	CWaitCursor wait;
-	// export the selected file into registry using command line
-
-//	int nrr = _spawnl(_P_WAIT,lpszCommandLine.GetBuffer(lpszCommandLine.GetLength())," ",NULL,NULL);
-
-	if (CreateProcess (NULL, lpszCommandLine.GetBuffer(lpszCommandLine.GetLength()), 
-							NULL, NULL, FALSE, 0, 
-							NULL, NULL, &siStartInfo, &piProcInfo))
-	{
-		DWORD dResult = WAIT_TIMEOUT;
-		while (dResult!= WAIT_OBJECT_0)
-		{
-			CWaitCursor wait;
-			dResult = WaitForSingleObject (piProcInfo.hProcess, 500);
-			AfxGetMainWnd()->Invalidate();
-			AfxGetMainWnd()->UpdateWindow();
-		}
-
-		//DWORD dResult = WaitForSingleObject (piProcInfo.hProcess, INFINITE);
-		DWORD d1 = WAIT_ABANDONED;
-		DWORD d2 = WAIT_OBJECT_0;
-		DWORD d3 = WAIT_TIMEOUT;
-		DWORD d4 = WAIT_FAILED;
-		if (dResult==d2)
-		{
-			int nErrNo = _access(TPref::Verif.strResult,00);
-			if (nErrNo!=0)
-			{
-			}
-		FILE *fp = NULL;
-			fp = fopen(TPref::Verif.strResult,"r");
-		TRY
-		{
-	
-			CStdioFile f(fp);
-			f.ReadString(strSymb);
-			f.Close();
-		}
-		CATCH( CFileException, e )
-		{
-#ifdef _DEBUG
-			afxDump << "File could not be opened " << e->m_cause << "\n";
-#endif
-		}
-		END_CATCH
-
-		AfxGetMainWnd()->MessageBox(strSymb);
-		}
-		else if (dResult==d3)
-		{
-		}
-		else if (dResult==d4)
-		{
-			LPVOID lpMsgBuf;
-			FormatMessage( 
-				FORMAT_MESSAGE_ALLOCATE_BUFFER | 
-				FORMAT_MESSAGE_FROM_SYSTEM | 
-				FORMAT_MESSAGE_IGNORE_INSERTS,
-				NULL,
-				GetLastError(),
-				MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // Default language
-				(LPTSTR) &lpMsgBuf,
-				0,
-				NULL);
-			// Display the string.
-			::MessageBox( NULL, (LPCTSTR)lpMsgBuf, "Error", MB_OK | MB_ICONINFORMATION );
-			// Free the buffer.
-			LocalFree( lpMsgBuf );
- 		}
-	}
-
-	bD = !bD;
+	return strSymb;
 }
+
 
 void CCalques3DDoc::OnViewPlacementSave() 
 {

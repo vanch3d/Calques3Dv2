@@ -161,6 +161,7 @@ public:
 	BOOL OnSetUndo();
 	BOOL AddUndoObject(CUndoObject *pUndoObj=NULL);
 
+	CString OnExportSymbolic(UINT nFormat);
 	void UpdateAllViews(CView* pSender, LPARAM lHint = 0L, CObject* pHint = NULL);
 
 

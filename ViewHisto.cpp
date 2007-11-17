@@ -1084,58 +1084,60 @@ CString CViewHisto::OnExportDot()
 
 CString CViewHisto::OnExportSymbolic(UINT nFormat) 
 {
-	// TODO: Add your command handler code here
-	CString strSymb;
+// 	// TODO: Add your command handler code here
+// 	CString strSymb;
+// 
+// 	//strSymb = _T("Range[-8.0,8.0,-8.0,8.0,-6.0,8.0];\n");
+// 	CVector4 mina(10000,10000,10000),maxa(0,0,0);
+// 	int nb = GetDocument()->m_cObjectSet.GetSize();
+// 	for (int i=0;i<nb;i++)
+// 	{
+// 		CObject3D* pObj = GetDocument()->m_cObjectSet.GetAt(i);
+// 		if (!pObj) continue;
+// 		if (DYNAMIC_DOWNCAST(CText3D,pObj)) continue;
+// 
+// 		CVector4 omin,omax;
+// 		pObj->GetRange(omin,omax);
+// 
+// 		mina.x = min(omin.x,mina.x);
+// 		mina.y = min(omin.y,mina.y);
+// 		mina.z = min(omin.z,mina.z);
+// 		maxa.x = max(omax.x,maxa.x);
+// 		maxa.y = max(omax.y,maxa.y);
+// 		maxa.z = max(omax.z,maxa.z);
+// 
+// 		CString mstr = pObj->ExportSymbolic(nFormat);
+// 		//if (!mstr.IsEmpty())
+// 		{
+// 			strSymb += mstr + _T("\n");
+// 		}
+// 	}
+// 	mina.x = (mina.x/TPref::TUniv.nUnitRep)*TPref::TMathPad.UnitScale;
+// 	mina.y = (mina.y/TPref::TUniv.nUnitRep)*TPref::TMathPad.UnitScale;
+// 	mina.z = (mina.z/TPref::TUniv.nUnitRep)*TPref::TMathPad.UnitScale;
+// 	maxa.x = (maxa.x/TPref::TUniv.nUnitRep)*TPref::TMathPad.UnitScale;
+// 	maxa.y = (maxa.y/TPref::TUniv.nUnitRep)*TPref::TMathPad.UnitScale;
+// 	maxa.z = (maxa.z/TPref::TUniv.nUnitRep)*TPref::TMathPad.UnitScale;
+// 
+// 	CVector4 delta(0.5,0.5,0.5);
+// 
+// 	mina = mina - delta;
+// 	maxa = maxa + delta;
+// 
+// 	CString strRange;
+// 	if (nFormat==CObject3D::EXPORT_MATHEMATICA)
+// 		strRange.Format(_T("Range[%.1f,%.1f,%.1f,%.1f,%.1f,%.1f];\n"),
+// 							mina.x,maxa.x,mina.y,maxa.y,mina.z,maxa.z);
+// 	else 
+// 	if (nFormat==CObject3D::EXPORT_MAPLE)
+// 		strRange.Format(_T("Range(%.1f,%.1f,%.1f,%.1f,%.1f,%.1f);\n"),
+// 							mina.x,maxa.x,mina.y,maxa.y,mina.z,maxa.z);
+// 	
+// 	strSymb = strRange + strSymb;
+// 
+// 	return strSymb;
 
-	//strSymb = _T("Range[-8.0,8.0,-8.0,8.0,-6.0,8.0];\n");
-	CVector4 mina(10000,10000,10000),maxa(0,0,0);
-	int nb = GetDocument()->m_cObjectSet.GetSize();
-	for (int i=0;i<nb;i++)
-	{
-		CObject3D* pObj = GetDocument()->m_cObjectSet.GetAt(i);
-		if (!pObj) continue;
-		if (DYNAMIC_DOWNCAST(CText3D,pObj)) continue;
-
-		CVector4 omin,omax;
-		pObj->GetRange(omin,omax);
-
-		mina.x = min(omin.x,mina.x);
-		mina.y = min(omin.y,mina.y);
-		mina.z = min(omin.z,mina.z);
-		maxa.x = max(omax.x,maxa.x);
-		maxa.y = max(omax.y,maxa.y);
-		maxa.z = max(omax.z,maxa.z);
-
-		CString mstr = pObj->ExportSymbolic(nFormat);
-		//if (!mstr.IsEmpty())
-		{
-			strSymb += mstr + _T("\n");
-		}
-	}
-	mina.x = (mina.x/TPref::TUniv.nUnitRep)*TPref::TMathPad.UnitScale;
-	mina.y = (mina.y/TPref::TUniv.nUnitRep)*TPref::TMathPad.UnitScale;
-	mina.z = (mina.z/TPref::TUniv.nUnitRep)*TPref::TMathPad.UnitScale;
-	maxa.x = (maxa.x/TPref::TUniv.nUnitRep)*TPref::TMathPad.UnitScale;
-	maxa.y = (maxa.y/TPref::TUniv.nUnitRep)*TPref::TMathPad.UnitScale;
-	maxa.z = (maxa.z/TPref::TUniv.nUnitRep)*TPref::TMathPad.UnitScale;
-
-	CVector4 delta(0.5,0.5,0.5);
-
-	mina = mina - delta;
-	maxa = maxa + delta;
-
-	CString strRange;
-	if (nFormat==CObject3D::EXPORT_MATHEMATICA)
-		strRange.Format(_T("Range[%.1f,%.1f,%.1f,%.1f,%.1f,%.1f];\n"),
-							mina.x,maxa.x,mina.y,maxa.y,mina.z,maxa.z);
-	else 
-	if (nFormat==CObject3D::EXPORT_MAPLE)
-		strRange.Format(_T("Range(%.1f,%.1f,%.1f,%.1f,%.1f,%.1f);\n"),
-							mina.x,maxa.x,mina.y,maxa.y,mina.z,maxa.z);
-	
-	strSymb = strRange + strSymb;
-
-	return strSymb;
+	return GetDocument()->OnExportSymbolic(nFormat);
 }
 
 
