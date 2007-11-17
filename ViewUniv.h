@@ -67,6 +67,7 @@ public:
 	void			SetVisualParam(int VP);
 	void			SetFixedProjection(BOOL bFixed = TRUE);
 	void			SetSliderPosition(UINT sliderID,int pos);
+	void			OnMouse3D(UINT);
 
 // Overrides
 	// ClassWizard generated virtual function overrides

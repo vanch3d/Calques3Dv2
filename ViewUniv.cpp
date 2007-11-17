@@ -21,8 +21,8 @@
 /// @file ViewUniv.cpp
 /// Implementation of the CViewUniv class.
 //
-/// $Date: 2007-10-28 11:57:46+00 $
-/// $Revision: 1.22 $
+/// $Date: 2007-11-11 11:11:49+00 $
+/// $Revision: 1.23 $
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
@@ -1866,72 +1866,84 @@ BOOL CViewUniv::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
     return CView::OnMouseWheel(nFlags, zDelta, pt);
 }
 
+#define FCComZero(a) (fabsl(a) < 0.01)
+
+void CViewUniv::OnMouse3D(UINT nIDEvent)
+{
+	CMainFrame *pMWnd= DYNAMIC_DOWNCAST(CMainFrame,AfxGetMainWnd());
+	if (!pMWnd) return;
+	if (!pMWnd->m_g3DSensor) return;
+
+	try {
+		CVisualParam *mv = GetVisualParam();
+
+		CComPtr<IAngleAxis> pRotation = pMWnd->m_g3DSensor->Rotation;
+		CComPtr<IVector3D> pTranslation = pMWnd->m_g3DSensor->Translation;
+
+		FCoord fAngle = pRotation->GetAngle();
+		FCoord fLength = pTranslation->GetLength();
+
+		if (!FCComZero(fAngle) || !FCComZero(fLength))
+		{
+			// Get the rotation
+			FCoord fX = pRotation->GetX() * fAngle;
+			FCoord fY = pRotation->GetY() * fAngle;
+			FCoord fZ = pRotation->GetZ() * fAngle;
+			//TRACE3("X %.2f - Y %.2f - Z %.2f\n",fX,fY,fZ);
+			
+			// Get the translation
+			FCoord dX = pTranslation->GetX() / 20.;
+			FCoord dY = pTranslation->GetY() / 20.;
+			FCoord dZ = pTranslation->GetZ() / 2.;
+
+			// Translate the universe
+			mv->ptRepCoord += CPoint((int)dX,(int)-dY);
+
+			// Change the observer's distance (in perspective)
+			if (!GetVisualParam()->bParProj)
+				GetVisualParam()->AddProjParam(dZ/20,CVisualParam::ID_RHO);
+			// TODO change the zoom in parallel projection
+
+			// Change the observer's point of view
+			GetVisualParam()->AddProjParam(-fZ/100,CVisualParam::ID_THETA);
+			GetVisualParam()->AddProjParam(fX/100,CVisualParam::ID_PHI);
+
+			// Modify the sliders
+			int r = (int)(GetVisualParam()->ProjParam.phi - 180 -TPref::TUniv.sDefParam.phi);
+			r = (r < 0) ? r + 360 : ((r > 360) ? r-360 : r);
+			r /= 5;
+
+			SetSliderPosition(ID_VISUALISATION_POV_VSLIDER,r);
+			r = (int)(180 - GetVisualParam()->ProjParam.theta + TPref::TUniv.sDefParam.theta);
+			r = (r < 0) ?  r+ 360 : ((r > 360) ? r-360 : r);
+			r /= 5;
+			SetSliderPosition(ID_VISUALISATION_POV_HSLIDER,r);
+			OnUpdateObjTooltip(NULL);
+			Invalidate();
+			UpdateWindow();
+		}
+		else
+		{
+			TRACE0("DEVICE AT REST\n");
+		}
+		// Release the device's components
+		pRotation.Release();
+		pTranslation.Release();
+
+	}
+	catch (...)
+	{
+		// Some sort of exception handling
+	}
+
+}
+
 void CViewUniv::OnTimer(UINT nIDEvent)
 {
 	if (nIDEvent==TIMER_TDXINPUT)
-	{
-	    CMainFrame *pMWnd= DYNAMIC_DOWNCAST(CMainFrame,AfxGetMainWnd());
-		if (pMWnd && pMWnd->m_g3DSensor)
-		{
-			try {
-				CVisualParam *mv = GetVisualParam();
-
-				CComPtr<IAngleAxis> pRotation = pMWnd->m_g3DSensor->Rotation;
-				CComPtr<IVector3D> pTranslation = pMWnd->m_g3DSensor->Translation;
-				///TRACE3("X %.2f - Y %.2f - Z %.2f\n",pTranslation->GetX(),pTranslation->GetY(),pTranslation->GetZ());
-				///TRACE2("X %.2f - Y %.2f",pRotation->GetX(),pRotation->GetY());
-				///TRACE2(" - Z %.2f - R %.2f\n",pRotation->GetZ(),pRotation->GetAngle());
-				
-				// Get the rotation
-				FCoord fX = pRotation->GetX() * pRotation->GetAngle();
-				FCoord fY = pRotation->GetY() * pRotation->GetAngle();
-				FCoord fZ = pRotation->GetZ() * pRotation->GetAngle();
-				//TRACE3("X %.2f - Y %.2f - Z %.2f\n",fX,fY,fZ);
-				
-				// Get the translation
-				FCoord dX = pTranslation->GetX() / 20.;
-				FCoord dY = pTranslation->GetY() / 20.;
-				FCoord dZ = pTranslation->GetZ() / 2.;
-
-				// Release the device's components
-				pRotation.Release();
-				pTranslation.Release();
-
-				// Translate the universe
-				mv->ptRepCoord += CPoint(dX,-dY);
-
-				// Change the observer's distance (in perspective)
-				if (!GetVisualParam()->bParProj)
-		            GetVisualParam()->AddProjParam(dZ/20,CVisualParam::ID_RHO);
-				// TODO change the zoom in parallel projection
-
-				// Change the observer's point of view
-				GetVisualParam()->AddProjParam(-fZ/100,CVisualParam::ID_THETA);
-				GetVisualParam()->AddProjParam(fX/100,CVisualParam::ID_PHI);
-
-				// Modify the sliders
-				int r = (int)(GetVisualParam()->ProjParam.phi - 180 -TPref::TUniv.sDefParam.phi);
-				r = (r < 0) ? r + 360 : ((r > 360) ? r-360 : r);
-				r /= 5;
-
-				SetSliderPosition(ID_VISUALISATION_POV_VSLIDER,r);
-				r = (int)(180 - GetVisualParam()->ProjParam.theta + TPref::TUniv.sDefParam.theta);
-				r = (r < 0) ?  r+ 360 : ((r > 360) ? r-360 : r);
-				r /= 5;
-				SetSliderPosition(ID_VISUALISATION_POV_HSLIDER,r);
-				OnUpdateObjTooltip(NULL);
-				Invalidate();
-				UpdateWindow();
-
-			}
-			catch (...)
-			{
-				// Some sort of exception handling
-			}
-
-		}
+	{	
+		OnMouse3D(nIDEvent);
 	}
-    // TODO: Add your message handler code here and/or call default
     if (IsWindowActivated() && m_pCurrentTask)
     {
         m_pCurrentTask->OnTimer(nIDEvent);
