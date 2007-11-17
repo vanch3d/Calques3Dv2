@@ -19,9 +19,10 @@
 // 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA 
 //////////////////////////////////////////////////////////////////////
 /// @file View3DRender.h
-/// @brief interface of the CView3DRender class.
+/// Interface of the CView3DRender class.
 ///
-///
+/// $Date: 2007-11-11 11:10:32+00 $
+/// $Revision: 1.12 $
 //////////////////////////////////////////////////////////////////////
 #if !defined(AFX_VIEW3DRENDER_H__B2DB87D7_9EE1_4190_96A2_D923EB8198F0__INCLUDED_)
 #define AFX_VIEW3DRENDER_H__B2DB87D7_9EE1_4190_96A2_D923EB8198F0__INCLUDED_
@@ -74,6 +75,7 @@ public:
 	void GetLightParams(int *pPos);			// Get lighting parameters
 	void SetLightParam (short lp, int nPos);	// Set lighting parameters
 	void SetLight();
+	void OnMouse3D(UINT);
 
 protected:
 	virtual ~CView3DRender();
@@ -98,6 +100,7 @@ protected:
 	afx_msg void OnUpdateProperty(CCmdUI* pCmdUI);
 	afx_msg void OnChangeVolumeMode(UINT);
 	afx_msg void OnUpdateVolumeMode(CCmdUI* pCmdUI);
+	afx_msg void OnTimer(UINT nIDEvent);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

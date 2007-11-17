@@ -18,14 +18,19 @@
 // along with Calques 3D; if not, write to The Free Software Foundation, Inc., 
 // 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA 
 //////////////////////////////////////////////////////////////////////
-// View3DRender.cpp: implementation of the CView3DRender class.
-//
+/// @file: View3DRender.cpp
+/// implementation of the CView3DRender class.
+///
+/// $Date: 2007-11-11 11:08:42+00 $
+/// $Revision: 1.17 $
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
 
 #include "calques3d.h"
 #include "Calques3DDoc.h"
+
+#include "MainFrm.h"
 
 #include "View3DRender.h"
 #include "Prefs\Prefs.h"
@@ -54,7 +59,7 @@ BEGIN_MESSAGE_MAP(CView3DRender, CGLEnabledView)
 	ON_UPDATE_COMMAND_UI(ID_RENDERER_PROPERTY, OnUpdateProperty)
 	ON_COMMAND_RANGE(ID_RENDERER_SILHOUETTE,ID_RENDERER_STIPPLE, OnChangeVolumeMode)
     ON_UPDATE_COMMAND_UI_RANGE(ID_RENDERER_SILHOUETTE, ID_RENDERER_STIPPLE, OnUpdateVolumeMode)
-
+	ON_WM_TIMER()
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -700,4 +705,71 @@ void CRenderPropDlg::OnClose()
 void CView3DRender::OnContextMenu(CWnd* pWnd, CPoint point) 
 {
 	// TODO: Add your message handler code here
+}
+
+#define FCComZero(a) (fabsl(a) < 0.01)
+
+void CView3DRender::OnMouse3D(UINT nIDEvent)
+{
+	CMainFrame *pMWnd= DYNAMIC_DOWNCAST(CMainFrame,AfxGetMainWnd());
+	if (!pMWnd) return;
+	if (!pMWnd->m_g3DSensor) return;
+
+	try {
+		CComPtr<IAngleAxis> pRotation = pMWnd->m_g3DSensor->Rotation;
+		CComPtr<IVector3D> pTranslation = pMWnd->m_g3DSensor->Translation;
+
+		FCoord fAngle = pRotation->GetAngle();
+		FCoord fLength = pTranslation->GetLength();
+
+		if (!FCComZero(fAngle) || !FCComZero(fLength))
+		{
+			// Get the rotation
+			FCoord fX = pRotation->GetX() * fAngle;
+			FCoord fY = pRotation->GetY() * fAngle;
+			FCoord fZ = pRotation->GetZ() * fAngle;
+			TRACE3("ROT X %.2f - Y %.2f - Z %.2f\n",fX,fY,fZ);
+			
+			// Get the translation
+			FCoord dX = pTranslation->GetX() / 20.;
+			FCoord dY = pTranslation->GetY() / 20.;
+			FCoord dZ = pTranslation->GetZ() / 2.;
+			TRACE3("TRN X %.2f - Y %.2f - Z %.2f\n",dX,dY,dZ);
+
+			// Translate the universe
+			m_wndTrackball.AddQuaternion(unitquaternion(DegToRad(-fZ/100),Y_AXIS));
+			m_wndTrackball.AddQuaternion(unitquaternion(DegToRad(-fX/100),X_AXIS));
+			m_wndTrackball.AddQuaternion(unitquaternion(DegToRad(fY/100),Z_AXIS));
+
+
+			int nb = m_LightParam[11];
+			SetLightParam (11,nb+dZ/100.);
+			Invalidate(TRUE);
+		}
+		else
+		{
+			TRACE0("DEVICE AT REST\n");
+		}
+		// Release the device's components
+		pRotation.Release();
+		pTranslation.Release();
+
+	}
+	catch (...)
+	{
+		// Some sort of exception handling
+	}
+
+}
+
+
+void CView3DRender::OnTimer(UINT nIDEvent) 
+{
+	// TODO: Add your message handler code here and/or call default
+	if (nIDEvent==TIMER_TDXINPUT)
+	{	
+		OnMouse3D(nIDEvent);
+	}
+	
+	CGLEnabledView::OnTimer(nIDEvent);
 }
