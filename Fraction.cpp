@@ -89,7 +89,7 @@ double Fracatof(const char *pszNum)
 {
   double f = 0;
   __int64 W,N,D;
-  char *s = strchr(pszNum,'/');
+  char *s = strchr((char*)pszNum,'/');
   if (!s)
     f = atof(pszNum);
   else
