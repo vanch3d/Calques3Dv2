@@ -43,7 +43,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_AFXDLL" /Yu"stdafx.h" /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /Yu"stdafx.h" /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /D "_C3D_PARAMGEO" /Yu"stdafx.h" /FD /c
 # SUBTRACT CPP /Fr
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
@@ -70,7 +70,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /Yu"stdafx.h" /FD /GZ /c
-# ADD CPP /nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR /Yu"stdafx.h" /FD /GZ /c
+# ADD CPP /nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /D "_C3D_PARAMGEO" /FR /Yu"stdafx.h" /FD /GZ /c
 # ADD BASE MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x809 /d "_DEBUG" /d "_AFXDLL"
@@ -377,6 +377,10 @@ SOURCE=.\objects\ObjectPropPage.cpp
 # Begin Source File
 
 SOURCE=.\ObjectVisual.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\ParamGeoBar.cpp
 # End Source File
 # Begin Source File
 
@@ -792,6 +796,10 @@ SOURCE=.\OGLTools\OGLT.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\ParamGeoBar.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\objects\Plan3D.h
 # End Source File
 # Begin Source File
@@ -1148,6 +1156,14 @@ SOURCE=.\res\notebook.bmp
 # Begin Source File
 
 SOURCE=.\res\obj_icon.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\paramgeo.bmp
+# End Source File
+# Begin Source File
+
+SOURCE=.\res\paramtools.bmp
 # End Source File
 # Begin Source File
 
