@@ -190,6 +190,7 @@
 #define IDC_STATIC_CMD                  1165
 #define IDC_STATIC_SCRIPT               1166
 #define IDC_STATIC_NONE                 1168
+#define IDC_DISCOV_ALERT                1168
 #define IDC_UNDO_UNDO                   1169
 #define IDC_UNDO_REDO                   1170
 #define IDC_UNDO_TXT                    1171
@@ -214,6 +215,8 @@
 #define IDC_POV_PHI                     1193
 #define IDC_POV_INFO                    1194
 #define IDC_DISCOV_ACTIVATE             1195
+#define IDC_DISCOV_PACKAGE              1196
+#define IDC_DISCOV_TRANSLT              1197
 #define IDC_ABOUTCALQUE                 1201
 #define IDC_RENDERER_AMBTXT             1300
 #define IDC_RENDERER_DIFFUSETXT         1301
@@ -813,6 +816,8 @@
 #define ID_PARAMGEO_EXEC                33001
 #define ID_PARAMGEO_CLEAR               33002
 #define ID_PARAMGEO_RESTART             33003
+#define ID_PARAMGEO_EXPORT              33004
+#define ID_PARAMGEO_INPUT               33005
 #define AFX_IDS_OBJPROP                 57347
 #define ID_INDICATOR_MODE               0xE707
 #define ID_INDICATOR_ICON               59144
@@ -825,8 +830,8 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        210
-#define _APS_NEXT_COMMAND_VALUE         33004
-#define _APS_NEXT_CONTROL_VALUE         1196
+#define _APS_NEXT_COMMAND_VALUE         33006
+#define _APS_NEXT_CONTROL_VALUE         1197
 #define _APS_NEXT_SYMED_VALUE           125
 #endif
 #endif
