@@ -8,10 +8,10 @@
     <ROW Property="C3D_LANGUAGE" Value="C3D_LANG_ENG"/>
     <ROW Property="DialogBitmap" Value="default_dialog.bmp" Type="1"/>
     <ROW Property="Manufacturer" Value="Nicolas Van Labeke" ValueLocId="*"/>
-    <ROW Property="ProductCode" Value="1033:{A58440E0-325D-44EA-8514-DBDEB85B4C92} "/>
+    <ROW Property="ProductCode" Value="1033:{DBF7B9CA-7968-447C-9109-18EC30336AAC} "/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="Calques 3D" ValueLocId="*"/>
-    <ROW Property="ProductVersion" Value="2.4.1"/>
+    <ROW Property="ProductVersion" Value="2.4.2"/>
     <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
     <ROW Property="UpgradeCode" Value="{29525319-700E-4735-B89E-34609D00975A}"/>
     <ROW Property="WIMinVersion" Value="2.0"/>
@@ -242,10 +242,10 @@
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiShortsComponent">
     <ROW Shortcut="Calques_3D_Help" Directory_="SHORTCUTDIR" Name="Calque~1|Calques 3D Help" Component_="CALQUES3D.HLP" Target="[#Calques3D.hlp]" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="APPDIR"/>
-    <ROW Shortcut="Calques_3D_v2.3.1" Directory_="STC_ENG_DIR" Name="Calque~1.1|Calques 3D v2.4.1" Component_="Calques3D.exe" Target="[#Calques3D.exe]" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="C3D_ENG_DIR"/>
-    <ROW Shortcut="Calques_3D_v2.3.1_1" Directory_="STC_ESP_DIR" Name="Calque~1.1|Calques 3D v2.4.1" Component_="Calques3D.exe_1" Target="[#Calques3D.exe_1]" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="C3D_ESP_DIR"/>
-    <ROW Shortcut="Calques_3D_v2.3.1_2" Directory_="STC_FRA_DIR" Name="Calque~1.1|Calques 3D v2.4.1" Component_="Calques3D.exe_2" Target="[#Calques3D.exe_2]" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="C3D_FRA_DIR"/>
-    <ROW Shortcut="Calques_3D_v2.3.1_3" Directory_="STC_PTG_DIR" Name="Calque~1.1|Calques 3D v2.4.1" Component_="Calques3D.exe_3" Target="[#Calques3D.exe_3]" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="C3D_PTG_DIR"/>
+    <ROW Shortcut="Calques_3D_v2.3.1" Directory_="STC_ENG_DIR" Name="Calque~1.2|Calques 3D v2.4.2" Component_="Calques3D.exe" Target="[#Calques3D.exe]" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="C3D_ENG_DIR"/>
+    <ROW Shortcut="Calques_3D_v2.3.1_1" Directory_="STC_ESP_DIR" Name="Calque~1.2|Calques 3D v2.4.2" Component_="Calques3D.exe_1" Target="[#Calques3D.exe_1]" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="C3D_ESP_DIR"/>
+    <ROW Shortcut="Calques_3D_v2.3.1_2" Directory_="STC_FRA_DIR" Name="Calque~1.2|Calques 3D v2.4.2" Component_="Calques3D.exe_2" Target="[#Calques3D.exe_2]" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="C3D_FRA_DIR"/>
+    <ROW Shortcut="Calques_3D_v2.3.1_3" Directory_="STC_PTG_DIR" Name="Calque~1.2|Calques 3D v2.4.2" Component_="Calques3D.exe_3" Target="[#Calques3D.exe_3]" Hotkey="0" IconIndex="0" ShowCmd="1" WkDir="C3D_PTG_DIR"/>
     <ROW Shortcut="Uninstall_Calques_3D" Directory_="SHORTCUTDIR" Name="Uninst~1|Uninstall Calques 3D" Component_="Language" Target="[SystemFolder]msiexec.exe" Arguments="/x [ProductCode]" Hotkey="0" Icon_="SystemFolder_msiexec.exe" IconIndex="0" ShowCmd="1"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiUpgradeComponent">
