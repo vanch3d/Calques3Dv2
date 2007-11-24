@@ -147,15 +147,15 @@ BOOL CCalques3DApp::InitInstance()
 #endif
 
 	//------------------------------------------------------------
-	// Initialise the COM manager (for the 2SXonnexion)
+	// Initialise the COM manager (for the 3DConnexion device)
 	//------------------------------------------------------------
-   HRESULT hr=CoInitialize(NULL);
-   if (!SUCCEEDED(hr))
-   {
-      CString strError;
-      strError.FormatMessage (_T("Error 0x%x"), hr);
-      ::MessageBox (NULL, strError, _T("CoInitializeEx failed"), MB_ICONERROR|MB_OK);
-     // return FALSE;
+	HRESULT hr=CoInitialize(NULL);
+	if (!SUCCEEDED(hr))
+	{
+		//CString strError;
+		//strError.FormatMessage (_T("Error 0x%x"), hr);
+		//::MessageBox (NULL, strError, _T("CoInitializeEx failed"), MB_ICONERROR|MB_OK);
+		// return FALSE;
    }
 
 
@@ -218,6 +218,7 @@ BOOL CCalques3DApp::InitInstance()
 	//------------------------------------------------------------
 
 	//InitMouseManager();
+	InitShellManager();
 	InitContextMenuManager();
 	InitKeyboardManager();
 	//InitSkinManager ();
@@ -460,6 +461,9 @@ void CCalques3DApp::OnClosingMainFrame (CBCGPFrameImpl* pFrame)
 /////////////////////////////////////////////////////////////////////////////
 void CCalques3DApp::LoadCustomState ()
 {
+	// Call the default initialisation of the preferences
+	TPref::DefaultInit();
+
 	//SetRegistryBase (REG_SESSION);
 	//TPref::strProfile = GetSectionString(REG_PROFILE,REG_PROFILE, TPref::strProfile);
 	//TPref::strProfileDesc = GetSectionString(REG_PROFILE,REG_PROFILEDES, TPref::strProfileDesc);
@@ -471,9 +475,11 @@ void CCalques3DApp::LoadCustomState ()
 	TPref::GrayedHidden = GetSectionInt(_T("Universe"),_T("GrayHidden"), TPref::GrayedHidden);
 	TPref::bMacroLoading = GetSectionInt(_T("Macro"),_T("UserLoading"), TPref::bMacroLoading);
 	BOOL brest = GetSectionObject(_T("Macro"),_T("UserMacros"),TPref::TMacroList);
+	TPref::TParamGeo.strPackagePath = GetSectionString(_T("ParamGeo3D"),_T("Package"),_T(""));
+	TPref::TParamGeo.strTranslatorPath = GetSectionString(_T("ParamGeo3D"),_T("Translator") ,_T(""));
 
-	// Call the default initialisation of the preferences
-	TPref::DefaultInit();
+	BOOL test = (TPref::TParamGeo.strPackagePath.IsEmpty() || TPref::TParamGeo.strTranslatorPath.IsEmpty());
+	TPref::TParamGeo.bIsActivated = !test;
 	SetRegistryBase (REG_WORKSPACE);
 }
 
@@ -500,6 +506,8 @@ void CCalques3DApp::SaveCustomState ()
 		delete TPref::TMacroList.GetNext( pos );
 	}
 	TPref::TMacroList.RemoveAll();
+	WriteSectionString(_T("ParamGeo3D"),_T("Package"), TPref::TParamGeo.strPackagePath);
+	WriteSectionString(_T("ParamGeo3D"),_T("Translator"), TPref::TParamGeo.strTranslatorPath);
 
 	SetRegistryBase (REG_SESSION);
 	WriteSectionString(REG_PROFILE,REG_PROFILE, TPref::strProfile);
