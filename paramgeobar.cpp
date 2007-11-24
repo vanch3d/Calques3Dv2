@@ -21,8 +21,8 @@
 /// @file ParamGeoBar.cpp
 /// Implementation of the classes used in defining the ParamGeo3D user interface.
 ///
-/// $Date$
-/// $Revision$
+/// $Date: 2007-11-10 17:55:11+00 $
+/// $Revision: 1.0 $
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
@@ -31,7 +31,7 @@
 #include "MainFrm.h"
 #include "Calques3DDoc.h"
 #include "objects/Text3D.h"
-
+#include "prefs/Prefs.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -109,6 +109,9 @@ CControlsContainer::CControlsContainer() :
 
 CControlsContainer::~CControlsContainer()
 {
+#ifdef _C3D_PARAMGEO
+    kv= NULL;  /* Maple kernel handle */
+#endif
 }
 
 
@@ -117,8 +120,10 @@ BEGIN_MESSAGE_MAP(CControlsContainer, CWnd)
 	ON_WM_SIZE()
 	ON_WM_ERASEBKGND()
 	ON_WM_CREATE()
-    ON_COMMAND(ID_PARAMGEO_EXEC, OnShowExample)
-    ON_COMMAND(ID_PARAMGEO_CLEAR, OnClearExample)
+    ON_COMMAND(ID_PARAMGEO_EXEC, OnRunCommand)
+    ON_COMMAND(ID_PARAMGEO_CLEAR, OnClearOutput)
+	ON_UPDATE_COMMAND_UI(ID_PARAMGEO_EXEC, OnUpdateRunCommand)
+	ON_UPDATE_COMMAND_UI(ID_PARAMGEO_CLEAR, OnUpdateClearOutput)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -183,8 +188,8 @@ int CControlsContainer::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndOutputCtrl.m_nLeftMarginWidth = 16;
 	m_wndOutputCtrl.SetReadOnly (TRUE);
 	m_wndOutputCtrl.m_nDlgCode = DLGC_WANTALLKEYS | DLGC_WANTMESSAGE;
-	BOOL res = m_wndInputCtrl.LoadXMLSettings(_T("bcgpedit-cpp.xml"));
-	res = m_wndOutputCtrl.LoadXMLSettings(_T("bcgpedit-cpp.xml"));
+	BOOL res = m_wndInputCtrl.LoadXMLSettings(_T("bcgpedit-maple.xml"));
+	res = m_wndOutputCtrl.LoadXMLSettings(_T("bcgpedit-maple.xml"));
 
 	m_wndToolBar.Create (this,dwDefaultToolbarStyle,idProgress);
 	m_wndToolBar.LoadToolBar (IDR_PARAMGEOTOOL_TB, 0, 0, TRUE /* Locked bar */);
@@ -363,7 +368,19 @@ static void M_DECL statusCallBack( void *data, long kilobytesUsed,
 }
 #endif
 
-void CControlsContainer::OnClearExample()
+void CControlsContainer::OnUpdateRunCommand(CCmdUI* pCmdUI)
+{
+	BOOL isEmpty = m_wndInputCtrl.GetText().IsEmpty();
+	pCmdUI->Enable(!isEmpty);
+}
+
+void CControlsContainer::OnUpdateClearOutput(CCmdUI* pCmdUI)
+{
+	BOOL isEmpty = m_wndOutputCtrl.GetText().IsEmpty();
+	pCmdUI->Enable(!isEmpty);
+}
+
+void CControlsContainer::OnClearOutput()
 {
 	m_wndOutputCtrl.EndOfText (FALSE);
 	m_wndOutputCtrl.SetWindowText("");
@@ -374,14 +391,7 @@ void CControlsContainer::OnClearExample()
 	m_wndInputCtrl.Invalidate ();
 }
 
-
-void CControlsContainer::OnParamGeoStart()
-{
-	MessageBox (_T("Two!"));
-
-}
-
-void CControlsContainer::OnShowExample()
+void CControlsContainer::OnRunCommand()
 {
 #ifdef _C3D_PARAMGEO
 	CString strInput = m_wndInputCtrl.GetText();
@@ -406,6 +416,7 @@ BEGIN_MESSAGE_MAP(CParamGeoBar, CBCGPDockingControlBar)
 	ON_WM_CREATE()
 	ON_WM_SIZE()
 	ON_COMMAND(ID_PARAMGEO_START, OnParamGeoStart)
+	ON_UPDATE_COMMAND_UI(ID_PARAMGEO_START, OnUpdateParamGeoStart)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -475,7 +486,7 @@ int CParamGeoBar::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndSymbolicCtrl.SetReadOnly (FALSE);
 	m_wndSymbolicCtrl.EnableToolTips ();
 	m_wndSymbolicCtrl.m_nDlgCode = DLGC_WANTALLKEYS | DLGC_WANTMESSAGE;
-	BOOL res = m_wndSymbolicCtrl.LoadXMLSettings(_T("bcgpedit-cpp.xml"));
+	BOOL res = m_wndSymbolicCtrl.LoadXMLSettings(_T("bcgpedit-maple.xml"));
 
 
 
@@ -486,8 +497,8 @@ int CParamGeoBar::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;      // fail to create
 	}
 	// Attach list windows to tab:
-	m_wndTabs.AddTab (&m_wndContainer, _T("Output 1"), -1);
-	m_wndTabs.AddTab (&m_wndSymbolicCtrl, _T("Output 2"), -1);
+	m_wndTabs.AddTab (&m_wndContainer, _T("Maple Command"), -1);
+	m_wndTabs.AddTab (&m_wndSymbolicCtrl, _T("Exported Figure"), -1);
 
 	return 0;
 }
@@ -518,8 +529,18 @@ void CParamGeoToolBar::AdjustLayout ()
 	//((CParamGeoBar*) GetParent ())->AdjustLayout ();
 }
 
+#define GUID_LENGTH        39
+
+void CParamGeoBar::OnUpdateParamGeoStart(CCmdUI* pCmdUI)
+{
+	BOOL bready = TPref::TParamGeo.bIsActivated && !TPref::TParamGeo.strTranslatorPath.IsEmpty()
+					&& !TPref::TParamGeo.strPackagePath.IsEmpty();
+	pCmdUI->Enable(bready);
+}
+
 void CParamGeoBar::OnParamGeoStart()
 {
+
 #ifdef _C3D_PARAMGEO
 
 	m_wndSymbolicCtrl.m_mTipString.RemoveAll();
@@ -542,7 +563,7 @@ void CParamGeoBar::OnParamGeoStart()
 		if (DYNAMIC_DOWNCAST(CText3D,pObj)) continue;
 		CString mstr = pObj->GetObjectNameRedux();
 		m_wndSymbolicCtrl.SetWordColor(mstr,RGB(255,0,0),-1,TRUE);
-		m_wndSymbolicCtrl.m_mTipString.SetAt(mstr,pObj->GetObjectHelp());
+		m_wndSymbolicCtrl.m_mTipString.SetAt(mstr,pObj->GetObjectDef());
 	}
 	m_wndSymbolicCtrl.EndOfText ();
 	m_wndSymbolicCtrl.Invalidate ();
@@ -550,51 +571,59 @@ void CParamGeoBar::OnParamGeoStart()
 	if (pBtn) 
 	{
 		pBtn->m_strText = pDoc->GetTitle();
-		AdjustLayout ();
-		Invalidate(TRUE);
+		m_wndToolBar.AdjustLayout ();
+		m_wndToolBar.Invalidate(FALSE);
+		m_wndToolBar.UpdateWindow();
 	}
 
-	// TODO: Add your control notification handler code here
+    CString strCommand("");
 	char err[2048];  /* command input and error string buffers */
-	//MKernelVector kv= NULL;  /* Maple kernel handle */
-	MCallBackVectorDesc cb = {  textCallBack2, 
-					errorCallBack,
-					statusCallBack,
-					0,   /* readLineCallBack not used */
-					0,   /* redirectCallBack not used */
-					0,   /* streamCallBack not used */
-			        0,   /* queryInterrupt not used */ 
-					0    /* callBackCallBack not used */
-					};
-			    ALGEB r, l;  /* Maple data-structures */
-				/* initialize Maple */
-				if( (m_wndContainer.kv=StartMaple(NULL,NULL,&cb,NULL,NULL,err)) == NULL ) {
-				printf("Fatal error, %s\n",err);
-					return;
-				}
-				r = MapleKernelOptions(m_wndContainer.kv,"mapledir",NULL);
-				if( IsMapleString(m_wndContainer.kv,r) )
-					textCallBack2(NULL,0,MapleToString(m_wndContainer.kv,r));
 
-		    /* example 2: compute an integral */
-			/* output goes through the textCallBack */
-	//			printf("Evaluate an integral: \n\t");
+	MCallBackVectorDesc cb = {  
+		textCallBack2, 
+		errorCallBack,
+		statusCallBack,
+		0,   /* readLineCallBack not used */
+		0,   /* redirectCallBack not used */
+		0,   /* streamCallBack not used */
+		0,   /* queryInterrupt not used */ 
+		0    /* callBackCallBack not used */
+	};
+	ALGEB r, l;  /* Maple data-structures */
+		
+	/* initialize Maple */
+	if( m_wndContainer.kv==NULL && (m_wndContainer.kv=StartMaple(NULL,NULL,&cb,NULL,NULL,err)) == NULL )
+	{
+		printf("Fatal error, %s\n",err);
+		errorCallBack(NULL,0,err);
+		return;
+	}
+	r = MapleKernelOptions(m_wndContainer.kv,"mapledir",NULL);
 
 	m_wndContainer.m_wndOutputCtrl.EndOfText (FALSE);
+	m_wndContainer.m_wndOutputCtrl.InsertText ("# Start Maple\n", m_wndContainer.m_wndOutputCtrl.GetCurOffset(), TRUE);
+	CString maplepath(_T(""));
+	if( IsMapleString(m_wndContainer.kv,r) )
+	{
+		maplepath = _T("Maple in \"") + CString(MapleToString(m_wndContainer.kv,r)) + _T("\"\n");
+		m_wndContainer.m_wndOutputCtrl.InsertText (maplepath, m_wndContainer.m_wndOutputCtrl.GetCurOffset(), TRUE);
+	}
 
-    CString strCommand("");
-// 	strCommand+="isPlaced(Pt29,Ln30);";
-	m_wndContainer.m_wndOutputCtrl.InsertText ("# Start Maple", m_wndContainer.m_wndOutputCtrl.GetCurOffset(), TRUE);
+
 	strCommand="restart;";
 	r = EvalMapleStatement(m_wndContainer.kv,strCommand.GetBuffer(strCommand.GetLength()));
-	m_wndContainer.m_wndOutputCtrl.InsertText ("# Load ParamGeo", m_wndContainer.m_wndOutputCtrl.GetCurOffset(), TRUE);
- 	strCommand="read(`C:/Documents and Settings/nicolas/Desktop/c3d/paramgeo3d_pascalmay6.mpl`);";
- 	strCommand+="read(`C:/Documents and Settings/nicolas/Desktop/c3d/traductor.mpl`);";
+	m_wndContainer.m_wndOutputCtrl.InsertText ("# Load ParamGeo\n", m_wndContainer.m_wndOutputCtrl.GetCurOffset(), TRUE);
+	CString path = TPref::TParamGeo.strPackagePath;
+	path.Replace(_T("\\"),_T("\\\\"));
+	strCommand="read(`"+ path + "`);";
+	path = TPref::TParamGeo.strTranslatorPath;
+	path.Replace(_T("\\"),_T("\\\\"));
+ 	strCommand+="read(`"+ path + "`);";
 	r = EvalMapleStatement(m_wndContainer.kv,strCommand.GetBuffer(strCommand.GetLength()));
-	m_wndContainer.m_wndOutputCtrl.InsertText ("# Load Figure", m_wndContainer.m_wndOutputCtrl.GetCurOffset(), TRUE);
+	m_wndContainer.m_wndOutputCtrl.InsertText ("# Load Figure\n", m_wndContainer.m_wndOutputCtrl.GetCurOffset(), TRUE);
  	strCommand=strSymb;
 	r = EvalMapleStatement(m_wndContainer.kv,strCommand.GetBuffer(strCommand.GetLength()));
-	m_wndContainer.m_wndOutputCtrl.InsertText ("# Ready for query ...", m_wndContainer.m_wndOutputCtrl.GetCurOffset(), TRUE);
+	m_wndContainer.m_wndOutputCtrl.InsertText ("# Ready for query ...\n", m_wndContainer.m_wndOutputCtrl.GetCurOffset(), TRUE);
 
 	m_wndContainer.m_wndOutputCtrl.Invalidate ();
 #endif
