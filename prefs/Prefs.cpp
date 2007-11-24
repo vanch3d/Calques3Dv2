@@ -151,8 +151,7 @@ TPref::CTUniverse	TPref::TUniv =
 			FALSE
 		};
 
-TPref::CTVerif      TPref::Verif;
-
+TPref::CTParamGeo      TPref::TParamGeo;
 
 BOOL TPref::bMacroLoading = TRUE;
 CObList	TPref::TMacroList;
@@ -169,14 +168,50 @@ CStringArray TPref::strUnits;
 //////////////////////////////////////////////////////////////////////
 void TPref::DefaultInit()
 {
-	TPref::Verif.strCommand = _T("command.com /E:2048 /C");
-	TPref::Verif.strRunTime = _T("c:\\progra~1\\cocoa-4.1\\cocoa.bat -q");
-	TPref::Verif.strConvert = _T("test.coc");
-	TPref::Verif.strResult = _T("my-file.txt");
+	// Initialise ParamGeo3D preferences
+ 	TPref::TParamGeo.bIsMapleOK = TRUE;
+ 	TPref::TParamGeo.bIsActivated = FALSE;
+ 	TPref::TParamGeo.strMaplePath = _T("");
+ 	TPref::TParamGeo.strMapleVersion = _T("");
+ 	TPref::TParamGeo.strPackagePath = _T("");
+ 	TPref::TParamGeo.strTranslatorPath = _T("");
 
 	TPref::strUnits.Add(_T("< none >"));
 	TPref::strUnits.Add(_T("cm"));
 	TPref::strUnits.Add(_T("mm"));
+
+/*	CRegKey keyMapleExt;
+    long nError = keyMapleExt.Open(HKEY_CLASSES_ROOT, ".mws", KEY_READ);
+    //if(nError == ERROR_SUCCESS)
+    {
+		CString sDefaultPath;
+		DWORD dwBufferSize = MAX_PATH;
+		keyMapleExt.QueryValue(sDefaultPath.GetBuffer( dwBufferSize ),"", &dwBufferSize );
+		sDefaultPath.ReleaseBuffer();
+
+		int split = sDefaultPath.Find('.');
+		CString soft = sDefaultPath.Left(split);
+
+		CRegKey keyMapleLoc;
+	    nError = keyMapleLoc.Open(HKEY_CLASSES_ROOT, sDefaultPath + "\\DefaultIcon", KEY_READ);
+		if(nError == ERROR_SUCCESS)
+		{
+			CString sDefaultPath2;
+			DWORD dwBufferSize2 = MAX_PATH;
+			keyMapleLoc.QueryValue(sDefaultPath2.GetBuffer( dwBufferSize2 ),"", &dwBufferSize2 );
+			sDefaultPath2.ReleaseBuffer();
+
+			int nb = sDefaultPath2.Find("bin.win\\doc.ico");
+			CString ff = sDefaultPath2.Left(nb);
+			keyMapleLoc.Close();
+			TPref::TParamGeo.bIsMapleOK = TRUE;
+			TPref::TParamGeo.bIsActivated = TRUE;
+		} 
+
+		soft = soft.Mid(5);
+		int nb = atof(soft);
+		keyMapleExt.Close();
+    }*/
 
 }
 
