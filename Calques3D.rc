@@ -587,7 +587,7 @@ END
 
 IDD_SPLASH DIALOGEX 0, 0, 204, 233
 STYLE DS_MODALFRAME | WS_POPUP
-FONT 8, "MS Sans Serif"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     CONTROL         "",IDC_BIGICON,"Button",BS_OWNERDRAW | WS_DISABLED,4,4,
                     34,30
@@ -737,15 +737,21 @@ END
 
 IDD_PREF_DISCOVERY_PAGE DIALOGEX 0, 0, 212, 196
 STYLE DS_CONTEXTHELP | WS_CHILD | WS_CAPTION
-CAPTION "Discovery"
+CAPTION "ParamGeo3D"
 FONT 8, "MS Sans Serif"
 BEGIN
-    LTEXT           "Neither Mathematica nor CocoA are installed in your computer. Please install one of these systems in order to use this feature.",
-                    IDC_STATIC_NONE,12,124,188,28
-    GROUPBOX        "Discovery Script",IDC_STATIC,4,72,204,48,BS_FLAT
+    LTEXT           "ParamGeo3D is a protoype of a direct connection between Calques 3D and a Computer Algebra System for the verification and discovery of geometrical properties.\nContact the author for more information.",
+                    IDC_DISCOV_ALERT,4,160,204,32
+    GROUPBOX        "",IDC_STATIC,4,8,204,104,BS_FLAT
     CONTROL         "&Activate ParamGeo3D",IDC_DISCOV_ACTIVATE,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,4,8,90,10,0,
+                    BS_AUTOCHECKBOX | WS_TABSTOP,8,8,88,10,0,
                     HIDC_DISCOV_ACTIVATE
+    LTEXT           "&Package:",IDC_STATIC,12,24,36,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_DISCOV_PACKAGE,48,24,152,12,ES_AUTOHSCROLL,0,
+                    HIDC_DISCOV_PACKAGE
+    LTEXT           "&Translator:",IDC_STATIC,12,40,36,12,SS_CENTERIMAGE
+    EDITTEXT        IDC_DISCOV_TRANSLT,48,40,152,12,ES_AUTOHSCROLL,0,
+                    HIDC_DISCOV_TRANSLT
 END
 
 IDD_UNDO_DLG DIALOGEX 0, 0, 144, 20
@@ -2251,6 +2257,7 @@ BEGIN
     BEGIN
         MENUITEM "&Attributes",                 ID_VIEW_PROPERTYBAR
         MENUITEM "&Structure",                  ID_VIEW_DEPENDENTBAR
+        MENUITEM "&ParamGeo3D",                 ID_VIEW_PARAMGEOBAR
         MENUITEM SEPARATOR
         MENUITEM "&Standard Toolbar",           ID_VIEW_TOOLBAR
         MENUITEM "&Objects",                    ID_VIEW_OBJECT
@@ -3504,7 +3511,7 @@ BEGIN
     IDR_PROPERTY_TB         "Attributes"
     IDR_DEPENDENT_TB        "Structure"
     IDR_FORMAT_TB           "Format"
-    IDR_PARAMGEO_TB         "ParamGeo3D ®"
+    IDR_PARAMGEO_TB         "ParamGeo3D"
 END
 
 STRINGTABLE DISCARDABLE 
@@ -3515,6 +3522,7 @@ BEGIN
     ID_VIEW_PROPERTYBAR     "Show or hide the object attributes bar\nToggle Attributes Bar"
     ID_VIEW_DEPENDENTBAR    "Show or hide the object structure bar\nToggle Structure Bar"
     ID_VIEW_FORMAT          "Show or hide the format bar\nToggle Format"
+    ID_VIEW_PARAMGEOBAR     "Show or hide the ParamGeo3D bar\nToggle ParamGeo3D"
 END
 
 STRINGTABLE DISCARDABLE 
@@ -3555,9 +3563,11 @@ BEGIN
     ID_FREE_TEAROFF2        "ID_FREE_TEAROFF2"
     ID_PARAMGEO_START       "Start ParamGeo3D with the current document\nLoad Current Document"
     ID_PARAMGEO_DOC         "Current document loaded in ParamGeo3D\nCurrent Document"
-    ID_PARAMGEO_EXEC        "ddfddf"
-    ID_PARAMGEO_CLEAR       "dddd"
-    ID_PARAMGEO_RESTART     "ddffddf"
+    ID_PARAMGEO_EXEC        "Execute the Maple query\nExecute Query"
+    ID_PARAMGEO_CLEAR       "Clear the output window\nClear Output"
+    ID_PARAMGEO_RESTART     "Clear the inout and output views and restart\nRestart Maple"
+    ID_PARAMGEO_EXPORT      "Exported Figure"
+    ID_PARAMGEO_INPUT       "Maple Command"
 END
 
 STRINGTABLE DISCARDABLE 
