@@ -21,8 +21,8 @@
 /// @file: MainFrm.cpp
 /// Implementation of the CMainFrame class.
 ///
-/// $Date: 2007-11-11 11:08:42+00 $
-/// $Revision: 1.17 $
+/// $Date: 2007-11-24 14:14:34+00 $
+/// $Revision: 1.18 $
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
@@ -107,7 +107,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CBCGPMDIFrameWnd)
 	ON_COMMAND(ID_VIEW_OPTIONS, OnViewOptions)
 	ON_REGISTERED_MESSAGE(BCGM_RESETTOOLBAR, OnToolbarReset)
 	ON_REGISTERED_MESSAGE(BCGM_TOOLBARMENU, OnToolbarContextMenu)
-	ON_COMMAND_EX_RANGE(ID_VIEW_USER_TOOLBAR1, ID_VIEW_USER_TOOLBAR10, OnToolsViewUserToolbar)
+	ON_COMMAND_RANGE(ID_VIEW_USER_TOOLBAR1, ID_VIEW_USER_TOOLBAR10, OnToolsViewUserToolbar)
 	ON_UPDATE_COMMAND_UI_RANGE(ID_VIEW_USER_TOOLBAR1, ID_VIEW_USER_TOOLBAR10, OnUpdateToolsViewUserToolbar)
 	ON_REGISTERED_MESSAGE(BCGM_CUSTOMIZEHELP, OnHelpCustomizeToolbars)
 	ON_COMMAND(ID_VIEW_OBJECT, OnViewObject)
