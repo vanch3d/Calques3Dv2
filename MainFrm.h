@@ -21,8 +21,8 @@
 /// @file MainFrm.h
 /// Interface of the CMainFrame class.
 ///
-/// $Date: 2007-11-11 11:08:42+00 $
-/// $Revision: 1.17 $
+/// $Date: 2007-11-11 11:10:32+00 $
+/// $Revision: 1.12 $
 //////////////////////////////////////////////////////////////////////
 #if !defined(AFX_MAINFRM_H__1B2AE4A8_D0DE_11D4_A2FA_00D0B71C8709__INCLUDED_)
 #define AFX_MAINFRM_H__1B2AE4A8_D0DE_11D4_A2FA_00D0B71C8709__INCLUDED_
@@ -33,6 +33,7 @@
 
 #include "PropertyBar.h"
 #include "FormatToolBar.h"
+#include "ParamGeoBar.h"
 
 /////////////////////////////////////////////////////////////////////////////
 /// The MDI main frame window of the application.
@@ -62,6 +63,7 @@ protected:
 
 	CPropertyBar			m_wndPropertyBar;	///< Control for the modeless object properties dialog
 	CDependentBar			m_wndDependentBar;	///< Control for the modeless object properties dialog
+	CParamGeoBar			m_wndParamGeoBar;	///< Control for the modeless ParamGeo interface
 
 	CBCGPToolBarImages		m_UserImages;		///< List of user-defined images (for configuring the interface)
 
@@ -84,6 +86,10 @@ public:
 	/// Access to the Dependent bar
 	/////////////////////////////////////////////////////////////////////////////
 	CPropertyBar*		GetDependentBar() { return  &m_wndDependentBar;};
+	/////////////////////////////////////////////////////////////////////////////
+	/// Access to the ParamGeo bar
+	/////////////////////////////////////////////////////////////////////////////
+	CBCGPDockingControlBar*		GetParamGeoBar() { return  &m_wndParamGeoBar;};
 
 // Overrides
 	// ClassWizard generated virtual function overrides
@@ -154,6 +160,8 @@ protected:
 	afx_msg void OnUpdateViewPropertyBar(CCmdUI* pCmdUI);
 	afx_msg void OnViewDependentBar();
 	afx_msg void OnUpdateViewDependentBar(CCmdUI* pCmdUI);
+	afx_msg void OnViewParamGeoBar();
+	afx_msg void OnUpdateViewParamGeoBar(CCmdUI* pCmdUI);
 	afx_msg void OnWindowManager();
 	afx_msg void OnAppLook(UINT id);
 	afx_msg void OnUpdateAppLook(CCmdUI* pCmdUI);
