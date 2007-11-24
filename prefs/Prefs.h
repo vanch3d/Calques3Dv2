@@ -172,14 +172,15 @@ public :
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
-	/// Default configuration for the Property Verification
-	/// @deprecated
+	/// Default configuration for the ParamGeo3D tool
 	/////////////////////////////////////////////////////////////////////////////
-	struct CTVerif {
-		CString	strCommand;			///< Command
-		CString	strRunTime;			///< CAS application path
-		CString strConvert;			///< COCOA Source File;
-		CString strResult;			///< Result of computation
+	struct CTParamGeo {
+		BOOL	bIsMapleOK;
+		BOOL	bIsActivated;
+ 		CString	strMaplePath;		
+ 		CString strMapleVersion;
+ 		CString	strPackagePath;	
+ 		CString	strTranslatorPath;	
 	};
 
 	/////////////////////////////////////////////////////////////////////////////
@@ -236,7 +237,7 @@ public :
 	static BOOL			VerifyObject;	///< Verify if objects are duplicated before creation (NOT YET USED)
 	static CObList		TPOVList;		///< List of user-defined PoV (NOT YET USED)
 
-	static CTVerif		Verif;			///< Configuration of the Verification procedure (\deprecated)
+	static CTParamGeo	TParamGeo;		///< Configuration of ParamGeo3D
 
 	static COLORREF		Color;			///< Default color for objects \deprecated
 
