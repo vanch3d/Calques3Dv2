@@ -21,8 +21,8 @@
 /// @file: MainFrm.cpp
 /// Implementation of the CMainFrame class.
 ///
-/// $Date: 2007-11-11 11:05:49+00 $
-/// $Revision: 1.8 $
+/// $Date: 2007-11-11 11:08:42+00 $
+/// $Revision: 1.17 $
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
@@ -116,6 +116,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CBCGPMDIFrameWnd)
 	ON_COMMAND(ID_VIEW_EXPLORATION, OnViewExploration)
 	ON_COMMAND(ID_VIEW_PROPERTYBAR, OnViewPropertyBar)
 	ON_COMMAND(ID_VIEW_DEPENDENTBAR, OnViewDependentBar)
+	ON_COMMAND(ID_VIEW_PARAMGEOBAR, OnViewParamGeoBar)
 	ON_COMMAND_RANGE(ID_VIEW_CALQUE,ID_VIEW_CALQUE4, OnViewCalque)
 	ON_UPDATE_COMMAND_UI_RANGE(ID_VIEW_CALQUE,ID_VIEW_CALQUE4, OnUpdateViews)
 	ON_UPDATE_COMMAND_UI(ID_INDICATOR_MODE, OnUpdateMode)
@@ -130,6 +131,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CBCGPMDIFrameWnd)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_EXPLORATION, OnUpdateViewExploration)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_PROPERTYBAR, OnUpdateViewPropertyBar)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_DEPENDENTBAR, OnUpdateViewDependentBar)
+	ON_UPDATE_COMMAND_UI(ID_VIEW_PARAMGEOBAR, OnUpdateViewParamGeoBar)
 //	ON_COMMAND(ID_VIEW_PLACEMENT_RESTORE, OnPlacementRestore)
 //	ON_COMMAND(ID_VIEW_PLACEMENT_SAVE, OnPlacementSave)
 //	ON_UPDATE_COMMAND_UI(ID_VIEW_PLACEMENT_SAVE, OnUpdatePlacement)
@@ -451,6 +453,27 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndDependentBar.AttachToTabWnd (&m_wndPropertyBar, DM_SHOW, FALSE, &pTabbedBar);
 
 
+#ifdef _C3D_PARAMGEO
+	//----------------------
+	// Create ParamGeo3D toolbar:
+	//----------------------
+	strPropertyTitle.LoadString (IDR_PARAMGEO_TB);
+	HWND hWnsd = m_wndParamGeoBar.GetSafeHwnd();
+	if (!m_wndParamGeoBar.Create (strPropertyTitle, this, CSize (200, 200),
+		TRUE /* Has gripper */, ID_VIEW_PARAMGEOBAR,
+		WS_CHILD | WS_VISIBLE | CBRS_RIGHT|CBRS_FLOAT_MULTI))
+	{
+		TRACE0("Failed to create workspace bar\n");
+		return -1;      // fail to create
+	}
+	hPropertyIcon = (HICON) ::LoadImage (::AfxGetResourceHandle (), 
+				MAKEINTRESOURCE (IDR_DEPENDENT_TB),
+				IMAGE_ICON, ::GetSystemMetrics (SM_CXSMICON), ::GetSystemMetrics (SM_CYSMICON), 0);
+	m_wndParamGeoBar.SetIcon (hPropertyIcon, FALSE);
+	m_wndParamGeoBar.EnableDocking(CBRS_ALIGN_ANY);
+	m_wndParamGeoBar.AttachToTabWnd (&m_wndPropertyBar, DM_SHOW, FALSE, &pTabbedBar);
+	hWnsd = m_wndParamGeoBar.GetSafeHwnd();
+#endif
 
 	//-----------------------
 	// Reload toolbar images:
@@ -523,43 +546,53 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	CUndoButton::m_lstActions.AddTail (_T("Item 6"));
 	CUndoButton::m_lstActions.AddTail (_T("Item 7"));
 	CUndoButton::m_lstActions.AddTail (_T("Item 8"));*/
-    // Create the device object
-    CComPtr<IUnknown> _3DxDevice;
-    HRESULT hr = _3DxDevice.CoCreateInstance(__uuidof(Device));
-	if (SUCCEEDED(hr))
-    {
-		CComPtr<ISimpleDevice> _3DxSimpleDevice;
-		hr = _3DxDevice.QueryInterface(&_3DxSimpleDevice);
+
+    // Create the connection with the 3D device object
+	
+	CRegKey keyMapleExt;
+    long nError = keyMapleExt.Open(HKEY_CURRENT_USER, "Software\\3Dconnexion\\3DxWare", KEY_READ);
+
+	if (nError==ERROR_SUCCESS)
+	{
+
+		TRACE0(_T("TDxInput: Try loading connection\n"));
+		CComPtr<IUnknown> _3DxDevice;
+		HRESULT hr = _3DxDevice.CoCreateInstance(__uuidof(Device));
 		if (SUCCEEDED(hr))
 		{
-			// Get the interfaces to the sensor and the keyboard;
-			m_g3DSensor = _3DxSimpleDevice->Sensor;
-			m_g3DKeyboard = _3DxSimpleDevice->Keyboard;
-			
-			// Associate a configuration with this device
-			_3DxSimpleDevice->LoadPreferences(_T("Calques3D"));
-			// Connect to the driver
-			_3DxSimpleDevice->Connect();
-			
-			// Create timer used to poll the 3dconnexion device
-			SetTimer(TIMER_TDXINPUT,25,NULL);
-			//m_gTimerId = ::SetTimer(NULL, 0, 25, _3DxTimerProc);
+			CComPtr<ISimpleDevice> _3DxSimpleDevice;
+			hr = _3DxDevice.QueryInterface(&_3DxSimpleDevice);
 
-			//MessageBox(_T("3DConnexion loaded"));
+			// check the device type (should be different from 0)
+			long device = _3DxSimpleDevice->GetType();
+
+			if (SUCCEEDED(hr) && device!=0)
+			{
+				// Get the interfaces to the sensor and the keyboard;
+				m_g3DSensor = _3DxSimpleDevice->Sensor;
+				m_g3DKeyboard = _3DxSimpleDevice->Keyboard;
+				
+				// Associate a configuration with this device
+				_3DxSimpleDevice->LoadPreferences(_T("Calques3D"));
+				// Connect to the driver
+				_3DxSimpleDevice->Connect();
+				
+				// Create timer used to poll the 3dconnexion device
+				SetTimer(TIMER_TDXINPUT,25,NULL);
+				//m_gTimerId = ::SetTimer(NULL, 0, 25, _3DxTimerProc);
+
+				TRACE0(_T("TDxInput: 3DConnexion loaded and intialised\n"));
+			}
+			else 
+			{
+				TRACE0(_T("TDxInput: QueryInterface failed\n"));
+			}
 		}
 		else 
 		{
-			CString strError;
-			strError.FormatMessage (_T("Error 0x%x"), hr);
-			::MessageBox (NULL, strError, _T("QueryInterface failed"), MB_ICONERROR|MB_OK);
+			TRACE0(_T("TDxInput: CoCreateInstance failed\n"));
 		}
 	}
-		else 
-		{
-			CString strError;
-			strError.FormatMessage (_T("Error 0x%x"), hr);
-			::MessageBox (NULL, strError, _T("CoCreateInstance failed"), MB_ICONERROR|MB_OK);
-		}
 	return 0;
 }
 
@@ -828,6 +861,10 @@ BOOL CMainFrame::OnShowPopupMenu (CBCGPPopupMenu* pMenuPopup)
 
 		CMenu menu;
 		VERIFY(menu.LoadMenu (IDR_POPUP_TOOLBAR));
+
+#ifndef _C3D_PARAMGEO
+		menu.RemoveMenu(ID_VIEW_PARAMGEOBAR,MF_BYCOMMAND);
+#endif		
 
 		CMenu* pPopup = menu.GetSubMenu(0);
 		ASSERT(pPopup != NULL);
@@ -1125,6 +1162,19 @@ void CMainFrame::OnViewDependentBar()
 void CMainFrame::OnUpdateViewDependentBar(CCmdUI* pCmdUI)
 {
 	pCmdUI->SetCheck (m_wndDependentBar.IsVisible());
+}
+
+void CMainFrame::OnViewParamGeoBar()
+{
+	ShowControlBar (&m_wndParamGeoBar,
+					!(m_wndParamGeoBar.IsVisible()),
+					FALSE,TRUE);
+	RecalcLayout ();
+}
+
+void CMainFrame::OnUpdateViewParamGeoBar(CCmdUI* pCmdUI)
+{
+	pCmdUI->SetCheck (m_wndParamGeoBar.IsVisible());
 }
 
 
@@ -1722,20 +1772,20 @@ void CMainFrame::OnTimer(UINT nIDEvent)
 	// TODO: Add your message handler code here and/or call default
 	if (nIDEvent==TIMER_TDXINPUT)
 	{
+#ifdef _DEBUG
 	   if (m_g3DKeyboard)
 		{
 			// Check if any change to the keyboard state
 				ISimpleDevicePtr _p3DxDevice;
-				HRESULT   hr = m_g3DKeyboard->get_Device((IDispatch**)&_p3DxDevice);
-				if (SUCCEEDED(hr))
+				HRESULT   hr = m_g3DSensor->get_Device((IDispatch**)&_p3DxDevice);
+				if (hr==S_OK)
 				{
-					BOOL b = _p3DxDevice->GetIsConnected();
+				   long device = _p3DxDevice->GetType();
 					      _p3DxDevice.Release();
-					TRACE1("is connected: %d\n",b);
+				   AtlTrace (_T("Attached device=%d\n"), device);
 				}
 	   }
-
-
+#endif
 		CMDIChildWnd* pChild = MDIGetActive();
 		if (pChild && pChild->GetSafeHwnd())
 		{
