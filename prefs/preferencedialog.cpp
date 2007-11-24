@@ -81,25 +81,31 @@ CPreferenceDialog::CPreferenceDialog(CWnd* pParentWnd, UINT iSelectPage)
 		AddPage(&m_wndHistory);
 		AddPage(&m_wndMathPad);
 		AddPage(&m_wndMacros);
+#ifdef _C3D_PARAMGEO
+		AddPage(&m_wndParamGeo);
+#endif
 	}
 	else if (myinit[nInitMode].nPrefLook==CBCGPPropertySheet::PropSheetLook_Tree)
 	{
 		SetIconsList (IDB_PREFC3D_ICONS, 16);
 
 		CBCGPPropSheetCategory* pCat1 = AddTreeCategory (_T("Starting Calques 3D"), 0, 0);
-		AddPageToTree (pCat1, &m_wndSession, -1, 0);
+		AddPageToTree (pCat1, &m_wndSession, 8, 0);
 
 		CBCGPPropSheetCategory* pCat2 = AddTreeCategory (_T("Appearance"), 0, 0);
-		AddPageToTree (pCat2, &m_wndShape, -1, 1);
-		AddPageToTree (pCat2, &m_wndColours, -1, 2);
+		AddPageToTree (pCat2, &m_wndShape, 9, 1);
+		AddPageToTree (pCat2, &m_wndColours, 10, 2);
 
 		CBCGPPropSheetCategory* pCat3 = AddTreeCategory (_T("Views"), 0, 0);
-		AddPageToTree (pCat3, &m_wndUniverse, -1, 3);
-		AddPageToTree (pCat3, &m_wndHistory, -1, 4);
-		AddPageToTree (pCat3, &m_wndMathPad, -1, 5);
+		AddPageToTree (pCat3, &m_wndUniverse, 11, 3);
+		AddPageToTree (pCat3, &m_wndHistory, 12, 4);
+		AddPageToTree (pCat3, &m_wndMathPad, 13, 5);
 
 		CBCGPPropSheetCategory* pCat4 = AddTreeCategory (_T("Utilities"), 0, 0);
-		AddPageToTree (pCat4, &m_wndMacros, -1, 6);
+		AddPageToTree (pCat4, &m_wndMacros, 14, 6);
+#ifdef _C3D_PARAMGEO
+		AddPageToTree (pCat4, &m_wndParamGeo, 15, 7);
+#endif
 	}
 }
 
