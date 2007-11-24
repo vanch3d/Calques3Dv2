@@ -232,6 +232,8 @@ HID_PARAMGEO_DOC                        0x180E8
 HID_PARAMGEO_EXEC                       0x180E9
 HID_PARAMGEO_CLEAR                      0x180EA
 HID_PARAMGEO_RESTART                    0x180EB
+HID_PARAMGEO_EXPORT                     0x180EC
+HID_PARAMGEO_INPUT                      0x180ED
 HID_INDICATOR_MODE                      0x1E707
 HID_INDICATOR_ICON                      0x1E708
 HID_INDICATOR_PROGRESS                  0x1E709
