@@ -37,6 +37,7 @@
 #include "PrefUniverse.h"
 #include "PrefMathPad.h"
 #include "PrefHistory.h"
+#include "PrefDiscovery.h"
 
 //////////////////////////////////////////////////////////////////////
 /// Main dialog for Calques 3D preferences
@@ -62,6 +63,7 @@ public:
 	CPrefObjShape	m_wndShape;			///< Control for the Object Appearance page
 	CPrefObjColor	m_wndColours;		///< Control for the Object Appearance page
 	CPrefMacros		m_wndMacros;		///< Control for the Macros page
+	CPrefDiscovery	m_wndParamGeo;		///< Control for the Macros page
 
 	// Operations
 public:
