@@ -30,30 +30,12 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-/////////////////////////////////////////////////////////////////////////////
-// CPrefDiscovery dialog
-/////////////////////////////////////////////////////////////////////////////
-/// CPrefCAS
-///
-/////////////////////////////////////////////////////////////////////////////
-class CPrefCAS : public CObject
-{
-public:
-	CPrefCAS();
-
-	CString	m_strName;
-	BOOL	m_bFound;
-	CString	m_strVersion;
-	CString	m_strPath;
-	CString	m_strRuntime;
-	CString	m_strScript;
-};
 
 /////////////////////////////////////////////////////////////////////////////
 /// CPrefDiscovery
 ///
 /////////////////////////////////////////////////////////////////////////////
-class CPrefDiscovery : public CPropertyPage
+class CPrefDiscovery : public CBCGPPropertyPage
 {
 // Construction
 public:
@@ -65,15 +47,13 @@ public:
 // Dialog Data
 	//{{AFX_DATA(CPrefDiscovery)
 	enum { IDD = IDD_PREF_DISCOVERY_PAGE };
-	CComboBox	m_wndCAS;
-	int		m_nCAS;
-	CString	m_strRuntime;
-	CString	m_strScript;
-	CString	m_strVersion;
+	CButton		m_wndActivate;
+	CBCGPEdit	m_wndTranslator;
+	CBCGPEdit	m_wndPackage;
+	BOOL		m_bActivate;
+	CString		m_strPackage;
+	CString		m_strTranslator;
 	//}}AFX_DATA
-
-	typedef CTypedPtrArray<CObArray,CPrefCAS*>	CCASList;
-	CCASList	m_cCASList;
 
 // Overrides
 	// ClassWizard generated virtual function overrides
@@ -84,14 +64,13 @@ public:
 
 // Implementation
 protected:
-
+	void ActivateWidgets(BOOL act);
+	
 	// Generated message map functions
 	//{{AFX_MSG(CPrefDiscovery)
 	virtual BOOL OnInitDialog();
+	afx_msg void OnActivateParamGeo();
 	afx_msg void OnDestroy();
-	afx_msg void OnBrowseScript();
-	afx_msg void OnBrowseCmdLine();
-	afx_msg void OnChangeCAS();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
