@@ -21,8 +21,8 @@
 /// @file ParamGeoBar.h
 /// Interface for the classes used in defining the ParamGeo3D user interface.
 ///
-/// $Date$
-/// $Revision$
+/// $Date: 2007-11-10 17:55:11+00 $
+/// $Revision: 1.0 $
 //////////////////////////////////////////////////////////////////////
 #if !defined(AFX_PARAMGEOBAR_H__CEF67ED0_2817_4D3F_B912_3D6BFB71E15C__INCLUDED_)
 #define AFX_PARAMGEOBAR_H__CEF67ED0_2817_4D3F_B912_3D6BFB71E15C__INCLUDED_
@@ -31,6 +31,7 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
+#include "C:\Program Files\Maple 10\extern\include\maplec.h"
 
 class CParamGeoEditCtrl : public CBCGPEditCtrl
 {
@@ -135,9 +136,10 @@ public:
 	// Generated message map functions
 protected:
 	//{{AFX_MSG(CControlsContainer)
-	afx_msg void OnParamGeoStart();
-	afx_msg void OnShowExample();
-	afx_msg void OnClearExample();
+	afx_msg void OnUpdateRunCommand(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateClearOutput(CCmdUI* pCmdUI);
+	afx_msg void OnRunCommand();
+	afx_msg void OnClearOutput();
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
@@ -179,6 +181,7 @@ public:
 protected:
 	//{{AFX_MSG(CParamGeoBar)
 	afx_msg void OnParamGeoStart();
+	afx_msg void OnUpdateParamGeoStart(CCmdUI* pCmdUI);
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	//}}AFX_MSG
