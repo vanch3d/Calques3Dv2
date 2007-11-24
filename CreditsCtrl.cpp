@@ -1005,7 +1005,7 @@ void CCreditsCtrl::Parse_VAlignLine(CDC *pDestDC, CDC *pHoverDestDC, CDC *pLineD
 		memDC.SelectObject(pOldBmp);
 
 		// calculate horisontal offset of links in list and add them to global list
-		for(i = 0; i < LinkElements.GetSize(); i++)
+		for(int i = 0; i < LinkElements.GetSize(); i++)
 		{
 			CRect rc = LinkElements[i].rcRect;
 			rc.OffsetRect(rect.left,nCurVPos);

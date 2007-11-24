@@ -20,8 +20,8 @@
 //////////////////////////////////////////////////////////////////////
 /// @file CompositeObj3D.cpp
 /// @brief Implementation of the CCompositeObj3D class.
-/// $Date: 2007-10-28 11:07:49+00 $
-/// $Revision: 1.9 $
+/// $Date: 2007-10-28 11:19:57+00 $
+/// $Revision: 1.12 $
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
@@ -628,7 +628,7 @@ CCube3D::CCube3D() : CCompositeObj3D()
     pObjectShape.clrObject = RGB(0,0,255);
     for (int i=0;i<8;i++)
         sommet[i]=NULL;
-    for (i=0;i<12;i++)
+    for (int i=0;i<12;i++)
         arete[i]=NULL;
 }
 
@@ -646,7 +646,7 @@ CCube3D::CCube3D(CPoint3D* p1,CPoint3D* p2,FCoord nAlpha):
     cr=NULL;
     for (int i=0;i<8;i++)
         sommet[i]=NULL;
-    for (i=0;i<12;i++)
+    for (int i=0;i<12;i++)
         arete[i]=NULL;
     InitCube();
 }
@@ -736,7 +736,7 @@ void CCube3D::InitCube(BOOL bLoad)
         sommet[i+3] = obj;
     }
     int nObjOrd[12][2];
-    for (i=0;i<4;i++)
+    for (int i=0;i<4;i++)
      {
         nObjOrd[i][0] = 0+i;
         nObjOrd[i][1] = (i==3) ? 0 : i+1;
@@ -745,7 +745,7 @@ void CCube3D::InitCube(BOOL bLoad)
         nObjOrd[8+i][0] = 0+i;
         nObjOrd[8+i][1] = 4+i;
      }
-    for (i=0;i<12;i++)
+    for (int i=0;i<12;i++)
     {
         int index = nObjOrd[i][0];
         CObject3D* p1 = sommet[index];
@@ -960,7 +960,7 @@ void CCube3D::CalculVisuel(CVisualParam *pVisParam)
         obj->pObjectShape.nShapeId = (pObjectShape.nShapeId) ? -1 : 4;
      }
     if (!pObjectShape.nShapeId) return;
-    for (i=0;i<6;i++)
+    for (int i=0;i<6;i++)
      {
         CPoint3D* p1 = facette[i].base;
         CPoint3D* p2 = facette[i].seg[0]->P2;
@@ -1053,7 +1053,7 @@ void CCube3D::SetColor(COLORREF rColor)
         pSom->pObjectShape.clrObject = pObjectShape.clrObject;
         //pObjectShape.nShapeId = pPage.m_nShape;
     }
-    for (i=0;i<12;i++)
+    for (int i=0;i<12;i++)
     {
         CSegment3D *pSom = arete[i];
         if (!pSom) continue;

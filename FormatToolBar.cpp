@@ -150,7 +150,7 @@ CBCGPColorMenuButton* CFormatToolBar::CreateObjectColorButton ()
 	pColorButton->EnableOtherButton (strOther);
 	pColorButton->EnableDocumentColors (strDoc);
 	pColorButton->SetColumnsNumber (8);
-	for (i = 0; i < 8; i++)
+	for (int i = 0; i < 8; i++)
 	{
 		pColorButton->SetColorName(TPref::custColors[i], TPref::custColorsString[i]);
 	}

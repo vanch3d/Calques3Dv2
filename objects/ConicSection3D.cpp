@@ -21,8 +21,8 @@
 /// @file ConicSection3D.cpp
 /// Implementation of the CConicSection3D class.
 //
-/// $Date: 2007-10-28 12:00:15+00 $
-/// $Revision: 1.3 $
+/// $Date: 2007-10-28 12:07:55+00 $
+/// $Revision: 1.1 $
 //////////////////////////////////////////////////////////////////////
 #include "stdafx.h"
 #include "..\calques3d.h"
@@ -652,7 +652,7 @@ void CConicSection3D::Draw(CDC* pDC,CVisualParam *mV,BOOL bSM)
     CBrush *pOldB = pDC->SelectObject(&curBrush);
     //  HandleDC.SelectObject(curPen);
 
-    for (t=0;t<m_cConcept_pts.GetSize()-1;t++)
+    for (int t=0;t<m_cConcept_pts.GetSize()-1;t++)
      {
         CPen *pOldP = NULL;
         if (!bSM)

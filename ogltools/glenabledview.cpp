@@ -785,7 +785,8 @@ void CGLEnabledView::StartStockDListDef()
 	if(!m_bInsideDispList)
 	{
 // search a free slot
-		for (int c=0;m_DispListVector[c]!=0;c++);
+		int c=0;
+		for (c=0;m_DispListVector[c]!=0;c++);
 // check if we are inside a drawing session or not....
 		if(!( m_hRC==wglGetCurrentContext() && m_pCDC->GetSafeHdc()==wglGetCurrentDC() ))
 		{

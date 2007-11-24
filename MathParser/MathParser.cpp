@@ -69,7 +69,7 @@ static dfd func_addresses[]= {
     &_trunc_, &floor, ceil, (double(*)(double)) &_round_, &asin,
     &acos, &_sgn_, &_neg_, NULL, NULL };
 
-inline TypeTableAddChars( hqCharType *CharTypeTable, char *Symbols,
+inline void TypeTableAddChars( hqCharType *CharTypeTable, char *Symbols,
 			hqCharType CharType )
 {
     while (*Symbols)

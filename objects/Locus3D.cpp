@@ -69,7 +69,7 @@ inline void CLocusMesh::operator =(const CLocusMesh& other)
 	int limit = (bIsLinear)? 2:3;
 	for (int i=0;i<limit;i++)
 		vertex3D[i] = other.vertex3D[i];
-	for (i=0;i<limit;i++)
+	for (int i=0;i<limit;i++)
 		vertex2D[i] = other.vertex2D[i];
 }
 
@@ -607,7 +607,7 @@ UINT  CLocus3D::CalculConceptuel()
             }
         }
     }
-    for (ii=0;ii<pDirectList.GetSize();ii++)
+    for (int ii=0;ii<pDirectList.GetSize();ii++)
     {
         CObject3D *pObj = pDirectList.GetAt(ii);
     }
@@ -750,9 +750,9 @@ void CLocus3D::Draw3DRendering(int nVolMode)
 		glPushMatrix();
 		if (nVolMode==RENDER_STIPPLE) glEnable(GL_POLYGON_STIPPLE);
 
-		for (int k=0;k<m_cTriangles.GetSize();k++)
+		for (int k1=0;k1<m_cTriangles.GetSize();k1++)
 		{
-			CLocusMesh trg = m_cTriangles.GetAt(k);
+			CLocusMesh trg = m_cTriangles.GetAt(k1);
 
 			CVector4 pt1 = trg.vertex3D[0];
 				CVector4 pt2 = trg.vertex3D[1];

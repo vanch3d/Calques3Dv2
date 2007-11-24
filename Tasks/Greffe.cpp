@@ -178,7 +178,7 @@ void CGreffe3DTask::OnLoadMacro(UINT nID)
 	//}
 	//delete pMacro;
 	m_cBasePoints.RemoveAll();
-	for (i=0;i<nb2;i++)
+	for (int i=0;i<nb2;i++)
 	{
 		CObject3D *pObj = pMacro->m_cSubObjects.GetAt(i);
 		if (!pObj) continue;

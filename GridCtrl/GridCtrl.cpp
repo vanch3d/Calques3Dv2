@@ -422,7 +422,7 @@ BOOL CGridCtrl::Create(const RECT& rect, CWnd* pParentWnd, UINT nID, DWORD dwSty
 
     for (int i = 0; i < m_nRows; i++)
         m_arRowHeights[i] = m_cellDefault.GetHeight();
-    for (i = 0; i < m_nCols; i++)
+    for (int i = 0; i < m_nCols; i++)
         m_arColWidths[i] = m_cellDefault.GetWidth();
 
     ResetScrollBars(); //- called in OnSize anyway
@@ -1954,7 +1954,7 @@ void CGridCtrl::SetSelectedRange(int nMinRow, int nMinCol, int nMaxRow, int nMax
         if (!GetSingleRowSelection() &&
             nMinRow >= 0 && nMinCol >= 0 && nMaxRow >= 0 && nMaxCol >= 0)
         {
-            for (pos = m_PrevSelectedCellMap.GetStartPosition(); pos != NULL; /* nothing */)
+            for (POSITION pos = m_PrevSelectedCellMap.GetStartPosition(); pos != NULL; /* nothing */)
             {
                 DWORD key;
                 CCellID cell;
@@ -2614,7 +2614,8 @@ CCellID CGridCtrl::GetCellFromPt(CPoint point, BOOL bAllowFixedCellCheck /*=TRUE
     else if (point.x < fixedColWidth) // in fixed col
     {
         int xpos = 0;
-        for (int col = 0; col < m_nFixedCols; col++)
+		int col = 0;
+        for (col = 0; col < m_nFixedCols; col++)
         {
             xpos += GetColumnWidth(col);
             if (xpos > point.x)
@@ -2625,7 +2626,8 @@ CCellID CGridCtrl::GetCellFromPt(CPoint point, BOOL bAllowFixedCellCheck /*=TRUE
     else    // in non-fixed col
     {
         int xpos = fixedColWidth;
-        for (int col = idTopLeft.col; col < GetColumnCount(); col++)
+		int col = 0;
+        for (col = idTopLeft.col; col < GetColumnCount(); col++)
         {
             xpos += GetColumnWidth(col);
             if (xpos > point.x)
@@ -2645,7 +2647,8 @@ CCellID CGridCtrl::GetCellFromPt(CPoint point, BOOL bAllowFixedCellCheck /*=TRUE
     else if (point.y < fixedRowHeight) // in fixed col
     {
         int ypos = 0;
-        for (int row = 0; row < m_nFixedRows; row++)
+		int row = 0;
+        for (row = 0; row < m_nFixedRows; row++)
         {
             ypos += GetRowHeight(row);
             if (ypos > point.y)
@@ -2656,7 +2659,8 @@ CCellID CGridCtrl::GetCellFromPt(CPoint point, BOOL bAllowFixedCellCheck /*=TRUE
     else
     {
         int ypos = fixedRowHeight;
-        for (int row = idTopLeft.row; row < GetRowCount(); row++)
+		int row = 0;
+        for (row = idTopLeft.row; row < GetRowCount(); row++)
         {
             ypos += GetRowHeight(row);
             if (ypos > point.y)
@@ -2709,7 +2713,8 @@ CCellRange CGridCtrl::GetVisibleNonFixedCellRange(LPRECT pRect /*=NULL*/)
 
     // calc bottom
     int bottom = GetFixedRowHeight();
-    for (int i = idTopLeft.row; i < GetRowCount(); i++)
+	int i=0;
+    for (i = idTopLeft.row; i < GetRowCount(); i++)
     {
         bottom += GetRowHeight(i);
         if (bottom >= rect.bottom)
@@ -2752,7 +2757,8 @@ CCellRange CGridCtrl::GetUnobstructedNonFixedCellRange()
 
     // calc bottom
     int bottom = GetFixedRowHeight();
-    for (int i = idTopLeft.row; i < GetRowCount(); i++)
+	int i = 0;
+    for (i = idTopLeft.row; i < GetRowCount(); i++)
     {
         bottom += GetRowHeight(i);
         if (bottom >= rect.bottom)
@@ -3194,7 +3200,7 @@ BOOL CGridCtrl::SetFixedRowCount(int nFixedRows)
                     for (int j = 0; j < GetFixedColumnCount(); j++)
                         SetItemState(i, j, GetItemState(i, j) & ~GVIS_FIXEDROW );
 
-                    for (j = GetFixedColumnCount(); j < GetColumnCount(); j++)
+                    for (int j = GetFixedColumnCount(); j < GetColumnCount(); j++)
                     {
                         SetItemState(i, j, GetItemState(i, j) & ~(GVIS_FIXED | GVIS_FIXEDROW) );
                         SetItemBkColour(i, j, CLR_DEFAULT );
@@ -3248,7 +3254,7 @@ BOOL CGridCtrl::SetFixedColumnCount(int nFixedCols)
                 for (int j = nFixedCols; j < m_nFixedCols; j++)
                     SetItemState(i, j, GetItemState(i, j) & ~GVIS_FIXEDCOL );
 
-            for (i = GetFixedRowCount(); i < GetRowCount(); i++)
+            for (int i = GetFixedRowCount(); i < GetRowCount(); i++)
                 for (int j = nFixedCols; j < m_nFixedCols; j++)
                 {
                     SetItemState(i, j, GetItemState(i, j) & ~(GVIS_FIXED | GVIS_FIXEDCOL) );
@@ -3414,7 +3420,7 @@ BOOL CGridCtrl::SetColumnCount(int nCols)
             if (!GetVirtualMode())
             {
                 for (int row = 0; row < m_nRows; row++)
-                    for (col = startCol; col < nCols; col++)
+                    for (int col = startCol; col < nCols; col++)
                     {
                         GRID_ROW* pRow = m_RowData[row];
                         if (pRow)
@@ -3492,7 +3498,7 @@ int CGridCtrl::InsertColumn(LPCTSTR strHeading,
         } 
         else
         {
-            m_arColWidths.InsertAt(nColumn, (int)0);
+            m_arColWidths.InsertAt(nColumn, (UINT)0);
             if (!GetVirtualMode())
             {
                 for (int row = 0; row < m_nRows; row++) 
@@ -3567,7 +3573,7 @@ int CGridCtrl::InsertRow(LPCTSTR strHeading, int nRow /* = -1 */)
         }
         else
         {
-            m_arRowHeights.InsertAt(nRow, (int)0);
+            m_arRowHeights.InsertAt(nRow, (UINT)0);
             if (!GetVirtualMode())
                 m_RowData.InsertAt(nRow, new GRID_ROW);
         }
@@ -4741,13 +4747,13 @@ void CGridCtrl::ExpandColumnsToFit(BOOL bExpandFixed /*=TRUE*/)
     if (nDifference > 0)
     {
         int leftOver = nDifference % nNumColumnsAffected;
-        for (i = nFirstColumn; i < nFirstColumn+leftOver; i++)
+        for (int i = nFirstColumn; i < nFirstColumn+leftOver; i++)
             m_arColWidths[i] += 1;
     }
     else 
     {
         int leftOver = (-nDifference) % nNumColumnsAffected;
-        for (i = nFirstColumn; i < nFirstColumn+leftOver; i++)
+        for (int i = nFirstColumn; i < nFirstColumn+leftOver; i++)
             m_arColWidths[i] -= 1;
     }
 
@@ -4808,13 +4814,13 @@ void CGridCtrl::ExpandRowsToFit(BOOL bExpandFixed /*=TRUE*/)
     if (nDifference > 0)
     {
         int leftOver = nDifference % nNumRowsAffected;
-        for (i = nFirstRow; i < nFirstRow+leftOver; i++)
+        for (int i = nFirstRow; i < nFirstRow+leftOver; i++)
             m_arRowHeights[i] += 1;
     } 
     else 
     {
         int leftOver = (-nDifference) % nNumRowsAffected;
-        for (i = nFirstRow; i < nFirstRow+leftOver; i++)
+        for (int i = nFirstRow; i < nFirstRow+leftOver; i++)
             m_arRowHeights[i] -= 1;
     }
 
@@ -6561,7 +6567,7 @@ BOOL CGridCtrl::Save(LPCTSTR filename)
             File.WriteString((i==(nNumColumns-1))? _T("\n"):_T(","));
         }
 
-        for (i = 0; i < GetRowCount(); i++)
+        for (int i = 0; i < GetRowCount(); i++)
         {
             for (int j = 0; j < nNumColumns; j++)
             {

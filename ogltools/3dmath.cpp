@@ -105,11 +105,11 @@ vector Bisect(vector v0,vector v1)
 	return v;
 }
 
-ostream& operator<<(ostream& os,const vector& vect)
+/*ostream& operator<<(ostream& os,const vector& vect)
 {
 	os<<"[ "<<vect.vec[0]<<" ; "<<vect.vec[1]<<" ; "<<vect.vec[2]<<" ]";
 	return os;
-}
+}*/
 
 #ifdef __AFXWIN_H__ // see if we are using MFC
 #ifdef _DEBUG
@@ -207,11 +207,11 @@ quaternion operator/(const quaternion& q1,const quaternion& q2)
 	return q1*q2.inversed();
 }
 
-ostream& operator<<(ostream& os,const quaternion& q)
+/*ostream& operator<<(ostream& os,const quaternion& q)
 {
 	os<<"< "<<q.s<<" , "<<q.v<<" >";
 	return os;
-}
+}*/
 
 #ifdef __AFXWIN_H__ // see if we are using MFC
 #ifdef _DEBUG
@@ -498,14 +498,14 @@ unitquaternion operator/(const unitquaternion& q,const real& s)
 //-----------------------------------------------------------------------------
 // tmatrix friends and members
 
-ostream& operator<<(ostream& os,const tmatrix& m)
+/*ostream& operator<<(ostream& os,const tmatrix& m)
 {
 	os<<"[ "<<m.mat[0][0]<<' '<<m.mat[1][0]<<' '<<m.mat[2][0]<<' '<<m.mat[3][0]<<" ]\n";
 	os<<"[ "<<m.mat[0][1]<<' '<<m.mat[1][1]<<' '<<m.mat[2][1]<<' '<<m.mat[3][1]<<" ]\n";
 	os<<"[ "<<m.mat[0][2]<<' '<<m.mat[1][2]<<' '<<m.mat[2][2]<<' '<<m.mat[3][2]<<" ]\n";
 	os<<"[ "<<m.mat[0][3]<<' '<<m.mat[1][3]<<' '<<m.mat[2][3]<<' '<<m.mat[3][3]<<" ]\n";
 	return os;
-}
+}*/
 
 #ifdef _AFXDLL // see if we are using MFC
 #ifdef _DEBUG

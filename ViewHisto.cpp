@@ -958,7 +958,7 @@ void CViewHisto::CollapseBranch( HTREEITEM hti )
 
 void CViewHisto::OnHistoryExport() 
 {
-	static nDefFormat = 1;
+	static int nDefFormat = 1;
 	static char BASED_CODE szFilter[] = 
 		"Mathematica Symbolic Description (*.txt)|*.txt|"
 		"Maple Symbolic Description (*.txt)|*.txt|"

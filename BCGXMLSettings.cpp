@@ -975,9 +975,9 @@ static BOOL ExcludeTag (CString& strBuffer,
 {
 	const int iBufLen = strBuffer.GetLength ();
 
-	CString strTagStart = _T('<');
+	CString strTagStart = _T("<");
 	strTagStart += lpszTag;
-	strTagStart += _T('>');
+	strTagStart += _T(">");
 
 	const int iTagStartLen = strTagStart.GetLength ();
 
@@ -993,7 +993,7 @@ static BOOL ExcludeTag (CString& strBuffer,
 
 	CString strTagEnd = _T("</");
 	strTagEnd += lpszTag;
-	strTagEnd += _T('>');
+	strTagEnd += _T(">");
 
 	const int iTagEndLen = strTagEnd.GetLength ();
 

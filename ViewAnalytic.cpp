@@ -257,7 +257,7 @@ void CViewAnalytic::OnDraw(CDC* rDC)
 		pDC->MoveTo(sizeBack.cx+i*nbS,0);
 		pDC->LineTo(sizeBack.cx+i*nbS,nMaxH);
 	}
-	for (i=0;i<nbY;i++)
+	for (int i=0;i<nbY;i++)
 	{
 		pDC->MoveTo(sizeBack.cx,i*nbS);
 		pDC->LineTo(nMaxW,i*nbS);

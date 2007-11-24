@@ -21,8 +21,8 @@
 /// @file Cylinder3D.cpp
 /// Implementation of the CCylinder3D class.
 ///
-/// $Date: 2007-10-28 11:21:38+00 $
-/// $Revision: 1.6 $
+/// $Date: 2007-10-28 11:44:14+00 $
+/// $Revision: 1.11 $
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
@@ -91,7 +91,7 @@ CCylinder3D::CCylinder3D(const CObject3D &src ) : CVolumeObject3D(src)
         CPoint3D *pt= (CPoint3D*)((CCylinder3D&)src).cPointsList.GetAt(i);
         cPointsList.Add(pt->CopyObject());
     }
-    for (i=0;i<((CCylinder3D&)src).cGenerList.GetSize();i++)
+    for (int i=0;i<((CCylinder3D&)src).cGenerList.GetSize();i++)
     {
         CObject3D  *obj = ((CCylinder3D&)src).cGenerList.GetAt(i);
         CSegment3D *sg = (CSegment3D*)obj->CopyObject();

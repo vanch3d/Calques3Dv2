@@ -12,7 +12,7 @@
 #ifndef _3D_MATH_H
 #define _3D_MATH_H
 
-#include <iostream.h>
+//#include <iostream.h>
 #include <assert.h>
 #include <math.h>
 #ifdef _AFXDLL // see if we are using MFC...
@@ -109,7 +109,7 @@ public:
 	friend vector operator/(const vector& v,const real& fact);//!< the divide a vector by a scalar factor
 	friend vector Bisect(vector v0,vector v1);//!< returns the unit vector which halves the arc between v0 and v1
 	friend void clamp(vector& vec,const real& low,const real& high);//!< clamps all the vector components between the given tresholds
-	friend ostream& operator<<(ostream& os,const vector& vect);//!< the print vector to C++ stream
+//	friend ostream& operator<<(ostream& os,const vector& vect);//!< the print vector to C++ stream
 #ifdef _AFXDLL // see if we are using MFC...
 #ifdef _DEBUG		//.. and if we are in a debug build
 	friend CDumpContext& operator<<(CDumpContext& cd,const vector& vect);//!< the print vector to MSVC++ debug console
@@ -356,7 +356,7 @@ public:
 	friend tmatrix operator*(const tmatrix& tmat,const real& fact);//!< multiply a tmatrix by a scalar factor
 	friend tmatrix operator*(const real& fact,const tmatrix& tmat);//!< multiply a scalar factor by a tmatrix
 	friend tmatrix operator/(const tmatrix& tmat,const real& fact);//!< divide a tmatrix by a scalar factor
-	friend ostream& operator<<(ostream& os,const tmatrix& m);//!< print tmatrix to C++ stream
+//	friend ostream& operator<<(ostream& os,const tmatrix& m);//!< print tmatrix to C++ stream
 #ifdef _AFXDLL // see if we are using MFC
 #ifdef _DEBUG
 	friend CDumpContext& operator<<(CDumpContext& cd,const tmatrix& m);//!< print tmatrix to MSVC++ debug console
@@ -504,7 +504,7 @@ public:
 	friend quaternion operator*(const real& s,const quaternion& q);//!< multiply a scalar by a quaternion
 	friend quaternion operator/(const quaternion& q,const real& s);//!< divide a quaternion by a scalar factor
 	friend quaternion operator/(const quaternion& q1,const quaternion& q2);//!< divide a quaternion by a quaternion
-	friend ostream& operator<<(ostream& os,const quaternion& q);//!< print quaternion to C++ stream
+//	friend ostream& operator<<(ostream& os,const quaternion& q);//!< print quaternion to C++ stream
 #ifdef _AFXDLL // see if we are using MFC
 #ifdef _DEBUG
 	friend CDumpContext& operator<<(CDumpContext& ad,const quaternion& q);//!< print quaternion to MSVC++ debug console

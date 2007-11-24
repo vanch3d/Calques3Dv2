@@ -104,7 +104,7 @@ int CMacro3D::SetDepth()
     }
     nDepth++;
     nb = m_cSubObjects.GetSize();
-    for (i=0;i<nb;i++)
+    for (int i=0;i<nb;i++)
     {
         CObject3D * pObj = m_cSubObjects.GetAt(i);
         if (!pObj) continue;

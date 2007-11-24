@@ -515,24 +515,24 @@ void CVisuRep::Draw(CDC* pDC)
 
 	for (int i=0;i<7;i++)
 		rep[i] = ProjectPoint(rep[i]);
-	for (i=0;i<6;i++)
+	for (int i=0;i<6;i++)
 		scl[i] = ProjectPoint(scl[i]);
 
 	// draw rep lines
 	pDC->SelectObject(&backPen);
-	for (i=4;i<7;i++)
+	for (int i=4;i<7;i++)
 	 {
 		pDC->MoveTo(rep[0]);
 		pDC->LineTo(rep[i]);
 	 }
 	pDC->SelectObject(&frontPen);
-	for (i=1;i<4;i++)
+	for (int i=1;i<4;i++)
 	 {
 		pDC->MoveTo(rep[0]);
 		pDC->LineTo(rep[i]);
 	 }
 	// draw rep scales
-	for (i=0;i<3;i++)
+	for (int i=0;i<3;i++)
 	 {
 		pDC->MoveTo(scl[2*i]);
 		pDC->LineTo(scl[2*i+1]);
@@ -791,7 +791,7 @@ void CVisuCloison::DrawLineRep(CVector4 ptA[],CDC *pDC)
 	CPen	frontPen(PS_SOLID,1,RGB(0,0,0)),
 			frontPen2(PS_SOLID,2,RGB(255,0,0)),
 			*oldP=NULL;
-	for (k=1;k<r;k++)
+	for (int k=1;k<r;k++)
 	 {
 		if (k==(3-TPref::TUniv.nMoveType) && bFeedPlane)
 			oldP = pDC->SelectObject(&frontPen2);

@@ -170,7 +170,7 @@ BOOL CObjectPropPage::OnInitDialog()
 	}
 
 
-	for (i = 0; i < m_nNumColours; i++)
+	for (int i = 0; i < m_nNumColours; i++)
 	{
 		m_cColor.SetColorName(TPref::custColors[i], TPref::custColorsString[i]);
 	}

@@ -653,12 +653,14 @@ BOOL CCalques3DDoc::RemoveObject(CObject3D* pObj,BOOL bUndo)
 		CObject3D *zObj = mySet.GetAt(j);
 		CObject3D *pMyObj = NULL;
 		int nbObj = m_cObjectSet.GetSize();
+		int nCount = -1;
 		for (int i=0;i<nbObj;i++)
 		{
 			CObject3D* pO = m_cObjectSet.GetAt(i);
 			if (pO != zObj) continue;
 
 			pMyObj = zObj;
+			nCount = i;
 			break;
 		}
 		if (!pMyObj) continue;
@@ -666,7 +668,7 @@ BOOL CCalques3DDoc::RemoveObject(CObject3D* pObj,BOOL bUndo)
 		OnCountObjects(pMyObj,FALSE);
 		//m_cUndoSet.Add(pMyObj);
 		pUndoObj->m_cUndoSet.Add(pMyObj);
-		m_cObjectSet.RemoveAt(i);
+		m_cObjectSet.RemoveAt(nCount);
 		pMyObj->SetInGraph(FALSE);
 		RenumberObjects();
 
@@ -841,8 +843,8 @@ BOOL CCalques3DDoc::OnSetUndo()
 
 void CCalques3DDoc::CleanUndo()
 {
-
-	for (POSITION pos = m_cNewUndoSet.GetHeadPosition (); pos != NULL;)
+	POSITION pos = NULL;
+	for (pos = m_cNewUndoSet.GetHeadPosition (); pos != NULL;)
 	{
 		CUndoObject *pObj = m_cNewUndoSet.GetNext (pos);
 		delete pObj;
@@ -1010,19 +1012,21 @@ BOOL CCalques3DDoc::OnDoRedo(CView *pView)
 				if (!pObj) continue;
 				CObject3D* pMyObj = NULL;
 				int nbObj = m_cObjectSet.GetSize();
+				int nCount = -1;
 				for (int j=0;j<nbObj;j++)
 				{
 					CObject3D* pO = m_cObjectSet.GetAt(j);
 					if (pO != pObj) continue;
 	
 					pMyObj = pObj;
+					nCount = j;
 					break;
 				}
 				if (!pMyObj) continue;
 
 				OnCountObjects(pMyObj,FALSE);
 				//m_cUndoSet.Add(pMyObj);
-				m_cObjectSet.RemoveAt(j);
+				m_cObjectSet.RemoveAt(nCount);
 				pMyObj->SetInGraph(FALSE);
 				RenumberObjects();
 
@@ -1096,19 +1100,21 @@ BOOL CCalques3DDoc::OnDoUndo(CView *pView)
 				if (!pObj) continue;
 				CObject3D* pMyObj = NULL;
 				int nbObj = m_cObjectSet.GetSize();
+				int nCount = -1;
 				for (int j=0;j<nbObj;j++)
 				{
 					CObject3D* pO = m_cObjectSet.GetAt(j);
 					if (pO != pObj) continue;
 	
 					pMyObj = pObj;
+					nCount = j;
 					break;
 				}
 				if (!pMyObj) continue;
 
 				OnCountObjects(pMyObj,FALSE);
 				//m_cUndoSet.Add(pMyObj);
-				m_cObjectSet.RemoveAt(j);
+				m_cObjectSet.RemoveAt(nCount);
 				pMyObj->SetInGraph(FALSE);
 				RenumberObjects();
 

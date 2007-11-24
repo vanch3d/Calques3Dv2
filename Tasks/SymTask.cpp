@@ -1212,7 +1212,7 @@ void CAnimation3DTask::DrawFeedBack(CDC *pDC)
     }
 
     pDC->MoveTo(m_ptOld);
-    for ( i=0;i<17;i++)
+    for (int i=0;i<17;i++)
     {
         pDC->LineTo(pt[i]);
         //CRect mrect(pt[i],pt[i]);
@@ -1584,7 +1584,7 @@ void CCenterOn3DTask::CreateObject3D()
         //ptA = ptA + ptNewOrg;
         //pPt->Concept_pt = ptA;
     }
-    for (i=0;i<nb;i++)
+    for (int i=0;i<nb;i++)
     {
         CObject3D * pObj = GetDocument()->m_cObjectSet.GetAt(i);
         if (!pObj) continue;

@@ -264,58 +264,62 @@ BOOL CTitleTip::PreTranslateMessage(MSG* pMsg)
 	switch (pMsg->message)
 	{
 	case WM_LBUTTONDOWN:
-       // Get tick count since last LButtonDown
-        dwTick = GetTickCount();
-        bDoubleClick = ((dwTick - m_dwLastLButtonDown) <= m_dwDblClickMsecs);
-        m_dwLastLButtonDown = dwTick;
-        // NOTE: DO NOT ADD break; STATEMENT HERE! Let code fall through
-
+		{
+			// Get tick count since last LButtonDown
+			dwTick = GetTickCount();
+			bDoubleClick = ((dwTick - m_dwLastLButtonDown) <= m_dwDblClickMsecs);
+			m_dwLastLButtonDown = dwTick;
+			// NOTE: DO NOT ADD break; STATEMENT HERE! Let code fall through
+		}
 	case WM_RBUTTONDOWN:
 	case WM_MBUTTONDOWN:
-		POINTS pts = MAKEPOINTS( pMsg->lParam );
-		POINT  point;
-		point.x = pts.x;
-		point.y = pts.y;
-		ClientToScreen( &point );
-		pWnd = WindowFromPoint( point );
-		if( pWnd == this ) 
-			pWnd = m_pParentWnd;
+		{
+			POINTS pts = MAKEPOINTS( pMsg->lParam );
+			POINT  point;
+			point.x = pts.x;
+			point.y = pts.y;
+			ClientToScreen( &point );
+			pWnd = WindowFromPoint( point );
+			if( pWnd == this ) 
+				pWnd = m_pParentWnd;
 
-		hittest = (int)pWnd->SendMessage(WM_NCHITTEST,0,MAKELONG(point.x,point.y));
+			hittest = (int)pWnd->SendMessage(WM_NCHITTEST,0,MAKELONG(point.x,point.y));
 
-		if (hittest == HTCLIENT) {
-			pWnd->ScreenToClient( &point );
-			pMsg->lParam = MAKELONG(point.x,point.y);
-		} else {
-			switch (pMsg->message) {
-			case WM_LBUTTONDOWN: 
-				pMsg->message = WM_NCLBUTTONDOWN;
-				break;
-			case WM_RBUTTONDOWN: 
-				pMsg->message = WM_NCRBUTTONDOWN;
-				break;
-			case WM_MBUTTONDOWN: 
-				pMsg->message = WM_NCMBUTTONDOWN;
-				break;
+			if (hittest == HTCLIENT) {
+				pWnd->ScreenToClient( &point );
+				pMsg->lParam = MAKELONG(point.x,point.y);
+			} else {
+				switch (pMsg->message) {
+				case WM_LBUTTONDOWN: 
+					pMsg->message = WM_NCLBUTTONDOWN;
+					break;
+				case WM_RBUTTONDOWN: 
+					pMsg->message = WM_NCRBUTTONDOWN;
+					break;
+				case WM_MBUTTONDOWN: 
+					pMsg->message = WM_NCMBUTTONDOWN;
+					break;
+				}
+				pMsg->wParam = hittest;
+				pMsg->lParam = MAKELONG(point.x,point.y);
 			}
-			pMsg->wParam = hittest;
-			pMsg->lParam = MAKELONG(point.x,point.y);
+
+			Hide();
+
+			// If this is the 2nd WM_LBUTTONDOWN in x milliseconds,
+			// post a WM_LBUTTONDBLCLK message instead of a single click.
+			pWnd->PostMessage(  bDoubleClick ? WM_LBUTTONDBLCLK : pMsg->message,
+								pMsg->wParam,
+								pMsg->lParam);
+			return TRUE;	
 		}
-
-        Hide();
-
-        // If this is the 2nd WM_LBUTTONDOWN in x milliseconds,
-        // post a WM_LBUTTONDBLCLK message instead of a single click.
-        pWnd->PostMessage(  bDoubleClick ? WM_LBUTTONDBLCLK : pMsg->message,
-                            pMsg->wParam,
-                            pMsg->lParam);
-		return TRUE;	
-		
 	case WM_KEYDOWN:
 	case WM_SYSKEYDOWN:
-        Hide();
-		m_pParentWnd->PostMessage( pMsg->message, pMsg->wParam, pMsg->lParam );
-		return TRUE;
+		{
+			Hide();
+			m_pParentWnd->PostMessage( pMsg->message, pMsg->wParam, pMsg->lParam );
+			return TRUE;
+		}
 	}
 
 	if( GetFocus() == NULL )

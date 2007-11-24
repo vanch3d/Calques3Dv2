@@ -532,6 +532,7 @@ void CObject3D::SetInGraph(BOOL bAdd)
         if (!pPar) continue;
         int nbD = pPar->cDependList.GetSize();
         BOOL bFound = FALSE;
+		int nCount=-1;
         for (int j=0;j<nbD && !bFound;j++)
         {
             CObject3D *pDep = pPar->cDependList.GetAt(j);
@@ -539,13 +540,14 @@ void CObject3D::SetInGraph(BOOL bAdd)
             if (pDep == this)
             {
                 bFound = TRUE;
+				nCount = j;
                 break;
             }
         }
         if (bAdd && !bFound)
             pPar->cDependList.Add(this);
         else if (!bAdd && bFound)
-            pPar->cDependList.RemoveAt(j);
+            pPar->cDependList.RemoveAt(nCount);
     }
     delete pList;
 }
@@ -670,7 +672,7 @@ void CObject3D::SetAttributes(CObject3DAttr pAttr)
 //////////////////////////////////////////////////////////////////////
 BOOL CObject3D::IsInCalque(int CalcNum)
 {
-    BOOL bTest = (nCalque & (int)pow(2,CalcNum));
+    BOOL bTest = (nCalque & (int)pow(2.,CalcNum));
     return bTest;
 }
 
@@ -683,9 +685,9 @@ BOOL CObject3D::IsInCalque(int CalcNum)
 BOOL CObject3D::AddInCalque(int CalcNum,BOOL bAdd/*=TRUE*/)
 {
     if (bAdd)    // add in tracing CalcNum
-        nCalque |= (int)pow(2,CalcNum);
+        nCalque |= (int)pow(2.,CalcNum);
     else        // remove from tracing CalcNum
-        nCalque &= ~((int)pow(2,CalcNum));
+        nCalque &= ~((int)pow(2.,CalcNum));
     return TRUE;
 }
 

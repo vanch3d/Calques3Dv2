@@ -21,8 +21,8 @@
 /// @file ViewUniv.cpp
 /// Implementation of the CViewUniv class.
 //
-/// $Date: 2007-11-11 11:11:49+00 $
-/// $Revision: 1.23 $
+/// $Date: 2007-11-17 19:33:48+00 $
+/// $Revision: 1.24 $
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
@@ -239,7 +239,7 @@ void CViewUniv::OnDraw(CDC* rDC)
 			// Calculate Position of the Polygons
 			int nbPol = GetDocument()->m_cPolygonSet.GetSize();
 			CxObject3DSet mset;
-			for (i=0;i<nbPol;i++)
+			for (int i=0;i<nbPol;i++)
 			{
 				CObject3D* pObj = GetDocument()->m_cPolygonSet.GetAt(i);
 				if (!pObj) continue;
@@ -262,7 +262,7 @@ void CViewUniv::OnDraw(CDC* rDC)
 				if (!bFound) mset.Add(pObj);
 			}
 			// Draw the Polygons
-			for (i=0;i<mset.GetSize();i++)
+			for (int i=0;i<mset.GetSize();i++)
 			{
 				CObject3D* pObj = mset.GetAt(i);
 				if (!pObj) continue;
@@ -275,7 +275,7 @@ void CViewUniv::OnDraw(CDC* rDC)
 	        GetVisualParam()->Draw(pDC);
 
         // Draw the Objects
-        for (i=0;i<nb;i++)
+        for (int i=0;i<nb;i++)
         {
             CObject3D* pObj = GetDocument()->m_cObjectSet.GetAt(i);
             if (!pObj) continue;
@@ -1626,7 +1626,7 @@ void CViewUniv::OnMacrosSave()
         }
 
         int nb1 = mdoc.m_cObjectSet.GetSize();
-        for (i=0;i<nb1;i++)
+        for (int i=0;i<nb1;i++)
         {
             CObject3D *pObj = mdoc.m_cObjectSet.GetAt(i);
         }

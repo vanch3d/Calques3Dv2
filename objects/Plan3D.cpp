@@ -21,8 +21,8 @@
 /// @file Plan3D.cpp
 /// Interface of the CPlan3D class.
 ///
-/// $Date: 2007-10-28 11:48:27+00 $
-/// $Revision: 1.8 $
+/// $Date: 2007-10-28 11:49:51+00 $
+/// $Revision: 1.18 $
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
@@ -1827,7 +1827,7 @@ UINT  CPolygon3D::CalculConceptuel()
     pl.CalculConceptuel();
     CVector4 vN = pl.GetNormalForm();
 
-    for (i=3;i<m_pPointSet.GetSize();i++)
+    for (int i=3;i<m_pPointSet.GetSize();i++)
     {
         CPoint3D*   pT = (CPoint3D *)m_pPointSet.GetAt(i);
         CVector4    U1 = pT->Concept_pt - pA->Concept_pt;

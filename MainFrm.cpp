@@ -21,8 +21,8 @@
 /// @file: MainFrm.cpp
 /// Implementation of the CMainFrame class.
 ///
-/// $Date: 2007-11-24 14:14:34+00 $
-/// $Revision: 1.18 $
+/// $Date: 2007-11-11 11:08:42+00 $
+/// $Revision: 1.17 $
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"

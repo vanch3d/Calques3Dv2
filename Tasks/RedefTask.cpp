@@ -316,17 +316,19 @@ void CRedefine3DTask::CreateObject3D()
             //pMacro->RemoveSubObject(0);
             int nbObj = GetDocument()->m_cObjectSet.GetSize();
             CObject3D *pMyObj = NULL;
+			int nCount = -1;
             for (int i=0;i<nbObj;i++)
             {
                 CObject3D* pO = GetDocument()->m_cObjectSet.GetAt(i);
                 if (pO != m_pObj) continue;
 
                 pMyObj = m_pObj;
+				nCount = i ;
                 break;
             }
             if (pMyObj)
             {
-                GetDocument()->m_cObjectSet.RemoveAt(i);
+                GetDocument()->m_cObjectSet.RemoveAt(nCount);
                 GetDocument()->UpdateAllViews(m_pParent,WM_UPDATEOBJ_DEL,pMyObj);
             }
             delete m_pObj;
@@ -357,7 +359,7 @@ void CRedefine3DTask::CreateObject3D()
 
             int nb = pChildList.GetSize();
 
-            for (i=0;i<nb;i++)
+            for (int i=0;i<nb;i++)
             {
                 CObject3D *pObj = pChildList.GetAt(i);
                 if (!pObj) continue;
