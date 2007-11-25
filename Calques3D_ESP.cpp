@@ -1,5 +1,29 @@
-// Calques3D.cpp : Defines the class behaviors for the application.
-//
+//////////////////////////////////////////////////////////////////////
+// Calques 3D - a 3D Dynamic Geometry Learning Environment
+// Copyright (c) 1997-2007 Nicolas Van Labeke
+//////////////////////////////////////////////////////////////////////
+// This file is part of Calques 3D.
+// 
+// Calques 3D is free software; you can redistribute it and/or modify it 
+// under the terms of the GNU General Public License as published by 
+// the Free Software Foundation; either version 2 of the License, or 
+// (at your option) any later version.
+// 
+// Calques 3D is distributed in the hope that it will be useful, 
+// but WITHOUT ANY WARRANTY; without even the implied warranty of 
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License 
+// along with Calques 3D; if not, write to The Free Software Foundation, Inc., 
+// 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA 
+//////////////////////////////////////////////////////////////////////
+/// @file Calques3D_ESP.cpp
+/// @brief Implementation of the CCalques3DApp class (Spanish).
+///
+/// $Date: 2007-11-24 18:07:06+00 $
+/// $Revision: 1.13 $
+//////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
 #include "Calques3D.h"
@@ -56,7 +80,7 @@ BEGIN_MESSAGE_MAP(CCalques3DApp, CWinApp)
 	//}}AFX_MSG_MAP
 	// Standard file based document commands
 	ON_COMMAND(ID_FILE_NEW, CWinApp::OnFileNew)
-//	ON_COMMAND(ID_FILE_OPEN, CWinApp::OnFileOpen)
+	//	ON_COMMAND(ID_FILE_OPEN, CWinApp::OnFileOpen)
 	// Standard print setup command
 	ON_COMMAND(ID_FILE_PRINT_SETUP, CWinApp::OnFilePrintSetup)
 END_MESSAGE_MAP()
@@ -98,10 +122,11 @@ BOOL CCalques3DApp::InitInstance()
 	//------------------------------------------------------------
 	// Localization: comment/uncomment for the relevant version
 	//------------------------------------------------------------
-    m_hinstBCGCBRes = LoadLibrary (_T("BCGCBProResESP.dll"));    // *** - Spanish
-    //m_hinstBCGCBRes = LoadLibrary (_T("BCGCBProResFRA.dll"));    // *** - French
-    //m_hinstBCGCBRes = LoadLibrary (_T("BCGCBProResPTG.dll"));    // *** - Portuguese
-	::BCGCBProSetResourceHandle (m_hinstBCGCBRes);
+	m_hinstBCGCBRes = LoadLibrary (_T("BCGCBProResESP.dll"));    // *** - Spanish
+	//m_hinstBCGCBRes = LoadLibrary (_T("BCGCBProResFRA.dll"));    // *** - French
+	//m_hinstBCGCBRes = LoadLibrary (_T("BCGCBProResPTG.dll"));    // *** - Portuguese
+	//m_hinstBCGCBRes = LoadLibrary (_T("BCGCBProResDEU.dll"));    // *** - German
+	//::BCGCBProSetResourceHandle (m_hinstBCGCBRes);
 
 	//------------------------------------------------------------
 	// Standard initialization
@@ -124,6 +149,19 @@ BOOL CCalques3DApp::InitInstance()
 #else
 	Enable3dControlsStatic();	// Call this when linking to MFC statically
 #endif
+
+	//------------------------------------------------------------
+	// Initialise the COM manager (for the 3DConnexion device)
+	//------------------------------------------------------------
+	HRESULT hr=CoInitialize(NULL);
+	if (!SUCCEEDED(hr))
+	{
+		//CString strError;
+		//strError.FormatMessage (_T("Error 0x%x"), hr);
+		//::MessageBox (NULL, strError, _T("CoInitializeEx failed"), MB_ICONERROR|MB_OK);
+		// return FALSE;
+	}
+
 
 	//------------------------------------------------------------
 	// Load the registry information
@@ -150,9 +188,9 @@ BOOL CCalques3DApp::InitInstance()
 		{
 			MessageBox(NULL,
 				_T("Due to major modifications in Calques 3D, the configuration saved\n"
-				   "during the last session cannot be retrieved by this new version.\n"
-				   "Calques 3D will be initialised with its default configuration.\n"
-				   "This problem will not occur anymore after this launch."),
+				"during the last session cannot be retrieved by this new version.\n"
+				"Calques 3D will be initialised with its default configuration.\n"
+				"This problem will not occur anymore after this launch."),
 				_T("Warning !"),MB_ICONWARNING|MB_OK);
 		}
 		CleanState(REG_WORKSPACE);
@@ -184,6 +222,7 @@ BOOL CCalques3DApp::InitInstance()
 	//------------------------------------------------------------
 
 	//InitMouseManager();
+	InitShellManager();
 	InitContextMenuManager();
 	InitKeyboardManager();
 	//InitSkinManager ();
@@ -299,6 +338,10 @@ int CCalques3DApp::ExitInstance()
 {
 	BCGCBProCleanUp();
 	//------------------------------------------------------------
+	// Unload COM manager
+	//------------------------------------------------------------
+	CoUninitialize( );
+	//------------------------------------------------------------
 	// Localization: comment/uncomment for the relevant version
 	//------------------------------------------------------------
 	FreeLibrary (m_hinstBCGCBRes);
@@ -357,9 +400,9 @@ void CCalques3DApp::OnFileOpen()
 		CString* pstrDefaultExt = bFirst ? &strDefault : NULL;
 
 		if (pTemplate->GetDocString(strFilterExt, CDocTemplate::filterExt) &&
-				!strFilterExt.IsEmpty() &&
-		    pTemplate->GetDocString(strFilterName, CDocTemplate::filterName) &&
-				!strFilterName.IsEmpty())
+			!strFilterExt.IsEmpty() &&
+			pTemplate->GetDocString(strFilterName, CDocTemplate::filterName) &&
+			!strFilterName.IsEmpty())
 		{
 			// a file based document template - add to filter list
 			ASSERT(strFilterExt[0] == '.');
@@ -383,7 +426,7 @@ void CCalques3DApp::OnFileOpen()
 		bFirst = FALSE;
 	}
 
-		// append the "*.*" all files filter
+	// append the "*.*" all files filter
 	CString allFilter;
 	VERIFY(allFilter.LoadString(AFX_IDS_ALLFILTER));
 	strFilter += allFilter;
@@ -422,6 +465,9 @@ void CCalques3DApp::OnClosingMainFrame (CBCGPFrameImpl* pFrame)
 /////////////////////////////////////////////////////////////////////////////
 void CCalques3DApp::LoadCustomState ()
 {
+	// Call the default initialisation of the preferences
+	TPref::DefaultInit();
+
 	//SetRegistryBase (REG_SESSION);
 	//TPref::strProfile = GetSectionString(REG_PROFILE,REG_PROFILE, TPref::strProfile);
 	//TPref::strProfileDesc = GetSectionString(REG_PROFILE,REG_PROFILEDES, TPref::strProfileDesc);
@@ -433,9 +479,11 @@ void CCalques3DApp::LoadCustomState ()
 	TPref::GrayedHidden = GetSectionInt(_T("Universe"),_T("GrayHidden"), TPref::GrayedHidden);
 	TPref::bMacroLoading = GetSectionInt(_T("Macro"),_T("UserLoading"), TPref::bMacroLoading);
 	BOOL brest = GetSectionObject(_T("Macro"),_T("UserMacros"),TPref::TMacroList);
+	TPref::TParamGeo.strPackagePath = GetSectionString(_T("ParamGeo3D"),_T("Package"),_T(""));
+	TPref::TParamGeo.strTranslatorPath = GetSectionString(_T("ParamGeo3D"),_T("Translator") ,_T(""));
 
-	// Call the default initialisation of the preferences
-	TPref::DefaultInit();
+	BOOL test = (TPref::TParamGeo.strPackagePath.IsEmpty() || TPref::TParamGeo.strTranslatorPath.IsEmpty());
+	TPref::TParamGeo.bIsActivated = !test;
 	SetRegistryBase (REG_WORKSPACE);
 }
 
@@ -462,6 +510,8 @@ void CCalques3DApp::SaveCustomState ()
 		delete TPref::TMacroList.GetNext( pos );
 	}
 	TPref::TMacroList.RemoveAll();
+	WriteSectionString(_T("ParamGeo3D"),_T("Package"), TPref::TParamGeo.strPackagePath);
+	WriteSectionString(_T("ParamGeo3D"),_T("Translator"), TPref::TParamGeo.strTranslatorPath);
 
 	SetRegistryBase (REG_SESSION);
 	WriteSectionString(REG_PROFILE,REG_PROFILE, TPref::strProfile);
@@ -487,22 +537,22 @@ void CCalques3DApp::PreLoadState ()
 	menu.GetMenuString(0,mstr,MF_BYPOSITION);
 	menu.Detach();
 	GetContextMenuManager()->AddMenu (mstr, IDR_POPUP_EXTRACT);
-	
+
 	menu.LoadMenu(IDR_POPUP_MOVE);
 	menu.GetMenuString(0,mstr,MF_BYPOSITION);
 	menu.Detach();
 	GetContextMenuManager()->AddMenu (mstr, IDR_POPUP_MOVE);
-	
+
 	menu.LoadMenu(IDR_POPUP_DEFAULT);
 	menu.GetMenuString(0,mstr,MF_BYPOSITION);
 	menu.Detach();
 	GetContextMenuManager()->AddMenu (mstr, IDR_POPUP_DEFAULT);
-	
+
 	menu.LoadMenu(IDR_POPUP_PROJECTION);
 	menu.GetMenuString(0,mstr,MF_BYPOSITION);
 	menu.Detach();
 	GetContextMenuManager()->AddMenu (mstr, IDR_POPUP_PROJECTION);
-	
+
 	menu.LoadMenu(IDR_POPUP_SHAPE);
 	menu.GetMenuString(0,mstr,MF_BYPOSITION);
 	menu.Detach();
@@ -518,7 +568,6 @@ void CCalques3DApp::PreLoadState ()
 	menu.Detach();
 	GetContextMenuManager()->AddMenu (mstr, IDR_POPUP_MEASURE);
 
-
 	menu.LoadMenu(IDR_POPUP_MATHPAD);
 	menu.GetMenuString(0,mstr,MF_BYPOSITION);
 	menu.Detach();
@@ -533,7 +582,7 @@ BOOL CCalques3DApp::PreTranslateMessage(MSG* pMsg)
 
 
 /////////////////////////////////////////////////////////////////////////////
-/// Calles to initialised and launch the "About" dialogue.
+/// Called to initialize and launch the "About" dialog.
 /// See CAboutInfoPage, CAboutCreditPage and CAboutCalquePage
 /////////////////////////////////////////////////////////////////////////////
 void CCalques3DApp::OnAppAbout()
