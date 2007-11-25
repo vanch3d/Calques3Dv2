@@ -18,8 +18,11 @@
 // along with Calques 3D; if not, write to The Free Software Foundation, Inc., 
 // 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA 
 //////////////////////////////////////////////////////////////////////
-// AboutInfoDlg.cpp: implementation of the CAboutInfoPage class.
-//
+/// @file AboutInfoDlg.cpp
+/// @brief Implementation of the CAboutInfoPage class.
+///
+/// $Date: 2007-11-25 13:16:42+00 $
+/// $Revision: 1.1 $
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
