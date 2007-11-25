@@ -36,7 +36,10 @@
         - <font style='b'>Nicolas Rosillo</font> for the Spanish version.<br>
         - <font style='b'>Humberto Jose Bortolossi</font>, <br>
           <font style='b'>Adelmo Ribeiro de Jesus</font> and <br>
-          <font style='b'>Alexandre Negreti</font> for the Brazilian version.<p><p></font>
-
-  <font color='1,1,1' align='left'>This project was initially supported by a grant from <br>  the <font style='b'>Conseil RÈgional de Lorraine</font>.<p><p></font>
+          <font style='b'>Alexandre Negreti</font> for the Brazilian version.
+        - <font style='b'>Alfred Flaﬂhaar</font> for the German version.<br>
+  </font>
+  <p><p>
+  <font color='1,1,1' align='left'>This project was initially supported by a grant from <br>  
+		the <font style='b'>Conseil RÈgional de Lorraine</font>.<p><p></font>
 <vspace size='80'>
