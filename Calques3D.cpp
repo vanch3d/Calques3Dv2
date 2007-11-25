@@ -18,8 +18,11 @@
 // along with Calques 3D; if not, write to The Free Software Foundation, Inc., 
 // 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA 
 //////////////////////////////////////////////////////////////////////
-// Calques3D.cpp: implementation of the CCalques3DApp class.
-//
+/// @file Calques3D.cpp
+/// @brief Implementation of the CCalques3DApp class.
+///
+/// $Date: 2007-11-24 18:07:06+00 $
+/// $Revision: 1.13 $
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
@@ -121,7 +124,8 @@ BOOL CCalques3DApp::InitInstance()
 	//------------------------------------------------------------
     //m_hinstBCGCBRes = LoadLibrary (_T("BCGCBProResESP.dll"));    // *** - Spanish
     //m_hinstBCGCBRes = LoadLibrary (_T("BCGCBProResFRA.dll"));    // *** - French
-    //m_hinstBCGCBRes = LoadLibrary (_T("BCGCBProResPTG.dll"));    // *** - Portuguese
+	//m_hinstBCGCBRes = LoadLibrary (_T("BCGCBProResPTG.dll"));    // *** - Portuguese
+	//m_hinstBCGCBRes = LoadLibrary (_T("BCGCBProResDEU.dll"));    // *** - German
 	//::BCGCBProSetResourceHandle (m_hinstBCGCBRes);
 
 	//------------------------------------------------------------
