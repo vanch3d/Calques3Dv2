@@ -5,8 +5,8 @@
 // Provides the implementation for the "default" cell type of the
 // grid control. Adds in cell editing.
 //
-// Written by Chris Maunder <cmaunder@mail.com>
-// Copyright (c) 1998-2000. All Rights Reserved.
+// Written by Chris Maunder <chris@codeproject.com>
+// Copyright (c) 1998-2005. All Rights Reserved.
 //
 // This code may be used in compiled form in any way you desire. This
 // file may be redistributed unmodified by any means PROVIDING it is 
@@ -20,7 +20,7 @@
 // The author accepts no liability for any damage/loss of business that
 // this product may cause.
 //
-// For use with CGridCtrl v2.20
+// For use with CGridCtrl v2.20+
 //
 // History:
 // Eric Woodruff - 20 Feb 2000 - Added PrintCell() plus other minor changes
@@ -50,7 +50,7 @@ IMPLEMENT_DYNCREATE(CGridDefaultCell, CGridCell)
 CGridCell::CGridCell()
 {
     m_plfFont = NULL;
-    Reset();
+	CGridCell::Reset();
 }
 
 CGridCell::~CGridCell()
@@ -63,7 +63,7 @@ CGridCell::~CGridCell()
 
 void CGridCell::operator=(const CGridCell& cell)
 {
-    CGridCellBase::operator=(  cell);
+    if (this != &cell) CGridCellBase::operator=(cell);
 }
 
 void CGridCell::Reset()
@@ -72,6 +72,7 @@ void CGridCell::Reset()
 
     m_strText.Empty();
     m_nImage   = -1;
+    m_lParam   = NULL;           // BUG FIX J. Bloggs 20/10/03
     m_pGrid    = NULL;
     m_bEditing = FALSE;
     m_pEditWnd = NULL;
@@ -168,18 +169,25 @@ UINT CGridCell::GetMargin() const
 
 BOOL CGridCell::Edit(int nRow, int nCol, CRect rect, CPoint /* point */, UINT nID, UINT nChar)
 {
-    DWORD dwStyle = ES_LEFT;
-    if (GetFormat() & DT_RIGHT) 
-        dwStyle = ES_RIGHT;
-    else if (GetFormat() & DT_CENTER) 
-        dwStyle = ES_CENTER;
-
-    m_bEditing = TRUE;
-    
-    // InPlaceEdit auto-deletes itself
-    CGridCtrl* pGrid = GetGrid();
-    m_pEditWnd = new CInPlaceEdit(pGrid, rect, dwStyle, nID, nRow, nCol, GetText(), nChar);
-    
+    if ( m_bEditing )
+	{      
+        if (m_pEditWnd)
+		    m_pEditWnd->SendMessage ( WM_CHAR, nChar );    
+    }  
+	else  
+	{   
+		DWORD dwStyle = ES_LEFT;
+		if (GetFormat() & DT_RIGHT) 
+			dwStyle = ES_RIGHT;
+		else if (GetFormat() & DT_CENTER) 
+			dwStyle = ES_CENTER;
+		
+		m_bEditing = TRUE;
+		
+		// InPlaceEdit auto-deletes itself
+		CGridCtrl* pGrid = GetGrid();
+		m_pEditWnd = new CInPlaceEdit(pGrid, rect, dwStyle, nID, nRow, nCol, GetText(), nChar);
+    }
     return TRUE;
 }
 
@@ -194,7 +202,6 @@ void CGridCell::OnEndEdit()
     m_bEditing = FALSE;
     m_pEditWnd = NULL;
 }
-
 
 /////////////////////////////////////////////////////////////////////////////
 // CGridDefaultCell

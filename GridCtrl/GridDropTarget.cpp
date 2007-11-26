@@ -6,8 +6,8 @@
 // is handle the drag and drop windows messages and pass them
 // directly onto the grid control.
 //
-// Written by Chris Maunder <cmaunder@mail.com>
-// Copyright (c) 1998-2000. All Rights Reserved.
+// Written by Chris Maunder <chris@codeproject.com>
+// Copyright (c) 1998-2005. All Rights Reserved.
 //
 // This code may be used in compiled form in any way you desire. This
 // file may be redistributed unmodified by any means PROVIDING it is 

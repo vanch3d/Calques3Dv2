@@ -1,7 +1,7 @@
 // InPlaceEdit.cpp : implementation file
 //
 // Adapted by Chris Maunder <cmaunder@mail.com>
-// Copyright (c) 1998-2000. All Rights Reserved.
+// Copyright (c) 1998-2002. All Rights Reserved.
 //
 // The code contained in this file is based on the original
 // CInPlaceEdit from http://www.codeguru.com/listview/edit_subitems.shtml
@@ -96,8 +96,13 @@ CInPlaceEdit::CInPlaceEdit(CWnd* pParent, CRect& rect, DWORD dwStyle, UINT nID,
         case VK_END:      SetSel(0,-1); return;
         default:          SetSel(0,-1);
     }
-    
-    SendMessage(WM_CHAR, nFirstChar);
+
+    // Added by KiteFly. When entering DBCS chars into cells the first char was being lost
+    // SenMessage changed to PostMessage (John Lagerquist)
+    if( nFirstChar < 0x80)
+        PostMessage(WM_CHAR, nFirstChar);   
+    else
+        PostMessage(WM_IME_CHAR, nFirstChar);
 }
 
 CInPlaceEdit::~CInPlaceEdit()

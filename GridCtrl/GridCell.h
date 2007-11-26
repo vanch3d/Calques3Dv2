@@ -3,8 +3,8 @@
 //
 // MFC Grid Control - Grid cell class header file
 //
-// Written by Chris Maunder <cmaunder@mail.com>
-// Copyright (c) 1998-2000. All Rights Reserved.
+// Written by Chris Maunder <chris@codeproject.com>
+// Copyright (c) 1998-2005. All Rights Reserved.
 //
 // This code may be used in compiled form in any way you desire. This
 // file may be redistributed unmodified by any means PROVIDING it is 
@@ -18,7 +18,7 @@
 // The author accepts no liability for any damage/loss of business that
 // this product may cause.
 //
-// For use with CGridCtrl v2.20
+// For use with CGridCtrl v2.20+
 //
 //////////////////////////////////////////////////////////////////////
 
@@ -50,21 +50,21 @@ public:
 public:
     void operator=(const CGridCell& cell);
 
-    virtual void SetText(LPCTSTR szText)        { m_strText = szText;  }                       
-    virtual void SetImage(int nImage)           { m_nImage = nImage;   }                        
-    virtual void SetData(LPARAM lParam)         { m_lParam = lParam;   }      
-    virtual void SetGrid(CGridCtrl* pGrid)      { m_pGrid = pGrid;     }                          
+    virtual void  SetText(LPCTSTR szText)        { m_strText = szText;  }                       
+    virtual void  SetImage(int nImage)           { m_nImage = nImage;   }                        
+    virtual void  SetData(LPARAM lParam)         { m_lParam = lParam;   }      
+    virtual void  SetGrid(CGridCtrl* pGrid)      { m_pGrid = pGrid;     }                          
     // virtual void SetState(const DWORD nState);  -  use base class version   
-    virtual void SetFormat(DWORD nFormat)       { m_nFormat = nFormat; }                      
-    virtual void SetTextClr(COLORREF clr)       { m_crFgClr = clr;     }                          
-    virtual void SetBackClr(COLORREF clr)       { m_crBkClr = clr;     }                          
-    virtual void SetFont(const LOGFONT* plf);
-    virtual void SetMargin(UINT nMargin)       { m_nMargin = nMargin; }
+    virtual void  SetFormat(DWORD nFormat)       { m_nFormat = nFormat; }                      
+    virtual void  SetTextClr(COLORREF clr)       { m_crFgClr = clr;     }                          
+    virtual void  SetBackClr(COLORREF clr)       { m_crBkClr = clr;     }                          
+    virtual void  SetFont(const LOGFONT* plf);
+    virtual void  SetMargin(UINT nMargin)        { m_nMargin = nMargin; }
+    virtual CWnd* GetEditWnd() const             { return m_pEditWnd;   }
+    virtual void  SetCoords(int /*nRow*/, int /*nCol*/) {}  // don't need to know the row and
+                                                            // column for base implementation
 
-    virtual void SetCoords( int /* nRow */, int /* nCol */) {}  // don't need to know the row and
-                                                                // column for base implementation
-
-    virtual LPCTSTR     GetText() const             { return (m_strText.IsEmpty())? _T("") : m_strText; }
+    virtual LPCTSTR     GetText() const             { return (m_strText.IsEmpty())? _T("") : LPCTSTR(m_strText); }
     virtual int         GetImage() const            { return m_nImage;  }
     virtual LPARAM      GetData() const             { return m_lParam;  }
     virtual CGridCtrl*  GetGrid() const             { return m_pGrid;   }

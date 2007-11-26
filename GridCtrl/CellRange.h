@@ -4,7 +4,7 @@
 // MFC Grid Control - interface for the CCellRange class.
 //
 // Written by Chris Maunder <cmaunder@mail.com>
-// Copyright (c) 1998-2000. All Rights Reserved.
+// Copyright (c) 1998-2002. All Rights Reserved.
 //
 // This code may be used in compiled form in any way you desire. This
 // file may be redistributed unmodified by any means PROVIDING it is 
@@ -18,7 +18,7 @@
 // The author accepts no liability for any damage/loss of business that
 // this product may cause.
 //
-// For use with CGridCtrl v2.20
+// For use with CGridCtrl v2.20+
 //
 //////////////////////////////////////////////////////////////////////
 
@@ -42,11 +42,11 @@ public:
 
 // Operations
 public:
-    CCellID(int nRow = -1, int nCol = -1) : row(nRow), col(nCol) {}
+    explicit CCellID(int nRow = -1, int nCol = -1) : row(nRow), col(nCol) {}
 
     int IsValid() const { return (row >= 0 && col >= 0); }
-    int operator==(const CCellID& rhs)    { return (row == rhs.row && col == rhs.col); }
-    int operator!=(const CCellID& rhs)    { return !operator==(rhs); }
+    int operator==(const CCellID& rhs) const { return (row == rhs.row && col == rhs.col); }
+    int operator!=(const CCellID& rhs) const { return !operator==(rhs); }
 };
 
 class CCellRange
@@ -104,7 +104,7 @@ inline void CCellRange::Set(int minRow, int minCol, int maxRow, int maxCol)
 
 inline void CCellRange::operator=(const CCellRange& rhs)
 {
-    Set(rhs.m_nMinRow, rhs.m_nMinCol, rhs.m_nMaxRow, rhs.m_nMaxCol);
+    if (this != &rhs) Set(rhs.m_nMinRow, rhs.m_nMinCol, rhs.m_nMaxRow, rhs.m_nMaxCol);
 }
 
 inline int CCellRange::operator==(const CCellRange& rhs)
