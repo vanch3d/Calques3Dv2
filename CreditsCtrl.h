@@ -21,7 +21,9 @@
 /// @file CreditsCtrl.h
 /// @brief interface of the CCreditsCtrl class.
 ///
-///
+/// @author Marc Richarme (http://www.codeproject.com/dialog/ccreditsctrl.asp)
+/// $Date: 2007-11-25 13:37:20+00 $
+/// $Revision: 1.8 $
 //////////////////////////////////////////////////////////////////////
 #if !defined(AFX_CREDITSCTRL_H__0D506182_3886_4D4C_A609_DA8914C17718__INCLUDED_)
 #define AFX_CREDITSCTRL_H__0D506182_3886_4D4C_A609_DA8914C17718__INCLUDED_
@@ -36,6 +38,7 @@
 /////////////////////////////////////////////////////////////////////////////
 /// Implement a Scrolling credit control
 ///
+/// @author Marc Richarme (http://www.codeproject.com/dialog/ccreditsctrl.asp)
 /////////////////////////////////////////////////////////////////////////////
 class CCreditsCtrl : public CWnd
 {
@@ -135,8 +138,8 @@ public:
 	////// Functions you probably won't need ///////////////////////////////
 
 	// helpers for parsing
-	void Parse_AppendText(CDC *pDC, CDC *pHoverDC, int *pnCurHPos, int *pnCurVPos, int *pnCurHeight, CArray<line_rect,line_rect&>* parcLineRects, general_attribs *pga, font_attribs *pfa, CString sText, CString sCurLink, font_attribs link);
-	void Parse_AppendBitmap(CDC *pDC, CDC *pHoverDC, int *pnCurHPos, int *pnCurVPos, int *pnCurHeight, CArray<line_rect,line_rect&>* parcLineRects, general_attribs *pga, CBitmap *pBitmap, COLORREF crBorder, int nBorder, CString sCurLink, font_attribs link);
+	void Parse_AppendText(CDC *pDC, CDC *pHoverDC, int *pnCurHPos, int *pnCurVPos, int *pnCurHeight, CArray<line_rect,line_rect&>* parcLineRects, general_attribs *pga, font_attribs *pfa, CString sText, CString sCurLink, font_attribs &link);
+	void Parse_AppendBitmap(CDC *pDC, CDC *pHoverDC, int *pnCurHPos, int *pnCurVPos, int *pnCurHeight, CArray<line_rect,line_rect&>* parcLineRects, general_attribs *pga, CBitmap *pBitmap, COLORREF crBorder, int nBorder, CString sCurLink, font_attribs &link);
 	void Parse_AppendElement(CDC *pDC, CDC *pHoverDC, int *pnCurHPos, int *pnCurVPos, int *pnCurHeight, CArray<line_rect,line_rect&>* parcLineRects, general_attribs *pga, int nElementWidth, int nElementHeight, CDC *pElementDC, CDC *pHoverElementDC, CString sCurLink);
 	void Parse_VAlignLine(CDC *pDestDC, CDC *pHoverDestDC, CDC *pLineDC, CDC *pHoverLineDC, int nCurHPos, int nCurVPos, int nCurHeight, CArray<line_rect,line_rect&>* parcLineRects, general_attribs *pga);
 	BOOL StringToColor(CString string, COLORREF &cr);

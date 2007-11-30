@@ -18,8 +18,12 @@
 // along with Calques 3D; if not, write to The Free Software Foundation, Inc., 
 // 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA 
 //////////////////////////////////////////////////////////////////////
-// CreditsCtrl.cpp: implementation of the CCreditsCtrl class.
-//
+/// @file CreditsCtrl.cpp
+/// @brief Implementation of the CCreditsCtrl class.
+///
+/// @author Marc Richarme (http://www.codeproject.com/dialog/ccreditsctrl.asp)
+/// $Date: 2007-11-25 13:37:20+00 $
+/// $Revision: 1.8 $
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
@@ -821,7 +825,7 @@ void CCreditsCtrl::SetDefaultBkColor(COLORREF crColor)
 	m_dwBackgroundPaintLParam = (DWORD)crColor; // default background color	
 }
 
-void CCreditsCtrl::Parse_AppendText(CDC *pDC, CDC *pHoverDC, int *pnCurHPos, int *pnCurVPos, int *pnCurHeight, CArray<line_rect,line_rect&>* parcLineRects, general_attribs *pga, font_attribs *pfa, CString sText, CString sCurLink, font_attribs link)
+void CCreditsCtrl::Parse_AppendText(CDC *pDC, CDC *pHoverDC, int *pnCurHPos, int *pnCurVPos, int *pnCurHeight, CArray<line_rect,line_rect&>* parcLineRects, general_attribs *pga, font_attribs *pfa, CString sText, CString sCurLink, font_attribs &link)
 {
 	CRect rect(0,0,pga->nMaxWidth,pga->nMaxHeight);
 	CDC dc,hoverDC;
@@ -892,7 +896,7 @@ void CCreditsCtrl::Parse_AppendText(CDC *pDC, CDC *pHoverDC, int *pnCurHPos, int
 	dc.SelectObject(pOldFont);
 }
 
-void CCreditsCtrl::Parse_AppendBitmap(CDC *pDC, CDC *pHoverDC, int *pnCurHPos, int *pnCurVPos, int *pnCurHeight, CArray<line_rect,line_rect&>* parcLineRects, general_attribs *pga, CBitmap *pBitmap, COLORREF crBorder, int nBorder, CString sCurLink, font_attribs link)
+void CCreditsCtrl::Parse_AppendBitmap(CDC *pDC, CDC *pHoverDC, int *pnCurHPos, int *pnCurVPos, int *pnCurHeight, CArray<line_rect,line_rect&>* parcLineRects, general_attribs *pga, CBitmap *pBitmap, COLORREF crBorder, int nBorder, CString sCurLink, font_attribs &link)
 {
 	BITMAP bm;
 	pBitmap->GetBitmap(&bm);
