@@ -21,8 +21,8 @@
 /// @file ViewUniv.cpp
 /// Implementation of the CViewUniv class.
 //
-/// $Date: 2007-11-17 19:33:48+00 $
-/// $Revision: 1.24 $
+/// $Date: 2007-11-24 18:07:05+00 $
+/// $Revision: 1.25 $
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
@@ -1924,7 +1924,7 @@ void CViewUniv::OnMouse3D(UINT nIDEvent)
 		}
 		else
 		{
-			TRACE0("DEVICE AT REST\n");
+			//TRACE0("DEVICE AT REST\n");
 		}
 		// Release the device's components
 		pRotation.Release();

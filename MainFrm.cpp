@@ -21,8 +21,8 @@
 /// @file: MainFrm.cpp
 /// Implementation of the CMainFrame class.
 ///
-/// $Date: 2007-11-11 11:08:42+00 $
-/// $Revision: 1.17 $
+/// $Date: 2007-11-24 18:07:04+00 $
+/// $Revision: 1.20 $
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
@@ -1782,7 +1782,7 @@ void CMainFrame::OnTimer(UINT nIDEvent)
 				{
 				   long device = _p3DxDevice->GetType();
 					      _p3DxDevice.Release();
-				   AtlTrace (_T("Attached device=%d\n"), device);
+				   //AtlTrace (_T("Attached device=%d\n"), device);
 				}
 	   }
 #endif

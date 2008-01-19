@@ -21,8 +21,8 @@
 /// @file: View3DRender.cpp
 /// implementation of the CView3DRender class.
 ///
-/// $Date: 2007-11-11 11:08:42+00 $
-/// $Revision: 1.17 $
+/// $Date: 2007-11-17 19:36:38+00 $
+/// $Revision: 1.11 $
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
@@ -748,7 +748,7 @@ void CView3DRender::OnMouse3D(UINT nIDEvent)
 		}
 		else
 		{
-			TRACE0("DEVICE AT REST\n");
+			//TRACE0("DEVICE AT REST\n");
 		}
 		// Release the device's components
 		pRotation.Release();
