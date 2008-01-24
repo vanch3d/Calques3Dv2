@@ -21,6 +21,8 @@
 /// @file AboutInfoDlg.h
 /// @brief interface of the CAboutCreditPage class.
 ///
+/// $Date: 2007-11-25 13:37:20+00 $
+/// $Revision: 1.8 $
 //////////////////////////////////////////////////////////////////////
 #if !defined(AFX_ABOUTINFODLG_H__17174020_E8A3_11D4_A2FA_00D0B71C8709__INCLUDED_)
 #define AFX_ABOUTINFODLG_H__17174020_E8A3_11D4_A2FA_00D0B71C8709__INCLUDED_
@@ -34,7 +36,7 @@
 #include "IconCtrl.h"
 
 /////////////////////////////////////////////////////////////////////////////
-/// CAboutCreditPage
+/// Property page used for displaying rolling credits in the About dialog.
 ///
 /////////////////////////////////////////////////////////////////////////////
 class CAboutCreditPage : public CPropertyPage
@@ -48,7 +50,7 @@ public:
 	enum { IDD = IDD_ABOUTCREDIT };
 	//}}AFX_DATA
 
-	CCreditsCtrl m_wndCredits;
+	CCreditsCtrl m_wndCredits;	///< Control for the rolling credits
 
 // Overrides
 	// ClassWizard generated virtual function overrides
@@ -70,7 +72,7 @@ protected:
 };
 
 /////////////////////////////////////////////////////////////////////////////
-/// CAboutInfoPage
+/// Property page used for displaying Calques 3D information in the About dialog.
 ///
 /////////////////////////////////////////////////////////////////////////////
 class CAboutInfoPage : public CPropertyPage
@@ -111,7 +113,7 @@ protected:
 
 
 /////////////////////////////////////////////////////////////////////////////
-/// CAboutCalquePage
+/// Property page used for displaying the Calques 3D logo in the About dialog.
 ///
 /////////////////////////////////////////////////////////////////////////////
 class CAboutCalquePage : public CPropertyPage
@@ -122,15 +124,13 @@ public:
 
 // Dialog Data
 	//{{AFX_DATA(CAboutCalquePage)
-	CIconCtrl		m_wndIcon;
-//	CBCGPButton		m_wndff;
+	CIconCtrl		m_wndIcon;		///< Logo placeholder
 	enum { IDD = IDD_ABOUTCALQUE };
 	//}}AFX_DATA
-//	CBCGPToolBarImages m_cImages;
 // Overrides
 	// ClassWizard generated virtual function overrides
 	//{{AFX_VIRTUAL(CAboutCalquePage)
-	protected:
+protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	//}}AFX_VIRTUAL
 
@@ -147,7 +147,9 @@ protected:
 
 
 /////////////////////////////////////////////////////////////////////////////
-/// CAboutDlg
+/// The main container for the About dialog.
+/// The property sheet dialog is overridden to get rid of the buttons,
+/// as well as reorganizing the layout of the dialog.
 ///
 /////////////////////////////////////////////////////////////////////////////
 class CAboutDlg : public CPropertySheet
