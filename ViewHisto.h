@@ -36,7 +36,7 @@
 /// Display the history of the construction in a list-like fashion.
 ///
 /////////////////////////////////////////////////////////////////////////////
-class CViewHisto : public CTreeView//CListView
+class CViewHisto : public CTreeView
 {
 protected:
 	CViewHisto();           // protected constructor used by dynamic creation
