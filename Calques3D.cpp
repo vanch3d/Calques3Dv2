@@ -21,8 +21,8 @@
 /// @file Calques3D.cpp
 /// @brief Implementation of the CCalques3DApp class.
 ///
-/// $Date: 2007-11-24 18:07:06+00 $
-/// $Revision: 1.13 $
+/// $Date: 2007-11-25 13:13:37+00 $
+/// $Revision: 1.14 $
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
@@ -92,6 +92,8 @@ END_MESSAGE_MAP()
 CCalques3DApp::CCalques3DApp() : CBCGPWorkspace(TRUE)
 {
 	m_bHiColorIcons = FALSE;
+	m_hinstC3DRes = NULL;
+	m_hinstBCGCBRes = NULL;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -122,11 +124,26 @@ BOOL CCalques3DApp::InitInstance()
 	//------------------------------------------------------------
 	// Localization: comment/uncomment for the relevant version
 	//------------------------------------------------------------
-    //m_hinstBCGCBRes = LoadLibrary (_T("BCGCBProResESP.dll"));    // *** - Spanish
-    //m_hinstBCGCBRes = LoadLibrary (_T("BCGCBProResFRA.dll"));    // *** - French
-	//m_hinstBCGCBRes = LoadLibrary (_T("BCGCBProResPTG.dll"));    // *** - Portuguese
-	//m_hinstBCGCBRes = LoadLibrary (_T("BCGCBProResDEU.dll"));    // *** - German
-	//::BCGCBProSetResourceHandle (m_hinstBCGCBRes);
+ 	m_hinstC3DRes = LoadLibrary (_T("c3dResFRA.dll"));
+ 	if (m_hinstC3DRes==NULL)
+ 		m_hinstC3DRes = LoadLibrary (_T("c3dResESP.dll"));
+ 	if (m_hinstC3DRes==NULL)
+ 		m_hinstC3DRes = LoadLibrary (_T("c3dResPTG.dll"));
+ 	if (m_hinstC3DRes==NULL)
+ 		m_hinstC3DRes = LoadLibrary (_T("c3dResDEU.dll"));
+
+	m_hinstBCGCBRes = LoadLibrary (_T("BCGCBProResFRA.dll"));    // *** - Spanish
+	if (m_hinstBCGCBRes==NULL)
+		m_hinstBCGCBRes = LoadLibrary (_T("BCGCBProResESP.dll"));    // *** - French
+	if (m_hinstBCGCBRes==NULL)
+		m_hinstBCGCBRes = LoadLibrary (_T("BCGCBProResPTG.dll"));    // *** - Portuguese
+	if (m_hinstBCGCBRes==NULL)
+		m_hinstBCGCBRes = LoadLibrary (_T("BCGCBProResDEU.dll"));    // *** - German
+
+	if(m_hinstC3DRes) 
+ 		AfxSetResourceHandle(m_hinstC3DRes);
+ 	if(m_hinstBCGCBRes) 
+ 		::BCGCBProSetResourceHandle (m_hinstBCGCBRes);
 
 	//------------------------------------------------------------
 	// Standard initialization
@@ -344,7 +361,10 @@ int CCalques3DApp::ExitInstance()
 	//------------------------------------------------------------
 	// Localization: comment/uncomment for the relevant version
 	//------------------------------------------------------------
-	//FreeLibrary (m_hinstBCGCBRes);
+	if(m_hinstC3DRes) 
+		FreeLibrary (m_hinstC3DRes);
+	if(m_hinstBCGCBRes) 
+		FreeLibrary (m_hinstBCGCBRes);
 	return CWinApp::ExitInstance();
 }
 
