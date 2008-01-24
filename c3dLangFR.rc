@@ -544,8 +544,8 @@ STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
     CONTROL         "",IDC_BIGICON,"Button",BS_OWNERDRAW | WS_DISABLED,4,4,34,30
-    LTEXT           "Calques 3D version 2.4.2",IDC_STATIC,52,4,140,8,NOT WS_GROUP
-    LTEXT           "Microsoft Foundation Classes version 4.2",IDC_STATIC,52,13,140,8,NOT WS_GROUP
+    LTEXT           "Calques 3D version 2.5.0",IDC_STATIC,52,4,140,8,NOT WS_GROUP
+    LTEXT           "Microsoft Foundation Classes version 8.0",IDC_STATIC,52,13,140,8,NOT WS_GROUP
     CONTROL         "",IDC_STATIC,"Static",SS_BLACKRECT,52,32,140,1
     LTEXT           "BCGControlBar Library version 7.31",IDC_STATIC,52,22,140,8,NOT WS_GROUP
     CONTROL         "Custom",IDC_ABOUTCALQUE,"MFCIconCtrl",WS_TABSTOP,1,42,201,190,0,HIDC_ABOUTCALQUE
@@ -556,8 +556,8 @@ STYLE DS_SETFONT | WS_CHILD | WS_VISIBLE | WS_CAPTION
 CAPTION "Calques 3D"
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    CONTROL         "Custom",IDC_ABOUTCALQUE,"MFCIconCtrl",0x0,7,7,188,177,0,HIDC_ABOUTCALQUE
-    PUSHBUTTON      "",IDC_STATIC,4,4,8,8,NOT WS_VISIBLE | WS_DISABLED | NOT WS_TABSTOP
+    CONTROL         "Custom",IDC_ABOUTCALQUE,"MFCIconCtrl",WS_TABSTOP,7,7,188,177,0,HIDC_ABOUTCALQUE
+    PUSHBUTTON      "Button1",IDC_STATIC,7,7,50,14,NOT WS_VISIBLE | WS_DISABLED
 END
 
 IDD_SUPPRESS_DLG DIALOGEX 0, 0, 316, 97
@@ -2387,8 +2387,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,4,2,0
- PRODUCTVERSION 2,4,2,0
+ FILEVERSION 2,5,0,0
+ PRODUCTVERSION 2,5,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x29L
@@ -2406,14 +2406,14 @@ BEGIN
             VALUE "Comments", "Micromonde de Géométrie dans l'espace\0"
             VALUE "CompanyName", "Calques 3D"
             VALUE "FileDescription", "Calques 3D"
-            VALUE "FileVersion", "2.4.2"
+            VALUE "FileVersion", "2.5.0"
             VALUE "InternalName", "Calques3D"
-            VALUE "LegalCopyright", "Copyright © 1997-2007 Nicolas Van Labeke"
-            VALUE "LegalTrademarks", "N. Van Labeke / P. Bernat / J. Morinet-Lambert"
+            VALUE "LegalCopyright", "Copyright © 1997-2008 Nicolas Van Labeke"
+            VALUE "LegalTrademarks", "N. Van Labeke / P. Bernat / J. Morinet-Lambert / M. Grandbastien"
             VALUE "OriginalFilename", "Calques3D.exe"
-            VALUE "PrivateBuild", "Beta Version"
+            VALUE "PrivateBuild", "Release Version"
             VALUE "ProductName", "Calques 3D"
-            VALUE "ProductVersion", "2.4.2"
+            VALUE "ProductVersion", "2.5.0"
             VALUE "SpecialBuild", "Built with BCGControlBar Library version 7.31"
         END
     END
@@ -2430,13 +2430,6 @@ END
 //
 
 IDR_CREDITS             CREDITS                 "res\\credits.txt"
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// RT_MANIFEST
-//
-//
-//1                       RT_MANIFEST             "xptheme.xml"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -2457,7 +2450,7 @@ STRINGTABLE
 BEGIN
     IDR_VIEWGRAPH           "Graphe\n\nGraphe\n\n\n\n Apparaît quand une fenêtre 'Graphe' est active."
     IDR_VIEWANALYTIC        "MathPad\n\nMathPad\n\n\n\n Apparaît quand une fenêtre 'MathPad' est active."
-    IDR_VIEWDEPEND          "Algrebra222\n\nAlgrebraic Notation\n\n\n\n Algrebra menu. Appears when an 'Algrebraic notations' window is active."
+    IDR_VIEWDEPEND          "Algrebra222\n\nAlgrebraic Notation\n\n\n\nAlgrebra menu. Appears when an 'Algrebraic notations' window is active."
     IDR_VIEWRENDERING       "Rendu 3D\n\nRendu 3D\n\n\n\n Apparaît quand une fenêtre 'Rendu 3D' est active."
 END
 
