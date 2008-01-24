@@ -52,8 +52,8 @@ CIconCtrl::~CIconCtrl()
 BOOL CIconCtrl::RegisterWindowClass()
 {
     WNDCLASS wndcls;
-    HINSTANCE hInst = AfxGetInstanceHandle();
-    //HINSTANCE hInst = AfxGetResourceHandle();
+    //HINSTANCE hInst = AfxGetInstanceHandle();
+    HINSTANCE hInst = AfxGetResourceHandle();
 
     if (!(::GetClassInfo(hInst, ICONCTRL_CLASSNAME, &wndcls)))
     {
