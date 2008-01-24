@@ -1,83 +1,83 @@
-// Microsoft Developer Studio generated Help ID include file.
-// Used by Calques3D.rc
+// Microsoft Visual C++ generated Help ID include file.
+// Used by c3dLangDE.rc
 //
-#define HIDC_ABOUTCALQUE                0xc9f304b1    // IDD_ABOUTCALQUE
-#define HIDC_DISCOV_ACTIVATE            0x814704ab    // IDD_PREF_DISCOVERY_PAGE
-#define HIDC_DISCOV_PACKAGE             0x814704ac    // IDD_PREF_DISCOVERY_PAGE
-#define HIDC_DISCOV_TRANSLT             0x814704ad    // IDD_PREF_DISCOVERY_PAGE
-#define HIDC_DMACRO_DEF                 0x80b10465    // IDD_MACROINFO_DLG
-#define HIDC_DMACRO_HELP                0x80b10464    // IDD_MACROINFO_DLG
-#define HIDC_DMACRO_NAME                0x80b10463    // IDD_MACROINFO_DLG
-#define HIDC_DMACRO_PATH                0x80b10414    // IDD_MACROINFO_DLG
-#define HIDC_DMACRO_SAVEAS              0x80b10466    // IDD_MACROINFO_DLG
-#define HIDC_MAIL                       0x814e03e8    // IDD_ABOUTPROP
-#define HIDC_MATHPAD_ANGLE              0x81450479    // IDD_PREF_MATHPAD_PAGE
-#define HIDC_MATHPAD_DIST               0x8145047a    // IDD_PREF_MATHPAD_PAGE
-#define HIDC_MATHPAD_FRACTION           0x81450477    // IDD_PREF_MATHPAD_PAGE
-#define HIDC_MATHPAD_OPEN               0x8145049f    // IDD_PREF_MATHPAD_PAGE
-#define HIDC_MATHPAD_PFR                0x8145047c    // IDD_PREF_MATHPAD_PAGE
-#define HIDC_MATHPAD_PRV                0x8145047b    // IDD_PREF_MATHPAD_PAGE
-#define HIDC_MATHPAD_REAL               0x81450476    // IDD_PREF_MATHPAD_PAGE
-#define HIDC_MATHPAD_SCALE              0x81450478    // IDD_PREF_MATHPAD_PAGE
-#define HIDC_MESSAGE_IMG                0x815404a5    // IDD_MESSAGE
-#define HIDC_MESSAGE_STRING             0x815404a4    // IDD_MESSAGE
-#define HIDC_MESSAGE_TITLE              0x815404a6    // IDD_MESSAGE
-#define HIDC_OBJ_COLOR                  0x806c0415    // IDD_OBJECTPROP_PAGE
-#define HIDC_OBJ_DEF                    0x806e0419    // IDD_OBJECTINFO_PAGE
-#define HIDC_OBJ_DEPLIST                0x8070046b    // IDD_OBJECTCPT_PAGE
-#define HIDC_OBJ_HELP                   0x806e041a    // IDD_OBJECTINFO_PAGE
-#define HIDC_OBJ_HIDDEN                 0x806c0417    // IDD_OBJECTPROP_PAGE
-#define HIDC_OBJ_LOCUS                  0x806c041c    // IDD_OBJECTPROP_PAGE
-#define HIDC_OBJ_LOCUSSPIN              0x806c041e    // IDD_OBJECTPROP_PAGE
-#define HIDC_OBJ_MARK                   0x806c0418    // IDD_OBJECTPROP_PAGE
-#define HIDC_OBJ_NAME                   0x806c0413    // IDD_OBJECTPROP_PAGE
-#define HIDC_OBJ_SHAPE                  0x806c0416    // IDD_OBJECTPROP_PAGE
-#define HIDC_PHISTO_SHOWSEL             0x814804a5    // IDD_PREF_HISTORY_PAGE
-#define HIDC_PMAC_DEF                   0xc9f00457    // IDD_PREF_MACROS_PAGE
-#define HIDC_PMAC_LIST                  0xc9f049e9    // IDD_PREF_MACROS_PAGE
-#define HIDC_PMAC_LOADMACRO             0xc9f00458    // IDD_PREF_MACROS_PAGE
-#define HIDC_PMAC_NAME                  0xc9f00456    // IDD_PREF_MACROS_PAGE
-#define HIDC_PMAC_PATH                  0xc9f049ea    // IDD_PREF_MACROS_PAGE
-#define HIDC_POV_LIST                   0x813304a7    // IDD_POV_DLG
-#define HIDC_POV_PHI                    0x813304a9    // IDD_POV_DLG
-#define HIDC_POV_THETA                  0x813304a8    // IDD_POV_DLG
-#define HIDC_PROFILE_LIST               0x80980411    // IDD_SAVE_PROFILE_DLG
-#define HIDC_PROFILE_NAME               0x80980414    // IDD_SAVE_PROFILE_DLG
-#define HIDC_PSESS_LIST                 0xc9f1045a    // IDD_PREF_SESSION_PAGE
-#define HIDC_PSESS_SAVEAS               0xc9f149e8    // IDD_PREF_SESSION_PAGE
-#define HIDC_PUNIV_MAGNET               0x8071044b    // IDD_PREF_UNIVERSE_PAGE
-#define HIDC_PUNIV_POVLIST              0xc9fb046a    // IDD_PREF_POV_PAGE
-#define HIDC_PUNIV_REFINIT              0x8071044a    // IDD_PREF_UNIVERSE_PAGE
-#define HIDC_PUNIV_SYNCHRO              0x8071044c    // IDD_PREF_UNIVERSE_PAGE
-#define HIDC_PUNIV_TRACE                0x80710494    // IDD_PREF_UNIVERSE_PAGE
-#define HIDC_RENDERER_AMBIENT           0x814f051a    // IDD_RENDERER_PROP
-#define HIDC_RENDERER_AMBMAT            0x814f0524    // IDD_RENDERER_PROP
-#define HIDC_RENDERER_DIFFMAT           0x814f0525    // IDD_RENDERER_PROP
-#define HIDC_RENDERER_DIFFUSE           0x814f051b    // IDD_RENDERER_PROP
-#define HIDC_RENDERER_EMISSION          0x814f0528    // IDD_RENDERER_PROP
-#define HIDC_RENDERER_FIELDVIEW         0x814f052a    // IDD_RENDERER_PROP
-#define HIDC_RENDERER_LGTX              0x814f051e    // IDD_RENDERER_PROP
-#define HIDC_RENDERER_LGTY              0x814f051f    // IDD_RENDERER_PROP
-#define HIDC_RENDERER_LGTZ              0x814f0520    // IDD_RENDERER_PROP
-#define HIDC_RENDERER_SHINE             0x814f051d    // IDD_RENDERER_PROP
-#define HIDC_RENDERER_SPECMAT           0x814f0526    // IDD_RENDERER_PROP
-#define HIDC_RENDERER_SPECULAR          0x814f051c    // IDD_RENDERER_PROP
-#define HIDC_SHAPE_APP                  0x806f0486    // IDD_PREF_SHAPE_PAGE
-#define HIDC_SHAPE_DEFCOLOR             0xc9fc042b    // IDD_PREF_COLORS_PAGE
-#define HIDC_SHAPE_HIDDEN               0xc9fc043c    // IDD_PREF_COLORS_PAGE
-#define HIDC_SUPPORT                    0x814e03ea    // IDD_ABOUTPROP
-#define HIDC_SUPP_DELETELIST            0x806b0412    // IDD_SUPPRESS_DLG
-#define HIDC_SUPP_SHOWLIST              0x806b0411    // IDD_SUPPRESS_DLG
-#define HIDC_TXT_EDIT                   0xc9f8047f    // IDD_OBJECTTEXT_PAGE
-#define HIDC_TXT_EQUATION               0xc9f80481    // IDD_OBJECTTEXT_PAGE
-#define HIDC_TXT_FONT                   0xc9f80480    // IDD_OBJECTTEXT_PAGE
-#define HIDC_TXT_VAR                    0xc9f80482    // IDD_OBJECTTEXT_PAGE
-#define HIDC_TXT_VARNAME                0xc9f80483    // IDD_OBJECTTEXT_PAGE
-#define HIDC_URL                        0x814e03e9    // IDD_ABOUTPROP
-#define HIDC_VERIFY_COUNTER             0x80760475    // IDD_VERIFY_DLG
-#define HIDC_VERIFY_PROP                0x80760470    // IDD_VERIFY_DLG
-#define HIDC_VERIFY_PROP_ICON           0x8076046f    // IDD_VERIFY_DLG
-#define HIDC_VERIFY_RESULT              0x80760474    // IDD_VERIFY_DLG
-#define HIDC_VERIFY_TARGET              0x80760485    // IDD_VERIFY_DLG
-#define HIDC_ZOOM_SLIDER                0xc9f6046c    // IDD_ZOOM_DLG
-#define HIDC_ZOOM_VALUE                 0xc9f6046e    // IDD_ZOOM_DLG
+#define HIDC_ABOUTCALQUE                0x814d04b1    // IDD_SPLASH [German (Germany)]
+#define HIDC_DISCOV_ACTIVATE            0x814704ab    // IDD_PREF_DISCOVERY_PAGE [German (Germany)]
+#define HIDC_DISCOV_PACKAGE             0x814704ac    // IDD_PREF_DISCOVERY_PAGE [German (Germany)]
+#define HIDC_DISCOV_TRANSLT             0x814704ad    // IDD_PREF_DISCOVERY_PAGE [German (Germany)]
+#define HIDC_DMACRO_DEF                 0x80b10465    // IDD_MACROINFO_DLG [German (Germany)]
+#define HIDC_DMACRO_HELP                0x80b10464    // IDD_MACROINFO_DLG [German (Germany)]
+#define HIDC_DMACRO_NAME                0x80b10463    // IDD_MACROINFO_DLG [German (Germany)]
+#define HIDC_DMACRO_PATH                0x80b10414    // IDD_MACROINFO_DLG [German (Germany)]
+#define HIDC_DMACRO_SAVEAS              0x80b10466    // IDD_MACROINFO_DLG [German (Germany)]
+#define HIDC_MAIL                       0x814e03e8    // IDD_ABOUTPROP [German (Germany)]
+#define HIDC_MATHPAD_ANGLE              0x81450479    // IDD_PREF_MATHPAD_PAGE [German (Germany)]
+#define HIDC_MATHPAD_DIST               0x8145047a    // IDD_PREF_MATHPAD_PAGE [German (Germany)]
+#define HIDC_MATHPAD_FRACTION           0x81450477    // IDD_PREF_MATHPAD_PAGE [German (Germany)]
+#define HIDC_MATHPAD_OPEN               0x8145049f    // IDD_PREF_MATHPAD_PAGE [German (Germany)]
+#define HIDC_MATHPAD_PFR                0x8145047c    // IDD_PREF_MATHPAD_PAGE [German (Germany)]
+#define HIDC_MATHPAD_PRV                0x8145047b    // IDD_PREF_MATHPAD_PAGE [German (Germany)]
+#define HIDC_MATHPAD_REAL               0x81450476    // IDD_PREF_MATHPAD_PAGE [German (Germany)]
+#define HIDC_MATHPAD_SCALE              0x81450478    // IDD_PREF_MATHPAD_PAGE [German (Germany)]
+#define HIDC_MESSAGE_IMG                0x815404a5    // IDD_MESSAGE [German (Germany)]
+#define HIDC_MESSAGE_STRING             0x815404a4    // IDD_MESSAGE [German (Germany)]
+#define HIDC_MESSAGE_TITLE              0x815404a6    // IDD_MESSAGE [German (Germany)]
+#define HIDC_OBJ_COLOR                  0x806c0415    // IDD_OBJECTPROP_PAGE [German (Germany)]
+#define HIDC_OBJ_DEF                    0x806e0419    // IDD_OBJECTINFO_PAGE [German (Germany)]
+#define HIDC_OBJ_DEPLIST                0x8070046b    // IDD_OBJECTCPT_PAGE [German (Germany)]
+#define HIDC_OBJ_HELP                   0x806e041a    // IDD_OBJECTINFO_PAGE [German (Germany)]
+#define HIDC_OBJ_HIDDEN                 0x806c0417    // IDD_OBJECTPROP_PAGE [German (Germany)]
+#define HIDC_OBJ_LOCUS                  0x806c041c    // IDD_OBJECTPROP_PAGE [German (Germany)]
+#define HIDC_OBJ_LOCUSSPIN              0x806c041e    // IDD_OBJECTPROP_PAGE [German (Germany)]
+#define HIDC_OBJ_MARK                   0x806c0418    // IDD_OBJECTPROP_PAGE [German (Germany)]
+#define HIDC_OBJ_NAME                   0x806c0413    // IDD_OBJECTPROP_PAGE [German (Germany)]
+#define HIDC_OBJ_SHAPE                  0x806c0416    // IDD_OBJECTPROP_PAGE [German (Germany)]
+#define HIDC_PHISTO_SHOWSEL             0x814804a5    // IDD_PREF_HISTORY_PAGE [German (Germany)]
+#define HIDC_PMAC_DEF                   0xc9f00457    // IDD_PREF_MACROS_PAGE [German (Germany)]
+#define HIDC_PMAC_LIST                  0xc9f049e9    // IDD_PREF_MACROS_PAGE [German (Germany)]
+#define HIDC_PMAC_LOADMACRO             0xc9f00458    // IDD_PREF_MACROS_PAGE [German (Germany)]
+#define HIDC_PMAC_NAME                  0xc9f00456    // IDD_PREF_MACROS_PAGE [German (Germany)]
+#define HIDC_PMAC_PATH                  0xc9f049ea    // IDD_PREF_MACROS_PAGE [German (Germany)]
+#define HIDC_POV_LIST                   0x813304a7    // IDD_POV_DLG [German (Germany)]
+#define HIDC_POV_PHI                    0x813304a9    // IDD_POV_DLG [German (Germany)]
+#define HIDC_POV_THETA                  0x813304a8    // IDD_POV_DLG [German (Germany)]
+#define HIDC_PROFILE_LIST               0x80980411    // IDD_SAVE_PROFILE_DLG [German (Germany)]
+#define HIDC_PROFILE_NAME               0x80980414    // IDD_SAVE_PROFILE_DLG [German (Germany)]
+#define HIDC_PSESS_LIST                 0xc9f1045a    // IDD_PREF_SESSION_PAGE [German (Germany)]
+#define HIDC_PSESS_SAVEAS               0xc9f149e8    // IDD_PREF_SESSION_PAGE [German (Germany)]
+#define HIDC_PUNIV_MAGNET               0x8071044b    // IDD_PREF_UNIVERSE_PAGE [German (Germany)]
+#define HIDC_PUNIV_POVLIST              0xc9fb046a    // IDD_PREF_POV_PAGE [German (Germany)]
+#define HIDC_PUNIV_REFINIT              0x8071044a    // IDD_PREF_UNIVERSE_PAGE [German (Germany)]
+#define HIDC_PUNIV_SYNCHRO              0x8071044c    // IDD_PREF_UNIVERSE_PAGE [German (Germany)]
+#define HIDC_PUNIV_TRACE                0x80710494    // IDD_PREF_UNIVERSE_PAGE [German (Germany)]
+#define HIDC_RENDERER_AMBIENT           0x814f051a    // IDD_RENDERER_PROP [German (Germany)]
+#define HIDC_RENDERER_AMBMAT            0x814f0524    // IDD_RENDERER_PROP [German (Germany)]
+#define HIDC_RENDERER_DIFFMAT           0x814f0525    // IDD_RENDERER_PROP [German (Germany)]
+#define HIDC_RENDERER_DIFFUSE           0x814f051b    // IDD_RENDERER_PROP [German (Germany)]
+#define HIDC_RENDERER_EMISSION          0x814f0528    // IDD_RENDERER_PROP [German (Germany)]
+#define HIDC_RENDERER_FIELDVIEW         0x814f052a    // IDD_RENDERER_PROP [German (Germany)]
+#define HIDC_RENDERER_LGTX              0x814f051e    // IDD_RENDERER_PROP [German (Germany)]
+#define HIDC_RENDERER_LGTY              0x814f051f    // IDD_RENDERER_PROP [German (Germany)]
+#define HIDC_RENDERER_LGTZ              0x814f0520    // IDD_RENDERER_PROP [German (Germany)]
+#define HIDC_RENDERER_SHINE             0x814f051d    // IDD_RENDERER_PROP [German (Germany)]
+#define HIDC_RENDERER_SPECMAT           0x814f0526    // IDD_RENDERER_PROP [German (Germany)]
+#define HIDC_RENDERER_SPECULAR          0x814f051c    // IDD_RENDERER_PROP [German (Germany)]
+#define HIDC_SHAPE_APP                  0x806f0486    // IDD_PREF_SHAPE_PAGE [German (Germany)]
+#define HIDC_SHAPE_DEFCOLOR             0xc9fc042b    // IDD_PREF_COLORS_PAGE [German (Germany)]
+#define HIDC_SHAPE_HIDDEN               0xc9fc043c    // IDD_PREF_COLORS_PAGE [German (Germany)]
+#define HIDC_SUPPORT                    0x814e03ea    // IDD_ABOUTPROP [German (Germany)]
+#define HIDC_SUPP_DELETELIST            0x806b0412    // IDD_SUPPRESS_DLG [German (Germany)]
+#define HIDC_SUPP_SHOWLIST              0x806b0411    // IDD_SUPPRESS_DLG [German (Germany)]
+#define HIDC_TXT_EDIT                   0xc9f8047f    // IDD_OBJECTTEXT_PAGE [German (Germany)]
+#define HIDC_TXT_EQUATION               0xc9f80481    // IDD_OBJECTTEXT_PAGE [German (Germany)]
+#define HIDC_TXT_FONT                   0xc9f80480    // IDD_OBJECTTEXT_PAGE [German (Germany)]
+#define HIDC_TXT_VAR                    0xc9f80482    // IDD_OBJECTTEXT_PAGE [German (Germany)]
+#define HIDC_TXT_VARNAME                0xc9f80483    // IDD_OBJECTTEXT_PAGE [German (Germany)]
+#define HIDC_URL                        0x814e03e9    // IDD_ABOUTPROP [German (Germany)]
+#define HIDC_VERIFY_COUNTER             0x80760475    // IDD_VERIFY_DLG [German (Germany)]
+#define HIDC_VERIFY_PROP                0x80760470    // IDD_VERIFY_DLG [German (Germany)]
+#define HIDC_VERIFY_PROP_ICON           0x8076046f    // IDD_VERIFY_DLG [German (Germany)]
+#define HIDC_VERIFY_RESULT              0x80760474    // IDD_VERIFY_DLG [German (Germany)]
+#define HIDC_VERIFY_TARGET              0x80760485    // IDD_VERIFY_DLG [German (Germany)]
+#define HIDC_ZOOM_SLIDER                0xc9f6046c    // IDD_ZOOM_DLG [German (Germany)]
+#define HIDC_ZOOM_VALUE                 0xc9f6046e    // IDD_ZOOM_DLG [German (Germany)]

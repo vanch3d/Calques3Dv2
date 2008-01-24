@@ -217,6 +217,7 @@
 #define IDC_DISCOV_ACTIVATE             1195
 #define IDC_DISCOV_PACKAGE              1196
 #define IDC_DISCOV_TRANSLT              1197
+#define IDC_BUTTON1                     1197
 #define IDC_ABOUTCALQUE                 1201
 #define IDC_RENDERER_AMBTXT             1300
 #define IDC_RENDERER_DIFFUSETXT         1301
@@ -831,7 +832,7 @@
 #define _APS_3D_CONTROLS                     1
 #define _APS_NEXT_RESOURCE_VALUE        211
 #define _APS_NEXT_COMMAND_VALUE         33006
-#define _APS_NEXT_CONTROL_VALUE         1197
+#define _APS_NEXT_CONTROL_VALUE         1198
 #define _APS_NEXT_SYMED_VALUE           125
 #endif
 #endif
