@@ -20,8 +20,8 @@
 //////////////////////////////////////////////////////////////////////
 /// @file Droite3D.cpp
 /// @brief implementation of the CDroite3D class.
-/// $Date: $
-/// $Revision: $
+/// $Date: 2007-10-28 11:01:21+00 $
+/// $Revision: 1.17 $
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
@@ -738,20 +738,31 @@ void CDroite3D::Draw3DRendering(int nVolMode)
 
 	CVector4 dl = GetDirVector().Normalized();
 	CVector4 dz(0,0,1);
-	CVector4 drot = dz % dl;
 	double dd = 0;
-		drot = drot.Normalized();
-		drot.Norme();
-	if (drot.N!=0)
+	CVector4 drot = dz;
+
+	FCoord ss = dl*dz;
+	if (ss == -1 || ss ==1)
 	{
-		FCoord cosangle = dz * dl;
-		dd = acos(cosangle);
-		dd = RTD(dd);
+		dd = (dl.z>0) ? 0 : 180;
+		drot = CVector4(1,0,0);
 	}
 	else
 	{
-		dd = (dl.z>0) ? 0 : 180;
-		drot = CVector4(0,1,0);
+		drot = dz % dl;
+		drot = drot.Normalized();
+		drot.Norme();
+		if (drot.N!=0)
+		{
+			FCoord cosangle = dz * dl;
+			dd = acos(cosangle);
+			dd = RTD(dd);
+		}
+		else
+		{
+			dd = (dl.z>0) ? 0 : 180;
+			drot = CVector4(0,1,0);
+		}
 	}
 
 	GLdouble	size=20;
