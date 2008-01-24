@@ -68,7 +68,7 @@ CPreferenceDialog::CPreferenceDialog(CWnd* pParentWnd, UINT iSelectPage)
 		{CBCGPPropertySheet::PropSheetLook_Tree,150}
 	};
 
-	int nInitMode = 0;
+	int nInitMode = 1;
 	SetLook (myinit[nInitMode].nPrefLook,myinit[nInitMode].nSepSize);
 
 	if (myinit[nInitMode].nPrefLook==CBCGPPropertySheet::PropSheetLook_OutlookBar)
