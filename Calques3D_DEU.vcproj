@@ -4,6 +4,7 @@
 	Version="8.00"
 	Name="Calques3D_DEU"
 	ProjectGUID="{80BFCD1E-C37E-4624-856E-45B27F5291F3}"
+	RootNamespace="Calques3D_DEU"
 	SccProjectName="Calques3D"
 	SccLocalPath="."
 	SccProvider="MSSCCI:ComponentSoftware RCS"
@@ -71,7 +72,7 @@
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="NDEBUG"
-				Culture="2057"
+				Culture="1031"
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -1763,6 +1764,14 @@
 			Filter="ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
 			>
 			<File
+				RelativePath=".\res\alert_tb.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\alert_tb24.bmp"
+				>
+			</File>
+			<File
 				RelativePath="res\arrowcop.cur"
 				>
 			</File>
@@ -1839,6 +1848,18 @@
 				>
 			</File>
 			<File
+				RelativePath=".\res\list_add.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\list_browse.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\list_delete.bmp"
+				>
+			</File>
+			<File
 				RelativePath="res\logo.bmp"
 				>
 			</File>
@@ -1859,7 +1880,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\res\notebook.bmp"
+				>
+			</File>
+			<File
 				RelativePath="res\obj_icon.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\paramgeo.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\paramtools.bmp"
 				>
 			</File>
 			<File
@@ -1867,11 +1900,107 @@
 				>
 			</File>
 			<File
+				RelativePath=".\res\prefc3dicons.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\preficons.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\project.bmp"
+				>
+			</File>
+			<File
 				RelativePath="res\prop_bar.ico"
 				>
 			</File>
 			<File
+				RelativePath=".\res\sliders.bmp"
+				>
+			</File>
+			<File
 				RelativePath="res\smallcpn.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\Splsh16.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\tb_command.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\tb_command24.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\tb_construction.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\tb_exploration.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\tb_graph.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\tb_intersec.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\tb_mainframe.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\tb_mainframe24.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\tb_objects.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\tb_pointdiv.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\tb_pointon.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\tb_property.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\tb_property24.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\tb_univh.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\tb_univv.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\tb_verify.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\tb_visual.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\text_tb.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\text_tb24.bmp"
 				>
 			</File>
 			<File
@@ -1897,6 +2026,18 @@
 						Name="VCCustomBuildTool"
 					/>
 				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\res\xBulb.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\xInfo.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\xWarning.bmp"
+				>
 			</File>
 		</Filter>
 		<Filter

@@ -3,32 +3,22 @@ Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Calques3D", "Calques3D.vcproj", "{5BB5E813-933B-45C1-B390-AEB5AAD86B75}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Calques3D_DEU", "Calques3D_DEU.vcproj", "{80BFCD1E-C37E-4624-856E-45B27F5291F3}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "c3dResFRA", "c3dResFRA\c3dResFRA.vcproj", "{AE5985C0-B7FA-4906-8D03-5A15CE239AA3}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Calques3D_ESP", "Calques3D_ESP.vcproj", "{B1858556-E2C1-4759-BC83-8838E22B77F6}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "c3dResDEU", "c3dResDEU\c3dResDEU.vcproj", "{F163EE86-9CA6-4074-8FB3-7E06F7D3520C}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Calques3D_FRA", "Calques3D_FRA.vcproj", "{5D019E0A-A1E5-4E8C-A9CB-364A8088F12E}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "c3dResESP", "c3dResESP\c3dResESP.vcproj", "{FA2C1024-D5F0-4129-B0FD-92BAEF7D9FFE}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Calques3D_PTG", "Calques3D_PTG.vcproj", "{FEEAEB1D-2BA1-4A8F-AE88-C8B301681DF5}"
-EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup1", "Install\Setup1\Setup1.vdproj", "{6166B753-EEB7-4A1F-8D5C-AD83FA6A0189}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "c3dResPTG", "c3dResPTG\c3dResPTG.vcproj", "{07D9865C-AEB9-40C3-8E9F-380DEB70AA22}"
 EndProject
 Global
 	GlobalSection(SourceCodeControl) = preSolution
-		SccNumberOfProjects = 6
+		SccNumberOfProjects = 2
 		SccProjectName0 = Calques3D
 		SccLocalPath0 = .
 		SccProvider0 = MSSCCI:ComponentSoftware\u0020RCS
 		SccProjectUniqueName1 = Calques3D.vcproj
 		SccLocalPath1 = .
-		SccProjectUniqueName2 = Calques3D_DEU.vcproj
-		SccLocalPath2 = .
-		SccProjectUniqueName3 = Calques3D_ESP.vcproj
-		SccLocalPath3 = .
-		SccProjectUniqueName4 = Calques3D_FRA.vcproj
-		SccLocalPath4 = .
-		SccProjectUniqueName5 = Calques3D_PTG.vcproj
-		SccLocalPath5 = .
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -39,24 +29,22 @@ Global
 		{5BB5E813-933B-45C1-B390-AEB5AAD86B75}.Debug|Win32.Build.0 = Debug|Win32
 		{5BB5E813-933B-45C1-B390-AEB5AAD86B75}.Release|Win32.ActiveCfg = Release|Win32
 		{5BB5E813-933B-45C1-B390-AEB5AAD86B75}.Release|Win32.Build.0 = Release|Win32
-		{80BFCD1E-C37E-4624-856E-45B27F5291F3}.Debug|Win32.ActiveCfg = Release|Win32
-		{80BFCD1E-C37E-4624-856E-45B27F5291F3}.Debug|Win32.Build.0 = Release|Win32
-		{80BFCD1E-C37E-4624-856E-45B27F5291F3}.Release|Win32.ActiveCfg = Release|Win32
-		{80BFCD1E-C37E-4624-856E-45B27F5291F3}.Release|Win32.Build.0 = Release|Win32
-		{B1858556-E2C1-4759-BC83-8838E22B77F6}.Debug|Win32.ActiveCfg = Release|Win32
-		{B1858556-E2C1-4759-BC83-8838E22B77F6}.Debug|Win32.Build.0 = Release|Win32
-		{B1858556-E2C1-4759-BC83-8838E22B77F6}.Release|Win32.ActiveCfg = Release|Win32
-		{B1858556-E2C1-4759-BC83-8838E22B77F6}.Release|Win32.Build.0 = Release|Win32
-		{5D019E0A-A1E5-4E8C-A9CB-364A8088F12E}.Debug|Win32.ActiveCfg = Release|Win32
-		{5D019E0A-A1E5-4E8C-A9CB-364A8088F12E}.Debug|Win32.Build.0 = Release|Win32
-		{5D019E0A-A1E5-4E8C-A9CB-364A8088F12E}.Release|Win32.ActiveCfg = Release|Win32
-		{5D019E0A-A1E5-4E8C-A9CB-364A8088F12E}.Release|Win32.Build.0 = Release|Win32
-		{FEEAEB1D-2BA1-4A8F-AE88-C8B301681DF5}.Debug|Win32.ActiveCfg = Release|Win32
-		{FEEAEB1D-2BA1-4A8F-AE88-C8B301681DF5}.Debug|Win32.Build.0 = Release|Win32
-		{FEEAEB1D-2BA1-4A8F-AE88-C8B301681DF5}.Release|Win32.ActiveCfg = Release|Win32
-		{FEEAEB1D-2BA1-4A8F-AE88-C8B301681DF5}.Release|Win32.Build.0 = Release|Win32
-		{6166B753-EEB7-4A1F-8D5C-AD83FA6A0189}.Debug|Win32.ActiveCfg = Debug
-		{6166B753-EEB7-4A1F-8D5C-AD83FA6A0189}.Release|Win32.ActiveCfg = Release
+		{AE5985C0-B7FA-4906-8D03-5A15CE239AA3}.Debug|Win32.ActiveCfg = Release|Win32
+		{AE5985C0-B7FA-4906-8D03-5A15CE239AA3}.Debug|Win32.Build.0 = Release|Win32
+		{AE5985C0-B7FA-4906-8D03-5A15CE239AA3}.Release|Win32.ActiveCfg = Release|Win32
+		{AE5985C0-B7FA-4906-8D03-5A15CE239AA3}.Release|Win32.Build.0 = Release|Win32
+		{F163EE86-9CA6-4074-8FB3-7E06F7D3520C}.Debug|Win32.ActiveCfg = Release|Win32
+		{F163EE86-9CA6-4074-8FB3-7E06F7D3520C}.Debug|Win32.Build.0 = Release|Win32
+		{F163EE86-9CA6-4074-8FB3-7E06F7D3520C}.Release|Win32.ActiveCfg = Release|Win32
+		{F163EE86-9CA6-4074-8FB3-7E06F7D3520C}.Release|Win32.Build.0 = Release|Win32
+		{FA2C1024-D5F0-4129-B0FD-92BAEF7D9FFE}.Debug|Win32.ActiveCfg = Release|Win32
+		{FA2C1024-D5F0-4129-B0FD-92BAEF7D9FFE}.Debug|Win32.Build.0 = Release|Win32
+		{FA2C1024-D5F0-4129-B0FD-92BAEF7D9FFE}.Release|Win32.ActiveCfg = Release|Win32
+		{FA2C1024-D5F0-4129-B0FD-92BAEF7D9FFE}.Release|Win32.Build.0 = Release|Win32
+		{07D9865C-AEB9-40C3-8E9F-380DEB70AA22}.Debug|Win32.ActiveCfg = Release|Win32
+		{07D9865C-AEB9-40C3-8E9F-380DEB70AA22}.Debug|Win32.Build.0 = Release|Win32
+		{07D9865C-AEB9-40C3-8E9F-380DEB70AA22}.Release|Win32.ActiveCfg = Release|Win32
+		{07D9865C-AEB9-40C3-8E9F-380DEB70AA22}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
