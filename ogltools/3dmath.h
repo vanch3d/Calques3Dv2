@@ -57,7 +57,7 @@ The vector class incapsulates a classic C++ vector of three real values and trea
 
 The most common operations between mathematical vectors (and some which involves scalars too) are defined.
 */
-class vector
+class COGLVector
 {
 private:
 	static int counter;//!< counts how many vector objects are present
@@ -65,22 +65,22 @@ private:
 
 public:
 // operators
-	vector();//!< default constructor
-	vector(const real& x,const real& y,const real& z);//!< constructs a vector from three values
-	vector(vector& from, vector& to);//!< constructs a vector from two other vectors
-	vector(const vector& other);//!< the copy constructor
-	~vector();//!< the distructor
+	COGLVector();//!< default constructor
+	COGLVector(const real& x,const real& y,const real& z);//!< constructs a vector from three values
+	COGLVector(COGLVector& from, COGLVector& to);//!< constructs a vector from two other vectors
+	COGLVector(const COGLVector& other);//!< the copy constructor
+	~COGLVector();//!< the distructor
 	real& x();//!< accessor for the x component (can be used as l-value too)
 	real& y();//!< accessor for the y component (can be used as l-value too)
 	real& z();//!< accessor for the z component (can be used as l-value too)
 	real x() const;//!< returns the x component (r-value only)
 	real y() const;//!< returns the y component (r-value only)
 	real z() const;//!< returns the z component (r-value only)
-	vector& operator=(const vector& other);//!< the assignment
-	vector& operator+=(const vector& other);//!< the sum & assign
-	vector& operator-=(const vector& other);//!< the subtract & assign
-	vector& operator*=(const real& fact);//!< the short multiply by a scalar factor & assign
-	vector& operator/=(const real& fact);//!< the short divide by a scalar factor & assign
+	COGLVector& operator=(const COGLVector& other);//!< the assignment
+	COGLVector& operator+=(const COGLVector& other);//!< the sum & assign
+	COGLVector& operator-=(const COGLVector& other);//!< the subtract & assign
+	COGLVector& operator*=(const real& fact);//!< the short multiply by a scalar factor & assign
+	COGLVector& operator/=(const real& fact);//!< the short divide by a scalar factor & assign
 	real& operator[](const int& index);//!< an "access like a C++ vector"
 #ifdef HIGH_PRECISION
 	operator double*();//!< the conversion to a 3 double elements C++ vector
@@ -89,43 +89,43 @@ public:
 #endif
 //	operator char*();//!< the conversion of the vector into a textual form (null terminated string)
 	real normalize();//!< normalize the vector
-	vector normalized() const;//!< normalized copy of the vector
+	COGLVector normalized() const;//!< normalized copy of the vector
 	real length() const;//!< get the length of the vector
 	real length2() const;//!< get the squared length of the vector
-	void EpsilonCorrect(const vector& v);//!< if the vector is almost equal to the origin substitute it with v
+	void EpsilonCorrect(const COGLVector& v);//!< if the vector is almost equal to the origin substitute it with v
 // ststic functions
 	static int howMany();//!< returns how many vector objects exists
 
 // friend functions	
-	friend int operator==(const vector& v1,const vector& v2);//!< the equality operator
-	friend int operator!=(const vector& v1,const vector& v2);//!< the inequality operator
-	friend vector operator+(const vector& v1,const vector& v2);//!< the sum
-	friend vector operator-(const vector& v1,const vector& v2);//!< the difference
-	friend vector operator-(const vector& v1);//!< the negation
-	friend real operator*(const vector& v1,const vector& v2);//!< the vector dot product
-	friend vector operator^(const vector& v1,const vector& v2);//!< the vector cross product
-	friend vector operator*(const vector& v,const real& fact);//!< the multiply a vector by a scalar factor
-	friend vector operator*(const real& fact,const vector& v);//!< the multiply a scalar factor by a vector
-	friend vector operator/(const vector& v,const real& fact);//!< the divide a vector by a scalar factor
-	friend vector Bisect(vector v0,vector v1);//!< returns the unit vector which halves the arc between v0 and v1
-	friend void clamp(vector& vec,const real& low,const real& high);//!< clamps all the vector components between the given tresholds
+	friend int operator==(const COGLVector& v1,const COGLVector& v2);//!< the equality operator
+	friend int operator!=(const COGLVector& v1,const COGLVector& v2);//!< the inequality operator
+	friend COGLVector operator+(const COGLVector& v1,const COGLVector& v2);//!< the sum
+	friend COGLVector operator-(const COGLVector& v1,const COGLVector& v2);//!< the difference
+	friend COGLVector operator-(const COGLVector& v1);//!< the negation
+	friend real operator*(const COGLVector& v1,const COGLVector& v2);//!< the vector dot product
+	friend COGLVector operator^(const COGLVector& v1,const COGLVector& v2);//!< the vector cross product
+	friend COGLVector operator*(const COGLVector& v,const real& fact);//!< the multiply a vector by a scalar factor
+	friend COGLVector operator*(const real& fact,const COGLVector& v);//!< the multiply a scalar factor by a vector
+	friend COGLVector operator/(const COGLVector& v,const real& fact);//!< the divide a vector by a scalar factor
+	friend COGLVector Bisect(COGLVector v0,COGLVector v1);//!< returns the unit vector which halves the arc between v0 and v1
+	friend void clamp(COGLVector& vec,const real& low,const real& high);//!< clamps all the vector components between the given tresholds
 //	friend ostream& operator<<(ostream& os,const vector& vect);//!< the print vector to C++ stream
 #ifdef _AFXDLL // see if we are using MFC...
 #ifdef _DEBUG		//.. and if we are in a debug build
-	friend CDumpContext& operator<<(CDumpContext& cd,const vector& vect);//!< the print vector to MSVC++ debug console
+	friend CDumpContext& operator<<(CDumpContext& cd,const COGLVector& vect);//!< the print vector to MSVC++ debug console
 #endif
 #endif
 };
 //-----------------------------------------------------------------------------
 // inlines
 
-inline vector::vector()
+inline COGLVector::COGLVector()
 {
 	vec[0]=vec[1]=vec[2]=0.0;
 	counter++;
 }
 
-inline vector::vector(const real& x,const real& y,const real& z)
+inline COGLVector::COGLVector(const real& x,const real& y,const real& z)
 {
 	vec[0]=x;
 	vec[1]=y;
@@ -139,7 +139,7 @@ It is useful when a vector has to be constructed from the difference of two othe
 \param from the first vector
 \param to the second vector
 */
-inline vector::vector(vector& from, vector& to)
+inline COGLVector::COGLVector(COGLVector& from, COGLVector& to)
 {
 	vec[0]=to.vec[0]-from.vec[0];
 	vec[1]=to.vec[1]-from.vec[1];
@@ -147,48 +147,48 @@ inline vector::vector(vector& from, vector& to)
 	counter++;
 }
 
-inline vector::vector(const vector& other)
+inline COGLVector::COGLVector(const COGLVector& other)
 {
 	*this=other;
 	counter++;
 }
 
-inline vector::~vector()
+inline COGLVector::~COGLVector()
 {
 	counter--;
 }
 
-inline real& vector::x()
+inline real& COGLVector::x()
 {
 	return vec[0];
 }
 
-inline real& vector::y()
+inline real& COGLVector::y()
 {
 	return vec[1];
 }
 
-inline real& vector::z()
+inline real& COGLVector::z()
 {
 	return vec[2];
 }
 
-inline real vector::x() const
+inline real COGLVector::x() const
 {
 	return vec[0];
 }
 
-inline real vector::y() const
+inline real COGLVector::y() const
 {
 	return vec[1];
 }
 
-inline real vector::z() const
+inline real COGLVector::z() const
 {
 	return vec[2];
 }
 
-inline vector& vector::operator=(const vector& other)
+inline COGLVector& COGLVector::operator=(const COGLVector& other)
 {
 	//check for 'a=a' case
 	if (this==&other) return *this;
@@ -198,7 +198,7 @@ inline vector& vector::operator=(const vector& other)
 	return *this;
 }
 
-inline vector& vector::operator+=(const vector& other)
+inline COGLVector& COGLVector::operator+=(const COGLVector& other)
 {
 	vec[0]+=other.vec[0];
 	vec[1]+=other.vec[1];
@@ -206,7 +206,7 @@ inline vector& vector::operator+=(const vector& other)
 	return *this;
 }
 
-inline vector& vector::operator-=(const vector& other)
+inline COGLVector& COGLVector::operator-=(const COGLVector& other)
 {
 	vec[0]-=other.vec[0];
 	vec[1]-=other.vec[1];
@@ -214,7 +214,7 @@ inline vector& vector::operator-=(const vector& other)
 	return *this;
 }
 
-inline vector& vector::operator*=(const real& fact)
+inline COGLVector& COGLVector::operator*=(const real& fact)
 {
 	vec[0]*=fact;
 	vec[1]*=fact;
@@ -222,7 +222,7 @@ inline vector& vector::operator*=(const real& fact)
 	return *this;
 }
 
-inline vector& vector::operator/=(const real& fact)
+inline COGLVector& COGLVector::operator/=(const real& fact)
 {
 	assert(fabs(fact) >= epsilon);
 	vec[0]/=fact;
@@ -237,18 +237,18 @@ It can be used on both sides of an assignment.
 \return a reference to the requested element
 \param index the index which should be one of 0,1,2
 */
-inline real& vector::operator[](const int& index)
+inline real& COGLVector::operator[](const int& index)
 {
 	assert(index>=0 && index<=2);
 	return vec[index];
 }
 
-inline real vector::length2() const
+inline real COGLVector::length2() const
 {
 	return (*this)*(*this);
 }
 
-inline real vector::length() const
+inline real COGLVector::length() const
 {
 	return sqrt(this->length2());
 }
@@ -257,7 +257,7 @@ inline real vector::length() const
 The counting of the vector objects is realized trough a static counter variable.
 \return the number of vector objects in memory
 */
-inline int vector::howMany()
+inline int COGLVector::howMany()
 {
 	return counter;
 }
@@ -276,7 +276,7 @@ inline vector::operator real*()
 /*!
 this conversion operator allows to use a vector in places of a classic double[3]
 */
-inline vector::operator double*()
+inline COGLVector::operator double*()
 {
 	return (double*)vec;
 }
@@ -286,7 +286,7 @@ inline vector::operator double*()
 /*!
 this conversion operator allows to use a vector in place of a classic float[3]
 */
-inline vector::operator float*()
+inline COGLVector::operator float*()
 {
 	return (float*)vec;
 }
@@ -296,10 +296,10 @@ inline vector::operator float*()
 //-----------------------------------------------------------------------------
 // useful constants (declaration)
 
-extern const vector ORIGIN;
-extern const vector X_AXIS;
-extern const vector Y_AXIS;
-extern const vector Z_AXIS;
+extern const COGLVector ORIGIN;
+extern const COGLVector X_AXIS;
+extern const COGLVector Y_AXIS;
+extern const COGLVector Z_AXIS;
 
 //=============================================================================
 //=============================================================================
@@ -460,10 +460,10 @@ private:
 	static int counter;//!< counts how many quaternion objects are present
 protected:
 	real s;//!< the scalar part of a quaternion
-	vector v;//!< the vector part of a quaternion
+	COGLVector v;//!< the vector part of a quaternion
 public:
 	quaternion();//!< default constructor
-	quaternion(const real& scal, const vector& vec);//!< constructs a quaternion from the scalar and vector components
+	quaternion(const real& scal, const COGLVector& vec);//!< constructs a quaternion from the scalar and vector components
 	quaternion(const real& s1,const real& s2,const real& s3,const real& s4);//!< constructs a quaternion from four real values
 	quaternion(const quaternion& other);//!< the copy constructor
 	virtual ~quaternion();//!< the distructor
@@ -472,7 +472,7 @@ public:
 	real& z();//!< accessor for the z component of the vector part (can be used as l-value too)
 	real& w();//!< accessor for the scalar part (can be used as l-value too)
 	real& scalarPart();//!< other accessor for the scalar component (can be used as l-value too)
-	vector& vectorPart();//!< accessor for the vector part (can be used as l-value too)
+	COGLVector& vectorPart();//!< accessor for the vector part (can be used as l-value too)
 	quaternion& operator=(const quaternion& other);//!< assignment
 	quaternion& operator+=(const quaternion& other);//!< sum & assign
 	quaternion& operator-=(const quaternion& other);//!< subtract & assign
@@ -536,7 +536,7 @@ inline quaternion::quaternion (const real& s1,const real& s2,const real& s3,cons
 	counter++;
 }
 
-inline quaternion::quaternion (const real& scal, const vector& vec)
+inline quaternion::quaternion (const real& scal, const COGLVector& vec)
 :s(scal),v(vec)
 {
 	s=scal;
@@ -588,7 +588,7 @@ inline real& quaternion::scalarPart()
 	return s;
 }
 
-inline vector& quaternion::vectorPart()
+inline COGLVector& quaternion::vectorPart()
 {
 	return v;
 }
@@ -649,7 +649,7 @@ inline quaternion quaternion::conjugated() const
 /*!
 This function check if all elements of \e v1 are equal to the corresponding elements of \e v2.
 */
-inline int operator==(const vector& v1,const vector& v2)
+inline int operator==(const COGLVector& v1,const COGLVector& v2)
 {
 	if(v1.vec[0]==v2.vec[0] && v1.vec[1]==v2.vec[1] && v1.vec[2]==v2.vec[2]) return 1;
 	else return 0;
@@ -658,7 +658,7 @@ inline int operator==(const vector& v1,const vector& v2)
 /*!
 This function check if some of the elements of \e v1 differs from the corresponding elements of \e v2.
 */
-inline int operator!=(const vector& v1,const vector& v2)
+inline int operator!=(const COGLVector& v1,const COGLVector& v2)
 {
 	if(v1.vec[0]==v2.vec[0] && v1.vec[1]==v2.vec[1] && v1.vec[2]==v2.vec[2]) return 0;
 	else return 1;
@@ -687,22 +687,22 @@ private:
 	unitquaternion& operator-=(const unitquaternion& other);//!< subtract & assign is not allowed
 	unitquaternion& operator*=(const real& fact);//!< multiply by a scalar factor & assign is not allowed
 	unitquaternion& operator/=(const real& fact);//!< divide by a scalar factor & assign is not allowed
-	unitquaternion(const vector& v, const real& s);//!< constructs a unitquaternion assigning directly the scalar and vector parts
+	unitquaternion(const COGLVector& v, const real& s);//!< constructs a unitquaternion assigning directly the scalar and vector parts
 public:
 	real x() const;//!< accessor for the x component of the vector part
 	real y() const;//!< accessor for the y component of the vector part
 	real z() const;//!< accessor for the z component of the vector part
 	real w() const;//!< accessor for the scalar part
 	real scalarPart() const;//!< other accessor for the scalar component
-	vector vectorPart() const;//!< accessor for the vector part
+	COGLVector vectorPart() const;//!< accessor for the vector part
 	unitquaternion();//!< default constructor
-	unitquaternion(const real& angle, const vector& axis);//!< constructs a unitquaternion representing a rotation of angle radiants about axis 
+	unitquaternion(const real& angle, const COGLVector& axis);//!< constructs a unitquaternion representing a rotation of angle radiants about axis 
 	unitquaternion(const quaternion& q);//!< constructs a unitquaternion from a generic one (conversion by normalizing)
 	~unitquaternion();//!< the distructor
 	unitquaternion inversed() const;//!< inversed copy of the unitquaternion
 	void inverse();//!< inverse of the unitquaternion
 	tmatrix getRotMatrix();//<! constructs a rotation matrix from the quaternion
-	void getVectorsOnSphere(vector& vfrom,vector& vto);//<! converts a unitquaternion to two vectors on a unit sphere (the extremes of a rotation)
+	void getVectorsOnSphere(COGLVector& vfrom,COGLVector& vto);//<! converts a unitquaternion to two vectors on a unit sphere (the extremes of a rotation)
 	unitquaternion& operator*=(const unitquaternion& other);//!< multiply by another unitquaternion & assign is not allowed
 // friend functions	
 	friend unitquaternion operator+(const unitquaternion& q1,const unitquaternion& q2);//!< the sum is not allowed
@@ -743,7 +743,7 @@ represents a rotation of \b angle radians about the axis \b a if:
 \param axis the axis of rotation
 \date 18/06/99
 */
-inline unitquaternion::unitquaternion (const real& angle, const vector& axis)
+inline unitquaternion::unitquaternion (const real& angle, const COGLVector& axis)
 :quaternion( cos(angle/2), sin(angle/2)*axis.normalized() )
 {
 }
@@ -753,7 +753,7 @@ This constructor has been introduced exclusively to make the inversed function
 more efficient by avoiding too many unitquaternion copies and conversions to
 quaternions.
 */
-inline unitquaternion::unitquaternion (const vector& v, const real& s)
+inline unitquaternion::unitquaternion (const COGLVector& v, const real& s)
 :quaternion( s, v )
 {
 }
@@ -790,7 +790,7 @@ This function overrides the same in base class to prevent the use as an l-value
 */
 inline real unitquaternion::x() const
 {
-	return ((vector&)v).x();// explicit cast to use the non const vector x() function
+	return ((COGLVector&)v).x();// explicit cast to use the non const vector x() function
 }
 
 /*!
@@ -799,7 +799,7 @@ This function overrides the same in base class to prevent the use as an l-value
 */
 inline real unitquaternion::y() const
 {
-	return ((vector&)v).y();// explicit cast to use the non const vector y() function
+	return ((COGLVector&)v).y();// explicit cast to use the non const vector y() function
 }
 
 /*!
@@ -808,7 +808,7 @@ This function overrides the same in base class to prevent the use as an l-value
 */
 inline real unitquaternion::z() const
 {
-	return ((vector&)v).z();// explicit cast to use the non const vector z() function
+	return ((COGLVector&)v).z();// explicit cast to use the non const vector z() function
 }
 
 /*!
@@ -833,7 +833,7 @@ inline real unitquaternion::scalarPart() const
 This function overrides the same in base class to prevent the use as an l-value
 (that is to modify the vector part).
 */
-inline vector unitquaternion::vectorPart() const
+inline COGLVector unitquaternion::vectorPart() const
 {
 	return v;
 }
@@ -883,7 +883,7 @@ limits the vector components in a range, modifying it.
 \param low the lower treshold
 \param high the higher treshold
 */
-inline void clamp(vector& theVec,const real& low,const real& high)
+inline void clamp(COGLVector& theVec,const real& low,const real& high)
 {
 	clamp(theVec.vec[0],low,high);
 	clamp(theVec.vec[1],low,high);

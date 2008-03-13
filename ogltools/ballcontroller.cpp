@@ -21,8 +21,8 @@
 /// @file BallController.cpp
 /// Implementation of the CBallController class.
 ///
-/// $Date: 2007-11-11 11:10:32+00 $
-/// $Revision: 1.12 $
+/// $Date: 2007-11-17 19:38:23+00 $
+/// $Revision: 1.2 $
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
@@ -64,7 +64,7 @@ CBallController& CBallController::operator=(const CBallController& other)
 	winWidth=other.winWidth;
 	winHeight=other.winHeight;
 	otherAxesNum=other.otherAxesNum;
-	otherAxes=new vector[otherAxesNum];
+	otherAxes=new COGLVector[otherAxesNum];
 	for(int c=0;c<otherAxesNum;c++) otherAxes[c]=other.otherAxes[c];
 	BallColor=other.BallColor;
 	return *this;
@@ -96,9 +96,9 @@ void CBallController::MouseUp(const CPoint& location)
 	bDrawBallArea=false;
 	// save current rotation axes for bodyAxes constraint at next rotation
 	bodyorientation=currentQuat.getRotMatrix();
-	bodyAxes[0]=vector(bodyorientation(0,0),bodyorientation(1,0),bodyorientation(2,0));
-	bodyAxes[1]=vector(bodyorientation(0,1),bodyorientation(1,1),bodyorientation(2,1));
-	bodyAxes[2]=vector(bodyorientation(0,2),bodyorientation(1,2),bodyorientation(2,2));
+	bodyAxes[0]=COGLVector(bodyorientation(0,0),bodyorientation(1,0),bodyorientation(2,0));
+	bodyAxes[1]=COGLVector(bodyorientation(0,1),bodyorientation(1,1),bodyorientation(2,1));
+	bodyAxes[2]=COGLVector(bodyorientation(0,2),bodyorientation(1,2),bodyorientation(2,2));
 
 //	vdown=vcurr=ORIGIN;// per rubberbanding
 }
@@ -108,8 +108,8 @@ void CBallController::MouseMove(const CPoint& location)
 {
 	real xcurr=(2*location.x-winWidth)/winWidth;
 	real ycurr=(winHeight-2*location.y)/winHeight;
-	vector vfrom(xprev,yprev,0);
-	vector vto(xcurr,ycurr,0);
+	COGLVector vfrom(xprev,yprev,0);
+	COGLVector vto(xcurr,ycurr,0);
 	if(mouseButtonDown)
 	{
 // find the two points on sphere according to the projection method
@@ -118,7 +118,7 @@ void CBallController::MouseMove(const CPoint& location)
 // modify the vectors according to the active constraint
 		if(whichConstraints != NO_AXES)
 		{
-			vector* axisSet=GetUsedAxisSet();
+			COGLVector* axisSet=GetUsedAxisSet();
 			vfrom=ConstrainToAxis(vfrom,axisSet[currentAxisIndex]);
 			vto=ConstrainToAxis(vto,axisSet[currentAxisIndex]);
 		};
@@ -144,7 +144,7 @@ void CBallController::IssueGLrotation()
 #endif
 }
 
-void CBallController::ProjectOnSphere(vector& v) const
+void CBallController::ProjectOnSphere(COGLVector& v) const
 {
 	real rsqr=radius*radius;
 	real dsqr=v.x()*v.x()+v.y()*v.y();
@@ -171,7 +171,7 @@ void CBallController::ProjectOnSphere(vector& v) const
 	};
 }
 
-unitquaternion CBallController::RotationFromMove(const vector& vfrom,const vector& vto)
+unitquaternion CBallController::RotationFromMove(const COGLVector& vfrom,const COGLVector& vto)
 {
 //	vcurr=vto;// per rubberbanding
 	if(bProjectionMethod2)
@@ -186,10 +186,10 @@ unitquaternion CBallController::RotationFromMove(const vector& vfrom,const vecto
 	else
 	{
 // calculate axis of rotation and correct it to avoid "near zero length" rot axis
-		vector rotaxis=(vto^vfrom);
+		COGLVector rotaxis=(vto^vfrom);
 		rotaxis.EpsilonCorrect(X_AXIS);
 // find the amount of rotation
-		vector d(vfrom-vto);
+		COGLVector d(vfrom-vto);
 		real t=d.length()/(2.0*radius);
 		clamp(t,-1.0,1.0);
 		real phi=2.0*asin(t);
@@ -313,7 +313,7 @@ void CBallController::initVars()
 	center=CPoint(0,0),
 	radius=0.6;
 	GLdisplayList=currentAxisIndex=otherAxesNum=0;
-	BallColor=vector(0.0,0.5,1.0);
+	BallColor=COGLVector(0.0,0.5,1.0);
 	otherAxes=NULL;
 	whichConstraints=NO_AXES;
 	cameraAxes[0]=bodyAxes[0]=X_AXIS;
@@ -330,15 +330,15 @@ void CBallController::SetColor(COLORREF col)
 	BallColor.z()=GetBValue(col)/255.0;
 }
 
-void CBallController::SetColorV(vector colvec)
+void CBallController::SetColorV(COGLVector colvec)
 {
 	clamp(colvec,0,1);
 	BallColor=colvec;
 }
 
-vector CBallController::ConstrainToAxis(const vector& loose,const vector& axis)
+COGLVector CBallController::ConstrainToAxis(const COGLVector& loose,const COGLVector& axis)
 {
-	vector onPlane;
+	COGLVector onPlane;
     register real norm;
     onPlane = loose-axis*(axis*loose);
     norm = onPlane.length();
@@ -350,16 +350,16 @@ vector CBallController::ConstrainToAxis(const vector& loose,const vector& axis)
     if (axis.z() == 1) onPlane = X_AXIS;
 	else
 	{
-		onPlane = vector(-axis.y(), axis.x(), 0);
+		onPlane = COGLVector(-axis.y(), axis.x(), 0);
 		onPlane.normalize();
     }
     return (onPlane);
 }
 
-int CBallController::NearestConstraintAxis(const vector& loose)
+int CBallController::NearestConstraintAxis(const COGLVector& loose)
 {
-	vector* axisSet=GetUsedAxisSet();
-	vector onPlane;
+	COGLVector* axisSet=GetUsedAxisSet();
+	COGLVector onPlane;
 	register real max, dot;
 	register int i, nearest;
 	max = -1; 
@@ -389,9 +389,9 @@ int CBallController::NearestConstraintAxis(const vector& loose)
 	return (nearest);
 }
 
-vector* CBallController::GetUsedAxisSet()
+COGLVector* CBallController::GetUsedAxisSet()
 {
-    vector* axes=NULL;
+    COGLVector* axes=NULL;
 	switch(whichConstraints)
 	{
 	case CAMERA_AXES: axes=cameraAxes;

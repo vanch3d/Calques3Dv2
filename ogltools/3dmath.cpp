@@ -19,7 +19,7 @@
 //-----------------------------------------------------------------------------
 // static members
 
-int vector::counter=0;// global counter initialization
+int COGLVector::counter=0;// global counter initialization
 int tmatrix::counter=0;// global counter initialization
 int quaternion::counter=0;// global counter initialization
 
@@ -27,13 +27,13 @@ int quaternion::counter=0;// global counter initialization
 // useful constants (definition)
 
 //!the vector representing the origin
-const vector ORIGIN(0,0,0);
+const COGLVector ORIGIN(0,0,0);
 //!the unit vector associated to the x axys
-const vector X_AXIS(1,0,0);
+const COGLVector X_AXIS(1,0,0);
 //!the unit vector associated to the y axys
-const vector Y_AXIS(0,1,0);
+const COGLVector Y_AXIS(0,1,0);
 //!the unit vector associated to the z axys
-const vector Z_AXIS(0,0,1);
+const COGLVector Z_AXIS(0,0,1);
 //!the greek pi constant
 const real G_PI=3.14159265359;
 //! greek pi / 2
@@ -44,29 +44,29 @@ const real G_DOUBLE_PI= 6.28318530718;
 //-----------------------------------------------------------------------------
 // vector friends and members
 
-vector operator+(const vector& v1,const vector& v2)
+COGLVector operator+(const COGLVector& v1,const COGLVector& v2)
 {
-	return vector(v1.vec[0]+v2.vec[0], v1.vec[1]+v2.vec[1], v1.vec[2]+v2.vec[2]);
+	return COGLVector(v1.vec[0]+v2.vec[0], v1.vec[1]+v2.vec[1], v1.vec[2]+v2.vec[2]);
 }
 
-vector operator-(const vector& v1,const vector& v2)
+COGLVector operator-(const COGLVector& v1,const COGLVector& v2)
 {
-	return vector(v1.vec[0]-v2.vec[0], v1.vec[1]-v2.vec[1], v1.vec[2]-v2.vec[2]);
+	return COGLVector(v1.vec[0]-v2.vec[0], v1.vec[1]-v2.vec[1], v1.vec[2]-v2.vec[2]);
 }
 
-vector operator-(const vector& v1)
+COGLVector operator-(const COGLVector& v1)
 {
-	return vector(-v1.vec[0],-v1.vec[1],-v1.vec[2]);
+	return COGLVector(-v1.vec[0],-v1.vec[1],-v1.vec[2]);
 }
 
-vector operator^(const vector& v1,const vector& v2)
+COGLVector operator^(const COGLVector& v1,const COGLVector& v2)
 {
-	return vector( v1.vec[1]*v2.vec[2]-v1.vec[2]*v2.vec[1],
+	return COGLVector( v1.vec[1]*v2.vec[2]-v1.vec[2]*v2.vec[1],
 				  -v1.vec[0]*v2.vec[2]+v1.vec[2]*v2.vec[0],
 				   v1.vec[0]*v2.vec[1]-v1.vec[1]*v2.vec[0]);
 }
 
-real operator*(const vector& v1,const vector& v2)
+real operator*(const COGLVector& v1,const COGLVector& v2)
 {
 	return v1.vec[0]*v2.vec[0] + v1.vec[1]*v2.vec[1] + v1.vec[2]*v2.vec[2];
 }
@@ -74,30 +74,30 @@ real operator*(const vector& v1,const vector& v2)
 /*!
 This function together with operator*(real,vector) implements the commutative product of a scalar by a vector
 */
-vector operator*(const vector& v,const real& fact)
+COGLVector operator*(const COGLVector& v,const real& fact)
 {
-	return vector(fact*v.vec[0],fact*v.vec[1],fact*v.vec[2]);
+	return COGLVector(fact*v.vec[0],fact*v.vec[1],fact*v.vec[2]);
 }
 
 /*!
 This function together with operator*(vector,real) implements the commutative product of a scalar by a vector
 */
-vector operator*(const real& fact,const vector& v)
+COGLVector operator*(const real& fact,const COGLVector& v)
 {
-	return vector(fact*v.vec[0],fact*v.vec[1],fact*v.vec[2]);
+	return COGLVector(fact*v.vec[0],fact*v.vec[1],fact*v.vec[2]);
 }
 
-vector operator/(const vector& v,const real& fact)
+COGLVector operator/(const COGLVector& v,const real& fact)
 {
 	assert(fabs(fact)>=epsilon );
-	return vector(v.vec[0]/fact,v.vec[1]/fact,v.vec[2]/fact);
+	return COGLVector(v.vec[0]/fact,v.vec[1]/fact,v.vec[2]/fact);
 }
-	vector Bisect(vector v0,vector v1);//!< returns the unit vector which halves the arc between v0 and v1
+	COGLVector Bisect(COGLVector v0,COGLVector v1);//!< returns the unit vector which halves the arc between v0 and v1
 
-vector Bisect(vector v0,vector v1)
+COGLVector Bisect(COGLVector v0,COGLVector v1)
 {
 	//add the vectors
-	vector v=v0+v1;
+	COGLVector v=v0+v1;
 	// normalize the sum vector or fill it with a standar vector
 	real norm=v.length2();
 	if(norm<1e-5) v=Z_AXIS;
@@ -113,7 +113,7 @@ vector Bisect(vector v0,vector v1)
 
 #ifdef __AFXWIN_H__ // see if we are using MFC
 #ifdef _DEBUG
-CDumpContext& operator<<(CDumpContext& cd,const vector& vect)
+CDumpContext& operator<<(CDumpContext& cd,const COGLVector& vect)
 {
 	cd<<"[ "<<vect.vec[0]<<" ; "<<vect.vec[1]<<" ; "<<vect.vec[2]<<" ]";
 	return cd;
@@ -125,7 +125,7 @@ CDumpContext& operator<<(CDumpContext& cd,const vector& vect)
 This function modifies the vector upon which has been called.
 \return the length of the vector before normalization, this is useful to check if the normalization operation has been numerically precise.
 */
-real vector::normalize()
+real COGLVector::normalize()
 {
 	real len=length();
 	assert(fabs(len)>=epsilon);
@@ -137,14 +137,14 @@ real vector::normalize()
 This function doesn't modifies the vector upon which has been called, it returns a new vector instead.
 \return the normalized copy of the vector
 */
-vector vector::normalized() const
+COGLVector COGLVector::normalized() const
 {
 	real len=length();
 	assert(fabs(len)>=epsilon);
-	return vector(this->vec[0]/len,this->vec[1]/len,this->vec[2]/len);
+	return COGLVector(this->vec[0]/len,this->vec[1]/len,this->vec[2]/len);
 }
 
-void vector::EpsilonCorrect(const vector& v)
+void COGLVector::EpsilonCorrect(const COGLVector& v)
 {
 	if(simpleabs(vec[0])<epsilon && simpleabs(vec[1])<epsilon && simpleabs(vec[2])<epsilon)	*this=v;
 }
@@ -177,7 +177,7 @@ quaternion operator-(const quaternion& q1)
 quaternion operator*(const quaternion& q1,const quaternion& q2)
 {
 	real ts=q1.s*q2.s-q1.v*q2.v;
-	vector tv=q1.s*q2.v+q2.s*q1.v+(q1.v^q2.v);
+	COGLVector tv=q1.s*q2.v+q2.s*q1.v+(q1.v^q2.v);
 	return quaternion(ts,tv);
 }
 
@@ -421,12 +421,12 @@ into the second. The vectors are of unit length (so they are placed on a unit sp
 \param vfrom the first vector
 \param vto the second vector
 */
-void unitquaternion::getVectorsOnSphere(vector& vfrom,vector& vto)
+void unitquaternion::getVectorsOnSphere(COGLVector& vfrom,COGLVector& vto)
 {
 	unitquaternion tmp=(*this)*(*this);
 	real s=sqrt(tmp.x()*tmp.x()+tmp.y()*tmp.y());
 	if(s<=epsilon) vfrom=Y_AXIS;
-	else vfrom=vector(-tmp.y()/s,tmp.x()/s,0.0);
+	else vfrom=COGLVector(-tmp.y()/s,tmp.x()/s,0.0);
 	vto.x()=tmp.w()*vfrom.x()-tmp.z()*vfrom.y();
 	vto.y()=tmp.w()*vfrom.y()+tmp.z()*vfrom.x();
 	vto.z()=tmp.x()*vfrom.y()-tmp.y()*vfrom.x();

@@ -21,8 +21,8 @@
 /// @file BallController.h
 /// Interface of the CBallController class.
 ///
-/// $Date: 2007-11-11 11:10:32+00 $
-/// $Revision: 1.12 $
+/// $Date: 2007-11-17 19:38:24+00 $
+/// $Revision: 1.3 $
 //////////////////////////////////////////////////////////////////////
 #if !defined(AFX_BALLCONTROLLER_H__196CBD82_3858_11D2_80B1_A7800FACFE7F__INCLUDED_)
 #define AFX_BALLCONTROLLER_H__196CBD82_3858_11D2_80B1_A7800FACFE7F__INCLUDED_
@@ -52,10 +52,10 @@ private:
 	tmatrix bodyorientation;
 	int angleKeyIncrement;
 	void DrawConstraints();
-	vector* GetUsedAxisSet();
+	COGLVector* GetUsedAxisSet();
 //	vector vcurr; //vettori iniz e finali per il rubber banding della rotaz
 //	vector vdown;
-	vector BallColor;
+	COGLVector BallColor;
 	bool bProjectionMethod2;
 	bool bDrawBallArea;
 	int GLdisplayList;
@@ -70,17 +70,17 @@ private:
 	bool mouseButtonDown;
 	AxisSet whichConstraints;
 	int currentAxisIndex;
-	vector cameraAxes[3];
-	vector bodyAxes[3];
-	vector* otherAxes;
+	COGLVector cameraAxes[3];
+	COGLVector bodyAxes[3];
+	COGLVector* otherAxes;
 	int otherAxesNum;
 
 	void InitDisplayLists();
 	void initVars(void);
-	void ProjectOnSphere(vector& v) const;
-	unitquaternion RotationFromMove(const vector& vfrom,const vector& vto);
-	vector ConstrainToAxis(const vector& loose,const vector& axis);
-	int NearestConstraintAxis(const vector& loose);
+	void ProjectOnSphere(COGLVector& v) const;
+	unitquaternion RotationFromMove(const COGLVector& vfrom,const COGLVector& vto);
+	COGLVector ConstrainToAxis(const COGLVector& loose,const COGLVector& axis);
+	int NearestConstraintAxis(const COGLVector& loose);
 public:
 	void AddQuaternion(unitquaternion quat);
 	bool GetDrawConstraints();
@@ -91,10 +91,10 @@ public:
 	void UseConstraints(AxisSet constraints);
 	void ToggleMethod();
 	void SetAlternateMethod(bool flag=true);
-	vector GetColorV();
+	COGLVector GetColorV();
 	COLORREF GetColor();
 	void SetColor(COLORREF col);
-	void SetColorV(vector colvec);
+	void SetColorV(COGLVector colvec);
 	void DrawBallLimit();
 	CBallController();
 	CBallController(const real& rad);
@@ -146,7 +146,7 @@ inline COLORREF CBallController::GetColor()
 	return RGB(int(BallColor.x()*255),int(BallColor.y()*255),int(BallColor.z()*255));
 }
 
-inline vector CBallController::GetColorV()
+inline COGLVector CBallController::GetColorV()
 {
 	return BallColor;
 }
