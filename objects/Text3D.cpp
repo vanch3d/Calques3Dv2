@@ -665,12 +665,12 @@ CString CEquation3D::GetLineText(CObject3D *pObj)
     ptDir = ptDir.Normalized();
 
 
-    CString strMask = _T("  |X: %s\n"
-                         "P |Y: %s\n"
-                         "  |Z: %s\n\n"
-                         "  |X: %s\n"
-                         "V |Y: %s\n"
-                         "  |Z: %s");
+    CString strMask = _T("  |X: %s\n");
+	strMask +=		  _T("P |Y: %s\n");
+	strMask +=		  _T("  |Z: %s\n\n");
+	strMask +=		  _T("  |X: %s\n");
+	strMask +=		  _T("V |Y: %s\n");
+	strMask +=		  _T("  |Z: %s");
 
 
     CString strN1 = FormatNumber(RoundNorm(ptSrc.x),pObj->bValidate);
@@ -2398,7 +2398,7 @@ void CMathOp3D::OnUpdateVariables(CxObject3DSet *pSet)
 
         str.MakeUpper();
         char tt[255];
-        strcpy(tt,str.GetBuffer(str.GetLength()));
+        strcpy(tt,str);
             //varmap.AddString(tt, varvalues );
         m_pMathVar->AddString(tt,m_pMathValue/*+i*/);
         m_pSource.Add(pVal);
@@ -2516,7 +2516,7 @@ void CMathOp3D::DrawMathPad(CDC* pDC)
         CString str = pObj->strObjectName;
         str.MakeUpper();
         char tt[255];
-        strcpy(tt,str.GetBuffer(str.GetLength()));
+        strcpy(tt,str);
 		if (pObj->bValidate)
 			m_pMathValue[i]=pVal->m_nValue;
 		else
