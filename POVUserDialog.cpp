@@ -21,8 +21,8 @@
 /// @file POVUserDialog.cpp
 /// Implementation of the CPOVList class.
 //
-/// $Date: 2007-10-28 11:57:46+00 $
-/// $Revision: 1.22 $
+/// $Date: 2007-10-28 12:00:15+00 $
+/// $Revision: 1.3 $
 //////////////////////////////////////////////////////////////////////
 #include "stdafx.h"
 #include "calques3d.h"
@@ -211,8 +211,8 @@ BOOL CPOVUserDialog::OnInitDialog()
 	// TODO: Add extra initialization here
 	UINT nStdBtn = BGCEDITLISTBOX_BTN_UP | BGCEDITLISTBOX_BTN_DOWN;
 	m_wndPOVListBox.SetStandardButtons (nStdBtn);
-	m_wndPOVListBox.AddButton(IDB_LIST_DELITEM,"Remove this point of view",VK_DELETE,0,BGCEDITLISTBOX_BTN_DELETE_ID);
-	m_wndPOVListBox.AddButton(IDB_LIST_ADDITEM,"Save the current point of view",VK_INSERT,0,BGCEDITLISTBOX_BTN_NEW_ID);
+	m_wndPOVListBox.AddButton(IDB_LIST_DELITEM,_T("Remove this point of view"),VK_DELETE,0,BGCEDITLISTBOX_BTN_DELETE_ID);
+	m_wndPOVListBox.AddButton(IDB_LIST_ADDITEM,_T("Save the current point of view"),VK_INSERT,0,BGCEDITLISTBOX_BTN_NEW_ID);
 	nStdBtn |= BGCEDITLISTBOX_BTN_NEW | BGCEDITLISTBOX_BTN_DELETE;
 	m_wndPOVListBox.SetStandardBtns(nStdBtn);
 	//m_wndPOVListBox.EnableBrowseButton ();

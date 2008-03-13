@@ -21,8 +21,8 @@
 /// @file ParamGeoBar.cpp
 /// Implementation of the classes used in defining the ParamGeo3D user interface.
 ///
-/// $Date: 2007-11-10 17:55:11+00 $
-/// $Revision: 1.0 $
+/// $Date: 2007-11-24 18:07:05+00 $
+/// $Revision: 1.2 $
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
@@ -204,7 +204,7 @@ int CControlsContainer::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndStatusBar.Create(this);
 	m_wndStatusBar.SetIndicators(indicators,
 		  sizeof(indicators)/sizeof(UINT));
-	m_wndStatusBar.SetWindowText ("Test");
+	m_wndStatusBar.SetWindowText (_T("Test"));
 
 
 	m_wndProgress.SetRange(0,100);
@@ -383,9 +383,9 @@ void CControlsContainer::OnUpdateClearOutput(CCmdUI* pCmdUI)
 void CControlsContainer::OnClearOutput()
 {
 	m_wndOutputCtrl.EndOfText (FALSE);
-	m_wndOutputCtrl.SetWindowText("");
+	m_wndOutputCtrl.SetWindowText(_T(""));
 	m_wndInputCtrl.EndOfText (FALSE);
-	m_wndInputCtrl.SetWindowText("");
+	m_wndInputCtrl.SetWindowText(_T(""));
 
 	m_wndOutputCtrl.Invalidate ();
 	m_wndInputCtrl.Invalidate ();

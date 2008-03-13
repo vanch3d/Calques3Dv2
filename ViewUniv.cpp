@@ -21,8 +21,8 @@
 /// @file ViewUniv.cpp
 /// Implementation of the CViewUniv class.
 //
-/// $Date: 2007-11-24 18:07:05+00 $
-/// $Revision: 1.25 $
+/// $Date: 2008-01-19 11:43:04+00 $
+/// $Revision: 1.26 $
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
@@ -1507,7 +1507,7 @@ void CViewUniv::OnEditCopy()
 {
 
     CMetaFileDC * m_pMetaDC = new CMetaFileDC();
-    m_pMetaDC->CreateEnhanced(GetDC(),NULL,NULL,"whatever");
+    m_pMetaDC->CreateEnhanced(GetDC(),NULL,NULL,_T("whatever"));
 
     CClientDC clientDC(this) ;
     m_pMetaDC->m_hAttribDC = clientDC.m_hDC;

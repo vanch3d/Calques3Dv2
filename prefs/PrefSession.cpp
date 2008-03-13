@@ -148,7 +148,7 @@ void CPrefSession::UpdateProfileList()
 	GetCurrentDirectory (_MAX_PATH, szCurrDir);
 
 	CFileFind finder;
-    BOOL bWorking = finder.FindFile("*.cfg");
+    BOOL bWorking = finder.FindFile(_T("*.cfg"));
 
 	CString mStrDef;
 	mStrDef.LoadString(ID_SESSION_DEF);
@@ -252,7 +252,7 @@ BOOL CSaveProfileDlg::OnInitDialog()
 	GetCurrentDirectory (_MAX_PATH, szCurrDir);
 
 	CFileFind finder;
-    BOOL bWorking = finder.FindFile("*.cfg");
+    BOOL bWorking = finder.FindFile(_T("*.cfg"));
 	while (bWorking)
 	{
 		bWorking = finder.FindNextFile();

@@ -251,7 +251,7 @@ void CTestGLView::OnCreateGL()
 // prepare quadric disp list
 	BuildQuadrDispList();
 // prepare charset for text
-	PrepareCharset2D("Arial",20);
+	PrepareCharset2D(_T("Arial"),20);
 }
 
 void CTestGLView::BuildTessDispList()

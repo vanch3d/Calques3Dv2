@@ -129,7 +129,7 @@ void CRedefine3DTask::OnMouseL(UINT, CPoint thepos)
 
                     CString strHelp;
                     strHelp.LoadString(pRedef->nAvail);
-                    strHelp = strHelp.SpanExcluding("\n");
+                    strHelp = strHelp.SpanExcluding(_T("\n"));
                     pPickUp.AddHelper(nbO,strHelp);
                 }
             }

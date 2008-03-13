@@ -262,7 +262,7 @@ void CEditLabel::OnContextMenu(CWnd* pWnd, CPoint point)
 
 			CString mstr,mstr2;
 			mstr.LoadString(pObj->GetNameID());
-			mstr2.Format("%s%d",mstr,pObj->nObjectId);
+			mstr2.Format(_T("%s%d"),mstr,pObj->nObjectId);
 			mstr2 = pObj->GetObjectHelp();
 			pVars->AppendMenu(MF_STRING,varID+i,mstr2);
 			isVar = TRUE;
@@ -300,7 +300,7 @@ BOOL CEditLabel::OnCommand(WPARAM wParam, LPARAM lParam)
 		if (pObj)
 		{
 			CString mstr2;
-			mstr2.Format("%s",pObj->strObjectName);
+			mstr2.Format(_T("%s"),pObj->strObjectName);
 			ReplaceSel(mstr2, TRUE);
 		}
 

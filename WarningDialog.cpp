@@ -111,7 +111,7 @@ void CWarningDialog::DoModeless(TWarning msg)
 
 	CString temp;
 	temp.LoadString(IDS_WARNING_TITLE);
-	int nb = temp.Find("\n",0);
+	int nb = temp.Find(_T("\n"),0);
 	m_strTitle= temp.Left(nb);
 	m_strMessage = temp.Right(temp.GetLength()-nb-1);
 

@@ -667,7 +667,7 @@ void CViewAnalytic::OnEditCopy()
 {
 	// TODO: Add your command handler code here
 	CMetaFileDC * m_pMetaDC = new CMetaFileDC();
-	m_pMetaDC->CreateEnhanced(GetDC(),NULL,NULL,"whatever");
+	m_pMetaDC->CreateEnhanced(GetDC(),NULL,NULL,_T("whatever"));
 
 	CClientDC clientDC(this) ; 
 	m_pMetaDC->m_hAttribDC = clientDC.m_hDC; 
