@@ -21,8 +21,8 @@
 /// @file Calques3D.cpp
 /// @brief Implementation of the CCalques3DApp class.
 ///
-/// $Date: 2007-11-25 13:13:37+00 $
-/// $Revision: 1.14 $
+/// $Date: 2008-01-24 21:01:59+00 $
+/// $Revision: 1.15 $
 //////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
@@ -161,11 +161,11 @@ BOOL CCalques3DApp::InitInstance()
 	AfxInitRichEdit( );
 	AfxEnableControlContainer();
 
-#ifdef _AFXDLL
-	Enable3dControls();			// Call this when using MFC in a shared DLL
-#else
-	Enable3dControlsStatic();	// Call this when linking to MFC statically
-#endif
+//#ifdef _AFXDLL
+//	Enable3dControls();			// Call this when using MFC in a shared DLL
+//#else
+//	Enable3dControlsStatic();	// Call this when linking to MFC statically
+//#endif
 
 	//------------------------------------------------------------
 	// Initialise the COM manager (for the 3DConnexion device)
@@ -245,6 +245,16 @@ BOOL CCalques3DApp::InitInstance()
 	//InitSkinManager ();
 	//GetSkinManager ()->EnableSkinsDownload (_T("http://www.bcgsoft.com/Skins"));
 	//EnableTearOffMenus (NULL, ID_FREE_TEAROFF1, ID_FREE_TEAROFF2);
+	
+	// TODO: Remove this if you don't want extended tooltips:
+	InitTooltipManager();
+	CBCGPToolTipParams params;
+	params.m_bVislManagerTheme = TRUE;
+
+	theApp.GetTooltipManager ()->SetTooltipParams (
+		BCGP_TOOLTIP_TYPE_ALL,
+		RUNTIME_CLASS (CBCGPToolTipCtrl),
+		&params);
 
 	// Enable user-defined tools. If you want allow more than 10 tools,
 	// add tools entry to resources (ID_USER_TOOL11, ID_USER_TOOL12,...)
