@@ -358,7 +358,8 @@ public:
 	{
 		EXPORT_MATHEMATICA = 0,	///< Mathematica export - used for property discovery
 		EXPORT_MAPLE,			///< Maple export - used for property discovery
-		EXPORT_DOT				///< DOT export - used for graph visualization 
+		EXPORT_DOT,				///< DOT export - used for graph visualization 
+		EXPORT_X3D				///< X3D export  used for 3D web-based exploration
 	};
 
 	BOOL		bValidate;			///< TRUE if the object is analytically valid, FALSE otherwise
