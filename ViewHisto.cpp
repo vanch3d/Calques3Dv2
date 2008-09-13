@@ -87,6 +87,7 @@ BEGIN_MESSAGE_MAP(CViewHisto, CTreeView)//CListView)
 	ON_COMMAND(ID_FILE_PRINT, CTreeView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, CTreeView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, OnFilePrintPreview)
+	ON_COMMAND(ID_EDIT_COPY, OnEditCopy)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -959,12 +960,12 @@ void CViewHisto::CollapseBranch( HTREEITEM hti )
 void CViewHisto::OnHistoryExport() 
 {
 	static int nDefFormat = 1;
-	static char BASED_CODE szFilter[] = 
-		"Mathematica Symbolic Description (*.txt)|*.txt|"
-		"Maple Symbolic Description (*.txt)|*.txt|"
-		"DOT Graph Layout (*.dot)|*.dot||";
+	CString szFilter = _T("Mathematica Symbolic Description (*.txt)|*.txt|");
+	szFilter += _T("Maple Symbolic Description (*.txt)|*.txt|");
+	szFilter += _T("X3D Scene (*.x3d)|*.x3d|");
+	szFilter += _T("DOT Graph Layout (*.dot)|*.dot||");
  
-	CFileDialog mdlg(FALSE,"txt","*.txt",
+	CFileDialog mdlg(FALSE,_T("txt"),_T("*.txt"),
 			OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT,
 			szFilter,
 			this);
@@ -986,12 +987,14 @@ void CViewHisto::OnHistoryExport()
 	else if (nformat==2)
 		strSymb = OnExportSymbolic(CObject3D::EXPORT_MAPLE);
 	else if (nformat==3)
+		strSymb = OnExportX3D();
+	else if (nformat==4)
 		strSymb = OnExportDot();
 	else 
 		return;
 
 	FILE *fp = NULL;
-		fp = fopen(m_strPath,"w+");
+	fopen_s(&fp,mdlg.m_ofn.lpstrFile,_T("w+"));
 	TRY
 	{
 
@@ -999,6 +1002,12 @@ void CViewHisto::OnHistoryExport()
 		f.WriteString(strSymb);
 		f.WriteString(_T("\n"));
 		f.Close();
+		if (nformat==3)
+		{
+			CString strURL = _T("file:///");
+			strURL += m_strPath;
+			HINSTANCE r = ShellExecute(NULL, _T("open"), strURL, NULL, NULL, SW_SHOWNORMAL);
+		}
 	}
 	CATCH( CFileException, e )
 	{
@@ -1007,6 +1016,39 @@ void CViewHisto::OnHistoryExport()
 #endif
 	}
 	END_CATCH
+}
+
+CString CViewHisto::OnExportX3D() 
+{
+	_TCHAR strPathName[_MAX_PATH];
+	::GetModuleFileName(NULL, strPathName, _MAX_PATH);
+
+	// The following code will allow you to get the path.
+	CString newPath(strPathName);
+	int fpos = newPath.ReverseFind('\\');
+
+	if (fpos != -1)
+		newPath = newPath.Left(fpos + 1);
+
+	FILE *fp = NULL;
+	fp = fopen(newPath + "model.x3d","r+");
+	CStdioFile f(fp);
+	CString strX3D = _T("");
+	BOOL cont = TRUE;
+	while (cont)
+	{
+		CString ss;
+		BOOL isOK = f.ReadString(ss);
+		if (isOK)
+		{
+			strX3D += ss + _T("\n");
+		}
+		cont = isOK;
+
+	}
+	f.Close();
+
+	return strX3D;
 }
 
 CString CViewHisto::OnExportDot() 
@@ -1152,4 +1194,31 @@ void CViewHisto::OnRclick(NMHDR* pNMHDR, LRESULT* pResult)
 	// TODO: Add your control notification handler code here
 	
 	*pResult = 1;
+}
+
+void CViewHisto::OnEditCopy()
+{
+	CTreeCtrl& mListCtrl = GetTreeCtrl();
+	if (!mListCtrl) return;
+
+	HTREEITEM pItem = mListCtrl.GetSelectedItem();
+	if (!pItem) return;
+
+	CObject3D* pObj = (CObject3D*)(mListCtrl.GetItemData(pItem));
+	if (!pObj) return;
+
+
+	if (OpenClipboard())
+	{
+		CString strData = mListCtrl.GetItemText(pItem);
+		EmptyClipboard();
+		HGLOBAL hClipboardData = GlobalAlloc(GMEM_DDESHARE, strData.GetLength()+1);
+
+		TCHAR * pchData = (TCHAR*)GlobalLock(hClipboardData);
+		_tcscpy (pchData, strData);
+		GlobalUnlock(hClipboardData);
+
+		SetClipboardData(CF_TEXT,hClipboardData);
+		CloseClipboard();	
+	}
 }

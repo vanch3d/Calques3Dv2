@@ -90,6 +90,7 @@ protected:
 
 	CString OnExportSymbolic(UINT nFormat);
 	CString OnExportDot();
+	CString OnExportX3D();
 
 	// Generated message map functions
 protected:
@@ -102,6 +103,7 @@ protected:
 	afx_msg void OnItemExpanding(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnClick(NMHDR* pNMHDR, LRESULT* pResult);
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
+	afx_msg void OnEditCopy();
 	afx_msg void OnExpandAll();
 	afx_msg void OnCollapseAll();
 	afx_msg void OnHistoryExport();
