@@ -204,6 +204,13 @@ public :
 		BOOL		bShowHidden;	///< TRUE if hidden objects are shown, FALSE otherwise
 	};
 
+	/////////////////////////////////////////////////////////////////////////////
+	/// Default options for the Graphical Interface 
+	/////////////////////////////////////////////////////////////////////////////
+	struct CTInterface {
+		BOOL	bUseRibbon;			///< TRUE if the interface is using the ribbon, FALSE otherwise
+		BOOL	bUseMDITab;			///< TRUE if the interface is using the MDI tabs
+	};
 
 public :
 
@@ -240,6 +247,8 @@ public :
 	static CTParamGeo	TParamGeo;		///< Configuration of ParamGeo3D
 
 	static COLORREF		Color;			///< Default color for objects \deprecated
+
+	static CTInterface	TInterface;		///< Default preferences for the interface
 
 public :
 	static void DefaultInit();

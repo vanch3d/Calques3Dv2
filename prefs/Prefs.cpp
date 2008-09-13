@@ -151,6 +151,13 @@ TPref::CTUniverse	TPref::TUniv =
 			FALSE
 		};
 
+TPref::CTInterface	TPref::TInterface = 
+	{
+		TRUE,
+		TRUE
+	};
+
+
 TPref::CTParamGeo      TPref::TParamGeo;
 
 BOOL TPref::bMacroLoading = TRUE;
