@@ -145,7 +145,7 @@ void CBCGPShapeMenuButton::OnDraw (CDC* pDC, const CRect& rect, CBCGPToolBarImag
 	//----------------------
 	FillInterior (pDC, rect, bHighlight || IsDroppedDown ());
 
-	CSize sizeImage = CMenuImages::Size ();
+	CSize sizeImage = CBCGPMenuImages::Size ();
 	if (CBCGPToolBar::IsLargeIcons ())
 	{
 		sizeImage.cx *= 2;
@@ -263,11 +263,11 @@ void CBCGPShapeMenuButton::OnDraw (CDC* pDC, const CRect& rect, CBCGPToolBarImag
 		int iImage;
 		if (bHorz && !m_bMenuOnly)
 		{
-			iImage = CMenuImages::IdArowDown;
+			iImage = CBCGPMenuImages::IdArowDown;
 		}
 		else
 		{
-			iImage = CMenuImages::IdArowRight;
+			iImage = CBCGPMenuImages::IdArowRight;
 		}
 
 		if (m_pPopupMenu != NULL &&
@@ -281,8 +281,8 @@ void CBCGPShapeMenuButton::OnDraw (CDC* pDC, const CRect& rect, CBCGPToolBarImag
 			rectArrow.left + (rectArrow.Width () - sizeImage.cx) / 2,
 			rectArrow.top + (rectArrow.Height () - sizeImage.cy) / 2);
 
-		CMenuImages::Draw (pDC, (CMenuImages::IMAGES_IDS) iImage, pointImage,
-							bDisabled ? CMenuImages::ImageGray : CMenuImages::ImageBlack,
+		CBCGPMenuImages::Draw (pDC, (CBCGPMenuImages::IMAGES_IDS) iImage, pointImage,
+							bDisabled ? CBCGPMenuImages::ImageGray : CBCGPMenuImages::ImageBlack,
 							sizeImage);
 	}
 

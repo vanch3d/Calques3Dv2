@@ -299,7 +299,7 @@ int CBCGPSliderButton::GetPos (UINT uiCmd)
 /////////////////////////////////////////////////////////////////////////////
 // CBCGPSliderCtrl
 
-CBCGPSliderCtrl::CBCGPSliderCtrl(CBCGPSliderButton& btnSlider) :
+CNVLSliderCtrl::CNVLSliderCtrl(CBCGPSliderButton& btnSlider) :
 	m_btnSlider (btnSlider)
 {
 		m_Images.SetTransparentColor(RGB(255,0,255));
@@ -307,12 +307,12 @@ CBCGPSliderCtrl::CBCGPSliderCtrl(CBCGPSliderButton& btnSlider) :
 		m_Images.Load(IDB_SLIDERS);
 }
 
-CBCGPSliderCtrl::~CBCGPSliderCtrl()
+CNVLSliderCtrl::~CNVLSliderCtrl()
 {
 }
 
 
-BEGIN_MESSAGE_MAP(CBCGPSliderCtrl, CSliderCtrl)
+BEGIN_MESSAGE_MAP(CNVLSliderCtrl, CSliderCtrl)
 	//{{AFX_MSG_MAP(CBCGPSliderCtrl)
 	ON_WM_MOUSEMOVE()
 	//ON_WM_PAINT()
@@ -326,7 +326,7 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // CBCGPSliderCtrl message handlers
 
-void CBCGPSliderCtrl::OnMouseMove(UINT nFlags, CPoint point)
+void CNVLSliderCtrl::OnMouseMove(UINT nFlags, CPoint point)
 {
 	int nPos = GetPos ();
 
@@ -338,7 +338,7 @@ void CBCGPSliderCtrl::OnMouseMove(UINT nFlags, CPoint point)
 	}
 }
 
-void CBCGPSliderCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) 
+void CNVLSliderCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags) 
 {
 	int nPos = GetPos ();
 
@@ -350,13 +350,13 @@ void CBCGPSliderCtrl::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 	}
 }
 
-void CBCGPSliderCtrl::OnLButtonUp(UINT nFlags, CPoint point) 
+void CNVLSliderCtrl::OnLButtonUp(UINT nFlags, CPoint point) 
 {
 	CSliderCtrl::OnLButtonUp(nFlags, point);
 	m_btnSlider.SetValue (GetPos (), TRUE);
 }
 
-BOOL CBCGPSliderCtrl::PreCreateWindow( CREATESTRUCT& cs )
+BOOL CNVLSliderCtrl::PreCreateWindow( CREATESTRUCT& cs )
 {
 	CSliderCtrl::PreCreateWindow(cs);
 	// TODO: Modify the Window class or styles here by modifying
@@ -372,7 +372,7 @@ BOOL CBCGPSliderCtrl::PreCreateWindow( CREATESTRUCT& cs )
 	return FALSE;
 }*/
 
-void CBCGPSliderCtrl::OnCustomDraw(NMHDR* pNMHDR, LRESULT* pResult)
+void CNVLSliderCtrl::OnCustomDraw(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	LPNMCUSTOMDRAW lpCustDraw = (LPNMCUSTOMDRAW)pNMHDR;
 	if (lpCustDraw->dwDrawStage == CDDS_PREPAINT)

@@ -58,11 +58,11 @@ protected:
 /////////////////////////////////////////////////////////////////////////////
 /// CBCGPSliderCtrl window
 /////////////////////////////////////////////////////////////////////////////
-class CBCGPSliderCtrl : public CSliderCtrl
+class CNVLSliderCtrl : public CSliderCtrl
 {
 // Construction
 public:
-	CBCGPSliderCtrl(CBCGPSliderButton& btnSlider);
+	CNVLSliderCtrl(CBCGPSliderButton& btnSlider);
 
 // Attributes
 public:
@@ -78,7 +78,7 @@ public:
 
 // Implementation
 public:
-	virtual ~CBCGPSliderCtrl();
+	virtual ~CNVLSliderCtrl();
 
 	// Generated message map functions
 protected:
@@ -140,7 +140,7 @@ public:
 
 // Attributes:
 public:
-	CBCGPSliderCtrl	m_wndSlider;
+	CNVLSliderCtrl	m_wndSlider;
 	CBCGPToolBar*	m_pToolBar;
 	int				m_iWidth;
 	DWORD			m_dwStyle;

@@ -78,7 +78,7 @@ END_MESSAGE_MAP()
 CSize CBCGPShapeButton::SizeToContent (BOOL bCalcOnly)
 {
 	CSize size = CBCGPButton::SizeToContent (FALSE);
-	size.cx += CMenuImages::Size ().cx;
+	size.cx += CBCGPMenuImages::Size ().cx;
 
 	if (!bCalcOnly)
 	{
@@ -113,7 +113,7 @@ void CBCGPShapeButton::OnDraw (CDC* pDC, const CRect& rect, UINT uiState)
 	//CPalette* pCurPalette = pDC->SelectPalette (m_pPalette, FALSE);
 	//pDC->RealizePalette();
 
-	CSize sizeArrow = CMenuImages::Size ();
+	CSize sizeArrow = CBCGPMenuImages::Size ();
 
 	CRect rectColor = rect;
 	rectColor.right -= sizeArrow.cx + nImageHorzMargin;
@@ -191,8 +191,8 @@ void CBCGPShapeButton::OnDraw (CDC* pDC, const CRect& rect, UINT uiState)
 			rectArrow.left + (rectArrow.Width () - sizeArrow.cx) / 2,
 			rectArrow.top + (rectArrow.Height () - sizeArrow.cy) / 2);
 
-		CMenuImages::Draw (pDC, CMenuImages::IdArowDownLarge, pointImage,
-			(uiState & ODS_DISABLED) ? CMenuImages::ImageGray : CMenuImages::ImageBlack);
+		CBCGPMenuImages::Draw (pDC, CBCGPMenuImages::IdArowDownLarge, pointImage,
+			(uiState & ODS_DISABLED) ? CBCGPMenuImages::ImageGray : CBCGPMenuImages::ImageBlack);
 
 		pDC->Draw3dRect (rectArrow, globalData.clrBtnLight, globalData.clrBtnDkShadow);
 		rectArrow.DeflateRect (1, 1);
@@ -228,7 +228,7 @@ void CBCGPShapeButton::OnDrawBorder (CDC* pDC, CRect& rectClient, UINT /*uiState
 //*****************************************************************************************
 void CBCGPShapeButton::OnDrawFocusRect (CDC* pDC, const CRect& rectClient)
 {
-	CSize sizeArrow = CMenuImages::Size ();
+	CSize sizeArrow = CBCGPMenuImages::Size ();
 
 	CRect rectColor = rectClient;
 	rectColor.right -= sizeArrow.cx + nImageHorzMargin;
