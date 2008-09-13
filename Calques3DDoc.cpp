@@ -1561,6 +1561,9 @@ void CCalques3DDoc::UpdateAllViews(CView* pSender, LPARAM lHint, CObject* pHint)
 	{
 	case WM_UPDATEOBJ_SEL:	// Object Selected
 		{
+			//####################### CHANGE FOR RIBBON 
+			BOOL useRbn = TPref::TInterface.bUseRibbon;
+			if (useRbn) return;
 			CObject3D *pObj= DYNAMIC_DOWNCAST(CObject3D,pHint);
 			CMainFrame *pWnd = DYNAMIC_DOWNCAST (CMainFrame, AfxGetMainWnd());
 			if (pObj && pWnd) 
@@ -1570,9 +1573,9 @@ void CCalques3DDoc::UpdateAllViews(CView* pSender, LPARAM lHint, CObject* pHint)
 				CFormatToolBar::OnUpdateCmdUI(pObj);
 			}
 			else if (pWnd)
-			{
-		        pWnd->GetPropertyBar()->AddProperties(NULL);
-		        pWnd->GetDependentBar()->AddProperties(NULL);
+			{	
+				pWnd->GetPropertyBar()->AddProperties(NULL);
+				pWnd->GetDependentBar()->AddProperties(NULL);
 			}
 		}
 		break;
